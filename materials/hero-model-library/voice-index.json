@@ -29304,6 +29304,2720 @@
       }
     },
     {
+      "id": "local-lol-decoded-audio:Sion",
+      "name": "LOL／Sion／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 560,
+      "bytes": 242671408,
+      "knownDurationSeconds": 1289.6139682539679,
+      "durationMeasuredFiles": 560,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sion/native/73c434168ece22a7.bnk",
+        "packages/Sion/native/9c5ca4f260ba9c78.bnk",
+        "packages/Sion/native/b7b557402f51e3dc.bnk",
+        "packages/Sion/native/bb91d71361fca2ee.bnk",
+        "packages/Sion/native/e0b05cdd8e6fbc69.bnk",
+        "packages/Sion/native/f4483e92cb533aef.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 560
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sion.zh_TW",
+      "name": "LOL／Sion／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 574,
+      "bytes": 720194624,
+      "knownDurationSeconds": 2400.255600907031,
+      "durationMeasuredFiles": 574,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sion.zh_TW/native/5e1dea913c255482.wpk",
+        "packages/Sion.zh_TW/native/7e70a2d345079f33.wpk",
+        "packages/Sion.zh_TW/native/cfe911b076708bfb.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 574
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sivir",
+      "name": "LOL／Sivir／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 580,
+      "bytes": 238102400,
+      "knownDurationSeconds": 1283.4031519274388,
+      "durationMeasuredFiles": 580,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sivir/native/054f2e20feaef036.bnk",
+        "packages/Sivir/native/2ec6fd2378032fb7.bnk",
+        "packages/Sivir/native/3312e4243e1fdb66.bnk",
+        "packages/Sivir/native/3cf08022a7091e41.bnk",
+        "packages/Sivir/native/58bf780a9e6b869b.bnk",
+        "packages/Sivir/native/68408c86bb2a5c63.bnk",
+        "packages/Sivir/native/84261695b5beb566.bnk",
+        "packages/Sivir/native/9ddeed5b217d5326.bnk",
+        "packages/Sivir/native/af244fbf492fdab2.bnk",
+        "packages/Sivir/native/b8c8dde06e815063.bnk",
+        "packages/Sivir/native/bc2874968b89ebac.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 580
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sivir.zh_TW",
+      "name": "LOL／Sivir／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 237,
+      "bytes": 192762396,
+      "knownDurationSeconds": 786.4292970521545,
+      "durationMeasuredFiles": 237,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sivir.zh_TW/native/80aac1c54faf5666.wpk",
+        "packages/Sivir.zh_TW/native/f2802401daa39e1a.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 237
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Skarner",
+      "name": "LOL／Skarner／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 279,
+      "bytes": 94420768,
+      "knownDurationSeconds": 525.3189115646258,
+      "durationMeasuredFiles": 279,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Skarner/native/2ce9c16fd0b22a84.bnk",
+        "packages/Skarner/native/332f57ad75b28cce.bnk",
+        "packages/Skarner/native/80cc0b064976f25a.bnk",
+        "packages/Skarner/native/ce6ce1baeef0d754.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 279
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Skarner.zh_TW",
+      "name": "LOL／Skarner／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 595,
+      "bytes": 843261736,
+      "knownDurationSeconds": 2635.06095238095,
+      "durationMeasuredFiles": 595,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Skarner.zh_TW/native/46d1957bd0da7383.wpk",
+        "packages/Skarner.zh_TW/native/a2da3dce09164854.wpk",
+        "packages/Skarner.zh_TW/native/f496f937f6fc1fc1.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 595
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Smolder",
+      "name": "LOL／Smolder／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 234,
+      "bytes": 84821052,
+      "knownDurationSeconds": 417.8314058956914,
+      "durationMeasuredFiles": 234,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Smolder/native/a0e50a3055a87a18.bnk",
+        "packages/Smolder/native/daeecf906102fa99.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 234
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Smolder.zh_TW",
+      "name": "LOL／Smolder／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 194,
+      "bytes": 117535064,
+      "knownDurationSeconds": 625.2901587301585,
+      "durationMeasuredFiles": 194,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Smolder.zh_TW/native/848a070be8f17f2a.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 194
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sona",
+      "name": "LOL／Sona／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1150,
+      "bytes": 2477590244,
+      "knownDurationSeconds": 8669.381726615658,
+      "durationMeasuredFiles": 1150,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sona/native/1149611ce10aa50a.bnk",
+        "packages/Sona/native/1726db1fd23e0517.bnk",
+        "packages/Sona/native/1a997a3093ca5c0f.bnk",
+        "packages/Sona/native/25285a21e88f2389.bnk",
+        "packages/Sona/native/2fcd7c78e6878a06.bnk",
+        "packages/Sona/native/310457f5dddb1d9d.bnk",
+        "packages/Sona/native/679115ad601a7aee.bnk",
+        "packages/Sona/native/685b0f5b00cb3dda.bnk",
+        "packages/Sona/native/767da524d37ef257.bnk",
+        "packages/Sona/native/8ba897e22f0d134e.bnk",
+        "packages/Sona/native/a0a5924461c5cf06.bnk",
+        "packages/Sona/native/b45f705620cd4f08.bnk",
+        "packages/Sona/native/bdc6b76bfba73313.bnk",
+        "packages/Sona/native/d13e5032b7562488.wpk",
+        "packages/Sona/native/f13f5d4e17f1044b.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1150
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sona.zh_TW",
+      "name": "LOL／Sona／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 354,
+      "bytes": 540288980,
+      "knownDurationSeconds": 1848.6311111111106,
+      "durationMeasuredFiles": 354,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sona.zh_TW/native/04fa8b4a03182ce1.wpk",
+        "packages/Sona.zh_TW/native/584fa53ab27e1ffb.wpk",
+        "packages/Sona.zh_TW/native/6ca480f3bc700551.wpk",
+        "packages/Sona.zh_TW/native/74d3c11ccbb071a9.wpk",
+        "packages/Sona.zh_TW/native/831a46e7879b879f.wpk",
+        "packages/Sona.zh_TW/native/96bff46f5dd83989.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 354
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Soraka",
+      "name": "LOL／Soraka／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 624,
+      "bytes": 295215572,
+      "knownDurationSeconds": 1626.3662811791398,
+      "durationMeasuredFiles": 624,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Soraka/native/00b78574b68a78df.bnk",
+        "packages/Soraka/native/255b3c301e581e67.bnk",
+        "packages/Soraka/native/2dd17f658ac24415.bnk",
+        "packages/Soraka/native/48e9a4bf5b210183.bnk",
+        "packages/Soraka/native/5328edcde711c62c.bnk",
+        "packages/Soraka/native/841882739c7e107d.bnk",
+        "packages/Soraka/native/8d608c79a6aaf905.bnk",
+        "packages/Soraka/native/9721fcbaddb7f088.bnk",
+        "packages/Soraka/native/9bea9977e0649c00.bnk",
+        "packages/Soraka/native/b17fd7525983a067.bnk",
+        "packages/Soraka/native/dc8dc67457f26f1a.bnk",
+        "packages/Soraka/native/ef1a111d3313e704.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 624
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Soraka.zh_TW",
+      "name": "LOL／Soraka／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 537,
+      "bytes": 498792544,
+      "knownDurationSeconds": 1892.238004535149,
+      "durationMeasuredFiles": 537,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Soraka.zh_TW/native/5ad6d9454668e2cf.wpk",
+        "packages/Soraka.zh_TW/native/86596d7aabae9210.wpk",
+        "packages/Soraka.zh_TW/native/bf13f75b25edb6c6.wpk",
+        "packages/Soraka.zh_TW/native/cb78d36ede6c71bf.wpk",
+        "packages/Soraka.zh_TW/native/ed406a8d2b6171d3.wpk",
+        "packages/Soraka.zh_TW/native/f9e5092a76b2e66b.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 537
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Aurora",
+      "name": "LOL／Strawberry_Aurora／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 56,
+      "bytes": 44197828,
+      "knownDurationSeconds": 167.48952380952383,
+      "durationMeasuredFiles": 56,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Aurora/native/c1104d92a19663c6.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 56
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Briar",
+      "name": "LOL／Strawberry_Briar／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 21,
+      "bytes": 9657752,
+      "knownDurationSeconds": 43.22138321995465,
+      "durationMeasuredFiles": 21,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Briar/native/f44d3f672ba67dc0.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 21
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Illaoi",
+      "name": "LOL／Strawberry_Illaoi／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 29,
+      "bytes": 14461372,
+      "knownDurationSeconds": 78.92757369614513,
+      "durationMeasuredFiles": 29,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Illaoi/native/4e1272199d2babe6.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 29
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Jinx",
+      "name": "LOL／Strawberry_Jinx／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 34,
+      "bytes": 10872416,
+      "knownDurationSeconds": 61.626530612244906,
+      "durationMeasuredFiles": 34,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Jinx/native/9119e5fa14a88b2f.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 34
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Leona",
+      "name": "LOL／Strawberry_Leona／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 20,
+      "bytes": 6015624,
+      "knownDurationSeconds": 34.097188208616785,
+      "durationMeasuredFiles": 20,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Leona/native/34e219e0d9d019fe.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 20
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Riven",
+      "name": "LOL／Strawberry_Riven／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 29,
+      "bytes": 6089228,
+      "knownDurationSeconds": 34.51219954648526,
+      "durationMeasuredFiles": 29,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Riven/native/ba16e9f1722792ff.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 29
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Seraphine",
+      "name": "LOL／Strawberry_Seraphine／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 39,
+      "bytes": 21659932,
+      "knownDurationSeconds": 94.77471655328796,
+      "durationMeasuredFiles": 39,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Seraphine/native/5481e320fc6c6a75.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 39
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Xayah",
+      "name": "LOL／Strawberry_Xayah／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 34,
+      "bytes": 6698000,
+      "knownDurationSeconds": 37.96204081632654,
+      "durationMeasuredFiles": 34,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Xayah/native/d97fb9fd82014fee.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 34
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Strawberry_Yasuo",
+      "name": "LOL／Strawberry_Yasuo／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 27,
+      "bytes": 13050604,
+      "knownDurationSeconds": 73.97628117913833,
+      "durationMeasuredFiles": 27,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Strawberry_Yasuo/native/dbabd0bb84e86b6e.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 27
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Swain",
+      "name": "LOL／Swain／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 856,
+      "bytes": 499847900,
+      "knownDurationSeconds": 2359.144943310655,
+      "durationMeasuredFiles": 856,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Swain/native/0335dfcf2347311a.bnk",
+        "packages/Swain/native/0bae2ed47638a21c.wpk",
+        "packages/Swain/native/177028a910d38cb9.bnk",
+        "packages/Swain/native/1e5e2128c3f1dfaa.bnk",
+        "packages/Swain/native/231a5d9bef5e150f.wpk",
+        "packages/Swain/native/26f96e7186ab3cc3.wpk",
+        "packages/Swain/native/35a854d1ea126d6b.wpk",
+        "packages/Swain/native/42dbb32489980e5c.bnk",
+        "packages/Swain/native/47c3d94a99375731.bnk",
+        "packages/Swain/native/4f6397d06f1933dc.bnk",
+        "packages/Swain/native/69bc94cbc3792a4a.wpk",
+        "packages/Swain/native/aa8f31443862e543.bnk",
+        "packages/Swain/native/b75fde4a287fb784.wpk",
+        "packages/Swain/native/bd2625a2a57d3177.wpk",
+        "packages/Swain/native/c3e6dd8b09107387.bnk",
+        "packages/Swain/native/cafb257d20756662.wpk",
+        "packages/Swain/native/f282d5b09638af1a.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 856
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Swain.zh_TW",
+      "name": "LOL／Swain／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 731,
+      "bytes": 857825144,
+      "knownDurationSeconds": 3456.107437641728,
+      "durationMeasuredFiles": 731,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Swain.zh_TW/native/82216d3fa846466d.wpk",
+        "packages/Swain.zh_TW/native/afc1dfcd12702971.wpk",
+        "packages/Swain.zh_TW/native/b0b030640cc8c268.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 731
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sylas",
+      "name": "LOL／Sylas／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 524,
+      "bytes": 173561092,
+      "knownDurationSeconds": 898.1569841269838,
+      "durationMeasuredFiles": 524,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sylas/native/299796ad4604b81a.bnk",
+        "packages/Sylas/native/32a154888f3bbabe.bnk",
+        "packages/Sylas/native/35ef1ddd07a1c11b.bnk",
+        "packages/Sylas/native/3d7d44ed8c66133a.bnk",
+        "packages/Sylas/native/6a0de76e09b134c8.bnk",
+        "packages/Sylas/native/9ac5281784b79a45.bnk",
+        "packages/Sylas/native/a0db2a58f1639599.bnk",
+        "packages/Sylas/native/d1a71adf6994504f.wpk",
+        "packages/Sylas/native/e348973b469f277c.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 524
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Sylas.zh_TW",
+      "name": "LOL／Sylas／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 831,
+      "bytes": 704301756,
+      "knownDurationSeconds": 2844.4135369897945,
+      "durationMeasuredFiles": 831,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Sylas.zh_TW/native/302511b7338c5494.wpk",
+        "packages/Sylas.zh_TW/native/3376372ddbe6ef82.wpk",
+        "packages/Sylas.zh_TW/native/4ea10e3b7f823d6e.wpk",
+        "packages/Sylas.zh_TW/native/6621909cce0dbfb7.wpk",
+        "packages/Sylas.zh_TW/native/6f811d5a90a430c0.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 831
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Syndra",
+      "name": "LOL／Syndra／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 841,
+      "bytes": 305429296,
+      "knownDurationSeconds": 1731.2488208616764,
+      "durationMeasuredFiles": 841,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Syndra/native/085719f6159cc669.bnk",
+        "packages/Syndra/native/28183c64b1f93eb2.bnk",
+        "packages/Syndra/native/487df1c8d5ffe7d8.bnk",
+        "packages/Syndra/native/52e9c22792f299be.bnk",
+        "packages/Syndra/native/61fb8a47c4600263.bnk",
+        "packages/Syndra/native/68d1cc41f5f78fcf.bnk",
+        "packages/Syndra/native/6aed927e28f4b7ec.bnk",
+        "packages/Syndra/native/85b03edc538d6455.bnk",
+        "packages/Syndra/native/a3b4c121226a051b.bnk",
+        "packages/Syndra/native/a7bdfbb225a80af3.bnk",
+        "packages/Syndra/native/b128b37034e96c8d.bnk",
+        "packages/Syndra/native/e3b28a09a15b6d75.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 841
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Syndra.zh_TW",
+      "name": "LOL／Syndra／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 44,
+      "bytes": 37394752,
+      "knownDurationSeconds": 155.47555555555556,
+      "durationMeasuredFiles": 44,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Syndra.zh_TW/native/a1f6be973615a8af.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 44
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:TahmKench",
+      "name": "LOL／TahmKench／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 280,
+      "bytes": 171895708,
+      "knownDurationSeconds": 898.3340136054417,
+      "durationMeasuredFiles": 280,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/TahmKench/native/050adc972710df33.bnk",
+        "packages/TahmKench/native/19c63e09963e3b0e.bnk",
+        "packages/TahmKench/native/3a656ed451c07eaa.bnk",
+        "packages/TahmKench/native/782dfcbc9effa57a.bnk",
+        "packages/TahmKench/native/9b67c28af208dd89.bnk",
+        "packages/TahmKench/native/d66b43cd45661354.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 280
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:TahmKench.zh_TW",
+      "name": "LOL／TahmKench／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 238,
+      "bytes": 138785752,
+      "knownDurationSeconds": 786.7079365079369,
+      "durationMeasuredFiles": 238,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/TahmKench.zh_TW/native/b6a90fe4dec459cc.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 238
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Taliyah",
+      "name": "LOL／Taliyah／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 582,
+      "bytes": 221550404,
+      "knownDurationSeconds": 1150.3198639455788,
+      "durationMeasuredFiles": 582,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Taliyah/native/3727a19dd434fb3e.bnk",
+        "packages/Taliyah/native/70c9fde8c09aaaa9.bnk",
+        "packages/Taliyah/native/a18a9eeeb0c41add.bnk",
+        "packages/Taliyah/native/ac90739ddff351ba.bnk",
+        "packages/Taliyah/native/bf1e7cf5d2d2f96c.bnk",
+        "packages/Taliyah/native/fbeda7b2ba367041.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 582
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Taliyah.zh_TW",
+      "name": "LOL／Taliyah／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 668,
+      "bytes": 393182992,
+      "knownDurationSeconds": 1741.5997052154178,
+      "durationMeasuredFiles": 668,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Taliyah.zh_TW/native/1efebbdc2782a09a.wpk",
+        "packages/Taliyah.zh_TW/native/e59f529b20994b5f.wpk",
+        "packages/Taliyah.zh_TW/native/e9b930c92cedc934.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 668
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Talon",
+      "name": "LOL／Talon／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 425,
+      "bytes": 93692916,
+      "knownDurationSeconds": 531.0329705215419,
+      "durationMeasuredFiles": 425,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Talon/native/2674d858ea5d6174.bnk",
+        "packages/Talon/native/32a55425960373c2.bnk",
+        "packages/Talon/native/6f3357ce389c01f1.bnk",
+        "packages/Talon/native/716ddc9aff1db27b.bnk",
+        "packages/Talon/native/7d0eae620dc841ff.bnk",
+        "packages/Talon/native/bd7f6ca51f304e09.bnk",
+        "packages/Talon/native/ffec54f729f63945.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 425
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Talon.zh_TW",
+      "name": "LOL／Talon／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 46,
+      "bytes": 13372704,
+      "knownDurationSeconds": 75.79750566893422,
+      "durationMeasuredFiles": 46,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Talon.zh_TW/native/32a268788f21efbc.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 46
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Taric",
+      "name": "LOL／Taric／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 280,
+      "bytes": 166758160,
+      "knownDurationSeconds": 915.5596145124716,
+      "durationMeasuredFiles": 280,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Taric/native/391ac537f749a6cd.bnk",
+        "packages/Taric/native/7f9a7f0cd10f368a.bnk",
+        "packages/Taric/native/b781cfc5b00e9b09.bnk",
+        "packages/Taric/native/c892f69013141996.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 280
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Taric.zh_TW",
+      "name": "LOL／Taric／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 212,
+      "bytes": 189355224,
+      "knownDurationSeconds": 673.616031746032,
+      "durationMeasuredFiles": 212,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Taric.zh_TW/native/33acc045c49b5863.wpk",
+        "packages/Taric.zh_TW/native/3e751b42dd1e97bc.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 212
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Teemo",
+      "name": "LOL／Teemo／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 968,
+      "bytes": 329679416,
+      "knownDurationSeconds": 1665.6936734693884,
+      "durationMeasuredFiles": 968,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Teemo/native/19f2eaa812730c71.bnk",
+        "packages/Teemo/native/25c00ba75f75a937.bnk",
+        "packages/Teemo/native/6735374c7d788b3b.bnk",
+        "packages/Teemo/native/6c1214ee5b128420.bnk",
+        "packages/Teemo/native/6e45d0cf6c55d09b.bnk",
+        "packages/Teemo/native/82b7f8b1dcfcefdc.bnk",
+        "packages/Teemo/native/8326c492bff73dde.bnk",
+        "packages/Teemo/native/92eba4a6c0f89abe.bnk",
+        "packages/Teemo/native/e9c34ce93474825b.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 968
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Teemo.zh_TW",
+      "name": "LOL／Teemo／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 618,
+      "bytes": 417495652,
+      "knownDurationSeconds": 1887.9269841269843,
+      "durationMeasuredFiles": 618,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Teemo.zh_TW/native/32b2352d4300d364.wpk",
+        "packages/Teemo.zh_TW/native/4f99886be320ee59.wpk",
+        "packages/Teemo.zh_TW/native/a1163599529e463e.wpk",
+        "packages/Teemo.zh_TW/native/c64f44a4cc2c5bcd.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 618
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Thresh",
+      "name": "LOL／Thresh／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 904,
+      "bytes": 422389008,
+      "knownDurationSeconds": 2241.932638888889,
+      "durationMeasuredFiles": 904,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Thresh/native/0a63e568e35bd7eb.bnk",
+        "packages/Thresh/native/271b61ea245a840f.bnk",
+        "packages/Thresh/native/329777cf524201e0.bnk",
+        "packages/Thresh/native/40634ac5734ae85b.bnk",
+        "packages/Thresh/native/71f53f819e1d37b4.bnk",
+        "packages/Thresh/native/78a242d12e332f53.bnk",
+        "packages/Thresh/native/834667b4ad09fa1b.bnk",
+        "packages/Thresh/native/8844ab06276abd3f.bnk",
+        "packages/Thresh/native/95b2545c8d79581a.bnk",
+        "packages/Thresh/native/cc919ade6a53ab45.bnk",
+        "packages/Thresh/native/e1673ac2119b299a.bnk",
+        "packages/Thresh/native/e6c2e71da743cca4.bnk",
+        "packages/Thresh/native/ea41fd6709489f11.bnk",
+        "packages/Thresh/native/ec4a4633a8c04fbb.bnk",
+        "packages/Thresh/native/eeb8aff017004ffe.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 904
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Thresh.zh_TW",
+      "name": "LOL／Thresh／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 568,
+      "bytes": 705647592,
+      "knownDurationSeconds": 2980.024603174605,
+      "durationMeasuredFiles": 568,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Thresh.zh_TW/native/8c15578c3c802f35.wpk",
+        "packages/Thresh.zh_TW/native/a588f4ddee91863c.wpk",
+        "packages/Thresh.zh_TW/native/a9e4053b2da09a11.wpk",
+        "packages/Thresh.zh_TW/native/b5a70c0b6934d1d2.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 568
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Tristana",
+      "name": "LOL／Tristana／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 759,
+      "bytes": 239741976,
+      "knownDurationSeconds": 1358.892176870747,
+      "durationMeasuredFiles": 759,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Tristana/native/0945f02a3bec1429.bnk",
+        "packages/Tristana/native/27aff4161f79cf81.bnk",
+        "packages/Tristana/native/4f45031fcb68492f.bnk",
+        "packages/Tristana/native/57d5312e7923a0f2.bnk",
+        "packages/Tristana/native/582d093cce073f61.bnk",
+        "packages/Tristana/native/78aad0d9d3be46bd.bnk",
+        "packages/Tristana/native/7b0029f2bbf22562.bnk",
+        "packages/Tristana/native/9e1e937062c24306.bnk",
+        "packages/Tristana/native/b72e55f28e664359.bnk",
+        "packages/Tristana/native/c87afd7ad470543b.bnk",
+        "packages/Tristana/native/ca59205c7881edfa.bnk",
+        "packages/Tristana/native/eb711f26b908ab64.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 759
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Tristana.zh_TW",
+      "name": "LOL／Tristana／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 582,
+      "bytes": 492689804,
+      "knownDurationSeconds": 1650.9043083900222,
+      "durationMeasuredFiles": 582,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Tristana.zh_TW/native/0950a33511683577.bnk",
+        "packages/Tristana.zh_TW/native/2adde6d9a07ffbb7.wpk",
+        "packages/Tristana.zh_TW/native/af7d717cfad97323.wpk",
+        "packages/Tristana.zh_TW/native/c6dae8c8bdc5d9fe.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 582
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Trundle",
+      "name": "LOL／Trundle／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 172,
+      "bytes": 99802124,
+      "knownDurationSeconds": 476.05990929705206,
+      "durationMeasuredFiles": 172,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Trundle/native/666b5355983f83f2.bnk",
+        "packages/Trundle/native/844f4c21169cf577.bnk",
+        "packages/Trundle/native/e055e2615f43e6ec.bnk",
+        "packages/Trundle/native/ea33bf66aa58892b.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 172
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Trundle.zh_TW",
+      "name": "LOL／Trundle／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 107,
+      "bytes": 46523732,
+      "knownDurationSeconds": 263.7132879818594,
+      "durationMeasuredFiles": 107,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Trundle.zh_TW/native/debcea6dad3a3c2a.wpk",
+        "packages/Trundle.zh_TW/native/df199884fac7a597.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 107
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Tryndamere",
+      "name": "LOL／Tryndamere／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 261,
+      "bytes": 97225184,
+      "knownDurationSeconds": 551.0980725623584,
+      "durationMeasuredFiles": 261,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Tryndamere/native/3280721f3212e4a1.bnk",
+        "packages/Tryndamere/native/85d65d504021d15d.bnk",
+        "packages/Tryndamere/native/a502784bf43e4152.bnk",
+        "packages/Tryndamere/native/a89630644b4493cb.bnk",
+        "packages/Tryndamere/native/d7e1a47e8b2b4d23.bnk",
+        "packages/Tryndamere/native/f5737bf0ec10d0e5.bnk",
+        "packages/Tryndamere/native/fd08fbbdb446cabc.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 261
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Tryndamere.zh_TW",
+      "name": "LOL／Tryndamere／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 84,
+      "bytes": 53571428,
+      "knownDurationSeconds": 232.5434467120183,
+      "durationMeasuredFiles": 84,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Tryndamere.zh_TW/native/3a0a31b48aed7968.wpk",
+        "packages/Tryndamere.zh_TW/native/4d9da9c8469ab330.wpk",
+        "packages/Tryndamere.zh_TW/native/dc7b5b564e64f24a.wpk",
+        "packages/Tryndamere.zh_TW/native/f483d30a589f6045.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 84
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:TwistedFate",
+      "name": "LOL／TwistedFate／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 587,
+      "bytes": 182262920,
+      "knownDurationSeconds": 1002.9580581065765,
+      "durationMeasuredFiles": 587,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/TwistedFate/native/0e6914850aad4eae.bnk",
+        "packages/TwistedFate/native/424fc2572c9bf7ac.bnk",
+        "packages/TwistedFate/native/4e260f3b5655ff04.bnk",
+        "packages/TwistedFate/native/509147bd12027e53.bnk",
+        "packages/TwistedFate/native/6c8aa4301ed7bd27.bnk",
+        "packages/TwistedFate/native/b28821fee6134db3.bnk",
+        "packages/TwistedFate/native/c20d964b367d5765.bnk",
+        "packages/TwistedFate/native/f35b2413fcbdcb18.bnk",
+        "packages/TwistedFate/native/f5a667377334d7db.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 587
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:TwistedFate.zh_TW",
+      "name": "LOL／TwistedFate／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 138,
+      "bytes": 68406784,
+      "knownDurationSeconds": 343.8962131519272,
+      "durationMeasuredFiles": 138,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/TwistedFate.zh_TW/native/0387af35e946b447.wpk",
+        "packages/TwistedFate.zh_TW/native/750a9483662309b6.wpk",
+        "packages/TwistedFate.zh_TW/native/c305ceea579c0c5f.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 138
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Twitch",
+      "name": "LOL／Twitch／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 650,
+      "bytes": 167812544,
+      "knownDurationSeconds": 925.221496598639,
+      "durationMeasuredFiles": 650,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Twitch/native/01dde771988a82a8.bnk",
+        "packages/Twitch/native/05b7fd0d9b90bff4.bnk",
+        "packages/Twitch/native/0678b716eabd10aa.bnk",
+        "packages/Twitch/native/152589e0ed4b17c1.bnk",
+        "packages/Twitch/native/16454fb069c69a2d.bnk",
+        "packages/Twitch/native/2c071f28de2db204.bnk",
+        "packages/Twitch/native/49d10fbddd76e924.bnk",
+        "packages/Twitch/native/9a271eb1024bb050.bnk",
+        "packages/Twitch/native/9f1ac2b89b237a9c.bnk",
+        "packages/Twitch/native/aac7cffe380e474c.bnk",
+        "packages/Twitch/native/b116c2f8e12cd173.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 650
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Twitch.zh_TW",
+      "name": "LOL／Twitch／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 598,
+      "bytes": 393916444,
+      "knownDurationSeconds": 1721.190476190473,
+      "durationMeasuredFiles": 598,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Twitch.zh_TW/native/0c62489ef12e7d4f.wpk",
+        "packages/Twitch.zh_TW/native/999c7ace4d1bb440.wpk",
+        "packages/Twitch.zh_TW/native/a1faf1d18ae4d65e.wpk",
+        "packages/Twitch.zh_TW/native/e8646c11cf0220a8.wpk",
+        "packages/Twitch.zh_TW/native/e94af1a4754cb4d9.wpk",
+        "packages/Twitch.zh_TW/native/f2dabf4d7c23c901.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 598
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Udyr",
+      "name": "LOL／Udyr／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 516,
+      "bytes": 255813476,
+      "knownDurationSeconds": 1275.330317460317,
+      "durationMeasuredFiles": 516,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Udyr/native/694e090b19f331a0.bnk",
+        "packages/Udyr/native/800139680af9b5cf.bnk",
+        "packages/Udyr/native/da50d59a35d620e9.bnk",
+        "packages/Udyr/native/fefb3716f754a358.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 516
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Udyr.zh_TW",
+      "name": "LOL／Udyr／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 525,
+      "bytes": 412768828,
+      "knownDurationSeconds": 1920.8243083900225,
+      "durationMeasuredFiles": 525,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Udyr.zh_TW/native/3761c93e7eba9913.wpk",
+        "packages/Udyr.zh_TW/native/843e514f23b86e8b.wpk",
+        "packages/Udyr.zh_TW/native/951de3ac154fd5cf.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 525
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Urgot",
+      "name": "LOL／Urgot／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 741,
+      "bytes": 210177792,
+      "knownDurationSeconds": 1133.3127210884345,
+      "durationMeasuredFiles": 741,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Urgot/native/0fe918ca550321dd.bnk",
+        "packages/Urgot/native/169e31b001cf597b.bnk",
+        "packages/Urgot/native/189753a64fe15fd1.bnk",
+        "packages/Urgot/native/5f5b409b71932b10.bnk",
+        "packages/Urgot/native/7b1ae872cd806881.bnk",
+        "packages/Urgot/native/911ed52757c8cddc.bnk",
+        "packages/Urgot/native/b1f399b349a7bacc.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 741
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Urgot.zh_TW",
+      "name": "LOL／Urgot／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 755,
+      "bytes": 699031328,
+      "knownDurationSeconds": 3024.668594104309,
+      "durationMeasuredFiles": 755,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Urgot.zh_TW/native/1d6e86a5a38c00b8.wpk",
+        "packages/Urgot.zh_TW/native/3d45acc4077b3602.wpk",
+        "packages/Urgot.zh_TW/native/b642de7c64f22a4a.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 755
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Varus",
+      "name": "LOL／Varus／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 829,
+      "bytes": 331273844,
+      "knownDurationSeconds": 1843.918145124716,
+      "durationMeasuredFiles": 829,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Varus/native/047155bb8cd9c926.bnk",
+        "packages/Varus/native/053119454ca29451.bnk",
+        "packages/Varus/native/09534f58e5305b24.bnk",
+        "packages/Varus/native/198d8f6dba0634af.bnk",
+        "packages/Varus/native/2ed74be61b64082c.bnk",
+        "packages/Varus/native/30b7d4525fb65891.bnk",
+        "packages/Varus/native/6a591e2b4a14a712.bnk",
+        "packages/Varus/native/8638803c41b0a3d5.bnk",
+        "packages/Varus/native/bb7bdbbaab27e26c.bnk",
+        "packages/Varus/native/c6446556d1e2c9a3.bnk",
+        "packages/Varus/native/d6f6a17d1659ad38.bnk",
+        "packages/Varus/native/ea203bdddeee4cc4.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 829
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Varus.zh_TW",
+      "name": "LOL／Varus／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 816,
+      "bytes": 1216519840,
+      "knownDurationSeconds": 3623.6328344671188,
+      "durationMeasuredFiles": 816,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Varus.zh_TW/native/020f19c18b6330ef.wpk",
+        "packages/Varus.zh_TW/native/3d56074ffaae0c38.wpk",
+        "packages/Varus.zh_TW/native/4d888a06da7efb2b.wpk",
+        "packages/Varus.zh_TW/native/9fc05dcf4f35627c.wpk",
+        "packages/Varus.zh_TW/native/d4d4db2da99d86cd.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 816
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vayne",
+      "name": "LOL／Vayne／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 656,
+      "bytes": 182990144,
+      "knownDurationSeconds": 1001.7768934240371,
+      "durationMeasuredFiles": 656,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vayne/native/0f73373681084b5e.bnk",
+        "packages/Vayne/native/10dae8fe7e289d44.bnk",
+        "packages/Vayne/native/77ec614b007f1d47.bnk",
+        "packages/Vayne/native/8d708df50b1a2620.bnk",
+        "packages/Vayne/native/8f5d1de7e0b5f554.bnk",
+        "packages/Vayne/native/9c812c90e28ce984.bnk",
+        "packages/Vayne/native/b61317350e67a691.bnk",
+        "packages/Vayne/native/b8080ec8aa368520.bnk",
+        "packages/Vayne/native/ba326a3aa670c5a1.bnk",
+        "packages/Vayne/native/de328793a0fcf4c7.bnk",
+        "packages/Vayne/native/f60f8e8cb612478a.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 656
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vayne.zh_TW",
+      "name": "LOL／Vayne／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 878,
+      "bytes": 655700104,
+      "knownDurationSeconds": 2441.553560090704,
+      "durationMeasuredFiles": 878,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vayne.zh_TW/native/775044d2272f7b81.wpk",
+        "packages/Vayne.zh_TW/native/89ea34c60600b6e0.wpk",
+        "packages/Vayne.zh_TW/native/ff76b99efe82318f.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 878
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Veigar",
+      "name": "LOL／Veigar／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 371,
+      "bytes": 128996612,
+      "knownDurationSeconds": 727.2827827380952,
+      "durationMeasuredFiles": 371,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Veigar/native/086ad675c4bf53cd.bnk",
+        "packages/Veigar/native/1208a9d4bd733f8a.bnk",
+        "packages/Veigar/native/1f1a60eab01b42c6.bnk",
+        "packages/Veigar/native/25dc1042354fdd8c.bnk",
+        "packages/Veigar/native/566c5eba24a22dfd.bnk",
+        "packages/Veigar/native/74212ba0b420a89c.bnk",
+        "packages/Veigar/native/8ce1bdc72be1a5c3.bnk",
+        "packages/Veigar/native/9c6450eac99c9377.bnk",
+        "packages/Veigar/native/dabafd430a9717f6.bnk",
+        "packages/Veigar/native/ed878f04cc4e89f3.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 371
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Veigar.zh_TW",
+      "name": "LOL／Veigar／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 360,
+      "bytes": 379340680,
+      "knownDurationSeconds": 1402.7695238095228,
+      "durationMeasuredFiles": 360,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Veigar.zh_TW/native/3639673a9b821d62.wpk",
+        "packages/Veigar.zh_TW/native/48111168c2372952.wpk",
+        "packages/Veigar.zh_TW/native/55445fe9c1359750.wpk",
+        "packages/Veigar.zh_TW/native/731236347f74a14d.wpk",
+        "packages/Veigar.zh_TW/native/7b6ce6f0eaa487f9.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 360
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Velkoz",
+      "name": "LOL／Velkoz／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 435,
+      "bytes": 194324384,
+      "knownDurationSeconds": 1101.5036507936509,
+      "durationMeasuredFiles": 435,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Velkoz/native/3ea41bfdc1170a29.bnk",
+        "packages/Velkoz/native/9cf25f43190fc4a0.bnk",
+        "packages/Velkoz/native/b812c8deeb4fb4a5.bnk",
+        "packages/Velkoz/native/c4e1647327862963.bnk",
+        "packages/Velkoz/native/ce8a8eac37961e3c.bnk",
+        "packages/Velkoz/native/e51494ed83d5950e.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 435
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Velkoz.zh_TW",
+      "name": "LOL／Velkoz／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 162,
+      "bytes": 255616152,
+      "knownDurationSeconds": 847.8708163265306,
+      "durationMeasuredFiles": 162,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Velkoz.zh_TW/native/01fda21e79f9eb28.wpk",
+        "packages/Velkoz.zh_TW/native/0fd5086e274d34a7.wpk",
+        "packages/Velkoz.zh_TW/native/f40b834876d349be.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 162
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vex",
+      "name": "LOL／Vex／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 199,
+      "bytes": 86698264,
+      "knownDurationSeconds": 438.01918367346923,
+      "durationMeasuredFiles": 199,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vex/native/10c29447752a4197.bnk",
+        "packages/Vex/native/7f91d605ab82dd67.bnk",
+        "packages/Vex/native/837df0767b255b2d.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 199
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vex.zh_TW",
+      "name": "LOL／Vex／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 326,
+      "bytes": 318571884,
+      "knownDurationSeconds": 1174.3791609977318,
+      "durationMeasuredFiles": 326,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vex.zh_TW/native/747ce9569033dbea.wpk",
+        "packages/Vex.zh_TW/native/8eabe3670227fc15.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 326
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vi",
+      "name": "LOL／Vi／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 660,
+      "bytes": 294246916,
+      "knownDurationSeconds": 1565.8351247165547,
+      "durationMeasuredFiles": 660,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vi/native/038e0e51eae2db61.bnk",
+        "packages/Vi/native/145c9c44b388c899.bnk",
+        "packages/Vi/native/203fffd78cdfcab1.bnk",
+        "packages/Vi/native/73d0dea16009ef8f.bnk",
+        "packages/Vi/native/9d8611791c2a1461.bnk",
+        "packages/Vi/native/ab0f00b9ac452232.bnk",
+        "packages/Vi/native/b5c3bcc27c941186.bnk",
+        "packages/Vi/native/d000787fa891554a.wpk",
+        "packages/Vi/native/d6e67e8c8dff0d09.bnk",
+        "packages/Vi/native/e1b29a74b984f553.bnk",
+        "packages/Vi/native/eea5d86dd1eade07.bnk",
+        "packages/Vi/native/f757f2166f2533fb.bnk",
+        "packages/Vi/native/f816ffffa125c1bd.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 660
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vi.zh_TW",
+      "name": "LOL／Vi／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 355,
+      "bytes": 196112440,
+      "knownDurationSeconds": 1014.9003174603174,
+      "durationMeasuredFiles": 355,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vi.zh_TW/native/67f814b9617e12ca.wpk",
+        "packages/Vi.zh_TW/native/cf30760cf3eae580.wpk",
+        "packages/Vi.zh_TW/native/e31734ca1dda3bf4.wpk",
+        "packages/Vi.zh_TW/native/e4cb41c3d269b0cb.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 355
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Viego",
+      "name": "LOL／Viego／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 469,
+      "bytes": 324889384,
+      "knownDurationSeconds": 1499.8990702947842,
+      "durationMeasuredFiles": 469,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Viego/native/237372917a1660dc.bnk",
+        "packages/Viego/native/2e18841c808ddd70.bnk",
+        "packages/Viego/native/392db8e5c9c1a869.bnk",
+        "packages/Viego/native/7f6e5d38e29215f5.wpk",
+        "packages/Viego/native/9cfd4df8a90a187e.bnk",
+        "packages/Viego/native/b2b3341b29725457.bnk",
+        "packages/Viego/native/b5359fe18244879b.bnk",
+        "packages/Viego/native/cf7abae9f4445793.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 469
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Viego.zh_TW",
+      "name": "LOL／Viego／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 451,
+      "bytes": 475673496,
+      "knownDurationSeconds": 1969.729206349208,
+      "durationMeasuredFiles": 451,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Viego.zh_TW/native/931b60f5a5f688a1.wpk",
+        "packages/Viego.zh_TW/native/f8a596275b134a20.wpk",
+        "packages/Viego.zh_TW/native/fd35c701cb290226.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 451
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Viktor",
+      "name": "LOL／Viktor／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 491,
+      "bytes": 333778036,
+      "knownDurationSeconds": 1494.2501587301601,
+      "durationMeasuredFiles": 491,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Viktor/native/083dc6811c1273e4.bnk",
+        "packages/Viktor/native/3e5f65ea2ff4281b.bnk",
+        "packages/Viktor/native/4c0ae686802e67f2.bnk",
+        "packages/Viktor/native/53f47929d59dfc15.bnk",
+        "packages/Viktor/native/6d9fb440413e8f45.bnk",
+        "packages/Viktor/native/7a62f47cb02959a2.bnk",
+        "packages/Viktor/native/d1f0ea9eb2c375f2.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 491
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Viktor.zh_TW",
+      "name": "LOL／Viktor／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 764,
+      "bytes": 714026036,
+      "knownDurationSeconds": 2629.616961451247,
+      "durationMeasuredFiles": 764,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Viktor.zh_TW/native/0fb287cb801acb29.wpk",
+        "packages/Viktor.zh_TW/native/a52fb32a3c050622.wpk",
+        "packages/Viktor.zh_TW/native/c8bcd3babd74c2fa.wpk",
+        "packages/Viktor.zh_TW/native/e54f974a5a2d9ffa.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 764
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vladimir",
+      "name": "LOL／Vladimir／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 435,
+      "bytes": 197489932,
+      "knownDurationSeconds": 1066.8812698412705,
+      "durationMeasuredFiles": 435,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vladimir/native/012678555a8b66ef.bnk",
+        "packages/Vladimir/native/09c8da41122fd25a.bnk",
+        "packages/Vladimir/native/133a8db70df9f2f1.bnk",
+        "packages/Vladimir/native/186079e47ba8e68d.bnk",
+        "packages/Vladimir/native/1a054fc73dad3219.bnk",
+        "packages/Vladimir/native/243246829f5727f4.bnk",
+        "packages/Vladimir/native/24aeec1011cf14a5.bnk",
+        "packages/Vladimir/native/3b7aff0e5f0e5b8f.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 435
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Vladimir.zh_TW",
+      "name": "LOL／Vladimir／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 195,
+      "bytes": 173172492,
+      "knownDurationSeconds": 717.4509977324262,
+      "durationMeasuredFiles": 195,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Vladimir.zh_TW/native/1a27fb77ca9c1a9e.wpk",
+        "packages/Vladimir.zh_TW/native/297d70df3afe23ce.wpk",
+        "packages/Vladimir.zh_TW/native/2da5ec30c2365b18.wpk",
+        "packages/Vladimir.zh_TW/native/81d23be59cf3e375.wpk",
+        "packages/Vladimir.zh_TW/native/d61c0e880c9a8cd1.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 195
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Volibear",
+      "name": "LOL／Volibear／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 353,
+      "bytes": 152954500,
+      "knownDurationSeconds": 807.6960770975061,
+      "durationMeasuredFiles": 353,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Volibear/native/25da47e12ac67574.bnk",
+        "packages/Volibear/native/341aff724dd34f97.bnk",
+        "packages/Volibear/native/49306dc12bfdbca4.bnk",
+        "packages/Volibear/native/cfc68a807e1c17a3.bnk",
+        "packages/Volibear/native/f6d0218f091d0fb5.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 353
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Volibear.zh_TW",
+      "name": "LOL／Volibear／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 296,
+      "bytes": 444329664,
+      "knownDurationSeconds": 1602.0808390022667,
+      "durationMeasuredFiles": 296,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Volibear.zh_TW/native/03a2d67286bd2a11.wpk",
+        "packages/Volibear.zh_TW/native/75b58be01561ace8.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 296
+      }
+    },
+    {
       "id": "local-lol-decoded-audio:Warwick",
       "name": "LOL／Warwick／共用音效包",
       "library": "本機遊戲",
@@ -29382,6 +32096,127 @@
       }
     },
     {
+      "id": "local-lol-decoded-audio:Xayah",
+      "name": "LOL／Xayah／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1099,
+      "bytes": 327930604,
+      "knownDurationSeconds": 1831.1931899092979,
+      "durationMeasuredFiles": 1099,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Xayah/native/035280576f17600e.bnk",
+        "packages/Xayah/native/11ab1da10c2d1151.bnk",
+        "packages/Xayah/native/1967163a89220827.bnk",
+        "packages/Xayah/native/22aae61803cbbaf0.bnk",
+        "packages/Xayah/native/519037a948b07279.bnk",
+        "packages/Xayah/native/6125bc30b3eb7ab2.bnk",
+        "packages/Xayah/native/6cf55b55f9dee77a.bnk",
+        "packages/Xayah/native/77f327feef4b3c1b.bnk",
+        "packages/Xayah/native/c1b9e56f3b16cb76.bnk",
+        "packages/Xayah/native/c246518cffc581e1.bnk",
+        "packages/Xayah/native/c48cbbfa56beb9ad.wpk",
+        "packages/Xayah/native/d8fa8f9b02c90f42.wpk",
+        "packages/Xayah/native/e9f5cbac0da54d51.bnk",
+        "packages/Xayah/native/f1ef390dc8b38c48.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1099
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Xayah.zh_TW",
+      "name": "LOL／Xayah／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1114,
+      "bytes": 485423788,
+      "knownDurationSeconds": 2742.420544217686,
+      "durationMeasuredFiles": 1114,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Xayah.zh_TW/native/5f6f7b127710833b.wpk",
+        "packages/Xayah.zh_TW/native/6457aa048bf1e714.wpk",
+        "packages/Xayah.zh_TW/native/dfd46baf6bf83055.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1114
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Xerath",
+      "name": "LOL／齊勒斯／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [
+        "example:xerath"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 542,
+      "bytes": 208472052,
+      "knownDurationSeconds": 1056.2491836734698,
+      "durationMeasuredFiles": 542,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Xerath/native/482f334c02b1c907.bnk",
+        "packages/Xerath/native/5460391893d26658.bnk",
+        "packages/Xerath/native/5c62c70312210ad5.bnk",
+        "packages/Xerath/native/a4849d2d709f7f6f.bnk",
+        "packages/Xerath/native/a50cb44668a36833.bnk",
+        "packages/Xerath/native/a68a7b5e46f7b7da.bnk",
+        "packages/Xerath/native/f178cd60a56ee79e.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 542
+      }
+    },
+    {
       "id": "local-lol-decoded-audio:Xerath.zh_TW",
       "name": "LOL／齊勒斯／繁中命名語系包",
       "library": "本機遊戲",
@@ -29417,6 +32252,128 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 223
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:XinZhao",
+      "name": "LOL／XinZhao／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 363,
+      "bytes": 112149928,
+      "knownDurationSeconds": 627.1009750566892,
+      "durationMeasuredFiles": 363,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/XinZhao/native/0e6f9723fda393b7.bnk",
+        "packages/XinZhao/native/3497a1f78524409d.bnk",
+        "packages/XinZhao/native/3fea5cef2e1e99b7.bnk",
+        "packages/XinZhao/native/6492c42b9eede9a0.bnk",
+        "packages/XinZhao/native/bd7082d201d7d3e7.bnk",
+        "packages/XinZhao/native/cf285f3897c41a9b.bnk",
+        "packages/XinZhao/native/f97df7f7e1284654.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 363
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:XinZhao.zh_TW",
+      "name": "LOL／XinZhao／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 212,
+      "bytes": 90788172,
+      "knownDurationSeconds": 411.02306122448977,
+      "durationMeasuredFiles": 212,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/XinZhao.zh_TW/native/0b7b887bcaf0938a.wpk",
+        "packages/XinZhao.zh_TW/native/4ab0b8e0de06fd18.wpk",
+        "packages/XinZhao.zh_TW/native/56e5bd8cc493ad53.wpk",
+        "packages/XinZhao.zh_TW/native/64ef95c5f0ce5497.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 212
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Yasuo",
+      "name": "LOL／Yasuo／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1353,
+      "bytes": 559824868,
+      "knownDurationSeconds": 3087.7176643990906,
+      "durationMeasuredFiles": 1353,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Yasuo/native/0a775a053e042452.bnk",
+        "packages/Yasuo/native/18a7433ddf055e8d.bnk",
+        "packages/Yasuo/native/194d975a87d333f7.bnk",
+        "packages/Yasuo/native/1daac83e7604c76e.bnk",
+        "packages/Yasuo/native/241699ae5c71f147.bnk",
+        "packages/Yasuo/native/27f4a7883928c597.bnk",
+        "packages/Yasuo/native/2f703a60e0ca0a1b.bnk",
+        "packages/Yasuo/native/543c195ce9a78bb7.bnk",
+        "packages/Yasuo/native/99f4ea1a942a77cd.bnk",
+        "packages/Yasuo/native/9b591ff0430cc4b3.bnk",
+        "packages/Yasuo/native/a49f40b4b644c85e.bnk",
+        "packages/Yasuo/native/a6411981c0a0c5af.bnk",
+        "packages/Yasuo/native/c389c6ebbbf92fd6.bnk",
+        "packages/Yasuo/native/cadae263e821daff.bnk",
+        "packages/Yasuo/native/d1a9f1f3f146a23d.bnk",
+        "packages/Yasuo/native/eadf541afb68c93d.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1353
       }
     },
     {
@@ -29458,6 +32415,194 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 1042
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Yone",
+      "name": "LOL／Yone／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 760,
+      "bytes": 367486540,
+      "knownDurationSeconds": 1873.3198866213147,
+      "durationMeasuredFiles": 760,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Yone/native/0b28567fa43d90b8.bnk",
+        "packages/Yone/native/11d9e5a6e935a89a.bnk",
+        "packages/Yone/native/11dbf307202ae249.bnk",
+        "packages/Yone/native/1f4a6de30fbbbfc6.bnk",
+        "packages/Yone/native/3b02ada033bec3a4.bnk",
+        "packages/Yone/native/7631b894b31a1d77.bnk",
+        "packages/Yone/native/aac70adc3b5e17ab.bnk",
+        "packages/Yone/native/dbd3fe4d07c839a8.bnk",
+        "packages/Yone/native/fdd53506c32408bc.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 760
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Yone.zh_TW",
+      "name": "LOL／Yone／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 609,
+      "bytes": 674451784,
+      "knownDurationSeconds": 2537.134512471656,
+      "durationMeasuredFiles": 609,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Yone.zh_TW/native/1e273f2a18c4f901.wpk",
+        "packages/Yone.zh_TW/native/3666eaac2909bdb6.wpk",
+        "packages/Yone.zh_TW/native/7b0a36f2f08e1b76.wpk",
+        "packages/Yone.zh_TW/native/99baf9f2a97b7d29.wpk",
+        "packages/Yone.zh_TW/native/b525fbd3441ec7f0.wpk",
+        "packages/Yone.zh_TW/native/b7eff83407382f8e.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 609
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Yorick",
+      "name": "LOL／Yorick／共用音效包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 743,
+      "bytes": 522499212,
+      "knownDurationSeconds": 2475.775124716554,
+      "durationMeasuredFiles": 743,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Yorick/native/022b14b340522524.wpk",
+        "packages/Yorick/native/218c810c9a358c98.bnk",
+        "packages/Yorick/native/3b299202dbb96b19.bnk",
+        "packages/Yorick/native/3f633c6319cc3f42.bnk",
+        "packages/Yorick/native/47b721ba3b65d7a9.bnk",
+        "packages/Yorick/native/60c937e2108ff6ba.bnk",
+        "packages/Yorick/native/93ae45f50381fcfd.bnk",
+        "packages/Yorick/native/a89d9ff5e910e9a5.bnk",
+        "packages/Yorick/native/d4a9cb01f68f0c07.bnk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 743
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Yorick.zh_TW",
+      "name": "LOL／Yorick／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 526,
+      "bytes": 662657012,
+      "knownDurationSeconds": 2122.0952380952385,
+      "durationMeasuredFiles": 526,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Yorick.zh_TW/native/bb36093a2511f7cf.wpk",
+        "packages/Yorick.zh_TW/native/bf491e1c77afb6c3.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 526
+      }
+    },
+    {
+      "id": "local-lol-decoded-audio:Yuumi.zh_TW",
+      "name": "LOL／Yuumi／繁中命名語系包",
+      "library": "本機遊戲",
+      "sourceId": "local-lol-decoded-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 173,
+      "bytes": 93037648,
+      "knownDurationSeconds": 527.3811564625851,
+      "durationMeasuredFiles": 173,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "packages/Yuumi.zh_TW/native/b69a481cebbc9a7c.wpk"
+      ],
+      "backupIds": [
+        "public:local-lol-decoded-audio"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 173
       }
     },
     {
@@ -35210,6 +38355,38 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-ambessa-ja-jp-16-18-8159717",
+      "name": "League of Legends / Ambessa / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 330,
+      "bytes": 370491748,
+      "knownDurationSeconds": 1323.382040816326,
+      "durationMeasuredFiles": 330,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 330
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-amumu-ja-jp-16-18-8159717",
       "name": "League of Legends / Amumu / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -35306,6 +38483,38 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-aphelios-ja-jp-16-18-8159717",
+      "name": "League of Legends / Aphelios / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 210,
+      "bytes": 410532280,
+      "knownDurationSeconds": 1163.6140589569166,
+      "durationMeasuredFiles": 210,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 210
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-aurora-ja-jp-16-18-8159717",
       "name": "League of Legends / Aurora / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -35335,6 +38544,38 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 166
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-azir-ja-jp-16-18-8159717",
+      "name": "League of Legends / Azir / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 452,
+      "bytes": 382195140,
+      "knownDurationSeconds": 1506.5577097505663,
+      "durationMeasuredFiles": 452,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 452
       }
     },
     {
@@ -35466,6 +38707,38 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-caitlyn-ja-jp-16-18-8159717",
+      "name": "League of Legends / Caitlyn / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 567,
+      "bytes": 417563564,
+      "knownDurationSeconds": 1367.5540589569148,
+      "durationMeasuredFiles": 567,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 567
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-cassiopeia-ja-jp-16-18-8159717",
       "name": "League of Legends / Cassiopeia / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -35594,6 +38867,70 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-draven-ja-jp-16-18-8159717",
+      "name": "League of Legends / Draven / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 362,
+      "bytes": 316290736,
+      "knownDurationSeconds": 1212.5079138322,
+      "durationMeasuredFiles": 362,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 362
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-ekko-ja-jp-16-18-8159717",
+      "name": "League of Legends / Ekko / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 500,
+      "bytes": 334265264,
+      "knownDurationSeconds": 1442.6732879818612,
+      "durationMeasuredFiles": 500,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 500
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-elise-ja-jp-16-18-8159717",
       "name": "League of Legends / Elise / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -35687,6 +39024,38 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 200
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-garen-ja-jp-16-18-8159717",
+      "name": "League of Legends / Garen / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 479,
+      "bytes": 379253200,
+      "knownDurationSeconds": 1398.285736961451,
+      "durationMeasuredFiles": 479,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 479
       }
     },
     {
@@ -36010,6 +39379,102 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-ksante-ja-jp-16-18-8159717",
+      "name": "League of Legends / KSante / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 353,
+      "bytes": 403877036,
+      "knownDurationSeconds": 1609.1892970521537,
+      "durationMeasuredFiles": 353,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 353
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-kalista-ja-jp-16-18-8159717",
+      "name": "League of Legends / Kalista / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 342,
+      "bytes": 333570092,
+      "knownDurationSeconds": 1266.4629705215411,
+      "durationMeasuredFiles": 342,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 342
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
+      "name": "League of Legends / Karthus / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 225,
+      "bytes": 311303080,
+      "knownDurationSeconds": 1102.4895918367351,
+      "durationMeasuredFiles": 225,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 225
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-kassadin-ja-jp-16-18-8159717",
       "name": "League of Legends / Kassadin / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -36167,6 +39632,38 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 120
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-lillia-ja-jp-16-18-8159717",
+      "name": "League of Legends / Lillia / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 321,
+      "bytes": 438310556,
+      "knownDurationSeconds": 1449.3450340136062,
+      "durationMeasuredFiles": 321,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 321
       }
     },
     {
@@ -36426,6 +39923,38 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-nasus-ja-jp-16-18-8159717",
+      "name": "League of Legends / Nasus / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 381,
+      "bytes": 358259308,
+      "knownDurationSeconds": 1346.1367573696143,
+      "durationMeasuredFiles": 381,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 381
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-nautilus-ja-jp-16-18-8159717",
       "name": "League of Legends / Nautilus / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -36487,6 +40016,38 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 154
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-nidalee-ja-jp-16-18-8159717",
+      "name": "League of Legends / Nidalee / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 342,
+      "bytes": 398861456,
+      "knownDurationSeconds": 1131.5170294784584,
+      "durationMeasuredFiles": 342,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 342
       }
     },
     {
@@ -36874,6 +40435,38 @@
       }
     },
     {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-riven-ja-jp-16-18-8159717",
+      "name": "League of Legends / Riven / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 541,
+      "bytes": 398970904,
+      "knownDurationSeconds": 1487.7949659863937,
+      "durationMeasuredFiles": 541,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 541
+      }
+    },
+    {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-rumble-ja-jp-16-18-8159717",
       "name": "League of Legends / Rumble / ja_JP / 16.18.8159717",
       "library": "公開來源",
@@ -37063,6 +40656,38 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 119
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-shyvana-ja-jp-16-18-8159717",
+      "name": "League of Legends / Shyvana / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 412,
+      "bytes": 491405792,
+      "knownDurationSeconds": 1392.8221768707479,
+      "durationMeasuredFiles": 412,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 412
       }
     },
     {
@@ -37383,6 +41008,38 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 138
+      }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-vex-ja-jp-16-18-8159717",
+      "name": "League of Legends / Vex / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 326,
+      "bytes": 378908124,
+      "knownDurationSeconds": 1386.6752834467127,
+      "durationMeasuredFiles": 326,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 326
       }
     },
     {
@@ -37934,6 +41591,66 @@
       "categoryCounts": {
         "unclassified": 2
       }
+    },
+    {
+      "id": "gamebanana-fuc-dark-sakura-492607:dark-sakura-voice",
+      "name": "Dark Sakura / 間桐櫻（黑櫻）",
+      "library": "公開來源",
+      "sourceId": "gamebanana-fuc-dark-sakura-492607",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 15,
+      "bytes": 2079730,
+      "knownDurationSeconds": 16.209468962585035,
+      "durationMeasuredFiles": 15,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:gamebanana-fuc-dark-sakura-492607"
+      ],
+      "sourceUrl": "https://gamebanana.com/mods/492607",
+      "work": "Fate/unlimited codes",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 15
+      }
+    },
+    {
+      "id": "lol-local-native-pcm16-recovery-round19:Sylas",
+      "name": "LOL／Sylas／共用WAD PCM16精確恢復",
+      "library": "本機遊戲",
+      "sourceId": "lol-local-native-pcm16-recovery-round19",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 6,
+      "bytes": 1072864,
+      "knownDurationSeconds": 6.080498866213151,
+      "durationMeasuredFiles": 6,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-local-native-pcm16-recovery-round19"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "work": "League of Legends",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 6
+      }
     }
   ],
   "backups": {
@@ -38467,13 +42184,37 @@
     },
     "public:lol-local-native-pcm16-recovery-round18": {
       "type": "zip",
-      "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
-      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
       "bytes": 2463798,
       "sha256": "6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8",
-      "readbackVerified": false,
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
       "localRoot": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round18",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/recovery-lol-native-pcm16-round18",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
+    },
+    "public:gamebanana-fuc-dark-sakura-492607": {
+      "type": "zip",
+      "localArchive": "outputs/model-source-backups/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
+      "bytes": 3979145,
+      "sha256": "45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4",
+      "readbackVerified": false,
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+      "localUseAvailable": true,
+      "publicationStatus": "local-verified-s3-pending"
+    },
+    "public:lol-local-native-pcm16-recovery-round19": {
+      "type": "zip",
+      "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
+      "bytes": 1446390,
+      "sha256": "fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d",
+      "readbackVerified": false,
+      "localRoot": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19",
       "localUseAvailable": true,
       "publicationStatus": "local-verified-s3-pending"
     }
@@ -38481,11 +42222,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "dba84f36194552ccf8e7bfe5dc179281fd9d2a76499de67074d2594b9b53f69a"
+      "sha256": "f7a21234971f4aba7a1d349010e28450709012b9e28245d911240b391a528233"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "50d30b59d6fd575a3a714bac38227bce05008a59d85fe8072bae8e9267fcde6d"
+      "sha256": "179130f92dedb770a056e7a0f14f8372906a3db8c36c1017464c76629d5bf021"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -38628,16 +42369,16 @@
       "sha256": "b2ba7478ee59a57fa865dec8290d71ed302246f1b9eb63b81122e0f3059ab539"
     },
     {
-      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T133206Z.json",
-      "sha256": "e0de2ad80aeac17898328be5be9727e8f517e1e791b4be41389eb072db5481a1"
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+      "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
     },
     {
-      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T133206Z.json",
-      "sha256": "e0de2ad80aeac17898328be5be9727e8f517e1e791b4be41389eb072db5481a1"
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+      "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
     },
     {
-      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T133206Z.json",
-      "sha256": "e0de2ad80aeac17898328be5be9727e8f517e1e791b4be41389eb072db5481a1"
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+      "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
     },
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer/audioFileIndex.json",
@@ -38736,16 +42477,16 @@
       "sha256": "d9654eb7eeeac4c421474a427cb90c5a522bb1b920a10a7a82afdef658960ea2"
     },
     {
-      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T132705556264Z.json",
-      "sha256": "e887a420faa93ece80efb379a43878ac934456a9d8b01c87368e8c15ec774481"
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T134434656597Z.json",
+      "sha256": "0e2a0526ea23fdadcce9be74273f82b2fc57fa4aa7b8d5dd0bd4142933bfbdc9"
     },
     {
-      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T132705556264Z.json",
-      "sha256": "e887a420faa93ece80efb379a43878ac934456a9d8b01c87368e8c15ec774481"
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T134434656597Z.json",
+      "sha256": "0e2a0526ea23fdadcce9be74273f82b2fc57fa4aa7b8d5dd0bd4142933bfbdc9"
     },
     {
-      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T132705556264Z.json",
-      "sha256": "e887a420faa93ece80efb379a43878ac934456a9d8b01c87368e8c15ec774481"
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T134434656597Z.json",
+      "sha256": "0e2a0526ea23fdadcce9be74273f82b2fc57fa4aa7b8d5dd0bd4142933bfbdc9"
     },
     {
       "path": "GGD-Asset-Library/intake/recovery-lol-local-pcm16-20260910/deliveries/local-audio-delivery-20260910T130527806078Z.json",
@@ -38778,10 +42519,26 @@
     {
       "path": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round18/delivery.json",
       "sha256": "cac6e01e47bbfe4326ebd6c98019fe92111325e6ad1e422681ff1ce2402bd623"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura/audioFileIndex-frozen-v1.json",
+      "sha256": "f1c977fcd10ae56c892097181b7688548aa03cbbbb6998954fd3ee427d7e7f60"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura/audioFileIndex-frozen-v1.json",
+      "sha256": "f1c977fcd10ae56c892097181b7688548aa03cbbbb6998954fd3ee427d7e7f60"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19/delivery.json",
+      "sha256": "3f925f1c034c75eb5fc0f41b7871c0c678105b4945217a9b4c7abe4e2d5d4019"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19/delivery.json",
+      "sha256": "3f925f1c034c75eb5fc0f41b7871c0c678105b4945217a9b4c7abe4e2d5d4019"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
-      "sha256": "62fcf75151e8f4111bbc02f391dd2b06da8fa2915d2b372c66e17c2a44fe8daa"
+      "sha256": "173b92c9f7b690aae727b7390a9488347937d62f86df9a4e62d6e5b7bfbc347a"
     }
   ],
   "audioSourceLeads": [
@@ -88640,6 +92397,606 @@
       "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Samira/wav/9c58e004b38415d5/00005-828511994.wav",
       "sha256": "ee1c405ee393a281d73108e590d70c87932f4ad7e444662093c1ce3c04a2b1ce",
       "bytes": 4883596
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "25465629",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00001-25465629.wem",
+      "fragmentSha256": "ff64f2fd021ad4f70baae04b0252c1d41d45be217142d250e917cc2863089f45",
+      "fragmentBytes": 1647,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00009-25465629.wem",
+      "completeSourceSha256": "2a4f11e32c88ae7e446805cd7c10050e012b8205db876a831ca4795649d2c825",
+      "completeSourceBytes": 47559,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00009-25465629.wav",
+      "sha256": "28db4c6410c2e431700a03df7eefea79e96b64306ee424b0e9cd626e2277c388",
+      "bytes": 1537668
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "71709635",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00003-71709635.wem",
+      "fragmentSha256": "f69a2b5e5bf732405751ef3f33804376d76a04e02569991f3110dfb8a9b93391",
+      "fragmentBytes": 1506,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00028-71709635.wem",
+      "completeSourceSha256": "ab1c057d20d039c497d4e69deafb666075e02f22cb040d711a384028c4863cba",
+      "completeSourceBytes": 32272,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00028-71709635.wav",
+      "sha256": "9367c307cf9f076b6c579fb51fe94404bf6c3fb125dd7b7ba3bc33e58cbd6be9",
+      "bytes": 1119756
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "96459071",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00005-96459071.wem",
+      "fragmentSha256": "0b8dab79231c5ab7bbe3132ddab02ba81ed055abdaad3849e263b62fa3c1bff3",
+      "fragmentBytes": 1751,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00033-96459071.wem",
+      "completeSourceSha256": "3bdef74c5c124c9339324eff16fb7340f9b850260e9c076c27a0bb243ca88c27",
+      "completeSourceBytes": 37505,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00033-96459071.wav",
+      "sha256": "463569718543eb0fd915646310c65dd2f50a2cf11853486f9d74bbfcf2ab9b8f",
+      "bytes": 1128492
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "135959058",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00006-135959058.wem",
+      "fragmentSha256": "14602eb591ac1a69b942765d3e4b2ae5bf9f7341186f9e8445392d7eca52ff75",
+      "fragmentBytes": 1745,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00040-135959058.wem",
+      "completeSourceSha256": "14b97cd287b0728d2f56e8f9409c911033c9d294d3b4f2f55462dd370b1e2c67",
+      "completeSourceBytes": 49002,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00040-135959058.wav",
+      "sha256": "fdc261d9c2881e61d410befd7094557be3b08367c4d7b800b1de28b190292e71",
+      "bytes": 1673388
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "188157588",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00010-188157588.wem",
+      "fragmentSha256": "d3e1019e4085219c077a4d6b598920b056c74a087baf92e6b5f2978ec0d0f927",
+      "fragmentBytes": 1586,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00053-188157588.wem",
+      "completeSourceSha256": "4290b2a7a7893ac29883928347650a961d44f2e6e713e71bff4f2bede76c9091",
+      "completeSourceBytes": 45710,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00053-188157588.wav",
+      "sha256": "1ae6661c1c7a5cee877b2f363505c7d8780c3407a1ea3bf43d2e555154924668",
+      "bytes": 1524108
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "295367696",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00013-295367696.wem",
+      "fragmentSha256": "135d98b0e7d72951a7754bd202e7bf0425abd82548fca0756b067068d28f8d08",
+      "fragmentBytes": 1775,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00078-295367696.wem",
+      "completeSourceSha256": "aa18da9265f77f13f44497daa2c03324f7722e5a5aed63b04dfde4b88df1d665",
+      "completeSourceBytes": 47306,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00078-295367696.wav",
+      "sha256": "5342ea2607f742e726e08979205b80f8a67504b2a909db2e1f50a6706fd3c9bb",
+      "bytes": 1578572
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "298867140",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00014-298867140.wem",
+      "fragmentSha256": "015c37da491721b495c9fb0d4cdd9a0c0c8f6cfe67fa84881399d9cffa706e71",
+      "fragmentBytes": 1806,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00079-298867140.wem",
+      "completeSourceSha256": "dccecfd7cba00dcc21134fe1103f7190d17a3fd181928fb8355178c3e355ab59",
+      "completeSourceBytes": 34250,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00079-298867140.wav",
+      "sha256": "5234d6a4895cc32803d143d4b5ab217a6bd23d0dc4e0e116a1e10f54e2063824",
+      "bytes": 1112524
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "321036366",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00015-321036366.wem",
+      "fragmentSha256": "650f40067681ad13e2c25f674a3892774f191632a36a3214fb58d8386725fad4",
+      "fragmentBytes": 1679,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00087-321036366.wem",
+      "completeSourceSha256": "86ae90ab2a770aff26dec660e248060b0297073913eb7bf41991129628c87ed8",
+      "completeSourceBytes": 46989,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00087-321036366.wav",
+      "sha256": "3f37b3b05822e67d2027736e1be56148649cb511e2a8058f32a1a8a12ce48439",
+      "bytes": 1608492
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "362938364",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00016-362938364.wem",
+      "fragmentSha256": "d7a8cea4024321b7051d6a96d1bb7c0c5e981fbd9fce2b970131cb25d09b6396",
+      "fragmentBytes": 1621,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00093-362938364.wem",
+      "completeSourceSha256": "32a1c15c2744826ea1d6ba982e21594414154516d26079a4b586c56448b1ef7a",
+      "completeSourceBytes": 55509,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00093-362938364.wav",
+      "sha256": "8f5972b005e5d6afa24a4563ca6c8b30de1f4d58dd329ce86f1e45fc160dc051",
+      "bytes": 1793068
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "363254044",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00017-363254044.wem",
+      "fragmentSha256": "556e3446c1776658aae7ed4e188e3a3118f9cf03cfcfa8a6a3f3cc6bda293eb6",
+      "fragmentBytes": 1841,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00094-363254044.wem",
+      "completeSourceSha256": "6740c7159f8c07d39c996f030b6c32586a2ef424b8ed10f01165c165ec6327e1",
+      "completeSourceBytes": 33997,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00094-363254044.wav",
+      "sha256": "f6e3c6fab21242ce36a036fb30be1b98f91f75c11f94fc3ffa25d2dd72c01e7a",
+      "bytes": 1128772
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "464152661",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00018-464152661.wem",
+      "fragmentSha256": "bc942cc0845930f11ddbe3eaa4967341dd868e95c74dc98b1d6eed3dcc64e68b",
+      "fragmentBytes": 1694,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00117-464152661.wem",
+      "completeSourceSha256": "7a70ccd0a9367646bda5247410eeebc116f5a06a88e2eb6eb13898cb0bb1c0ef",
+      "completeSourceBytes": 48767,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00117-464152661.wav",
+      "sha256": "e9427903c7fcc3468ec87c912e3cdad06a4ef935355828d6ba242c65bf33c17d",
+      "bytes": 1522860
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "588355941",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00020-588355941.wem",
+      "fragmentSha256": "0a055970d50abd1e733d4560044cf6664ebb850e8688bc3750505209cf77fa01",
+      "fragmentBytes": 2187,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00143-588355941.wem",
+      "completeSourceSha256": "24bed2d1d540480f144e4e8664ed569e1e299ac3eec144c6c636a79920a86372",
+      "completeSourceBytes": 48339,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00143-588355941.wav",
+      "sha256": "29a2152979d2059a0cc1bd11a011fc505395f9869b6b78b3abd2f9de2cec0cb8",
+      "bytes": 1519892
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "606156289",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00021-606156289.wem",
+      "fragmentSha256": "b2e001abee9cc361b861473a9ff9ec52dc9f560d0daa6e9d948b0391cb446152",
+      "fragmentBytes": 1421,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00146-606156289.wem",
+      "completeSourceSha256": "05b2bbad8934e6cc33f835f877a195d30b5edb62b3417abc47614761fdf0cb7a",
+      "completeSourceBytes": 48671,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00146-606156289.wav",
+      "sha256": "c3ff07f1b6f08f4a63889bd0ee4955d5db6767b6beb667e03164d61a57e2d185",
+      "bytes": 1568508
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "613917651",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00022-613917651.wem",
+      "fragmentSha256": "efde5d3334d8da768ccaa7bf1e8602dbe935a3a6ef0f414545fe052aa9d2a09a",
+      "fragmentBytes": 1764,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00149-613917651.wem",
+      "completeSourceSha256": "5d2d547e4c6a8628020cc38ee5ec9902619d6b3516e5564e95488195086618e1",
+      "completeSourceBytes": 39680,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00149-613917651.wav",
+      "sha256": "da006077529251a4626acb16186398fce48dd583c78d2f73773151bccafe92f1",
+      "bytes": 1373516
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "647569570",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00023-647569570.wem",
+      "fragmentSha256": "bc7ac4e7e07b91af4768f0de314e3f81d7e8a1ee1838dc83f4138b0e30198700",
+      "fragmentBytes": 1928,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00155-647569570.wem",
+      "completeSourceSha256": "17ffca57d86fe4f330c06bacfc039981da49fb3b3edfb02ac57fd056586f8c34",
+      "completeSourceBytes": 54030,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00155-647569570.wav",
+      "sha256": "9294cb1121fd1ea38ce4ec3d76b28dbb8ef4a5cdb67df6ea53e569afc7e7af42",
+      "bytes": 1807788
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "718006848",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00026-718006848.wem",
+      "fragmentSha256": "22503e9e43242b6229ce2a7b7739d3046dfc4603720016d01bab46fef725f95d",
+      "fragmentBytes": 1671,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00169-718006848.wem",
+      "completeSourceSha256": "8bc5c434d7359978a86caa9bd366a51d89ec5bf336cd1d0415adeb2f81ca445c",
+      "completeSourceBytes": 55951,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00169-718006848.wav",
+      "sha256": "c4edbf3a705d967c62e8fe557111f29b49fbbb0723fa81aa3a89b9c5d78b2f46",
+      "bytes": 1817780
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "858695985",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00030-858695985.wem",
+      "fragmentSha256": "703472393ef1ec9abd1d3f4fa95b22aabf8cbaae1868750a04b6768c59db07db",
+      "fragmentBytes": 1859,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00198-858695985.wem",
+      "completeSourceSha256": "3b7ada6c65966a8797c29c58655a0b2f2ce8ab6b3f74456430eec60a513dd6fc",
+      "completeSourceBytes": 52468,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00198-858695985.wav",
+      "sha256": "1edc2f44297ecf3f199dc729664a90b671d237fb276d39277fce5403732fba29",
+      "bytes": 1684964
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "911867915",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00031-911867915.wem",
+      "fragmentSha256": "fd9ec3bcbc4ef821ebbc54ba2ac353a3881de53e33cd7401cc15b5a23cdfb332",
+      "fragmentBytes": 1578,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00213-911867915.wem",
+      "completeSourceSha256": "801cda593a3ad9ee4bfa3542e36ae8bbf19c38a1dbc11926fc5d1981c1dcdb83",
+      "completeSourceBytes": 55671,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00213-911867915.wav",
+      "sha256": "62ed31e9160d29e6f647e83396c071966e1b2b9a0186affa84dbe4d716a50079",
+      "bytes": 1868588
+    },
+    {
+      "nativeId": "Sona",
+      "groupId": "local-lol-decoded-audio:Sona",
+      "mediaId": "1067636626",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/25285a21e88f2389/00036-1067636626.wem",
+      "fragmentSha256": "6422ff46f60ab748d78bc6a61071eb2f8839a4ff48ed5223c1c445cf13f9fa5b",
+      "fragmentBytes": 1650,
+      "fragmentSourceBank": "native/25285a21e88f2389.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/extraction.json",
+      "extractionReportSha256": "6db1e0c86510117c471f354c073c9443fd25de5350c0ada26904e9babc3096c0",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/decoding.json",
+      "decodingReportSha256": "c05204b54727b101517018be71f1217ba09a20a64ffdf6106a341d5da2ad648f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sona/media/d13e5032b7562488/00245-1067636626.wem",
+      "completeSourceSha256": "beb6b5273c74e4140086c29e4966eb1a59a4ac51edc4b507148b61503214f19a",
+      "completeSourceBytes": 57716,
+      "completeSourceBank": "native/d13e5032b7562488.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Sona/wav/d13e5032b7562488/00245-1067636626.wav",
+      "sha256": "3f38aa5a87dfab96c7b35287b3abccf81eb76f766e6209dba99ca03a6a6e4ae4",
+      "bytes": 1852004
+    },
+    {
+      "nativeId": "Swain",
+      "groupId": "local-lol-decoded-audio:Swain",
+      "mediaId": "879678739",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/0335dfcf2347311a/00074-879678739.wem",
+      "fragmentSha256": "fdfe8afa3cf83870fab3e81cf0857c0f72974330521f2e6458fa2993585ec1ff",
+      "fragmentBytes": 6389,
+      "fragmentSourceBank": "native/0335dfcf2347311a.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/extraction.json",
+      "extractionReportSha256": "a445760ada6989bd088dd84552f2bc02fe9a27a3e4ba9139119958aa558d591d",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/decoding.json",
+      "decodingReportSha256": "09061b162ff63792e765c3c8675fec5684f32c8eed8dcfaf126803dfda9f4d1f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/b75fde4a287fb784/00000-879678739.wem",
+      "completeSourceSha256": "7fb555a04ae17c0705c19ba940985b0148b9833a41be8661af5ef923e096a1b1",
+      "completeSourceBytes": 341651,
+      "completeSourceBank": "native/b75fde4a287fb784.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/wav/b75fde4a287fb784/00000-879678739.wav",
+      "sha256": "3fb56404405244a1d20d9df6e9e222903c99107708955653d849d1c9ba28aec5",
+      "bytes": 9726948
+    },
+    {
+      "nativeId": "Swain",
+      "groupId": "local-lol-decoded-audio:Swain",
+      "mediaId": "392158299",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/177028a910d38cb9/00031-392158299.wem",
+      "fragmentSha256": "db905b391cdfb8e3b68a63653efbf12963c3cefafbf4f5b55568222f2e572089",
+      "fragmentBytes": 6389,
+      "fragmentSourceBank": "native/177028a910d38cb9.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/extraction.json",
+      "extractionReportSha256": "a445760ada6989bd088dd84552f2bc02fe9a27a3e4ba9139119958aa558d591d",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/decoding.json",
+      "decodingReportSha256": "09061b162ff63792e765c3c8675fec5684f32c8eed8dcfaf126803dfda9f4d1f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/69bc94cbc3792a4a/00000-392158299.wem",
+      "completeSourceSha256": "b5344dd533a472288e4a039576bb4fd6dfb16a1678ae10740182bff6874f427d",
+      "completeSourceBytes": 341635,
+      "completeSourceBank": "native/69bc94cbc3792a4a.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/wav/69bc94cbc3792a4a/00000-392158299.wav",
+      "sha256": "c623e15d60bcf2c71af9825dbf6e2a56121e219eeb2bf768ed303095bc5a5adf",
+      "bytes": 9726948
+    },
+    {
+      "nativeId": "Swain",
+      "groupId": "local-lol-decoded-audio:Swain",
+      "mediaId": "465928860",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/47c3d94a99375731/00055-465928860.wem",
+      "fragmentSha256": "db905b391cdfb8e3b68a63653efbf12963c3cefafbf4f5b55568222f2e572089",
+      "fragmentBytes": 6389,
+      "fragmentSourceBank": "native/47c3d94a99375731.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/extraction.json",
+      "extractionReportSha256": "a445760ada6989bd088dd84552f2bc02fe9a27a3e4ba9139119958aa558d591d",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/decoding.json",
+      "decodingReportSha256": "09061b162ff63792e765c3c8675fec5684f32c8eed8dcfaf126803dfda9f4d1f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/f282d5b09638af1a/00000-465928860.wem",
+      "completeSourceSha256": "b5344dd533a472288e4a039576bb4fd6dfb16a1678ae10740182bff6874f427d",
+      "completeSourceBytes": 341635,
+      "completeSourceBank": "native/f282d5b09638af1a.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/wav/f282d5b09638af1a/00000-465928860.wav",
+      "sha256": "c623e15d60bcf2c71af9825dbf6e2a56121e219eeb2bf768ed303095bc5a5adf",
+      "bytes": 9726948
+    },
+    {
+      "nativeId": "Swain",
+      "groupId": "local-lol-decoded-audio:Swain",
+      "mediaId": "109347097",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/aa8f31443862e543/00005-109347097.wem",
+      "fragmentSha256": "236dcbd3a6cecc758cb9f4feaa14d814daff05875afbca290440099c04ab8243",
+      "fragmentBytes": 6390,
+      "fragmentSourceBank": "native/aa8f31443862e543.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/extraction.json",
+      "extractionReportSha256": "a445760ada6989bd088dd84552f2bc02fe9a27a3e4ba9139119958aa558d591d",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/decoding.json",
+      "decodingReportSha256": "09061b162ff63792e765c3c8675fec5684f32c8eed8dcfaf126803dfda9f4d1f",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Swain/media/0bae2ed47638a21c/00000-109347097.wem",
+      "completeSourceSha256": "5929db2331c008725170f723dcc2299093828eec1a6d524e8e560c1fda6326cb",
+      "completeSourceBytes": 341642,
+      "completeSourceBank": "native/0bae2ed47638a21c.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Swain/wav/0bae2ed47638a21c/00000-109347097.wav",
+      "sha256": "031b6b2306b217e5704278e495a8cab1085847e96458a7f4a9daa4947b88e8f1",
+      "bytes": 9726948
+    },
+    {
+      "nativeId": "Urgot.zh_TW",
+      "groupId": "local-lol-decoded-audio:Urgot.zh_TW",
+      "mediaId": "846565357",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Urgot.zh_TW/media/f78093c3b8378b25/00000-846565357.wem",
+      "fragmentSha256": "66eb839fb10253abe36b8e91877c47587a7a3f050f3f23558ce6986741aa346d",
+      "fragmentBytes": 1287,
+      "fragmentSourceBank": "native/f78093c3b8378b25.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Urgot.zh_TW/extraction.json",
+      "extractionReportSha256": "0b9173f071f5307a2decbb741822093f7a1d36643edcaea24df03015bcafda61",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Urgot.zh_TW/decoding.json",
+      "decodingReportSha256": "eeb1d3c2b2e76f21298a9dccd40cf54168ac32a6c9d628f9c0ecd32e18f763f0",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Urgot.zh_TW/media/b642de7c64f22a4a/00191-846565357.wem",
+      "completeSourceSha256": "20bd110a69e81b7b3a939ef34a4ada3a1db7b5268873ab435fc3153582076947",
+      "completeSourceBytes": 21100,
+      "completeSourceBank": "native/b642de7c64f22a4a.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Urgot.zh_TW/wav/b642de7c64f22a4a/00191-846565357.wav",
+      "sha256": "ad94f418a602c9bcb112edd993a686ffed6e68a5113314cd7570f69f196b1cfe",
+      "bytes": 442412
+    },
+    {
+      "nativeId": "Viktor",
+      "groupId": "local-lol-decoded-audio:Viktor",
+      "mediaId": "966553712",
+      "fragmentPath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Viktor/media/53f47929d59dfc15/00074-966553712.wem",
+      "fragmentSha256": "f92f0c696df0bf4d8d41cd34750b1bc2fe3d3912a968cc298ce73e51f06021e6",
+      "fragmentBytes": 2067,
+      "fragmentSourceBank": "native/53f47929d59dfc15.bnk",
+      "extractionReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Viktor/extraction.json",
+      "extractionReportSha256": "3fc47f02bee1d91d4313f744511520d0be29da5a82ac2ab1f0a546ed5bcc81cc",
+      "decodingReport": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Viktor/decoding.json",
+      "decodingReportSha256": "b92456efa7ee9417fba1adbc0b40998cec13603a914bc156e2b4861d80482366",
+      "byteExactPrefixVerified": true,
+      "completeRiffLengthVerified": true,
+      "alreadyCountedPrimaryAudio": true,
+      "originalFailureReportRetained": true,
+      "completeSourcePath": "GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Viktor/media/d1f0ea9eb2c375f2/00000-966553712.wem",
+      "completeSourceSha256": "fb4194186061a731e8b8be7fde3afbce68eb7780f3dea35d1c667e47fe4d4513",
+      "completeSourceBytes": 207470,
+      "completeSourceBank": "native/d1f0ea9eb2c375f2.wpk",
+      "path": "GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Viktor/wav/d1f0ea9eb2c375f2/00000-966553712.wav",
+      "sha256": "42abec642645d1bab8e2b2ebf3839b432b666d957c3aea7f90e59a7e202fa07a",
+      "bytes": 6385084
     }
   ],
   "acquisitionPolicy": {
@@ -88742,15 +93099,15 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 860,
-    "audioFiles": 233417,
-    "bytes": 99898320377,
+    "groups": 962,
+    "audioFiles": 278874,
+    "bytes": 132927227039,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
-    "prefetchAliases": 22
+    "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "b02551364b929beca7e02262ebfa09b182e619624eca86a9c615d4d91b79f594",
-  "uncompressedFileManifestSha256": "6acd62f14b431c87d990637f8106102de9e976e223bafdb75cf1d10002d469c4"
+  "sourceFileManifestSha256": "f95439d0df0c0219354a998b42ba60c0bc62d9fd53bd81b4d6fa1176bc2a4829",
+  "uncompressedFileManifestSha256": "191faa47da537d53a4596341599a81c4ec1f784512255d114610cb7f23586af0"
 }

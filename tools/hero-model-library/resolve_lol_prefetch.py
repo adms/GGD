@@ -22,9 +22,17 @@ def exact_prefetch(short, complete):
     return len(short)<declared==len(complete) and complete.startswith(short)
 
 
-def resolve(root, workspace):
+def resolve(root, workspace, delivery=None):
     records=[];unresolved=[]
-    for dp in sorted((root/'decoded').glob('*/decoding.json')):
+    frozen=None
+    if delivery is not None:
+        frozen={row['path']:row['sha256'] for row in json.loads(delivery.read_text())['decodingReports']}
+    paths=[root/path for path in frozen] if frozen is not None else (root/'decoded').glob('*/decoding.json')
+    for dp in sorted(paths):
+        assert dp.resolve().is_relative_to(root.resolve())
+        if frozen is not None:
+            relative=dp.relative_to(root).as_posix()
+            assert digest(dp)==frozen[relative], 'Frozen decoding report changed: '+relative
         report=json.loads(dp.read_text());home=root/'packages'/dp.parent.name
         failed=[f for f in report['files'] if not f.get('decoded') and 'RIFF length' in f.get('error','')]
         if not failed:continue
@@ -60,16 +68,20 @@ def resolve(root, workspace):
                 decodingReport=dp.relative_to(workspace).as_posix(),decodingReportSha256=digest(dp),
                 byteExactPrefixVerified=True,completeRiffLengthVerified=True,alreadyCountedPrimaryAudio=True,
                 originalFailureReportRetained=True,**matches[0]))
-    return dict(schema='ggd-lol-prefetch-resolution@1',sourceId='local-lol-decoded-audio',
+    result=dict(schema='ggd-lol-prefetch-resolution@1',sourceId='local-lol-decoded-audio',
         inputIntake=root.relative_to(workspace).as_posix(),records=records,unresolved=unresolved,
         resolvedCount=len(records),newAudioFiles=0,originalFilesChanged=False)
+    if delivery is not None:
+        result['frozenDelivery']={'path':delivery.relative_to(root).as_posix(),'sha256':digest(delivery)}
+    return result
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--intake',type=Path,required=True);p.add_argument('--workspace',type=Path,required=True)
+    p.add_argument('--delivery',type=Path,help='Restrict correspondence to this immutable completed-package delivery.')
     p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-    data=resolve(a.intake.resolve(),a.workspace.resolve())
+    data=resolve(a.intake.resolve(),a.workspace.resolve(),a.delivery.resolve() if a.delivery else None)
     with a.output.open('x') as f:f.write(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(dict(output=str(a.output),sha256=digest(a.output),resolved=data['resolvedCount'],unresolved=len(data['unresolved']))))
 

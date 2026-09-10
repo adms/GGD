@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T21:52:33+08:00",
-  "inputsSha256": "96ae59fca8a48c6ae91a96d66e8b037077aa6051d9fc1a0a036af271807af0c6",
+  "generatedAt": "2026-09-10T22:14:54+08:00",
+  "inputsSha256": "8946fa2390aaf0682fe9887c5a0171f09a7865ead4052b98fbd82c17ec369abb",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -12542,25 +12542,246 @@
           },
           "derivedFromSourceId": "parallel-community-slayers-lina-hand-review",
           "animationSourceId": "300heroes:46",
-          "publicationStatus": "local-only-awaiting-s3-upload",
+          "publicationStatus": "s3-legacy-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-foot-contact-and-loop-review",
             "selectionVerified": false
           },
           "verification": "保留原8手型、原300GLB/JUMPX。1個主候選＋3個加工對照，19主要關節重綁、69 joints、0.01尺度；實際Babylon播放及Khronos0錯誤0警告。idle/run為300動作重綁到Rays，0原生Rays/0 walk，原生FPS未知。原片長不改，另有120Hz重取樣與每段地面偏移；跑步仍1.18mm穿地、6.3–10.1cm足部循環差與腳滑/披風僵硬，idle左腳約1.4cm離地，待修復。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
             "bytes": 33386225,
             "sha256": "30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        },
+        {
+          "id": "parallel-community-lina-rays-300-retarget-footloop-v2",
+          "target": "莉娜 Rays／300動作落地與循環加工 v2",
+          "heroIds": [
+            "godie-h020",
+            "godie-hjai"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+          "uploader": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+          "format": "1 derived GLB / 1 audit GLB / 2 derived motions",
+          "accessStatus": "public-source-or-local-derived",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-runtime-and-visual-validation",
+          "purchaseDecision": "supplement-only-continue-model-search",
+          "defaultEligible": false,
+          "resourceRole": "character-model-collection",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2",
+          "selectionClass": "community-mod",
+          "publicationStatus": "local-only-awaiting-s3-upload",
+          "backendIntegration": {
+            "required": true,
+            "state": "registration-rejected-material-extensions-and-missing-clips",
+            "selectionVerified": false
+          },
+          "sourceGame": "Tales of the Rays",
+          "platform": "Mobile (Android/iOS)",
+          "derivedFromSourceId": "parallel-community-lina-rays-300-retarget",
+          "animationSourceId": "300heroes:46",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation"
+          ],
+          "modelCandidates": [
+            {
+              "candidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-footplant-loop-review",
+              "sourceCandidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-retarget-review",
+              "sourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+              "upstreamSourceId": "parallel-community-lina-rays-300-retarget",
+              "label": "莉娜 lina00 放鬆手型 — 300英雄 idle/run 落地與循環加工版（條件式驗證）",
+              "nativeCharacter": "Lina Inverse",
+              "heroIds": [
+                "godie-h020",
+                "godie-hjai"
+              ],
+              "resourceRole": "character-body-retarget-footplant-loop-review",
+              "sourceClass": "original-game-body-with-cross-game-retargeted-animation",
+              "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+              "author": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+              "sourceGame": "Tales of the Rays",
+              "sourcePlatform": "Mobile (Android/iOS)",
+              "sourceWork": "Slayers",
+              "animationSourceGame": "300英雄",
+              "animationSourceId": "300heroes:46",
+              "animationProvenanceLabel": "300英雄動作重綁到Rays模型，再作落地與循環加工",
+              "nativeAnimationFps": "unknown",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+              "file": {
+                "path": "candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+                "bytes": 2490156,
+                "sha256": "d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f"
+              },
+              "format": "glb",
+              "bodyModelCount": 1,
+              "meshNodes": 3,
+              "meshPrimitives": 5,
+              "triangles": 9072,
+              "joints": 69,
+              "retargetedMajorJoints": 19,
+              "embeddedTextures": 3,
+              "distinctEmbeddedTexturePayloads": 2,
+              "nativeRaysAnimationClips": 0,
+              "derivedAnimationClips": 2,
+              "sourceWalkAvailable": false,
+              "audioFiles": 0,
+              "sceneScale": 0.01,
+              "nominalRestHeightMeters": 1.55758,
+              "canonicalCharacterHeightClaim": false,
+              "selection": {
+                "handVariant": "a",
+                "left": "HandLa.013",
+                "right": "HandRa.013",
+                "visibleLeftHandMeshes": 1,
+                "visibleRightHandMeshes": 1
+              },
+              "animations": [
+                {
+                  "name": "300heroes_bat_idle_retargeted_to_Rays_Lina_processed_footplant_loop",
+                  "sourceClip": "300heroes_bat_idle_retargeted_to_Rays_Lina",
+                  "durationSeconds": 1.21875,
+                  "outputKeys": 730,
+                  "resamplingHz": 480,
+                  "nativeRaysAnimation": false,
+                  "durationChanged": false,
+                  "seamProcessing": true,
+                  "footIKProcessing": true
+                },
+                {
+                  "name": "300heroes_single_run_retargeted_to_Rays_Lina_processed_footplant_loop",
+                  "sourceClip": "300heroes_single_run_retargeted_to_Rays_Lina",
+                  "durationSeconds": 0.40625,
+                  "outputKeys": 244,
+                  "resamplingHz": 480,
+                  "nativeRaysAnimation": false,
+                  "durationChanged": false,
+                  "seamProcessing": true,
+                  "footIKProcessing": true
+                }
+              ],
+              "rootMotion": {
+                "horizontal": "in-place source-derived retarget; no XZ root track added",
+                "vertical": "prior root bob and ground offsets preserved, then pelvis lowered 2 cm idle / 6 cm run; periodic processing of final 18%",
+                "footIK": "two-bone IK with flat boot contact windows and per-key actual boot ground correction",
+                "externalPreviewEntitySpeedMps": 4.5224146092674875,
+                "canonicalGameSpeed": false,
+                "sourceDurationsPreserved": true
+              },
+              "validation": {
+                "khronosErrors": 0,
+                "khronosWarnings": 0,
+                "khronosInfos": 43,
+                "khronosTruncated": false,
+                "assimpReadback": true,
+                "meshWeightsTexturesAndBindMatricesUnchanged": true,
+                "actualBabylonPlayback": true,
+                "sampledGroundClearancePass": true,
+                "sampledLoopPositionClosurePass": true,
+                "contactSlidingImprovedAtSpecifiedTestSpeed": true,
+                "fullFootPlantPass": false,
+                "runtimeReady": false
+              },
+              "existsLocal": true,
+              "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
+              "backendSelectableVerified": false,
+              "eligibleForAutomaticDefault": false,
+              "runtimeReady": false,
+              "manualDefaultsChanged": false,
+              "limitations": [
+                "All motions are 300英雄動作重綁到Rays模型，再作落地與循環加工; 0 native Rays animations and no new walk. Existing GGD 300 GLB durations remain unchanged; native JUMPX FPS is unknown.",
+                "Source comparison diagnoses the existing GGD 300 conversion, not the original running game. Native JUMPX was not decoded again, so native-game foot defects are not established.",
+                "Foot locking depends on the derived 4.522414609 m/s external actor test speed and configured stance windows. This is not a default gameplay speed; turning, acceleration, other speeds and terrain were not tested.",
+                "Run left foot retains a rare 1.995 m/s horizontal contact-speed spike and up to 6.79 mm core-phase boot clearance; IK target reach can miss by up to 10.4 mm.",
+                "Run endpoint foot positions close exactly in sampled output; velocity seam remains about 0.118 m/s, not a proven perfect C1 loop.",
+                "IK changes lower-body posing materially: maximum local rotation change roughly 21.3 degrees idle / 67.4 degrees run. Do not describe the result as unchanged source motion.",
+                "The fixed world +Z knee pole is suitable only for this forward-facing bounded sample; it is not a general turning or arbitrary-animation retarget system.",
+                "Hair/cape/accessory secondary animation remains absent. Cape remains visibly broad and rigid; fingers remain the selected single relaxed hand meshes.",
+                "960 Hz CPU skin audit proves sampled flat-ground metrics only. Whole-body self collision, arbitrary terrain, game runtime, transitions between clips and backend selection remain unverified.",
+                "Structural validator has 0 errors / 0 warnings, plus 43 information messages: 42 intentionally retained unused prior animation accessors and one unsupported FB_ngon_encoding extension."
+              ],
+              "processingParametersPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/processing-parameters.json",
+              "testActorSpeedMps": 4.5224146092674875
+            }
+          ],
+          "filesManifest": {
+            "path": "all-files.sha256.jsonl",
+            "sha256": "f7e4bee9acc7c7e616f3c2b5e5dabeb1c92beb95051d3ecd88e62b6b83fcd27f"
+          },
+          "candidateManifest": {
+            "path": "model-candidates.json",
+            "sha256": "256aca011b585d8d87d58a858da89d11ec7eeb393b593c503d3920ea18727537"
+          },
+          "verification": "保留v1與原300/Rays資料，另存1個480Hz落地/循環加工候選及1失敗實驗；69 joints、2 derived idle/run、0原生Rays動作。960Hz平地取樣的足部位置循環差為0、穿地改善；原片長不改，但IK/下沉/18%片尾混合改變姿態。測試外部移速4.522m/s不等於GGD速度，左腳短時速度尖峰及僵硬披風仍存在。Khronos0錯誤0警告、實際Babylon播放；攻擊/施法/受傷/死亡和GGD整合仍待補。 真實GGD元件載入通過，但註冊422；缺4狀態與材質擴充詳見独立GGD驗收來源。",
+          "pendingBackup": {
+            "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+            "bytes": 36383294,
+            "sha256": "853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909",
+            "readbackVerified": false,
+            "status": "not-uploaded"
+          },
+          "runtimeValidationSourceId": "parallel-community-lina-ggd-compatibility"
+        }
+      ],
+      "paidCandidates": [],
+      "supplementSources": [
+        {
+          "id": "parallel-community-lina-ggd-compatibility",
+          "target": "莉娜既有候選／GGD真實載入與註冊驗收證據",
+          "heroIds": [
+            "godie-h020",
+            "godie-hjai"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+          "uploader": "GGD local source-runtime verification",
+          "format": "Runtime reports / 3 playback MP4 / preserved test fixture",
+          "accessStatus": "local-validation",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "registration-rejected-missing-motion-and-material-support",
+          "purchaseDecision": "supplement-only-continue-model-search",
+          "defaultEligible": false,
+          "resourceRole": "validation-evidence",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility",
+          "selectionClass": "community-mod",
+          "assetKinds": [],
+          "newModelCandidates": 0,
+          "newAudioFiles": 0,
+          "derivedFromSourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+          "filesManifest": {
+            "path": "FILE_MANIFEST.json",
+            "sha256": "547d220b2725a97a7fa1b26589d095f814fa4f5a3c797e8346fa15519cfc7944"
+          },
+          "runtimeReview": {
+            "reportPath": "REPORT.json",
+            "sha256": "655a97dc9e3fa46065ff4f2d0bf15c7f1e7789833a6a57bf7c72d3f37883afce"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "registration-rejected-material-extensions-and-missing-clips",
+            "selectionVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload",
+          "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。",
+          "pendingBackup": {
+            "localArchive": "outputs/model-source-backups/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+            "bytes": 15820766,
+            "sha256": "50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10",
             "readbackVerified": false,
             "status": "not-uploaded"
           }
         }
       ],
-      "paidCandidates": [],
-      "supplementSources": [],
       "audioSources": []
     },
     {
@@ -23206,25 +23427,246 @@
           },
           "derivedFromSourceId": "parallel-community-slayers-lina-hand-review",
           "animationSourceId": "300heroes:46",
-          "publicationStatus": "local-only-awaiting-s3-upload",
+          "publicationStatus": "s3-legacy-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-foot-contact-and-loop-review",
             "selectionVerified": false
           },
           "verification": "保留原8手型、原300GLB/JUMPX。1個主候選＋3個加工對照，19主要關節重綁、69 joints、0.01尺度；實際Babylon播放及Khronos0錯誤0警告。idle/run為300動作重綁到Rays，0原生Rays/0 walk，原生FPS未知。原片長不改，另有120Hz重取樣與每段地面偏移；跑步仍1.18mm穿地、6.3–10.1cm足部循環差與腳滑/披風僵硬，idle左腳約1.4cm離地，待修復。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
             "bytes": 33386225,
             "sha256": "30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        },
+        {
+          "id": "parallel-community-lina-rays-300-retarget-footloop-v2",
+          "target": "莉娜 Rays／300動作落地與循環加工 v2",
+          "heroIds": [
+            "godie-h020",
+            "godie-hjai"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+          "uploader": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+          "format": "1 derived GLB / 1 audit GLB / 2 derived motions",
+          "accessStatus": "public-source-or-local-derived",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-runtime-and-visual-validation",
+          "purchaseDecision": "supplement-only-continue-model-search",
+          "defaultEligible": false,
+          "resourceRole": "character-model-collection",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2",
+          "selectionClass": "community-mod",
+          "publicationStatus": "local-only-awaiting-s3-upload",
+          "backendIntegration": {
+            "required": true,
+            "state": "registration-rejected-material-extensions-and-missing-clips",
+            "selectionVerified": false
+          },
+          "sourceGame": "Tales of the Rays",
+          "platform": "Mobile (Android/iOS)",
+          "derivedFromSourceId": "parallel-community-lina-rays-300-retarget",
+          "animationSourceId": "300heroes:46",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation"
+          ],
+          "modelCandidates": [
+            {
+              "candidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-footplant-loop-review",
+              "sourceCandidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-retarget-review",
+              "sourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+              "upstreamSourceId": "parallel-community-lina-rays-300-retarget",
+              "label": "莉娜 lina00 放鬆手型 — 300英雄 idle/run 落地與循環加工版（條件式驗證）",
+              "nativeCharacter": "Lina Inverse",
+              "heroIds": [
+                "godie-h020",
+                "godie-hjai"
+              ],
+              "resourceRole": "character-body-retarget-footplant-loop-review",
+              "sourceClass": "original-game-body-with-cross-game-retargeted-animation",
+              "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+              "author": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+              "sourceGame": "Tales of the Rays",
+              "sourcePlatform": "Mobile (Android/iOS)",
+              "sourceWork": "Slayers",
+              "animationSourceGame": "300英雄",
+              "animationSourceId": "300heroes:46",
+              "animationProvenanceLabel": "300英雄動作重綁到Rays模型，再作落地與循環加工",
+              "nativeAnimationFps": "unknown",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+              "file": {
+                "path": "candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+                "bytes": 2490156,
+                "sha256": "d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f"
+              },
+              "format": "glb",
+              "bodyModelCount": 1,
+              "meshNodes": 3,
+              "meshPrimitives": 5,
+              "triangles": 9072,
+              "joints": 69,
+              "retargetedMajorJoints": 19,
+              "embeddedTextures": 3,
+              "distinctEmbeddedTexturePayloads": 2,
+              "nativeRaysAnimationClips": 0,
+              "derivedAnimationClips": 2,
+              "sourceWalkAvailable": false,
+              "audioFiles": 0,
+              "sceneScale": 0.01,
+              "nominalRestHeightMeters": 1.55758,
+              "canonicalCharacterHeightClaim": false,
+              "selection": {
+                "handVariant": "a",
+                "left": "HandLa.013",
+                "right": "HandRa.013",
+                "visibleLeftHandMeshes": 1,
+                "visibleRightHandMeshes": 1
+              },
+              "animations": [
+                {
+                  "name": "300heroes_bat_idle_retargeted_to_Rays_Lina_processed_footplant_loop",
+                  "sourceClip": "300heroes_bat_idle_retargeted_to_Rays_Lina",
+                  "durationSeconds": 1.21875,
+                  "outputKeys": 730,
+                  "resamplingHz": 480,
+                  "nativeRaysAnimation": false,
+                  "durationChanged": false,
+                  "seamProcessing": true,
+                  "footIKProcessing": true
+                },
+                {
+                  "name": "300heroes_single_run_retargeted_to_Rays_Lina_processed_footplant_loop",
+                  "sourceClip": "300heroes_single_run_retargeted_to_Rays_Lina",
+                  "durationSeconds": 0.40625,
+                  "outputKeys": 244,
+                  "resamplingHz": 480,
+                  "nativeRaysAnimation": false,
+                  "durationChanged": false,
+                  "seamProcessing": true,
+                  "footIKProcessing": true
+                }
+              ],
+              "rootMotion": {
+                "horizontal": "in-place source-derived retarget; no XZ root track added",
+                "vertical": "prior root bob and ground offsets preserved, then pelvis lowered 2 cm idle / 6 cm run; periodic processing of final 18%",
+                "footIK": "two-bone IK with flat boot contact windows and per-key actual boot ground correction",
+                "externalPreviewEntitySpeedMps": 4.5224146092674875,
+                "canonicalGameSpeed": false,
+                "sourceDurationsPreserved": true
+              },
+              "validation": {
+                "khronosErrors": 0,
+                "khronosWarnings": 0,
+                "khronosInfos": 43,
+                "khronosTruncated": false,
+                "assimpReadback": true,
+                "meshWeightsTexturesAndBindMatricesUnchanged": true,
+                "actualBabylonPlayback": true,
+                "sampledGroundClearancePass": true,
+                "sampledLoopPositionClosurePass": true,
+                "contactSlidingImprovedAtSpecifiedTestSpeed": true,
+                "fullFootPlantPass": false,
+                "runtimeReady": false
+              },
+              "existsLocal": true,
+              "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
+              "backendSelectableVerified": false,
+              "eligibleForAutomaticDefault": false,
+              "runtimeReady": false,
+              "manualDefaultsChanged": false,
+              "limitations": [
+                "All motions are 300英雄動作重綁到Rays模型，再作落地與循環加工; 0 native Rays animations and no new walk. Existing GGD 300 GLB durations remain unchanged; native JUMPX FPS is unknown.",
+                "Source comparison diagnoses the existing GGD 300 conversion, not the original running game. Native JUMPX was not decoded again, so native-game foot defects are not established.",
+                "Foot locking depends on the derived 4.522414609 m/s external actor test speed and configured stance windows. This is not a default gameplay speed; turning, acceleration, other speeds and terrain were not tested.",
+                "Run left foot retains a rare 1.995 m/s horizontal contact-speed spike and up to 6.79 mm core-phase boot clearance; IK target reach can miss by up to 10.4 mm.",
+                "Run endpoint foot positions close exactly in sampled output; velocity seam remains about 0.118 m/s, not a proven perfect C1 loop.",
+                "IK changes lower-body posing materially: maximum local rotation change roughly 21.3 degrees idle / 67.4 degrees run. Do not describe the result as unchanged source motion.",
+                "The fixed world +Z knee pole is suitable only for this forward-facing bounded sample; it is not a general turning or arbitrary-animation retarget system.",
+                "Hair/cape/accessory secondary animation remains absent. Cape remains visibly broad and rigid; fingers remain the selected single relaxed hand meshes.",
+                "960 Hz CPU skin audit proves sampled flat-ground metrics only. Whole-body self collision, arbitrary terrain, game runtime, transitions between clips and backend selection remain unverified.",
+                "Structural validator has 0 errors / 0 warnings, plus 43 information messages: 42 intentionally retained unused prior animation accessors and one unsupported FB_ngon_encoding extension."
+              ],
+              "processingParametersPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/processing-parameters.json",
+              "testActorSpeedMps": 4.5224146092674875
+            }
+          ],
+          "filesManifest": {
+            "path": "all-files.sha256.jsonl",
+            "sha256": "f7e4bee9acc7c7e616f3c2b5e5dabeb1c92beb95051d3ecd88e62b6b83fcd27f"
+          },
+          "candidateManifest": {
+            "path": "model-candidates.json",
+            "sha256": "256aca011b585d8d87d58a858da89d11ec7eeb393b593c503d3920ea18727537"
+          },
+          "verification": "保留v1與原300/Rays資料，另存1個480Hz落地/循環加工候選及1失敗實驗；69 joints、2 derived idle/run、0原生Rays動作。960Hz平地取樣的足部位置循環差為0、穿地改善；原片長不改，但IK/下沉/18%片尾混合改變姿態。測試外部移速4.522m/s不等於GGD速度，左腳短時速度尖峰及僵硬披風仍存在。Khronos0錯誤0警告、實際Babylon播放；攻擊/施法/受傷/死亡和GGD整合仍待補。 真實GGD元件載入通過，但註冊422；缺4狀態與材質擴充詳見独立GGD驗收來源。",
+          "pendingBackup": {
+            "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+            "bytes": 36383294,
+            "sha256": "853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909",
+            "readbackVerified": false,
+            "status": "not-uploaded"
+          },
+          "runtimeValidationSourceId": "parallel-community-lina-ggd-compatibility"
+        }
+      ],
+      "paidCandidates": [],
+      "supplementSources": [
+        {
+          "id": "parallel-community-lina-ggd-compatibility",
+          "target": "莉娜既有候選／GGD真實載入與註冊驗收證據",
+          "heroIds": [
+            "godie-h020",
+            "godie-hjai"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+          "uploader": "GGD local source-runtime verification",
+          "format": "Runtime reports / 3 playback MP4 / preserved test fixture",
+          "accessStatus": "local-validation",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "registration-rejected-missing-motion-and-material-support",
+          "purchaseDecision": "supplement-only-continue-model-search",
+          "defaultEligible": false,
+          "resourceRole": "validation-evidence",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility",
+          "selectionClass": "community-mod",
+          "assetKinds": [],
+          "newModelCandidates": 0,
+          "newAudioFiles": 0,
+          "derivedFromSourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+          "filesManifest": {
+            "path": "FILE_MANIFEST.json",
+            "sha256": "547d220b2725a97a7fa1b26589d095f814fa4f5a3c797e8346fa15519cfc7944"
+          },
+          "runtimeReview": {
+            "reportPath": "REPORT.json",
+            "sha256": "655a97dc9e3fa46065ff4f2d0bf15c7f1e7789833a6a57bf7c72d3f37883afce"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "registration-rejected-material-extensions-and-missing-clips",
+            "selectionVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload",
+          "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。",
+          "pendingBackup": {
+            "localArchive": "outputs/model-source-backups/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+            "bytes": 15820766,
+            "sha256": "50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10",
             "readbackVerified": false,
             "status": "not-uploaded"
           }
         }
       ],
-      "paidCandidates": [],
-      "supplementSources": [],
       "audioSources": []
     },
     {
@@ -54310,15 +54752,15 @@
           "state": "pending-standardization",
           "selectionVerified": false
         },
-        "verification": "250個WAD已完成當批處理，共126468個通過驗證的Float32 WAV；另36個媒體未通過解碼／格式驗證，原檔及錯誤保留，不列可播放數。原取樣率／聲道／frame核對，SHA已重新驗證。未逐段聽審；其他原生媒體仍分批轉換，不等待S3。 原36個decoder失敗分別有14個原生PCM16另存精確恢復、22個BNK預載片段指向本機已計入的完整WPK音訊；22對逐bytes前綴及完整RIFF長度核對，原錯誤保留，本次無剩餘未對應格式失敗。",
+        "verification": "334個WAD已完成當批處理，共165761個通過驗證的Float32 WAV；另68個媒體未通過解碼／格式驗證，原檔及錯誤保留，不列可播放數。原取樣率／聲道／frame核對，SHA已重新驗證。未逐段聽審；其他原生媒體仍分批轉換，不等待S3。 原68個格式失敗另以20個原生PCM16精確恢復與47個同media ID/逐byte前綴相同的完整WPK對應處理；仍1個Sona片段未確認對應，原報告不改。不同ID的前綴相同候選尚不視為事件對應完成。",
         "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
         "preferredLanguageGaps": [
           "ja-JP",
           "en-US"
         ],
         "audioFileIndex": {
-          "reportPath": "deliveries/decoded-20260910T133206Z.json",
-          "reportSha256": "e0de2ad80aeac17898328be5be9727e8f517e1e791b4be41389eb072db5481a1"
+          "reportPath": "deliveries/decoded-20260910T140018Z.json",
+          "reportSha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
         },
         "audioGroups": [
           {
@@ -56548,6 +56990,663 @@
             "reportedLanguage": "zh-TW"
           },
           {
+            "id": "Sion",
+            "name": "LOL／Sion／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sion/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Sion.zh_TW",
+            "name": "LOL／Sion／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sion.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Sivir",
+            "name": "LOL／Sivir／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sivir/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Sivir.zh_TW",
+            "name": "LOL／Sivir／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sivir.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Skarner",
+            "name": "LOL／Skarner／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Skarner/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Skarner.zh_TW",
+            "name": "LOL／Skarner／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Skarner.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Smolder",
+            "name": "LOL／Smolder／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Smolder/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Smolder.zh_TW",
+            "name": "LOL／Smolder／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Smolder.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Sona",
+            "name": "LOL／Sona／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sona/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Sona.zh_TW",
+            "name": "LOL／Sona／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sona.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Soraka",
+            "name": "LOL／Soraka／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Soraka/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Soraka.zh_TW",
+            "name": "LOL／Soraka／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Soraka.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Strawberry_Aurora",
+            "name": "LOL／Strawberry_Aurora／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Aurora/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Briar",
+            "name": "LOL／Strawberry_Briar／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Briar/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Illaoi",
+            "name": "LOL／Strawberry_Illaoi／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Illaoi/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Jinx",
+            "name": "LOL／Strawberry_Jinx／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Jinx/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Leona",
+            "name": "LOL／Strawberry_Leona／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Leona/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Riven",
+            "name": "LOL／Strawberry_Riven／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Riven/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Seraphine",
+            "name": "LOL／Strawberry_Seraphine／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Seraphine/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Xayah",
+            "name": "LOL／Strawberry_Xayah／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Xayah/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Strawberry_Yasuo",
+            "name": "LOL／Strawberry_Yasuo／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Strawberry_Yasuo/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Swain",
+            "name": "LOL／Swain／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Swain/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Swain.zh_TW",
+            "name": "LOL／Swain／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Swain.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Sylas",
+            "name": "LOL／Sylas／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sylas/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Sylas.zh_TW",
+            "name": "LOL／Sylas／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Sylas.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Syndra",
+            "name": "LOL／Syndra／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Syndra/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Syndra.zh_TW",
+            "name": "LOL／Syndra／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Syndra.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "TahmKench",
+            "name": "LOL／TahmKench／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/TahmKench/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "TahmKench.zh_TW",
+            "name": "LOL／TahmKench／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/TahmKench.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Taliyah",
+            "name": "LOL／Taliyah／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Taliyah/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Taliyah.zh_TW",
+            "name": "LOL／Taliyah／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Taliyah.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Talon",
+            "name": "LOL／Talon／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Talon/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Talon.zh_TW",
+            "name": "LOL／Talon／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Talon.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Taric",
+            "name": "LOL／Taric／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Taric/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Taric.zh_TW",
+            "name": "LOL／Taric／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Taric.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Teemo",
+            "name": "LOL／Teemo／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Teemo/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Teemo.zh_TW",
+            "name": "LOL／Teemo／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Teemo.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Thresh",
+            "name": "LOL／Thresh／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Thresh/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Thresh.zh_TW",
+            "name": "LOL／Thresh／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Thresh.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Tristana",
+            "name": "LOL／Tristana／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Tristana/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Tristana.zh_TW",
+            "name": "LOL／Tristana／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Tristana.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Trundle",
+            "name": "LOL／Trundle／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Trundle/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Trundle.zh_TW",
+            "name": "LOL／Trundle／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Trundle.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Tryndamere",
+            "name": "LOL／Tryndamere／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Tryndamere/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Tryndamere.zh_TW",
+            "name": "LOL／Tryndamere／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Tryndamere.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "TwistedFate",
+            "name": "LOL／TwistedFate／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/TwistedFate/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "TwistedFate.zh_TW",
+            "name": "LOL／TwistedFate／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/TwistedFate.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Twitch",
+            "name": "LOL／Twitch／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Twitch/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Twitch.zh_TW",
+            "name": "LOL／Twitch／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Twitch.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Udyr",
+            "name": "LOL／Udyr／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Udyr/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Udyr.zh_TW",
+            "name": "LOL／Udyr／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Udyr.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Urgot",
+            "name": "LOL／Urgot／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Urgot/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Urgot.zh_TW",
+            "name": "LOL／Urgot／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Urgot.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Varus",
+            "name": "LOL／Varus／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Varus/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Varus.zh_TW",
+            "name": "LOL／Varus／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Varus.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Vayne",
+            "name": "LOL／Vayne／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vayne/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Vayne.zh_TW",
+            "name": "LOL／Vayne／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vayne.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Veigar",
+            "name": "LOL／Veigar／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Veigar/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Veigar.zh_TW",
+            "name": "LOL／Veigar／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Veigar.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Velkoz",
+            "name": "LOL／Velkoz／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Velkoz/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Velkoz.zh_TW",
+            "name": "LOL／Velkoz／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Velkoz.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Vex",
+            "name": "LOL／Vex／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vex/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Vex.zh_TW",
+            "name": "LOL／Vex／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vex.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Vi",
+            "name": "LOL／Vi／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vi/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Vi.zh_TW",
+            "name": "LOL／Vi／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vi.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Viego",
+            "name": "LOL／Viego／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Viego/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Viego.zh_TW",
+            "name": "LOL／Viego／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Viego.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Viktor",
+            "name": "LOL／Viktor／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Viktor/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Viktor.zh_TW",
+            "name": "LOL／Viktor／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Viktor.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Vladimir",
+            "name": "LOL／Vladimir／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vladimir/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Vladimir.zh_TW",
+            "name": "LOL／Vladimir／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Vladimir.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Volibear",
+            "name": "LOL／Volibear／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Volibear/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Volibear.zh_TW",
+            "name": "LOL／Volibear／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Volibear.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
             "id": "Warwick",
             "name": "LOL／Warwick／共用音效包",
             "heroIds": [],
@@ -56566,6 +57665,35 @@
             "reportedLanguage": "zh-TW"
           },
           {
+            "id": "Xayah",
+            "name": "LOL／Xayah／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Xayah/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Xayah.zh_TW",
+            "name": "LOL／Xayah／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Xayah.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Xerath",
+            "name": "LOL／齊勒斯／共用音效包",
+            "heroIds": [
+              "example:xerath"
+            ],
+            "pathPrefixes": [
+              "decoded/Xerath/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
             "id": "Xerath.zh_TW",
             "name": "LOL／齊勒斯／繁中命名語系包",
             "heroIds": [
@@ -56577,6 +57705,33 @@
             "reportedLanguage": "zh-TW"
           },
           {
+            "id": "XinZhao",
+            "name": "LOL／XinZhao／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/XinZhao/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "XinZhao.zh_TW",
+            "name": "LOL／XinZhao／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/XinZhao.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Yasuo",
+            "name": "LOL／Yasuo／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Yasuo/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
             "id": "Yasuo.zh_TW",
             "name": "LOL／Yasuo／繁中命名語系包",
             "heroIds": [],
@@ -56584,12 +57739,57 @@
               "decoded/Yasuo.zh_TW/wav/"
             ],
             "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Yone",
+            "name": "LOL／Yone／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Yone/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Yone.zh_TW",
+            "name": "LOL／Yone／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Yone.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Yorick",
+            "name": "LOL／Yorick／共用音效包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Yorick/wav/"
+            ],
+            "reportedLanguage": null
+          },
+          {
+            "id": "Yorick.zh_TW",
+            "name": "LOL／Yorick／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Yorick.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
+          },
+          {
+            "id": "Yuumi.zh_TW",
+            "name": "LOL／Yuumi／繁中命名語系包",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded/Yuumi.zh_TW/wav/"
+            ],
+            "reportedLanguage": "zh-TW"
           }
         ],
         "audioAcquisition": {
-          "packageCount": 250,
-          "wavFiles": 126468,
-          "failedMedia": 36
+          "packageCount": 334,
+          "wavFiles": 165761,
+          "failedMedia": 68
         },
         "audioFileIndexHistory": [
           {
@@ -56611,21 +57811,34 @@
           {
             "reportPath": "deliveries/decoded-20260910T125206Z.json",
             "reportSha256": "6d84eb865a9530f00e651cf3eaeba4f87469aac41748f82fead6bb1d040b77ff"
+          },
+          {
+            "reportPath": "deliveries/decoded-20260910T133206Z.json",
+            "reportSha256": "e0de2ad80aeac17898328be5be9727e8f517e1e791b4be41389eb072db5481a1"
           }
         ],
         "audioPrefetchResolution": {
           "reportPath": "lol-prefetch-resolution.json",
-          "reportSha256": "62fcf75151e8f4111bbc02f391dd2b06da8fa2915d2b372c66e17c2a44fe8daa"
+          "reportSha256": "173b92c9f7b690aae727b7390a9488347937d62f86df9a4e62d6e5b7bfbc347a"
         },
         "audioFailureResolution": {
-          "originalFailedMedia": 36,
-          "exactPcm16RecoveredSeparately": 14,
-          "prefetchResolvedToExistingCompleteAudio": 22,
-          "unresolvedMedia": 0,
+          "originalFailedMedia": 68,
+          "exactPcm16RecoveredSeparately": 20,
+          "prefetchResolvedToExistingCompleteAudio": 47,
+          "unresolvedMedia": 1,
           "originalReportsRetained": true,
           "recoverySourceIds": [
             "lol-local-native-pcm16-recovery-20260910",
-            "lol-local-native-pcm16-recovery-round18"
+            "lol-local-native-pcm16-recovery-round18",
+            "lol-local-native-pcm16-recovery-round19"
+          ],
+          "unresolved": [
+            {
+              "nativeId": "Sona",
+              "source": "25285a21e88f2389/00004-83784634.wem",
+              "reason": "Require one exact complete WPK stream with verified decoded output",
+              "matches": 0
+            }
           ]
         }
       },
@@ -64522,7 +65735,7 @@
       },
       {
         "id": "lol-riot-ja-jp-16.18.8159717",
-        "target": "LOL 官方日文語音候選／16.18.8159717（82完整WAD）",
+        "target": "LOL 官方日文語音候選／16.18.8159717（98完整WAD）",
         "heroIds": [],
         "ownerEntryIds": [],
         "url": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
@@ -64543,8 +65756,8 @@
           "audio"
         ],
         "audioFileIndex": {
-          "reportPath": "deliveries/local-audio-delivery-20260910T132705556264Z.json",
-          "reportSha256": "e887a420faa93ece80efb379a43878ac934456a9d8b01c87368e8c15ec774481"
+          "reportPath": "deliveries/local-audio-delivery-20260910T134434656597Z.json",
+          "reportSha256": "0e2a0526ea23fdadcce9be74273f82b2fc57fa4aa7b8d5dd0bd4142933bfbdc9"
         },
         "audioGroups": [
           {
@@ -64565,6 +65778,18 @@
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/Alistar.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-ambessa-ja-jp-16-18-8159717",
+            "name": "League of Legends / Ambessa / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Ambessa.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -64608,11 +65833,35 @@
             "languageVerified": false
           },
           {
+            "id": "lol-aphelios-ja-jp-16-18-8159717",
+            "name": "League of Legends / Aphelios / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Aphelios.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
             "id": "lol-aurora-ja-jp-16-18-8159717",
             "name": "League of Legends / Aurora / ja_JP / 16.18.8159717",
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/Aurora.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-azir-ja-jp-16-18-8159717",
+            "name": "League of Legends / Azir / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Azir.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -64668,6 +65917,18 @@
             "languageVerified": false
           },
           {
+            "id": "lol-caitlyn-ja-jp-16-18-8159717",
+            "name": "League of Legends / Caitlyn / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Caitlyn.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
             "id": "lol-cassiopeia-ja-jp-16-18-8159717",
             "name": "League of Legends / Cassiopeia / ja_JP / 16.18.8159717",
             "heroIds": [],
@@ -64716,6 +65977,30 @@
             "languageVerified": false
           },
           {
+            "id": "lol-draven-ja-jp-16-18-8159717",
+            "name": "League of Legends / Draven / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Draven.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-ekko-ja-jp-16-18-8159717",
+            "name": "League of Legends / Ekko / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Ekko.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
             "id": "lol-elise-ja-jp-16-18-8159717",
             "name": "League of Legends / Elise / ja_JP / 16.18.8159717",
             "heroIds": [],
@@ -64745,6 +66030,18 @@
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/Fizz.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-garen-ja-jp-16-18-8159717",
+            "name": "League of Legends / Garen / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Garen.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -64872,6 +66169,42 @@
             "languageVerified": false
           },
           {
+            "id": "lol-ksante-ja-jp-16-18-8159717",
+            "name": "League of Legends / KSante / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/KSante.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-kalista-ja-jp-16-18-8159717",
+            "name": "League of Legends / Kalista / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Kalista.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-karthus-ja-jp-16-18-8159717",
+            "name": "League of Legends / Karthus / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Karthus.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
             "id": "lol-kassadin-ja-jp-16-18-8159717",
             "name": "League of Legends / Kassadin / ja_JP / 16.18.8159717",
             "heroIds": [],
@@ -64925,6 +66258,18 @@
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/KogMaw.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-lillia-ja-jp-16-18-8159717",
+            "name": "League of Legends / Lillia / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Lillia.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -65028,6 +66373,18 @@
             "languageVerified": false
           },
           {
+            "id": "lol-nasus-ja-jp-16-18-8159717",
+            "name": "League of Legends / Nasus / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Nasus.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
             "id": "lol-nautilus-ja-jp-16-18-8159717",
             "name": "League of Legends / Nautilus / ja_JP / 16.18.8159717",
             "heroIds": [],
@@ -65045,6 +66402,18 @@
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/Neeko.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-nidalee-ja-jp-16-18-8159717",
+            "name": "League of Legends / Nidalee / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Nidalee.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -65196,6 +66565,18 @@
             "languageVerified": false
           },
           {
+            "id": "lol-riven-ja-jp-16-18-8159717",
+            "name": "League of Legends / Riven / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Riven.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
             "id": "lol-rumble-ja-jp-16-18-8159717",
             "name": "League of Legends / Rumble / ja_JP / 16.18.8159717",
             "heroIds": [],
@@ -65261,6 +66642,18 @@
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/Shen.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-shyvana-ja-jp-16-18-8159717",
+            "name": "League of Legends / Shyvana / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Shyvana.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -65381,6 +66774,18 @@
             "heroIds": [],
             "pathPrefixes": [
               "audio/decoded/TwistedFate.ja_JP/wav/"
+            ],
+            "reportedLanguage": "ja_JP",
+            "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+            "speakerVerified": false,
+            "languageVerified": false
+          },
+          {
+            "id": "lol-vex-ja-jp-16-18-8159717",
+            "name": "League of Legends / Vex / ja_JP / 16.18.8159717",
+            "heroIds": [],
+            "pathPrefixes": [
+              "audio/decoded/Vex.ja_JP/wav/"
             ],
             "reportedLanguage": "ja_JP",
             "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -65573,6 +66978,30 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "Ambessa.ja_JP",
+            "sourceWad": "original-wads/Ambessa.ja_JP.wad.client",
+            "bytes": 13378343,
+            "sha256": "ada25418a049f678ed27df9eed0de2a4e3cfeafbdc907659fd23e273236e1be8",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Ambessa.ja_JP/extraction.json",
+            "extractionReportSha256": "0a66468a25db69ea388a0d1480f0a3533f8cabce53372ba98ce912d0c36ae5e3",
+            "decodingReport": "audio/decoded/Ambessa.ja_JP/decoding.json",
+            "decodingReportSha256": "96d7d2235930bd55bc173ccb6740eb8bc9aaa1f3040bdc9b577bda2571805913",
+            "nativeAudioBanks": 6,
+            "wemFiles": 330,
+            "pcmWavCount": 330,
+            "audioSeconds": 1323.382040816326,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Amumu.ja_JP",
             "sourceWad": "original-wads/Amumu.ja_JP.wad.client",
             "bytes": 1657426,
@@ -65645,6 +67074,30 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "Aphelios.ja_JP",
+            "sourceWad": "original-wads/Aphelios.ja_JP.wad.client",
+            "bytes": 14253839,
+            "sha256": "c249d41e9fd460e8060de38206b12d39d3cbb36a9f417ca761ebc44517609346",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Aphelios.ja_JP/extraction.json",
+            "extractionReportSha256": "02b82b0c996bf24f902ec151ea2d8954f15360558cb7143bf84031a70b4eb989",
+            "decodingReport": "audio/decoded/Aphelios.ja_JP/decoding.json",
+            "decodingReportSha256": "153600d00e9a4e4c45cd0e651757f846e15d412afab944be91266a51069c1c2b",
+            "nativeAudioBanks": 6,
+            "wemFiles": 210,
+            "pcmWavCount": 210,
+            "audioSeconds": 1163.6140589569166,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Aurora.ja_JP",
             "sourceWad": "original-wads/Aurora.ja_JP.wad.client",
             "bytes": 3962599,
@@ -65662,6 +67115,30 @@
             "wemFiles": 166,
             "pcmWavCount": 166,
             "audioSeconds": 494.35401360544205,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Azir.ja_JP",
+            "sourceWad": "original-wads/Azir.ja_JP.wad.client",
+            "bytes": 14368353,
+            "sha256": "8178ce6500620d1f95b183dfa5fe4249b8269eb03f55e13ed61b1e5720f89674",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Azir.ja_JP/extraction.json",
+            "extractionReportSha256": "2a150027cca0b2e1d466fc867699f53e3e22c49e0320655ff9ff96f24ac3b918",
+            "decodingReport": "audio/decoded/Azir.ja_JP/decoding.json",
+            "decodingReportSha256": "0cebed7baae34907c69584751e6b0f75b1021697cc790d1cc125c5bd120af019",
+            "nativeAudioBanks": 9,
+            "wemFiles": 452,
+            "pcmWavCount": 452,
+            "audioSeconds": 1506.5577097505663,
             "errors": [],
             "rawDecoderFailedCount": 0,
             "exactPcm16RecoveryCount": 0,
@@ -65765,6 +67242,30 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "Caitlyn.ja_JP",
+            "sourceWad": "original-wads/Caitlyn.ja_JP.wad.client",
+            "bytes": 14211730,
+            "sha256": "1df81c7ce7b9a76b620e91a3f813aff7b7783765dfaf598f612a201f9fc868bc",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Caitlyn.ja_JP/extraction.json",
+            "extractionReportSha256": "e61bf0baf43408de08bc73f38000628c24d39d19562fe1443f52b3646262abc2",
+            "decodingReport": "audio/decoded/Caitlyn.ja_JP/decoding.json",
+            "decodingReportSha256": "dd3e5bfce780377c14e83b5d90ab0f085d4edb631a163c8dd15748e113918680",
+            "nativeAudioBanks": 9,
+            "wemFiles": 567,
+            "pcmWavCount": 567,
+            "audioSeconds": 1367.5540589569148,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Cassiopeia.ja_JP",
             "sourceWad": "original-wads/Cassiopeia.ja_JP.wad.client",
             "bytes": 10465401,
@@ -65861,6 +67362,54 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "Draven.ja_JP",
+            "sourceWad": "original-wads/Draven.ja_JP.wad.client",
+            "bytes": 14393546,
+            "sha256": "14f8c4f22029a38de2ecb5a73e9b7907dd3aedbdf6b2cb0e6a2f141461b412ce",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Draven.ja_JP/extraction.json",
+            "extractionReportSha256": "231517370e75c795a7af644686fe1f740432cd3285206749146fdc0e066579be",
+            "decodingReport": "audio/decoded/Draven.ja_JP/decoding.json",
+            "decodingReportSha256": "981679865e878abbc5f5802a2708f9ebb1ad63737c3df9518d062286e7338859",
+            "nativeAudioBanks": 18,
+            "wemFiles": 362,
+            "pcmWavCount": 362,
+            "audioSeconds": 1212.5079138322,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Ekko.ja_JP",
+            "sourceWad": "original-wads/Ekko.ja_JP.wad.client",
+            "bytes": 13393898,
+            "sha256": "0d64f18c401f7b80fc2e3bfcbf9647470a2627d98b4c1d14f37ef357c4719b17",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Ekko.ja_JP/extraction.json",
+            "extractionReportSha256": "6681e77a8a692c7835a7b044aca71db1b23f202a7d331053fb3c14cd1ef7abd8",
+            "decodingReport": "audio/decoded/Ekko.ja_JP/decoding.json",
+            "decodingReportSha256": "4ab46be832dbd5c2e8e904f5dd8a98ba182bbb8c1f5770c177eb8b827d2bff6f",
+            "nativeAudioBanks": 9,
+            "wemFiles": 500,
+            "pcmWavCount": 500,
+            "audioSeconds": 1442.6732879818612,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Elise.ja_JP",
             "sourceWad": "original-wads/Elise.ja_JP.wad.client",
             "bytes": 2219337,
@@ -65926,6 +67475,30 @@
             "wemFiles": 200,
             "pcmWavCount": 200,
             "audioSeconds": 397.3523129251701,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Garen.ja_JP",
+            "sourceWad": "original-wads/Garen.ja_JP.wad.client",
+            "bytes": 16224498,
+            "sha256": "8b813642f825ed175cb131779c60424ab72eccfdfa4cc884aed04c34a6e0b8ab",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Garen.ja_JP/extraction.json",
+            "extractionReportSha256": "e00d650b5c626d0ef7931461e631432b72b02354e79c7f6dd6904de9be265a3d",
+            "decodingReport": "audio/decoded/Garen.ja_JP/decoding.json",
+            "decodingReportSha256": "d08b58890f3aeb346b22507bbb6ed82a0245b3f05427735c4ea4fb6cc47faa30",
+            "nativeAudioBanks": 15,
+            "wemFiles": 479,
+            "pcmWavCount": 479,
+            "audioSeconds": 1398.285736961451,
             "errors": [],
             "rawDecoderFailedCount": 0,
             "exactPcm16RecoveryCount": 0,
@@ -66173,6 +67746,78 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "KSante.ja_JP",
+            "sourceWad": "original-wads/KSante.ja_JP.wad.client",
+            "bytes": 17141015,
+            "sha256": "c99aac8f95d356efbd171aa158ded11120c7298f6b6b79daabb6ef2b2b0b9947",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/KSante.ja_JP/extraction.json",
+            "extractionReportSha256": "4bb1cd08227684b16b7e26a8339857b47d5f068de782f1b7eced1fead8047af1",
+            "decodingReport": "audio/decoded/KSante.ja_JP/decoding.json",
+            "decodingReportSha256": "ede87c26b5ab9b29698cc95a61a60cc3ebe62248a7f83121ef7fbd98fecc3a00",
+            "nativeAudioBanks": 6,
+            "wemFiles": 353,
+            "pcmWavCount": 353,
+            "audioSeconds": 1609.1892970521537,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Kalista.ja_JP",
+            "sourceWad": "original-wads/Kalista.ja_JP.wad.client",
+            "bytes": 12279527,
+            "sha256": "2f36ee610c25a3e4d727654c8394726dabd7c0fafb91ca562d6a7b394f48657b",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Kalista.ja_JP/extraction.json",
+            "extractionReportSha256": "b58a86c3aece3dd51ab29bcdafb79aa8b43878616a6500b7479b9d10e3695c0f",
+            "decodingReport": "audio/decoded/Kalista.ja_JP/decoding.json",
+            "decodingReportSha256": "7e303d7b7b52ba0295336fd8e004d08cdce7d6b19cd12d42ead364b1240527b3",
+            "nativeAudioBanks": 6,
+            "wemFiles": 342,
+            "pcmWavCount": 342,
+            "audioSeconds": 1266.4629705215411,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Karthus.ja_JP",
+            "sourceWad": "original-wads/Karthus.ja_JP.wad.client",
+            "bytes": 11550735,
+            "sha256": "2df91dd179c3ef23221b443319bfda4ff6472c003df10ec1bdc6f2fdea4fcdb2",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Karthus.ja_JP/extraction.json",
+            "extractionReportSha256": "149d5b3c91b523efc16d09599eee84cd03d7be39008f8351e3c5b02479093774",
+            "decodingReport": "audio/decoded/Karthus.ja_JP/decoding.json",
+            "decodingReportSha256": "b02b3bdf8d551cbccfd4ff4b49c5d8ea28eac28420f5e362d2817a83f4267c31",
+            "nativeAudioBanks": 9,
+            "wemFiles": 225,
+            "pcmWavCount": 225,
+            "audioSeconds": 1102.4895918367351,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Kassadin.ja_JP",
             "sourceWad": "original-wads/Kassadin.ja_JP.wad.client",
             "bytes": 1651913,
@@ -66286,6 +67931,30 @@
             "wemFiles": 120,
             "pcmWavCount": 120,
             "audioSeconds": 215.68643990929706,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Lillia.ja_JP",
+            "sourceWad": "original-wads/Lillia.ja_JP.wad.client",
+            "bytes": 14378623,
+            "sha256": "67b2688b9be2251995cd63af06b737199ed82fcdc2d3b649b2e84368e9d89228",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Lillia.ja_JP/extraction.json",
+            "extractionReportSha256": "8db5d8af7d8dabb3b68ae3fcfb823714fd9d463bfff6d494cb36c1b3e40aeed1",
+            "decodingReport": "audio/decoded/Lillia.ja_JP/decoding.json",
+            "decodingReportSha256": "724817819dc53408f49ed00e337a4e440a8c08f422688974e57f395fbb7d1452",
+            "nativeAudioBanks": 9,
+            "wemFiles": 321,
+            "pcmWavCount": 321,
+            "audioSeconds": 1449.3450340136062,
             "errors": [],
             "rawDecoderFailedCount": 0,
             "exactPcm16RecoveryCount": 0,
@@ -66485,6 +68154,30 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "Nasus.ja_JP",
+            "sourceWad": "original-wads/Nasus.ja_JP.wad.client",
+            "bytes": 12926989,
+            "sha256": "1f62b98b772862a58df076b4e7131d58a231796790d1625d904d8d07d3c8f4b6",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Nasus.ja_JP/extraction.json",
+            "extractionReportSha256": "b16ea59d5c9cc3f1e63aeb3f88bf85ce0a8fcf213aea55bc26753ec00f41c8b4",
+            "decodingReport": "audio/decoded/Nasus.ja_JP/decoding.json",
+            "decodingReportSha256": "904c99823cc6ecce67206d5e44a0a7891af9d9eacc9cbc40a805c746be4bd3bb",
+            "nativeAudioBanks": 18,
+            "wemFiles": 381,
+            "pcmWavCount": 381,
+            "audioSeconds": 1346.1367573696143,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Nautilus.ja_JP",
             "sourceWad": "original-wads/Nautilus.ja_JP.wad.client",
             "bytes": 7864627,
@@ -66526,6 +68219,30 @@
             "wemFiles": 154,
             "pcmWavCount": 154,
             "audioSeconds": 664.7921873582762,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Nidalee.ja_JP",
+            "sourceWad": "original-wads/Nidalee.ja_JP.wad.client",
+            "bytes": 11947454,
+            "sha256": "d6a459a9f2b7c08959c42b90ad52638dc5fb9d707e25b02899b16de146735fc9",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Nidalee.ja_JP/extraction.json",
+            "extractionReportSha256": "941e77ea2cdedb9bc71c48ba7556ee1a4de11f5db4b04302dad8c1282fd6faa8",
+            "decodingReport": "audio/decoded/Nidalee.ja_JP/decoding.json",
+            "decodingReportSha256": "dcea77a2b6bac384b8679e51997603b0e0cd58717183651c215af9a18f8b425e",
+            "nativeAudioBanks": 9,
+            "wemFiles": 342,
+            "pcmWavCount": 342,
+            "audioSeconds": 1131.5170294784584,
             "errors": [],
             "rawDecoderFailedCount": 0,
             "exactPcm16RecoveryCount": 0,
@@ -66821,6 +68538,30 @@
             "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
           },
           {
+            "nativeId": "Riven.ja_JP",
+            "sourceWad": "original-wads/Riven.ja_JP.wad.client",
+            "bytes": 14314512,
+            "sha256": "c6c7c58647d1bb985891b154508aba12bab87e9ebc1f4b3a6ee0abfd2ecef911",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Riven.ja_JP/extraction.json",
+            "extractionReportSha256": "6634981a29d191ef8a90ffa444ba8cbc8e40a184223f0b06c50cb97528a10ff5",
+            "decodingReport": "audio/decoded/Riven.ja_JP/decoding.json",
+            "decodingReportSha256": "c2d90250fed345bd7755537474bf6383d8731242d5d53166b478f7935bac71f8",
+            "nativeAudioBanks": 15,
+            "wemFiles": 541,
+            "pcmWavCount": 541,
+            "audioSeconds": 1487.7949659863937,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
             "nativeId": "Rumble.ja_JP",
             "sourceWad": "original-wads/Rumble.ja_JP.wad.client",
             "bytes": 5538775,
@@ -66958,6 +68699,30 @@
             "wemFiles": 119,
             "pcmWavCount": 119,
             "audioSeconds": 271.0746258503403,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Shyvana.ja_JP",
+            "sourceWad": "original-wads/Shyvana.ja_JP.wad.client",
+            "bytes": 15630347,
+            "sha256": "6c95bf7b24e8264a85714ab9699a42a50c42bb496c353da6fe35ea4ae3255c1c",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Shyvana.ja_JP/extraction.json",
+            "extractionReportSha256": "ae6d080cd00e2f6121f40eae2294048d52b6c39fd882c47e22d76d7fbc164575",
+            "decodingReport": "audio/decoded/Shyvana.ja_JP/decoding.json",
+            "decodingReportSha256": "cc9beda0876cc277df7e5ac88bc7f4c3f24de3013d4891bf014191d42198359d",
+            "nativeAudioBanks": 9,
+            "wemFiles": 412,
+            "pcmWavCount": 412,
+            "audioSeconds": 1392.8221768707479,
             "errors": [],
             "rawDecoderFailedCount": 0,
             "exactPcm16RecoveryCount": 0,
@@ -67198,6 +68963,30 @@
             "wemFiles": 138,
             "pcmWavCount": 138,
             "audioSeconds": 349.9588662131521,
+            "errors": [],
+            "rawDecoderFailedCount": 0,
+            "exactPcm16RecoveryCount": 0,
+            "effectiveFailedCount": 0,
+            "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+          },
+          {
+            "nativeId": "Vex.ja_JP",
+            "sourceWad": "original-wads/Vex.ja_JP.wad.client",
+            "bytes": 13818404,
+            "sha256": "f3da05f791db9fa1c6e01716970300bc7f1c97a4d81730a52cb25a88d799771b",
+            "officialManifestFlags": [
+              "ja_JP"
+            ],
+            "manifestFileSizeVerified": true,
+            "manifestChunkOrderAndTargetSizesVerified": true,
+            "extractionReport": "audio/packages/Vex.ja_JP/extraction.json",
+            "extractionReportSha256": "2d5b82793fc695bd984069bde13de03f0243c085734d8b065b433dc3a2fe10dc",
+            "decodingReport": "audio/decoded/Vex.ja_JP/decoding.json",
+            "decodingReportSha256": "a8a5e8310a3b785d5a4f77c7ff1fbe4ec1317c1534b0e10655869302ffd2c24a",
+            "nativeAudioBanks": 6,
+            "wemFiles": 326,
+            "pcmWavCount": 326,
+            "audioSeconds": 1386.6752834467127,
             "errors": [],
             "rawDecoderFailedCount": 0,
             "exactPcm16RecoveryCount": 0,
@@ -67470,15 +69259,15 @@
           }
         ],
         "audioAcquisition": {
-          "completeWads": 82,
-          "completeAudioWads": 81,
+          "completeWads": 98,
+          "completeAudioWads": 97,
           "nonAudioWads": 1,
-          "pcmWavCount": 14460,
-          "audioSeconds": 45136.868472789254,
-          "audioBytes": 11347829544,
-          "nativeWemFiles": 14460,
-          "nativeBanks": 664,
-          "filesWithSamplesAboveUnity": 4102,
+          "pcmWavCount": 20603,
+          "audioSeconds": 66723.8763866213,
+          "audioBytes": 17471887824,
+          "nativeWemFiles": 20603,
+          "nativeBanks": 823,
+          "filesWithSamplesAboveUnity": 5213,
           "confirmedVoiceCount": null,
           "synthesisReadyGroups": 0,
           "exactPcm16Recoveries": 0,
@@ -67495,7 +69284,7 @@
           "state": "pending-audio-review",
           "selectionVerified": false
         },
-        "verification": "固定82完整WAD（81音訊＋1空佔位）交付14,460 Float32 WAV，0 unresolved。保留官方ja_JP來源證據、原WAD/WEM、所有歷史交付；4,102個浮點峰值超過1的檔案原樣保存。尚未逐段聽審；全174包其餘未列已取得。",
+        "verification": "固定98完整WAD（97音訊＋1空佔位）、20,603 Float32 WAV，逐檔SHA與原始浮點峰值保留，未解格式失敗0；之前82包全保留。官方日文來源，逐段語言/說話者仍待聽審，其餘174包尚未完成部分不計本次交付。",
         "audioFileIndexHistory": [
           {
             "reportPath": "deliveries/local-audio-delivery-20260910T125015909272Z.json",
@@ -67508,6 +69297,10 @@
           {
             "reportPath": "deliveries/local-audio-delivery-20260910T130421918567Z.json",
             "reportSha256": "4edc534472a9c3ca427a8b7d8e35049bf650a72701eb76c898c11abea252c3d3"
+          },
+          {
+            "reportPath": "deliveries/local-audio-delivery-20260910T132705556264Z.json",
+            "reportSha256": "e887a420faa93ece80efb379a43878ac934456a9d8b01c87368e8c15ec774481"
           }
         ]
       },
@@ -72837,20 +74630,19 @@
         },
         "derivedFromSourceId": "parallel-community-slayers-lina-hand-review",
         "animationSourceId": "300heroes:46",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-legacy-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-foot-contact-and-loop-review",
           "selectionVerified": false
         },
         "verification": "保留原8手型、原300GLB/JUMPX。1個主候選＋3個加工對照，19主要關節重綁、69 joints、0.01尺度；實際Babylon播放及Khronos0錯誤0警告。idle/run為300動作重綁到Rays，0原生Rays/0 walk，原生FPS未知。原片長不改，另有120Hz重取樣與每段地面偏移；跑步仍1.18mm穿地、6.3–10.1cm足部循環差與腳滑/披風僵硬，idle左腳約1.4cm離地，待修復。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
           "bytes": 33386225,
           "sha256": "30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         }
       },
       {
@@ -72897,20 +74689,19 @@
           ".wav"
         ],
         "recoveryOfSourceId": "local-lol-decoded-audio",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-legacy-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-audio-review",
           "selectionVerified": false
         },
         "verification": "Malzahar共用WAD的2個原生PCM16另轉Float32，原WEM data與舊PCM16相同，逐樣本還原一致，frame/rate/channels皆核對。原WEM/舊PCM16另複製歸檔；非新台詞、語言未核，既有12個恢復檔來源不變。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
           "bytes": 2463798,
           "sha256": "6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         }
       },
       {
@@ -73090,18 +74881,741 @@
           "main/inputtext.png"
         ],
         "fucNativeGapClosed": false,
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-legacy-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "texture-supplement-pending-mapping-not-model",
           "selectionVerified": false
         },
         "verification": "完整30,560,970-byte ZIP CRC通過，104/104來源檔Git blob/大小吻合，103 PNG全部解碼：71角色肖像/片段、18任務肖像、7商標、4介面、3靜態魔法陣。INI共88映射，原包缺main/inputtext.png；不是可直接套用的完整設定。模型/骨架/動作/原生VFX/音訊皆0，不能填Fate PSP原生素材缺口。原27.4MB partial留作診斷，未計入可用檔案。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/github-udienzebeer-fate-uc-hd-c8c2d52b/005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-udienzebeer-fate-uc-hd-c8c2d52b/005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001.zip",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-udienzebeer-fate-uc-hd-c8c2d52b/005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001.zip",
           "bytes": 89129051,
           "sha256": "005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
+      },
+      {
+        "id": "gamebanana-fuc-kotomine-kirei-291438",
+        "target": "言峰綺禮／Fate UC Sven MOD骨架與動作",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://gamebanana.com/mods/291438",
+        "uploader": "NicholaiParadox / Type-Moon (credited original)",
+        "format": "MDL / GLB / 4 PNG / 349 blend entries",
+        "accessStatus": "public-source-or-local-derived",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-runtime-and-visual-validation",
+        "purchaseDecision": "supplement-only-continue-model-search",
+        "defaultEligible": false,
+        "resourceRole": "character-model-collection",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
+        "selectionClass": "community-mod",
+        "publicationStatus": "local-only-awaiting-s3-upload",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-runtime-and-visual-validation",
+          "selectionVerified": false
+        },
+        "sourceGame": "Fate/unlimited codes",
+        "platform": "unknown",
+        "targetModGame": "Sven Co-op / GoldSrc",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation"
+        ],
+        "modelCandidates": [
+          {
+            "candidateId": "fuc-mod-kotomine-kirei-sven",
+            "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
+            "character": "Kotomine Kirei / 言峰綺禮",
+            "heroIds": [],
+            "sourceGame": "Fate/unlimited codes",
+            "sourcePlatform": "unknown",
+            "platformEvidence": "Author and package identify Fate/UC but not original PSP versus PS2. Actual target model is Sven Co-op/GoldSrc MDL v10.",
+            "sourceClass": "mod-community-port",
+            "model": "converted/kotomine-kirei-standard.glb",
+            "bytes": 18728816,
+            "sha256": "cf5f5d84cf6c8419c8d8a006771d5ce1d6206ddbb97701cb24b8ef4450190ac3",
+            "meshCount": 3,
+            "primitiveCount": 8,
+            "jointCounts": [
+              17
+            ],
+            "sourceSkeletonBoneCount": 22,
+            "animationEntryCount": 349,
+            "timeVaryingMotionEntries": 336,
+            "sourceSequenceCount": 191,
+            "sourceMovingSequenceCount": 182,
+            "singleFramePoseEntries": 9,
+            "staticMultiFramePoseEntries": 4,
+            "textureCount": 4,
+            "sourceSkeleton": "Sven Co-op/GoldSrc MOD rig",
+            "motionOrigin": "Sven Co-op/GoldSrc MOD",
+            "originalFateAnimationsProven": false,
+            "motionIndex": "motion-index.json",
+            "readyStage": "standard-glb-candidate",
+            "khronosValidation": "0 errors; 0 warnings; unlimited issue collection; not truncated",
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "defaultChanged": false,
+            "manualVisualReview": "3 clips x 4 actual mesh frames inspected: standing/running/waving coherent, dark robe/hair/face textured",
+            "unitStatus": "Retained native model coordinates; metric scale not established or normalized to a hero height.",
+            "limitations": [
+              "Original platform PSP/PS2 not proven.",
+              "MOD sequence events, controller mixing and root linear-movement behavior are preserved as metadata, not executed.",
+              "GoldSrc additive/chrome/shading semantics are not fully recreated by base-color PBR.",
+              "Sven model bodypart metadata is preserved in the original and Assimp nodes; backend bodygroup selection is not integrated."
+            ]
+          }
+        ],
+        "candidateManifest": {
+          "path": "candidate-manifest.json",
+          "sha256": "c7a642236eef8946acd5f5155fbe3eedd076f0ccc607f58742d5d9c2c5b4980f"
+        },
+        "files": [
+          {
+            "checkedAt": "2026-09-10T13:40:14.530110+00:00",
+            "url": "https://gamebanana.com/dl/582713",
+            "httpStatus": "200",
+            "curlExitCode": 0,
+            "stderr": "",
+            "declaredBytes": 1105055,
+            "declaredMd5": "1dfc722f1f9fa4d45d9eb3184d753b19",
+            "path": "original/kotomine_kirei_-_fate_unlimited_cod.rar",
+            "bytes": 1105055,
+            "sha256": "8f9434471e43d6b10b826b41d154ae66e948841b99e02385ab979210ddbc63ef",
+            "md5": "1dfc722f1f9fa4d45d9eb3184d753b19",
+            "sizeMatch": true,
+            "md5Match": true
+          }
+        ],
+        "fucNativeGapClosed": false,
+        "batchFileManifest": {
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/files.sha256.json",
+          "sha256": "ba6186612f9c26198db86563f1da4f0894cd55f51cc7a590a1967671bac2f632",
+          "memberPrefix": "kotomine-kirei/"
+        },
+        "sourceLicense": "credit and permissions require source-specific review; no broader grant assumed",
+        "motionIndex": {
+          "path": "motion-index.json",
+          "sha256": "11454596ee563409cf9434aa814630978bd6d5c2a52fc117b6d8f7c6145c3c3e"
+        },
+        "verification": "完整MOD原包與3D本體已取得；22原骨節、GLB蒙皮17個有權重joints、4貼圖。191來源sequence展開349項，其中336時間變化動作、9單幀/4多幀靜態pose；按原MDL每段FPS、loop与全量RLE樣本核對，1745 CPU蒙皮frame通過，3段實際渲染已檢查。動作是Sven/GoldSrc MOD，非Fate原生；Khronos0錯誤0警告。尺度、事件/controllers/root motion及GGD切換未驗收。",
+        "pendingBackup": {
+          "localArchive": "outputs/model-source-backups/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
+          "bytes": 8828637,
+          "sha256": "a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20",
+          "readbackVerified": false,
+          "status": "not-uploaded"
+        }
+      },
+      {
+        "id": "gamebanana-fuc-dark-sakura-492607",
+        "target": "間桐櫻（黑櫻）／Fate UC MOD兩配色及音訊",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://gamebanana.com/mods/492607",
+        "uploader": "7Negative_Creep / MEKMKII / anonymous credited contributor",
+        "format": "UnityFS / 2 distinct GLB / 15 PCM WAV",
+        "accessStatus": "public-source-or-local-derived",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-runtime-and-visual-validation",
+        "purchaseDecision": "supplement-only-continue-model-search",
+        "defaultEligible": false,
+        "resourceRole": "character-model-collection",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+        "selectionClass": "community-mod",
+        "publicationStatus": "local-only-awaiting-s3-upload",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-runtime-and-visual-validation",
+          "selectionVerified": false
+        },
+        "sourceGame": "Fate/unlimited codes",
+        "platform": "unknown",
+        "targetModGame": "Bomb Rush Cyberfunk / Unity CrewBoom",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "audio"
+        ],
+        "modelCandidates": [
+          {
+            "candidateId": "fuc-mod-dark-sakura-p1",
+            "sourceId": "gamebanana-fuc-dark-sakura-492607",
+            "character": "Dark Sakura / 間桐櫻（黑櫻）",
+            "heroIds": [],
+            "sourceGame": "Fate/unlimited codes",
+            "sourcePlatform": "unknown",
+            "platformEvidence": "Author identifies Fate/UC but not PSP versus PS2; target MOD is Bomb Rush Cyberfunk on PC.",
+            "sourceClass": "mod-community-port",
+            "variant": "P1",
+            "model": "converted/models/01-p1/body.glb",
+            "bytes": 307032,
+            "sha256": "db1038b27795660802f7701195ddf48ab8b5a520f63f7d5bc0cbacff1dd108eb",
+            "readyStage": "standard-glb-candidate",
+            "meshCount": 1,
+            "skinCount": 1,
+            "jointCounts": [
+              57
+            ],
+            "animationCount": 0,
+            "textureCount": 1,
+            "sourceSkeleton": "MOD-retargeted",
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "manualVisualReview": "CPU static skinned render inspected; complete clothed model, purple hair, black/red versus white/red outfit.",
+            "defaultChanged": false,
+            "limitations": [
+              "Original game source platform, skeleton and animations not proven.",
+              "Custom toon shader reduced to base-color PBR.",
+              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            ],
+            "sourceOutfitIndices": [
+              0,
+              2
+            ],
+            "duplicateSourceModelPaths": [
+              "converted/models/03-p1/body.glb"
+            ],
+            "khronosValidation": "0 errors; 0 warnings; unlimited issue collection; not truncated",
+            "sourceOutfitEntriesRetained": true
+          },
+          {
+            "candidateId": "fuc-mod-dark-sakura-p2",
+            "sourceId": "gamebanana-fuc-dark-sakura-492607",
+            "character": "Dark Sakura / 間桐櫻（黑櫻）",
+            "heroIds": [],
+            "sourceGame": "Fate/unlimited codes",
+            "sourcePlatform": "unknown",
+            "platformEvidence": "Author identifies Fate/UC but not PSP versus PS2; target MOD is Bomb Rush Cyberfunk on PC.",
+            "sourceClass": "mod-community-port",
+            "variant": "P2",
+            "model": "converted/models/02-p2/body.glb",
+            "bytes": 309512,
+            "sha256": "a60f1b30d613f16c95d20579aaadce672bddc0fe0f8d084979aa01d835eee247",
+            "readyStage": "standard-glb-candidate",
+            "meshCount": 1,
+            "skinCount": 1,
+            "jointCounts": [
+              57
+            ],
+            "animationCount": 0,
+            "textureCount": 1,
+            "sourceSkeleton": "MOD-retargeted",
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "manualVisualReview": "CPU static skinned render inspected; complete clothed model, purple hair, black/red versus white/red outfit.",
+            "defaultChanged": false,
+            "limitations": [
+              "Original game source platform, skeleton and animations not proven.",
+              "Custom toon shader reduced to base-color PBR.",
+              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            ],
+            "sourceOutfitIndices": [
+              1,
+              3
+            ],
+            "duplicateSourceModelPaths": [
+              "converted/models/04-p2/body.glb"
+            ],
+            "khronosValidation": "0 errors; 0 warnings; unlimited issue collection; not truncated",
+            "sourceOutfitEntriesRetained": true
+          }
+        ],
+        "candidateManifest": {
+          "path": "candidate-manifest.json",
+          "sha256": "c155572505c659b415a6655a03d3034e0123b0c695054a15a44635e2ed4d1f1d"
+        },
+        "files": [
+          {
+            "checkedAt": "2026-09-10T13:41:10.057444+00:00",
+            "url": "https://gamebanana.com/dl/1129461",
+            "httpStatus": "200",
+            "curlExitCode": 0,
+            "stderr": "",
+            "declaredBytes": 598429,
+            "declaredMd5": "9ea69248b422f8efddcafe4a23595c41",
+            "path": "original/dark_sakura_695a0.7z",
+            "bytes": 598429,
+            "sha256": "890b71eae085035e68dd3bcb60437acdc74c602e1fa3f2ba955f8939da5a3ecc",
+            "md5": "9ea69248b422f8efddcafe4a23595c41",
+            "sizeMatch": true,
+            "md5Match": true
+          }
+        ],
+        "fucNativeGapClosed": false,
+        "batchFileManifest": {
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/files.sha256.json",
+          "sha256": "ba6186612f9c26198db86563f1da4f0894cd55f51cc7a590a1967671bac2f632",
+          "memberPrefix": "dark-sakura/"
+        },
+        "sourceLicense": "credit and permissions require source-specific review; no broader grant assumed",
+        "audioFileIndex": {
+          "reportPath": "audioFileIndex-frozen-v1.json",
+          "reportSha256": "f1c977fcd10ae56c892097181b7688548aa03cbbbb6998954fd3ee427d7e7f60"
+        },
+        "audioGroups": [
+          {
+            "id": "dark-sakura-voice",
+            "character": "Dark Sakura / 間桐櫻（黑櫻）",
+            "heroIds": [],
+            "pathPrefixes": [
+              "converted/voice-pcm/"
+            ],
+            "classification": "voice-source-labelled",
+            "manualReview": "pending",
+            "name": "Dark Sakura / 間桐櫻（黑櫻）",
+            "reportedLanguage": null
+          }
+        ],
+        "audioAcquisition": {
+          "wavFiles": 15,
+          "seconds": 16.209468962585035
+        },
+        "primaryAudioFormats": [
+          ".wav"
+        ],
+        "verification": "完整原包、4來源服裝輸出全留；相同SHA分成P1/P2兩個候選，57骨節、0動畫。15 PCM WAV完整解碼/長度/SHA通過，原作者標為角色聲音，語言及逐段說話者待核。兩GLB完整Khronos0錯誤0警告，原PSP/PS2平台未證明，MOD重綁與toon材質限制保留；GGD未驗收。",
+        "pendingBackup": {
+          "localArchive": "outputs/model-source-backups/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
+          "bytes": 3979145,
+          "sha256": "45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4",
+          "readbackVerified": false,
+          "status": "not-uploaded"
+        }
+      },
+      {
+        "id": "kof-open3dlab-ash-xv-material-repair-v2",
+        "target": "KOF XV／Ash Crimson／兩髮型材質修正版 v2",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+        "uploader": "Anthony; original XPS model credited to MichiFreddy35",
+        "format": "2 revised GLB / original Blend / 15 source textures / 6 derived textures",
+        "accessStatus": "public-source-or-local-derived",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-runtime-and-visual-validation",
+        "purchaseDecision": "supplement-only-continue-model-search",
+        "defaultEligible": false,
+        "resourceRole": "character-model-collection",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2",
+        "selectionClass": "community-mod",
+        "publicationStatus": "local-only-awaiting-s3-upload",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-runtime-and-visual-validation",
+          "selectionVerified": false
+        },
+        "sourceGame": "The King of Fighters XV",
+        "platform": "unknown-original-platform",
+        "derivedFromSourceId": "kof-open3dlab-ash-xv",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton"
+        ],
+        "modelCandidates": [
+          {
+            "candidateId": "kof-xv-ash-crimson-open3dlab-left-hair-material-v2",
+            "sourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+            "character": "Ash Crimson",
+            "heroIds": [],
+            "sourceGame": "The King of Fighters XV",
+            "sourcePlatform": "unknown-original-platform",
+            "platformEvidence": "Author identifies KOF XV; original game installation platform is not specified.",
+            "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+            "author": "Anthony; original XPS model credited to MichiFreddy35",
+            "sourceClass": "mod-community-port",
+            "variant": "left-hair",
+            "model": "converted/left-hair/body.glb",
+            "bytes": 64653404,
+            "sha256": "272e69ecbcd033f093c9fba57f39a5f11edf1e9d50a031fd88a27fa680670d2d",
+            "readyStage": "standard-glb-candidate-material-repaired-runtime-review-pending",
+            "meshCount": 2,
+            "skinCount": 1,
+            "jointCounts": [
+              258
+            ],
+            "animationCount": 0,
+            "sourceStaticPoseActions": 3,
+            "textureCount": 15,
+            "sourceSkeleton": "community-Rigify: 972 source bones, GLB deform hierarchy 258 joints",
+            "maxVertexInfluences": 5,
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "manualVisualReview": "material-translation-repaired-runtime-review-pending",
+            "visualReviewPath": "visual-review.json",
+            "defaultChanged": false,
+            "candidateMustBeRetained": true,
+            "originalBytesPreserved": true,
+            "limitations": [
+              "Original reflection-vector TextureEnvironment additive emission is view-dependent and has no core glTF static UV texture equivalent; its source images and node graph are preserved, but this term is not reproduced in v2.",
+              "Diffuse/lightmap multiplication and nonlinear roughness are sampled to 8-bit PNG; original source textures are unchanged. Filtering between texel centers is a finite-resolution approximation.",
+              "Only source frame 1 and two camera directions plus face/boots detail views were compared. Dynamic deformation, retargeting, gameplay, performance and GGD backend selection remain unverified.",
+              "Source Rigify controls and 3 single-frame pose actions remain in original blend; there are 0 original gameplay animation clips in either candidate.",
+              "Maximum 5 vertex influences retained; target runtime compatibility must be accepted separately."
+            ],
+            "revisionOfCandidateId": "kof-xv-ash-crimson-open3dlab-left-hair",
+            "revision": 2,
+            "upstreamCandidateRetained": true,
+            "upstreamModelPath": "baseline/v1/left-hair/body.glb",
+            "upstreamModelSha256": "f71a26ff138b9adef7257c06c842211ce871adafa1c7ec0985fed2aebead1ec4",
+            "materialRepairReport": "analysis/material-repair-report.json",
+            "comparisonSheet": "comparisons/left-hair-source-baseline-repair.png"
+          },
+          {
+            "candidateId": "kof-xv-ash-crimson-open3dlab-right-hair-material-v2",
+            "sourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+            "character": "Ash Crimson",
+            "heroIds": [],
+            "sourceGame": "The King of Fighters XV",
+            "sourcePlatform": "unknown-original-platform",
+            "platformEvidence": "Author identifies KOF XV; original game installation platform is not specified.",
+            "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+            "author": "Anthony; original XPS model credited to MichiFreddy35",
+            "sourceClass": "mod-community-port",
+            "variant": "right-hair",
+            "model": "converted/right-hair/body.glb",
+            "bytes": 64653332,
+            "sha256": "8b98da52eacc66bd5773028e0ef2b788e39d6ca2de064498a0ef21259da37cc1",
+            "readyStage": "standard-glb-candidate-material-repaired-runtime-review-pending",
+            "meshCount": 2,
+            "skinCount": 1,
+            "jointCounts": [
+              258
+            ],
+            "animationCount": 0,
+            "sourceStaticPoseActions": 3,
+            "textureCount": 15,
+            "sourceSkeleton": "community-Rigify: 972 source bones, GLB deform hierarchy 258 joints",
+            "maxVertexInfluences": 5,
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "manualVisualReview": "material-translation-repaired-runtime-review-pending",
+            "visualReviewPath": "visual-review.json",
+            "defaultChanged": false,
+            "candidateMustBeRetained": true,
+            "originalBytesPreserved": true,
+            "limitations": [
+              "Original reflection-vector TextureEnvironment additive emission is view-dependent and has no core glTF static UV texture equivalent; its source images and node graph are preserved, but this term is not reproduced in v2.",
+              "Diffuse/lightmap multiplication and nonlinear roughness are sampled to 8-bit PNG; original source textures are unchanged. Filtering between texel centers is a finite-resolution approximation.",
+              "Only source frame 1 and two camera directions plus face/boots detail views were compared. Dynamic deformation, retargeting, gameplay, performance and GGD backend selection remain unverified.",
+              "Source Rigify controls and 3 single-frame pose actions remain in original blend; there are 0 original gameplay animation clips in either candidate.",
+              "Maximum 5 vertex influences retained; target runtime compatibility must be accepted separately."
+            ],
+            "revisionOfCandidateId": "kof-xv-ash-crimson-open3dlab-right-hair",
+            "revision": 2,
+            "upstreamCandidateRetained": true,
+            "upstreamModelPath": "baseline/v1/right-hair/body.glb",
+            "upstreamModelSha256": "fd4880ca4e1a5eb1752e6db1dc56ef0a34c1302862d9aee14c405e5bb78bd553",
+            "materialRepairReport": "analysis/material-repair-report.json",
+            "comparisonSheet": "comparisons/right-hair-source-baseline-repair.png"
+          }
+        ],
+        "candidateManifest": {
+          "path": "candidate-manifest.json",
+          "sha256": "6a4d39892127130cb2acf3eab5fa86d694776e762dbb57eace403224c7ebb113"
+        },
+        "filesManifest": {
+          "path": "deliveries/local-model-delivery-20260910T134548415208Z.json",
+          "sha256": "64e0af66d0bdeefefa6847bacb1632d258c8454bc7d041a357be63a8d760801b"
+        },
+        "newlyAcquiredSourcePackages": 0,
+        "verification": "原來源與舊2GLB完整保留，另存左右瀏海2材質修訂版。修正roughness、lightmap、IOR與白色emission錯譯；24張同相機比較圖及2總圖，根工作流已檢視兩總圖。幾何/骨架不改，258 joints、0 gameplay動畫。仍缺view-dependent environment項的等價呈現，最大5權重與GGD效能/變形/切換待驗收；新版本不移除舊選項。",
+        "pendingBackup": {
+          "localArchive": "outputs/model-source-backups/kof-open3dlab-ash-xv-material-repair-v2/029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7.zip",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-open3dlab-ash-xv-material-repair-v2/029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7.zip",
+          "bytes": 343150268,
+          "sha256": "029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7",
+          "readbackVerified": false,
+          "status": "not-uploaded"
+        }
+      },
+      {
+        "id": "parallel-community-lina-rays-300-retarget-footloop-v2",
+        "target": "莉娜 Rays／300動作落地與循環加工 v2",
+        "heroIds": [
+          "godie-h020",
+          "godie-hjai"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+        "uploader": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+        "format": "1 derived GLB / 1 audit GLB / 2 derived motions",
+        "accessStatus": "public-source-or-local-derived",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-runtime-and-visual-validation",
+        "purchaseDecision": "supplement-only-continue-model-search",
+        "defaultEligible": false,
+        "resourceRole": "character-model-collection",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2",
+        "selectionClass": "community-mod",
+        "publicationStatus": "local-only-awaiting-s3-upload",
+        "backendIntegration": {
+          "required": true,
+          "state": "registration-rejected-material-extensions-and-missing-clips",
+          "selectionVerified": false
+        },
+        "sourceGame": "Tales of the Rays",
+        "platform": "Mobile (Android/iOS)",
+        "derivedFromSourceId": "parallel-community-lina-rays-300-retarget",
+        "animationSourceId": "300heroes:46",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation"
+        ],
+        "modelCandidates": [
+          {
+            "candidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-footplant-loop-review",
+            "sourceCandidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-retarget-review",
+            "sourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+            "upstreamSourceId": "parallel-community-lina-rays-300-retarget",
+            "label": "莉娜 lina00 放鬆手型 — 300英雄 idle/run 落地與循環加工版（條件式驗證）",
+            "nativeCharacter": "Lina Inverse",
+            "heroIds": [
+              "godie-h020",
+              "godie-hjai"
+            ],
+            "resourceRole": "character-body-retarget-footplant-loop-review",
+            "sourceClass": "original-game-body-with-cross-game-retargeted-animation",
+            "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+            "author": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+            "sourceGame": "Tales of the Rays",
+            "sourcePlatform": "Mobile (Android/iOS)",
+            "sourceWork": "Slayers",
+            "animationSourceGame": "300英雄",
+            "animationSourceId": "300heroes:46",
+            "animationProvenanceLabel": "300英雄動作重綁到Rays模型，再作落地與循環加工",
+            "nativeAnimationFps": "unknown",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+            "file": {
+              "path": "candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+              "bytes": 2490156,
+              "sha256": "d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f"
+            },
+            "format": "glb",
+            "bodyModelCount": 1,
+            "meshNodes": 3,
+            "meshPrimitives": 5,
+            "triangles": 9072,
+            "joints": 69,
+            "retargetedMajorJoints": 19,
+            "embeddedTextures": 3,
+            "distinctEmbeddedTexturePayloads": 2,
+            "nativeRaysAnimationClips": 0,
+            "derivedAnimationClips": 2,
+            "sourceWalkAvailable": false,
+            "audioFiles": 0,
+            "sceneScale": 0.01,
+            "nominalRestHeightMeters": 1.55758,
+            "canonicalCharacterHeightClaim": false,
+            "selection": {
+              "handVariant": "a",
+              "left": "HandLa.013",
+              "right": "HandRa.013",
+              "visibleLeftHandMeshes": 1,
+              "visibleRightHandMeshes": 1
+            },
+            "animations": [
+              {
+                "name": "300heroes_bat_idle_retargeted_to_Rays_Lina_processed_footplant_loop",
+                "sourceClip": "300heroes_bat_idle_retargeted_to_Rays_Lina",
+                "durationSeconds": 1.21875,
+                "outputKeys": 730,
+                "resamplingHz": 480,
+                "nativeRaysAnimation": false,
+                "durationChanged": false,
+                "seamProcessing": true,
+                "footIKProcessing": true
+              },
+              {
+                "name": "300heroes_single_run_retargeted_to_Rays_Lina_processed_footplant_loop",
+                "sourceClip": "300heroes_single_run_retargeted_to_Rays_Lina",
+                "durationSeconds": 0.40625,
+                "outputKeys": 244,
+                "resamplingHz": 480,
+                "nativeRaysAnimation": false,
+                "durationChanged": false,
+                "seamProcessing": true,
+                "footIKProcessing": true
+              }
+            ],
+            "rootMotion": {
+              "horizontal": "in-place source-derived retarget; no XZ root track added",
+              "vertical": "prior root bob and ground offsets preserved, then pelvis lowered 2 cm idle / 6 cm run; periodic processing of final 18%",
+              "footIK": "two-bone IK with flat boot contact windows and per-key actual boot ground correction",
+              "externalPreviewEntitySpeedMps": 4.5224146092674875,
+              "canonicalGameSpeed": false,
+              "sourceDurationsPreserved": true
+            },
+            "validation": {
+              "khronosErrors": 0,
+              "khronosWarnings": 0,
+              "khronosInfos": 43,
+              "khronosTruncated": false,
+              "assimpReadback": true,
+              "meshWeightsTexturesAndBindMatricesUnchanged": true,
+              "actualBabylonPlayback": true,
+              "sampledGroundClearancePass": true,
+              "sampledLoopPositionClosurePass": true,
+              "contactSlidingImprovedAtSpecifiedTestSpeed": true,
+              "fullFootPlantPass": false,
+              "runtimeReady": false
+            },
+            "existsLocal": true,
+            "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
+            "backendSelectableVerified": false,
+            "eligibleForAutomaticDefault": false,
+            "runtimeReady": false,
+            "manualDefaultsChanged": false,
+            "limitations": [
+              "All motions are 300英雄動作重綁到Rays模型，再作落地與循環加工; 0 native Rays animations and no new walk. Existing GGD 300 GLB durations remain unchanged; native JUMPX FPS is unknown.",
+              "Source comparison diagnoses the existing GGD 300 conversion, not the original running game. Native JUMPX was not decoded again, so native-game foot defects are not established.",
+              "Foot locking depends on the derived 4.522414609 m/s external actor test speed and configured stance windows. This is not a default gameplay speed; turning, acceleration, other speeds and terrain were not tested.",
+              "Run left foot retains a rare 1.995 m/s horizontal contact-speed spike and up to 6.79 mm core-phase boot clearance; IK target reach can miss by up to 10.4 mm.",
+              "Run endpoint foot positions close exactly in sampled output; velocity seam remains about 0.118 m/s, not a proven perfect C1 loop.",
+              "IK changes lower-body posing materially: maximum local rotation change roughly 21.3 degrees idle / 67.4 degrees run. Do not describe the result as unchanged source motion.",
+              "The fixed world +Z knee pole is suitable only for this forward-facing bounded sample; it is not a general turning or arbitrary-animation retarget system.",
+              "Hair/cape/accessory secondary animation remains absent. Cape remains visibly broad and rigid; fingers remain the selected single relaxed hand meshes.",
+              "960 Hz CPU skin audit proves sampled flat-ground metrics only. Whole-body self collision, arbitrary terrain, game runtime, transitions between clips and backend selection remain unverified.",
+              "Structural validator has 0 errors / 0 warnings, plus 43 information messages: 42 intentionally retained unused prior animation accessors and one unsupported FB_ngon_encoding extension."
+            ],
+            "processingParametersPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/processing-parameters.json",
+            "testActorSpeedMps": 4.5224146092674875
+          }
+        ],
+        "filesManifest": {
+          "path": "all-files.sha256.jsonl",
+          "sha256": "f7e4bee9acc7c7e616f3c2b5e5dabeb1c92beb95051d3ecd88e62b6b83fcd27f"
+        },
+        "candidateManifest": {
+          "path": "model-candidates.json",
+          "sha256": "256aca011b585d8d87d58a858da89d11ec7eeb393b593c503d3920ea18727537"
+        },
+        "verification": "保留v1與原300/Rays資料，另存1個480Hz落地/循環加工候選及1失敗實驗；69 joints、2 derived idle/run、0原生Rays動作。960Hz平地取樣的足部位置循環差為0、穿地改善；原片長不改，但IK/下沉/18%片尾混合改變姿態。測試外部移速4.522m/s不等於GGD速度，左腳短時速度尖峰及僵硬披風仍存在。Khronos0錯誤0警告、實際Babylon播放；攻擊/施法/受傷/死亡和GGD整合仍待補。 真實GGD元件載入通過，但註冊422；缺4狀態與材質擴充詳見独立GGD驗收來源。",
+        "pendingBackup": {
+          "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+          "bytes": 36383294,
+          "sha256": "853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909",
+          "readbackVerified": false,
+          "status": "not-uploaded"
+        },
+        "runtimeValidationSourceId": "parallel-community-lina-ggd-compatibility"
+      },
+      {
+        "id": "lol-local-native-pcm16-recovery-round19",
+        "target": "LOL Sylas／共用WAD 6個原生PCM16精確恢復",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://www.leagueoflegends.com/",
+        "uploader": "Local Riot game extraction; exact numeric conversion",
+        "format": "Native PCM16 / Float32 WAV",
+        "accessStatus": "local-installed-game",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "audio-intake-pending-listening-review",
+        "purchaseDecision": "supplement-only-continue-model-search",
+        "defaultEligible": false,
+        "resourceRole": "audio-supplement",
+        "localPath": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19",
+        "sourceGame": "League of Legends",
+        "platform": "Local installed game",
+        "selectionClass": "canonical-game",
+        "discoveryChannel": "local-recovery",
+        "assetKinds": [
+          "audio"
+        ],
+        "audioFileIndex": {
+          "reportPath": "delivery.json",
+          "reportSha256": "3f925f1c034c75eb5fc0f41b7871c0c678105b4945217a9b4c7abe4e2d5d4019"
+        },
+        "audioGroups": [
+          {
+            "id": "Sylas",
+            "name": "LOL／Sylas／共用WAD PCM16精確恢復",
+            "heroIds": [],
+            "pathPrefixes": [
+              "Sylas/"
+            ],
+            "reportedLanguage": null
+          }
+        ],
+        "audioAcquisition": {
+          "pcmWavCount": 6
+        },
+        "primaryAudioFormats": [
+          ".wav"
+        ],
+        "recoveryOfSourceId": "local-lol-decoded-audio",
+        "publicationStatus": "local-only-awaiting-s3-upload",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-audio-review",
+          "selectionVerified": false
+        },
+        "verification": "Sylas共用WAD的6個原生PCM16另存Float32，WEM data與舊PCM16相同且逐樣本往返一致，取樣率/frame/聲道核對；原WEM/舊PCM16/失敗報告全留。語言未核；新主檔另列，不重算先前14個恢復檔。",
+        "pendingBackup": {
+          "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
+          "bytes": 1446390,
+          "sha256": "fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d",
+          "readbackVerified": false,
+          "status": "not-uploaded"
+        }
+      },
+      {
+        "id": "parallel-community-lina-ggd-compatibility",
+        "target": "莉娜既有候選／GGD真實載入與註冊驗收證據",
+        "heroIds": [
+          "godie-h020",
+          "godie-hjai"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+        "uploader": "GGD local source-runtime verification",
+        "format": "Runtime reports / 3 playback MP4 / preserved test fixture",
+        "accessStatus": "local-validation",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "registration-rejected-missing-motion-and-material-support",
+        "purchaseDecision": "supplement-only-continue-model-search",
+        "defaultEligible": false,
+        "resourceRole": "validation-evidence",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility",
+        "selectionClass": "community-mod",
+        "assetKinds": [],
+        "newModelCandidates": 0,
+        "newAudioFiles": 0,
+        "derivedFromSourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+        "filesManifest": {
+          "path": "FILE_MANIFEST.json",
+          "sha256": "547d220b2725a97a7fa1b26589d095f814fa4f5a3c797e8346fa15519cfc7944"
+        },
+        "runtimeReview": {
+          "reportPath": "REPORT.json",
+          "sha256": "655a97dc9e3fa46065ff4f2d0bf15c7f1e7789833a6a57bf7c72d3f37883afce"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "registration-rejected-material-extensions-and-missing-clips",
+          "selectionVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload",
+        "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。",
+        "pendingBackup": {
+          "localArchive": "outputs/model-source-backups/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+          "bytes": 15820766,
+          "sha256": "50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10",
           "readbackVerified": false,
           "status": "not-uploaded"
         }

@@ -1,0 +1,4699 @@
+{
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "commitAtFixtureSetup": "4b57288b2f126ea38516ad858d7f2bb0200091ff",
+  "commitAtSourceEvidence": "dda5a452765ac75614c09bf77e6b0cbcdf227812",
+  "exactSourceFiles": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/schema/model.ts",
+      "repoRelativePath": "packages/shared/src/content/schema/model.ts",
+      "sha256": "7d0f160f50c9354915f921cc59f11a1ee0745ff4aa374be72aa09d7f1a10cdf6",
+      "bytes": 19553,
+      "excerpts": [
+        {
+          "start": 11,
+          "end": 38,
+          "lines": [
+            {
+              "number": 11,
+              "text": "export const zClipMap = z"
+            },
+            {
+              "number": 12,
+              "text": "  .object({"
+            },
+            {
+              "number": 13,
+              "text": "    idle: z.string().min(1),"
+            },
+            {
+              "number": 14,
+              "text": "    run: z.string().min(1),"
+            },
+            {
+              "number": 15,
+              "text": "    attack: z.string().min(1),"
+            },
+            {
+              "number": 16,
+              "text": "    cast: z.string().min(1),"
+            },
+            {
+              "number": 17,
+              "text": "    hurt: z.string().min(1),"
+            },
+            {
+              "number": 18,
+              "text": "    death: z.string().min(1),"
+            },
+            {
+              "number": 19,
+              "text": "  })"
+            },
+            {
+              "number": 20,
+              "text": "  .strict();"
+            },
+            {
+              "number": 21,
+              "text": ""
+            },
+            {
+              "number": 22,
+              "text": "export const zModelDoc = z"
+            },
+            {
+              "number": 23,
+              "text": "  .object({"
+            },
+            {
+              "number": 24,
+              "text": "    id: zId,"
+            },
+            {
+              "number": 25,
+              "text": "    schema: z.literal(\"model@1\"),"
+            },
+            {
+              "number": 26,
+              "text": "    /** path relative to content/ root; binaries live under assets/** */"
+            },
+            {
+              "number": 27,
+              "text": "    glbPath: z"
+            },
+            {
+              "number": 28,
+              "text": "      .string()"
+            },
+            {
+              "number": 29,
+              "text": "      .min(1)"
+            },
+            {
+              "number": 30,
+              "text": "      .regex(/^assets\\//, \"glbPath must be relative to content/ and start with assets/\"),"
+            },
+            {
+              "number": 31,
+              "text": "    scale: z.number().positive(),"
+            },
+            {
+              "number": 32,
+              "text": "    /** planar collision radius the sim uses for this model's champion */"
+            },
+            {
+              "number": 33,
+              "text": "    collisionRadius: z.number().positive(),"
+            },
+            {
+              "number": 34,
+              "text": "    /** logical state -> AnimationGroup clip name inside the .glb */"
+            },
+            {
+              "number": 35,
+              "text": "    clipMap: zClipMap,"
+            },
+            {
+              "number": 36,
+              "text": "    /**"
+            },
+            {
+              "number": 37,
+              "text": "     * Trusted catalog approval for use as a Hero Forge body. true allows a new"
+            },
+            {
+              "number": 38,
+              "text": "     * model before any official champion references it; false withdraws it from"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/glb.ts",
+      "repoRelativePath": "packages/shared/src/content/modelUpload/glb.ts",
+      "sha256": "acbea5faad130c9fdf39bf606eca286bccf6b1790a044a1220e2e6c015f480bc",
+      "bytes": 9666,
+      "excerpts": [
+        {
+          "start": 28,
+          "end": 41,
+          "lines": [
+            {
+              "number": 28,
+              "text": "export const MODEL_UPLOAD_LIMITS = {"
+            },
+            {
+              "number": 29,
+              "text": "  fileBytes: 32 * 1024 * 1024,"
+            },
+            {
+              "number": 30,
+              "text": "  jsonBytes: 4 * 1024 * 1024,"
+            },
+            {
+              "number": 31,
+              "text": "  jsonValues: 500_000,"
+            },
+            {
+              "number": 32,
+              "text": "  depth: 64,"
+            },
+            {
+              "number": 33,
+              "text": "  nodes: 1024,"
+            },
+            {
+              "number": 34,
+              "text": "  clips: 256,"
+            },
+            {
+              "number": 35,
+              "text": "  accessors: 32_768,"
+            },
+            {
+              "number": 36,
+              "text": "  accessorValues: 8_000_000,"
+            },
+            {
+              "number": 37,
+              "text": "  channels: 32_768,"
+            },
+            {
+              "number": 38,
+              "text": "  clipChannels: 2048,"
+            },
+            {
+              "number": 39,
+              "text": "  clipSeconds: 300,"
+            },
+            {
+              "number": 40,
+              "text": "} as const;"
+            },
+            {
+              "number": 41,
+              "text": "const extensions = new Set([\"KHR_materials_unlit\", \"KHR_texture_transform\", \"KHR_materials_emissive_strength\"]);"
+            }
+          ]
+        },
+        {
+          "start": 65,
+          "end": 101,
+          "lines": [
+            {
+              "number": 65,
+              "text": "  const stack: { value: unknown; depth: number }[] = [{ value: json, depth: 0 }]; let visited = 0;"
+            },
+            {
+              "number": 66,
+              "text": "  while (stack.length) {"
+            },
+            {
+              "number": 67,
+              "text": "    const { value, depth } = stack.pop()!;"
+            },
+            {
+              "number": 68,
+              "text": "    if (++visited > MODEL_UPLOAD_LIMITS.jsonValues || depth > MODEL_UPLOAD_LIMITS.depth) throw new Error(\"GLB 描述過於複雜。\");"
+            },
+            {
+              "number": 69,
+              "text": "    if (typeof value === \"number\" && !Number.isFinite(value)) throw new Error(\"GLB 含有無效數值。\");"
+            },
+            {
+              "number": 70,
+              "text": "    if (!value || typeof value !== \"object\") continue;"
+            },
+            {
+              "number": 71,
+              "text": "    for (const [key, child] of Object.entries(value)) {"
+            },
+            {
+              "number": 72,
+              "text": "      if (key === \"uri\" || key === \"url\") throw new Error(\"請把貼圖與 buffer 嵌入 GLB，不使用外部連結或 data URI。\");"
+            },
+            {
+              "number": 73,
+              "text": "      if (key === \"extensions\" && (!child || typeof child !== \"object\" || Array.isArray(child) || Object.keys(child).some((name) => !extensions.has(name)))) throw new Error(\"GLB 使用尚未支援的擴充，請匯出未壓縮的標準模型與動畫。\");"
+            },
+            {
+              "number": 74,
+              "text": "      if ((key === \"extensionsUsed\" || key === \"extensionsRequired\") && (!Array.isArray(child) || child.some((name) => typeof name !== \"string\" || !extensions.has(name)))) throw new Error(\"GLB 宣告尚未支援的擴充。\");"
+            },
+            {
+              "number": 75,
+              "text": "      // Count primitive array members too, without allocating a second huge stack."
+            },
+            {
+              "number": 76,
+              "text": "      if (stack.length + visited >= MODEL_UPLOAD_LIMITS.jsonValues) throw new Error(\"GLB 描述過於複雜。\");"
+            },
+            {
+              "number": 77,
+              "text": "      stack.push({ value: child, depth: depth + 1 });"
+            },
+            {
+              "number": 78,
+              "text": "    }"
+            },
+            {
+              "number": 79,
+              "text": "  }"
+            },
+            {
+              "number": 80,
+              "text": "  const doc = json as GlbDocument;"
+            },
+            {
+              "number": 81,
+              "text": "  if (doc.asset?.version !== \"2.0\") throw new Error(\"僅支援 glTF 2.0。\");"
+            },
+            {
+              "number": 82,
+              "text": "  const arrays = [\"nodes\", \"animations\", \"accessors\", \"bufferViews\", \"buffers\", \"images\", \"meshes\", \"skins\"] as const;"
+            },
+            {
+              "number": 83,
+              "text": "  for (const key of arrays) if (doc[key] !== undefined && !Array.isArray(doc[key])) throw new Error(`GLB ${key} 集合不合法。`);"
+            },
+            {
+              "number": 84,
+              "text": "  if (!doc.accessors || !doc.bufferViews || doc.buffers?.length !== 1 || !Number.isSafeInteger(doc.buffers[0]!.byteLength) || doc.buffers[0]!.byteLength > bin.length || doc.buffers[0]!.byteLength < bin.length - 3) throw new Error(\"GLB 必須使用單一內嵌 buffer。\");"
+            },
+            {
+              "number": 85,
+              "text": "  if ((doc.nodes?.length ?? 0) > MODEL_UPLOAD_LIMITS.nodes || (doc.animations?.length ?? 0) > MODEL_UPLOAD_LIMITS.clips || doc.accessors.length > MODEL_UPLOAD_LIMITS.accessors) throw new Error(\"節點、動作或 accessor 數超過匯入上限。\");"
+            },
+            {
+              "number": 86,
+              "text": "  let values = 0;"
+            },
+            {
+              "number": 87,
+              "text": "  for (const accessor of doc.accessors) {"
+            },
+            {
+              "number": 88,
+              "text": "    if (!accessor || !Number.isSafeInteger(accessor.count) || accessor.count <= 0 || !Object.hasOwn(dimensions, accessor.type)) throw new Error(\"GLB accessor 大小不合法。\");"
+            },
+            {
+              "number": 89,
+              "text": "    values += accessor.count * dimensions[accessor.type]!;"
+            },
+            {
+              "number": 90,
+              "text": "    if (values > MODEL_UPLOAD_LIMITS.accessorValues) throw new Error(\"GLB 解碼資料量超過匯入上限。\");"
+            },
+            {
+              "number": 91,
+              "text": "  }"
+            },
+            {
+              "number": 92,
+              "text": "  let channels = 0;"
+            },
+            {
+              "number": 93,
+              "text": "  for (const clip of doc.animations ?? []) {"
+            },
+            {
+              "number": 94,
+              "text": "    if (!clip || !Array.isArray(clip.channels) || !Array.isArray(clip.samplers) || clip.channels.length > MODEL_UPLOAD_LIMITS.clipChannels || clip.samplers.length > MODEL_UPLOAD_LIMITS.clipChannels) throw new Error(\"單段動作超過來源上限。\");"
+            },
+            {
+              "number": 95,
+              "text": "    channels += clip.channels.length;"
+            },
+            {
+              "number": 96,
+              "text": "  }"
+            },
+            {
+              "number": 97,
+              "text": "  if (channels > MODEL_UPLOAD_LIMITS.channels) throw new Error(\"動作庫總通道數超過匯入上限。\");"
+            },
+            {
+              "number": 98,
+              "text": "  return { json: doc, bin };"
+            },
+            {
+              "number": 99,
+              "text": "}"
+            },
+            {
+              "number": 100,
+              "text": ""
+            },
+            {
+              "number": 101,
+              "text": "/** Call only after structural validation; preflight still prevents oversized arrays. */"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/budget.ts",
+      "repoRelativePath": "packages/shared/src/content/modelUpload/budget.ts",
+      "sha256": "43aae1ec1e505f8896e47f481a948e3afb9f8ad1a4192ceced7b43e608f7bde4",
+      "bytes": 607,
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 12,
+          "lines": [
+            {
+              "number": 1,
+              "text": "/** Shared with tools/model-budget/limits.ts: iPad mini A17 Pro at 30 fps, estimated. */"
+            },
+            {
+              "number": 2,
+              "text": "export const C_CHAN_MS = 2.19 / 1476;"
+            },
+            {
+              "number": 3,
+              "text": "export const DERATE = 3;"
+            },
+            {
+              "number": 4,
+              "text": "export const ANIMATION_FRAME_MS = 9;"
+            },
+            {
+              "number": 5,
+              "text": "export const CHAMPION_INSTANCES = 12;"
+            },
+            {
+              "number": 6,
+              "text": "export const CHAMPION_CHANNEL_LIMIT = Math.floor(ANIMATION_FRAME_MS / (C_CHAN_MS * DERATE) / CHAMPION_INSTANCES / 10) * 10;"
+            },
+            {
+              "number": 7,
+              "text": "export const HERO_MODEL_BUDGET = {"
+            },
+            {
+              "number": 8,
+              "text": "  tris: { warn: 16_000, limit: 28_000 },"
+            },
+            {
+              "number": 9,
+              "text": "  meshes: { warn: 3, limit: 5 },"
+            },
+            {
+              "number": 10,
+              "text": "  texEdge: { warn: 512, limit: 1024 },"
+            },
+            {
+              "number": 11,
+              "text": "  channels: { warn: Math.floor(CHAMPION_CHANNEL_LIMIT * 0.75), limit: CHAMPION_CHANNEL_LIMIT },"
+            },
+            {
+              "number": 12,
+              "text": "} as const;"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/heroModel.ts",
+      "repoRelativePath": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "8d430ed65975f44576bb5b40d22200d86d5345afc8fd57c4e1dac20b858b8309",
+      "bytes": 3969,
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 56,
+          "lines": [
+            {
+              "number": 1,
+              "text": "import { zModelDoc } from \"../schema/model\";"
+            },
+            {
+              "number": 2,
+              "text": "import { contentSha256 } from \"../import/jcs\";"
+            },
+            {
+              "number": 3,
+              "text": "import { inspectModelUpload, type InspectedModelUpload } from \"./inspect\";"
+            },
+            {
+              "number": 4,
+              "text": "import { selectModelAnimations } from \"./compose\";"
+            },
+            {
+              "number": 5,
+              "text": "import { HERO_MODEL_BUDGET } from \"./budget\";"
+            },
+            {
+              "number": 6,
+              "text": "import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from \"./heroModelSchema\";"
+            },
+            {
+              "number": 7,
+              "text": "export function uploadedHeroModelDoc(raw: UploadedHeroModel) {"
+            },
+            {
+              "number": 8,
+              "text": "  const model = zUploadedHeroModel.parse(raw);"
+            },
+            {
+              "number": 9,
+              "text": "  return zModelDoc.parse({"
+            },
+            {
+              "number": 10,
+              "text": "    // Content ids are capped at 64 characters; bytes retain their full SHA-256."
+            },
+            {
+              "number": 11,
+              "text": "    id: `community.body.${contentSha256(model).slice(7, 55)}`, schema: \"model@1\", glbPath: uploadedHeroModelPath(model),"
+            },
+            {
+              "number": 12,
+              "text": "    // ChampionView already normalizes every body to the shared target height."
+            },
+            {
+              "number": 13,
+              "text": "    // Collision follows the existing champ.thorne body contract, not uploaded geometry."
+            },
+            {
+              "number": 14,
+              "text": "    scale: 1, collisionRadius: 0.6, clipMap: model.clipMap, yawOffsetDeg: model.yawOffsetDeg,"
+            },
+            {
+              "number": 15,
+              "text": "  });"
+            },
+            {
+              "number": 16,
+              "text": "}"
+            },
+            {
+              "number": 17,
+              "text": ""
+            },
+            {
+              "number": 18,
+              "text": "export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: string[]; warnings: string[] } {"
+            },
+            {
+              "number": 19,
+              "text": "  const errors: string[] = [], warnings: string[] = [];"
+            },
+            {
+              "number": 20,
+              "text": "  const rows = ["
+            },
+            {
+              "number": 21,
+              "text": "    [\"三角面\", model.triangles, HERO_MODEL_BUDGET.tris],"
+            },
+            {
+              "number": 22,
+              "text": "    [\"繪製網格\", model.meshes, HERO_MODEL_BUDGET.meshes],"
+            },
+            {
+              "number": 23,
+              "text": "    [\"貼圖邊長\", Math.max(0, ...model.textures.flatMap((texture) => [texture.width, texture.height])), HERO_MODEL_BUDGET.texEdge],"
+            },
+            {
+              "number": 24,
+              "text": "    [\"單段動作通道\", Math.max(0, ...model.clips.map((clip) => clip.channels)), HERO_MODEL_BUDGET.channels],"
+            },
+            {
+              "number": 25,
+              "text": "  ] as const;"
+            },
+            {
+              "number": 26,
+              "text": "  for (const [label, value, limit] of rows) {"
+            },
+            {
+              "number": 27,
+              "text": "    if (value > limit.limit) errors.push(`${label} ${value} 超過英雄模型上限 ${limit.limit}。`);"
+            },
+            {
+              "number": 28,
+              "text": "    else if (value > limit.warn) warnings.push(`${label} ${value} 高於警戒值 ${limit.warn}，送審時需檢查演出負載。`);"
+            },
+            {
+              "number": 29,
+              "text": "  }"
+            },
+            {
+              "number": 30,
+              "text": "  return { errors, warnings };"
+            },
+            {
+              "number": 31,
+              "text": "}"
+            },
+            {
+              "number": 32,
+              "text": ""
+            },
+            {
+              "number": 33,
+              "text": "/** Final bytes contain only clips explicitly mapped to GGD's six runtime states. */"
+            },
+            {
+              "number": 34,
+              "text": "export async function prepareUploadedHeroModel(source: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0) {"
+            },
+            {
+              "number": 35,
+              "text": "  const indices = HERO_MODEL_STATES.map((state) => selections[state]);"
+            },
+            {
+              "number": 36,
+              "text": "  if (indices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error(\"請為六項 GGD 動作指定片段；同一片段可重複使用。\");"
+            },
+            {
+              "number": 37,
+              "text": "  const chosen = [...new Set(indices)];"
+            },
+            {
+              "number": 38,
+              "text": "  const prepared = await selectModelAnimations(source, chosen);"
+            },
+            {
+              "number": 39,
+              "text": "  const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, prepared.inspected.clips[chosen.indexOf(selections[state])]!.name]));"
+            },
+            {
+              "number": 40,
+              "text": "  const model = zUploadedHeroModel.parse({ schema: \"ggd-uploaded-hero-model@1\", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg });"
+            },
+            {
+              "number": 41,
+              "text": "  const budget = heroModelBudgetIssues(prepared.inspected);"
+            },
+            {
+              "number": 42,
+              "text": "  if (budget.errors.length) throw new Error(budget.errors.join(\"\\n\"));"
+            },
+            {
+              "number": 43,
+              "text": "  return { ...prepared, model, document: uploadedHeroModelDoc(model), warnings: budget.warnings };"
+            },
+            {
+              "number": 44,
+              "text": "}"
+            },
+            {
+              "number": 45,
+              "text": ""
+            },
+            {
+              "number": 46,
+              "text": "/** Re-run from received bytes; a client report or descriptor grants no trust. */"
+            },
+            {
+              "number": 47,
+              "text": "export async function verifyUploadedHeroModel(raw: unknown, bytes: Uint8Array) {"
+            },
+            {
+              "number": 48,
+              "text": "  const model = zUploadedHeroModel.parse(raw);"
+            },
+            {
+              "number": 49,
+              "text": "  const inspected = await inspectModelUpload(bytes);"
+            },
+            {
+              "number": 50,
+              "text": "  if (inspected.sha256 !== model.sha256 || bytes.length !== model.byteSize) throw new Error(\"模型與固定的資產版本不符。\");"
+            },
+            {
+              "number": 51,
+              "text": "  const declared = new Set(Object.values(model.clipMap)), actual = inspected.clips.map((clip) => clip.name);"
+            },
+            {
+              "number": 52,
+              "text": "  if (declared.size !== actual.length || actual.some((name, index) => !declared.has(name) || inspected.json.animations![index]!.name !== name)) throw new Error(\"模型只能包含六項 GGD 用途實際引用的具名片段。\");"
+            },
+            {
+              "number": 53,
+              "text": "  const budget = heroModelBudgetIssues(inspected);"
+            },
+            {
+              "number": 54,
+              "text": "  if (budget.errors.length) throw new Error(budget.errors.join(\"\\n\"));"
+            },
+            {
+              "number": 55,
+              "text": "  return { model, document: uploadedHeroModelDoc(model), inspected, warnings: budget.warnings };"
+            },
+            {
+              "number": 56,
+              "text": "}"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/inspect.ts",
+      "repoRelativePath": "packages/shared/src/content/modelUpload/inspect.ts",
+      "sha256": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1",
+      "bytes": 3756,
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 53,
+          "lines": [
+            {
+              "number": 1,
+              "text": "import { sha256Bytes } from \"../sha256\";"
+            },
+            {
+              "number": 2,
+              "text": "import { sniffImageHeader } from \"../icons/encodeIcon\";"
+            },
+            {
+              "number": 3,
+              "text": "import { MODEL_UPLOAD_LIMITS, parseUploadGlb, readFloatAccessor } from \"./glb\";"
+            },
+            {
+              "number": 4,
+              "text": ""
+            },
+            {
+              "number": 5,
+              "text": "export interface UploadClip { index: number; name: string; duration: number; channels: number }"
+            },
+            {
+              "number": 6,
+              "text": "export interface UploadValidationReport {"
+            },
+            {
+              "number": 7,
+              "text": "  issues: { numErrors: number; numWarnings: number; numInfos: number; truncated: boolean; messages: { code: string; severity: number; pointer?: string; message?: string }[] };"
+            },
+            {
+              "number": 8,
+              "text": "}"
+            },
+            {
+              "number": 9,
+              "text": ""
+            },
+            {
+              "number": 10,
+              "text": "/** Async so the same validator runs in a bounded browser or server worker. */"
+            },
+            {
+              "number": 11,
+              "text": "export async function inspectModelUpload(bytes: Uint8Array, kind: \"model\" | \"animations\" = \"model\") {"
+            },
+            {
+              "number": 12,
+              "text": "  const parsed = parseUploadGlb(bytes), { json, bin } = parsed;"
+            },
+            {
+              "number": 13,
+              "text": "  // Khronos publishes JS without TypeScript declarations."
+            },
+            {
+              "number": 14,
+              "text": "  // @ts-expect-error gltf-validator has no declaration file."
+            },
+            {
+              "number": 15,
+              "text": "  const validator = await import(\"gltf-validator\");"
+            },
+            {
+              "number": 16,
+              "text": "  const report = await validator.validateBytes(bytes, {"
+            },
+            {
+              "number": 17,
+              "text": "    format: \"glb\", maxIssues: 1000, writeTimestamp: false, ignoredIssues: [\"UNUSED_OBJECT\"],"
+            },
+            {
+              "number": 18,
+              "text": "    externalResourceFunction: async () => { throw new Error(\"External resources disabled\"); },"
+            },
+            {
+              "number": 19,
+              "text": "  }) as UploadValidationReport;"
+            },
+            {
+              "number": 20,
+              "text": "  if (report.issues.numErrors || report.issues.truncated) throw new Error(\"GLB 格式檢查未通過：\" + (report.issues.messages.filter((issue) => issue.severity === 0).slice(0, 3).map((issue) => issue.code).join(\"、\") || \"診斷數超過上限\"));"
+            },
+            {
+              "number": 21,
+              "text": "  const names = new Set<string>();"
+            },
+            {
+              "number": 22,
+              "text": "  const clips: UploadClip[] = (json.animations ?? []).map((animation, index) => {"
+            },
+            {
+              "number": 23,
+              "text": "    let duration = 0;"
+            },
+            {
+              "number": 24,
+              "text": "    for (const sampler of animation.samplers) {"
+            },
+            {
+              "number": 25,
+              "text": "      const values = readFloatAccessor(json, bin, sampler.input);"
+            },
+            {
+              "number": 26,
+              "text": "      duration = Math.max(duration, values.at(-1) ?? 0);"
+            },
+            {
+              "number": 27,
+              "text": "    }"
+            },
+            {
+              "number": 28,
+              "text": "    if (duration <= 0 || duration > MODEL_UPLOAD_LIMITS.clipSeconds) throw new Error(\"動作長度必須大於零且不超過 300 秒。\");"
+            },
+            {
+              "number": 29,
+              "text": "    // Disambiguate only the working copy; uploaded original bytes remain intact."
+            },
+            {
+              "number": 30,
+              "text": "    const prefix = animation.name?.trim().slice(0, 120) || `動作 ${index + 1}`;"
+            },
+            {
+              "number": 31,
+              "text": "    let name = prefix, n = 2; while (names.has(name)) name = `${prefix} (${n++})`;"
+            },
+            {
+              "number": 32,
+              "text": "    names.add(name);"
+            },
+            {
+              "number": 33,
+              "text": "    return { index, name, duration, channels: animation.channels.length };"
+            },
+            {
+              "number": 34,
+              "text": "  });"
+            },
+            {
+              "number": 35,
+              "text": "  if (kind === \"animations\" && !clips.length) throw new Error(\"動作庫沒有動畫片段。\");"
+            },
+            {
+              "number": 36,
+              "text": "  let meshes = 0, triangles = 0;"
+            },
+            {
+              "number": 37,
+              "text": "  for (const node of json.nodes ?? []) if (node.mesh !== undefined) for (const primitive of json.meshes![node.mesh]!.primitives) {"
+            },
+            {
+              "number": 38,
+              "text": "    meshes++;"
+            },
+            {
+              "number": 39,
+              "text": "    const count = json.accessors[primitive.indices ?? primitive.attributes.POSITION!]!.count, mode = primitive.mode ?? 4;"
+            },
+            {
+              "number": 40,
+              "text": "    if (mode === 4) triangles += Math.floor(count / 3); else if (mode === 5 || mode === 6) triangles += Math.max(0, count - 2);"
+            },
+            {
+              "number": 41,
+              "text": "  }"
+            },
+            {
+              "number": 42,
+              "text": "  if (kind === \"model\" && (!meshes || !triangles)) throw new Error(\"模型檔沒有可見的三角網格。\");"
+            },
+            {
+              "number": 43,
+              "text": "  const textures = (json.images ?? []).map((image) => {"
+            },
+            {
+              "number": 44,
+              "text": "    if (image.bufferView === undefined || ![\"image/png\", \"image/jpeg\"].includes(image.mimeType ?? \"\")) throw new Error(\"GLB 貼圖必須是內嵌 PNG 或 JPEG。\");"
+            },
+            {
+              "number": 45,
+              "text": "    const view = json.bufferViews[image.bufferView]!, offset = view.byteOffset ?? 0;"
+            },
+            {
+              "number": 46,
+              "text": "    const imageBytes = bin.subarray(offset, offset + view.byteLength);"
+            },
+            {
+              "number": 47,
+              "text": "    const header = sniffImageHeader(imageBytes);"
+            },
+            {
+              "number": 48,
+              "text": "    if (!header || header.mime !== image.mimeType || !header.width || !header.height) throw new Error(\"GLB 貼圖格式與內容不符。\");"
+            },
+            {
+              "number": 49,
+              "text": "    return { width: header.width, height: header.height, bytes: view.byteLength, sha256: sha256Bytes(imageBytes) };"
+            },
+            {
+              "number": 50,
+              "text": "  });"
+            },
+            {
+              "number": 51,
+              "text": "  return { ...parsed, sha256: sha256Bytes(bytes), clips, meshes, triangles, textures, report };"
+            },
+            {
+              "number": 52,
+              "text": "}"
+            },
+            {
+              "number": 53,
+              "text": "export type InspectedModelUpload = Awaited<ReturnType<typeof inspectModelUpload>>;"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/schema/championModelVersions.ts",
+      "repoRelativePath": "packages/shared/src/content/schema/championModelVersions.ts",
+      "sha256": "18da578ce8bb1060bdd69a723f6e3bda7a6724d5323de7021a7602b755e13a75",
+      "bytes": 5544,
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 98,
+          "lines": [
+            {
+              "number": 1,
+              "text": "import { z } from \"zod\";"
+            },
+            {
+              "number": 2,
+              "text": "import { zId, zRef } from \"./ref\";"
+            },
+            {
+              "number": 3,
+              "text": ""
+            },
+            {
+              "number": 4,
+              "text": "export const MODEL_VERSION_PREFIX = \"version.body.\";"
+            },
+            {
+              "number": 5,
+              "text": "const zDigest = z.string().regex(/^[a-f0-9]{64}$/);"
+            },
+            {
+              "number": 6,
+              "text": "export const MODEL_SOURCE_ORDER = [\"300heroes\", \"mba\", \"original\", \"w3x\"] as const;"
+            },
+            {
+              "number": 7,
+              "text": "export const MODEL_SOURCE_LABELS = { \"300heroes\": \"300英雄\", mba: \"MBA\", original: \"原版\", w3x: \"借用 W3X\" } as const;"
+            },
+            {
+              "number": 8,
+              "text": "export const MODEL_SELECTION_ORDER = [\"manual\", \"canonical-game\", \"community-mod\", \"retextured-proxy\", \"similar-proxy\", ...MODEL_SOURCE_ORDER] as const;"
+            },
+            {
+              "number": 9,
+              "text": "export const MODEL_SELECTION_LABELS = { manual: \"手動指定模型\", \"canonical-game\": \"原著模型\", \"community-mod\": \"MOD社群修改\", \"retextured-proxy\": \"相似模型貼圖修改\", \"similar-proxy\": \"相似模型\", ...MODEL_SOURCE_LABELS } as const;"
+            },
+            {
+              "number": 10,
+              "text": "export const zModelSelectionMode = z.enum([\"automatic\", \"manual\"]);"
+            },
+            {
+              "number": 11,
+              "text": ""
+            },
+            {
+              "number": 12,
+              "text": "export const zModelVersionSource = z.object({"
+            },
+            {
+              "number": 13,
+              "text": "  kind: z.enum([\"exact\", \"alternate\", \"style-proxy\", \"previous\"]),"
+            },
+            {
+              "number": 14,
+              "text": "  character: z.string().trim().min(1).max(120),"
+            },
+            {
+              "number": 15,
+              "text": "  work: z.string().trim().min(1).max(160),"
+            },
+            {
+              "number": 16,
+              "text": "  library: z.string().trim().min(1).max(120),"
+            },
+            {
+              "number": 17,
+              "text": "  reference: z.string().trim().min(1).max(1000),"
+            },
+            {
+              "number": 18,
+              "text": "  tier: z.enum(MODEL_SOURCE_ORDER).optional(),"
+            },
+            {
+              "number": 19,
+              "text": "  // Selection class is independent of the preserved source library/tier."
+            },
+            {
+              "number": 20,
+              "text": "  selectionClass: z.enum(MODEL_SELECTION_ORDER).optional(),"
+            },
+            {
+              "number": 21,
+              "text": "  sourceGame: z.string().trim().min(1).max(160).optional(),"
+            },
+            {
+              "number": 22,
+              "text": "  sourcePlatform: z.string().trim().min(1).max(80).optional(),"
+            },
+            {
+              "number": 23,
+              "text": "  sourceGameReleasedAt: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/).refine((value) => modelGameReleaseDate({sourceGameReleasedAt:value}) === value, \"Invalid game release date\").optional(),"
+            },
+            {
+              "number": 24,
+              "text": "  sourceGameReleaseReference: z.string().trim().min(1).max(1000).optional(),"
+            },
+            {
+              "number": 25,
+              "text": "}).strict();"
+            },
+            {
+              "number": 26,
+              "text": ""
+            },
+            {
+              "number": 27,
+              "text": "/** A retained model document pins the GLB AND the complete animation/appearance binding. */"
+            },
+            {
+              "number": 28,
+              "text": "export const zChampionModelVersion = z.object({"
+            },
+            {
+              "number": 29,
+              "text": "  modelKey: zRef(\"models\").refine((id) => id.startsWith(MODEL_VERSION_PREFIX)),"
+            },
+            {
+              "number": 30,
+              "text": "  label: z.string().trim().min(1).max(160),"
+            },
+            {
+              "number": 31,
+              "text": "  sourceModelKey: zId,"
+            },
+            {
+              "number": 32,
+              "text": "  modelSha256: zDigest,"
+            },
+            {
+              "number": 33,
+              "text": "  binarySha256: zDigest,"
+            },
+            {
+              "number": 34,
+              "text": "  registeredAt: z.string().datetime(),"
+            },
+            {
+              "number": 35,
+              "text": "  source: zModelVersionSource,"
+            },
+            {
+              "number": 36,
+              "text": "  // Explicit approval lets the 11 owner-approved proxy copies participate in defaults."
+            },
+            {
+              "number": 37,
+              "text": "  automaticEligible: z.boolean().optional(),"
+            },
+            {
+              "number": 38,
+              "text": "}).strict();"
+            },
+            {
+              "number": 39,
+              "text": "export const zChampionModelVersions = z.array(zChampionModelVersion).min(1).max(64);"
+            },
+            {
+              "number": 40,
+              "text": "export type ChampionModelVersion = z.infer<typeof zChampionModelVersion>;"
+            },
+            {
+              "number": 41,
+              "text": "export type ModelVersionSource = z.infer<typeof zModelVersionSource>;"
+            },
+            {
+              "number": 42,
+              "text": ""
+            },
+            {
+              "number": 43,
+              "text": "/** Explicit provenance wins; retain compatibility with versions saved before tiers. */"
+            },
+            {
+              "number": 44,
+              "text": "export function modelSourceTier(source: ModelVersionSource): typeof MODEL_SOURCE_ORDER[number] {"
+            },
+            {
+              "number": 45,
+              "text": "  if (source.tier) return source.tier;"
+            },
+            {
+              "number": 46,
+              "text": "  if (/300heroes|300英雄/i.test(source.library)) return \"300heroes\";"
+            },
+            {
+              "number": 47,
+              "text": "  if (/\\bmba\\b|magical[-_ ]battle[-_ ]arena|魔法少女武鬥祭/i.test(source.library)) return \"mba\";"
+            },
+            {
+              "number": 48,
+              "text": "  if (/w3x|warcraft/i.test(source.library)) return \"w3x\";"
+            },
+            {
+              "number": 49,
+              "text": "  return \"original\";"
+            },
+            {
+              "number": 50,
+              "text": "}"
+            },
+            {
+              "number": 51,
+              "text": ""
+            },
+            {
+              "number": 52,
+              "text": "export function modelSelectionClass(source: ModelVersionSource): typeof MODEL_SELECTION_ORDER[number] {"
+            },
+            {
+              "number": 53,
+              "text": "  return source.selectionClass ?? (source.kind === \"style-proxy\" ? \"similar-proxy\" : modelSourceTier(source));"
+            },
+            {
+              "number": 54,
+              "text": "}"
+            },
+            {
+              "number": 55,
+              "text": ""
+            },
+            {
+              "number": 56,
+              "text": "/** Unknown dates sort last; upload/registration dates are not game release dates. */"
+            },
+            {
+              "number": 57,
+              "text": "export function modelGameReleaseDate(source: {sourceGameReleasedAt?: string}): string {"
+            },
+            {
+              "number": 58,
+              "text": "  const date = source.sourceGameReleasedAt ?? \"\";"
+            },
+            {
+              "number": 59,
+              "text": "  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) return \"\";"
+            },
+            {
+              "number": 60,
+              "text": "  const parsed = new Date(date + \"T00:00:00Z\");"
+            },
+            {
+              "number": 61,
+              "text": "  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0,10) === date ? date : \"\";"
+            },
+            {
+              "number": 62,
+              "text": "}"
+            },
+            {
+              "number": 63,
+              "text": ""
+            },
+            {
+              "number": 64,
+              "text": "/** Preserve every version; newer source games win within the same owner class. */"
+            },
+            {
+              "number": 65,
+              "text": "export function sortModelVersions(versions: readonly ChampionModelVersion[]): ChampionModelVersion[] {"
+            },
+            {
+              "number": 66,
+              "text": "  return [...versions].reverse().sort((a, b) => MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(a.source)) - MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(b.source)) || modelGameReleaseDate(b.source).localeCompare(modelGameReleaseDate(a.source)));"
+            },
+            {
+              "number": 67,
+              "text": "}"
+            },
+            {
+              "number": 68,
+              "text": ""
+            },
+            {
+              "number": 69,
+              "text": "/** Eligibility changes automatic selection, never the retained dropdown list. */"
+            },
+            {
+              "number": 70,
+              "text": "export function preferredModelVersion(versions: readonly ChampionModelVersion[]): ChampionModelVersion | undefined {"
+            },
+            {
+              "number": 71,
+              "text": "  return sortModelVersions(versions).find(modelVersionAutomaticEligible);"
+            },
+            {
+              "number": 72,
+              "text": "}"
+            },
+            {
+              "number": 73,
+              "text": ""
+            },
+            {
+              "number": 74,
+              "text": "export function modelVersionAutomaticEligible(version: ChampionModelVersion): boolean {"
+            },
+            {
+              "number": 75,
+              "text": "  return version.automaticEligible ?? version.source.kind !== \"style-proxy\";"
+            },
+            {
+              "number": 76,
+              "text": "}"
+            },
+            {
+              "number": 77,
+              "text": ""
+            },
+            {
+              "number": 78,
+              "text": "export const zModelVersionCommand = z.discriminatedUnion(\"action\", ["
+            },
+            {
+              "number": 79,
+              "text": "  z.object({"
+            },
+            {
+              "number": 80,
+              "text": "    action: z.literal(\"register\"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/),"
+            },
+            {
+              "number": 81,
+              "text": "    sourceModelKey: zId, label: z.string().trim().min(1).max(160), source: zModelVersionSource,"
+            },
+            {
+              "number": 82,
+              "text": "    automaticEligible: z.boolean().optional(),"
+            },
+            {
+              "number": 83,
+              "text": "  }).strict(),"
+            },
+            {
+              "number": 84,
+              "text": "  z.object({"
+            },
+            {
+              "number": 85,
+              "text": "    action: z.literal(\"activate\"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/), modelKey: zId,"
+            },
+            {
+              "number": 86,
+              "text": "  }).strict(),"
+            },
+            {
+              "number": 87,
+              "text": "  z.object({ action: z.literal(\"automatic\"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/) }).strict(),"
+            },
+            {
+              "number": 88,
+              "text": "]);"
+            },
+            {
+              "number": 89,
+              "text": "export type ModelVersionCommand = z.infer<typeof zModelVersionCommand>;"
+            },
+            {
+              "number": 90,
+              "text": "export const zChampionModelVersionState = z.object({"
+            },
+            {
+              "number": 91,
+              "text": "  championId: zId,"
+            },
+            {
+              "number": 92,
+              "text": "  expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/),"
+            },
+            {
+              "number": 93,
+              "text": "  activeModelKey: zId,"
+            },
+            {
+              "number": 94,
+              "text": "  selectionMode: zModelSelectionMode,"
+            },
+            {
+              "number": 95,
+              "text": "  preferredModelKey: zId,"
+            },
+            {
+              "number": 96,
+              "text": "  versions: z.array(zChampionModelVersion).max(64),"
+            },
+            {
+              "number": 97,
+              "text": "});"
+            },
+            {
+              "number": 98,
+              "text": "export type ChampionModelVersionState = z.infer<typeof zChampionModelVersionState>;"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/content-api/src/modelVersions.ts",
+      "repoRelativePath": "apps/content-api/src/modelVersions.ts",
+      "sha256": "70125e8d962348fa144d7e49e224dc86b36c7641e858344e336f21ed1a493831",
+      "bytes": 12242,
+      "excerpts": [
+        {
+          "start": 70,
+          "end": 165,
+          "lines": [
+            {
+              "number": 70,
+              "text": "    if (!realpathSync(absolute).startsWith(root + sep)) throw new ModelVersionError(\"模型連結不可指向內容目錄外。\", 422);"
+            },
+            {
+              "number": 71,
+              "text": "    if (statSync(absolute).size > MODEL_UPLOAD_LIMITS.fileBytes) throw new ModelVersionError(\"模型檔超過 32 MiB。\", 422);"
+            },
+            {
+              "number": 72,
+              "text": "    return new Uint8Array(readFileSync(absolute));"
+            },
+            {
+              "number": 73,
+              "text": "  }"
+            },
+            {
+              "number": 74,
+              "text": ""
+            },
+            {
+              "number": 75,
+              "text": "  private source(modelKey: string): { doc: ModelDoc; bytes: Uint8Array } {"
+            },
+            {
+              "number": 76,
+              "text": "    const file = docPath(this.root, \"models\", modelKey);"
+            },
+            {
+              "number": 77,
+              "text": "    if (!existsSync(file)) throw new ModelVersionError(`尚未匯入模型 ${modelKey}。`, 422);"
+            },
+            {
+              "number": 78,
+              "text": "    this.assertDocumentPath(file);"
+            },
+            {
+              "number": 79,
+              "text": "    const raw = readFileSync(file, \"utf8\");"
+            },
+            {
+              "number": 80,
+              "text": "    let doc: ModelDoc;"
+            },
+            {
+              "number": 81,
+              "text": "    try { doc = zModelDoc.parse(JSON.parse(raw)); }"
+            },
+            {
+              "number": 82,
+              "text": "    catch { throw new ModelVersionError(\"模型設定格式無效，未建立新版本。\", 422); }"
+            },
+            {
+              "number": 83,
+              "text": "    if (doc.id !== modelKey) throw new ModelVersionError(\"模型 ID 與檔名不符。\", 422);"
+            },
+            {
+              "number": 84,
+              "text": "    const bytes = this.asset(doc.glbPath);"
+            },
+            {
+              "number": 85,
+              "text": "    try { parseUploadGlb(bytes); }"
+            },
+            {
+              "number": 86,
+              "text": "    catch (error) { throw new ModelVersionError(error instanceof Error ? error.message : \"GLB 格式無效。\", 422); }"
+            },
+            {
+              "number": 87,
+              "text": "    return { doc, bytes };"
+            },
+            {
+              "number": 88,
+              "text": "  }"
+            },
+            {
+              "number": 89,
+              "text": ""
+            },
+            {
+              "number": 90,
+              "text": "  private freeze(source: { doc: ModelDoc; bytes: Uint8Array }, label: string, provenance: ChampionModelVersion[\"source\"], legacy: boolean, automaticEligible?: boolean): FrozenBody {"
+            },
+            {
+              "number": 91,
+              "text": "    // Keep the asset family prefix: legacy overlay detection depends on it."
+            },
+            {
+              "number": 92,
+              "text": "    // Drop the live generator knob, since this GLB is already baked and immutable."
+            },
+            {
+              "number": 93,
+              "text": "    const { voxel: _voxel, bodyVersion: _version, ...binding } = source.doc;"
+            },
+            {
+              "number": 94,
+              "text": "    const binarySha256 = sha256Bytes(source.bytes);"
+            },
+            {
+              "number": 95,
+              "text": "    const glbPath = `${source.doc.glbPath.slice(0, source.doc.glbPath.lastIndexOf(\"/\"))}/versions/${binarySha256}.glb`;"
+            },
+            {
+              "number": 96,
+              "text": "    const appearance = { ...binding, glbPath, yawOffsetDeg: effectiveYawOffsetDeg(source.doc), bodyVersion: { sourceModelKey: source.doc.id, legacyAppearance: legacy } };"
+            },
+            {
+              "number": 97,
+              "text": "    // Identical bytes from different deliveries retain independently selectable provenance."
+            },
+            {
+              "number": 98,
+              "text": "    const id = MODEL_VERSION_PREFIX + contentSha256({ appearance, label, source: provenance, ...(automaticEligible === undefined ? {} : { automaticEligible }) }).slice(7, 55);"
+            },
+            {
+              "number": 99,
+              "text": "    const doc = zModelDoc.parse({ ...appearance, id });"
+            },
+            {
+              "number": 100,
+              "text": "    const version = zChampionModelVersion.parse({ modelKey: id, label, sourceModelKey: source.doc.id, modelSha256: contentSha256(doc).slice(7), binarySha256, registeredAt: new Date().toISOString(), source: provenance, ...(automaticEligible === undefined ? {} : { automaticEligible }) });"
+            },
+            {
+              "number": 101,
+              "text": "    return { doc, bytes: source.bytes, version };"
+            },
+            {
+              "number": 102,
+              "text": "  }"
+            },
+            {
+              "number": 103,
+              "text": ""
+            },
+            {
+              "number": 104,
+              "text": "  verify(version: ChampionModelVersion): void {"
+            },
+            {
+              "number": 105,
+              "text": "    const { doc, bytes } = this.source(version.modelKey);"
+            },
+            {
+              "number": 106,
+              "text": "    if (contentSha256(doc).slice(7) !== version.modelSha256 || sha256Bytes(bytes) !== version.binarySha256) {"
+            },
+            {
+              "number": 107,
+              "text": "      throw new ModelVersionError(\"保存的模型或動作設定已被外部修改，未切換上線版本。請先還原該版本檔案。\", 409);"
+            },
+            {
+              "number": 108,
+              "text": "    }"
+            },
+            {
+              "number": 109,
+              "text": "  }"
+            },
+            {
+              "number": 110,
+              "text": ""
+            },
+            {
+              "number": 111,
+              "text": "  async prepare(id: string, command: ModelVersionCommand): Promise<{ champion: ChampionDoc; artifacts: FrozenBody[] }> {"
+            },
+            {
+              "number": 112,
+              "text": "    const champion = this.champion(id);"
+            },
+            {
+              "number": 113,
+              "text": "    this.assertCurrent(champion.id, command.expectedHash);"
+            },
+            {
+              "number": 114,
+              "text": "    if (command.action === \"activate\" || command.action === \"automatic\") {"
+            },
+            {
+              "number": 115,
+              "text": "      const version = command.action === \"automatic\" ? preferredModelVersion(champion.modelVersions ?? []) : champion.modelVersions?.find((v) => v.modelKey === command.modelKey);"
+            },
+            {
+              "number": 116,
+              "text": "      if (!version) throw new ModelVersionError(\"此英雄沒有該模型版本。\", 422);"
+            },
+            {
+              "number": 117,
+              "text": "      this.verify(version);"
+            },
+            {
+              "number": 118,
+              "text": "      return { champion: zChampionDoc.parse({ ...champion, modelKey: version.modelKey, modelSelectionMode: command.action === \"automatic\" ? \"automatic\" : \"manual\" }), artifacts: [] };"
+            },
+            {
+              "number": 119,
+              "text": "    }"
+            },
+            {
+              "number": 120,
+              "text": "    if (command.source.kind === \"previous\") throw new ModelVersionError(\"舊版紀錄由系統自動保存。\", 422);"
+            },
+            {
+              "number": 121,
+              "text": "    const candidate = this.source(command.sourceModelKey);"
+            },
+            {
+              "number": 122,
+              "text": "    if (candidate.doc.heroBody === false) throw new ModelVersionError(\"此模型已停用作為英雄身體。\", 422);"
+            },
+            {
+              "number": 123,
+              "text": "    const inspected = await inspectModelUpload(candidate.bytes).catch((error: unknown) => { throw new ModelVersionError(error instanceof Error ? error.message : \"模型驗證失敗。\", 422); });"
+            },
+            {
+              "number": 124,
+              "text": "    const budget = heroModelBudgetIssues(inspected);"
+            },
+            {
+              "number": 125,
+              "text": "    if (budget.errors.length) throw new ModelVersionError(budget.errors.join(\"\\n\"), 422);"
+            },
+            {
+              "number": 126,
+              "text": "    const names = (inspected.json.animations ?? []).map((animation) => animation.name);"
+            },
+            {
+              "number": 127,
+              "text": "    if (Object.values(candidate.doc.clipMap).some((name) => !names.includes(name)) || new Set(names).size !== names.length) {"
+            },
+            {
+              "number": 128,
+              "text": "      throw new ModelVersionError(\"六項動作映射必須對應 GLB 內唯一具名的片段。\", 422);"
+            },
+            {
+              "number": 129,
+              "text": "    }"
+            },
+            {
+              "number": 130,
+              "text": "    this.assertCurrent(champion.id, command.expectedHash);"
+            },
+            {
+              "number": 131,
+              "text": "    const artifacts: FrozenBody[] = [];"
+            },
+            {
+              "number": 132,
+              "text": "    const versions = [...(champion.modelVersions ?? [])];"
+            },
+            {
+              "number": 133,
+              "text": "    if (versions.length >= 64) throw new ModelVersionError(\"此英雄已保存 64 個版本，未移除任何歷史版本。\", 422);"
+            },
+            {
+              "number": 134,
+              "text": "    if (!versions.length) {"
+            },
+            {
+              "number": 135,
+              "text": "      const previous = this.freeze(this.source(champion.modelKey), \"原上線模型\", {"
+            },
+            {
+              "number": 136,
+              "text": "        kind: \"previous\", character: champion.name, work: \"原上線內容\", library: \"GGD\", reference: `models/${champion.modelKey}.json`, tier: /^(imported\\.|w3x\\.)/.test(champion.modelKey) ? \"w3x\" : \"original\","
+            },
+            {
+              "number": 137,
+              "text": "      }, true);"
+            },
+            {
+              "number": 138,
+              "text": "      artifacts.push(previous); versions.push(previous.version);"
+            },
+            {
+              "number": 139,
+              "text": "    }"
+            },
+            {
+              "number": 140,
+              "text": "    const next = this.freeze(candidate, command.label, command.source, false, command.automaticEligible ?? command.source.kind !== \"style-proxy\");"
+            },
+            {
+              "number": 141,
+              "text": "    if (versions.some((v) => v.modelKey === next.version.modelKey)) {"
+            },
+            {
+              "number": 142,
+              "text": "      throw new ModelVersionError(\"相同模型與動作設定已在此英雄的版本清單中，請直接選擇該版本。\", 409);"
+            },
+            {
+              "number": 143,
+              "text": "    }"
+            },
+            {
+              "number": 144,
+              "text": "    artifacts.push(next); versions.push(next.version);"
+            },
+            {
+              "number": 145,
+              "text": "    const mode = champion.modelSelectionMode ?? \"automatic\";"
+            },
+            {
+              "number": 146,
+              "text": "    const selected = mode === \"manual\" ? versions.find((v) => v.modelKey === champion.modelKey) ?? versions[0]! : preferredModelVersion(versions);"
+            },
+            {
+              "number": 147,
+              "text": "    if (!selected) throw new ModelVersionError(\"沒有核准自動選用的模型；候選仍保留供手動選用。\", 422);"
+            },
+            {
+              "number": 148,
+              "text": "    if (!artifacts.some((artifact) => artifact.version.modelKey === selected.modelKey)) this.verify(selected);"
+            },
+            {
+              "number": 149,
+              "text": "    return { champion: zChampionDoc.parse({ ...champion, modelKey: selected.modelKey, modelVersions: versions, modelSelectionMode: mode }), artifacts };"
+            },
+            {
+              "number": 150,
+              "text": "  }"
+            },
+            {
+              "number": 151,
+              "text": ""
+            },
+            {
+              "number": 152,
+              "text": "  assertCurrent(id: string, expectedHash: string): void {"
+            },
+            {
+              "number": 153,
+              "text": "    if (contentSha256(this.champion(id)) !== expectedHash) throw new ModelVersionError(\"英雄已被其他操作更新，請重新載入後再選擇模型。\", 409);"
+            },
+            {
+              "number": 154,
+              "text": "  }"
+            },
+            {
+              "number": 155,
+              "text": ""
+            },
+            {
+              "number": 156,
+              "text": "  writeArtifacts(artifacts: readonly FrozenBody[]): void {"
+            },
+            {
+              "number": 157,
+              "text": "    // Preflight every collision before the first write. Never overwrite a previous asset."
+            },
+            {
+              "number": 158,
+              "text": "    const files = artifacts.flatMap(({ doc, bytes }) => ["
+            },
+            {
+              "number": 159,
+              "text": "      { path: resolve(this.root, doc.glbPath), bytes: Buffer.from(bytes) },"
+            },
+            {
+              "number": 160,
+              "text": "      { path: docPath(this.root, \"models\", doc.id), bytes: Buffer.from(fileJson(doc)) },"
+            },
+            {
+              "number": 161,
+              "text": "    ]);"
+            },
+            {
+              "number": 162,
+              "text": "    const root = realpathSync(this.root);"
+            },
+            {
+              "number": 163,
+              "text": "    for (const file of files) {"
+            },
+            {
+              "number": 164,
+              "text": "      let ancestor = file.path;"
+            },
+            {
+              "number": 165,
+              "text": "      while (!existsSync(ancestor)) ancestor = dirname(ancestor);"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/admin/src/ui/ChampionModelVersions.tsx",
+      "repoRelativePath": "apps/admin/src/ui/ChampionModelVersions.tsx",
+      "sha256": "8b00d0ea2ba6784ece32de6a8a57b0e548244ff546718e2eed8fa9291676dd25",
+      "bytes": 10458,
+      "excerpts": [
+        {
+          "start": 26,
+          "end": 93,
+          "lines": [
+            {
+              "number": 26,
+              "text": "  const [error, setError] = useState<string | null>(null);"
+            },
+            {
+              "number": 27,
+              "text": "  const [notice, setNotice] = useState(\"\");"
+            },
+            {
+              "number": 28,
+              "text": "  const [models, setModels] = useState<string[]>([]);"
+            },
+            {
+              "number": 29,
+              "text": "  const [model, setModel] = useState<Record<string, unknown> | null>(null);"
+            },
+            {
+              "number": 30,
+              "text": "  const [sourceModelKey, setSourceModelKey] = useState(\"\");"
+            },
+            {
+              "number": 31,
+              "text": "  const [label, setLabel] = useState(\"\");"
+            },
+            {
+              "number": 32,
+              "text": "  const [source, setSource] = useState<ModelVersionSource>({ kind: \"exact\", character: \"\", work: \"\", library: \"\", reference: \"\", tier: \"300heroes\" });"
+            },
+            {
+              "number": 33,
+              "text": "  const alive = useRef(false);"
+            },
+            {
+              "number": 34,
+              "text": "  useEffect(() => {"
+            },
+            {
+              "number": 35,
+              "text": "    let current = true;"
+            },
+            {
+              "number": 36,
+              "text": "    alive.current = true;"
+            },
+            {
+              "number": 37,
+              "text": "    void api.modelVersions.read(championId).then((result) => {"
+            },
+            {
+              "number": 38,
+              "text": "      if (!current) return;"
+            },
+            {
+              "number": 39,
+              "text": "      setState(result.state); setError(result.error); setSelected(result.state?.activeModelKey ?? \"\");"
+            },
+            {
+              "number": 40,
+              "text": "    });"
+            },
+            {
+              "number": 41,
+              "text": "    return () => { current = false; alive.current = false; };"
+            },
+            {
+              "number": 42,
+              "text": "  }, [api, championId, props.document]);"
+            },
+            {
+              "number": 43,
+              "text": "  useEffect(() => {"
+            },
+            {
+              "number": 44,
+              "text": "    let current = true;"
+            },
+            {
+              "number": 45,
+              "text": "    if (props.allowRegister === false) return;"
+            },
+            {
+              "number": 46,
+              "text": "    void api.modelVersions.catalog().then((result) => { if (current) { setModels(result.ids); if (result.error) setError(result.error); } });"
+            },
+            {
+              "number": 47,
+              "text": "    return () => { current = false; };"
+            },
+            {
+              "number": 48,
+              "text": "  }, [api, props.document, props.allowRegister]);"
+            },
+            {
+              "number": 49,
+              "text": "  useEffect(() => {"
+            },
+            {
+              "number": 50,
+              "text": "    let current = true;"
+            },
+            {
+              "number": 51,
+              "text": "    setModel(null);"
+            },
+            {
+              "number": 52,
+              "text": "    if (selected) void api.fetchDoc(\"models\", selected).then((result) => { if (current) setModel(result.doc); });"
+            },
+            {
+              "number": 53,
+              "text": "    return () => { current = false; };"
+            },
+            {
+              "number": 54,
+              "text": "  }, [api, selected]);"
+            },
+            {
+              "number": 55,
+              "text": ""
+            },
+            {
+              "number": 56,
+              "text": "  const apply = async (command: ModelVersionCommand) => {"
+            },
+            {
+              "number": 57,
+              "text": "    props.onBusy(true); setError(null); setNotice(\"\");"
+            },
+            {
+              "number": 58,
+              "text": "    const result = await api.modelVersions.update(championId, command);"
+            },
+            {
+              "number": 59,
+              "text": "    if (!alive.current) return;"
+            },
+            {
+              "number": 60,
+              "text": "    props.onBusy(false);"
+            },
+            {
+              "number": 61,
+              "text": "    if (!result.state) { setError(result.error); return; }"
+            },
+            {
+              "number": 62,
+              "text": "    setState(result.state); setSelected(result.state.activeModelKey);"
+            },
+            {
+              "number": 63,
+              "text": "    setNotice(\"已儲存模型選擇。自動模式依來源順位套用；手動模式保留你的選擇。\");"
+            },
+            {
+              "number": 64,
+              "text": "    props.onSaved();"
+            },
+            {
+              "number": 65,
+              "text": "  };"
+            },
+            {
+              "number": 66,
+              "text": "  const locked = props.disabled || props.dirty || !state;"
+            },
+            {
+              "number": 67,
+              "text": "  const version = state?.versions.find((entry) => entry.modelKey === selected);"
+            },
+            {
+              "number": 68,
+              "text": "  return <Panel title=\"上線模型版本\">"
+            },
+            {
+              "number": 69,
+              "text": "    <div style={{ display: \"grid\", gap: 10 }}>"
+            },
+            {
+              "number": 70,
+              "text": "      <label>選擇上線套用的 3D 模型"
+            },
+            {
+              "number": 71,
+              "text": "        <select aria-label=\"上線模型版本\" style={inputStyle} disabled={locked} value={selected} onChange={(event) => setSelected(event.target.value)}>"
+            },
+            {
+              "number": 72,
+              "text": "          {!state?.versions.length && <option value={state?.activeModelKey ?? \"\"}>目前模型 · {state?.activeModelKey ?? \"載入中\"}</option>}"
+            },
+            {
+              "number": 73,
+              "text": "          {sortModelVersions(state?.versions ?? []).map((entry) => <option key={entry.modelKey} value={entry.modelKey}>"
+            },
+            {
+              "number": 74,
+              "text": "            {MODEL_SELECTION_LABELS[modelSelectionClass(entry.source)]} · {entry.label} · {KIND_LABELS[entry.source.kind]}{!modelVersionAutomaticEligible(entry) ? \" · 手動選用\" : entry.modelKey === state?.preferredModelKey ? \" · 預設首選\" : \"\"}{entry.modelKey === state?.activeModelKey ? \" · 使用中\" : \"\"}"
+            },
+            {
+              "number": 75,
+              "text": "          </option>)}"
+            },
+            {
+              "number": 76,
+              "text": "        </select>"
+            },
+            {
+              "number": 77,
+              "text": "      </label>"
+            },
+            {
+              "number": 78,
+              "text": "      {version && <div style={{ color: TEXT_DIM, fontSize: 12 }}>"
+            },
+            {
+              "number": 79,
+              "text": "        素材角色：{version.source.character} · 作品：{version.source.work} · 素材庫：{version.source.library}<br />"
+            },
+            {
+              "number": 80,
+              "text": "        來源：{version.source.reference}<br />"
+            },
+            {
+              "number": 81,
+              "text": "        {version.source.sourceGame && <>來源遊戲：{version.source.sourceGame} · {version.source.sourcePlatform ?? \"平台待核\"} · 發售日：{version.source.sourceGameReleasedAt ?? \"待核\"}<br /></>}"
+            },
+            {
+              "number": 82,
+              "text": "        保存時間：{new Date(version.registeredAt).toLocaleString()}"
+            },
+            {
+              "number": 83,
+              "text": "      </div>}"
+            },
+            {
+              "number": 84,
+              "text": "      {model && <details><summary>檢視此版模型與動作綁定</summary><pre style={{ whiteSpace: \"pre-wrap\", overflowWrap: \"anywhere\", fontSize: 12 }}>{JSON.stringify({ 模型: model.glbPath, 尺寸: model.scale, 朝向角度: model.yawOffsetDeg, 動作: model.clipMap }, null, 2)}</pre></details>}"
+            },
+            {
+              "number": 85,
+              "text": "      <Btn disabled={locked || !version || (selected === state?.activeModelKey && state?.selectionMode === \"manual\")} onClick={() => state && void apply({ action: \"activate\", modelKey: selected, expectedHash: state.expectedHash })}>套用選取版本</Btn>"
+            },
+            {
+              "number": 86,
+              "text": "      <div style={{ color: TEXT_DIM, fontSize: 12 }}>預設順序：{MODEL_SELECTION_ORDER.map((key) => MODEL_SELECTION_LABELS[key]).join(\" ＞ \")}。同級按來源遊戲發售日由新到舊，日期待核者排後；不同世代與作品全部保留供手選。原著模型指原作遊戲直接擷取，300／MBA 維持各自順位。僅套用核准的預設候選；現在為{state?.selectionMode === \"manual\" ? \"手動選用\" : \"自動選用\"}。</div>"
+            },
+            {
+              "number": 87,
+              "text": "      <Btn disabled={locked || !state?.versions.length || (state.selectionMode === \"automatic\" && state.activeModelKey === state.preferredModelKey)} onClick={() => state && void apply({ action: \"automatic\", expectedHash: state.expectedHash })}>恢復依順位自動選用</Btn>"
+            },
+            {
+              "number": 88,
+              "text": "      {props.allowRegister !== false && <details><summary>新增已匯入的模型版本</summary>"
+            },
+            {
+              "number": 89,
+              "text": "        <fieldset disabled={locked} style={{ border: 0, padding: \"10px 0\", display: \"grid\", gap: 8 }}>"
+            },
+            {
+              "number": 90,
+              "text": "          <label>已匯入模型<input aria-label=\"新增版本的模型\" list={`model-options-${championId}`} style={inputStyle} value={sourceModelKey} onChange={(e) => setSourceModelKey(e.target.value)} /></label>"
+            },
+            {
+              "number": 91,
+              "text": "          <datalist id={`model-options-${championId}`}>{models.map((id) => <option key={id} value={id} />)}</datalist>"
+            },
+            {
+              "number": 92,
+              "text": "          <label>版本名稱<input aria-label=\"模型版本名稱\" maxLength={160} style={inputStyle} value={label} onChange={(e) => setLabel(e.target.value)} /></label>"
+            },
+            {
+              "number": 93,
+              "text": "          <label>來源類別<select aria-label=\"模型來源類別\" style={inputStyle} value={source.tier} onChange={(e) => setSource({ ...source, tier: e.target.value as ModelVersionSource[\"tier\"] })}>{MODEL_SOURCE_ORDER.map((tier) => <option key={tier} value={tier}>{MODEL_SOURCE_LABELS[tier]}</option>)}</select></label>"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/AssetManager.ts",
+      "repoRelativePath": "apps/client/src/render/AssetManager.ts",
+      "sha256": "9afd9669ac561c127750223057aa5a8655c7539ce2ec81e33c5d4fd079345781",
+      "bytes": 13724,
+      "excerpts": [
+        {
+          "start": 156,
+          "end": 195,
+          "lines": [
+            {
+              "number": 156,
+              "text": "export type AssetTag = \"shared\" | \"fx\";"
+            },
+            {
+              "number": 157,
+              "text": "import { frozenMatchAssetSource } from \"../content/frozenAssets\";"
+            },
+            {
+              "number": 158,
+              "text": "export interface FrozenAssetSource {"
+            },
+            {
+              "number": 159,
+              "text": "  resolveUrl(path: string): string;"
+            },
+            {
+              "number": 160,
+              "text": "  resolvePath?(path: string): string;"
+            },
+            {
+              "number": 161,
+              "text": "}"
+            },
+            {
+              "number": 162,
+              "text": ""
+            },
+            {
+              "number": 163,
+              "text": "export class AssetManager {"
+            },
+            {
+              "number": 164,
+              "text": "  private readonly cache = new Map<string, Promise<AssetContainer | null>>();"
+            },
+            {
+              "number": 165,
+              "text": "  /** resolved path → 誰要過它（🧹 GH#819 的 purge 判準；⛔ 不是手寫名單）。 */"
+            },
+            {
+              "number": 166,
+              "text": "  private readonly tags = new Map<string, Set<AssetTag>>();"
+            },
+            {
+              "number": 167,
+              "text": ""
+            },
+            {
+              "number": 168,
+              "text": "  constructor("
+            },
+            {
+              "number": 169,
+              "text": "    private readonly scene: Scene,"
+            },
+            {
+              "number": 170,
+              "text": "    private readonly baseUrl = \"/content/\","
+            },
+            {
+              "number": 171,
+              "text": "    private readonly frozenSource: FrozenAssetSource | undefined = frozenMatchAssetSource(),"
+            },
+            {
+              "number": 172,
+              "text": "  ) {"
+            },
+            {
+              "number": 173,
+              "text": "    // 🔁 讀一次貼圖去重的逃生口（`localStorage[\"ggd.textureDedup\"]=\"off\"`）。"
+            },
+            {
+              "number": 174,
+              "text": "    // ⭐ 掛在這裡而不是 boot：`main.tsx` 不在這條 lane 的柵欄內,而**每一條**載入"
+            },
+            {
+              "number": 175,
+              "text": "    // 模型的路徑都會先建一個 AssetManager ⇒ 這裡是柵欄內唯一必經的閘口。冪等。"
+            },
+            {
+              "number": 176,
+              "text": "    initTextureDedup();"
+            },
+            {
+              "number": 177,
+              "text": "  }"
+            },
+            {
+              "number": 178,
+              "text": ""
+            },
+            {
+              "number": 179,
+              "text": "  /**"
+            },
+            {
+              "number": 180,
+              "text": "   * Resolve an AssetContainer for a glb path relative to content/"
+            },
+            {
+              "number": 181,
+              "text": "   * (e.g. \"assets/models/props/pillar.glb\"), or null when unavailable."
+            },
+            {
+              "number": 182,
+              "text": "   *"
+            },
+            {
+              "number": 183,
+              "text": "   * MODEL LOD (task #115). The authored path in is the model doc's; the path"
+            },
+            {
+              "number": 184,
+              "text": "   * actually FETCHED is `resolveLodPath`'s, which appends `-mid`/`-small` when"
+            },
+            {
+              "number": 185,
+              "text": "   * the active graphics preset asks for a lower tier and that tier was"
+            },
+            {
+              "number": 186,
+              "text": "   * generated. This is the ONE place the swap happens — every consumer"
+            },
+            {
+              "number": 187,
+              "text": "   * (ChampionView, GuardianView, FlowerView, StorePreview, IntermissionScene,"
+            },
+            {
+              "number": 188,
+              "text": "   * the audition harnesses) already funnels through here."
+            },
+            {
+              "number": 189,
+              "text": "   *"
+            },
+            {
+              "number": 190,
+              "text": "   * The cache is keyed on the RESOLVED path, not the authored one: keying on"
+            },
+            {
+              "number": 191,
+              "text": "   * the authored path would hand back the previous tier's container after a"
+            },
+            {
+              "number": 192,
+              "text": "   * settings change and the setting would silently do nothing again."
+            },
+            {
+              "number": 193,
+              "text": "   */"
+            },
+            {
+              "number": 194,
+              "text": "  load(path: string, tag: AssetTag = \"shared\"): Promise<AssetContainer | null> {"
+            },
+            {
+              "number": 195,
+              "text": "    const resolved = this.frozenSource ? this.frozenSource.resolvePath?.(path) ?? path : resolveLodPath(path);"
+            }
+          ]
+        },
+        {
+          "start": 240,
+          "end": 285,
+          "lines": [
+            {
+              "number": 240,
+              "text": "  }"
+            },
+            {
+              "number": 241,
+              "text": ""
+            },
+            {
+              "number": 242,
+              "text": "  private async loadUncached(path: string): Promise<AssetContainer | null> {"
+            },
+            {
+              "number": 243,
+              "text": "    try {"
+            },
+            {
+              "number": 244,
+              "text": "      // register the glTF loader on demand (render/-only Babylon surface)"
+            },
+            {
+              "number": 245,
+              "text": "      await import(\"@babylonjs/loaders/glTF\");"
+            },
+            {
+              "number": 246,
+              "text": "      const url = this.frozenSource ? this.frozenSource.resolveUrl(path) : this.baseUrl + path;"
+            },
+            {
+              "number": 247,
+              "text": "      // Content cache key. `?h=<contentVersion>` is the ONLY thing that flips"
+            },
+            {
+              "number": 248,
+              "text": "      // nginx from `no-cache` to `public, max-age=31536000, immutable`"
+            },
+            {
+              "number": 249,
+              "text": "      // (nginx.conf `map $arg_h $content_cache`), and the .glb corpus is"
+            },
+            {
+              "number": 250,
+              "text": "      // 36,525,948 B across 163 files — by far the largest revalidating set in"
+            },
+            {
+              "number": 251,
+              "text": "      // the game. Stamped ONLY on the byte fetch: `url` stays bare below so the"
+            },
+            {
+              "number": 252,
+              "text": "      // loader's `name`/`rootUrl` (and any sibling URI it resolves against"
+            },
+            {
+              "number": 253,
+              "text": "      // them) are unaffected. No-op until the manifest lands, so this needs no"
+            },
+            {
+              "number": 254,
+              "text": "      // ordering guarantee — see content/assetVersion.ts."
+            },
+            {
+              "number": 255,
+              "text": "      const bytes = await loadBytes(this.frozenSource ? url : withContentVersion(url));"
+            },
+            {
+              "number": 256,
+              "text": "      if (bytes === null) return null; // missing/unreachable — never reaches the loader"
+            },
+            {
+              "number": 257,
+              "text": "      const dot = path.lastIndexOf(\".\");"
+            },
+            {
+              "number": 258,
+              "text": "      const ext = dot < 0 ? \"\" : path.slice(dot).toLowerCase();"
+            },
+            {
+              "number": 259,
+              "text": "      const slash = url.lastIndexOf(\"/\");"
+            },
+            {
+              "number": 260,
+              "text": "      if (ext !== \".glb\") {"
+            },
+            {
+              "number": 261,
+              "text": "        // .gltf & friends resolve sibling .bin/texture URIs themselves, and the"
+            },
+            {
+              "number": 262,
+              "text": "        // loader refuses an ArrayBufferView for non-binary plugins — so hand it"
+            },
+            {
+              "number": 263,
+              "text": "        // the URL. Costs a second request, but the file is known to exist by"
+            },
+            {
+              "number": 264,
+              "text": "        // now, so this still never spams a 404 through the loader. Deliberately"
+            },
+            {
+              "number": 265,
+              "text": "        // NOT `?h=`-stamped: a .gltf resolves its sibling .bin/textures relative"
+            },
+            {
+              "number": 266,
+              "text": "        // to this URL and a query arg would follow them into paths nginx does"
+            },
+            {
+              "number": 267,
+              "text": "        // not serve. Nothing under content/ is .gltf today, so this costs"
+            },
+            {
+              "number": 268,
+              "text": "        // nothing; if that changes, stamp the siblings, not the parent."
+            },
+            {
+              "number": 269,
+              "text": "        return await LoadAssetContainerAsync(url, this.scene, { pluginExtension: ext });"
+            },
+            {
+              "number": 270,
+              "text": "      }"
+            },
+            {
+              "number": 271,
+              "text": "      const container = await LoadAssetContainerAsync(bytes, this.scene, {"
+            },
+            {
+              "number": 272,
+              "text": "        pluginExtension: \".glb\","
+            },
+            {
+              "number": 273,
+              "text": "        name: url.slice(slash + 1),"
+            },
+            {
+              "number": 274,
+              "text": "        rootUrl: url.slice(0, slash + 1),"
+            },
+            {
+              "number": 275,
+              "text": "        // Uploaded clips have no implicit default order. Keep the cached source"
+            },
+            {
+              "number": 276,
+              "text": "        // at rest so later instances get the same bounds and skeleton pose;"
+            },
+            {
+              "number": 277,
+              "text": "        // ChampionView's ClipAnimator starts the explicitly mapped animation."
+            },
+            {
+              "number": 278,
+              "text": "        ...(path.startsWith(\"assets/models/community/\") || /\\/versions\\/[a-f0-9]{64}\\.glb$/.test(path) ? { pluginOptions: { gltf: { animationStartMode: 0 } } } : {}),"
+            },
+            {
+              "number": 279,
+              "text": "      });"
+            },
+            {
+              "number": 280,
+              "text": "      // 🎽 內容相同的貼圖只留一塊 GPU 記憶體（GH#382）。⚠️ 一定要在 await 之後 ——"
+            },
+            {
+              "number": 281,
+              "text": "      // `LoadAssetContainerAsync` 到這裡才保證每一張貼圖的 InternalTexture 已經生出來。"
+            },
+            {
+              "number": 282,
+              "text": "      shareDuplicateTextures(this.scene, container, glbImageDigests(bytes));"
+            },
+            {
+              "number": 283,
+              "text": "      return container;"
+            },
+            {
+              "number": 284,
+              "text": "    } catch {"
+            },
+            {
+              "number": 285,
+              "text": "      return null; // caller keeps its procedural fallback"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/ClipAnimator.ts",
+      "repoRelativePath": "apps/client/src/render/ClipAnimator.ts",
+      "sha256": "de72bff5d41f9ecd1e0d0cf0e840ecc52ffca3949fc94fbe31f01f3acef7406a",
+      "bytes": 23102,
+      "excerpts": [
+        {
+          "start": 90,
+          "end": 107,
+          "lines": [
+            {
+              "number": 90,
+              "text": "  // frame halfway through and read as \"the winner also stopped moving\"."
+            },
+            {
+              "number": 91,
+              "text": "  celebrate: true,"
+            },
+            {
+              "number": 92,
+              "text": "};"
+            },
+            {
+              "number": 93,
+              "text": ""
+            },
+            {
+              "number": 94,
+              "text": "const BLENDING_SPEED = 0.1;"
+            },
+            {
+              "number": 95,
+              "text": "/** glTF clips are sampled at 60 fps by the Babylon loader. */"
+            },
+            {
+              "number": 96,
+              "text": "const GLTF_FPS = 60;"
+            },
+            {
+              "number": 97,
+              "text": ""
+            },
+            {
+              "number": 98,
+              "text": "/**"
+            },
+            {
+              "number": 99,
+              "text": " * Reference ground speed (world units/s) at which a run clip plays at its"
+            },
+            {
+              "number": 100,
+              "text": " * authored 1.0 rate. Tuned to the roster median move speed (5.8 u/s) so both"
+            },
+            {
+              "number": 101,
+              "text": " * KayKit and imported rigs cycle believably at typical speeds."
+            },
+            {
+              "number": 102,
+              "text": " */"
+            },
+            {
+              "number": 103,
+              "text": "export const REFERENCE_RUN_SPEED = 5.8;"
+            },
+            {
+              "number": 104,
+              "text": "/** Run-rate clamp — never slower than 0.6x or faster than 1.8x authored. */"
+            },
+            {
+              "number": 105,
+              "text": "export const RUN_RATE_MIN = 0.6;"
+            },
+            {
+              "number": 106,
+              "text": "export const RUN_RATE_MAX = 1.8;"
+            },
+            {
+              "number": 107,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "start": 229,
+          "end": 274,
+          "lines": [
+            {
+              "number": 229,
+              "text": "/** Resolve state → AnimationGroup using the clipMap, with fuzzy fallback. */"
+            },
+            {
+              "number": 230,
+              "text": "export function resolveClips("
+            },
+            {
+              "number": 231,
+              "text": "  groups: readonly { name: string }[],"
+            },
+            {
+              "number": 232,
+              "text": "  clipMap?: Partial<Record<ClipState, string>>,"
+            },
+            {
+              "number": 233,
+              "text": "): Map<ClipState, number> {"
+            },
+            {
+              "number": 234,
+              "text": "  const out = new Map<ClipState, number>();"
+            },
+            {
+              "number": 235,
+              "text": "  for (const state of Object.keys(DEFAULT_CLIP_NAMES) as ClipState[]) {"
+            },
+            {
+              "number": 236,
+              "text": "    const explicit = clipMap?.[state];"
+            },
+            {
+              "number": 237,
+              "text": "    let idx = explicit ? groups.findIndex((g) => clipNameMatches(g.name, explicit)) : -1;"
+            },
+            {
+              "number": 238,
+              "text": "    if (idx < 0) {"
+            },
+            {
+              "number": 239,
+              "text": "      idx = groups.findIndex((g) => {"
+            },
+            {
+              "number": 240,
+              "text": "        const n = g.name.toLowerCase();"
+            },
+            {
+              "number": 241,
+              "text": "        return DEFAULT_CLIP_NAMES[state].some((k) => n.includes(k));"
+            },
+            {
+              "number": 242,
+              "text": "      });"
+            },
+            {
+              "number": 243,
+              "text": "    }"
+            },
+            {
+              "number": 244,
+              "text": "    if (idx >= 0) out.set(state, idx);"
+            },
+            {
+              "number": 245,
+              "text": "  }"
+            },
+            {
+              "number": 246,
+              "text": "  return out;"
+            },
+            {
+              "number": 247,
+              "text": "}"
+            },
+            {
+              "number": 248,
+              "text": ""
+            },
+            {
+              "number": 249,
+              "text": "/**"
+            },
+            {
+              "number": 250,
+              "text": " * speedRatio that makes a one-shot clip fit its pulse window (squeezed OR"
+            },
+            {
+              "number": 251,
+              "text": " * stretched, clamped). `windowSec` overrides the default per-state window —"
+            },
+            {
+              "number": 252,
+              "text": " * cast events pass castTimeSec, attack wind-ups pass the wind-up span."
+            },
+            {
+              "number": 253,
+              "text": " */"
+            },
+            {
+              "number": 254,
+              "text": "export function pulseSpeedRatio("
+            },
+            {
+              "number": 255,
+              "text": "  clipDurationSec: number,"
+            },
+            {
+              "number": 256,
+              "text": "  state: ClipState,"
+            },
+            {
+              "number": 257,
+              "text": "  windowSec?: number,"
+            },
+            {
+              "number": 258,
+              "text": "): number {"
+            },
+            {
+              "number": 259,
+              "text": "  if (LOOPING[state] || state === \"death\") return 1.0;"
+            },
+            {
+              "number": 260,
+              "text": "  const pulseSec = windowSec ?? PULSE_MS[state as keyof typeof PULSE_MS] / 1000;"
+            },
+            {
+              "number": 261,
+              "text": "  if (!(clipDurationSec > 0) || !(pulseSec > 0)) return 1.0;"
+            },
+            {
+              "number": 262,
+              "text": "  return Math.min(PULSE_RATE_MAX, Math.max(PULSE_RATE_MIN, clipDurationSec / pulseSec));"
+            },
+            {
+              "number": 263,
+              "text": "}"
+            },
+            {
+              "number": 264,
+              "text": ""
+            },
+            {
+              "number": 265,
+              "text": "/**"
+            },
+            {
+              "number": 266,
+              "text": " * Run-loop playback rate synced to actual ground speed (pure; unit-tested)."
+            },
+            {
+              "number": 267,
+              "text": " * Unknown/zero speed plays at the authored rate."
+            },
+            {
+              "number": 268,
+              "text": " */"
+            },
+            {
+              "number": 269,
+              "text": "export function runSpeedRatio(unitsPerSec: number, referenceSpeed = REFERENCE_RUN_SPEED): number {"
+            },
+            {
+              "number": 270,
+              "text": "  if (!(unitsPerSec > 0) || !(referenceSpeed > 0)) return 1.0;"
+            },
+            {
+              "number": 271,
+              "text": "  return Math.min(RUN_RATE_MAX, Math.max(RUN_RATE_MIN, unitsPerSec / referenceSpeed));"
+            },
+            {
+              "number": 272,
+              "text": "}"
+            },
+            {
+              "number": 273,
+              "text": ""
+            },
+            {
+              "number": 274,
+              "text": "export class ClipAnimator {"
+            }
+          ]
+        },
+        {
+          "start": 302,
+          "end": 335,
+          "lines": [
+            {
+              "number": 302,
+              "text": "  constructor(groups: AnimationGroup[], clipMap?: Partial<Record<ClipState, string>>) {"
+            },
+            {
+              "number": 303,
+              "text": "    this.groups = groups.slice();"
+            },
+            {
+              "number": 304,
+              "text": "    const resolved = resolveClips(groups, clipMap);"
+            },
+            {
+              "number": 305,
+              "text": "    for (const [state, idx] of resolved) this.byState.set(state, groups[idx]!);"
+            },
+            {
+              "number": 306,
+              "text": "    for (const g of groups) {"
+            },
+            {
+              "number": 307,
+              "text": "      g.stop();"
+            },
+            {
+              "number": 308,
+              "text": "      for (const ta of g.targetedAnimations) {"
+            },
+            {
+              "number": 309,
+              "text": "        // Imported skinned meshes can retain an Euler rest pose while their"
+            },
+            {
+              "number": 310,
+              "text": "        // clips target a quaternion. Blending reads that pose before frame 0."
+            },
+            {
+              "number": 311,
+              "text": "        if (ta.animation.targetProperty === \"rotationQuaternion\" && ta.target?.rotationQuaternion === null && ta.target.rotation) {"
+            },
+            {
+              "number": 312,
+              "text": "          ta.target.rotationQuaternion = Quaternion.FromEulerVector(ta.target.rotation);"
+            },
+            {
+              "number": 313,
+              "text": "        }"
+            },
+            {
+              "number": 314,
+              "text": "        ta.animation.enableBlending = true;"
+            },
+            {
+              "number": 315,
+              "text": "        ta.animation.blendingSpeed = BLENDING_SPEED;"
+            },
+            {
+              "number": 316,
+              "text": "      }"
+            },
+            {
+              "number": 317,
+              "text": "    }"
+            },
+            {
+              "number": 318,
+              "text": "  }"
+            },
+            {
+              "number": 319,
+              "text": ""
+            },
+            {
+              "number": 320,
+              "text": "  get hasClips(): boolean {"
+            },
+            {
+              "number": 321,
+              "text": "    return this.byState.size > 0;"
+            },
+            {
+              "number": 322,
+              "text": "  }"
+            },
+            {
+              "number": 323,
+              "text": ""
+            },
+            {
+              "number": 324,
+              "text": "  /**"
+            },
+            {
+              "number": 325,
+              "text": "   * The state whose clip is currently playing (observability / tests)."
+            },
+            {
+              "number": 326,
+              "text": "   *"
+            },
+            {
+              "number": 327,
+              "text": "   * This is what the caller ASKED for, not what resolved: a model with no"
+            },
+            {
+              "number": 328,
+              "text": "   * `celebrate` clip reports `celebrate` while the idle group actually turns —"
+            },
+            {
+              "number": 329,
+              "text": "   * which is the honest answer for \"did the podium request the cheer?\", and the"
+            },
+            {
+              "number": 330,
+              "text": "   * fallback itself is reported by `start()`'s warn-once."
+            },
+            {
+              "number": 331,
+              "text": "   */"
+            },
+            {
+              "number": 332,
+              "text": "  get currentClip(): ClipState | null {"
+            },
+            {
+              "number": 333,
+              "text": "    return this.current;"
+            },
+            {
+              "number": 334,
+              "text": "  }"
+            },
+            {
+              "number": 335,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "start": 445,
+          "end": 456,
+          "lines": [
+            {
+              "number": 445,
+              "text": "   * Sync the run loop's playback rate to the entity's actual ground speed"
+            },
+            {
+              "number": 446,
+              "text": "   * (units/s). Applies live if the run clip is playing (foot-slide fix)."
+            },
+            {
+              "number": 447,
+              "text": "   */"
+            },
+            {
+              "number": 448,
+              "text": "  setLocomotionSpeed(unitsPerSec: number): void {"
+            },
+            {
+              "number": 449,
+              "text": "    const rate = runSpeedRatio(unitsPerSec);"
+            },
+            {
+              "number": 450,
+              "text": "    if (rate === this.locomotionRate) return;"
+            },
+            {
+              "number": 451,
+              "text": "    this.locomotionRate = rate;"
+            },
+            {
+              "number": 452,
+              "text": "    if (this.current === \"run\") {"
+            },
+            {
+              "number": 453,
+              "text": "      const group = this.byState.get(\"run\");"
+            },
+            {
+              "number": 454,
+              "text": "      if (group) group.speedRatio = rate;"
+            },
+            {
+              "number": 455,
+              "text": "    }"
+            },
+            {
+              "number": 456,
+              "text": "  }"
+            }
+          ]
+        },
+        {
+          "start": 475,
+          "end": 510,
+          "lines": [
+            {
+              "number": 475,
+              "text": ""
+            },
+            {
+              "number": 476,
+              "text": "  private start(state: ClipState): void {"
+            },
+            {
+              "number": 477,
+              "text": "    let group = this.byState.get(state);"
+            },
+            {
+              "number": 478,
+              "text": "    if (!group) {"
+            },
+            {
+              "number": 479,
+              "text": "      // A model whose clipMap points at a clip its .glb does not contain (or"
+            },
+            {
+              "number": 480,
+              "text": "      // aliases to \"Stand\") silently plays IDLE forever — which on screen is"
+            },
+            {
+              "number": 481,
+              "text": "      // indistinguishable from a frozen champion, and is exactly how a"
+            },
+            {
+              "number": 482,
+              "text": "      // mis-mapped rig hides. Keep the fallback, but say so once per model so"
+            },
+            {
+              "number": 483,
+              "text": "      // the defect is visible in the console instead of only in the gameplay."
+            },
+            {
+              "number": 484,
+              "text": "      if (!this.warnedStates.has(state)) {"
+            },
+            {
+              "number": 485,
+              "text": "        this.warnedStates.add(state);"
+            },
+            {
+              "number": 486,
+              "text": "        console.warn("
+            },
+            {
+              "number": 487,
+              "text": "          `[ClipAnimator] no \"${state}\" clip resolved — falling back to idle. ` +"
+            },
+            {
+              "number": 488,
+              "text": "            `Check the model doc's clipMap against the .glb's animation names.`,"
+            },
+            {
+              "number": 489,
+              "text": "        );"
+            },
+            {
+              "number": 490,
+              "text": "      }"
+            },
+            {
+              "number": 491,
+              "text": "      group = this.byState.get(\"idle\");"
+            },
+            {
+              "number": 492,
+              "text": "    }"
+            },
+            {
+              "number": 493,
+              "text": "    if (!group) return;"
+            },
+            {
+              "number": 494,
+              "text": "    this.pending = null;"
+            },
+            {
+              "number": 495,
+              "text": "    const durationSec = (group.to - group.from) / GLTF_FPS;"
+            },
+            {
+              "number": 496,
+              "text": "    const align = this.pulseAlign.get(state);"
+            },
+            {
+              "number": 497,
+              "text": "    if (align && !LOOPING[state] && state !== \"death\") {"
+            },
+            {
+              "number": 498,
+              "text": "      // FRAME-DATA PATH: rate + (delay | skip) so the strike frame lands on the"
+            },
+            {
+              "number": 499,
+              "text": "      // sim's damage tick even when the rate clamp bites. A delayed start opens"
+            },
+            {
+              "number": 500,
+              "text": "      // at speedRatio 0 (the clip's first frame, held) and `advance` releases it."
+            },
+            {
+              "number": 501,
+              "text": "      const plan = alignPulseClip(durationSec, align.startupSec, align.strikeFraction);"
+            },
+            {
+              "number": 502,
+              "text": "      this.lastPlanValue = { ...plan, state };"
+            },
+            {
+              "number": 503,
+              "text": "      const fromFrame = group.from + plan.skipSec * GLTF_FPS;"
+            },
+            {
+              "number": 504,
+              "text": "      const rate = plan.delaySec > 0 ? 0 : plan.rate;"
+            },
+            {
+              "number": 505,
+              "text": "      if (plan.delaySec > 0) this.pending = { state, remainingSec: plan.delaySec, rate: plan.rate };"
+            },
+            {
+              "number": 506,
+              "text": "      group.start(false, rate, fromFrame, group.to);"
+            },
+            {
+              "number": 507,
+              "text": "      this.settleRate(group, rate);"
+            },
+            {
+              "number": 508,
+              "text": "      return;"
+            },
+            {
+              "number": 509,
+              "text": "    }"
+            },
+            {
+              "number": 510,
+              "text": "    this.lastPlanValue = null;"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/views/ChampionView.ts",
+      "repoRelativePath": "apps/client/src/render/views/ChampionView.ts",
+      "sha256": "425dd935d14f73a070c469f4f56e21545128dbdffc6403feb08fa9c8a1a6ffd5",
+      "bytes": 106196,
+      "excerpts": [
+        {
+          "start": 1531,
+          "end": 1560,
+          "lines": [
+            {
+              "number": 1531,
+              "text": "  update(state: AnimState | AnimPulse, nowMs: number, dtMs: number, speedUnitsPerSec = 0): void {"
+            },
+            {
+              "number": 1532,
+              "text": "    this.stepFacing(dtMs); // yaw smoothing — model-source independent"
+            },
+            {
+              "number": 1533,
+              "text": "    // #244: the growth ease + the tier-2 mud ring, before the dissolve early-out"
+            },
+            {
+              "number": 1534,
+              "text": "    // (a corpse's ring is switched off by setBodyVisible, not by skipping this)."
+            },
+            {
+              "number": 1535,
+              "text": "    this.updateGrowth(nowMs);"
+            },
+            {
+              "number": 1536,
+              "text": "    // #268: the local player's halo + caret. BEFORE the dissolve early-out on"
+            },
+            {
+              "number": 1537,
+              "text": "    // purpose — a corpse must have its marker switched OFF, and the early-out"
+            },
+            {
+              "number": 1538,
+              "text": "    // would skip the frame that does it."
+            },
+            {
+              "number": 1539,
+              "text": "    this.updateSelfMarker(state, nowMs);"
+            },
+            {
+              "number": 1540,
+              "text": "    // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing"
+            },
+            {
+              "number": 1541,
+              "text": "    // left to animate, so the rest of the frame is skipped entirely."
+            },
+            {
+              "number": 1542,
+              "text": "    // 隱形 (owner 2026-07-30). BEFORE `updateDissolve`, and passed `dead`, so"
+            },
+            {
+              "number": 1543,
+              "text": "    // the two writers of `mesh.visibility` have an unambiguous priority: while"
+            },
+            {
+              "number": 1544,
+              "text": "    // the body lives stealth owns the channel; from the death tick the dissolve"
+            },
+            {
+              "number": 1545,
+              "text": "    // does, and this call has already handed it back at full opacity."
+            },
+            {
+              "number": 1546,
+              "text": "    this.applyStealth(state === \"death\");"
+            },
+            {
+              "number": 1547,
+              "text": "    if (this.updateDissolve(state, nowMs)) return;"
+            },
+            {
+              "number": 1548,
+              "text": "    this.applyAirborne(); // #247 fly height + temporary scale (see below)"
+            },
+            {
+              "number": 1549,
+              "text": "    const frozen = nowMs < this.hitstopUntilMs; // hitstop window"
+            },
+            {
+              "number": 1550,
+              "text": "    this.applyHitstopShiver(nowMs, frozen); // 破碎 buzz on the frozen body"
+            },
+            {
+              "number": 1551,
+              "text": "    if (this.clipAnimator?.hasClips) {"
+            },
+            {
+              "number": 1552,
+              "text": "      this.clipAnimator.setFrozen(frozen); // freeze/unfreeze the clip"
+            },
+            {
+              "number": 1553,
+              "text": "      if (!frozen) {"
+            },
+            {
+              "number": 1554,
+              "text": "        this.clipAnimator.setLocomotionSpeed(speedUnitsPerSec); // foot-slide fix"
+            },
+            {
+              "number": 1555,
+              "text": "        this.clipAnimator.play(state);"
+            },
+            {
+              "number": 1556,
+              "text": "        // release a HELD clip start (a cast clip too short to fill its window"
+            },
+            {
+              "number": 1557,
+              "text": "        // waits on its opening frame so the strike still lands on the tick)."
+            },
+            {
+              "number": 1558,
+              "text": "        // Inside the !frozen branch on purpose: hitstop must pause the hold."
+            },
+            {
+              "number": 1559,
+              "text": "        this.clipAnimator.advance(dtMs);"
+            },
+            {
+              "number": 1560,
+              "text": "      }"
+            }
+          ]
+        },
+        {
+          "start": 1788,
+          "end": 1818,
+          "lines": [
+            {
+              "number": 1788,
+              "text": "  tryUpgradeToGlb("
+            },
+            {
+              "number": 1789,
+              "text": "    assets: AssetManager,"
+            },
+            {
+              "number": 1790,
+              "text": "    doc: ModelDoc | null,"
+            },
+            {
+              "number": 1791,
+              "text": "    relativeScale = 1,"
+            },
+            {
+              "number": 1792,
+              "text": "    standinRelativeScale = relativeScale,"
+            },
+            {
+              "number": 1793,
+              "text": "  ): void {"
+            },
+            {
+              "number": 1794,
+              "text": "    // #77 — recorded on EVERY call, including the ones that return early below."
+            },
+            {
+              "number": 1795,
+              "text": "    // The registry calls this each frame until `upgradeAttempted` latches, and"
+            },
+            {
+              "number": 1796,
+              "text": "    // the FIRST calls arrive with `doc === null` (ContentDb has not settled);"
+            },
+            {
+              "number": 1797,
+              "text": "    // deferring the write to the adopt branch would leave the procedural figure"
+            },
+            {
+              "number": 1798,
+              "text": "    // un-sized for exactly the champions that never adopt anything."
+            },
+            {
+              "number": 1799,
+              "text": "    const standin = standinRelativeScale > 0 ? standinRelativeScale : 1;"
+            },
+            {
+              "number": 1800,
+              "text": "    if (standin !== this.standinScaleValue) {"
+            },
+            {
+              "number": 1801,
+              "text": "      this.standinScaleValue = standin;"
+            },
+            {
+              "number": 1802,
+              "text": "      // write it now: `applyGrowthScale` early-returns while the growth factor"
+            },
+            {
+              "number": 1803,
+              "text": "      // has not moved, so waiting for the next tier change would never happen."
+            },
+            {
+              "number": 1804,
+              "text": "      this.growthFactorWritten = false;"
+            },
+            {
+              "number": 1805,
+              "text": "      this.applyGrowthScale(this.growthSinceMs + GROWTH_SCALE_EASE_MS);"
+            },
+            {
+              "number": 1806,
+              "text": "    }"
+            },
+            {
+              "number": 1807,
+              "text": "    // TASK #231 — a champion whose recipe says `preferVoxelBody` has NO art of"
+            },
+            {
+              "number": 1808,
+              "text": "    // its own: its modelKey points at one of the four shared stand-in meshes,"
+            },
+            {
+              "number": 1809,
+              "text": "    // which is precisely the \"44 heroes wearing 4 faces\" problem. Adopting that"
+            },
+            {
+              "number": 1810,
+              "text": "    // glb would hide the generated skin behind somebody else's body, so the"
+            },
+            {
+              "number": 1811,
+              "text": "    // upgrade is declined outright and the champion keeps its own voxel figure."
+            },
+            {
+              "number": 1812,
+              "text": "    // Latch `upgradeStarted` so the registry stops asking every frame. When"
+            },
+            {
+              "number": 1813,
+              "text": "    // #226 deletes the KayKit glbs this branch becomes a no-op rather than a"
+            },
+            {
+              "number": 1814,
+              "text": "    // behaviour change."
+            },
+            {
+              "number": 1815,
+              "text": "    if (this.skin?.preferVoxelBody) {"
+            },
+            {
+              "number": 1816,
+              "text": "      this.upgradeStarted = true;"
+            },
+            {
+              "number": 1817,
+              "text": "      return;"
+            },
+            {
+              "number": 1818,
+              "text": "    }"
+            }
+          ]
+        },
+        {
+          "start": 1881,
+          "end": 1948,
+          "lines": [
+            {
+              "number": 1881,
+              "text": "        //"
+            },
+            {
+              "number": 1882,
+              "text": "        // ⚠️ `ENABLED_ONLY` 是 hiddenPrimitives 的一半功能,不是順手優化。"
+            },
+            {
+              "number": 1883,
+              "text": "        // `getHierarchyBoundingVectors` **不看 `isEnabled`**(Babylon 只跳過"
+            },
+            {
+              "number": 1884,
+              "text": "        // 沒有 boundingInfo / 0 頂點的節點),所以少了這個 predicate,被藏起來"
+            },
+            {
+              "number": 1885,
+              "text": "        // 的血泥仍然參與身高正規化與下面那行 `position.y = -min.y` 的落地。"
+            },
+            {
+              "number": 1886,
+              "text": "        // 實測 `Hblm.glb`(賈修)的血泥最低點 y=-0.063,身體最低點 y=0.025 ——"
+            },
+            {
+              "number": 1887,
+              "text": "        // 藏了卻不排除,結果是整隻英雄被墊高 0.088u 浮在空中(失敗形態 ①)。"
+            },
+            {
+              "number": 1888,
+              "text": "        glbRoot.computeWorldMatrix(true);"
+            },
+            {
+              "number": 1889,
+              "text": "        const native = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);"
+            },
+            {
+              "number": 1890,
+              "text": "        const nativeH = native.max.y - native.min.y;"
+            },
+            {
+              "number": 1891,
+              "text": "        // #77 —— 「這具網格是誰」決定用哪個倍率,而不是「這個英雄是誰」。"
+            },
+            {
+              "number": 1892,
+              "text": "        // 替身英雄的 modelKey 永遠是那四個共用替身之一,但實際載進來的可能是"
+            },
+            {
+              "number": 1893,
+              "text": "        // 他自己的 Warcraft III 模型(GH#31),也可能是 overlay 缺席時退回來的"
+            },
+            {
+              "number": 1894,
+              "text": "        // 方塊人。兩者正規化到同一個 1.8u,可是「1.8u 之後要再乘多少」完全"
+            },
+            {
+              "number": 1895,
+              "text": "        // 不同 —— 方塊人的輪廓就是身體(乘 usca),WC3 模型不是(乘身高比 ×"
+            },
+            {
+              "number": 1896,
+              "text": "        // usca)。判斷讀的是真的送進 assets.load() 的那條路徑。"
+            },
+            {
+              "number": 1897,
+              "text": "        const rel = isStandinBodyGlb(doc.glbPath) ? standin : relativeScale > 0 ? relativeScale : 1;"
+            },
+            {
+              "number": 1898,
+              "text": "        // GH#368 —— the arithmetic moved to `./modelSizing` so 商店/英靈殿/選人/"
+            },
+            {
+              "number": 1899,
+              "text": "        // 補給站 compute the SAME number instead of four hand-copies of it."
+            },
+            {
+              "number": 1900,
+              "text": "        const finalScale = normalizedModelScale(nativeH, doc.scale, rel);"
+            },
+            {
+              "number": 1901,
+              "text": "        glbRoot.scaling.setAll(finalScale);"
+            },
+            {
+              "number": 1902,
+              "text": "        // GROUND (task #61 \"flying\"/\"sinking\" fix): lift the model so its lowest"
+            },
+            {
+              "number": 1903,
+              "text": "        // vertex sits on the arena floor (y=0). Imported rigs bake their feet at"
+            },
+            {
+              "number": 1904,
+              "text": "        // an arbitrary local Y — `imported.ma` floats 0.72u above the origin,"
+            },
+            {
+              "number": 1905,
+              "text": "        // `imported.picacugy`/`gumdam` dip ~0.6u below it (half-buried). This is"
+            },
+            {
+              "number": 1906,
+              "text": "        // the SAME per-model root shift StorePreview (#129) and the intermission"
+            },
+            {
+              "number": 1907,
+              "text": "        // mount (#111 int-32) apply, ported to the in-arena view so every"
+            },
+            {
+              "number": 1908,
+              "text": "        // champion stands ON the ground, not above or sunk into it. Runs after"
+            },
+            {
+              "number": 1909,
+              "text": "        // the FINAL scaling so the shift is in the rendered (scaled) frame."
+            },
+            {
+              "number": 1910,
+              "text": "        glbRoot.computeWorldMatrix(true);"
+            },
+            {
+              "number": 1911,
+              "text": "        const { min } = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);"
+            },
+            {
+              "number": 1912,
+              "text": "        if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;"
+            },
+            {
+              "number": 1913,
+              "text": "        // #247: remember the ground offset, because `applyAirborne` REWRITES"
+            },
+            {
+              "number": 1914,
+              "text": "        // `glbRoot.position.y` every frame (fly height + offset) and would"
+            },
+            {
+              "number": 1915,
+              "text": "        // otherwise clobber the shift measured on the line above. Kept in the"
+            },
+            {
+              "number": 1916,
+              "text": "        // scaled frame — `glbRoot.scaling` is written exactly once, right here,"
+            },
+            {
+              "number": 1917,
+              "text": "        // and nothing may change it afterwards (that is what keeps #150)."
+            },
+            {
+              "number": 1918,
+              "text": "        this.groundOffsetY = Number.isFinite(min.y) ? -min.y : 0;"
+            },
+            {
+              "number": 1919,
+              "text": "        this.glbRoot = glbRoot;"
+            },
+            {
+              "number": 1920,
+              "text": "        this.glbSkeletons = inst.skeletons as unknown as InstanceSkeleton[];"
+            },
+            {
+              "number": 1921,
+              "text": "        // GH#31: remember WHICH glb landed. Must be written BEFORE"
+            },
+            {
+              "number": 1922,
+              "text": "        // `applyVoxelLookToGlb` below, which reads it to decide whether the"
+            },
+            {
+              "number": 1923,
+              "text": "        // #226 palette may touch this mesh at all."
+            },
+            {
+              "number": 1924,
+              "text": "        this.adoptedGlbPath = doc.glbPath;"
+            },
+            {
+              "number": 1925,
+              "text": "        // #226 per-champion palette/proportions/props. MUST run before the"
+            },
+            {
+              "number": 1926,
+              "text": "        // registry's applyModelTint, which it does: the registry gates on"
+            },
+            {
+              "number": 1927,
+              "text": "        // `view.hasGlb`, and `hasGlb` reads `glbRoot`, set one line above —"
+            },
+            {
+              "number": 1928,
+              "text": "        // but the tint only happens on the NEXT sync, after this returns."
+            },
+            {
+              "number": 1929,
+              "text": "        this.applyVoxelLookToGlb();"
+            },
+            {
+              "number": 1930,
+              "text": "        this.declaredScaleValue = finalScale; // the render scale actually applied"
+            },
+            {
+              "number": 1931,
+              "text": "        // #244: a growth tier that arrived while this load was in flight has"
+            },
+            {
+              "number": 1932,
+              "text": "        // nothing to scale yet. Replay it now that `declaredScaleValue` exists —"
+            },
+            {
+              "number": 1933,
+              "text": "        // strictly AFTER the assignment above, because `applyGrowthScale`"
+            },
+            {
+              "number": 1934,
+              "text": "        // multiplies off the STORED value."
+            },
+            {
+              "number": 1935,
+              "text": "        if (this.growthPending || this.growthTier !== 0) {"
+            },
+            {
+              "number": 1936,
+              "text": "          this.growthPending = false;"
+            },
+            {
+              "number": 1937,
+              "text": "          this.growthFactorWritten = false; // force the write"
+            },
+            {
+              "number": 1938,
+              "text": "          this.applyGrowthScale(this.growthSinceMs + GROWTH_SCALE_EASE_MS);"
+            },
+            {
+              "number": 1939,
+              "text": "        }"
+            },
+            {
+              "number": 1940,
+              "text": "        this.clipAnimator = new ClipAnimator(inst.animationGroups, doc.clipMap);"
+            },
+            {
+              "number": 1941,
+              "text": "        // hide the procedural fallback"
+            },
+            {
+              "number": 1942,
+              "text": "        for (const p of this.proceduralParts) p.setEnabled(false);"
+            },
+            {
+              "number": 1943,
+              "text": "        // #220: the load can resolve AFTER this body already dissolved (a death"
+            },
+            {
+              "number": 1944,
+              "text": "        // early in a match, on a cold asset cache). Adopt the corpse's current"
+            },
+            {
+              "number": 1945,
+              "text": "        // dissolve state instead of popping a fully opaque model back on screen."
+            },
+            {
+              "number": 1946,
+              "text": "        if (this.vanishedFlag) {"
+            },
+            {
+              "number": 1947,
+              "text": "          glbRoot.setEnabled(false);"
+            },
+            {
+              "number": 1948,
+              "text": "          this.clipAnimator.stopAll();"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/views/modelSizing.ts",
+      "repoRelativePath": "apps/client/src/render/views/modelSizing.ts",
+      "sha256": "655184bb4231cc1af1ec63593669592893369167e8c72d9d0969ec07302fd5fc",
+      "bytes": 7695,
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 110,
+          "lines": [
+            {
+              "number": 1,
+              "text": "/**"
+            },
+            {
+              "number": 2,
+              "text": " * modelSizing — THE ONE PLACE a champion's on-screen size is decided (GH#368)."
+            },
+            {
+              "number": 3,
+              "text": " *"
+            },
+            {
+              "number": 4,
+              "text": " * owner 2026-08-18:「多拉A夢在商店依然是巨大支，你是不是**沒改到正常遊戲大小**"
+            },
+            {
+              "number": 5,
+              "text": " * （其他英雄也是?）」"
+            },
+            {
+              "number": 6,
+              "text": " *"
+            },
+            {
+              "number": 7,
+              "text": " * ⚠️ THE SHAPE OF THE DEFECT — four scenes, four hand-copies, one of them right."
+            },
+            {
+              "number": 8,
+              "text": " *"
+            },
+            {
+              "number": 9,
+              "text": " * #150 introduced height normalization and it went in at ONE call site:"
+            },
+            {
+              "number": 10,
+              "text": " * `ChampionView.tryUpgradeToGlb`, the arena. 結算 rides the arena (it is only a"
+            },
+            {
+              "number": 11,
+              "text": " * camera over the live scene, see render/settlementCamera.ts) so it inherited"
+            },
+            {
+              "number": 12,
+              "text": " * the fix. The other three paths kept multiplying the model doc's raw `scale`:"
+            },
+            {
+              "number": 13,
+              "text": " *"
+            },
+            {
+              "number": 14,
+              "text": " *   · `StorePreview.show`          → 商店 / 英靈殿 / 選擇英雄 / 回合勝者卡"
+            },
+            {
+              "number": 15,
+              "text": " *   · `IntermissionScene.setChampion` → 補給站攤位"
+            },
+            {
+              "number": 16,
+              "text": " *   · `championModelAudition`      → the /model audition page (normalized, but"
+            },
+            {
+              "number": 17,
+              "text": " *                                    without the per-champion multiplier)"
+            },
+            {
+              "number": 18,
+              "text": " *"
+            },
+            {
+              "number": 19,
+              "text": " * And `doc.scale` is not a size. For an overlay doc it is the hard-coded"
+            },
+            {
+              "number": 20,
+              "text": " * `OVERLAY_MODEL_SCALE = 1`, whose own comment says so in as many words —"
+            },
+            {
+              "number": 21,
+              "text": " *「Any future consumer that uses `doc.scale` as an absolute has to measure,"
+            },
+            {
+              "number": 22,
+              "text": " * exactly as ChampionView does」— and then GH#31 wired the previews onto the"
+            },
+            {
+              "number": 23,
+              "text": " * overlay resolver, which made them exactly that consumer. Measured: 小叮噹"
+            },
+            {
+              "number": 24,
+              "text": " * (godie-n00b) rides N00B.glb, which the w3x importer baked at 6.672u native."
+            },
+            {
+              "number": 25,
+              "text": " * The arena renders him at 1.8 × 0.65 = 1.17u; the preview scenes rendered the"
+            },
+            {
+              "number": 26,
+              "text": " * raw 6.672u — 5.7× too big, standing on a podium that is 2.4u across. That is"
+            },
+            {
+              "number": 27,
+              "text": " * the「巨大支」."
+            },
+            {
+              "number": 28,
+              "text": " *"
+            },
+            {
+              "number": 29,
+              "text": " * ⛔ So the fix is NOT an `if` in StorePreview. It is this module: every path"
+            },
+            {
+              "number": 30,
+              "text": " * that mounts a champion mesh calls {@link normalizedModelScale}, and a fifth"
+            },
+            {
+              "number": 31,
+              "text": " * scene added tomorrow gets the size right by construction. `modelSizing.test.ts`"
+            },
+            {
+              "number": 32,
+              "text": " * asserts the call sites, not the existence of the function."
+            },
+            {
+              "number": 33,
+              "text": " *"
+            },
+            {
+              "number": 34,
+              "text": " * ⚠️⚠️ **BUT「呼叫同一支函式」不等於「餵它同一個量測」—— 這一段以前寫得像是等價的，"
+            },
+            {
+              "number": 35,
+              "text": " * 而它不是**（CLAUDE.md 第三守則：註解會說謊，去驗證）。量到的（2026-08-22，GH#368）："
+            },
+            {
+              "number": 36,
+              "text": " *"
+            },
+            {
+              "number": 37,
+              "text": " *   | 路徑 | `hiddenPrimitives` | 量高度用的 predicate |"
+            },
+            {
+              "number": 38,
+              "text": " *   |---|---|---|"
+            },
+            {
+              "number": 39,
+              "text": " *   | `ChampionView.tryUpgradeToGlb`  | ✅ 藏 | `ENABLED_ONLY` |"
+            },
+            {
+              "number": 40,
+              "text": " *   | `StorePreview.show`             | ✅ 藏 | `ENABLED_ONLY` |"
+            },
+            {
+              "number": 41,
+              "text": " *   | `IntermissionScene.setChampion` | ✅ 藏 | `ENABLED_ONLY` |"
+            },
+            {
+              "number": 42,
+              "text": " *   | **`championModelAudition`**（`/model` 稽核頁） | ⛔ **從來沒藏** | ⛔ **裸的 `getHierarchyBoundingVectors(true)`** |"
+            },
+            {
+              "number": 43,
+              "text": " *"
+            },
+            {
+              "number": 44,
+              "text": " * ⇒ 第四條**呼叫了 {@link normalizedModelScale}，卻餵它血泥的高度**。後果與 #368"
+            },
+            {
+              "number": 45,
+              "text": " * 原本那三條一模一樣：16 隻 overlay 英雄在稽核頁上矮 ~35%，而且腳底貼的是血泥"
+            },
+            {
+              "number": 46,
+              "text": " * 不是身體（`hiddenPrimitives.ts` 的 `ENABLED_ONLY` 檔頭寫著「⛔ Never measure a"
+            },
+            {
+              "number": 47,
+              "text": " * freshly-mounted champion WITHOUT this predicate」，而這一條正是那句話的反例）。"
+            },
+            {
+              "number": 48,
+              "text": " *"
+            },
+            {
+              "number": 49,
+              "text": " * ⚠️ 這正是**失敗形態 ⑤（被測的不是出貨的那個）**的一個新面孔：`modelSizing.test.ts`"
+            },
+            {
+              "number": 50,
+              "text": " * 釘住了三條路徑算出同一個世界高度，⛔ 而稽核頁那一條**不在夾具裡**，所以它退回"
+            },
+            {
+              "number": 51,
+              "text": " * 錯的量測時一格都不會紅。⇒ 修法在 `render/championModelAudition.ts`"
+            },
+            {
+              "number": 52,
+              "text": " * （`applyHiddenPrimitives` + 兩處 `ENABLED_ONLY`），⛔ 不在這一支；"
+            },
+            {
+              "number": 53,
+              "text": " * 這裡只負責不再宣稱它已經對了。"
+            },
+            {
+              "number": 54,
+              "text": " *"
+            },
+            {
+              "number": 55,
+              "text": " * This module is deliberately PURE (no @babylonjs import): the scenes hand it"
+            },
+            {
+              "number": 56,
+              "text": " * numbers they measured with `getHierarchyBoundingVectors`, so it unit-tests"
+            },
+            {
+              "number": 57,
+              "text": " * without an engine and can be imported by probe scripts."
+            },
+            {
+              "number": 58,
+              "text": " */"
+            },
+            {
+              "number": 59,
+              "text": "import { isStandinBodyGlb, standinRelativeScaleOf } from \"@ggd/shared/content/standinScale\";"
+            },
+            {
+              "number": 60,
+              "text": "import type { StandinScaleFields } from \"@ggd/shared/content/standinScale\";"
+            },
+            {
+              "number": 61,
+              "text": ""
+            },
+            {
+              "number": 62,
+              "text": "/**"
+            },
+            {
+              "number": 63,
+              "text": " * HEIGHT-NORMALIZATION target (task #150). Every loaded champion .glb is scaled"
+            },
+            {
+              "number": 64,
+              "text": " * so its full silhouette stands ≈ this many world units tall, REGARDLESS of the"
+            },
+            {
+              "number": 65,
+              "text": " * glb's native mesh height — which varies wildly per champion (measured 1.70u to"
+            },
+            {
+              "number": 66,
+              "text": " * 2.32u rendered across the shipped roster, and 1.29u to 21.83u across the"
+            },
+            {
+              "number": 67,
+              "text": " * Blizzard overlay, whose exporter only normalized the files that passed its"
+            },
+            {
+              "number": 68,
+              "text": " * hero-height guard). Before #150 the render scale was the model doc's raw"
+            },
+            {
+              "number": 69,
+              "text": " * `scale` applied as an ABSOLUTE — so consistency depended on every doc.scale"
+            },
+            {
+              "number": 70,
+              "text": " * being hand-tuned per glb (fragile: any new/un-tuned import renders wrong)."
+            },
+            {
+              "number": 71,
+              "text": " * Normalizing makes size CONSISTENT by construction. A per-champion RELATIVE"
+            },
+            {
+              "number": 72,
+              "text": " * multiplier (`content/models/_standin-overrides.json`) then intentionally"
+            },
+            {
+              "number": 73,
+              "text": " * shrinks lore-small creatures / enlarges giants. ~1.8u ≈ a standing human"
+            },
+            {
+              "number": 74,
+              "text": " * (夏娜 = the normal case)."
+            },
+            {
+              "number": 75,
+              "text": " */"
+            },
+            {
+              "number": 76,
+              "text": "export const TARGET_HEIGHT = 1.8;"
+            },
+            {
+              "number": 77,
+              "text": ""
+            },
+            {
+              "number": 78,
+              "text": "/**"
+            },
+            {
+              "number": 79,
+              "text": " * Below this the measured native height is noise, not a body: a geometry-less"
+            },
+            {
+              "number": 80,
+              "text": " * WC3 dummy, or a hierarchy Babylon could not bound. Dividing by it would"
+            },
+            {
+              "number": 81,
+              "text": " * produce a nonsense normalization factor (a 0.001u dummy would be scaled"
+            },
+            {
+              "number": 82,
+              "text": " * 1800×), so those fall back to the doc's declared scale instead."
+            },
+            {
+              "number": 83,
+              "text": " */"
+            },
+            {
+              "number": 84,
+              "text": "export const MIN_NATIVE_HEIGHT = 0.05;"
+            },
+            {
+              "number": 85,
+              "text": ""
+            },
+            {
+              "number": 86,
+              "text": "/**"
+            },
+            {
+              "number": 87,
+              "text": " * The uniform scale to apply to a freshly-mounted champion .glb."
+            },
+            {
+              "number": 88,
+              "text": " *"
+            },
+            {
+              "number": 89,
+              "text": " * @param nativeHeight  the glb's own bounding-box height, measured at scale 1"
+            },
+            {
+              "number": 90,
+              "text": " *                      (`getHierarchyBoundingVectors(true, …).max.y - min.y`)."
+            },
+            {
+              "number": 91,
+              "text": " *                      ⚠️ Measure with the same enabled-mesh predicate the"
+            },
+            {
+              "number": 92,
+              "text": " *                      caller renders with — hidden gore geometry that still"
+            },
+            {
+              "number": 93,
+              "text": " *                      counts here silently shrinks the whole champion."
+            },
+            {
+              "number": 94,
+              "text": " * @param docScale      the model doc's `scale`, used ONLY as the degenerate"
+            },
+            {
+              "number": 95,
+              "text": " *                      fallback (see {@link MIN_NATIVE_HEIGHT})."
+            },
+            {
+              "number": 96,
+              "text": " * @param relativeScale the champion's INTENTIONAL size multiplier from"
+            },
+            {
+              "number": 97,
+              "text": " *                      `_standin-overrides.json` (1 = the common height,"
+            },
+            {
+              "number": 98,
+              "text": " *                      0.65 = 小叮噹, 1.55 = 初號機). Non-positive ⇒ 1."
+            },
+            {
+              "number": 99,
+              "text": " */"
+            },
+            {
+              "number": 100,
+              "text": "export function normalizedModelScale("
+            },
+            {
+              "number": 101,
+              "text": "  nativeHeight: number,"
+            },
+            {
+              "number": 102,
+              "text": "  docScale: number,"
+            },
+            {
+              "number": 103,
+              "text": "  relativeScale = 1,"
+            },
+            {
+              "number": 104,
+              "text": "): number {"
+            },
+            {
+              "number": 105,
+              "text": "  const rel = Number.isFinite(relativeScale) && relativeScale > 0 ? relativeScale : 1;"
+            },
+            {
+              "number": 106,
+              "text": "  const base ="
+            },
+            {
+              "number": 107,
+              "text": "    Number.isFinite(nativeHeight) && nativeHeight > MIN_NATIVE_HEIGHT"
+            },
+            {
+              "number": 108,
+              "text": "      ? TARGET_HEIGHT / nativeHeight"
+            },
+            {
+              "number": 109,
+              "text": "      : docScale;"
+            },
+            {
+              "number": 110,
+              "text": "  return base * rel;"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/StorePreview.ts",
+      "repoRelativePath": "apps/client/src/render/StorePreview.ts",
+      "sha256": "9c2dc49852e291b8dd5b66574ed83bebe53d780237ecdaa8cefd9a1c21e24a2d",
+      "bytes": 18401,
+      "excerpts": [
+        {
+          "start": 146,
+          "end": 205,
+          "lines": [
+            {
+              "number": 146,
+              "text": "  constructor("
+            },
+            {
+              "number": 147,
+              "text": "    host: HTMLCanvasElement | Scene,"
+            },
+            {
+              "number": 148,
+              "text": "    assets?: AssetManager,"
+            },
+            {
+              "number": 149,
+              "text": "    opts: { now?: () => number } = {},"
+            },
+            {
+              "number": 150,
+              "text": "  ) {"
+            },
+            {
+              "number": 151,
+              "text": "    this.now = opts.now ?? ((): number => (typeof performance !== \"undefined\" ? performance.now() : Date.now()));"
+            },
+            {
+              "number": 152,
+              "text": "    if (host instanceof Scene) {"
+            },
+            {
+              "number": 153,
+              "text": "      this.scene = host;"
+            },
+            {
+              "number": 154,
+              "text": "      this.engine = host.getEngine() as Engine;"
+            },
+            {
+              "number": 155,
+              "text": "      this.ownsScene = false;"
+            },
+            {
+              "number": 156,
+              "text": "    } else {"
+            },
+            {
+              "number": 157,
+              "text": "      this.engine = new Engine(host, true, { stencil: false });"
+            },
+            {
+              "number": 158,
+              "text": "      this.scene = new Scene(this.engine);"
+            },
+            {
+              "number": 159,
+              "text": "      this.ownsScene = true;"
+            },
+            {
+              "number": 160,
+              "text": "    }"
+            },
+            {
+              "number": 161,
+              "text": "    this.scene.clearColor = new Color4(0.055, 0.07, 0.1, 1);"
+            },
+            {
+              "number": 162,
+              "text": "    this.assets = assets ?? new AssetManager(this.scene);"
+            },
+            {
+              "number": 163,
+              "text": ""
+            },
+            {
+              "number": 164,
+              "text": "    this.camera = new ArcRotateCamera("
+            },
+            {
+              "number": 165,
+              "text": "      \"store-cam\","
+            },
+            {
+              "number": 166,
+              "text": "      STORE_CAM_ALPHA,"
+            },
+            {
+              "number": 167,
+              "text": "      STORE_CAM_BETA,"
+            },
+            {
+              "number": 168,
+              "text": "      4.2,"
+            },
+            {
+              "number": 169,
+              "text": "      new Vector3(0, 1.0, 0),"
+            },
+            {
+              "number": 170,
+              "text": "      this.scene,"
+            },
+            {
+              "number": 171,
+              "text": "    );"
+            },
+            {
+              "number": 172,
+              "text": "    this.camera.lowerRadiusLimit = 2.5;"
+            },
+            {
+              "number": 173,
+              "text": "    this.camera.upperRadiusLimit = 8;"
+            },
+            {
+              "number": 174,
+              "text": "    this.camera.useAutoRotationBehavior = true;"
+            },
+            {
+              "number": 175,
+              "text": "    if (this.camera.autoRotationBehavior) {"
+            },
+            {
+              "number": 176,
+              "text": "      this.camera.autoRotationBehavior.idleRotationSpeed = 0.35;"
+            },
+            {
+              "number": 177,
+              "text": "      this.camera.autoRotationBehavior.idleRotationWaitTime = 1200;"
+            },
+            {
+              "number": 178,
+              "text": "    }"
+            },
+            {
+              "number": 179,
+              "text": ""
+            },
+            {
+              "number": 180,
+              "text": "    const hemi = new HemisphericLight(\"store-hemi\", new Vector3(0.2, 1, 0.1), this.scene);"
+            },
+            {
+              "number": 181,
+              "text": "    hemi.intensity = 0.85;"
+            },
+            {
+              "number": 182,
+              "text": "    // fill the undersides so a grounded figure never reads as a black silhouette"
+            },
+            {
+              "number": 183,
+              "text": "    hemi.groundColor = new Color3(0.32, 0.35, 0.42);"
+            },
+            {
+              "number": 184,
+              "text": "    const dir = new DirectionalLight(\"store-dir\", new Vector3(-0.4, -1, 0.35), this.scene);"
+            },
+            {
+              "number": 185,
+              "text": "    dir.intensity = 0.9;"
+            },
+            {
+              "number": 186,
+              "text": ""
+            },
+            {
+              "number": 187,
+              "text": "    // simple podium disc"
+            },
+            {
+              "number": 188,
+              "text": "    const podiumMat = new StandardMaterial(\"store-podium\", this.scene);"
+            },
+            {
+              "number": 189,
+              "text": "    podiumMat.diffuseColor = new Color3(0.12, 0.15, 0.22);"
+            },
+            {
+              "number": 190,
+              "text": "    podiumMat.specularColor = new Color3(0.03, 0.03, 0.05);"
+            },
+            {
+              "number": 191,
+              "text": "    const podium = MeshBuilder.CreateCylinder(\"store-podium\", { diameter: 2.4, height: 0.12, tessellation: 48 }, this.scene);"
+            },
+            {
+              "number": 192,
+              "text": "    podium.material = podiumMat;"
+            },
+            {
+              "number": 193,
+              "text": "    podium.position.y = -0.06;"
+            },
+            {
+              "number": 194,
+              "text": ""
+            },
+            {
+              "number": 195,
+              "text": "    if (this.ownsScene) {"
+            },
+            {
+              "number": 196,
+              "text": "      // only drive the loop / resize when we own the engine (a canvas host)"
+            },
+            {
+              "number": 197,
+              "text": "      // ⭐ GH#609 —— 裸呼叫 = 一個 throw 凍住商店預覽。"
+            },
+            {
+              "number": 198,
+              "text": "      runRenderLoopSafely(this.engine, () => this.frame(), \"store-preview\");"
+            },
+            {
+              "number": 199,
+              "text": "      if (host instanceof HTMLCanvasElement && typeof ResizeObserver !== \"undefined\") {"
+            },
+            {
+              "number": 200,
+              "text": "        const ro = new ResizeObserver(() => this.engine.resize());"
+            },
+            {
+              "number": 201,
+              "text": "        ro.observe(host);"
+            },
+            {
+              "number": 202,
+              "text": "      }"
+            },
+            {
+              "number": 203,
+              "text": "      this.camera.attachControl(host as HTMLCanvasElement, true);"
+            },
+            {
+              "number": 204,
+              "text": "    }"
+            },
+            {
+              "number": 205,
+              "text": "  }"
+            }
+          ]
+        },
+        {
+          "start": 267,
+          "end": 306,
+          "lines": [
+            {
+              "number": 267,
+              "text": "  async show("
+            },
+            {
+              "number": 268,
+              "text": "    doc: ModelDoc,"
+            },
+            {
+              "number": 269,
+              "text": "    opts: { championId?: string | null; clip?: ClipState; relativeScale?: number } = {},"
+            },
+            {
+              "number": 270,
+              "text": "  ): Promise<void> {"
+            },
+            {
+              "number": 271,
+              "text": "    const token = ++this.showToken;"
+            },
+            {
+              "number": 272,
+              "text": "    this.clearModel();"
+            },
+            {
+              "number": 273,
+              "text": "    const container = await this.assets.load(doc.glbPath);"
+            },
+            {
+              "number": 274,
+              "text": "    if (!container || this.disposed || token !== this.showToken) return;"
+            },
+            {
+              "number": 275,
+              "text": "    const inst = container.instantiateModelsToScene((n) => `store-${n}`, false, { doNotInstantiate: true });"
+            },
+            {
+              "number": 276,
+              "text": "    const root = new TransformNode(\"store-model\", this.scene);"
+            },
+            {
+              "number": 277,
+              "text": "    // Measure at the NATIVE scale first, exactly as ChampionView does: the"
+            },
+            {
+              "number": 278,
+              "text": "    // normalization needs the glb's own height before any scaling is applied."
+            },
+            {
+              "number": 279,
+              "text": "    // Yaw is about Y, so applying it here does not disturb the vertical measure."
+            },
+            {
+              "number": 280,
+              "text": "    root.scaling.setAll(1);"
+            },
+            {
+              "number": 281,
+              "text": "    root.rotation.y = glbYawOffset(doc);"
+            },
+            {
+              "number": 282,
+              "text": "    for (const node of inst.rootNodes) node.parent = root;"
+            },
+            {
+              "number": 283,
+              "text": "    // 屍體/血泥幾何 —— `model@1.hiddenPrimitives` (owner 2026-08-02「初號機跟拳"
+            },
+            {
+              "number": 284,
+              "text": "    // 四郎一樣 3d model 連著屍體一起」). ⚠️ GH#368: the arena hid these and this"
+            },
+            {
+              "number": 285,
+              "text": "    // stage did not, so 16 overlay champions showed a corpse sheet lying at"
+            },
+            {
+              "number": 286,
+              "text": "    // their feet — AND that sheet went into the bounding box below, which both"
+            },
+            {
+              "number": 287,
+              "text": "    // floated them off the podium and normalized the WRONG height. Every"
+            },
+            {
+              "number": 288,
+              "text": "    // measurement from here down therefore uses `ENABLED_ONLY`."
+            },
+            {
+              "number": 289,
+              "text": "    applyHiddenPrimitives(root.getChildMeshes(false), doc.hiddenPrimitives);"
+            },
+            {
+              "number": 290,
+              "text": "    root.computeWorldMatrix(true);"
+            },
+            {
+              "number": 291,
+              "text": "    const native = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);"
+            },
+            {
+              "number": 292,
+              "text": "    root.scaling.setAll("
+            },
+            {
+              "number": 293,
+              "text": "      normalizedModelScale(native.max.y - native.min.y, doc.scale, opts.relativeScale),"
+            },
+            {
+              "number": 294,
+              "text": "    );"
+            },
+            {
+              "number": 295,
+              "text": "    this.modelRoot = root;"
+            },
+            {
+              "number": 296,
+              "text": "    this.frameToModel(root);"
+            },
+            {
+              "number": 297,
+              "text": "    // AFTER the meshes are parented (applyModelTint walks `root`'s children)"
+            },
+            {
+              "number": 298,
+              "text": "    // and BEFORE the first frame, so a tinted champion never flashes untinted."
+            },
+            {
+              "number": 299,
+              "text": "    // `championTintForId` returns undefined while content is still loading —"
+            },
+            {
+              "number": 300,
+              "text": "    // treated as \"no tint\" here rather than retried, because this stage shows"
+            },
+            {
+              "number": 301,
+              "text": "    // one model on demand instead of running a per-frame diff."
+            },
+            {
+              "number": 302,
+              "text": "    applyModelTint(root, championTintForId(opts.championId ?? null) ?? null);"
+            },
+            {
+              "number": 303,
+              "text": "    this.animator = new ClipAnimator(inst.animationGroups, doc.clipMap);"
+            },
+            {
+              "number": 304,
+              "text": "    this.animator.play(opts.clip ?? \"idle\");"
+            },
+            {
+              "number": 305,
+              "text": "  }"
+            },
+            {
+              "number": 306,
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/views/championBody.ts",
+      "repoRelativePath": "apps/client/src/render/views/championBody.ts",
+      "sha256": "d2443ed11be8deb95f23c00e528a5d835eda967dd43c23f4c729086aa1c49b4c",
+      "bytes": 24843,
+      "excerpts": [
+        {
+          "start": 321,
+          "end": 355,
+          "lines": [
+            {
+              "number": 321,
+              "text": "    // 而下面那行 `resolved !== modelKey` 的早退因此**同時**涵蓋兩種明寫的選擇"
+            },
+            {
+              "number": 322,
+              "text": "    // （造型替換與身體覆寫）—— 兩者都不該再讓 overlay 去 w3u 借一具。"
+            },
+            {
+              "number": 323,
+              "text": "    const overrideKey = bodyModelKeyFor(seatId, formIndex);"
+            },
+            {
+              "number": 324,
+              "text": "    const resolved = deps.resolveModelKey(overrideKey ?? modelKey, seatId);"
+            },
+            {
+              "number": 325,
+              "text": "    const doc = content.modelFor(resolved);"
+            },
+            {
+              "number": 326,
+              "text": "    if (doc?.bodyVersion && !doc.bodyVersion.legacyAppearance) return doc;"
+            },
+            {
+              "number": 327,
+              "text": "    if (resolved !== modelKey) return doc; // equipped skin / 身體覆寫 is an explicit choice"
+            },
+            {
+              "number": 328,
+              "text": "    // WHICH BODY IS ON SCREEN, not which hero the seat picked. `inheritFrom`"
+            },
+            {
+              "number": 329,
+              "text": "    // is the base id: a 變身態 with no overlay unit of its own keeps the model"
+            },
+            {
+              "number": 330,
+              "text": "    // the player was looking at one second ago instead of dropping to a"
+            },
+            {
+              "number": 331,
+              "text": "    // generic blocky stand-in (measured: that is 克勞薩, and it is the ONLY"
+            },
+            {
+              "number": 332,
+              "text": "    // pair this whole branch moves — see the module header)."
+            },
+            {
+              "number": 333,
+              "text": "    const seated = deps.championIdForSeat(seatId);"
+            },
+            {
+              "number": 334,
+              "text": "    return overlay.resolve(doc, idForSeatForm(seatId, formIndex), seated);"
+            },
+            {
+              "number": 335,
+              "text": "  };"
+            },
+            {
+              "number": 336,
+              "text": ""
+            },
+            {
+              "number": 337,
+              "text": "  const voxelSkinFor = (e: EntityViewState): VoxelSkinRecipe | null | undefined => {"
+            },
+            {
+              "number": 338,
+              "text": "    const championId = bodyChampionIdFor(e);"
+            },
+            {
+              "number": 339,
+              "text": "    const key = deps.resolveModelKey(bodyModelKeyFor(e.seatId, formIndexFromFlags(e.flags ?? 0)) ?? e.key, e.seatId);"
+            },
+            {
+              "number": 340,
+              "text": "    const version = content.modelFor(key)?.bodyVersion;"
+            },
+            {
+              "number": 341,
+              "text": "    const skin = voxelSkinForId(championId, content.voxelSkinOverrideFor(championId ?? \"\"), version?.legacyAppearance ? version.sourceModelKey : undefined);"
+            },
+            {
+              "number": 342,
+              "text": "    return skin && version && !version.legacyAppearance ? { ...skin, preferVoxelBody: false } : skin;"
+            },
+            {
+              "number": 343,
+              "text": "  };"
+            },
+            {
+              "number": 344,
+              "text": ""
+            },
+            {
+              "number": 345,
+              "text": "  const modelOverrideFor = (e: EntityViewState): ModelDocOverride | null => {"
+            },
+            {
+              "number": 346,
+              "text": "    // A MOB HAS NO SEAT (#262), so the championId hop below answers null and"
+            },
+            {
+              "number": 347,
+              "text": "    // #150's normalization would render all three zombie kinds at 1.8u. Same"
+            },
+            {
+              "number": 348,
+              "text": "    // seam, one branch earlier; `mobModelSizeOverride` is null for every"
+            },
+            {
+              "number": 349,
+              "text": "    // non-mob, so champions are untouched."
+            },
+            {
+              "number": 350,
+              "text": "    const mob = mobModelSizeOverride(e, modelDocFor(e.key));"
+            },
+            {
+              "number": 351,
+              "text": "    if (mob) return mob;"
+            },
+            {
+              "number": 352,
+              "text": "    const seatedId = deps.championIdForSeat(e.seatId);"
+            },
+            {
+              "number": 353,
+              "text": "    const championId = bodyChampionIdFor(e) ?? seatedId;"
+            },
+            {
+              "number": 354,
+              "text": "    if (!championId) return null;"
+            },
+            {
+              "number": 355,
+              "text": "    // 缺省即繼承 —— `_standin-overrides.json` is keyed by championId, and"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/client/src/render/CameraRig.ts",
+      "repoRelativePath": "apps/client/src/render/CameraRig.ts",
+      "sha256": "c937084df0f650c18c7f1416729fd5939a4acb1618fc530f9f6b154363fadea8",
+      "bytes": 27869,
+      "excerpts": [
+        {
+          "start": 212,
+          "end": 238,
+          "lines": [
+            {
+              "number": 212,
+              "text": "    yawRad: 0,"
+            },
+            {
+              "number": 213,
+              "text": "  };"
+            },
+            {
+              "number": 214,
+              "text": ""
+            },
+            {
+              "number": 215,
+              "text": "  constructor("
+            },
+            {
+              "number": 216,
+              "text": "    private readonly scene: Scene,"
+            },
+            {
+              "number": 217,
+              "text": "    initialTarget: Vec2,"
+            },
+            {
+              "number": 218,
+              "text": "  ) {"
+            },
+            {
+              "number": 219,
+              "text": "    // ⭐ 開局鏡頭讀的是**執行期**設定，⛔ 不是模組層級的 DOLLY_DEFAULT ——"
+            },
+            {
+              "number": 220,
+              "text": "    //    後者在模組載入時就凍結了，於是後台存的預設要等到下一次 client rebuild"
+            },
+            {
+              "number": 221,
+              "text": "    //    才生效（＝「存了沒反應」，同 #278）。resolveCamera 已經把它夾進區間。"
+            },
+            {
+              "number": 222,
+              "text": "    this.dolly = cameraLimits().defaultDolly;"
+            },
+            {
+              "number": 223,
+              "text": "    this.target = { x: initialTarget.x, z: initialTarget.z };"
+            },
+            {
+              "number": 224,
+              "text": "    this.camera = new TargetCamera(\"rig\", Vector3.Zero(), scene);"
+            },
+            {
+              "number": 225,
+              "text": "    this.camera.minZ = 0.5;"
+            },
+            {
+              "number": 226,
+              "text": "    this.camera.maxZ = 250;"
+            },
+            {
+              "number": 227,
+              "text": "    scene.activeCamera = this.camera;"
+            },
+            {
+              "number": 228,
+              "text": "    this.apply();"
+            },
+            {
+              "number": 229,
+              "text": "  }"
+            },
+            {
+              "number": 230,
+              "text": ""
+            },
+            {
+              "number": 231,
+              "text": "  toggleFollow(): void {"
+            },
+            {
+              "number": 232,
+              "text": "    this.followLock = !this.followLock;"
+            },
+            {
+              "number": 233,
+              "text": "  }"
+            },
+            {
+              "number": 234,
+              "text": ""
+            },
+            {
+              "number": 235,
+              "text": "  /** True while spectating a dead champion (free-pan + wider zoom-out). */"
+            },
+            {
+              "number": 236,
+              "text": "  get spectating(): boolean {"
+            },
+            {
+              "number": 237,
+              "text": "    return this.dead;"
+            },
+            {
+              "number": 238,
+              "text": "  }"
+            }
+          ]
+        }
+      ],
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/textures/ground/stone/albedo.png",
+      "repoRelativePath": "content/assets/textures/ground/stone/albedo.png",
+      "sha256": "b2beadfaac5997f91c807cf9ed70964c1a7a8a9cf14ee22d68081b36e19565fd",
+      "bytes": 189919,
+      "purpose": "Actual GGD ground display dependency, no new acquisition or candidate.",
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/textures/ground/stone/normal.png",
+      "repoRelativePath": "content/assets/textures/ground/stone/normal.png",
+      "sha256": "70b05de03e39f8f8a2aac09ba2054df35a154bb050e74bf1c97c8723d04484f9",
+      "bytes": 235893,
+      "purpose": "Actual GGD ground display dependency, no new acquisition or candidate.",
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/textures/ground/stone/orm.png",
+      "repoRelativePath": "content/assets/textures/ground/stone/orm.png",
+      "sha256": "63867ed9d9a65000fd42337fac164ec65bbbdc5377a6f9eaf7f360320df58875",
+      "bytes": 182514,
+      "purpose": "Actual GGD ground display dependency, no new acquisition or candidate.",
+      "matchesRecordedCommit": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/textures/ground/stone/macro.png",
+      "repoRelativePath": "content/assets/textures/ground/stone/macro.png",
+      "sha256": "d39a389e2f82a7ee323387fc7a21bc17590acf3c5acf56ce15a12269324a6126",
+      "bytes": 78246,
+      "purpose": "Actual GGD ground display dependency, no new acquisition or candidate.",
+      "matchesRecordedCommit": true
+    }
+  ],
+  "sourceState": "Read-only snapshots of actual modules; central repo may be updated concurrently. Reproduction must match file SHA or report drift."
+}
