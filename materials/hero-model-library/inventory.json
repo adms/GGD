@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T07:28:45+08:00",
-  "inputsSha256": "9d649c2a1a486fab4e5313592dbbc91caed7a2f63097740a3ffa3f35c4e2f322",
+  "generatedAt": "2026-09-11T07:33:02+08:00",
+  "inputsSha256": "fac79894bf20b7635202a97f82a53faab9d8a387bbe1dd609171d1b4f9ac75f8",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -14548,15 +14548,16 @@
             "state": "registration-rejected-material-extensions-and-missing-clips",
             "selectionVerified": false
           },
-          "publicationStatus": "local-only-awaiting-s3-upload",
-          "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+          "publicationStatus": "s3-readback-verified",
+          "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
             "bytes": 15820766,
             "sha256": "50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10",
-            "readbackVerified": false,
-            "status": "not-uploaded"
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           }
         }
       ],
@@ -26298,15 +26299,16 @@
             "state": "registration-rejected-material-extensions-and-missing-clips",
             "selectionVerified": false
           },
-          "publicationStatus": "local-only-awaiting-s3-upload",
-          "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+          "publicationStatus": "s3-readback-verified",
+          "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
             "bytes": 15820766,
             "sha256": "50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10",
-            "readbackVerified": false,
-            "status": "not-uploaded"
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           }
         }
       ],
@@ -94318,15 +94320,16 @@
           "state": "registration-rejected-material-extensions-and-missing-clips",
           "selectionVerified": false
         },
-        "publicationStatus": "local-only-awaiting-s3-upload",
-        "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
+        "publicationStatus": "s3-readback-verified",
+        "verification": "真實AssetManager/ChampionView/StorePreview已載入，69 bones、1.8單位高度；3影片各57個不同畫面。兩莉娜ID的實際註冊均422：specular等3個未支援擴充，且缺attack/cast/hurt/death；缺動作時真正播放idle@3x，不能讀currentClip當作成功。run rate .7797267、移動腳滑0.44735u/s只是推算，未跑完整SimWorld。原候選/預設不改，無新模型或新動作。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-ggd-compatibility/50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10.zip",
           "bytes": 15820766,
           "sha256": "50cd451179af5e6087f4e5f57fa66ceb9dc66b418c91ca1536d6f13261e2bd10",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
