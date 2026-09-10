@@ -2,6 +2,9 @@
  "id": "ou99.495015",
  "schema": "model@1",
  "glbPath": "assets/models/ou99/ou99_495015.glb",
+ "hiddenPrimitives": [
+  1
+ ],
  "scale": 1.0,
  "collisionRadius": 0.55,
  "clipMap": {

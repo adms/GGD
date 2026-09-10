@@ -560,14 +560,68 @@ def scan() -> list[dict]:
 #: `--check` 允許**不宣告**的 (glb 檔名, primitive)。⭐ 每一筆都要帶一個**能被反駁**
 #: 的理由 —— 「還沒收」⛔ 不是理由（CLAUDE.md 第〇·四守則的例外條款）。
 #:
-#: ⚠️ 這張表現在**是空的，而那是量出來的結論不是懶惰**：2026-08-22 掃過
-#: 160 顆 champion 會掛的 .glb，20 處殘留幾何**全部**已經宣告（16 顆 overlay
-#: 在 `_overlay-hidden-geometry.json`、`hero-turtle` 在它自己的 model doc）。
-#: 空表 = 這條閘現在真的攔得住下一顆帶血泥的新模型，⛔ 不是「先放著」。
-EXEMPT: dict[tuple[str, int], str] = {}
+#: 這些是幾何啟發式會誤判、但在真模型稽核頁可辨認為角色配件或技能道具的圖元。
+#: 每一筆理由都寫出尺寸／骨架或可播放動作，之後換檔或改 clipMap 時可以直接反駁。
+EXEMPT: dict[tuple[str, int], str] = {
+    ("ou99_458777.glb", 0): (
+        "角色右手持有的燈具配件；真選角預覽可見它由手掌抓住。bind bbox 僅 "
+        "0.14×0.30×0.14u（1789 頂點），骨架根名為 `JD-Bip001 Prop1-QQ136183818`，"
+        "不是第二具人形。反駁方式：在 champion-model-audition.html 的 idle 預覽確認"
+        "該圖元不再與手部相連，或模型換檔後上述 bbox／骨架根改變。"
+    ),
+    ("ou99_474258.glb", 1): (
+        "角色身側的細長配件；bind bbox 為 0.24×1.47×0.13u（597 頂點），"
+        "遠窄於人形身體，真選角預覽可見本體只有一名角色。反駁方式：在 idle／attack "
+        "預覽確認出現第二具人形，或模型換檔後該圖元不再維持細長配件尺寸。"
+    ),
+    ("4bdc23a090527b2ac7e2bc6ebb779a0241b7a2c4764d39fd33268899d2cf3954.glb", 1): (
+        "ou99_474258 的不可變版本，prim1 與來源檔同為 0.24×1.47×0.13u 的身側細長配件。"
+        "反駁方式：版本雜湊或 primitive 幾何不再與來源檔一致。"
+    ),
+    ("doraemon-cat.glb", 14): (
+        "哆啦A夢 Spell One 道具群的小型道具（105 頂點，0.27×0.25×0.20u），"
+        "不是貼地血泥。真施法預覽會與任意門、空氣砲等道具一起出現。"
+        "反駁方式：Spell One 預覽不再出現道具群，或它在 idle 變成常駐殘骸。"
+    ),
+    ("doraemon-cat.glb", 15): (
+        "哆啦A夢 Spell One 道具群的細長道具（124 頂點，0.09×1.62×0.97u），"
+        "真施法預覽顯示它屬於任意門／道具演出，不是第二名角色。"
+        "反駁方式：Spell One 預覽不再使用它，或 idle 出現第二具角色。"
+    ),
+    ("5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb", 14): (
+        "imported.doraemon-cat 的不可變版本；prim14 是同一組 Spell One 小型道具。"
+        "反駁方式：版本雜湊或 primitive 幾何不再與來源模型的道具對應。"
+    ),
+    ("5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb", 15): (
+        "imported.doraemon-cat 的不可變版本；prim15 是同一組 Spell One 細長道具。"
+        "反駁方式：版本雜湊或 primitive 幾何不再與來源模型的道具對應。"
+    ),
+    ("5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb", 16): (
+        "imported.doraemon-cat 不可變版本的另一片 Spell One 道具幾何；與 prim15 共用 "
+        "`yummy_40` 骨架根，真施法預覽只出現一名哆啦A夢。反駁方式：Spell One "
+        "不再使用此道具，或 idle 出現第二具角色。"
+    ),
+}
 
 #: 同一張表的「分身飛上天」版（GH#540）。⭐ 一樣要帶**能被反駁**的理由。
 FLY_EXEMPT: dict[tuple[str, int], str] = {
+    ("doraemon-cat.glb", 5): (
+        "Spell One 刻意升起的道具，整塊只綁 `yummy_10`，真施法預覽可見它與任意門及"
+        "其他道具一起展開；不是本體分身。反駁方式：Spell One 不再使用該道具，或 idle "
+        "也讓它浮在角色頭頂。"
+    ),
+    ("doraemon-cat.glb", 7): (
+        "Spell One 刻意升起的另一件道具，整塊只綁 `yummy_15`；真施法預覽只出現一名"
+        "哆啦A夢。反駁方式：Spell One 不再使用該道具，或 idle 出現第二具角色。"
+    ),
+    ("5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb", 5): (
+        "imported.doraemon-cat 不可變版本的 `yummy_10` Spell One 道具。"
+        "反駁方式：版本雜湊或 primitive 動畫不再與來源模型對應。"
+    ),
+    ("5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb", 7): (
+        "imported.doraemon-cat 不可變版本的 `yummy_15` Spell One 道具。"
+        "反駁方式：版本雜湊或 primitive 動畫不再與來源模型對應。"
+    ),
     ("Efur.glb", 9): (
         "靈魂分身的一小塊（34 頂點，掛在 Object49ArchDruid，跟 prim3–12 一起浮到 y≈4.45）。"
         "⛔ 現在**不能**宣告：hiddenPrimitives.test.ts 的「宣告表不可以憑空多藏東西」只認"
