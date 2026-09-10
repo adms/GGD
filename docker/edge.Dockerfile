@@ -89,6 +89,8 @@ COPY apps/content-api/src/ apps/content-api/src/
 COPY content/assets/audio/wc3/PROVENANCE.json content/assets/audio/wc3/
 # Offline Editor image staging validates against the shipped default policy.
 COPY content/config/icon-upload.json content/config/
+# The browser model-upload worker statically imports the shipped model budget.
+COPY content/config/model-lod.json content/config/
 # ---- tools/ 的跨界 import（GH#682/#683,2026-08-25）--------------------------
 # SkillListsPage 靜態 import 產生器的 lists.json（md 與後台頁**同一份**資料 ——
 # 第〇·四守則的單一住處,所以它非在建置脈絡不可）。同一條閘現在也掃 tools/。

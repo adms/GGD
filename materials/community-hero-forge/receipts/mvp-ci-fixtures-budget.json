@@ -114,5 +114,79 @@
   "generatedChecks": {
     "decor": 0,
     "legacyIndex": 0
+  },
+  "followup": {
+    "sourceCommit": "62cad6f5c6d5e69d58b92f2a2349ee589f3d8d3a",
+    "ci": [
+      {
+        "run": 34442186336,
+        "head": "4b2f9f15f4b08c9e47363fb6b276aaf5865d9a20",
+        "unitJob": 102759497896
+      },
+      {
+        "run": 34442191934,
+        "head": "697b27064e4a3e1e3e03b79ef193fe665adcef8d",
+        "unitJob": 102759525188
+      }
+    ],
+    "sameSharedResult": {
+      "passed": 6270,
+      "failed": 5,
+      "skipped": 4,
+      "files": 969
+    },
+    "prior11FixedInCI": true,
+    "localFixes": [
+      "explicit Docker COPY matching the new static config import; broad config COPY already made actual build succeed",
+      "original content:build refreshed only editor-target-profile.json processor/profile digests",
+      "18 expired and still unadopted records reclassified from landing to debt; original dates/groups/reasons preserved; no new exemptions, grace extension or hero edits"
+    ],
+    "debtKeys": [
+      "field:abilities.effects[]#damageArea.maxTargetsCounts",
+      "field:abilities.effects[]#damageArea.runOnEmptyHit",
+      "field:abilities.effects[]#damageLine.victimCondition",
+      "field:abilities.effects[]#damageLine.maxTargetsCounts",
+      "field:abilities.effects[]#damageLine.runOnEmptyHit",
+      "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot",
+      "field:abilities.effects[]#applyBuff.modifiers[].scopeAbilityId",
+      "field:items.modifiers[].scopeSlot",
+      "field:items.modifiers[].scopeAbilityId",
+      "field:abilities.effects[]#applyBuff.hooks[].perTarget",
+      "field:items.passive[].consumeOn",
+      "field:items.passive[].onConsumed",
+      "field:items.passive[].perTarget",
+      "field:items.passive[].critSource",
+      "field:items.passive[].reflectedDamageSource",
+      "field:items.passive[].reflectedDamageType",
+      "field:abilities.effects[]#dash.onEndWhenDead",
+      "field:champions.abilities.*.innateActivePassive"
+    ],
+    "debtSince": "2026-08-10",
+    "debtMeaning": "Still unadopted metadata, not completed hero mechanisms. Static and accepted-community usage both remain zero for these paths.",
+    "focusedTests": {
+      "clientContentImports": 1,
+      "shippedEditorProfileAndTwoProfilesAgree": 7,
+      "fieldAdoption": 10,
+      "exitCode": 0
+    },
+    "processorFingerprint": "7e4ef63cc6d2",
+    "profileDigest": "e4d7eb3ff961",
+    "logSha256": {
+      "ggd-mvp-unit-102759497896.txt": "00a64985c7cd53a394d8e5d472dc0c373b27e6e0c40e1005ead5adf7e31514c9",
+      "ggd-mvp-unit-102759525188.txt": "4e71285a9f29a2239a7fe3c09c14fd1a988154ef97212ae0f1e15d67c1ee6628",
+      "ggd-mvp-client-content-imports-focused.log": "c28fa6e2a57f43921d83384a4a36748e41ce888d0da3b6087ea8103f804d8de7",
+      "ggd-mvp-ci-profile-build.txt": "0a22c210e50dd6990e6d75e3539540613053e4a1d51a77b29b8cc781e00005bf",
+      "ggd-mvp-ci-profile-tests.txt": "7852e5260076acff5a62e786488e167f852b096e5c6f5c01c7af65a84e9816cb",
+      "ggd-mvp-field-adoption-20260910.log": "26001733688c51e1a9883e596ae11d2f077a26c3a93cd2a7ff02cc3ba40ea5d4"
+    },
+    "notRerun": "Actual Docker build already passed on the observed heads; explicit COPY adds an already-copied file. No repeated full hero/editor suite. New remote CI still required.",
+    "openFailure": "everyTagAnnounced: v0.42.26 / v0.43.4 missing real delivery records",
+    "formalObservation": {
+      "publishedHeroWorksEndpoint": "https://ggd.adms.ai/api/v1/hero-works/published",
+      "response": [],
+      "editorEndpoint": "https://ggd.adms.ai/editor/hero-forge",
+      "returnedApplication": "game index, not the Editor entry",
+      "credentialsUsed": false
+    }
   }
 }
