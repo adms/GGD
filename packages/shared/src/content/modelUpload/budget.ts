@@ -63,13 +63,44 @@ export function derateFor(perChampionChannels: number): number {
  */
 const MESH_SCENE_LIMIT = Math.round(6.0 / (C_MESH_MS * DERATE) / 10) * 10;
 const CHAMPION_MESH_SHARE = 0.25;
+/**
+ * ⭐ 英雄貼圖的邊長 —— 2026-09-10 起從**螢幕解析度反推**，⛔ 不再是 512/1024 的字面值。
+ *
+ * > owner 2026-09-10（逐字）：「貼圖圖集 應該也可以縮小尺寸及壓縮到可接受的程度嗎
+ * >  因為**我們不是在做4k遊戲 頂多HD1080**」
+ *
+ * 量到的（出貨鏡頭參數 + 1080p）：
+ * · `content/config/camera.json` 的 `defaultDolly 18` / `minDolly 10`，Babylon fov 0.8 rad
+ * · 英雄身高固定 1.7 世界單位（`models.py` 的 `HERO_TARGET_HEIGHT`）
+ * ⇒ 一具英雄在畫面上 **121 像素高**（預設鏡頭）· **217 像素**（滾到最近）
+ * ⇒ 螢幕佔用約 150×250 ≈ **37,500 個像素**
+ *
+ * | 貼圖 | texel | 相對螢幕像素 |
+ * |---|---:|---:|
+ * | 1024² | 1,048,576 | 過取樣 28.0× |
+ * | 512² | 262,144 | 過取樣 7.0× |
+ * | **256²** | **65,536** | **過取樣 1.7×** ⭐ |
+ * | 128² | 16,384 | 0.4×（不足） |
+ *
+ * ⭐ 視覺證明：西索（5 張貼圖）在 512²／256²／192² 三個版本的實拍逐像素比對，
+ * **256² 與 512² 的平均每通道差 0.10 / 255**（192² 是 0.19）——
+ * ⚠️ 而那是在實拍台的 ~300 像素，**比遊戲裡最近的 217 像素更嚴苛**。
+ *
+ * ⇒ 警戒 **256**（設計目標）／上限 **512**（真的需要細節的角色的硬天花板）。
+ *
+ * ⛔⛔ 而「壓縮」對這一格**沒有用**：`emit_report.ts` 的 `vramOf` 逐字是
+ * 「RGBA8（Babylon 把每一種壓縮來源都解成 RGBA8）× 4/3 給 mip」
+ * ⇒ PNG/JPEG 只縮**下載量**，VRAM 一個位元組都不會少。
+ * ⭐ 真正能再省的只有 **KTX2/ASTC**（GPU 壓縮格式在 VRAM 裡保持壓縮，4–8×）。
+ */
+const HERO_TEXTURE_EDGE = { warn: 256, limit: 512 } as const;
 export const HERO_MODEL_BUDGET = {
   tris: { warn: 16_000, limit: 28_000 },
   meshes: {
     warn: Math.floor(MESH_SCENE_LIMIT * CHAMPION_MESH_SHARE / CHAMPION_INSTANCES / 2),
     limit: Math.floor(MESH_SCENE_LIMIT * CHAMPION_MESH_SHARE / CHAMPION_INSTANCES),
   },
-  texEdge: { warn: 512, limit: 1024 },
+  texEdge: HERO_TEXTURE_EDGE,
   // ⭐ GH#1164 —— 兩條線各自是 owner 指定的**字面值**，⛔ 不再由 `limit × 0.75` 推。
   //   ⚠️ 舊的 `0.75` 會讓警戒線變成 375 —— ⛔ 那不是他說的 300。
   channels: { warn: CHAMPION_CHANNEL_WARN, limit: CHAMPION_CHANNEL_LIMIT },

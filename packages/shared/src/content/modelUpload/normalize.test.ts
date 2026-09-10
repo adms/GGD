@@ -3,6 +3,7 @@ import { modelUploadFixture } from "./fixtures";
 import { encodeUploadGlb, parseUploadGlb, readFloatAccessor } from "./glb";
 import { normalizeUploadedModel } from "./normalize";
 import { inspectModelUpload } from "./inspect";
+import { HERO_MODEL_BUDGET } from "./budget";
 
 /**
  * 匯入正規化的兩個承重不變量（GH#1164）。
@@ -67,4 +68,28 @@ describe("匯入模型的自動正規化", () => {
     const after = await inspectModelUpload(bytes);
     expect(after.clips.map((c) => c.name)).toEqual((await inspectModelUpload(src.bytes)).clips.map((c) => c.name));
   });
+});
+
+/**
+ * ⭐ 貼圖邊長是從**螢幕解析度**反推的，⛔ 不是挑一個好看的 2 的次方。
+ *
+ * > owner 2026-09-10（逐字）：「因為**我們不是在做4k遊戲 頂多HD1080**」
+ *
+ * ⚠️ 這條驗的是**關係**（貼圖 texel 數 vs 一具英雄真的佔幾個螢幕像素），
+ * ⛔ 不是數字本身 —— 鏡頭參數或目標解析度改了，它就會紅並且說得出為什麼。
+ */
+it("★ 英雄貼圖的警戒邊長，相對 1080p 上一具英雄的螢幕佔用是「略微過取樣」", () => {
+  // 出貨鏡頭：content/config/camera.json 的 minDolly（滾到最近＝最嚴苛）
+  const MIN_DOLLY = 10, FOV_RAD = 0.8, HERO_WORLD_HEIGHT = 1.7, SCREEN_H = 1080;
+  const heroPx = (HERO_WORLD_HEIGHT / (2 * MIN_DOLLY * Math.tan(FOV_RAD / 2))) * SCREEN_H;
+  // 一具英雄約 heroPx 高、寬約 0.6 倍 ⇒ 螢幕佔用
+  const screenPixels = heroPx * heroPx * 0.6;
+  const texels = HERO_MODEL_BUDGET.texEdge.warn ** 2;
+  const oversample = texels / screenPixels;
+  // ⭐ 過取樣要落在 1–4 倍之間：低於 1 是糊掉，高於 4 是白花 VRAM
+  //   （512² 是 7.0×、1024² 是 28×，兩個都在窗外）
+  expect(oversample).toBeGreaterThan(1);
+  expect(oversample).toBeLessThan(4);
+  // ⭐ 上限是警戒的兩倍（給真的需要細節的角色一格空間），⛔ 不是四倍
+  expect(HERO_MODEL_BUDGET.texEdge.limit).toBe(HERO_MODEL_BUDGET.texEdge.warn * 2);
 });

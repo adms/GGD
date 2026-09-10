@@ -33,7 +33,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 DEFAULT_SCAN = os.path.join(ROOT, "content", "assets", "models")
 # ⭐ 與 `HERO_MODEL_BUDGET` 同步 —— ⚠️ 那份是 TS，這裡是 python ⇒ 兩個住處。
 #    改上限時**兩邊都要動**，而 `--check` 會把不一致喊出來（見 _budget_drift）。
-BUDGET = {"tris": 28_000, "meshes": 6, "texEdge": 1024}
+BUDGET = {"tris": 28_000, "meshes": 6, "texEdge": 512}
 BUDGET_TS = os.path.join(ROOT, "packages/shared/src/content/modelUpload/budget.ts")
 
 

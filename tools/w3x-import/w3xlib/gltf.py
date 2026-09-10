@@ -695,7 +695,7 @@ NEUTRAL_TEAM = [0.55, 0.55, 0.60, 1.0]  # untinted team-color base
 #: 「註冊一個模型版本」會**再複製一份完整 GLB** ⇒ 41 顆全註冊要 +95 MiB
 #: ⇒ 中途必然撞牆(2026-09-10 真的撞了,b2-makoto 收到 503)。
 #: ⭐ 貼圖佔 ou99 這批的 **47%**(36.1 MiB) ⇒ 降到 512 約省 23 MiB。
-HERO_TEXTURE_MAX_EDGE = 512
+HERO_TEXTURE_MAX_EDGE = 256
 
 
 def _fit_texture_budget(textures_png: dict[int, bytes],
