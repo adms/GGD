@@ -1,0 +1,167 @@
+{
+  "schema": "ggd.supplemental-source-audit@1",
+  "characters": [
+    {
+      "id": "community:palworld-daedream",
+      "name": "Daedream",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "mediafire-shinypenguin-palworld-daedream"
+      ],
+      "aliases": [
+        "Daedream",
+        "DreamDemon",
+        "SK_DreamDemon"
+      ],
+      "modelCandidates": [
+        {
+          "id": "mediafire-shinypenguin-palworld-daedream.body",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/original/daedream.fbx",
+          "bytes": 6421980,
+          "sha256": "b5e9cfbd4f35416fa5fb7c51b30627c0a269b77b7e79dac292eef552aa231024",
+          "format": "fbx",
+          "readiness": "acquired-rigged-source-pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "downloadPageUrl": "https://www.mediafire.com/file/pgyk06m7c9emizd/daedream.fbx/file",
+          "geometryCount": 1,
+          "nativeVertices": 5089,
+          "triangles": 9918,
+          "boneCount": 44,
+          "skinClusterCount": 44,
+          "weightedVertices": 5089,
+          "maxVertexInfluences": 4,
+          "maxWeightSumError": 9.685754776000977e-08,
+          "materialCount": 5,
+          "textureCount": 5,
+          "textures": [
+            {
+              "name": "T_DreamDemon_Body_B.png",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/extracted/textures/T_DreamDemon_Body_B.png",
+              "bytes": 1122784,
+              "sha256": "80135fffb304d5ac569e2d3036a3566a0e01bdb10535b2d3dff1ae2985dba4c8",
+              "crc32": "293ecc80",
+              "pngAllChunkCrcValid": true,
+              "width": 2048,
+              "height": 2048,
+              "extraction": "byte-exact FBX Video/Content, no conversion",
+              "pngChunkCount": 140
+            },
+            {
+              "name": "T_DreamDemon_Body_N.png",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/extracted/textures/T_DreamDemon_Body_N.png",
+              "bytes": 3698948,
+              "sha256": "7e3f78259cbabff13cca3c7e96383b5d2c27f44025126591e50f63b2703fdb09",
+              "crc32": "ade59488",
+              "pngAllChunkCrcValid": true,
+              "width": 2048,
+              "height": 2048,
+              "extraction": "byte-exact FBX Video/Content, no conversion",
+              "pngChunkCount": 454
+            },
+            {
+              "name": "T_DreamDemon_Body_M.png",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/extracted/textures/T_DreamDemon_Body_M.png",
+              "bytes": 1048087,
+              "sha256": "2691b6cd6dcc51990d7e8c69a7c0855752e8289f6cf71f514836f076f9a9fc23",
+              "crc32": "03ee5064",
+              "pngAllChunkCrcValid": true,
+              "width": 2048,
+              "height": 2048,
+              "extraction": "byte-exact FBX Video/Content, no conversion",
+              "pngChunkCount": 131
+            },
+            {
+              "name": "T_DreamDemon_Eye_B.png",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/extracted/textures/T_DreamDemon_Eye_B.png",
+              "bytes": 37159,
+              "sha256": "938e8a9a99d453741ec5d5c552136ded654fe16d397c4d1f8aaf027340fa87e8",
+              "crc32": "20fd347a",
+              "pngAllChunkCrcValid": true,
+              "width": 1024,
+              "height": 1024,
+              "extraction": "byte-exact FBX Video/Content, no conversion",
+              "pngChunkCount": 8
+            },
+            {
+              "name": "T_DreamDemon_Mouth_B.png",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/extracted/textures/T_DreamDemon_Mouth_B.png",
+              "bytes": 35699,
+              "sha256": "80fe57f74dcc79df3f07cd9e3b480325299f8c5c721806565e0d9f6a46da055a",
+              "crc32": "816c40c4",
+              "pngAllChunkCrcValid": true,
+              "width": 1024,
+              "height": 1024,
+              "extraction": "byte-exact FBX Video/Content, no conversion",
+              "pngChunkCount": 8
+            }
+          ],
+          "nativeAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "vfxRelatedMaterialCount": 1,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/analysis/static-analysis.json",
+          "analysisSha256": "0c1b8795e4aa259fd796c629302e7bb51781cbcdb422e4d59bb024a33b692356",
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-shinypenguin-20260911/d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b.tar.gz"
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No Palworld / Daedream identity in all current champion definitions or authoritative model-library inventory/manifest. Checked name, source work and canonical/internal aliases; no source-to-hero mapping exists.",
+      "evidence": {
+        "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+        "author": "ShinyPenguin",
+        "downloadPageUrl": "https://www.mediafire.com/file/pgyk06m7c9emizd/daedream.fbx/file",
+        "shareFolderUrl": "https://www.mediafire.com/folder/n1qka5sixonyc/Palworld",
+        "sourceNotes": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/evidence/source-notes.json",
+        "acquisitionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/acquisition.json",
+        "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/analysis/static-analysis.json",
+        "sourceNameEvidence": "Author public Daedream download link, original filename daedream.fbx, internal rig/mesh SK_DreamDemon.",
+        "authorClaim": "Palworld source models exported and textured/tweaked in Blender; game build not specified.",
+        "nameAndWorkCatalogChecked": true,
+        "heroDefinitionCount": 153,
+        "runtimeAcceptance": false,
+        "sourceCrcScope": "FBX CRC32 computed locally only; all 5 embedded PNG stored chunk CRC values independently verified. Upstream FBX is not an archive and has no provided CRC.",
+        "backupReceiptSha256": "a7c3214d935c7110e232a1424eeae25045de3ed64bf577b33ce0005d6fcb5acd",
+        "fullSourceAudit": {
+          "path": "materials/hero-model-library/priority-evidence/palworld-daedream/design-source-original.json",
+          "sha256": "2316b0e567b2350d207ea3e755729ad94b443abdfbc36660cbcedfaaaf5f14a0"
+        }
+      },
+      "limitations": [
+        "No game installation, DRM/AES handling, executable or asset script execution.",
+        "No GLB conversion, GGD registration, visual/material/animation runtime acceptance in this source intake.",
+        "Source author says game models were exported and textures assigned/tweaked in Blender; fidelity to original shader logic is not proved.",
+        "No animation stacks/curves or audio files in this acquired FBX. Skeleton presence does not mean original game animations were obtained.",
+        "Assimp reports 220 bone instances across 5 material splits; source has 44 unique bone nodes, not 220 unique bones."
+      ],
+      "backupReceiptPath": "materials/hero-model-library/priority-evidence/palworld-daedream/s3-backup.json",
+      "backup": {
+        "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-shinypenguin-20260911/d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b.tar.gz",
+        "archiveSha256": "d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b",
+        "archiveBytes": 12387183,
+        "memberCount": 18,
+        "fullGetAndMemberShaVerified": true,
+        "receiptPath": "/private/tmp/ggd-palworld-source-s3-backup.json",
+        "receiptSha256": "a7c3214d935c7110e232a1424eeae25045de3ed64bf577b33ce0005d6fcb5acd"
+      },
+      "supersedesAuditRows": [
+        "mediafire-shinypenguin-palworld-daedream:Daedream"
+      ]
+    }
+  ],
+  "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate."
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "ggd-undesigned-community-delivery@1",
+  "report": {
+    "path": "/private/tmp/ggd-undesigned-community.json",
+    "bytes": 3745712,
+    "sha256": "338ba45a36126f96c4a916dd3f664827019bb21f6487ada66e9e91cc0beabc34"
+  },
+  "generator": {
+    "path": "/private/tmp/ggd-audit-community-undesigned.py",
+    "bytes": 37659,
+    "sha256": "bd42f38cfae9d5786e2c02cd6d9bd3816ec2abf2a030b9c9387de491324b042a",
+    "dependencies": "Python 3 standard library; complete local source intake and repo are required. Does not download or claim a clean clone contains raw sources.",
+    "command": "python3 /private/tmp/ggd-audit-community-undesigned.py --workspace <ABxVFX_EDIT> --output <report.json> --generated-at 2026-09-10T17:24:35.504288+00:00"
+  },
+  "summary": {
+    "not-defined": 146,
+    "designed": 46,
+    "identity-review": 246,
+    "characterGroups": 438,
+    "actualModelCandidateFiles": 2338,
+    "missingCandidatePaths": 0,
+    "publicSourcesInspected": 90,
+    "nativeSSBUGroups": 278,
+    "ssbuBlendFiles": 1793,
+    "uniqueExistingModelPaths": 2287,
+    "knownNotDefinedGroups": 146,
+    "historicalMutableManifestMismatchCount": 33
+  },
+  "validation": {
+    "allCandidatePathsExist": true,
+    "recordedByteCountsMatchExceptListedHistoricalMutablePaths": true,
+    "historicalMutableManifestMismatchCount": 33,
+    "allMappedHeroSixSlotsChecked": true,
+    "inputShaPinsStillCurrent": true,
+    "noHeaderOrMeshInspectionErrors": true,
+    "fate14Servants": {
+      "designed": 4,
+      "notDefined": 10
+    },
+    "shaMode": "Report and control pins freshly hashed. Large candidate files use preserved source-manifest SHA plus fresh size and format/mesh checks; this run does not claim fresh SHA of all asset payloads. All 33 historical mutable-path mismatches freshly hashed and labelled."
+  },
+  "limits": [
+    "No human visual review in this audit. Source names and existing parsed manifests are preserved.",
+    "GMO filename-only character identities remain review-required.",
+    "Unknown SSBU native identifier groups (including projectiles, bosses, Pokémon and assistants) remain review-required, not confirmed undesigned heroes.",
+    "OU99 intentional proxy donor identities remain review-required; borrowedByHeroIds is not an exact mapping.",
+    "No design quality or runtime combat assertion is inferred from complete definition files.",
+    "Original local LoL corpora and 300/MBA are outside this subagent scope."
+  ],
+  "readOnlyCentral": true
+}

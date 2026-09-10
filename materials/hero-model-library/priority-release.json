@@ -1,7 +1,7 @@
 {
   "schema": "ggd-priority-model-release@1",
   "state": "git-handoff-awaiting-main-review-and-deployment",
-  "baseMainCommit": "b6686109a",
+  "baseMainCommit": "817a05498",
   "branch": "codex/hero-model-library-options",
   "pullRequest": "https://github.com/adms/GGD/pull/1152",
   "productionDeployed": false,
@@ -566,10 +566,10 @@
     "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
     "productionDeployed": false
   },
-  "contentBuildVersion": "cv_258401b6b5a6",
-  "latestValidation": "priority-evidence/kaiji-community/validation.json",
+  "contentBuildVersion": "cv_85e0b7db5ec1",
+  "latestValidation": "priority-evidence/design-backlog/validation.json",
   "priority81Handoff": "priority-81-handoff.json",
-  "previousValidation": "priority-evidence/kisaragi-train-audio/validation.json",
+  "previousValidation": "priority-evidence/kaiji-community/validation.json",
   "kaijiCommunityModel": {
     "receipt": "priority-evidence/kaiji-community/receipt.json",
     "sourceUrl": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
@@ -591,5 +591,14 @@
     "runtimeReady": false,
     "originalFucPsp": false,
     "backupReceipt": "priority-evidence/fateubw-community/source-s3-backup.json"
+  },
+  "modelDesignBacklog": "materials/hero-model-library/已取得模型待設計英雄.md",
+  "palworldReserve": "materials/hero-model-library/priority-evidence/palworld-daedream/delivery.json",
+  "modelDesignBacklogCounts": {
+    "not-defined": 381,
+    "definitions-incomplete": 3,
+    "identity-review": 247,
+    "designed": 83,
+    "source-unavailable": 0
   }
 }

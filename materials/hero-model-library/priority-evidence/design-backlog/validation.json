@@ -1,0 +1,111 @@
+{
+  "schema": "ggd-model-design-backlog-validation@1",
+  "baseCommit": "79ccd787f05078f956041543b1cd6445ac66e7e7",
+  "checks": [
+    {
+      "name": "skills:check",
+      "exitCode": 1,
+      "log": "priority-evidence/design-backlog/checks/ggd-design-skills-check-final.log",
+      "sha256": "8f09ada6c5c0be788625406b1808ffd02b2dea68e864c1e7aa346e55a7729323",
+      "boundary": "Reached prior-day message ledger missing/unpaired rows; generated contract/readme staleness repaired."
+    },
+    {
+      "name": "editor:accept:release",
+      "exitCode": 1,
+      "log": "priority-evidence/design-backlog/checks/ggd-design-editor-accept-release-full.log",
+      "sha256": "d00b7aaae29d52147384fc55e98d2be2e25bd5fc63505a72c76eb4a793a7fdc7",
+      "boundary": "Two existing Skill Forge capability-only catalog mismatches."
+    },
+    {
+      "name": "coord:check",
+      "exitCode": 1,
+      "log": "priority-evidence/design-backlog/checks/ggd-design-coord-check-full.log",
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb",
+      "boundary": "Existing claim.editor-form-receipts duplicate merged fingerprint; asset-library claim passes."
+    },
+    {
+      "name": "python source/inventory/voice tests",
+      "exitCode": 0,
+      "log": "priority-evidence/design-backlog/checks/ggd-design-python-tests.log",
+      "sha256": "787f50c193c7bd2f02fa581b8638def570643c096d0f77eece1d31fd51d0c57e",
+      "boundary": "65 tests: 64 pass, optional real TAR fixture skip; existing separate fixture evidence retained."
+    },
+    {
+      "name": "all hero analysis",
+      "exitCode": 0,
+      "log": "priority-evidence/design-backlog/checks/ggd-design-analysis-final.log",
+      "sha256": "b453191d4a870c6894fa71dda3fe84d4b851802a0d14188728dc475b40b1bb81",
+      "boundary": "907 abilities, template expansion and schema parse pass."
+    },
+    {
+      "name": "all hero mechanics coverage",
+      "exitCode": 0,
+      "log": "priority-evidence/design-backlog/checks/ggd-design-coverage-final.log",
+      "sha256": "182fafde72d2538046f38fde1a1beda2d6f472dea3ccc4f74d7a2989ce14afdb",
+      "boundary": "153 heroes; no missing refs or explicit skill placeholders; not gameplay/design-completion acceptance."
+    }
+  ],
+  "backlogCounts": {
+    "not-defined": 381,
+    "definitions-incomplete": 3,
+    "identity-review": 247,
+    "designed": 83,
+    "source-unavailable": 0
+  },
+  "sourceIdentities": 714,
+  "coverageSummary": {
+    "heroes": 153,
+    "abilityDocumentsAnalyzed": 907,
+    "declaredHeroAbilityReferences": 912,
+    "uniqueDirectHeroAbilityPaths": 906,
+    "abilityDocumentsNotDirectlyReferencedByCurrentHeroes": [
+      "godie-zombieking.passive"
+    ],
+    "heroesWithAllDeclaredMechanics": 153,
+    "heroesWithMissingRefs": 0,
+    "heroesWithExplicitSkillPlaceholderEvidence": 0,
+    "heroesWithUncertainty": 0,
+    "statusCounts": {
+      "mechanics-defined": 153
+    },
+    "schemaFailedAbilities": 0,
+    "templateExpansionFailedAbilities": 0,
+    "snapshotWhitelistedHeroes": 130,
+    "snapshotNotWhitelistedHeroes": 23,
+    "builtinFourSlotCharacters": [
+      "sela",
+      "thorne"
+    ],
+    "designCompletionVerified": false,
+    "sourceFilesStableDuringAudit": true
+  },
+  "priority81": {
+    "heroCount": 81,
+    "activeModelFilesAndMappingsPass": 81,
+    "activeModelsGitTracked": 81,
+    "activePlaceholderCount": 0,
+    "registeredCandidateCount": 283,
+    "perHeroAudioAudits": 81,
+    "heroesWithReportedGaps": 7,
+    "mainBaselineAudioFiles": 1016,
+    "currentBranchAudioAdditions": 2,
+    "currentBranchAudioFiles": 1018,
+    "mainMergedAudioAdditions": false,
+    "productionDeploymentVerified": false,
+    "all81NativeAudioOrMotionComplete": false
+  },
+  "sourceReplays": [
+    "source-300-mba-replay.json",
+    "source-community-replay.json"
+  ],
+  "independentCodeReview": [
+    "code-review.json",
+    "analysis-input-pins-review.json"
+  ],
+  "palworldDaedream": "priority-evidence/palworld-daedream/delivery.json",
+  "sourceAuditBackup": "source-audit-s3-backup.json",
+  "gitAssetBaseBackup": "git-backup-e2df99f91.json",
+  "allReleaseChecksPassed": false,
+  "productionDeployed": false,
+  "scope": "Maintain the acquired-model design backlog and retain the existing 81 hero handoff. Palworld Jetragon/Astralym/Cattiva source acquisition continues separately."
+}

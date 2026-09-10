@@ -3,7 +3,7 @@
   "generator": "tools/hero-model-library/build_priority81_handoff.py",
   "generatorSha256": "5f6ee6159bf46033d2c8f200dbf5b6683eceb29f619e00aa7dbe400c3cec15e8",
   "scope": "Main review and merge of existing 81-hero content; Root owns remaining conversions",
-  "inputsSha256": "62bb2618f944f183880f6c939eccb37c42ccc6cc4c37219f01882ed669a1a487",
+  "inputsSha256": "09ac62027da1ed15277bfe344417523e8c88a63a02bb5ea0c0fb40e8237d168e",
   "inputs": [
     {
       "gitPath": null,
@@ -11202,648 +11202,648 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-aladdin.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13212,
-      "sha256": "c97c19847d44cc7b61537b0902dd92ccd9466440f0c529063508c0d21bce5d78"
+      "bytes": 13216,
+      "sha256": "32348a6daafcdd3994bbd11a98fdfcef3cb093cbfceee8b7a62798e8895c8f59"
     },
     {
       "gitPath": "content/champions/b2-albus.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-albus.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11549,
-      "sha256": "426d2f0e9eff1fce252906ae4239f76b79787ec6af91ed442dcf2a560ce92534"
+      "bytes": 11553,
+      "sha256": "540eb23ccc70a317a442800c5513d6f496f776f7e34502dcf2e04193e0997496"
     },
     {
       "gitPath": "content/champions/b2-bojji.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-bojji.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11609,
-      "sha256": "be771f732f8ea080303b87ce648d13b9c0aa0adfba73cae35c70ae342e686735"
+      "bytes": 11613,
+      "sha256": "4f151ecbb04b021886c8c2833f5540be49f98798a88b3381962b6fd00c7b6bad"
     },
     {
       "gitPath": "content/champions/b2-boxxo.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-boxxo.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 15559,
-      "sha256": "7e5f3dbe9852c659f90bf36fa6b58c8e92ce31d799c12426fc080c83f8de2627"
+      "bytes": 15563,
+      "sha256": "40a5634c13e39e07983ba28f2bdd8fc0763fecec4e2288f1e566c6d2986f427e"
     },
     {
       "gitPath": "content/champions/b2-elma.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-elma.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13833,
-      "sha256": "f923ece29e7b6ff6766157f39d150bb59c8f7928c34df6029576df2c985d9275"
+      "bytes": 13837,
+      "sha256": "7457cadd0ca81d0f3a1d7e3bc2ed0507a73f7168d64317b6e7b41f94bbf7a6b1"
     },
     {
       "gitPath": "content/champions/b2-fushi.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-fushi.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 15021,
-      "sha256": "5857bce6662672ae81ab663942049358c30a18d715abd0915ebf8b53f7cef135"
+      "bytes": 15025,
+      "sha256": "211d3add6b8b79b22bd543b8733803d02b89b1c2ba5b872ea5e4130ee06c6ea8"
     },
     {
       "gitPath": "content/champions/b2-goblin.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-goblin.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12847,
-      "sha256": "7a630235c1bf06d5f9c6096cc12deda53ccef6f9e44f49b39881dc8658b24f32"
+      "bytes": 12851,
+      "sha256": "47b2d78cff1c2c00a83f77c5bc87013a20a26f4afeb2a08b9460a63387ead076"
     },
     {
       "gitPath": "content/champions/b2-guts.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-guts.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13202,
-      "sha256": "7bff3831813bb515f16be2c2ffc65a433335af914ff0f22188833fe6ac4ae9cc"
+      "bytes": 13206,
+      "sha256": "789ef7c932e8428b698bebce16853acdaa939d70f00af844a7b9b7309192f49d"
     },
     {
       "gitPath": "content/champions/b2-haga.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-haga.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 14524,
-      "sha256": "1fcdecbb630755d2c1501518805f1cea341d2ca4c8ce6dbb14e28c96b6b5943b"
+      "bytes": 14528,
+      "sha256": "e98c222b89652f896822be384e927318185fa25ed1ad9f15f4e11367fc3514b8"
     },
     {
       "gitPath": "content/champions/b2-kaede.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kaede.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12802,
-      "sha256": "19b3629b96e4caf661bc7dfaa87c939a4d076e7deaa54979dbdc598248916f7a"
+      "bytes": 12806,
+      "sha256": "422394c236c2e80fba8c92b5b1c05baaa89aa757bb681ea1f72b6ba2df5b3511"
     },
     {
       "gitPath": "content/champions/b2-kaiji.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kaiji.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 14947,
-      "sha256": "f7b55f97ea2763b6068ac73e59bc1f7f5782083697462ac1a5b88a118b55f45e"
+      "bytes": 14951,
+      "sha256": "648c1fd3bb5fb1455cb9e1caa333990b3fbd76fca6291f1d6c71332d987c8ddc"
     },
     {
       "gitPath": "content/champions/b2-keyaru.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-keyaru.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12705,
-      "sha256": "e0d29c351b1c9e012b80736f9658be12a4a199afe279f29970e0d2b29287b325"
+      "bytes": 12709,
+      "sha256": "c80e491c0d62c13d4a6314b7bc10aa58541ca8bee55f0e69c4c4d778ce9706d6"
     },
     {
       "gitPath": "content/champions/b2-kisaragi.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kisaragi.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 20841,
-      "sha256": "c29b860041bc178b7b29bb0a175c783ee217d289e580c4718bd1d80cbcfb8d5c"
+      "bytes": 20845,
+      "sha256": "117483d70a0fca0156f829ca1f51af6c66a0653d0ce8c88e49fdf28ecfae8be0"
     },
     {
       "gitPath": "content/champions/b2-klaus.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-klaus.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13909,
-      "sha256": "51bf5ea4c2052148ad80f3210b5525e6ea19c89b40d993f27140e10bdee7b742"
+      "bytes": 13913,
+      "sha256": "f27e8f2c71a45447969734e293a5eb134516e08fa1db3011b171ae29fe213d34"
     },
     {
       "gitPath": "content/champions/b2-kumoko.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kumoko.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10993,
-      "sha256": "3278977240947508e8bb1cadd561fd720b25693c1177b6c824830dbdc9862d41"
+      "bytes": 10997,
+      "sha256": "7a83ea37cac45c11a488204d44371f9cf22981844614ef5f932fac8f1bbcbbe3"
     },
     {
       "gitPath": "content/champions/b2-luckyman.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-luckyman.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13944,
-      "sha256": "9efd8eb09e8057d5b93f3064914093061848165f7839a77afae53cf2c1076121"
+      "bytes": 13948,
+      "sha256": "ea8c47d2fb415af67f867e37761b4757659402b4f393fc8736c26e484f281f99"
     },
     {
       "gitPath": "content/champions/b2-makoto.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-makoto.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 14427,
-      "sha256": "1d8cf9f9b352b8b8ea44afb7c369efee80ca81a1a92b15092e4d46d1e72d3310"
+      "bytes": 14431,
+      "sha256": "d3c26b6ee6632a3f305bd5fba263e8049b0af99fb1aecea1b09712bfbe83f9cb"
     },
     {
       "gitPath": "content/champions/b2-maomao.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-maomao.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 15015,
-      "sha256": "2622d8d74abce505b35c7a009fc16423aa270d002b7425c829bb996b067d81e3"
+      "bytes": 15019,
+      "sha256": "114c3cea9b8d5b8dd2489e7f556b9355faf1e874149fc9121dd8f1eb678b41bc"
     },
     {
       "gitPath": "content/champions/b2-maple.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-maple.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12946,
-      "sha256": "7c2501e7f1ecce4aa5cd06fcf932b76e22f393cab066147f3c09f3edeef831ff"
+      "bytes": 12950,
+      "sha256": "adfddc05447074ddfff19ecb19856d6cad2b3d11d72728ec5f03187b4d54f50e"
     },
     {
       "gitPath": "content/champions/b2-matthias.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-matthias.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12748,
-      "sha256": "d021f71263076c72b5d663ae55a83888b059bddc8c4ac7fb22ae00c91f4d460f"
+      "bytes": 12752,
+      "sha256": "8ea722fa1d199122bb41decb060fc2c36e777b0366dc35a827bdf546a5a1ce16"
     },
     {
       "gitPath": "content/champions/b2-misery.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-misery.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11375,
-      "sha256": "b5fc18dad478c9d20c15b69a01e05571fe4b7ba01b12373d63296fb0f1bb3c37"
+      "bytes": 11379,
+      "sha256": "fd8ee2619844dfd39a5fcc49eb4ad66dc6885ae4bbd3d175af2dc5c7d376d8d5"
     },
     {
       "gitPath": "content/champions/b2-naofumi.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-naofumi.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 15541,
-      "sha256": "87cf3c72241dc95cd072b392dd10b7db5f30550461b877ba5439c507ac8b2823"
+      "bytes": 15545,
+      "sha256": "7c083d4ee9718f418b504e5030273ed37c1e30e759b3f5dd5073c45d4100146b"
     },
     {
       "gitPath": "content/champions/b2-ned.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-ned.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13175,
-      "sha256": "b016b6976eda74eee85604a27208929bc57ea0659fabb273c0a229239eab30da"
+      "bytes": 13179,
+      "sha256": "b91d7001a5816abd6852818df2c58fe9812073cce906e8258f41207134780931"
     },
     {
       "gitPath": "content/champions/b2-noor.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-noor.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 18382,
-      "sha256": "ce3903b1cae705487d51af1638d8f9e2314d74634e05e23be3d1943f7d8acb36"
+      "bytes": 18386,
+      "sha256": "9860e08196b8e12e2bf4cec51c1153643428fee51558f6610a2248f3940c5de3"
     },
     {
       "gitPath": "content/champions/b2-nube.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-nube.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13585,
-      "sha256": "f5a47e8d14a8069004cc43d53024b6762d871355e83e12932eb62d101c616cc5"
+      "bytes": 13589,
+      "sha256": "2de4404d387e5a40203f7c00ccde7ef39934358fc914a4a32f51a7ed214fc047"
     },
     {
       "gitPath": "content/champions/b2-orphen.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-orphen.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12663,
-      "sha256": "109b09e1839cd26dea81f1a51e84ae01037501c8211ce63a4c548ef501ff373a"
+      "bytes": 12667,
+      "sha256": "a9d613e3cf746eb1b17859e0eb4ff3c2318c1ab1517809450dcb8b7c5bb5921a"
     },
     {
       "gitPath": "content/champions/b2-popp.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-popp.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11269,
-      "sha256": "067d74f9cca7e9766826d743d113227580c7adabedfc5384113bab4a78245f19"
+      "bytes": 11273,
+      "sha256": "7c0484689aa090bfc255d7f50b09c06f9afe37b86db77d57ca3525f1cbed0dcc"
     },
     {
       "gitPath": "content/champions/b2-rem.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-rem.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13030,
-      "sha256": "46a39b8ad0e829baed331741e29c0ed5c85f3630c517c9f36936349710cbcf32"
+      "bytes": 13034,
+      "sha256": "2cb25cebaf0c9434a260a54727d2b62066c5c6449427e36cdcf946e1304854f9"
     },
     {
       "gitPath": "content/champions/b2-rin.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-rin.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12960,
-      "sha256": "ca3af44685e15d3fa512c7dd8c34f737246a47a644bdf0aaa53e82d3214a7bed"
+      "bytes": 12964,
+      "sha256": "55f5e99f3ef9caf0620bab6b2f2aed7def6d944a6781a7d335b61fb5b378d6de"
     },
     {
       "gitPath": "content/champions/b2-shadow.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-shadow.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13186,
-      "sha256": "a54f0d6198c3ebbc2cbab45cd0d4e6bf86ca082e5bc385c8d22d23ac9ae7e1cc"
+      "bytes": 13190,
+      "sha256": "c2806a10d144e9522c4cd2c669a1adbb90227f2b56f1c81fd1d08b696fc98df0"
     },
     {
       "gitPath": "content/champions/b2-shinchan.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-shinchan.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12172,
-      "sha256": "7f21ea68652709f0fca64801f4da74256a29f62e48f4f7098e13a6bbe50438a7"
+      "bytes": 12176,
+      "sha256": "4393101773593f6902bcd7d974f412ed8126e1a20b748adfdfb635a47eeab342"
     },
     {
       "gitPath": "content/champions/b2-sinbad.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-sinbad.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13109,
-      "sha256": "be9831e6fbb4c20bbb0f6bd8e2998bffee396d84cb916edd995f6e6bc4126726"
+      "bytes": 13113,
+      "sha256": "dd86d64f6314b590ec8de299e3cd57b3dd1c7cb25b50dd09857b385d48ecabe3"
     },
     {
       "gitPath": "content/champions/b2-takopi.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-takopi.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11956,
-      "sha256": "08bc3b85ad50bef69413ce0bf461ad5fb3915ccd242760f7a09bf8e48daa875a"
+      "bytes": 11960,
+      "sha256": "9568b51afa7217434bef3f366da86c05810eaa9b5c29b43c5f82139371d79bfb"
     },
     {
       "gitPath": "content/champions/b2-touka.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-touka.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 14434,
-      "sha256": "88cbb63941ab77d1e43c76a3bec05c16c5c7dbfd9e9adbb41f2fee7e4ed2621c"
+      "bytes": 14438,
+      "sha256": "684d429db4f0472018f510e72cb6a47dfcb44a56bed83897e154b90a1a7712dd"
     },
     {
       "gitPath": "content/champions/b2-uncle.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-uncle.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 14730,
-      "sha256": "a36cf5df592c1c074ccbc67230336ebdef835d34270cdf2633175eb1bf2e7fb3"
+      "bytes": 14734,
+      "sha256": "3d369a0b418067fa4ecfb9083a77e5ea8422a33292efdd9d58dbf7c25403c4d4"
     },
     {
       "gitPath": "content/champions/b2-yogiri.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-yogiri.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13835,
-      "sha256": "6af39cbbb5252e7f947c34f204f5f33941bfc16dd0603175ea076a05adf2ee1c"
+      "bytes": 13839,
+      "sha256": "e155eb9580c1ff95774dde6125e6ba75fb6e324d3531c47fe02771dfbe29b8fd"
     },
     {
       "gitPath": "content/champions/b2-zenitsu.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-zenitsu.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13759,
-      "sha256": "4316c55e739315357e927d097e5511cfd1db186be6486bddd64df8155f47e3c8"
+      "bytes": 13763,
+      "sha256": "3b17d4f9afb647d01aa5ec9f8fc1516ea44e842ca13d1baa0e60088cb721dc86"
     },
     {
       "gitPath": "content/champions/community-review-01-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-01-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10355,
-      "sha256": "567f46207c4f62b98dbaf1b936d7e80e4a9cc5cc15496c02f42d21466ffff35c"
+      "bytes": 10359,
+      "sha256": "fe0501f6a2db4ce4cbadb920134fc7c334c9d7c3004e3beb4748b894601145c3"
     },
     {
       "gitPath": "content/champions/community-review-02-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-02-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13981,
-      "sha256": "34cc7c985fab7889f57fee64c0df86bc9310fcd7cef3c5fe314b0a464acc017b"
+      "bytes": 13985,
+      "sha256": "1e434ba3de0052763f793fba96675dd8c45d203eda098eb733214fea6d7e955a"
     },
     {
       "gitPath": "content/champions/community-review-03-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-03-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12821,
-      "sha256": "fc30634f79aa0b4dca8a9a186793405982d644521ca2f08459a48b591bf2de4e"
+      "bytes": 12825,
+      "sha256": "3efe6b674848853c6a40acbb6896249e934aee2f45ea29d0ac775376550d2755"
     },
     {
       "gitPath": "content/champions/community-review-04-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-04-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11437,
-      "sha256": "f7928e43448a55e383d7c81f2a63b13884318be82b667a20d14438e64942a0d5"
+      "bytes": 11441,
+      "sha256": "150b2563648e3a67e7c2dc0f7843f8e9282eb696364c9db6c48ef2a7c7e78880"
     },
     {
       "gitPath": "content/champions/community-review-05-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-05-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13154,
-      "sha256": "6d61b4dca73805fcc2eabb016f447d64b6e0b494b10b825dab6f81c4d00e4209"
+      "bytes": 13158,
+      "sha256": "ad0381949ae299de30c0af8c6bd07c664e6c8bc722869adf6b672a750adb75ae"
     },
     {
       "gitPath": "content/champions/community-review-06-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-06-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12164,
-      "sha256": "daddb16cb4c21c802b92b7eab5ac5717696213b2698724d4c82865512f791470"
+      "bytes": 12168,
+      "sha256": "ae47d258e866be7ca486bb69f0a888e0de65884d06866b0f8950a112f3f19b43"
     },
     {
       "gitPath": "content/champions/community-review-07-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-07-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12364,
-      "sha256": "950a8fef1558e5cdfee1fa21946821d98b77dcbf4db123a42f27eed2a9f24759"
+      "bytes": 12368,
+      "sha256": "6533f068781f126bebeaef16c48edac55429ffd5adefd25a6e306c8cdcc65966"
     },
     {
       "gitPath": "content/champions/community-review-08-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-08-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10513,
-      "sha256": "e982792350798845655984f0a422c701e9c704c8da48023cd34542446cf577a8"
+      "bytes": 10517,
+      "sha256": "ab21de8584f9a7d627e8d86770723363c7d2290192a8064301f0f85c9274f812"
     },
     {
       "gitPath": "content/champions/community-review-09-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-09-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11783,
-      "sha256": "244682fea32fd8f23ee2de52f5e6d94bcdc9e994904ab77b51ea443a9edf6b32"
+      "bytes": 11787,
+      "sha256": "8572f7d681f39fc76d0ce9779160bbac6e22a88bb79b9aa6c50eae0566c50b2f"
     },
     {
       "gitPath": "content/champions/community-review-10-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-10-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 9696,
-      "sha256": "3fa393f8b6bd5deb9593cceed95c2b2a193f5a3c02d05cd8af938a67cbf8345f"
+      "bytes": 9700,
+      "sha256": "1aca82abbf54063f80dedae72b98cb8297b2e1600fffa2432312dd8b9d2e8d37"
     },
     {
       "gitPath": "content/champions/community-review-11-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-11-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12970,
-      "sha256": "bd3641ab7cb02c65a0942b4d4cd9e8687c60d5edee1fbde35d08234bf4b098c4"
+      "bytes": 12974,
+      "sha256": "25450d00a5ee3e48ffe6429f76ff8f915f00ea0f6554d0de122b92966d332a49"
     },
     {
       "gitPath": "content/champions/community-review-12-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-12-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11437,
-      "sha256": "999bbbdf28f8501da8583c07f11aa76ac9dd279d2f0bb76a389b828716e04b55"
+      "bytes": 11441,
+      "sha256": "8eec57a60984068e5e8c45537c8d87bdf89c8d68a9e4ca7566982bf542df49be"
     },
     {
       "gitPath": "content/champions/community-review-13-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-13-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10661,
-      "sha256": "47fa2d7ae6cf411fac288c024b31f283669913ddcef6d91571e61cbbf3bd9855"
+      "bytes": 10665,
+      "sha256": "00b15590bbc20d2ff2a0c269225be0107d68d97e203b1061549f883700041129"
     },
     {
       "gitPath": "content/champions/community-review-14-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-14-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13048,
-      "sha256": "ee66406e2539cbc35e9c927d2852259613e8c2e6598b2b2244c9b3ecfca18c5e"
+      "bytes": 13052,
+      "sha256": "eb57fd0277112af4e4c1425bfed5883ff02a7eb9fd6e14d7ee34d4b70cdadf6c"
     },
     {
       "gitPath": "content/champions/community-review-15-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-15-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12691,
-      "sha256": "8978d4b13979a782e19d1cda175806ec6726293aa94c49a94d509020026a424d"
+      "bytes": 12695,
+      "sha256": "8da5a100b06b4dab9e1d063392373d3f7eda03a944a43ad417e5393f203086ed"
     },
     {
       "gitPath": "content/champions/community-review-16-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-16-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10583,
-      "sha256": "e4f23eb0a8cae2cddeded1d258b84c6ad5b9b6bfea64e0209df38e715fd5338a"
+      "bytes": 10587,
+      "sha256": "1451ace0e346b93cf8b65930cd1a3ddbcbd5ddba3bb72e048ec29e3ee27b35c4"
     },
     {
       "gitPath": "content/champions/community-review-17-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-17-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 9687,
-      "sha256": "d66b8d3b37fb25ad224353077d70e08bb6e53ee9cfda6bcbfe5bddec973fbb4f"
+      "bytes": 9691,
+      "sha256": "9f3d703d98bd7fe8ee46fbae4b77ef899a1051c191448429fd9888cb3c90f985"
     },
     {
       "gitPath": "content/champions/community-review-18-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-18-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10519,
-      "sha256": "bf1ecfda4210e1083680117badfe4d5a7313b77061135e71a0685a351e491a84"
+      "bytes": 10523,
+      "sha256": "19321700e277f7c1e1b3641df4e2234d235e5464dae12aef181cae8cbf0a1c7c"
     },
     {
       "gitPath": "content/champions/community-review-19-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-19-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11446,
-      "sha256": "ad2d296f71d1d7b07b3b4bb0a3afd7c4576f3f8225c57e4c3be4bdb38afa9515"
+      "bytes": 11450,
+      "sha256": "be7245649b4850a2cc6cee7ea073b01b0be212f4bc382f82e74dfb125f9e1dd1"
     },
     {
       "gitPath": "content/champions/community-review-20-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-20-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11136,
-      "sha256": "895a3baaff9ca30be28ffa58bc700f3b79e9d9f608d3b5041a8e8b787d21bcf0"
+      "bytes": 11140,
+      "sha256": "0ca4f75da6b573957e26a876ccecc543bfbd52a9c580b332c435764d07e7ba6b"
     },
     {
       "gitPath": "content/champions/community-review-21-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-21-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10537,
-      "sha256": "348bf4e004da3c7ae8b03f928c18f259bf32accee98bfaf5e7969af32cbaa1c6"
+      "bytes": 10541,
+      "sha256": "f9fbfd73722e80bad4f09f101246cfe5304d82b329af12a8a05390c669c59e6d"
     },
     {
       "gitPath": "content/champions/community-review-22-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-22-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12668,
-      "sha256": "1bbd5a433e47593dc213015149ea7c69d9057ef49a1a73614505be7d1e6151b7"
+      "bytes": 12672,
+      "sha256": "12a0a15e2f54f9843014efeffccb8777c9d5be33bbc9c11baad55483bf2fd608"
     },
     {
       "gitPath": "content/champions/community-review-23-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-23-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11019,
-      "sha256": "12a7d01905babcf13fee080b6d400ce6ef25f1ac591f7501928599f3c1181bc1"
+      "bytes": 11023,
+      "sha256": "9162f4b837a6841569df15bc1c8682951ab59b21a9b8fab8f127477f53a6a5d7"
     },
     {
       "gitPath": "content/champions/community-review-24-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-24-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 9692,
-      "sha256": "d6626fab8eb049dc475798f5f485fe90759f23cbbe7b6299c4d2d505d3edf47e"
+      "bytes": 9696,
+      "sha256": "425fae96e853c68be037c3939296615b5cded6fe493fc092f342045f0cf27df2"
     },
     {
       "gitPath": "content/champions/community-review-25-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-25-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11108,
-      "sha256": "a4673e52c3af8563d4cb4001690de11799e125687e0f20da5da886bf0a4c9f32"
+      "bytes": 11112,
+      "sha256": "fd6fa27dd1d3767302b95a75c95dc2ac8fbdf7d587e67e7f101fedbcb138b6ed"
     },
     {
       "gitPath": "content/champions/community-review-26-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-26-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10631,
-      "sha256": "01ef0e9d09362b79f51e26fcad1740960a05ccd45f59fe7960c35102842924fe"
+      "bytes": 10635,
+      "sha256": "d0b623fd99f1be570f131b098b80e14a215c1f10e61c0d719a291c53551ae969"
     },
     {
       "gitPath": "content/champions/community-review-27-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-27-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 9873,
-      "sha256": "988479e5b05d7eee529e78309d6bc8f074a06c5d0e2c1dcbbdb2c0e94d3e7837"
+      "bytes": 9877,
+      "sha256": "fda1a5bb93cd75123aa2ead3f35aa31745150c7a9587bb56cef454b19fc13c9c"
     },
     {
       "gitPath": "content/champions/community-review-28-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-28-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11657,
-      "sha256": "d7f6874512895504cd9f6af4484b4426356f30ad82a30e7eae6fb3683b8acbbc"
+      "bytes": 11661,
+      "sha256": "83a25b3aead694a32eeee57962a62fd40c33f42d3d26c662e2253b8542456341"
     },
     {
       "gitPath": "content/champions/community-review-29-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-29-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10655,
-      "sha256": "2556afc80d4d3bc96aedf2165c1c3b39c9b2d9bc83f6d681b22c9b04775a8554"
+      "bytes": 10659,
+      "sha256": "732b67cd0df14c6b4e01cb110a0a2785882f7194d54934f4ca75a0e80fa1662f"
     },
     {
       "gitPath": "content/champions/community-review-30-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-30-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12611,
-      "sha256": "039606e308b356b13e4c1372dd4afeb510fc58e0f48e25106cdc20d3227625a8"
+      "bytes": 12615,
+      "sha256": "ac936f94ceaf8d1df750c3e9ad56a61fed1d98d44ce07f191dc21e750922f32a"
     },
     {
       "gitPath": "content/champions/community-review-31-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-31-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10915,
-      "sha256": "ef092fa6a1004a217b71abe48e9035d897587c8ce76db795fd37f45e9661763b"
+      "bytes": 10919,
+      "sha256": "b6d08c2356b26c6e8eefb61300cf049fba3618b544d7cb3ff4e3473fe887720d"
     },
     {
       "gitPath": "content/champions/community-review-32-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-32-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 11957,
-      "sha256": "352862b57325318f7da39e627920cde813202dde1769b35a13125a994b1202f9"
+      "bytes": 11961,
+      "sha256": "40a20809874865d2aeab68846c219280b03cad6cdba90e4036235a15a598a433"
     },
     {
       "gitPath": "content/champions/community-review-33-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-33-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12575,
-      "sha256": "2c31f383ae083685b813cfc1b7c41dd62c1d840190992a3afb7e09985d1e393b"
+      "bytes": 12579,
+      "sha256": "d124954a927e1f05520226c3552c32ffc050983c3deca19d18419e6ff3c507b8"
     },
     {
       "gitPath": "content/champions/community-review-34-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-34-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13305,
-      "sha256": "35e68dca9affeed9e72540506bdd52fafa8f2b20235a62fd4a879cc4fb2c76fb"
+      "bytes": 13309,
+      "sha256": "30ed26872f3f0883c40311555f960affbee73fb2e7dcfff424fb0a8b4a0b9e86"
     },
     {
       "gitPath": "content/champions/community-review-35-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-35-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10541,
-      "sha256": "97ed94cac0db8b182eec76f7d86e192426ffc10f6a568d18d4498e6f6d262b9d"
+      "bytes": 10545,
+      "sha256": "2689855db9664e26af5d3b5c4e53664fc7b8399192464f519a4f53fe4f8569fb"
     },
     {
       "gitPath": "content/champions/community-review-36-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-36-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 13276,
-      "sha256": "b7f0dd36aded2d0c55bbf20e66d5db8cb107bfb6cc86cde8e431fadbd9dc58e3"
+      "bytes": 13280,
+      "sha256": "61183ef1455784b2531864eef77873921225a62324b8e7c8b623719ed76adf15"
     },
     {
       "gitPath": "content/champions/community-review-37-20260907.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-37-20260907.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 12798,
-      "sha256": "2b7f5f21344fb7c4eac8827c84a1aa697027ef9e2b4721262dcf46a0350a2910"
+      "bytes": 12802,
+      "sha256": "4c79ff7fb29d0369f41523c881a15d1c1ea3a02dbfd5565a3e0ccdf1d8fd75e7"
     },
     {
       "gitPath": "content/champions/lol-karthus.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-karthus.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 9930,
-      "sha256": "ed955916f84cc138ecef19c8a6a42377a412f5fd143cd8dcf7a48f08ac20821f"
+      "bytes": 9934,
+      "sha256": "418684ca3d9408816f6df19b5ddbebe1a764c0005b393b3c2936adc1f3d93eee"
     },
     {
       "gitPath": "content/champions/lol-leesin.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-leesin.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 9537,
-      "sha256": "91325d350881876750da9fa22c80453b7c8e0fd4cc5f380a8f00e3097c9fbbd6"
+      "bytes": 9541,
+      "sha256": "6a7eb70a08bc8bfeb521e6da2c5f192bf14acd13ebbb8504ecc9bef1f5b77c7b"
     },
     {
       "gitPath": "content/champions/lol-lux.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-lux.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10481,
-      "sha256": "a77fde97f5479e9ad5bef800e16cea522bd24a3445fbef73a6494fc8439930e2"
+      "bytes": 10485,
+      "sha256": "111eb65f6676e09abda68d24878b98ba0b3d128a300dd0e0d8942609346a0291"
     },
     {
       "gitPath": "content/champions/lol-missfortune.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-missfortune.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10598,
-      "sha256": "fdfc8f8cec003b6c6f56c15f79d4e8b0b7bc1307eb85b790a18d2a575a555f5b"
+      "bytes": 10602,
+      "sha256": "b391f0707af394f06259ab5a1d0dd31571e1a21e52adb0034984d2d0fc8cad57"
     },
     {
       "gitPath": "content/champions/lol-warwick.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-warwick.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10607,
-      "sha256": "92cc2022d13bb7ee009c8310da89b5a3c43c67b20d564ff918424680fcd13931"
+      "bytes": 10611,
+      "sha256": "d04c42a30b775de4875f1a34a9c98159fa7ac8c67e148ab2fb34fd07626359fc"
     },
     {
       "gitPath": "content/champions/lol-xerath.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-xerath.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10191,
-      "sha256": "2b18e9eb66d8ccc510aead8e60551e37bac8c71ec6b08a900ac632a06076cd00"
+      "bytes": 10195,
+      "sha256": "614a407beff99b91512a34f78858003f1ae59a865a0b1e077a4aeb4fa5683318"
     },
     {
       "gitPath": "content/champions/lol-yasuo.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-yasuo.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10840,
-      "sha256": "9ee8bd31579b3d795f80fda3ebe92afa03724b62b299bd3eb80df608223bd613"
+      "bytes": 10844,
+      "sha256": "2650ff41dc73d3f274f2d1a50741c68118224c6f4c6aa40c0975f03e5b75ee41"
     },
     {
       "gitPath": "content/models/champ.sela.json",
@@ -15034,8 +15034,8 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 4406541,
-      "sha256": "a33a795f00d47fa7a77645bc19d479a389f4f595a4f084cc41c79f3478b5945e"
+      "bytes": 4417469,
+      "sha256": "c277c016b97203f1da49297b23e97c7b0cb0ce8d8664891c3ea4a4feb1d11cae"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
@@ -15170,8 +15170,8 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-registration.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 511629,
-      "sha256": "663a60d5da649b688de2c320b3d1b1f07ecf9926a6fab066e276bcb2a6f868ac"
+      "bytes": 556179,
+      "sha256": "b3a5597916dcba8a559cd4e1665d0a67078b8222cfd2d6350a87c2699005b8db"
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
@@ -15738,8 +15738,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-01-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10355,
-        "sha256": "567f46207c4f62b98dbaf1b936d7e80e4a9cc5cc15496c02f42d21466ffff35c"
+        "bytes": 10359,
+        "sha256": "fe0501f6a2db4ce4cbadb920134fc7c334c9d7c3004e3beb4748b894601145c3"
       },
       "activeModelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
       "selectionMode": "automatic",
@@ -16882,8 +16882,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-02-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13981,
-        "sha256": "34cc7c985fab7889f57fee64c0df86bc9310fcd7cef3c5fe314b0a464acc017b"
+        "bytes": 13985,
+        "sha256": "1e434ba3de0052763f793fba96675dd8c45d203eda098eb733214fea6d7e955a"
       },
       "activeModelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
       "selectionMode": "automatic",
@@ -18871,8 +18871,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-03-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12821,
-        "sha256": "fc30634f79aa0b4dca8a9a186793405982d644521ca2f08459a48b591bf2de4e"
+        "bytes": 12825,
+        "sha256": "3efe6b674848853c6a40acbb6896249e934aee2f45ea29d0ac775376550d2755"
       },
       "activeModelKey": "version.body.4460b40eae91d19d1895469c9eaf0d6bd1e4fb3766b1b350",
       "selectionMode": "automatic",
@@ -20042,8 +20042,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-04-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11437,
-        "sha256": "f7928e43448a55e383d7c81f2a63b13884318be82b667a20d14438e64942a0d5"
+        "bytes": 11441,
+        "sha256": "150b2563648e3a67e7c2dc0f7843f8e9282eb696364c9db6c48ef2a7c7e78880"
       },
       "activeModelKey": "version.body.e47f9a11483e936f6ae4796e32f51853b1a2ad1c0599cc75",
       "selectionMode": "automatic",
@@ -21148,8 +21148,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-05-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13154,
-        "sha256": "6d61b4dca73805fcc2eabb016f447d64b6e0b494b10b825dab6f81c4d00e4209"
+        "bytes": 13158,
+        "sha256": "ad0381949ae299de30c0af8c6bd07c664e6c8bc722869adf6b672a750adb75ae"
       },
       "activeModelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
       "selectionMode": "automatic",
@@ -22694,8 +22694,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-06-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12164,
-        "sha256": "daddb16cb4c21c802b92b7eab5ac5717696213b2698724d4c82865512f791470"
+        "bytes": 12168,
+        "sha256": "ae47d258e866be7ca486bb69f0a888e0de65884d06866b0f8950a112f3f19b43"
       },
       "activeModelKey": "version.body.6484c748978551f4419a5e982a3e6814f8fca9b9ff276939",
       "selectionMode": "automatic",
@@ -23959,8 +23959,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-07-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12364,
-        "sha256": "950a8fef1558e5cdfee1fa21946821d98b77dcbf4db123a42f27eed2a9f24759"
+        "bytes": 12368,
+        "sha256": "6533f068781f126bebeaef16c48edac55429ffd5adefd25a6e306c8cdcc65966"
       },
       "activeModelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
       "selectionMode": "automatic",
@@ -25543,8 +25543,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-08-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10513,
-        "sha256": "e982792350798845655984f0a422c701e9c704c8da48023cd34542446cf577a8"
+        "bytes": 10517,
+        "sha256": "ab21de8584f9a7d627e8d86770723363c7d2290192a8064301f0f85c9274f812"
       },
       "activeModelKey": "version.body.66097b65102bec44b3d65cc9e524ba10b3e175261680a998",
       "selectionMode": "automatic",
@@ -26709,8 +26709,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-09-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11783,
-        "sha256": "244682fea32fd8f23ee2de52f5e6d94bcdc9e994904ab77b51ea443a9edf6b32"
+        "bytes": 11787,
+        "sha256": "8572f7d681f39fc76d0ce9779160bbac6e22a88bb79b9aa6c50eae0566c50b2f"
       },
       "activeModelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
       "selectionMode": "automatic",
@@ -28257,8 +28257,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-10-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 9696,
-        "sha256": "3fa393f8b6bd5deb9593cceed95c2b2a193f5a3c02d05cd8af938a67cbf8345f"
+        "bytes": 9700,
+        "sha256": "1aca82abbf54063f80dedae72b98cb8297b2e1600fffa2432312dd8b9d2e8d37"
       },
       "activeModelKey": "version.body.1017c2855b9daf1ffefdf0a6285253a6cfee673a8329b94b",
       "selectionMode": "automatic",
@@ -29423,8 +29423,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-11-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12970,
-        "sha256": "bd3641ab7cb02c65a0942b4d4cd9e8687c60d5edee1fbde35d08234bf4b098c4"
+        "bytes": 12974,
+        "sha256": "25450d00a5ee3e48ffe6429f76ff8f915f00ea0f6554d0de122b92966d332a49"
       },
       "activeModelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
       "selectionMode": "automatic",
@@ -31150,8 +31150,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-12-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11437,
-        "sha256": "999bbbdf28f8501da8583c07f11aa76ac9dd279d2f0bb76a389b828716e04b55"
+        "bytes": 11441,
+        "sha256": "8eec57a60984068e5e8c45537c8d87bdf89c8d68a9e4ca7566982bf542df49be"
       },
       "activeModelKey": "version.body.317bd7b51ce0d64c24ebd79093f3aea10399eaaeec9186ec",
       "selectionMode": "automatic",
@@ -32159,8 +32159,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-13-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10661,
-        "sha256": "47fa2d7ae6cf411fac288c024b31f283669913ddcef6d91571e61cbbf3bd9855"
+        "bytes": 10665,
+        "sha256": "00b15590bbc20d2ff2a0c269225be0107d68d97e203b1061549f883700041129"
       },
       "activeModelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
       "selectionMode": "automatic",
@@ -33267,8 +33267,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-14-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13048,
-        "sha256": "ee66406e2539cbc35e9c927d2852259613e8c2e6598b2b2244c9b3ecfca18c5e"
+        "bytes": 13052,
+        "sha256": "eb57fd0277112af4e4c1425bfed5883ff02a7eb9fd6e14d7ee34d4b70cdadf6c"
       },
       "activeModelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
       "selectionMode": "automatic",
@@ -34921,8 +34921,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-15-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12691,
-        "sha256": "8978d4b13979a782e19d1cda175806ec6726293aa94c49a94d509020026a424d"
+        "bytes": 12695,
+        "sha256": "8da5a100b06b4dab9e1d063392373d3f7eda03a944a43ad417e5393f203086ed"
       },
       "activeModelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
       "selectionMode": "automatic",
@@ -36589,8 +36589,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-16-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10583,
-        "sha256": "e4f23eb0a8cae2cddeded1d258b84c6ad5b9b6bfea64e0209df38e715fd5338a"
+        "bytes": 10587,
+        "sha256": "1451ace0e346b93cf8b65930cd1a3ddbcbd5ddba3bb72e048ec29e3ee27b35c4"
       },
       "activeModelKey": "version.body.c50b439503acbc0286d34aa863de3b5b60f040647b3e3fe5",
       "selectionMode": "automatic",
@@ -37743,8 +37743,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-17-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 9687,
-        "sha256": "d66b8d3b37fb25ad224353077d70e08bb6e53ee9cfda6bcbfe5bddec973fbb4f"
+        "bytes": 9691,
+        "sha256": "9f3d703d98bd7fe8ee46fbae4b77ef899a1051c191448429fd9888cb3c90f985"
       },
       "activeModelKey": "version.body.a7b05cda23ed28ef09c8cc70fdb6331f78fe40521d48c953",
       "selectionMode": "automatic",
@@ -38909,8 +38909,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-18-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10519,
-        "sha256": "bf1ecfda4210e1083680117badfe4d5a7313b77061135e71a0685a351e491a84"
+        "bytes": 10523,
+        "sha256": "19321700e277f7c1e1b3641df4e2234d235e5464dae12aef181cae8cbf0a1c7c"
       },
       "activeModelKey": "version.body.19497fdc652b511ec9848c31dc8709e35a78e1b6e1ef0e44",
       "selectionMode": "automatic",
@@ -40043,8 +40043,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-19-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11446,
-        "sha256": "ad2d296f71d1d7b07b3b4bb0a3afd7c4576f3f8225c57e4c3be4bdb38afa9515"
+        "bytes": 11450,
+        "sha256": "be7245649b4850a2cc6cee7ea073b01b0be212f4bc382f82e74dfb125f9e1dd1"
       },
       "activeModelKey": "version.body.6a8f96e74f75181f0076b272622cf3fe83404a51f17149fa",
       "selectionMode": "automatic",
@@ -41359,8 +41359,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-20-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11136,
-        "sha256": "895a3baaff9ca30be28ffa58bc700f3b79e9d9f608d3b5041a8e8b787d21bcf0"
+        "bytes": 11140,
+        "sha256": "0ca4f75da6b573957e26a876ccecc543bfbd52a9c580b332c435764d07e7ba6b"
       },
       "activeModelKey": "version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502",
       "selectionMode": "automatic",
@@ -42525,8 +42525,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-21-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10537,
-        "sha256": "348bf4e004da3c7ae8b03f928c18f259bf32accee98bfaf5e7969af32cbaa1c6"
+        "bytes": 10541,
+        "sha256": "f9fbfd73722e80bad4f09f101246cfe5304d82b329af12a8a05390c669c59e6d"
       },
       "activeModelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
       "selectionMode": "automatic",
@@ -43679,8 +43679,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-22-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12668,
-        "sha256": "1bbd5a433e47593dc213015149ea7c69d9057ef49a1a73614505be7d1e6151b7"
+        "bytes": 12672,
+        "sha256": "12a0a15e2f54f9843014efeffccb8777c9d5be33bbc9c11baad55483bf2fd608"
       },
       "activeModelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
       "selectionMode": "automatic",
@@ -45305,8 +45305,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-23-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11019,
-        "sha256": "12a7d01905babcf13fee080b6d400ce6ef25f1ac591f7501928599f3c1181bc1"
+        "bytes": 11023,
+        "sha256": "9162f4b837a6841569df15bc1c8682951ab59b21a9b8fab8f127477f53a6a5d7"
       },
       "activeModelKey": "version.body.64f3795c6a5e90dbf5a8b78fe190d56cf81effb852f353fd",
       "selectionMode": "automatic",
@@ -46615,8 +46615,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-24-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 9692,
-        "sha256": "d6626fab8eb049dc475798f5f485fe90759f23cbbe7b6299c4d2d505d3edf47e"
+        "bytes": 9696,
+        "sha256": "425fae96e853c68be037c3939296615b5cded6fe493fc092f342045f0cf27df2"
       },
       "activeModelKey": "version.body.7f075191d8d759a8475e66b421de085eb1fcf8926a175681",
       "selectionMode": "automatic",
@@ -47769,8 +47769,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-25-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11108,
-        "sha256": "a4673e52c3af8563d4cb4001690de11799e125687e0f20da5da886bf0a4c9f32"
+        "bytes": 11112,
+        "sha256": "fd6fa27dd1d3767302b95a75c95dc2ac8fbdf7d587e67e7f101fedbcb138b6ed"
       },
       "activeModelKey": "version.body.93f9bee80c870645e52e6c71f731c3bf56dd3c9f0757fc76",
       "selectionMode": "automatic",
@@ -48935,8 +48935,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-26-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10631,
-        "sha256": "01ef0e9d09362b79f51e26fcad1740960a05ccd45f59fe7960c35102842924fe"
+        "bytes": 10635,
+        "sha256": "d0b623fd99f1be570f131b098b80e14a215c1f10e61c0d719a291c53551ae969"
       },
       "activeModelKey": "version.body.d3d930c84f9423094ffdca11a0b5ea4fa2c39638cea939ab",
       "selectionMode": "automatic",
@@ -50101,8 +50101,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-27-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 9873,
-        "sha256": "988479e5b05d7eee529e78309d6bc8f074a06c5d0e2c1dcbbdb2c0e94d3e7837"
+        "bytes": 9877,
+        "sha256": "fda1a5bb93cd75123aa2ead3f35aa31745150c7a9587bb56cef454b19fc13c9c"
       },
       "activeModelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
       "selectionMode": "automatic",
@@ -51269,8 +51269,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-28-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11657,
-        "sha256": "d7f6874512895504cd9f6af4484b4426356f30ad82a30e7eae6fb3683b8acbbc"
+        "bytes": 11661,
+        "sha256": "83a25b3aead694a32eeee57962a62fd40c33f42d3d26c662e2253b8542456341"
       },
       "activeModelKey": "version.body.1de4f7fe358ffb265236f5cbcd16e3b6cf4289ff48c9c429",
       "selectionMode": "automatic",
@@ -52249,8 +52249,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-29-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10655,
-        "sha256": "2556afc80d4d3bc96aedf2165c1c3b39c9b2d9bc83f6d681b22c9b04775a8554"
+        "bytes": 10659,
+        "sha256": "732b67cd0df14c6b4e01cb110a0a2785882f7194d54934f4ca75a0e80fa1662f"
       },
       "activeModelKey": "version.body.ba1886127e7f2741f4e6763d243777cb7e34b38d28d02bd4",
       "selectionMode": "automatic",
@@ -53415,8 +53415,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-30-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12611,
-        "sha256": "039606e308b356b13e4c1372dd4afeb510fc58e0f48e25106cdc20d3227625a8"
+        "bytes": 12615,
+        "sha256": "ac936f94ceaf8d1df750c3e9ad56a61fed1d98d44ce07f191dc21e750922f32a"
       },
       "activeModelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
       "selectionMode": "automatic",
@@ -54861,8 +54861,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-31-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10915,
-        "sha256": "ef092fa6a1004a217b71abe48e9035d897587c8ce76db795fd37f45e9661763b"
+        "bytes": 10919,
+        "sha256": "b6d08c2356b26c6e8eefb61300cf049fba3618b544d7cb3ff4e3473fe887720d"
       },
       "activeModelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
       "selectionMode": "automatic",
@@ -55978,8 +55978,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-32-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11957,
-        "sha256": "352862b57325318f7da39e627920cde813202dde1769b35a13125a994b1202f9"
+        "bytes": 11961,
+        "sha256": "40a20809874865d2aeab68846c219280b03cad6cdba90e4036235a15a598a433"
       },
       "activeModelKey": "version.body.a22a6e40793b280739b186768ad8a8a32b303806d27577cc",
       "selectionMode": "automatic",
@@ -57107,8 +57107,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-33-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12575,
-        "sha256": "2c31f383ae083685b813cfc1b7c41dd62c1d840190992a3afb7e09985d1e393b"
+        "bytes": 12579,
+        "sha256": "d124954a927e1f05520226c3552c32ffc050983c3deca19d18419e6ff3c507b8"
       },
       "activeModelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
       "selectionMode": "automatic",
@@ -59063,8 +59063,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-34-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13305,
-        "sha256": "35e68dca9affeed9e72540506bdd52fafa8f2b20235a62fd4a879cc4fb2c76fb"
+        "bytes": 13309,
+        "sha256": "30ed26872f3f0883c40311555f960affbee73fb2e7dcfff424fb0a8b4a0b9e86"
       },
       "activeModelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
       "selectionMode": "automatic",
@@ -60668,8 +60668,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-35-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10541,
-        "sha256": "97ed94cac0db8b182eec76f7d86e192426ffc10f6a568d18d4498e6f6d262b9d"
+        "bytes": 10545,
+        "sha256": "2689855db9664e26af5d3b5c4e53664fc7b8399192464f519a4f53fe4f8569fb"
       },
       "activeModelKey": "version.body.2f9f563af47ff08c5b5a7e3e34658d24ce59718cc568379c",
       "selectionMode": "automatic",
@@ -61844,8 +61844,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-36-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13276,
-        "sha256": "b7f0dd36aded2d0c55bbf20e66d5db8cb107bfb6cc86cde8e431fadbd9dc58e3"
+        "bytes": 13280,
+        "sha256": "61183ef1455784b2531864eef77873921225a62324b8e7c8b623719ed76adf15"
       },
       "activeModelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
       "selectionMode": "automatic",
@@ -63286,8 +63286,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-37-20260907.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12798,
-        "sha256": "2b7f5f21344fb7c4eac8827c84a1aa697027ef9e2b4721262dcf46a0350a2910"
+        "bytes": 12802,
+        "sha256": "4c79ff7fb29d0369f41523c881a15d1c1ea3a02dbfd5565a3e0ccdf1d8fd75e7"
       },
       "activeModelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
       "selectionMode": "automatic",
@@ -64696,8 +64696,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-popp.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11269,
-        "sha256": "067d74f9cca7e9766826d743d113227580c7adabedfc5384113bab4a78245f19"
+        "bytes": 11273,
+        "sha256": "7c0484689aa090bfc255d7f50b09c06f9afe37b86db77d57ca3525f1cbed0dcc"
       },
       "activeModelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
       "selectionMode": "automatic",
@@ -65811,8 +65811,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-rem.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13030,
-        "sha256": "46a39b8ad0e829baed331741e29c0ed5c85f3630c517c9f36936349710cbcf32"
+        "bytes": 13034,
+        "sha256": "2cb25cebaf0c9434a260a54727d2b62066c5c6449427e36cdcf946e1304854f9"
       },
       "activeModelKey": "version.body.712d51b72d6746b5e62dd98a095c148ec269187477f8e040",
       "selectionMode": "automatic",
@@ -66938,8 +66938,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-zenitsu.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13759,
-        "sha256": "4316c55e739315357e927d097e5511cfd1db186be6486bddd64df8155f47e3c8"
+        "bytes": 13763,
+        "sha256": "3b17d4f9afb647d01aa5ec9f8fc1516ea44e842ca13d1baa0e60088cb721dc86"
       },
       "activeModelKey": "version.body.80d9331a8e1ba0ea4afa42aefa76dc1c3b11b0d0bf1ceb4c",
       "selectionMode": "automatic",
@@ -68091,8 +68091,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-rin.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12960,
-        "sha256": "ca3af44685e15d3fa512c7dd8c34f737246a47a644bdf0aaa53e82d3214a7bed"
+        "bytes": 12964,
+        "sha256": "55f5e99f3ef9caf0620bab6b2f2aed7def6d944a6781a7d335b61fb5b378d6de"
       },
       "activeModelKey": "version.body.24dff69da9f04e6b1cb5fe28affe1d1df196a9f352259aed",
       "selectionMode": "automatic",
@@ -69262,8 +69262,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-uncle.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 14730,
-        "sha256": "a36cf5df592c1c074ccbc67230336ebdef835d34270cdf2633175eb1bf2e7fb3"
+        "bytes": 14734,
+        "sha256": "3d369a0b418067fa4ecfb9083a77e5ea8422a33292efdd9d58dbf7c25403c4d4"
       },
       "activeModelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
       "selectionMode": "automatic",
@@ -70716,8 +70716,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-boxxo.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 15559,
-        "sha256": "7e5f3dbe9852c659f90bf36fa6b58c8e92ce31d799c12426fc080c83f8de2627"
+        "bytes": 15563,
+        "sha256": "40a5634c13e39e07983ba28f2bdd8fc0763fecec4e2288f1e566c6d2986f427e"
       },
       "activeModelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
       "selectionMode": "automatic",
@@ -72318,8 +72318,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-shadow.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13186,
-        "sha256": "a54f0d6198c3ebbc2cbab45cd0d4e6bf86ca082e5bc385c8d22d23ac9ae7e1cc"
+        "bytes": 13190,
+        "sha256": "c2806a10d144e9522c4cd2c669a1adbb90227f2b56f1c81fd1d08b696fc98df0"
       },
       "activeModelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
       "selectionMode": "automatic",
@@ -74201,8 +74201,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-bojji.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11609,
-        "sha256": "be771f732f8ea080303b87ce648d13b9c0aa0adfba73cae35c70ae342e686735"
+        "bytes": 11613,
+        "sha256": "4f151ecbb04b021886c8c2833f5540be49f98798a88b3381962b6fd00c7b6bad"
       },
       "activeModelKey": "version.body.f8868cbb08e0ca359ebd1dcfb1b9cd5392235511ddf457a0",
       "selectionMode": "automatic",
@@ -75278,8 +75278,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-maomao.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 15015,
-        "sha256": "2622d8d74abce505b35c7a009fc16423aa270d002b7425c829bb996b067d81e3"
+        "bytes": 15019,
+        "sha256": "114c3cea9b8d5b8dd2489e7f556b9355faf1e874149fc9121dd8f1eb678b41bc"
       },
       "activeModelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
       "selectionMode": "automatic",
@@ -76444,8 +76444,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-elma.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13833,
-        "sha256": "f923ece29e7b6ff6766157f39d150bb59c8f7928c34df6029576df2c985d9275"
+        "bytes": 13837,
+        "sha256": "7457cadd0ca81d0f3a1d7e3bc2ed0507a73f7168d64317b6e7b41f94bbf7a6b1"
       },
       "activeModelKey": "version.body.d01b869b45b264aa7f43b3025a8c47363003290c792df741",
       "selectionMode": "automatic",
@@ -77844,8 +77844,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-albus.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11549,
-        "sha256": "426d2f0e9eff1fce252906ae4239f76b79787ec6af91ed442dcf2a560ce92534"
+        "bytes": 11553,
+        "sha256": "540eb23ccc70a317a442800c5513d6f496f776f7e34502dcf2e04193e0997496"
       },
       "activeModelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
       "selectionMode": "automatic",
@@ -78925,8 +78925,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-goblin.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12847,
-        "sha256": "7a630235c1bf06d5f9c6096cc12deda53ccef6f9e44f49b39881dc8658b24f32"
+        "bytes": 12851,
+        "sha256": "47b2d78cff1c2c00a83f77c5bc87013a20a26f4afeb2a08b9460a63387ead076"
       },
       "activeModelKey": "version.body.d10ee74c106dbc6ed7c08168720ecfade61d528aaadfbc46",
       "selectionMode": "automatic",
@@ -80031,8 +80031,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-maple.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12946,
-        "sha256": "7c2501e7f1ecce4aa5cd06fcf932b76e22f393cab066147f3c09f3edeef831ff"
+        "bytes": 12950,
+        "sha256": "adfddc05447074ddfff19ecb19856d6cad2b3d11d72728ec5f03187b4d54f50e"
       },
       "activeModelKey": "version.body.516a9ba13596bee68805d424a072ff349c62ab532e8b0070",
       "selectionMode": "automatic",
@@ -81174,8 +81174,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-naofumi.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 15541,
-        "sha256": "87cf3c72241dc95cd072b392dd10b7db5f30550461b877ba5439c507ac8b2823"
+        "bytes": 15545,
+        "sha256": "7c083d4ee9718f418b504e5030273ed37c1e30e759b3f5dd5073c45d4100146b"
       },
       "activeModelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
       "selectionMode": "automatic",
@@ -82477,8 +82477,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-makoto.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 14427,
-        "sha256": "1d8cf9f9b352b8b8ea44afb7c369efee80ca81a1a92b15092e4d46d1e72d3310"
+        "bytes": 14431,
+        "sha256": "d3c26b6ee6632a3f305bd5fba263e8049b0af99fb1aecea1b09712bfbe83f9cb"
       },
       "activeModelKey": "version.body.1658fe832754e7719e19011038369d9578f2143d59828350",
       "selectionMode": "automatic",
@@ -84037,8 +84037,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-noor.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 18382,
-        "sha256": "ce3903b1cae705487d51af1638d8f9e2314d74634e05e23be3d1943f7d8acb36"
+        "bytes": 18386,
+        "sha256": "9860e08196b8e12e2bf4cec51c1153643428fee51558f6610a2248f3940c5de3"
       },
       "activeModelKey": "version.body.697b1d6e6689c28e722161e3789cbc77a49bde86c9ad461b",
       "selectionMode": "automatic",
@@ -85638,8 +85638,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-touka.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 14434,
-        "sha256": "88cbb63941ab77d1e43c76a3bec05c16c5c7dbfd9e9adbb41f2fee7e4ed2621c"
+        "bytes": 14438,
+        "sha256": "684d429db4f0472018f510e72cb6a47dfcb44a56bed83897e154b90a1a7712dd"
       },
       "activeModelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
       "selectionMode": "automatic",
@@ -87652,8 +87652,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-haga.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 14524,
-        "sha256": "1fcdecbb630755d2c1501518805f1cea341d2ca4c8ce6dbb14e28c96b6b5943b"
+        "bytes": 14528,
+        "sha256": "e98c222b89652f896822be384e927318185fa25ed1ad9f15f4e11367fc3514b8"
       },
       "activeModelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
       "selectionMode": "automatic",
@@ -89442,8 +89442,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-guts.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13202,
-        "sha256": "7bff3831813bb515f16be2c2ffc65a433335af914ff0f22188833fe6ac4ae9cc"
+        "bytes": 13206,
+        "sha256": "789ef7c932e8428b698bebce16853acdaa939d70f00af844a7b9b7309192f49d"
       },
       "activeModelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
       "selectionMode": "automatic",
@@ -90751,8 +90751,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-keyaru.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12705,
-        "sha256": "e0d29c351b1c9e012b80736f9658be12a4a199afe279f29970e0d2b29287b325"
+        "bytes": 12709,
+        "sha256": "c80e491c0d62c13d4a6314b7bc10aa58541ca8bee55f0e69c4c4d778ce9706d6"
       },
       "activeModelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
       "selectionMode": "automatic",
@@ -91917,8 +91917,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kaede.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12802,
-        "sha256": "19b3629b96e4caf661bc7dfaa87c939a4d076e7deaa54979dbdc598248916f7a"
+        "bytes": 12806,
+        "sha256": "422394c236c2e80fba8c92b5b1c05baaa89aa757bb681ea1f72b6ba2df5b3511"
       },
       "activeModelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
       "selectionMode": "automatic",
@@ -93405,8 +93405,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-matthias.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12748,
-        "sha256": "d021f71263076c72b5d663ae55a83888b059bddc8c4ac7fb22ae00c91f4d460f"
+        "bytes": 12752,
+        "sha256": "8ea722fa1d199122bb41decb060fc2c36e777b0366dc35a827bdf546a5a1ce16"
       },
       "activeModelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
       "selectionMode": "automatic",
@@ -95403,8 +95403,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-sinbad.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13109,
-        "sha256": "be9831e6fbb4c20bbb0f6bd8e2998bffee396d84cb916edd995f6e6bc4126726"
+        "bytes": 13113,
+        "sha256": "dd86d64f6314b590ec8de299e3cd57b3dd1c7cb25b50dd09857b385d48ecabe3"
       },
       "activeModelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
       "selectionMode": "automatic",
@@ -97170,8 +97170,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kumoko.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10993,
-        "sha256": "3278977240947508e8bb1cadd561fd720b25693c1177b6c824830dbdc9862d41"
+        "bytes": 10997,
+        "sha256": "7a83ea37cac45c11a488204d44371f9cf22981844614ef5f932fac8f1bbcbbe3"
       },
       "activeModelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
       "selectionMode": "automatic",
@@ -98128,8 +98128,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-yogiri.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13835,
-        "sha256": "6af39cbbb5252e7f947c34f204f5f33941bfc16dd0603175ea076a05adf2ee1c"
+        "bytes": 13839,
+        "sha256": "e155eb9580c1ff95774dde6125e6ba75fb6e324d3531c47fe02771dfbe29b8fd"
       },
       "activeModelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
       "selectionMode": "automatic",
@@ -99233,8 +99233,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kaiji.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 14947,
-        "sha256": "f7b55f97ea2763b6068ac73e59bc1f7f5782083697462ac1a5b88a118b55f45e"
+        "bytes": 14951,
+        "sha256": "648c1fd3bb5fb1455cb9e1caa333990b3fbd76fca6291f1d6c71332d987c8ddc"
       },
       "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
       "selectionMode": "automatic",
@@ -100534,8 +100534,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-fushi.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 15021,
-        "sha256": "5857bce6662672ae81ab663942049358c30a18d715abd0915ebf8b53f7cef135"
+        "bytes": 15025,
+        "sha256": "211d3add6b8b79b22bd543b8733803d02b89b1c2ba5b872ea5e4130ee06c6ea8"
       },
       "activeModelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
       "selectionMode": "automatic",
@@ -101878,8 +101878,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-orphen.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12663,
-        "sha256": "109b09e1839cd26dea81f1a51e84ae01037501c8211ce63a4c548ef501ff373a"
+        "bytes": 12667,
+        "sha256": "a9d613e3cf746eb1b17859e0eb4ff3c2318c1ab1517809450dcb8b7c5bb5921a"
       },
       "activeModelKey": "version.body.5abf9ec53fc14ad4e39811385acbce35771cecb10869d810",
       "selectionMode": "automatic",
@@ -103302,8 +103302,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-klaus.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13909,
-        "sha256": "51bf5ea4c2052148ad80f3210b5525e6ea19c89b40d993f27140e10bdee7b742"
+        "bytes": 13913,
+        "sha256": "f27e8f2c71a45447969734e293a5eb134516e08fa1db3011b171ae29fe213d34"
       },
       "activeModelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
       "selectionMode": "automatic",
@@ -104849,8 +104849,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-takopi.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11956,
-        "sha256": "08bc3b85ad50bef69413ce0bf461ad5fb3915ccd242760f7a09bf8e48daa875a"
+        "bytes": 11960,
+        "sha256": "9568b51afa7217434bef3f366da86c05810eaa9b5c29b43c5f82139371d79bfb"
       },
       "activeModelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
       "selectionMode": "automatic",
@@ -105832,8 +105832,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-luckyman.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13944,
-        "sha256": "9efd8eb09e8057d5b93f3064914093061848165f7839a77afae53cf2c1076121"
+        "bytes": 13948,
+        "sha256": "ea8c47d2fb415af67f867e37761b4757659402b4f393fc8736c26e484f281f99"
       },
       "activeModelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
       "selectionMode": "automatic",
@@ -107520,8 +107520,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-misery.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 11375,
-        "sha256": "b5fc18dad478c9d20c15b69a01e05571fe4b7ba01b12373d63296fb0f1bb3c37"
+        "bytes": 11379,
+        "sha256": "fd8ee2619844dfd39a5fcc49eb4ad66dc6885ae4bbd3d175af2dc5c7d376d8d5"
       },
       "activeModelKey": "version.body.d4cffd536c8d484810c76b5cc47bb397cff677f25bc95200",
       "selectionMode": "automatic",
@@ -108595,8 +108595,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-nube.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13585,
-        "sha256": "f5a47e8d14a8069004cc43d53024b6762d871355e83e12932eb62d101c616cc5"
+        "bytes": 13589,
+        "sha256": "2de4404d387e5a40203f7c00ccde7ef39934358fc914a4a32f51a7ed214fc047"
       },
       "activeModelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
       "selectionMode": "automatic",
@@ -110105,8 +110105,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-shinchan.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 12172,
-        "sha256": "7f21ea68652709f0fca64801f4da74256a29f62e48f4f7098e13a6bbe50438a7"
+        "bytes": 12176,
+        "sha256": "4393101773593f6902bcd7d974f412ed8126e1a20b748adfdfb635a47eeab342"
       },
       "activeModelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
       "selectionMode": "automatic",
@@ -111447,8 +111447,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-aladdin.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13212,
-        "sha256": "c97c19847d44cc7b61537b0902dd92ccd9466440f0c529063508c0d21bce5d78"
+        "bytes": 13216,
+        "sha256": "32348a6daafcdd3994bbd11a98fdfcef3cb093cbfceee8b7a62798e8895c8f59"
       },
       "activeModelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
       "selectionMode": "automatic",
@@ -112543,8 +112543,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-ned.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 13175,
-        "sha256": "b016b6976eda74eee85604a27208929bc57ea0659fabb273c0a229239eab30da"
+        "bytes": 13179,
+        "sha256": "b91d7001a5816abd6852818df2c58fe9812073cce906e8258f41207134780931"
       },
       "activeModelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
       "selectionMode": "automatic",
@@ -113943,8 +113943,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kisaragi.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 20841,
-        "sha256": "c29b860041bc178b7b29bb0a175c783ee217d289e580c4718bd1d80cbcfb8d5c"
+        "bytes": 20845,
+        "sha256": "117483d70a0fca0156f829ca1f51af6c66a0653d0ce8c88e49fdf28ecfae8be0"
       },
       "activeModelKey": "version.body.39c18a9b1921088ab533c174a64f6ae0bf908933d72ed3ea",
       "selectionMode": "automatic",
@@ -115240,8 +115240,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-karthus.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 9930,
-        "sha256": "ed955916f84cc138ecef19c8a6a42377a412f5fd143cd8dcf7a48f08ac20821f"
+        "bytes": 9934,
+        "sha256": "418684ca3d9408816f6df19b5ddbebe1a764c0005b393b3c2936adc1f3d93eee"
       },
       "activeModelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
       "selectionMode": "automatic",
@@ -116019,8 +116019,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-leesin.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 9537,
-        "sha256": "91325d350881876750da9fa22c80453b7c8e0fd4cc5f380a8f00e3097c9fbbd6"
+        "bytes": 9541,
+        "sha256": "6a7eb70a08bc8bfeb521e6da2c5f192bf14acd13ebbb8504ecc9bef1f5b77c7b"
       },
       "activeModelKey": "version.body.c69dcf0c70845d97d8fbd2e60822783f13136a9969d7cfcf",
       "selectionMode": "automatic",
@@ -116652,8 +116652,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-lux.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10481,
-        "sha256": "a77fde97f5479e9ad5bef800e16cea522bd24a3445fbef73a6494fc8439930e2"
+        "bytes": 10485,
+        "sha256": "111eb65f6676e09abda68d24878b98ba0b3d128a300dd0e0d8942609346a0291"
       },
       "activeModelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
       "selectionMode": "automatic",
@@ -117426,8 +117426,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-missfortune.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10598,
-        "sha256": "fdfc8f8cec003b6c6f56c15f79d4e8b0b7bc1307eb85b790a18d2a575a555f5b"
+        "bytes": 10602,
+        "sha256": "b391f0707af394f06259ab5a1d0dd31571e1a21e52adb0034984d2d0fc8cad57"
       },
       "activeModelKey": "version.body.1ad5f12b5d0bb1dd56fa32dc62c0b3e276b535ede1416373",
       "selectionMode": "automatic",
@@ -118200,8 +118200,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-warwick.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10607,
-        "sha256": "92cc2022d13bb7ee009c8310da89b5a3c43c67b20d564ff918424680fcd13931"
+        "bytes": 10611,
+        "sha256": "d04c42a30b775de4875f1a34a9c98159fa7ac8c67e148ab2fb34fd07626359fc"
       },
       "activeModelKey": "version.body.b2b6844ed06e05009309d104f46f9c3245ddf636af2023d5",
       "selectionMode": "automatic",
@@ -118833,8 +118833,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-xerath.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10191,
-        "sha256": "2b18e9eb66d8ccc510aead8e60551e37bac8c71ec6b08a900ac632a06076cd00"
+        "bytes": 10195,
+        "sha256": "614a407beff99b91512a34f78858003f1ae59a865a0b1e077a4aeb4fa5683318"
       },
       "activeModelKey": "version.body.cf0570347305b3e13535d2b411bc17a0f9964f818c308554",
       "selectionMode": "automatic",
@@ -119612,8 +119612,8 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/lol-yasuo.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 10840,
-        "sha256": "9ee8bd31579b3d795f80fda3ebe92afa03724b62b299bd3eb80df608223bd613"
+        "bytes": 10844,
+        "sha256": "2650ff41dc73d3f274f2d1a50741c68118224c6f4c6aa40c0975f03e5b75ee41"
       },
       "activeModelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
       "selectionMode": "automatic",

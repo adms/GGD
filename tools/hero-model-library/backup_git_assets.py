@@ -32,18 +32,31 @@ def aws(args,action,resource):
     if p.returncode:raise RuntimeError(f'{action} failed on {resource}: {p.stderr.strip()}')
     return p.stdout
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--commit',required=True);parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--commit',required=True);parser.add_argument('--base',help='Optional ancestor with an existing fully verified local backup receipt');parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
     commit=subprocess.check_output(['git','rev-parse',args.commit+'^{commit}'],cwd=REPO,text=True).strip()
+    base=None;paths=SCOPES;removed=[];base_receipt=None
+    if args.base:
+        base=subprocess.check_output(['git','rev-parse',args.base+'^{commit}'],cwd=REPO,text=True).strip()
+        subprocess.run(['git','merge-base','--is-ancestor',base,commit],cwd=REPO,check=True)
+        base_receipt=json.loads((args.output.resolve()/base/'receipt.json').read_text())
+        assert base_receipt['commit']==base and base_receipt['fullGetAndEveryFileVerified']
+        def changes(filter):return [p for p in subprocess.check_output(['git','diff','--no-renames','--name-only','-z','--diff-filter='+filter,base,commit,'--',*SCOPES],cwd=REPO,text=True).split('\0') if p]
+        paths=changes('ACMRT');removed=changes('D');assert paths,'No changed snapshot files'
     out=args.output.resolve()/commit;out.mkdir(parents=True,exist_ok=True)
     archive=out/'assets-and-tools.tar.gz'
+    prior_manifest=out/'manifest.json'
+    if archive.exists():
+        if not prior_manifest.exists():raise RuntimeError('Existing archive has no verified recipe; keep it and use a separate output root.')
+        prior=json.loads(prior_manifest.read_text())
+        if prior.get('commit')!=commit or prior.get('baseCommit')!=base:raise RuntimeError('Existing archive uses a different commit/base recipe; use a separate output root.')
     if not archive.exists():
         raw=out/'assets-and-tools.tar'
-        with raw.open('xb') as f:subprocess.run(['git','archive','--format=tar',commit,'--',*SCOPES],cwd=REPO,stdout=f,check=True)
+        with raw.open('xb') as f:subprocess.run(['git','archive','--format=tar',commit,'--',*paths],cwd=REPO,stdout=f,check=True)
         with raw.open('rb') as src,archive.open('xb') as dst,gzip.GzipFile(filename='',mode='wb',fileobj=dst,mtime=0,compresslevel=6) as gz:shutil.copyfileobj(src,gz,1024*1024)
         # The raw TAR is deliberately retained locally as well.
     digest=sha(archive);rows=members(archive)
     uri=f's3://{BUCKET}/legacy/git-asset-snapshots/{commit}/{digest}.tar.gz'
-    manifest=dict(schema='ggd-git-asset-backup-manifest@1',commit=commit,scopes=SCOPES,files=rows,archiveSha256=digest,archiveBytes=archive.stat().st_size,s3Uri=uri,
+    manifest=dict(schema='ggd-git-asset-backup-manifest@1',commit=commit,scopes=SCOPES,baseCommit=base,baseReceipt=base_receipt,removedPaths=removed,files=rows,archiveSha256=digest,archiveBytes=archive.stat().st_size,s3Uri=uri,
                   scopeBoundary='Committed files only. Original and intermediate local intakes require their independent source/conversion backups.')
     write(out/'manifest.json',manifest)
     print(json.dumps(dict(phase='archive-ready',commit=commit,files=len(rows),bytes=archive.stat().st_size)),flush=True)
@@ -56,7 +69,7 @@ def main():
     aws(['s3','cp',str(out/'manifest.json'),manifest_uri,'--only-show-errors'],'s3:PutObject',manifest_uri)
     mb=out/'manifest-readback.json';aws(['s3','cp',manifest_uri,str(mb),'--only-show-errors'],'s3:GetObject',manifest_uri)
     assert mb.read_bytes()==(out/'manifest.json').read_bytes()
-    receipt=dict(schema='ggd-git-asset-backup-receipt@1',commit=commit,s3Uri=uri,manifestUri=manifest_uri,archiveSha256=digest,archiveBytes=archive.stat().st_size,
+    receipt=dict(schema='ggd-git-asset-backup-receipt@1',commit=commit,baseCommit=base,baseSnapshotUri=(base_receipt or {}).get('s3Uri'),s3Uri=uri,manifestUri=manifest_uri,archiveSha256=digest,archiveBytes=archive.stat().st_size,
                  files=len(rows),uncompressedBytes=sum(r['bytes'] for r in rows),fullGetAndEveryFileVerified=True,localPreserved=True,localRoot=str(out),profile='vibe-coding',region='ap-east-2')
     write(out/'receipt.json',receipt);print(json.dumps(receipt),flush=True)
 if __name__=='__main__':main()
