@@ -21,8 +21,17 @@ import {
   round11MobRulesPatch,
   round11AliveCap,
   round11BossScale,
+  round11EventsDue,
+  pickRound11Event,
   type Round11MobRulesPatch,
 } from "@ggd/shared/sim/round11Waves";
+import {
+  bombardmentDamage,
+  bombardmentHits,
+  bombardmentPhase,
+  pickBombardmentTarget,
+  type BombardmentCandidate,
+} from "@ggd/shared/sim/round11Bombardment";
 import { Round11Claims } from "@ggd/shared/sim/round11Claims";
 import {
   round11BumpBossKills,
@@ -1010,6 +1019,16 @@ export class MatchController {
    * 前十回合的戰果再乘一次倍率（票逐字警告的「**重複乘算**」的另一個入口）。
    */
   private readonly round11DamageBase = new Map<SeatId, number>();
+  /**
+   * ⭐⭐ 正在進行中的那一發大轟炸（GH#1151 F）—— `null` ＝ 沒有。
+   *
+   * ⚠️ ⭐ 存的是**開始的絕對 tick**，⛔ 不是「還剩幾秒」——
+   * `sim/**` ⛔ 不可以有遞減計數器，⭐ 而階段是 `bombardmentPhase()` 從時間推的。
+   * ⭐ 也因此⛔ 不需要一個「打過了沒」的旗標（旗標要有人記得清掉）。
+   */
+  private round11Bombard: { startTick: number; x: number; z: number } | null = null;
+  /** ⭐ 第十一回合已經發出去幾個波次事件（`round11EventsDue` 回的是**應該發幾個**）。 */
+  private round11EventsFired = 0;
 
   /** ⭐ **只給測試**：換邊狀態（⛔ 出貨路徑仍是唯一的寫入端）。 */
   get round11PossessionsForTest(): ReadonlyMap<
@@ -2453,6 +2472,8 @@ export class MatchController {
       // ⭐ GH#1151 G —— **本回合**的戰鬥貢獻要有分母:`matchStats` 是整場累計,
       //   ⛔ 直接拿它當「這一回合打了多少」會把前十回合的戰果算進獎勵局。
       //   ⇒ ⭐ 在進場那一刻抄一份基準,貢獻 ＝ 現在 − 基準。
+      this.round11Bombard = null;
+      this.round11EventsFired = 0;
       this.round11DamageBase.clear();
       for (const [seatId, seat] of this.seats) {
         if (seat.entityId === null) continue;
@@ -4471,6 +4492,101 @@ export class MatchController {
     }
   }
 
+  /**
+   * ⭐⭐ 第十一回合的**波次事件排程**（GH#1151 B 的「發哪一種」那一半）。
+   *
+   * ⚠️ ⭐ `round11EventsDue()` 回的是「到現在**應該**發過幾個」——
+   * ⛔ 不是「這一 tick 要不要發」。⭐ 兩者的差別就是這裡的 `while`：
+   * 一次 lag（或一次重播快轉）不會**吞掉**中間那幾個事件。
+   *
+   * ⭐ 抽哪一種走 `world.rng`（⛔ 不是 `Math.random` —— `sim/**` 禁它，
+   * 而且錄影要重播得出同一場）。
+   */
+  private tickRound11Events(): void {
+    if (this.round11Round !== this.phase.round) return;
+    const wt = this.rules.round11.waveTable;
+    const elapsedSec = this.world.mobTicks / TICK_HZ;
+    const due = round11EventsDue(elapsedSec, wt.eventIntervalSec);
+    while (this.round11EventsFired < due) {
+      this.round11EventsFired++;
+      const kind = pickRound11Event(wt.events, this.world.rng.next());
+      if (kind === "bombardment") this.startRound11Bombardment();
+    }
+  }
+
+  /**
+   * ⭐ 開始一發大轟炸：挑落點、記下開始的 tick、發預警事件。
+   *
+   * ⚠️⚠️ ⭐ **已經有一發在飛就不再開第二發** —— ⛔ 兩個紅圈同時倒數時，
+   * 玩家分不出哪一個是哪一個的倒數，⭐ 而那正是預警存在的理由。
+   * （⛔ 這不是「省事」：它是一個**決策**，所以下面那一行有註解說明選了哪一邊。）
+   */
+  private startRound11Bombardment(): void {
+    const cfg = this.rules.round11.bombardment;
+    if (!cfg.enabled) return;
+    if (this.round11Bombard !== null) return;
+    const candidates: BombardmentCandidate[] = [];
+    for (const [, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (!hp?.alive) continue;
+      const t = this.world.transform.get(seat.entityId);
+      if (t) candidates.push({ x: t.pos.x, z: t.pos.z });
+    }
+    const at = pickBombardmentTarget(candidates, cfg.radius, cfg.crowdBias, this.world.rng.next());
+    if (at === null) return; // ⛔ 場上沒有活人 ⇒ 不炸空地
+    this.round11Bombard = { startTick: this.world.tick, x: at.x, z: at.z };
+    // ⭐ 預警圈 —— ⚠️ 今天**沒有客戶端在讀這一則**（client UI 還沒做）。
+    //   ⛔ 而它仍然要發：它是這個事件唯一的「⭐ 我在這裡倒數」訊號，
+    //   ⭐ 錄影與後台重播讀得到它。（⛔ 這不是「玩家看得到了」——第一·五守則。）
+    this.world.emit("round11Bombardment", {
+      x: at.x,
+      z: at.z,
+      radius: cfg.radius,
+      telegraphSec: cfg.telegraphSec,
+    });
+  }
+
+  /**
+   * ⭐⭐ 大轟炸的每 tick 結算（GH#1151 F）。
+   *
+   * ⚠️⚠️ ⭐ 票逐字：「**倒數前不傷害**⋯事件**只結算一次**」——
+   * ⭐ 而「只一次」是 `bombardmentPhase()` 用**跨越**判出來的：
+   * `impact` 只在 `prevElapsed < telegraph <= elapsed` 的那一 tick 回一次。
+   *
+   * ⚠️⭐ 傷害走 `world.damageQueue`（**合法環境傷害入口**，與火圈同一條路）——
+   * ⛔ 不自己扣血：自己扣血會繞過無敵／免疫／護盾／免死，
+   * ⭐ 而票 D 項要的「⛔ 防止不合理一擊必殺」正是由那條管線提供的。
+   */
+  private tickRound11Bombardment(): void {
+    const b = this.round11Bombard;
+    if (b === null || this.round11Round !== this.phase.round) return;
+    const cfg = this.rules.round11.bombardment;
+    const elapsed = (this.world.tick - b.startTick) / TICK_HZ;
+    const prev = (this.world.tick - 1 - b.startTick) / TICK_HZ;
+    const phase = bombardmentPhase(prev, elapsed, cfg.telegraphSec);
+    if (phase === "telegraph") return; // ⛔ 倒數期間一點傷害都沒有
+    if (phase === "done") {
+      this.round11Bombard = null; // ⭐ 結算完就收掉 ⇒ 下一個事件可以再開一發
+      return;
+    }
+    for (const [, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (!hp?.alive) continue;
+      const t = this.world.transform.get(seat.entityId);
+      if (!t || !bombardmentHits({ x: t.pos.x, z: t.pos.z }, b.x, b.z, cfg.radius)) continue;
+      this.world.damageQueue.push({
+        source: seat.entityId, // ⚠️ 環境傷害沒有施法者 —— 與火圈同一個做法
+        target: seat.entityId,
+        amount: bombardmentDamage(hp.maxHp, cfg.damagePctOfMaxHp),
+        type: "true",
+        crit: false,
+        origin: "round11Bombardment",
+      });
+    }
+  }
+
   private clampRound11AliveCap(): void {
     if (this.round11Round !== this.phase.round) return;
     const rules = this.world.mobRules;
@@ -5213,6 +5329,9 @@ export class MatchController {
         //   ⚠️ ⭐ 排在夾上限**之後**：換邊會讓一具屍體站起來,⛔ 而牠不是殭屍,
         //   ⛔ 不該被 `maxAlivePerZone` 那一格算進去。
         this.convertWipedTeamsToBosses();
+        // ⭐ GH#1151 B/F —— 波次事件排程 ＋ 大轟炸的倒數與結算。
+        this.tickRound11Events();
+        this.tickRound11Bombardment();
         this.accelFireRingForBotOnly(); // GH#643 —— 只剩 bot 在打就提前縮火圈
         // ⭐【回合分數與排名】GH#737 —— owner:「進入戰鬥房間，**隨時**顯示玩家
         // 自己回合累積分數及排名」。1 Hz 取樣（⛔ 不是每 tick：12 席 × 4 個數字 ×
