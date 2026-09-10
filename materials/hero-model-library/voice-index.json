@@ -42134,6 +42134,211 @@
       "categoryCounts": {
         "unclassified": 1042
       }
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu-audio-decoded-v1:alucard-ssm-source-se",
+      "name": "惡魔城阿魯卡多 Alucard SSM / sfx-source-labelled",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-alucard-ssbu-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 92,
+      "bytes": 9604112,
+      "knownDurationSeconds": 93.75831929542794,
+      "durationMeasuredFiles": 92,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "revision-02/raw/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-alucard-ssbu-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-alucard-ssbu",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-alucard-ssbu-audio-decoded-v1",
+        "parallel-ns-alucard-ssbu"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "No language or actual speaker determined from richter bank/entry names. Castlevania Alucard identity is distinct from Hellsing Alucard.",
+      "classificationEvidence": "Source bank role is a label only; actual speaker, language, dialogue/SFX/event identity pending.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 92
+      }
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu-audio-decoded-v1:alucard-ssm-silent-placeholders",
+      "name": "惡魔城阿魯卡多來源 dummy／零 PCM 佔位（不可作語音或完成音效）",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-alucard-ssbu-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2,
+      "bytes": 384088,
+      "knownDurationSeconds": 2.0,
+      "durationMeasuredFiles": 2,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "revision-02/raw/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-alucard-ssbu-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-alucard-ssbu",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-alucard-ssbu-audio-decoded-v1",
+        "parallel-ns-alucard-ssbu"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "No language or actual speaker determined from richter bank/entry names. Castlevania Alucard identity is distinct from Hellsing Alucard.",
+      "classificationEvidence": "Both source entries are named dummy and every decoded PCM sample is zero. sound-effect is only the existing broad non-speech index bucket; these are explicitly unusable silent placeholders.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 2
+      }
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu-audio-decoded-v1:alucard-ssm-source-vc",
+      "name": "惡魔城阿魯卡多 Alucard SSM / voice-source-labelled",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-alucard-ssbu-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 39,
+      "bytes": 3981916,
+      "knownDurationSeconds": 53.83920163697872,
+      "durationMeasuredFiles": 39,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "revision-02/raw/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_c120.nus3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-alucard-ssbu-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-alucard-ssbu",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-alucard-ssbu-audio-decoded-v1",
+        "parallel-ns-alucard-ssbu"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "No language or actual speaker determined from richter bank/entry names. Castlevania Alucard identity is distinct from Hellsing Alucard.",
+      "classificationEvidence": "Source bank role is a label only; actual speaker, language, dialogue/SFX/event identity pending.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 39
+      }
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu-audio-decoded-v1:alucard-ssm-source-cheer",
+      "name": "惡魔城阿魯卡多 Alucard SSM / cheer-source-labelled",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-alucard-ssbu-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 8446,
+      "knownDurationSeconds": 0.08752083333333334,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "revision-02/raw/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_cheer_c120.nus3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-alucard-ssbu-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-alucard-ssbu",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-alucard-ssbu-audio-decoded-v1",
+        "parallel-ns-alucard-ssbu"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "No language or actual speaker determined from richter bank/entry names. Castlevania Alucard identity is distinct from Hellsing Alucard.",
+      "classificationEvidence": "Source bank role is a label only; actual speaker, language, dialogue/SFX/event identity pending.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu-audio-decoded-v1:alucard-ssm-source-narration",
+      "name": "惡魔城阿魯卡多 Alucard SSM / narration-source-labelled",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-alucard-ssbu-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 164202,
+      "knownDurationSeconds": 1.7099791666666666,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "revision-02/raw/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/narration/vc_narration_characall_alucard.idsp"
+      ],
+      "backupIds": [
+        "public:parallel-ns-alucard-ssbu-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-alucard-ssbu",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-alucard-ssbu-audio-decoded-v1",
+        "parallel-ns-alucard-ssbu"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "No language or actual speaker determined from richter bank/entry names. Castlevania Alucard identity is distinct from Hellsing Alucard.",
+      "classificationEvidence": "Source bank role is a label only; actual speaker, language, dialogue/SFX/event identity pending.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
     }
   ],
   "backups": {
@@ -42790,16 +42995,31 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
       "localUseAvailable": true,
       "publicationStatus": "local-verified-s3-pending"
+    },
+    "public:parallel-ns-alucard-ssbu-audio-decoded-v1": {
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/alucard-audio-20260911-v1/d7c6eab8628838734b0a1cecc2a9b408ca8dbd5350c212927b382195afccc81f.tar.gz",
+      "bytes": 116939299,
+      "sha256": "d7c6eab8628838734b0a1cecc2a9b408ca8dbd5350c212927b382195afccc81f",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "s3ReadbackVerified": true,
+      "localRoot": "GGD-Asset-Library/conversions/alucard-audio-20260911-v1",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "4ac64aaf6cc28eb4d56e03cbb6c85c11a81587c6413e61813de380e79d2026c6"
+      "sha256": "5ef55db49727827c98eff4738ee4340d04d8ffd863ee08de520d87dba30b9155"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "26cbd70f0c18492b9939cb20f665c04c4633c6f00fdd530f52d9032187cdf82f"
+      "sha256": "2434560d4a451108b5c9304d07b6d81df33b4dc72c0162101e0041a01dbaa979"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -43172,6 +43392,14 @@
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z-project-seven.json",
       "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda"
+    },
+    {
+      "path": "GGD-Asset-Library/conversions/alucard-audio-20260911-v1/integration-v1/audioFileIndex.json",
+      "sha256": "e7652b516ad41da867b774c5ed3258b63bc9023cef066a99f5b4f6558b96a179"
+    },
+    {
+      "path": "GGD-Asset-Library/conversions/alucard-audio-20260911-v1/integration-v1/audioFileIndex.json",
+      "sha256": "e7652b516ad41da867b774c5ed3258b63bc9023cef066a99f5b4f6558b96a179"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
@@ -93773,19 +94001,19 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 976,
-    "audioFiles": 283921,
-    "bytes": 138384323141,
-    "sourceFileRelationshipRows": 283921,
-    "uniqueLocalPaths": 283473,
-    "uniqueSha256Payloads": 251608,
-    "uniqueLocalPathBytes": 137811394425,
+    "groups": 981,
+    "audioFiles": 284056,
+    "bytes": 138398465905,
+    "sourceFileRelationshipRows": 284056,
+    "uniqueLocalPaths": 283608,
+    "uniqueSha256Payloads": 251731,
+    "uniqueLocalPathBytes": 137825537189,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "eda4aafeefcd5f4ef529e7c53ffac13e03ea445becf1179e81a5ce37185df966",
-  "uncompressedFileManifestSha256": "f0b4fbc23e9b1d2297603b0a8e28b1bd781f812faefca887fbc9e787f9c2ca3b"
+  "sourceFileManifestSha256": "07e257c5519d56e144a8d9506796438010b3e92ae26237f578a472e2791fe4e9",
+  "uncompressedFileManifestSha256": "ff7567904c4fd4affac11115f79aaf8019df784a4e5cb0db02237dc0285f982e"
 }

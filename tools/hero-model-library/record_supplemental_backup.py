@@ -78,8 +78,10 @@ def main(argv=None, repo=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('receipt', type=Path)
     parser.add_argument('--id', required=True)
-    parser.add_argument('--role', choices=['model-conversion-backup', 'integration-evidence-backup'], required=True)
+    parser.add_argument('--role', choices=['model-conversion-backup', 'audio-conversion-backup', 'integration-evidence-backup'], required=True)
     parser.add_argument('--source-id')
+    parser.add_argument('--primary-source-backup', action='store_true',
+                        help='Attach this verified archive as the source primary backup; requires --id == --source-id.')
     parser.add_argument('--pending-manifest', action='store_true', help='The positional path is an intake manifest; remote readback is not yet verified.')
     args = parser.parse_args(argv)
     repo = Path(repo).resolve() if repo is not None else Path(__file__).resolve().parents[2]
@@ -147,6 +149,8 @@ def main(argv=None, repo=None):
         index['sources'].append(entry)
     if 'pendingUploads' in index:
         index['pendingUploads'] = [row for row in index['pendingUploads'] if (row['id'], row['sha256']) != (entry['id'], entry['sha256'])]
+    if args.primary_source_backup and args.source_id != args.id:
+        raise ValueError('Primary source backup requires identical --id and --source-id')
     if args.source_id:
         matches = [row for row in downloads.get('publicSources', []) + downloads.get('paidSources', []) if row['id'] == args.source_id]
         if len(matches) != 1:
@@ -154,13 +158,23 @@ def main(argv=None, repo=None):
         source = matches[0]
         if 'pendingSupplementalDeliveries' in source:
             source['pendingSupplementalDeliveries'] = [row for row in source['pendingSupplementalDeliveries'] if (row['id'], row['sha256']) != (entry['id'], entry['sha256'])]
-        link = {key: value for key, value in entry.items() if key != 'files'}
-        prior = [row for row in source.setdefault('supplementalDeliveries', [])
-                 if (row['id'], row['sha256']) == (entry['id'], entry['sha256'])]
-        if prior and prior != [link]:
-            raise ValueError('Different source supplemental revision already exists')
-        if not prior:
-            source['supplementalDeliveries'].append(link)
+        if args.primary_source_backup:
+            primary = {key: entry[key] for key in ['s3Uri', 'bytes', 'sha256', 'archiveFormat',
+                                                    'archiveMemberRoot', 'readbackVerified',
+                                                    'fullReadbackVerified', 's3ReadbackVerified']}
+            prior = source.get('backup')
+            if prior is not None and prior != primary:
+                raise ValueError('Different primary backup already exists for source')
+            source['backup'] = primary
+            source['publicationStatus'] = 's3-readback-verified'
+        else:
+            link = {key: value for key, value in entry.items() if key != 'files'}
+            prior = [row for row in source.setdefault('supplementalDeliveries', [])
+                     if (row['id'], row['sha256']) == (entry['id'], entry['sha256'])]
+            if prior and prior != [link]:
+                raise ValueError('Different source supplemental revision already exists')
+            if not prior:
+                source['supplementalDeliveries'].append(link)
         by_path = {row['path']: row for row in expected}
         for candidate in source.get('componentCandidates', []):
             local = Path(candidate['absolutePath']).resolve()

@@ -3,7 +3,7 @@
   "generator": "tools/hero-model-library/build_priority81_handoff.py",
   "generatorSha256": "5f6ee6159bf46033d2c8f200dbf5b6683eceb29f619e00aa7dbe400c3cec15e8",
   "scope": "Main review and merge of existing 81-hero content; Root owns remaining conversions",
-  "inputsSha256": "ee4f87c57934f05efa556b3d3e664e37fc9194265b236fa1804d7b51d0045a87",
+  "inputsSha256": "d1034f8fb67fb27c00bc8b0b164ab3baebe7ee06ad0f3d8b753bf6d843d3bbb7",
   "inputs": [
     {
       "gitPath": null,
@@ -15034,8 +15034,8 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 4986560,
-      "sha256": "fbf7b4903e3795030d5c19c51f78d3c928d83bd350f0fc12c743e46f67580c7d"
+      "bytes": 5013612,
+      "sha256": "85f2c13c8729f4099024718ebf5a82166e0d2ee4a60e9d6f539eaa188a9d22d7"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",

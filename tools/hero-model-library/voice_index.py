@@ -371,9 +371,19 @@ def main():
         for f in audio:
             member=f['path'];part=None
             if source.get('audioGroups'):
-                matches=[p for p in source['audioGroups'] if any(member.startswith(prefix) for prefix in p['pathPrefixes'])]
-                assert len(matches)==1, 'Audio file requires one native-character group: '+member
-                part=matches[0]
+                # A precise child path may deliberately override a broad bank
+                # prefix (for example, a known silent dummy inside a source-SE
+                # folder).  Select that most-specific declaration and still
+                # reject equally-specific conflicting groups.
+                matches=[]
+                for candidate in source['audioGroups']:
+                    lengths=[len(prefix) for prefix in candidate['pathPrefixes'] if member.startswith(prefix)]
+                    if lengths: matches.append((max(lengths), candidate))
+                assert matches, 'Audio file requires one native-character group: '+member
+                longest=max(length for length, _ in matches)
+                exact=[candidate for length, candidate in matches if length==longest]
+                assert len(exact)==1, 'Audio file has ambiguous native-character group: '+member
+                part=exact[0]
             elif source['id']=='dayjo-ssbb-zelda-audio':
                 part=next((p for p in source['packages'] if member.startswith('extracted/'+p['id']+'/')),None)
             elif source['id']=='github-chiikawa':
@@ -408,8 +418,14 @@ def main():
                 source_is_synthetic=decoded.get('sourceIsSynthetic',(part or {}).get('sourceIsSynthetic',source.get('sourceIsSynthetic'))),
                 source_contains_synthetic=(part or {}).get('sourceContainsSynthetic',source.get('sourceContainsSynthetic')))
             for field in ['sampleRate','channels','frames','sampleFormat','bitsPerSample',
-                          'peakAbsFloat','samplesAboveUnity','gainDecisionRequired',
-                          'sourcePath','sourceSha256','reportedLocale','sourceManifestLocale','label','event','eventName']:
+                          'peakAbsFloat','peakAbsoluteNormalized','samplesAboveUnity','fullScaleSampleCount',
+                          'gainDecisionRequired','pcmSha256','pcmPayloadVerified','allSamplesZero',
+                          'sourceSilentPlaceholder','streamIndex','streamName','sourceBankEntryName',
+                          'sourcePath','sourceSha256','sourceBankSha256','sourceEncoding',
+                          'sourceLabelCategory','sourceGroupId','sourceOriginalBank','upstreamSourceId',
+                          'reportedLocale','sourceManifestLocale','label','event','eventName','eventReview',
+                          'language','languageReviewed','speakerReviewed','speakerVerified',
+                          'transcriptReviewed','countAsNewPerformance','deterministicReplay']:
                 if field in decoded:files[-1][field]=decoded[field]
             for field in ['sourceContainsSynthetic','sourceIsSynthetic','sourceSynthesisProvider','classificationEvidence']:
                 if field in (part or {}):g[field]=part[field]

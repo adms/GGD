@@ -5878,7 +5878,7 @@
       "bytes": 732280,
       "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
       "gitPath": "content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
-      "s3Uri": null,
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/dai-rigid-props-20260911-v1/1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5.tar.gz",
       "sourceArchiveSha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434",
       "componentReady": true,
       "runtimeSelectable": false,
@@ -5924,6 +5924,19 @@
         "bytes": 4673,
         "sha256": "178435cf6f396a6b2c5dc3ec109eec66534ee3bb92124530d679f09adc3e8c5e"
       },
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/dai-rigid-props-20260911-v1/1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5.tar.gz",
+          "s3ArchiveMember": "revision-02/outputs/handheld/component.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
+          "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e"
+        }
+      ],
+      "s3ArchiveMember": "revision-02/outputs/handheld/component.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
+      "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e",
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb"
     },
     {
@@ -5950,7 +5963,7 @@
       "bytes": 732224,
       "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
       "gitPath": "content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
-      "s3Uri": null,
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/dai-rigid-props-20260911-v1/1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5.tar.gz",
       "sourceArchiveSha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434",
       "componentReady": true,
       "runtimeSelectable": false,
@@ -5996,16 +6009,29 @@
         "bytes": 4632,
         "sha256": "e792be2a42dcd1df3da59acdf6a510002352335bd84b2376aec432dc9dd074cb"
       },
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/dai-rigid-props-20260911-v1/1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5.tar.gz",
+          "s3ArchiveMember": "revision-02/outputs/back/component.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
+          "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e"
+        }
+      ],
+      "s3ArchiveMember": "revision-02/outputs/back/component.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
+      "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e",
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb"
     }
   ],
   "modelComponentCount": 5,
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "1a2fae75ab06179ea6cc99dd0ec6de035a0962f0fd0918bee54e8e2cbe43cf4a"
+    "sha256": "5f22f355efc47e64800deffaa7dd115085b50fde29053b0ea72d4c1d611bc372"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "4ac64aaf6cc28eb4d56e03cbb6c85c11a81587c6413e61813de380e79d2026c6"
+    "sha256": "96c0d6d7c8063a5bd339a72c636694aacfbd6a8d3bc9b4bf884d56f47596b9ba"
   }
 }

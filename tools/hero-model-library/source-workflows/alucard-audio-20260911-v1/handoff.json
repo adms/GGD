@@ -1,0 +1,76 @@
+{
+  "sourceId": "parallel-ns-alucard-ssbu-audio-decoded-v1",
+  "upstreamSourceId": "parallel-ns-alucard-ssbu",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/revision-02",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu",
+  "sourceGame": "Super Smash Bros. Ultimate",
+  "platform": "Nintendo Switch",
+  "sourceVersion": "Alucard SSM 2.7",
+  "characterLabel": "Alucard / 阿魯卡多（惡魔城）; native mod slot richter",
+  "heroIds": [],
+  "fileCount": 135,
+  "totalSeconds": 151.39502093240665,
+  "totalAudioBytes": 14142764,
+  "sourceSilentPlaceholderCount": 2,
+  "validation": {
+    "freshSourceSha256": "pass",
+    "copiedSourceSha256": "pass",
+    "allPcmPayloads": "pass",
+    "allFfmpegFullDecode": "pass",
+    "allReplay": "byte-identical",
+    "sourceUnchangedAfterDecode": "pass"
+  },
+  "readiness": "decoded-verified-local-awaiting-listening-and-central-registration",
+  "groupCounts": {
+    "alucard-ssm-source-se": {
+      "files": 94,
+      "seconds": 95.75831929542795,
+      "silentPlaceholders": 2
+    },
+    "alucard-ssm-source-vc": {
+      "files": 39,
+      "seconds": 53.83920163697872,
+      "silentPlaceholders": 0
+    },
+    "alucard-ssm-source-cheer": {
+      "files": 1,
+      "seconds": 0.08752083333333334,
+      "silentPlaceholders": 0
+    },
+    "alucard-ssm-source-narration": {
+      "files": 1,
+      "seconds": 1.7099791666666666,
+      "silentPlaceholders": 0
+    }
+  },
+  "audioFileIndex": {
+    "path": "audioFileIndex.json",
+    "sha256": "04ff769acec1b0184dede76b54901ff4b629ee791f0900ffd2183331cb8ca84a"
+  },
+  "dependencies": {
+    "path": "dependencies.json",
+    "sha256": "d1d18a54200ee0c988a48aa08518352cfb0821e6f00f132eeb62fefe20744d4b"
+  },
+  "maxPeak": 1.0,
+  "fullScaleSamples": 3191,
+  "limitations": [
+    "No language, actual speaker, dialogue, vocalization or skill-event confirmation from bank labels.",
+    "Castlevania Alucard MOD identity is distinct from Hellsing Alucard; no GGD hero mapping assigned.",
+    "Native loops retained in metadata; decoded masters contain each stream once.",
+    "PCM masters are candidates for listening and classification; no backend option/default/deployment performed."
+  ],
+  "delivery": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/revision-02/delivery.json",
+    "sha256": "9f9899f376f704a1c840bb162424f181a59cd13d9b4fa2c1471175917b12e923"
+  },
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/revision-02/files-sha256.json",
+    "sha256": "1e9a5fbb518f2fbb372be53d42568a07008c31777023658277c3fb13f529b895"
+  },
+  "allStagesManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/all-stage-files-sha256.json",
+    "sha256": "60147db7a14ae8c15acf53ead8653e4baa25990e5f77da38589d6d70b665682f",
+    "files": 377,
+    "bytes": 183972707
+  }
+}

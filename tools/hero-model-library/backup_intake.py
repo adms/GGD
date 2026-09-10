@@ -24,16 +24,25 @@ def main():
  root=a.source.resolve();out=a.output.resolve();assert not out.is_relative_to(root)
  prefix=Path(a.prefix);assert not prefix.is_absolute() and prefix.parts[0]=='legacy' and '..' not in prefix.parts
  rows=inventory(root);digest=hashlib.sha256(json.dumps(rows,sort_keys=True).encode()).hexdigest();dest=out/digest;dest.mkdir(parents=True,exist_ok=True)
- archive=dest/'source.tar.gz'
- if archive.exists():raise ValueError('Frozen backup already exists; inspect its receipt before retrying: '+str(dest))
- with archive.open('xb') as raw,gzip.GzipFile(fileobj=raw,mode='wb',mtime=0,filename='') as gz,tarfile.open(fileobj=gz,mode='w|') as tf:
-  for row in rows:
-   p=root/row['path'];info=tf.gettarinfo(str(p),arcname=row['path']);info.uid=info.gid=0;info.uname=info.gname='';info.mtime=0
-   with p.open('rb') as f:tf.addfile(info,f)
- assert inventory(root)==rows,'Local intake changed during archive'
- archive_sha=sha(archive);uri=f's3://{BUCKET}/{a.prefix.strip("/")}/{archive_sha}.tar.gz'
- manifest=dict(schema='ggd-intake-backup-manifest@1',source=str(root),files=rows,archiveSha256=archive_sha,archiveBytes=archive.stat().st_size,s3Uri=uri)
- mp=dest/'manifest.json';mp.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+ archive=dest/'source.tar.gz';mp=dest/'manifest.json'
+ if archive.exists():
+  if not mp.is_file():raise ValueError('Frozen backup has no manifest; preserve for inspection: '+str(dest))
+  manifest=json.loads(mp.read_text())
+  if (manifest.get('schema')!='ggd-intake-backup-manifest@1' or manifest.get('source')!=str(root)
+      or manifest.get('files')!=rows or manifest.get('archiveBytes')!=archive.stat().st_size
+      or manifest.get('archiveSha256')!=sha(archive)):
+   raise ValueError('Frozen backup differs from current source; preserve for inspection: '+str(dest))
+  archive_sha=manifest['archiveSha256'];uri=f's3://{BUCKET}/{a.prefix.strip("/")}/{archive_sha}.tar.gz'
+  if manifest.get('s3Uri')!=uri:raise ValueError('Frozen backup has an unexpected destination: '+str(dest))
+ else:
+  with archive.open('xb') as raw,gzip.GzipFile(fileobj=raw,mode='wb',mtime=0,filename='') as gz,tarfile.open(fileobj=gz,mode='w|') as tf:
+   for row in rows:
+    p=root/row['path'];info=tf.gettarinfo(str(p),arcname=row['path']);info.uid=info.gid=0;info.uname=info.gname='';info.mtime=0
+    with p.open('rb') as f:tf.addfile(info,f)
+  assert inventory(root)==rows,'Local intake changed during archive'
+  archive_sha=sha(archive);uri=f's3://{BUCKET}/{a.prefix.strip("/")}/{archive_sha}.tar.gz'
+  manifest=dict(schema='ggd-intake-backup-manifest@1',source=str(root),files=rows,archiveSha256=archive_sha,archiveBytes=archive.stat().st_size,s3Uri=uri)
+  mp.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
  arn=aws(['sts','get-caller-identity','--query','Arn','--output','text'],'sts:GetCallerIdentity','configured role').strip()
  if 'assumed-role/vibe-coding-s3-role/' not in arn:raise RuntimeError('STOP identity mismatch: '+arn)
  aws(['s3','cp',str(archive),uri,'--only-show-errors'],'s3:PutObject',uri)
