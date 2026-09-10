@@ -167,7 +167,7 @@
   ],
   "asks": [
     "請 Main 審查並合併本 PR；34 名中已有 27 名以目前 target 完成隔離投稿及發布，合併後請在正式服務重建並發布。7 個超過 4 MiB 的 catalog 模型包，請讓完整英雄包採 heroModelMaxBytes 或移除 ZIP 內重複模型資產，不能刪除模型來規避。",
-    "請 Main 為已存在 content/champions 的 canonical ID 提供明確的 Editor 接管／遷移模式，使第一、二批與 LoL 第一批能沿用原 ID 建立不可變候選、發布新版本與 rollback；不能換 ID 產生同名副本。",
+    "請 Main 依 #1221 為已存在 content/champions 的 canonical ID 提供明確的 Editor 接管／遷移模式，使第一、二批與 LoL 第一批能沿用原 ID 建立不可變候選、發布新版本與 rollback；不能換 ID 產生同名副本。",
     "請與 Draft PR #1193 的 LoL 第二批 11 名一併安排合併；兩張 PR 合併後，以同一正式服務名單確認 126 名的目前發布版本及單英雄 rollback。",
     "P2-05 若要正式發行，請由持有者配置簽章、Team ID、Windows publisher 與 stable feed。P3-05 若要啟用推論，請提供兩個核准硬體 target 的 E8 收據與 runtime artifact；在此之前保留 released=false。",
     "#1206、#1212 與 #1214 已在本分支完成；PR 推送後 Codex 會附 commit 與測試證據並關票。#1205 要等 34 名正式發布後才可關閉，新增的兩個發布阻擋也記錄在該票。"
