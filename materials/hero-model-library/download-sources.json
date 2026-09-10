@@ -11861,9 +11861,9 @@
       ],
       "verifiedLocalDeliveryOnly": true,
       "acquisitionScope": "Only the frozen packages and files listed in this immutable delivery; other sibling downloads are excluded.",
-      "publicationStatus": "local-only-preparing-s3-backup",
+      "publicationStatus": "s3-readback-verified",
       "usage": "Local audio may be used immediately for listening, transcription and preparation; not automatically imported into the game.",
-      "verification": "新增 10 個已凍結完整包、2238 OGG；全部逐檔 SHA 驗證，OGG 結構檢查與各分類抽樣解碼通過。未逐段聽審，不把音檔數當語音句數。",
+      "verification": "新增 10 個已凍結完整包、2238 OGG；全部逐檔 SHA 驗證，OGG 結構檢查與各分類抽樣解碼通過。未逐段聽審，不把音檔數當語音句數。 此固定交付與其 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；同根目錄的其他交付不在此備份範圍。",
       "backendIntegration": {
         "required": true,
         "state": "pending-character-mapping",
@@ -11877,6 +11877,16 @@
         "audioFiles": 2238,
         "confirmedVoiceCount": null,
         "synthesisReady": false
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-second10/ff8f951e90784dfc0dc8c697b9e9266eca70561b92f90ff3344f260addb51432.tar.gz",
+        "bytes": 116537824,
+        "sha256": "ff8f951e90784dfc0dc8c697b9e9266eca70561b92f90ff3344f260addb51432",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "s3ReadbackVerified": true
       }
     },
     {

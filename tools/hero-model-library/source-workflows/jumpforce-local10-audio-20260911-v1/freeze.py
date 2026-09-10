@@ -13,7 +13,6 @@ import tarfile
 from pathlib import Path
 
 
-SOURCE_ID = 'parallel-ps-jumpforce-local-10'
 BUCKET = 'ggd-390630837668-ap-east-2-an'
 
 
@@ -72,6 +71,7 @@ def write_archive(root, rows, archive):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source-id', required=True)
     parser.add_argument('--delivery', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -98,10 +98,10 @@ def main():
     if sorted(archived, key=lambda row: row['path']) != rows or validated_rows(root, delivery_path) != rows:
         raise ValueError('Delivery changed while freezing')
     digest = sha(archive)
-    uri = f's3://{BUCKET}/legacy/public-model-sources/{SOURCE_ID}/{digest}.tar.gz'
+    uri = f's3://{BUCKET}/legacy/public-model-sources/{args.source_id}/{digest}.tar.gz'
     manifest = {
         'schema': 'ggd-jumpforce-scoped-audio-backup@1',
-        'sourceId': SOURCE_ID,
+        'sourceId': args.source_id,
         'deliveryPath': str(delivery_path),
         'deliverySha256': sha(delivery_path),
         'sourceRoot': str(root),

@@ -42969,12 +42969,19 @@
       "publicationStatus": "local-verified-s3-pending"
     },
     "public:parallel-ps-jumpforce-local-second10": {
-      "type": "local-intake",
-      "readbackVerified": false,
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-second10/ff8f951e90784dfc0dc8c697b9e9266eca70561b92f90ff3344f260addb51432.tar.gz",
+      "bytes": 116537824,
+      "sha256": "ff8f951e90784dfc0dc8c697b9e9266eca70561b92f90ff3344f260addb51432",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "s3ReadbackVerified": true,
       "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
       "localUseAvailable": true,
-      "publicationStatus": "local-verified-s3-pending"
+      "publicationStatus": "s3-readback-verified"
     },
     "public:local-lol-installed-audio": {
       "type": "local-intake",
@@ -43338,11 +43345,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "aa48081c19e7ca33a28582ad21774aaa2da689130b7b7dee3e84b95a267c8d28"
+      "sha256": "555addeaab69b1488f32d4f2179d0962e497f95262be99d5c2e732b93a041f5f"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "a8fd06ddc1781bc78ea77386de043450739d5acb65f45e475a0eb54f519aad0d"
+      "sha256": "3950e6e7cf52f11272a66a690ca2687b179dd5c5d59e9ea41904fef394538d2c"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -43451,10 +43458,6 @@
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/nus3audio-decoding.json",
       "sha256": "79be93677c92412b550ed12b0a2a93d6fd734b6feea637fe1a3a6e1f7f489878"
-    },
-    {
-      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/deliveries/ggd-parallel-ps-frozen-10-20260910T121206Z.json",
-      "sha256": "3a0d2f1e0d9190689635970125862991fadfd2ddd19dd4f73fb323e050dad02e"
     },
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/deliveries/ggd-parallel-ps-frozen-10-20260910T121206Z.json",

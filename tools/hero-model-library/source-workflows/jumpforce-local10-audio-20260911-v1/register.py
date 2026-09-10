@@ -13,7 +13,6 @@ from upload_scoped_tar import scoped_members
 REPO = Path(__file__).resolve().parents[4]
 WORKSPACE = REPO.parent
 BASE = REPO / 'materials/hero-model-library'
-SOURCE_ID = 'parallel-ps-jumpforce-local-10'
 
 
 def sha(path):
@@ -26,6 +25,7 @@ def sha(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source-id', required=True)
     parser.add_argument('--receipt', type=Path, required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     args = parser.parse_args()
@@ -34,7 +34,8 @@ def main():
     if receipt.get('schema') != 'ggd-scoped-tar-s3-receipt@1' or manifest.get('schema') != 'ggd-jumpforce-scoped-audio-backup@1':
         raise ValueError('Unexpected scoped backup evidence')
     required = ['readbackVerified', 'fullGetVerified', 'allArchiveMembersSha256Verified', 'localPreserved']
-    if any(receipt.get(key) is not True for key in required) or receipt.get('id') != SOURCE_ID or manifest.get('sourceId') != SOURCE_ID:
+    source_id = args.source_id
+    if any(receipt.get(key) is not True for key in required) or receipt.get('id') != source_id or manifest.get('sourceId') != source_id:
         raise ValueError('Scoped backup is not fully verified for this source')
     if (receipt['sha256'], receipt['bytes'], receipt['fileCount'], receipt['s3Uri']) != (
             manifest['sha256'], manifest['bytes'], manifest['fileCount'], manifest['plannedS3Uri']):
@@ -54,21 +55,21 @@ def main():
     paths = [BASE / 'download-sources.json', BASE / 'public-source-files.json']
     before = [path.read_bytes() for path in paths]
     downloads, index = [json.loads(blob) for blob in before]
-    sources = [row for row in downloads['publicSources'] if row['id'] == SOURCE_ID]
+    sources = [row for row in downloads['publicSources'] if row['id'] == source_id]
     if len(sources) != 1:
         raise ValueError('Expected exactly one central source record')
     source = sources[0]
     if source.get('backup') is not None or source.get('publicationStatus') != 'local-only-preparing-s3-backup':
         raise ValueError('Source publication state changed; preserve for review')
-    if any(row['id'] == SOURCE_ID for row in index.get('sources', [])) or any(row['id'] == SOURCE_ID for row in index.get('pendingUploads', [])):
+    if any(row['id'] == source_id for row in index.get('sources', [])) or any(row['id'] == source_id for row in index.get('pendingUploads', [])):
         raise ValueError('Central archive record already exists or is pending')
     backup = {key: receipt[key] for key in ['s3Uri', 'bytes', 'sha256', 'archiveFormat', 'archiveMemberRoot', 'readbackVerified', 'fullGetVerified']}
     backup['s3ReadbackVerified'] = True
     source['backup'] = backup
     source['publicationStatus'] = 's3-readback-verified'
-    source['verification'] += ' 第一批固定 10 包與交付 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；其餘同根目錄的後續交付不在此備份範圍。'
+    source['verification'] += ' 此固定交付與其 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；同根目錄的其他交付不在此備份範圍。'
     index['sources'].append({
-        'id': SOURCE_ID, 'sourceId': SOURCE_ID,
+        'id': source_id, 'sourceId': source_id,
         'localPath': str(root.relative_to(WORKSPACE)), 'localArchive': str(archive),
         'readbackPath': str(readback), 's3Uri': receipt['s3Uri'], 'manifestUri': receipt['manifestUri'],
         'bytes': receipt['bytes'], 'sha256': receipt['sha256'], 'archiveFormat': receipt['archiveFormat'],
@@ -83,7 +84,7 @@ def main():
         raise ValueError('Central files changed during verification')
     for path, value in zip(paths, [downloads, index]):
         path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
-    print(json.dumps({'id': SOURCE_ID, 'files': len(expected), 's3Uri': receipt['s3Uri'], 'fullReadbackVerified': True}, ensure_ascii=False))
+    print(json.dumps({'id': source_id, 'files': len(expected), 's3Uri': receipt['s3Uri'], 'fullReadbackVerified': True}, ensure_ascii=False))
 
 
 if __name__ == '__main__':
