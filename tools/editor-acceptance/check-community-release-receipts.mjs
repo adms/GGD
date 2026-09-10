@@ -9,6 +9,7 @@ const read = (name) => JSON.parse(fs.readFileSync(path.join(reports, name), "utf
 const batch = read("loopback-release-27of34.json");
 const rollback = read("loopback-release-rollback.json");
 const canonical = read("loopback-release-canonical-id-blocker.json");
+const statusTable = fs.readFileSync(path.join(root, "docs/editor-contract/社群英雄126名上架狀態.md"), "utf8");
 const maxGeneralBytes = 4 * 1024 * 1024;
 const digest = /^sha256:[0-9a-f]{64}$/;
 
@@ -78,10 +79,33 @@ for (const receipt of canonical.receipts) {
   assert.match(receipt.error, /社群作品不能佔用既有官方英雄的身分，請建立改作草稿/);
 }
 
+function idsInSection(title) {
+  const start = statusTable.indexOf(`## ${title}`);
+  assert(start >= 0, `Missing status section: ${title}`);
+  const end = statusTable.indexOf("\n## ", start + 4);
+  const section = statusTable.slice(start, end < 0 ? undefined : end);
+  return [...section.matchAll(/\|\s*\d+\s*\|\s*`([^`]+)`\s*\|/g)].map((match) => match[1]);
+}
+const canonicalGroups = [
+  ["第一批社群英雄（37）", 37],
+  ["第二批社群英雄（37）", 37],
+  ["LoL 第一批（7）", 7],
+];
+const canonicalIds = canonicalGroups.flatMap(([title, expected]) => {
+  const ids = idsInSection(title);
+  assert.equal(ids.length, expected, `${title} count drifted`);
+  return ids;
+});
+assert.equal(canonicalIds.length, 81);
+for (const id of canonicalIds) {
+  assert(fs.existsSync(path.join(root, "content/champions", `${id}.json`)), `${id} is not in the shipped champion catalog`);
+}
+
 console.log(JSON.stringify({
   status: "passed",
   published: batch.passed,
   oversize: batch.failed,
   rollback: rollback.rollback.status,
   canonicalBlocked: canonical.failed,
+  canonicalCatalogIds: canonicalIds.length,
 }));

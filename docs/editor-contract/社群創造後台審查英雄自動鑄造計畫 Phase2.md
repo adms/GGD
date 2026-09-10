@@ -34,6 +34,6 @@ P2-01 至 P2-05 已全部核准，沿既有程式、模板、版本制度及 PR�
 
 ## 2026-09-11 實作狀態
 
-P2-01 至 P2-04 的一般新作程式與代表流程已有實作／驗收；本輪 34 名以同一 factory 與套件契約通過完整 ZIP 往返，並在乾淨 loopback 服務讓其中 27 名完成投稿與管理員發布。DIO 再發布暫時 v2 並恢復 v1，沙耶的發布指標與 revision 未變，證明單英雄回復隔離。真實批次同時揭露兩個尚未完成的 P2 發布缺口：已存在正式 catalog 的 canonical ID 會被 importer 防撞規則拒絕，無法接入同 ID 版本鏈；7 份使用 catalog 模型的完整包超過一般 4 MiB 上界，卻不會採用 `heroModelMaxBytes`。重現收據與判定位置已交 coordination packet，不能以換 ID、刪模型或只保留編譯證據替代。
+P2-01 至 P2-04 的一般新作程式與代表流程已有實作／驗收；本輪 34 名以同一 factory 與套件契約通過完整 ZIP 往返，並在乾淨 loopback 服務讓其中 27 名完成投稿與管理員發布。DIO 再發布暫時 v2 並恢復 v1，沙耶的發布指標與 revision 未變，證明單英雄回復隔離。真實批次同時揭露兩個尚未完成的 P2 發布缺口：第一批 37、第二批 37 與 LoL 第一批 7 名共 81／81 canonical ID 已存在正式 catalog，而 importer 對此條件會確定拒絕，無法接入同 ID 版本鏈；第一批兩名服務抽驗亦收到相同錯誤。另有 7 份使用 catalog 模型的完整包超過一般 4 MiB 上界，卻不會採用 `heroModelMaxBytes`。重現收據、完整 ID 集合檢查與判定位置已交 coordination packet，不能以換 ID、刪模型或只保留編譯證據替代。
 
 P2-05 的桌面建置、保存後更新、摘要及發布者驗證已存在。仍需 Main／Owner 提供正式簽章、Team ID、Windows publisher、stable feed，並在修正上述兩個版本發布缺口後完成全部 126 名於同一正式服務 target 的發布結果；這些外部條件均明列，不以測試冒充正式發布。
