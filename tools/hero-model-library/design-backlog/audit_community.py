@@ -358,7 +358,7 @@ for r in rows.values():
  if not actual:r['designStatus']='identity-review';r['identityAmbiguity'].append('No actual model file verified locally; excluded from confirmed acquired-model gaps.')
  r['skillsCheckedAgainst']={'championDirectory':str(REPO/'content/champions'),'standaloneAbilityDirectory':str(REPO/'content/abilities'),'nameSearchUniverseCount':len(champs),'policy':'Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent.'}
  r['sourceIds']=sorted(r['sourceIds']);r['identityAmbiguity']=sorted(set(r['identityAmbiguity']))
- 
+
 pins=[]
 for p in [LIB/'download-sources.json',LIB/'inventory.json',LIB/'workflow-model-options.json',LIB/'public-source-files.json',LIB/'priority-runtime-options.json']:
  pins.append({'path':str(p),'sha256':sha(p),'bytes':p.stat().st_size})
