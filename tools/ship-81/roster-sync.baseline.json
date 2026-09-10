@@ -60,7 +60,10 @@
     ]
   },
   "skeletonPlaceholders": {
-    "note": "⭐ 誰在用引擎骨架（champ.sela / champ.thorne），⭐ 而**為什麼**。⛔ 這不是豁免名單，是分類：一個暫時的佔位與一個刻意的選擇在 JSON 裡長得一模一樣（都只是 champ.thorne），⭐ 而它們的下一步完全不同。⚠️ 每一列的 why 必須引用得到盤點表上的一句話 —— ⛔ 「還沒排到」不是理由。⭐ 棘輪：pending-* 只能變少；一名轉檔完成之後把它那一列刪掉，⛔ 而如果忘了刪，skeletonStaleDeclarations 會紅。",
+    "note": [
+      "⭐ 誰在用引擎骨架（champ.sela / champ.thorne），⭐ 而**為什麼**。⛔ 這不是豁免名單，是分類：一個暫時的佔位與一個刻意的選擇在 JSON 裡長得一模一樣（都只是 champ.thorne），⭐ 而它們的下一步完全不同。⚠️ 每一列的 why 必須引用得到盤點表上的一句話 —— ⛔ 「還沒排到」不是理由。⭐ 棘輪：pending-* 只能變少；一名轉檔完成之後把它那一列刪掉，⛔ 而如果忘了刪，skeletonStaleDeclarations 會紅。",
+      "⭐ 2026-09-11：ou99 模型批次併回 main 之後，7 名（aladdin · guts · kaiji · keyaru · maomao · naofumi · shinchan）都拿到真模型 ⇒ 那 7 列刪掉（棘輪只准變短）。剩下的 1 列是梅普露變身態，⛔ 那不是缺模型，是「變身態要不要沿用本體模型」的設計決定（GH#1217）。"
+    ],
     "kinds": {
       "pending-conversion": "來源**已取得**，還沒轉成 GGD 的 glb（⇒ 模型側工作流的待辦）",
       "pending-source": "來源**還沒拿到**（連結未核／file_url 為空）",
@@ -68,41 +71,6 @@
       "alternate-inherits-base": "變身態，⛔ 玩家選不到它；本體已有真模型"
     },
     "rows": [
-      {
-        "id": "b2-aladdin",
-        "kind": "pending-approval",
-        "why": "盤點表 L479「**待取得核准模型**」；候選是小悟空／300英雄，逐字標「相似外觀代理；**未核准預設**」"
-      },
-      {
-        "id": "b2-keyaru",
-        "kind": "pending-approval",
-        "why": "盤點表 L464「**待取得核准模型**」；候選是李小狼／300英雄，逐字標「相似外觀代理；**未核准預設**」"
-      },
-      {
-        "id": "b2-guts",
-        "kind": "pending-conversion",
-        "why": "盤點表 L202「免費來源已取得，暫緩購買；thunderstore-guts；**待完成標準化**」"
-      },
-      {
-        "id": "b2-maomao",
-        "kind": "pending-conversion",
-        "why": "盤點表 L192「免費來源已取得，暫緩購買；thunderstore-maomao；**待完成標準化**」"
-      },
-      {
-        "id": "b2-shinchan",
-        "kind": "pending-conversion",
-        "why": "盤點表 L116/117 兩個免費公開 GTA V 來源（gta5mod SD2 v1.2 / KS TAMIL v1.0）—— 已取得，待轉檔"
-      },
-      {
-        "id": "b2-kaiji",
-        "kind": "pending-source",
-        "why": "盤點表 L154「官方 API 確認公開項目，但 **file_url 為空；尚未取得模型**，繼續查找正常取得管道」"
-      },
-      {
-        "id": "b2-naofumi",
-        "kind": "pending-source",
-        "why": "盤點表 L151「Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，**尚未下載模型**」"
-      },
       {
         "id": "b2-maple-alt-9769eb88b85b",
         "kind": "alternate-inherits-base",
