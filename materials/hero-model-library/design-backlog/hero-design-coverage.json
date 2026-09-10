@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-10T18:02:06.612471+00:00",
+  "generatedAt": "2026-09-10T19:00:04.193553+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
-  "revision": "384ba5838561af77caf6fa72cca6db23f572cd61",
+  "revision": "1267de2e9b9c8d9da0ab30873d141228ab9dffe6",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5767,13 +5767,13 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "6aa04128568c894e907537e12f8cf90350e1f296d7881b5d41c47e6fb77bca8d",
-      "bytes": 4534004
+      "sha256": "ffff95ecf53a7084b34de9b8d76e5e7f43956a16addafc86f541a4c57f538d9f",
+      "bytes": 4557752
     },
     {
       "path": "package.json",
-      "bytes": 26905,
-      "sha256": "a6bcb0349835fe351cb6249aac895685c1486036f27143c82b8dc84c55a6f42a"
+      "bytes": 26926,
+      "sha256": "8fe07ae02c331aff0e883b5d8e986d0718e5809aca78f0e312ec4222aab6f681"
     },
     {
       "path": "packages/shared/src/art/fatePalette.ts",
@@ -6022,13 +6022,13 @@
     },
     {
       "path": "packages/shared/src/content/abilityProse.test.ts",
-      "bytes": 19791,
-      "sha256": "8543c0ff2dafb23bf746acc35d4fe01ce806a091304dc904ca2d2d86d72b12f2"
+      "bytes": 21453,
+      "sha256": "a69b65577ec2e31a660be6dc5779d2b5413464c0bd83fd3ed9810029fa1ef181"
     },
     {
       "path": "packages/shared/src/content/abilityProse.ts",
-      "bytes": 62374,
-      "sha256": "4ec6cda2cb64c81039883cd096dfb46866fbbbfc887b42aec337100a14b104f7"
+      "bytes": 62813,
+      "sha256": "b9236bbf86c273a8075c0f7ed9a1124410e2a46cab6268d502fbac16d5179ab7"
     },
     {
       "path": "packages/shared/src/content/abilityProvenance.test.ts",
@@ -6347,8 +6347,8 @@
     },
     {
       "path": "packages/shared/src/content/championIdentity.test.ts",
-      "bytes": 30434,
-      "sha256": "b70af6cf63d263cfde1ae491dc511cf5b816eaefb8b4e3daa22661ac21641326"
+      "bytes": 31466,
+      "sha256": "ead7d3fb80ae1efe9bb5bf66a39113bba8ef00ca5254f277b8255f6535d761d4"
     },
     {
       "path": "packages/shared/src/content/championIdentity.ts",
@@ -6827,8 +6827,8 @@
     },
     {
       "path": "packages/shared/src/content/fieldAdoption.exemptions.json",
-      "bytes": 296318,
-      "sha256": "e608f1684f713513221aa79c62c1c1de6db4ad17bb50483129d048c74a6c55fc"
+      "bytes": 291029,
+      "sha256": "35fa76ba9e6b0045a9703ec33d1d6a9e19f34c88a170a0458d63e2ceca71ffc8"
     },
     {
       "path": "packages/shared/src/content/fieldAdoption.test.ts",
@@ -8017,8 +8017,8 @@
     },
     {
       "path": "packages/shared/src/content/schema/ability.ts",
-      "bytes": 62457,
-      "sha256": "2200cd2587bcfbc9b27115611afd657a4641cd55bf0b9af9c6dbefa1ac9bc3eb"
+      "bytes": 64653,
+      "sha256": "70ab455f7ab180639396c52bf82ba694633e834eed98d3a3c19898f9505b7325"
     },
     {
       "path": "packages/shared/src/content/schema/abilityVfx.test.ts",
@@ -8712,8 +8712,8 @@
     },
     {
       "path": "packages/shared/src/content/schema/effects/fxLongAxisVisibleGeometry.test.ts",
-      "bytes": 9897,
-      "sha256": "fc1d88d31bee2b09446a63b77cf7904d5b1b248311f7b362f71974c8950c3488"
+      "bytes": 10488,
+      "sha256": "a03e108b27c1f69391a6a1d54725b6d49d530e34c0a78c91738ace90b33201ae"
     },
     {
       "path": "packages/shared/src/content/schema/effects/grantAttribute.ts",
@@ -9582,8 +9582,8 @@
     },
     {
       "path": "packages/shared/src/content/voxelSkin/__snapshots__/roster.json",
-      "bytes": 11660,
-      "sha256": "75634d9de3934bae266c3a609dad4373f1cbe688cbc65c21a88db7e69e666c9f"
+      "bytes": 24855,
+      "sha256": "895db2f921b568f4cdccd83a05d180eeee020d7cb3bbdd54b58fd6ea71f265bd"
     },
     {
       "path": "packages/shared/src/content/voxelSkin/barcode.test.ts",
@@ -10862,8 +10862,8 @@
     },
     {
       "path": "packages/shared/src/ops/skillsSyncCoversGenerators.test.ts",
-      "bytes": 46121,
-      "sha256": "87ed4067409add9ea401df49048eea2fa6080ca369959b440b7b8619f45e3dd4"
+      "bytes": 46725,
+      "sha256": "ffe2003b5da8a3b49b1e6dd13f916d02115930e2e1fad4dd6df7a75a1c225ca1"
     },
     {
       "path": "packages/shared/src/ops/statCapsFresh.test.ts",
@@ -11042,8 +11042,8 @@
     },
     {
       "path": "packages/shared/src/protocol/schema.ts",
-      "bytes": 84650,
-      "sha256": "35541f3535f81edb140482c560bc0b9339c1e979d3fd9bcf110db7e307de914d"
+      "bytes": 85449,
+      "sha256": "08d5bfdf61f846979d902da374767f196b1f012a0824fb057431c9ae7f04576d"
     },
     {
       "path": "packages/shared/src/protocol/viewGatedDelivery.test.ts",
@@ -11097,8 +11097,8 @@
     },
     {
       "path": "packages/shared/src/sim/abilities/abilitySystem.ts",
-      "bytes": 54953,
-      "sha256": "47f96e50d3f3f7b07fee6998ecb12f02c8377fa55046cb14fc75d5b9e657c505"
+      "bytes": 56753,
+      "sha256": "8596b7a013976add71af44fa3f910c1fc7deaced2b8f3d55168faed01484dc36"
     },
     {
       "path": "packages/shared/src/sim/abilities/augmentAndDeferred.test.ts",
@@ -11169,6 +11169,16 @@
       "path": "packages/shared/src/sim/abilities/passivesNeverFakeCast.test.ts",
       "bytes": 4955,
       "sha256": "dabf3cf401f2cbc648f9aa2d8ee66993f78601c2e6d7995db27966729c382369"
+    },
+    {
+      "path": "packages/shared/src/sim/abilities/recast.test.ts",
+      "bytes": 5544,
+      "sha256": "fc209a71a6d07b9736e49ada11d6085ebeea1991d9879dd73a1bcc8e6fcc23e9"
+    },
+    {
+      "path": "packages/shared/src/sim/abilities/recast.ts",
+      "bytes": 4413,
+      "sha256": "bdec93b3c2cceb033ccfc225317225333fef974e9bc3aa270907354c08341a54"
     },
     {
       "path": "packages/shared/src/sim/abilities/statusCost.test.ts",
@@ -11597,8 +11607,8 @@
     },
     {
       "path": "packages/shared/src/sim/combat/damage.ts",
-      "bytes": 89836,
-      "sha256": "a38e29bf675f52e38cd9e231c9f09b01708860df6e4faeadb21036c2fb2ac7ff"
+      "bytes": 90214,
+      "sha256": "5920e48794c67024bd612165eb2519b5bdd81165f64da7f0f37d25d2a7692da8"
     },
     {
       "path": "packages/shared/src/sim/combat/damageTypeOverride.shipped.test.ts",
@@ -11847,8 +11857,8 @@
     },
     {
       "path": "packages/shared/src/sim/content/defs.ts",
-      "bytes": 42048,
-      "sha256": "325247d05ac664dd302698cce6a2f3031cf3eb3441db8a1e6c7d8ab144fe6240"
+      "bytes": 42815,
+      "sha256": "7556db02de91a370f885280b3b1dbffb1bb76c19ec7175dc83171b24ac899846"
     },
     {
       "path": "packages/shared/src/sim/content/mobCountsAsChampion.test.ts",
@@ -14027,8 +14037,8 @@
     },
     {
       "path": "packages/shared/src/sim/stats/statsComp.ts",
-      "bytes": 10183,
-      "sha256": "e2f2bbf782fa5946f0636b5a8382af217fa6d6709aed488f2cdac591f444a7c0"
+      "bytes": 11245,
+      "sha256": "4a1dee486ab2f7a176c643b6fbb8e69818297d76a1b7a3d9c7325facab72e22b"
     },
     {
       "path": "packages/shared/src/sim/stats/survivalBonus.test.ts",
@@ -14512,8 +14522,8 @@
     }
   ],
   "sourceReport": {
-    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "ed525d22527644fc18fa0f4a747769e3b92b2eda17cd54c228d21d6ab7e89299"
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog-main-e36-20260911/hero-design-coverage-full.json",
+    "sha256": "846b9d296b4f6bc988328711554c1a4bfeb61d5192dffd50b5b70fe4c3e92d0f"
   },
   "heroes": [
     {

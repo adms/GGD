@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "0a52bb76",
+  "fingerprint": "600485a2",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -911,6 +911,8 @@
     "range",
     "rangeTier",
     "rangeUnlimited",
+    "recast",
+    "recastEffects",
     "recoveryRoots",
     "recoverySec",
     "rootWhileCasting",
@@ -1092,6 +1094,8 @@
       "range",
       "rangeTier",
       "rangeUnlimited",
+      "recast",
+      "recastEffects",
       "recoveryRoots",
       "recoverySec",
       "rootWhileCasting",

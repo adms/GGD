@@ -6,6 +6,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { unchangedHistoricalReceipt } from "./editor-form-receipt-history.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const BRICKS = join(ROOT, "docs/editor-contract/ggd-bricks.json");
@@ -117,7 +118,23 @@ const packet = {
   receipts,
 };
 
-const content = `${JSON.stringify(packet, null, 2)}\n`;
+// The coordination packet is a historical claim after merging. A capability-wide
+// fingerprint can change for unrelated asset/config work without changing any
+// actual form measurement input. Preserve the merged bytes only when the freshly
+// executed measurement and EVERY other packet field remain identical.
+let mergedReceiptText = null;
+try {
+  mergedReceiptText = execFileSync("git", ["show", `origin/main:${relative(ROOT, OUTPUT)}`], {
+    cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"],
+  });
+} catch {
+  // No available merged receipt: retain the normal fresh-output/check behavior.
+}
+const historicalContent = unchangedHistoricalReceipt(mergedReceiptText, packet);
+const content = historicalContent ?? `${JSON.stringify(packet, null, 2)}\n`;
+if (historicalContent !== null) {
+  console.log("Historical editor-form claim retained: actual measurement inputs and receipts unchanged; its capability fingerprint remains historical.");
+}
 if (CHECK) {
   if (!existsSync(OUTPUT)) fail(`${relative(ROOT, OUTPUT)} 不存在`);
   if (readFileSync(OUTPUT, "utf8") !== content) fail(`${relative(ROOT, OUTPUT)} 已過期`);

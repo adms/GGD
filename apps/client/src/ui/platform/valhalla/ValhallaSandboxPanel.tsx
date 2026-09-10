@@ -68,6 +68,8 @@ const CAST_REASON: Readonly<Record<CastResult, string>> = {
   silenced: "被沉默",
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
+  // GH#1187【再次施放】gate:"onHit"：後段要先打中
+  "recast-gate": "再次施放要先命中",
   "no-resource": "技能資源不足，請先累積所需層數",
   "out-of-range": "距離太遠",
   // ⭐ owner 2026-08-22：「**超過施法距離人物不會走過去放技能（做成後台開關）**」

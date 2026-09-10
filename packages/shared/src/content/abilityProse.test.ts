@@ -18,6 +18,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
+import { NUM_PATTERNS } from "./abilityProse";
 import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "./registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
@@ -44,6 +45,8 @@ interface Subject {
   readonly source: string;
   readonly rendered: string;
   readonly q: ReturnType<typeof abilityQuantities>;
+  /** 這支技能 `modifyCooldown` 效果的秒數 —— 卡面講「縮短 Q 冷卻 1.5 秒」時，1.5 的出處在這裡，⛔ 不在 cooldown[] */
+  readonly cdMods: readonly number[];
 }
 
 /**
@@ -57,6 +60,10 @@ const EXCUSES = {
     "已在 descriptionClaims 棘輪基準線裡 —— 卡面與 JSON 本來就不一致，" +
     "⛔ 綁上去等於無聲改掉玩家看到的字。⭐ 反駁方式：修好那一筆，這一處會自動變成可綁",
   /** 引擎這一軸**整個是空的**（卡面寫了距離／範圍／傷害，JSON 上一格都沒有）。 */
+  /** 卡面那個秒數等於本技能某個 `modifyCooldown.amount` —— 句子講的是**別的技能**的冷卻被改了多少。 */
+  "modify-cooldown-amount":
+    "那個秒數是本技能 modifyCooldown 效果的 amount（b2-albus.w「縮短 Q 剩餘冷卻 1.5 秒」）——" +
+    "它講的是被改的那一格，⛔ 不是自己的 cooldown[]。⭐ 反駁方式：把 amount 改掉，這一處立刻變成孤兒而紅",
   "engine-axis-empty":
     "引擎這一軸是空的 —— 沒有任何值可以綁，而換上去只會讓一句做不到的宣稱更像真的" +
     "（第一·五守則）。⭐ 反駁方式：把那一軸填進 JSON，這一處就會自動變成可綁。" +
@@ -177,6 +184,9 @@ describe("技能說明從 JSON 推導（說明推導（票號待開））", () =
         source: source.description!,
         rendered: def.description ?? "",
         q: abilityQuantities(def, tables),
+        cdMods: ((def.effects as { kind?: string; amount?: number }[] | undefined) ?? [])
+          .filter((e) => e.kind === "modifyCooldown" && typeof e.amount === "number")
+          .map((e) => e.amount as number),
       });
     }
   });
@@ -221,6 +231,7 @@ describe("技能說明從 JSON 推導（說明推導（票號待開））", () =
         if (f.rule !== "num-unbound") continue;
         if (axisEmpty(s.q, f.slot)) continue; // ← EXCUSES["engine-axis-empty"]
         if (known.has(`${s.id}|${CLAIM_RULE[f.slot]}`)) continue; // ← EXCUSES["claims-baseline"]
+        if (f.slot === "cd" && s.cdMods.some((a) => f.before.includes(String(a)))) continue; // ← EXCUSES["modify-cooldown-amount"]
         const key = `${s.id}|${f.slot}`;
         if (key in KNOWN_UNBINDABLE) {
           hit.add(key);
@@ -354,5 +365,16 @@ describe("mult 的射程 (mult-vs-ratios)", () => {
       `⛔ 這幾格同時帶 mult 與係數 ⇒ 卡面手打的「+N% [AP]」少乘了一個 mult，` +
         `而 {{dmg}} 那半是對的 ⇒ 一張**半真**的卡（第一·五守則）。\n${bad.join("\n")}`,
     ).toBe("");
+  });
+});
+
+describe("「內置冷卻 N 秒」是被動 hook 的 internalCooldown，⛔ 不是 cooldown[] 宣稱", () => {
+  const cdClaims = (text: string): string[] =>
+    NUM_PATTERNS.filter((p) => p.slot === "cd").flatMap((p) => [...text.matchAll(p.re)].map((m) => m[p.num] ?? ""));
+  it("內置／內建／內部 冷卻不抓；一般冷卻照抓（兩個方向）", () => {
+    expect(cdClaims("回復自身最大魔力 5%，內置冷卻 3 秒；")).toEqual([]);
+    expect(cdClaims("內建冷卻時間 3 秒")).toEqual([]);
+    expect(cdClaims("冷卻 3 秒")).toEqual(["3"]);
+    expect(cdClaims("45秒冷卻")).toEqual(["45"]);
   });
 });

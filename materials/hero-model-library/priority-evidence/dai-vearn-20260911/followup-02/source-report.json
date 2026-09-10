@@ -1,0 +1,139 @@
+{
+  "schema": "ggd.dai-vearn-bounded-local-source-followup@1",
+  "generatedAt": "2026-09-10T19:02:56.436307+00:00",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02",
+  "centralReadOnly": true,
+  "newAcquiredCharacterAssetCount": 0,
+  "modelCandidates": [],
+  "audioFiles": [],
+  "localGameSourceCheck": {
+    "libraryMetadataPath": "/Users/Takuro/Library/Application Support/Steam/steamapps/libraryfolders.vdf",
+    "registeredLibraryPaths": [
+      "/Users/Takuro/Library/Application Support/Steam"
+    ],
+    "installedGames": [
+      {
+        "metadataPath": "/Users/Takuro/Library/Application Support/Steam/steamapps/appmanifest_1161170.acf",
+        "appid": "1161170",
+        "name": "The Rewinder",
+        "installdir": "The Rewinder"
+      },
+      {
+        "metadataPath": "/Users/Takuro/Library/Application Support/Steam/steamapps/appmanifest_228980.acf",
+        "appid": "228980",
+        "name": "Steamworks Common Redistributables",
+        "installdir": "Steamworks Shared"
+      },
+      {
+        "metadataPath": "/Users/Takuro/Library/Application Support/Steam/steamapps/appmanifest_386940.acf",
+        "appid": "386940",
+        "name": "Ultimate Chicken Horse",
+        "installdir": "Ultimate Chicken Horse"
+      },
+      {
+        "metadataPath": "/Users/Takuro/Library/Application Support/Steam/steamapps/appmanifest_474750.acf",
+        "appid": "474750",
+        "name": "Reigns",
+        "installdir": "Reigns"
+      },
+      {
+        "metadataPath": "/Users/Takuro/Library/Application Support/Steam/steamapps/appmanifest_555220.acf",
+        "appid": "555220",
+        "name": "Detention",
+        "installdir": "Detention"
+      }
+    ],
+    "targetAppIds": [
+      "1895810",
+      "816020"
+    ],
+    "targetInstalledManifests": [],
+    "commonGameFolders": [
+      "Ultimate Chicken Horse",
+      "Detention",
+      "The Rewinder",
+      "Reigns",
+      "Steamworks Shared",
+      "DreadOut"
+    ],
+    "downloadingEntryCount": 0,
+    "depotcacheEntryCount": 11,
+    "limitation": "Depot cache metadata is not a downloaded game; no target installed manifest or readable target resource bundle resolved. Only Steam game library metadata/folder names inspected, no account/config/login/credential files. No claim about every unidentified hashed file elsewhere on disk."
+  },
+  "knownCentralSources": [
+    {
+      "id": "parallel-infinity-strash-sorcerer-popp",
+      "target": "何布 Popp／PN020：Sorcerer Popp 動畫與法術加工補充包",
+      "localRoot": null,
+      "acquisitionStatus": "downloaded-verified",
+      "verification": "原 ZIP 877392 bytes／SHA-256 已核對；PAK v3 的索引與 111 個 payload 全部通過內建 SHA-1。UE4.26 export table 確認 1 AnimSequence 與 5 AnimMontage；AS_PN020_00_B_Spl01 屬性為36 frames／1.1666666秒，壓縮骨節尚未解碼與播放。5 montage 不能當5個獨立骨骼序列。未取得 Popp body、Skeleton、音訊或完整 NiagaraSystem。"
+    },
+    {
+      "id": "patreon-shinteo-dai-daz-v2",
+      "target": "小呆／達伊：JUMP FORCE 造型 Daz G8M/G8.1M 改作，待人體基底",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
+      "acquisitionStatus": "downloaded-verified",
+      "verification": "117 原始檔 CRC 全通過；2 個 Daz 人物預設、14 DSF 服裝／頭髮／武器部件、35 JPG 貼圖、22 PNG 預覽。缺 Genesis 8／8.1 男性人體基底，完整獨立本體0；動作、音訊、獨立特效均0。135 檔封存完整 GET 與逐檔 SHA 全通過。"
+    },
+    {
+      "id": "parallel-vearn-priority-source-audit-20260911",
+      "target": "巴恩大魔王：老年與年輕真身",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+      "acquisitionStatus": "research-only-no-asset-package",
+      "verification": "已核對《無限神速斬》老年巴恩 Boss 官方公告與遊戲畫面；年輕真身是否收錄尚未證實。此輪模型、動作、特效、音效、語音素材包均0。研究備份不是角色素材取得。"
+    }
+  ],
+  "newSpecificSourceRoutes": [
+    {
+      "id": "franky3dworld-fly-dai-2025",
+      "character": "小呆／達伊",
+      "author": "Franky3DWorld",
+      "urls": [
+        "https://cults3d.com/en/3d-model/game/fly-dragon-quest-version-original-en-pose-de-lucha",
+        "https://franky3dworld.com"
+      ],
+      "advertisedAttachment": "Fly Figura.zip: Fly figura.stl + info.txt",
+      "observedPrice": "US$3.50",
+      "published": "2025-09-02",
+      "status": "not-acquired-paid-sculpt",
+      "evidence": "Cults author listing provides a single posed printable figure. Author advertises one rotating free catalog item daily on own website, but nothing establishes Dai is currently free. Normal website open returned HTTP400 Timeout fetching; bounded round stopped, no bypass/account/purchase. No rig, animation, sound or texture package verified."
+    },
+    {
+      "id": "cgtrader-vearn-5504550",
+      "character": "巴恩大魔王，形態未驗",
+      "author": "billkaketo",
+      "url": "https://www.cgtrader.com/3d-print-models/art/sculpture/vearn-dragon-quest-the-adventure-of-dai-3d-print",
+      "advertisedAttachment": "STL 147MB",
+      "observedPrice": "US$11.00",
+      "published": "2024-09-03",
+      "status": "not-acquired-paid-sculpt",
+      "evidence": "Actual public product page states model5504550, STL and purchase price. Similar title/date to previously inspected DuongKhuong/Cults listing, so no independent asset/version asserted without bytes. No purchase or download. Not original-game rig/motion evidence."
+    }
+  ],
+  "alreadyKnownRouteExcluded": {
+    "url": "https://www.gildor.org/smf/index.php?topic=8730.0",
+    "localEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/other-source-leads.json",
+    "result": "Already recorded previously. Public one-post thread still lists UE4.26 specific UModel build plus one Clipboard01.jpg screenshot, not a character sample archive. Effects outline/aura sections export note is useful when actual game data becomes available. No tool/game download performed."
+  },
+  "routeLimit": {
+    "maximumNewSources": 3,
+    "specificNewSourcesInspected": 2,
+    "additionalSearchResults": "Other targeted MOD/author searches yielded unrelated characters or already registered blocked/deleted routes; no third qualified new attachment source established. Stopped rather than broadening."
+  },
+  "outcome": "No new complete standalone Dai body, no old/young Vearn body, motion or audio obtained this bounded round. Existing Dai Daz package still requires external G8/G8.1 male base; old Vearn inclusion evidence remains valid but not asset bytes.",
+  "storage": {
+    "localPreserved": true,
+    "s3Status": "pending-backup-research-only",
+    "newCharacterAssetsAwaitingBackup": 0
+  },
+  "inputs": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
+      "bytes": 1897563,
+      "sha256": "7bc152e1d0d620b902760848c9ac0566dc963c902791b991f087a5b14ac8e762"
+    }
+  ],
+  "noAccessBypass": true,
+  "noPurchase": true,
+  "noGameImageDownload": true
+}

@@ -103,9 +103,9 @@ def source_overview(coverage):
 
 
 def audio_reserve_section(coverage):
-    rows = coverage.get('audioOnlyCharacters', [])
-    lines = ['## 音訊／動作儲備：尚未確認同來源角色模型', '',
-        '這些角色的音訊或動作已取得；不能因此計入「已取得模型」筆數。若已有其他來源模型，仍須保留各來源的取得差異。', '',
+    rows = coverage.get('audioOnlyCharacters', []) + coverage.get('reservedResources', [])
+    lines = ['## 音訊、動作及部件儲備：尚未確認同來源完整模型', '',
+        '這些角色的音訊、動作或模型部件已取得；不能因此計入「已取得完整模型」筆數。若已有其他來源模型，仍須保留各來源的取得差異。', '',
         '| 角色 | 來源作品 | 已取得素材 | 模型狀態 | 索引／本機位置 |', '|---|---|---|---|---|']
     for row in rows:
         fields = [row['nameZh'], row['workZh'], row['resources'], row['modelStatus'],

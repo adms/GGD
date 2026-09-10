@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T02:01:04+08:00",
-  "inputsSha256": "b62ac4f3db6c8b293c8c149d79eb9bbe597f53a0630390766c85fbbb968f0027",
+  "generatedAt": "2026-09-11T03:00:03+08:00",
+  "inputsSha256": "45334c016c197effd45e895dbe144e519e0b67b5ff1906390f667d67bc987456",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -28234,7 +28234,96 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": [],
+      "publicCandidates": [
+        {
+          "id": "patreon-shinteo-dai-daz-v2",
+          "target": "小呆／達伊：JUMP FORCE 造型 Daz G8M/G8.1M 改作，待人體基底",
+          "heroIds": [
+            "godie-nbbc"
+          ],
+          "sourceWork": "勇者鬥惡龍 達伊的大冒險／神龍之謎（Dragon Quest: The Adventure of Dai）",
+          "sourceGame": "JUMP FORCE (archive folder label; source extraction fidelity not independently verified)",
+          "sourceClass": "community-mod-adaptation",
+          "sourcePlatform": "Daz Studio Genesis 8 Male / Genesis 8.1 Male",
+          "url": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+          "downloadUrl": "https://www.patreon.com/file?h=66623597&m=153675691",
+          "author": "Shinteo",
+          "uploader": "Shinteo",
+          "sourceVersion": "V2 / 2022-05-20",
+          "format": "ZIP / DSON DUF+DSF / JPG textures / PNG previews",
+          "acquisitionStatus": "downloaded-verified",
+          "accessStatus": "public-download-no-login",
+          "resourceRole": "clothing-weapon-morph",
+          "assetKinds": [
+            "clothing",
+            "character-morph",
+            "model-component",
+            "skeleton-component",
+            "texture",
+            "material",
+            "weapon"
+          ],
+          "modelCount": 0,
+          "fullIndependentCharacterBodyCount": 0,
+          "presetCandidateCount": 2,
+          "modelComponentCount": 14,
+          "nativeAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "readiness": "reserved-pending-dependencies",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-dependencies",
+            "selectionVerified": false
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "publicationStatus": "s3-legacy-full-get-verified",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
+          "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
+          "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/model-candidates.json",
+          "audioIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/audio-index.json",
+          "files": [
+            {
+              "path": "original/Dai V2.zip",
+              "bytes": 17352966,
+              "sha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434"
+            }
+          ],
+          "missingDependenciesIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json",
+          "license": "No explicit downstream game/redistribution grant established; source attribution retained.",
+          "limitations": [
+            "Both presets depend on missing Genesis8Male/Genesis8_1Male geometry and supporting morphs. No independent complete character body acquired.",
+            "587 bone definitions across repeated presets and garments are not 587 unique body joints.",
+            "20 stored geometry blocks include repeated inline eyes/brows; 14 DSF component geometry files are not 14 characters.",
+            "Dragon Aura hair is preserved but is not proof of the godie-n01c canonical Dragon Demon full-body transformation.",
+            "No original Infinity Strash body, motions, SFX or VFX acquired.",
+            "Existing 261 Jump Force Dai audio files are separate and not new."
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/dai-shinteo-public-20260911/6fea2fddd0bfa6719e33d89d28324cda2a3919d4af0027eacd0c19b3b0c82718.tar.gz",
+          "s3Backup": {
+            "archiveSha256": "6fea2fddd0bfa6719e33d89d28324cda2a3919d4af0027eacd0c19b3b0c82718",
+            "archiveBytes": 34674621,
+            "memberCount": 135,
+            "fullGetReadback": true,
+            "allMembersVerified": true,
+            "localUnchangedBeforeAfter": true
+          },
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-shinteo-public-20260911/backup-receipt.json",
+          "frozenLocalEntryUnchanged": true,
+          "ownerEntryIds": [],
+          "modelCandidates": [],
+          "purchaseDecision": "no-purchase",
+          "s3BackupReceiptPath": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/s3-backup-receipt.json",
+          "gitControlIndexPaths": {
+            "components": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/model-candidates.json",
+            "dependencies": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/dependency-index.json",
+            "sourceFiles": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/archive-manifest.json",
+            "audio": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/audio-index.json"
+          },
+          "verification": "117 原始檔 CRC 全通過；2 個 Daz 人物預設、14 DSF 服裝／頭髮／武器部件、35 JPG 貼圖、22 PNG 預覽。缺 Genesis 8／8.1 男性人體基底，完整獨立本體0；動作、音訊、獨立特效均0。135 檔封存完整 GET 與逐檔 SHA 全通過。"
+        }
+      ],
       "paidCandidates": [],
       "supplementSources": [],
       "audioSources": []
@@ -49088,7 +49177,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [
           "infinity-strash-dai-owner-source",
-          "lead-vearn-mmd-sketchfab-a264ddd"
+          "lead-vearn-mmd-sketchfab-a264ddd",
+          "parallel-vearn-priority-source-audit-20260911"
         ],
         "acquiredPublicSources": [],
         "acquiredPaidSources": [],
@@ -49126,7 +49216,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [
           "infinity-strash-dai-owner-source",
-          "lead-vearn-mmd-sketchfab-a264ddd"
+          "lead-vearn-mmd-sketchfab-a264ddd",
+          "parallel-vearn-priority-source-audit-20260911"
         ],
         "acquiredPublicSources": [],
         "acquiredPaidSources": [],
@@ -90179,6 +90270,94 @@
           "selectionVerified": false
         },
         "purchaseDecision": "not-required"
+      },
+      {
+        "id": "patreon-shinteo-dai-daz-v2",
+        "target": "小呆／達伊：JUMP FORCE 造型 Daz G8M/G8.1M 改作，待人體基底",
+        "heroIds": [
+          "godie-nbbc"
+        ],
+        "sourceWork": "勇者鬥惡龍 達伊的大冒險／神龍之謎（Dragon Quest: The Adventure of Dai）",
+        "sourceGame": "JUMP FORCE (archive folder label; source extraction fidelity not independently verified)",
+        "sourceClass": "community-mod-adaptation",
+        "sourcePlatform": "Daz Studio Genesis 8 Male / Genesis 8.1 Male",
+        "url": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+        "downloadUrl": "https://www.patreon.com/file?h=66623597&m=153675691",
+        "author": "Shinteo",
+        "uploader": "Shinteo",
+        "sourceVersion": "V2 / 2022-05-20",
+        "format": "ZIP / DSON DUF+DSF / JPG textures / PNG previews",
+        "acquisitionStatus": "downloaded-verified",
+        "accessStatus": "public-download-no-login",
+        "resourceRole": "clothing-weapon-morph",
+        "assetKinds": [
+          "clothing",
+          "character-morph",
+          "model-component",
+          "skeleton-component",
+          "texture",
+          "material",
+          "weapon"
+        ],
+        "modelCount": 0,
+        "fullIndependentCharacterBodyCount": 0,
+        "presetCandidateCount": 2,
+        "modelComponentCount": 14,
+        "nativeAnimationCount": 0,
+        "audioCount": 0,
+        "standaloneVfxCount": 0,
+        "readiness": "reserved-pending-dependencies",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-dependencies",
+          "selectionVerified": false
+        },
+        "defaultEligible": false,
+        "automaticEligible": false,
+        "publicationStatus": "s3-legacy-full-get-verified",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
+        "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/model-candidates.json",
+        "audioIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/audio-index.json",
+        "files": [
+          {
+            "path": "original/Dai V2.zip",
+            "bytes": 17352966,
+            "sha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434"
+          }
+        ],
+        "missingDependenciesIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json",
+        "license": "No explicit downstream game/redistribution grant established; source attribution retained.",
+        "limitations": [
+          "Both presets depend on missing Genesis8Male/Genesis8_1Male geometry and supporting morphs. No independent complete character body acquired.",
+          "587 bone definitions across repeated presets and garments are not 587 unique body joints.",
+          "20 stored geometry blocks include repeated inline eyes/brows; 14 DSF component geometry files are not 14 characters.",
+          "Dragon Aura hair is preserved but is not proof of the godie-n01c canonical Dragon Demon full-body transformation.",
+          "No original Infinity Strash body, motions, SFX or VFX acquired.",
+          "Existing 261 Jump Force Dai audio files are separate and not new."
+        ],
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/dai-shinteo-public-20260911/6fea2fddd0bfa6719e33d89d28324cda2a3919d4af0027eacd0c19b3b0c82718.tar.gz",
+        "s3Backup": {
+          "archiveSha256": "6fea2fddd0bfa6719e33d89d28324cda2a3919d4af0027eacd0c19b3b0c82718",
+          "archiveBytes": 34674621,
+          "memberCount": 135,
+          "fullGetReadback": true,
+          "allMembersVerified": true,
+          "localUnchangedBeforeAfter": true
+        },
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-shinteo-public-20260911/backup-receipt.json",
+        "frozenLocalEntryUnchanged": true,
+        "ownerEntryIds": [],
+        "modelCandidates": [],
+        "purchaseDecision": "no-purchase",
+        "s3BackupReceiptPath": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/s3-backup-receipt.json",
+        "gitControlIndexPaths": {
+          "components": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/model-candidates.json",
+          "dependencies": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/dependency-index.json",
+          "sourceFiles": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/archive-manifest.json",
+          "audio": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/audio-index.json"
+        },
+        "verification": "117 原始檔 CRC 全通過；2 個 Daz 人物預設、14 DSF 服裝／頭髮／武器部件、35 JPG 貼圖、22 PNG 預覽。缺 Genesis 8／8.1 男性人體基底，完整獨立本體0；動作、音訊、獨立特效均0。135 檔封存完整 GET 與逐檔 SHA 全通過。"
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -91089,6 +91268,231 @@
           "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
         },
         "verification": "本輪未取得素材。Not acquired; advertised rig and package quality unverified. No native game animation, sound or VFX established. Not Infinity Strash."
+      },
+      {
+        "id": "parallel-vearn-priority-source-audit-20260911",
+        "target": "巴恩大魔王：老年與年輕真身",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "sourceGame": "Infinity Strash: DRAGON QUEST The Adventure of Dai; alternate community leads separately identified",
+        "platform": "mixed-leads-not-acquired",
+        "sourceKind": "research-only",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+        "sourcePage": "https://steamcommunity.com/app/1895810/allnews/",
+        "sourceReport": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/source-report.json",
+        "verification": "已核對《無限神速斬》老年巴恩 Boss 官方公告與遊戲畫面；年輕真身是否收錄尚未證實。此輪模型、動作、特效、音效、語音素材包均0。研究備份不是角色素材取得。",
+        "defaultEligible": false,
+        "modelCandidates": [],
+        "audioFileIndex": [],
+        "acquiredAssetPayloadCount": 0,
+        "acquisitionStatus": "research-only-no-asset-package",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/vearn-priority-20260911/f9960f2d04b13deef099767e4b54deeab0274245e1844f36abe4641945872f56.tar.gz",
+          "sha256": "f9960f2d04b13deef099767e4b54deeab0274245e1844f36abe4641945872f56",
+          "bytes": 666761,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "parallel-vearn-priority-source-audit",
+          "verified": true,
+          "fullGetAndEveryFileVerified": true,
+          "inventoryUri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/vearn-priority-20260911/f9960f2d04b13deef099767e4b54deeab0274245e1844f36abe4641945872f56.files.json",
+          "inventorySha256": "43e9bc616ff726b07e5d60d00d83f5e25f406b2051ecb71d8371ff9aa7806a3e",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/vearn-source-research-20260911/s3-backup-receipt.json",
+          "receiptSha256": "2795eb9819a4fc2129cebab9c3e20c4c0deb9f5d3f895758d536aa715a68a2f8"
+        },
+        "url": "https://steamcommunity.com/app/1895810/allnews/",
+        "downloadUrl": null,
+        "sourceWork": "勇者鬥惡龍 達伊的大冒險／神龍之謎（Dragon Quest: The Adventure of Dai）",
+        "readiness": "source-lead-only",
+        "resourceRole": "model-source-lead",
+        "assetKinds": [],
+        "format": "研究 JSON／HTML／證據截圖；未取得模型素材包",
+        "accessStatus": "mixed-research-evidence-no-asset-download",
+        "automaticEligible": false,
+        "modelCount": 0,
+        "nativeAnimationCount": 0,
+        "audioCount": 0,
+        "standaloneVfxCount": 0,
+        "files": [],
+        "ownerEntryIds": [],
+        "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+        "publicationStatus": "s3-legacy-research-only-full-get-verified",
+        "purchaseDecision": "no-purchase",
+        "backendIntegration": {
+          "required": false,
+          "state": "not-acquired",
+          "selectionVerified": false,
+          "note": "僅來源研究，不能登記可選模型。"
+        },
+        "sourceRoutes": [
+          {
+            "id": "infinity-strash-official-tgs-vearn",
+            "urls": [
+              "https://steamcommunity.com/app/1895810/allnews/",
+              "https://steamcommunity.com/gid/103582791473687350/announcements/detail/3703704711972736125",
+              "https://www.square-enix-games.com/en_US/home/infinity-strash-dragon-quest-adventure-dai-out-now"
+            ],
+            "status": "official-inclusion-evidence-only",
+            "findings": "Publisher announcement dated 2023-09-27 names Vearn among TGS game reveals. Story coverage alone cannot imply absence of a Temple of Recollection bonus boss. Public pages provide no character package. Individual Steam announcement web open was non-retryable URL-safety rejection; not retried via shell/alternate endpoint. All-news page independently read successfully before that rejection.",
+            "evidencePaths": [
+              "evidence/steam-official-news.html",
+              "evidence/square-enix-story-coverage.html"
+            ],
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "infinity-strash-vearn-gameplay-guide",
+            "urls": [
+              "https://www.dragonquest-fan.com/forum/index.php?subjectID=14968",
+              "https://www.dragonquest-fan.com/imgs/userfiles/1/Infinity%20Strash_vearn.jpg"
+            ],
+            "status": "screenshot-only",
+            "author": "Poppu, Dragon Quest Fan administrator",
+            "published": "2023-10-08",
+            "findings": "Guide explains Vearn as Temple of Recollection boss. Downloaded and visually inspected screenshot: old man with wrinkles, long white hair/beard, horned crown, blue robe and staff. Confirms elderly Vearn presentation, not young true-body mesh. Screenshot is evidence only, not reusable model texture.",
+            "evidencePaths": [
+              "evidence/dragonquest-fan-vearn-boss.jpg"
+            ],
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "gematsu-tgs-vearn-announcement",
+            "urls": [
+              "https://www.gematsu.com/2023/09/infinity-strash-dragon-quest-the-adventure-of-dai-adds-dark-king-vearn-boss-battle"
+            ],
+            "status": "article-only-image-403",
+            "published": "2023-09-23",
+            "author": "Sal Romano",
+            "findings": "Reports official TGS announcement placing Vearn in deepest Temple of Recollection. Public image URL returned actual HTTP403; stopped with no alternate image size/host attempt. No game/stream downloaded.",
+            "blockedResource": "https://www.gematsu.com/wp-content/uploads/2023/09/Infinity-Strash-TGS-Stage_09-23-23_001-320x180.jpg",
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "dqtact-public-repository-vearn",
+            "urls": [
+              "https://dq-tact.github.io/units/truedarkkingvearn.html",
+              "https://api.github.com/repos/DQ-Tact/DQ-Tact.github.io/git/trees/main?recursive=1"
+            ],
+            "status": "complete-tree-has-no-vearn-asset-package",
+            "repositoryTreeSha": "ca3cfd630543f4c62990bcbde727b0e10126f2ef",
+            "truncated": false,
+            "treeEntryCount": 6185,
+            "characterPaths": [
+              "images/DarkKingVearn.png",
+              "images/Killvearn.png",
+              "images/Mystvearn.png",
+              "images/TrueDarkKingVearn.png",
+              "units/darkkingvearn.html",
+              "units/killvearn.html",
+              "units/mystvearn.html",
+              "units/truedarkkingvearn.html",
+              "unitscripts/darkkingvearn.js",
+              "unitscripts/killvearn.js",
+              "unitscripts/mystvearn.js",
+              "unitscripts/truedarkkingvearn.js"
+            ],
+            "findings": "Old and True Dark King Vearn appear as data pages, JavaScript stats and PNG portraits. No model, native skeleton/motion, VFX or audio candidate in this tree. Fifteen .clip files are named under images backgrounds/attack icons; they were not downloaded or parsed and are not counted as animation clips. Source directory/file names alone do not prove native 3D game data.",
+            "evidencePaths": [
+              "evidence/dqtact-repository-tree.json",
+              "evidence/dqtact-repository.json",
+              "evidence/dqtact-true-vearn.html"
+            ],
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "cults-vearn-duongkhuong-2254947",
+            "urls": [
+              "https://cults3d.com/en/3d-model/art/vearn-dragon-quest-the-adventure-of-dai-3d-print"
+            ],
+            "status": "paid-not-acquired",
+            "author": "DuongKhuong",
+            "advertised": "US$11; DAU AN RONG THIENG.zip containing 7 STL pieces; no advertised rig or native motion/audio. Form not visually established in this audit.",
+            "findings": "No purchase or download attempted; not a free source.",
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "cults-vearn-thelegend-4601945",
+            "urls": [
+              "https://cults3d.com/en/3d-model/game/vearn-thelegend"
+            ],
+            "status": "paid-ai-sculpt-not-acquired",
+            "author": "theLEGEND",
+            "advertised": "US$1.75; 1 STL, AI assisted design. Form and resemblance unverified.",
+            "findings": "No purchase; not a native game resource and no rig/motion evidence.",
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "creality-vearn-khuongtainang",
+            "urls": [
+              "https://www.crealitycloud.com/es/model-detail/66d70beed164d01a74e934ca"
+            ],
+            "status": "paid-sculpt-no-free-package-established",
+            "author": "KHUONGTAINANG",
+            "findings": "Search listing describes Vearn 3D print; same sculpt author family as DuongKhuong route. No normal free asset URL established; no account/paywall attempt.",
+            "acquiredAssetPayloadCount": 0
+          },
+          {
+            "id": "official-hoshidora-vearn-army-event",
+            "urls": [
+              "https://www.dragonquest.jp/hoshidora/raid_event3/"
+            ],
+            "status": "official-event-page-only",
+            "author": "Square Enix",
+            "published": "2017-12-25 event start",
+            "findings": "Official event page for Vearn army and Sovereign Rock Castle. Page has campaign images, not downloadable character model or sound package. Does not prove both Vearn bodies in this intake.",
+            "evidencePaths": [
+              "evidence/official-hoshidora-vearn-event.html"
+            ],
+            "acquiredAssetPayloadCount": 0
+          }
+        ],
+        "previousBlockedRoutesNotRetried": [
+          {
+            "id": "lead-vearn-mmd-sketchfab-a264ddd",
+            "url": "https://sketchfab.com/3d-models/dragon-quest-mmd-a264ddd01e1a416abd6ec2fd17ab7bf2",
+            "status": "prior-research-only-not-retried",
+            "note": "鯖缶 v0.87, secondary uploader tellgamestory. Author distribution bowlroll.net/up/dl37061 previously non-retryable URL-safety blocked; no bypass. Sketchfab download requires normal author/account route; no public asset archive obtained. Form remains unverified."
+          }
+        ],
+        "gitSourceReportPath": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/vearn/source-report.json",
+        "gitBackupReceiptPath": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/vearn/s3-backup-receipt.json",
+        "forms": [
+          {
+            "form": "elderly",
+            "nameZh": "老年巴恩",
+            "heroIds": [
+              "godie-ubal"
+            ],
+            "gameInclusion": "Infinity Strash official Vearn announcement plus actual old-form gameplay screenshot",
+            "acquiredNativeModel": false,
+            "acquiredNativeMotion": false,
+            "acquiredNativeAudio": false,
+            "sourceLeads": [
+              "infinity-strash-official-tgs-vearn",
+              "infinity-strash-vearn-gameplay-guide"
+            ]
+          },
+          {
+            "form": "young-true-body",
+            "nameZh": "年輕真身巴恩",
+            "heroIds": [
+              "godie-ubal"
+            ],
+            "gameInclusion": "Not established for Infinity Strash. DQ Tact public data page confirms character listing only, no mesh.",
+            "acquiredNativeModel": false,
+            "acquiredNativeMotion": false,
+            "acquiredNativeAudio": false,
+            "sourceLeads": [
+              "dqtact-public-repository-vearn",
+              "lead-vearn-mmd-sketchfab-a264ddd"
+            ]
+          }
+        ],
+        "notAliases": [
+          "Baran",
+          "巴蘭",
+          "バラン"
+        ]
       }
     ],
     "ingestionPolicy": {

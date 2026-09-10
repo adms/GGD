@@ -311,34 +311,23 @@
     {
       "championId": "b2-kaiji",
       "schema": "resolved-appearance@1",
-      "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
-      "glbPath": "assets/models/champions/versions/b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810.glb",
-      "modelDocDigest": "610dacead699",
+      "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+      "glbPath": "assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "modelDocDigest": "a2997a1e64f6",
       "scale": 1,
       "collisionRadius": 0.6,
       "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -4626,69 +4615,23 @@
     {
       "championId": "godie-n003",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.long",
-      "glbPath": "assets/models/imported/long.glb",
-      "modelDocDigest": "e1cbda06105f",
+      "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
+      "glbPath": "assets/models/ou99/versions/fba8d82b18a88930248d5d593191d685f23f919d1b59e7760826685feb844310.glb",
+      "modelDocDigest": "079f897456eb",
       "scale": 1,
       "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
         "idle": "Stand",
         "run": "Walk",
-        "attack": "Attack",
+        "attack": "Attack 1",
         "cast": "Spell",
         "hurt": "Stand",
         "death": "Death"
       },
-      "attachPoints": {
-        "Origin": {
-          "x": 0,
-          "y": 0.0247,
-          "z": 0
-        },
-        "Chest": {
-          "x": 0.011,
-          "y": 1.0211,
-          "z": 0
-        },
-        "Hand Right": {
-          "x": -0.0125,
-          "y": 1.1663,
-          "z": 0.7314
-        },
-        "Hand Left": {
-          "x": -0.0125,
-          "y": 1.1663,
-          "z": -0.7314
-        },
-        "Head": {
-          "x": -0.0192,
-          "y": 1.3483,
-          "z": 0
-        },
-        "Foot Right": {
-          "x": 0.1905,
-          "y": 0.0395,
-          "z": 0.1047
-        },
-        "Foot Left": {
-          "x": 0.1906,
-          "y": 0.0395,
-          "z": -0.1031
-        },
-        "OverHead": {
-          "x": 0.0522,
-          "y": 1.7213,
-          "z": 0
-        },
-        "Weapon": {
-          "x": -0.0128,
-          "y": 1.1563,
-          "z": 0.728
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -4702,14 +4645,14 @@
     {
       "championId": "godie-n00b",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.doraemon-cat",
-      "glbPath": "assets/models/imported/doraemon-cat.glb",
-      "modelDocDigest": "a8cca23a77cc",
+      "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
+      "glbPath": "assets/models/ou99/versions/845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2.glb",
+      "modelDocDigest": "f40f51ec9693",
       "scale": 1,
       "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
         "idle": "Stand",
         "run": "Walk",
@@ -4718,48 +4661,7 @@
         "hurt": "Stand",
         "death": "Death"
       },
-      "attachPoints": {
-        "Foot Right": {
-          "x": -0.0635,
-          "y": 0.1017,
-          "z": 0.1482
-        },
-        "Foot Left": {
-          "x": -0.0635,
-          "y": 0.1017,
-          "z": -0.1482
-        },
-        "Hand Right": {
-          "x": -0.0198,
-          "y": 0.381,
-          "z": 0.391
-        },
-        "Hand Left": {
-          "x": -0.0198,
-          "y": 0.381,
-          "z": -0.391
-        },
-        "Head": {
-          "x": -0.1102,
-          "y": 0.7058,
-          "z": 0
-        },
-        "Chest": {
-          "x": -0.0271,
-          "y": 0.4507,
-          "z": 0
-        },
-        "Overhead": {
-          "x": 0,
-          "y": 1.4681,
-          "z": 0
-        },
-        "Origin": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -5523,12 +5425,12 @@
     {
       "championId": "godie-o030",
       "schema": "resolved-appearance@1",
-      "modelKey": "ou99.456546",
-      "glbPath": "assets/models/ou99/ou99_456546.glb",
-      "modelDocDigest": "b72fb1735d5c",
+      "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
+      "glbPath": "assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb",
+      "modelDocDigest": "0e42b51c499c",
       "scale": 1,
       "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
@@ -5536,8 +5438,8 @@
         "run": "Walk",
         "attack": "Attack 1",
         "cast": "Spell Ten",
-        "death": "Death",
-        "hurt": "Stand Ready"
+        "hurt": "Stand Ready",
+        "death": "Death"
       },
       "attachPoints": {},
       "teamTintMaterials": [],
@@ -5746,12 +5648,12 @@
     {
       "championId": "godie-orkn",
       "schema": "resolved-appearance@1",
-      "modelKey": "ou99.456546",
-      "glbPath": "assets/models/ou99/ou99_456546.glb",
-      "modelDocDigest": "b72fb1735d5c",
+      "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
+      "glbPath": "assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb",
+      "modelDocDigest": "0e42b51c499c",
       "scale": 1,
       "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
@@ -5759,8 +5661,8 @@
         "run": "Walk",
         "attack": "Attack 1",
         "cast": "Spell Ten",
-        "death": "Death",
-        "hurt": "Stand Ready"
+        "hurt": "Stand Ready",
+        "death": "Death"
       },
       "attachPoints": {},
       "teamTintMaterials": [],
@@ -6567,21 +6469,21 @@
     {
       "championId": "godie-ubal",
       "schema": "resolved-appearance@1",
-      "modelKey": "ou99.457883",
-      "glbPath": "assets/models/ou99/ou99_457883.glb",
-      "modelDocDigest": "b0cd58f4968d",
+      "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
+      "glbPath": "assets/models/ou99/versions/6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912.glb",
+      "modelDocDigest": "3dbc7251c499",
       "scale": 1,
       "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
         "idle": "Stand",
         "run": "Walk",
         "attack": "Attack - 1",
-        "death": "Death",
+        "cast": "Attack Slam",
         "hurt": "Stand Ready",
-        "cast": "Attack Slam"
+        "death": "Death"
       },
       "attachPoints": {},
       "teamTintMaterials": [],

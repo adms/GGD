@@ -55,7 +55,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "bc0a758012b19661e898b67aaf7f940ed81457e67b6a9208f69a5b83551d3925"
+      "sha256": "4ad10b4ec0fcf01ef8f3accfa32e248cca61628877a55950ebf8d5b69b5121d5"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -63,15 +63,15 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/resource-coverage.json",
-      "sha256": "f976159e19d9b71ab1eae0e5f19cfaff7dd1b1cc3b810bb98ab34c859a430e42"
+      "sha256": "d839508c71082395fa277b22aaf9b8e22e0cdbc4efb547fbe806b4d04006ff5b"
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "bfbea1f70a1dfa3e2935df474db059f960bf33d5353c52a82fe151fc8bb6cbda"
+      "sha256": "6d79ec270ec98b88601e23748639ac07338effcb19eb0501817fd14335d8ad8e"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "ba82e2f827981368f46ebf07b69e71975958d542a4242ae03d7d3de009d72271"
+      "sha256": "7bc152e1d0d620b902760848c9ac0566dc963c902791b991f087a5b14ac8e762"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -185356,10 +185356,11 @@
           "parallel-ps-jumpforce-local-next32",
           "parallel-ps-jumpforce-local-final3",
           "gtainside-kenshin",
-          "parallel-community-adult-gon-multiversus"
+          "parallel-community-adult-gon-multiversus",
+          "patreon-shinteo-dai-daz-v2"
         ],
-        "model": "緋村劍心1個已解析DFF本體、32骨／7貼圖；大傑1個已取得未解析PAK，內部模型數未知。音訊58包不算模型。",
-        "motion": "音訊包無骨骼動作；劍心包無動作；大傑PAK尚未解析。",
+        "model": "緋村劍心1個已解析DFF本體、32骨／7貼圖；大傑1個已取得未解析PAK，內部模型數未知。音訊58包不算模型。；新增達伊 JUMP FORCE 造型 Daz 改作：2 預設、14 部件、35 貼圖；缺人體基底，完整本體0，不增加已取得本體數。",
+        "motion": "音訊包無骨骼動作；劍心包無動作；大傑PAK尚未解析。；達伊 Daz 包原生動作0。",
         "vfx": "未取得已解析可用特效；大傑PAK內部未知。",
         "sfx": "746個來源目錄標為音效；另1815個共用音訊尚未分類。",
         "voice": "12646個來源目錄標為語音，未逐段核說話者／語言；57角色包＋1共用包，共15207音檔。",
@@ -185375,6 +185376,14 @@
           [
             "本次覆蓋稽核",
             "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog-source-coverage-20260911/ggd-dai-jump-source-coverage.json"
+          ],
+          [
+            "達伊部件儲備",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/model-candidates.json"
+          ],
+          [
+            "達伊人體基底缺項",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json"
           ]
         ]
       },
@@ -185388,9 +185397,10 @@
           "lead-dai-jumpforce-l4d2-2298782931",
           "lead-dai-jumpforce-sword-l4d2-2318399292",
           "lead-popp-dragonquest-tact-modelsresource",
-          "lead-popp-summerforce-cgtrader-3827837"
+          "lead-popp-summerforce-cgtrader-3827837",
+          "parallel-vearn-priority-source-audit-20260911"
         ],
-        "model": "本遊戲本體與骨架0；小呆及巴恩前後形態未取得。",
+        "model": "本遊戲完整本體與骨架0；小呆及巴恩前後形態本體均未取得。已確認遊戲包含老年巴恩 Boss，年輕真身是否收錄尚未證實；達伊 Daz 部件屬另作社群來源。",
         "motion": "何布MOD實檔：1 AnimSequence＋5 AnimMontage；非6個獨立動作，尚未解碼播放，缺原骨架。",
         "vfx": "僅Niagara組件／事件引用與法術設定；完整NiagaraSystem 0。",
         "sfx": "音訊檔與銀行0；15個AkEvent通知為外部引用。",
@@ -185407,6 +185417,18 @@
           [
             "本體來源調查",
             "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json"
+          ],
+          [
+            "巴恩前後形態來源核對",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/source-report.json"
+          ],
+          [
+            "巴恩研究備份收據",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/vearn-source-research-20260911/s3-backup-receipt.json"
+          ],
+          [
+            "小呆／巴恩本機與社群續查",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-evidence/dai-vearn-20260911/followup-02/source-report.json"
           ]
         ]
       },
@@ -191674,7 +191696,7 @@
           "parallel-ps-jumpforce-audio"
         ],
         "resources": "音效：14 檔（來源目錄標示音效）；語音：247 檔（來源目錄標示語音，未逐段聽審）",
-        "modelStatus": "此音訊包不含模型；其他來源模型見角色主表",
+        "modelStatus": "此音訊包不含模型；另取得 Shinteo Daz 達伊部件原包，缺人體基底，完整本體仍未確認，見部件儲備；261音訊是既有資料，不重算。",
         "existingBacklogRowIds": [],
         "voiceGroupIds": [
           "parallel-ps-jumpforce-audio:JForce_Dai"
@@ -191687,6 +191709,10 @@
           [
             "逐檔SHA索引",
             "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/audio-validation.json"
+          ],
+          [
+            "另一來源的達伊部件儲備",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/model-candidates.json"
           ]
         ],
         "evidencePaths": [
@@ -193886,7 +193912,12 @@
           "voice"
         ],
         "priority": "released-hero-priority",
-        "statusZh": "優先查找本體與全類素材；已有 JUMP FORCE 261 檔音訊，非本作模型"
+        "statusZh": "已取得其他來源：JUMP FORCE 造型 Daz V2 原包117檔（2預設／14部件／35貼圖），缺人體基底，完整本體仍0；本作模型與原生動作待補。既有 JUMP FORCE 261音訊另列，本批新增音訊0。",
+        "evidencePaths": [
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/model-candidates.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-evidence/dai-vearn-20260911/followup-02/source-report.json"
+        ]
       },
       {
         "id": "vearn-old-infinity-strash",
@@ -193903,7 +193934,12 @@
           "voice"
         ],
         "priority": "released-hero-priority",
-        "statusZh": "優先查找本尊與形態證據；現有替代選項保留"
+        "statusZh": "已確認本作有老年巴恩 Boss（官方公告＋實際遊戲畫面）；尚未取得本尊模型、動作、特效、音效或語音包。研究證據已備份，既有替代選項保留。",
+        "evidencePaths": [
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/source-report.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/vearn-source-research-20260911/s3-backup-receipt.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-evidence/dai-vearn-20260911/followup-02/source-report.json"
+        ]
       },
       {
         "id": "vearn-young-infinity-strash",
@@ -193920,7 +193956,65 @@
           "voice"
         ],
         "priority": "released-hero-priority",
-        "statusZh": "優先查找本尊與形態證據；與變身前分開歸檔"
+        "statusZh": "本作是否包含年輕真身尚未證實；其他原作與社群線索亦未取得素材包。與老年形態分開追蹤，不能以巴蘭或替代模型充作本尊。",
+        "evidencePaths": [
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/source-report.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/vearn-source-research-20260911/s3-backup-receipt.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-evidence/dai-vearn-20260911/followup-02/source-report.json"
+        ]
+      }
+    ],
+    "reservedResources": [
+      {
+        "id": "reserve-dai-shinteo-daz-v2-components",
+        "nameZh": "小呆／達伊（Dai，Daz 部件儲備）",
+        "workZh": "勇者鬥惡龍 達伊的大冒險／神龍之謎；JUMP FORCE 造型社群改作",
+        "heroIds": [
+          "godie-nbbc"
+        ],
+        "sourceIds": [
+          "patreon-shinteo-dai-daz-v2"
+        ],
+        "resourceRole": "clothing-weapon-morph",
+        "resources": "2 個人物預設、14 個 DSF 服裝／頭髮／武器部件、35 張 JPG 貼圖、22 張 PNG 預覽；117 原始檔全保存。含完整與破損衣裝、3 種頭髮、劍／背劍／劍鞘。原生動作0、音訊0、獨立特效0。",
+        "modelStatus": "缺 Genesis 8／8.1 男性人體基底，完整獨立本體0；不可當作已上架模型。Dragon Aura 頭髮不能證明已取得龍魔人全身形態，未配 godie-n01c。",
+        "readiness": "reserved-pending-dependencies",
+        "defaultEligible": false,
+        "automaticEligible": false,
+        "links": [
+          [
+            "部件與人物預設索引",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/model-candidates.json"
+          ],
+          [
+            "人體基底缺項",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json"
+          ],
+          [
+            "逐檔 SHA",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/archive-manifest.json"
+          ],
+          [
+            "S3 完整讀回收據",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-shinteo-public-20260911/backup-receipt.json"
+          ],
+          [
+            "作者公開來源",
+            "https://www.patreon.com/posts/dai-for-g8m-and-66623597"
+          ]
+        ],
+        "resourceDetails": {
+          "model": "完整獨立本體0；2 預設需外部人體基底。",
+          "motion": "0；骨架／衣装蒙皮資料不算原生動作。",
+          "vfx": "0；Dragon Aura 頭髮是造型部件。",
+          "sfx": "0；既有 JUMP FORCE 音效另列，不重算。",
+          "voice": "0；既有 JUMP FORCE 語音另列，不重算。"
+        },
+        "evidencePaths": [
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/static-analysis.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-shinteo-public-20260911/backup-receipt.json"
+        ]
       }
     ]
   },

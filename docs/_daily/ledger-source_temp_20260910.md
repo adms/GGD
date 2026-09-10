@@ -328,3 +328,254 @@ PR 開好了 →
 ## 22:30
 
 17位佔位 是哪些列表給我
+
+## 22:34
+
+你得替換跟保留 我搞的好亂 替換哪個 保留又是哪個
+
+## 22:37
+
+⭐ ou99 有登記、標「優先下載」	6（#1–6）	⭐ 這條工作流 —— 我可以直接買下來轉換上架
+⚠️ 被預算擋住的相似模型	2（#14–15）	
+#1174 貼圖圖集做完就能
+=> go!
+
+## 22:43
+
+我覺得你有點亂配 把 joke配對到受傷 以及一些技能招式 不是剛好對上 QWER 你要記得挪位 例如勝利約束之劍 在GGD不是R而是E 請你重新檢查過一輪我再來審查
+
+## 22:44
+
+然後我們有個規則是 只配對講日文 所以有些語音是中文 就不要配對上來了
+
+## 22:45
+
+語音跟模型 都還再陸續準備中
+
+## 23:00
+
+我看一下第二層是哪些
+
+## 23:01
+
+第三層呢
+
+## 23:05
+
+我再給你一次完整名單 你交叉比對一下
+
+3d model great again plan
+
+目前已補上相似或本尊的角色，待整合 
+初號機 https://www.ou99.com/thread-498341-1-1.html
+哆啦A夢 https://www.ou99.com/thread-496905-1-2.html
+貞子 https://www.ou99.com/thread-480489-1-1.html
+阿強一號 https://www.ou99.com/thread-485012-1-1.html
+拳四郎 https://www.ou99.com/thread-464696-1-70.html (變身保持放大皮卡丘)
+獵人 西索 https://www.ou99.com/thread-497211-1-3.html
+狼與辛香料 赫蘿 https://www.ou99.com/thread-468771-1-49.html
+轉生史萊姆 利姆路 https://www.ou99.com/forum.php?mod=viewthread&tid=457280
+暗殺教室 殺老師 https://www.ou99.com/thread-472112-1-41.html
+比利海靈頓 https://www.ou99.com/thread-457123-1-139.html
+藥師少女的獨語 貓貓 https://www.ou99.com/thread-467165-1-56.html
+去死團的逆襲 死之王 https://www.ou99.com/thread-459087-1-34.html
+胖虎 https://www.ou99.com/thread-496746-1-1.html
+轉生蜘蛛 蜘蛛子 https://www.ou99.com/thread-478121-1-1.html
+鬼滅之刃 善逸 https://www.ou99.com/thread-454069-1-1.html
+鬼滅之刃 炭治郎 https://www.ou99.com/thread-466002-1-1.html
+去死團的逆襲 熊貓 https://www.ou99.com/thread-463344-1-1.html
+志志雄真實 https://www.ou99.com/thread-476060-1-1.html
+月光下的異世界之旅 深澄真https://www.ou99.com/thread-478642-1-71.html
+吉伊卡哇 https://www.ou99.com/thread-459617-1-199.html
+烙印勇士 凱茲 https://www.ou99.com/thread-460977-1-184.html
+刀劍神域 阿絲娜 https://www.ou99.com/thread-470467-1-1.html
+HUNTER×HUNTER 傑・富力士 https://www.ou99.com/thread-458241-1-1.html
+HUNTER×HUNTER 揍敵客阿福 https://www.ou99.com/thread-472410-1-1.html
+神龍之謎 巴恩大魔王(變身後) https://www.ou99.com/thread-457883-1-1.html
+神龍之謎 巴恩大魔王(變身前) https://www.ou99.com/thread-472035-1-98.html
+我要招架一切 諾爾 https://www.ou99.com/thread-453949-1-1.html
+勇者死了 托卡・史考特 https://www.ou99.com/thread-459257-1-1.html
+中華一番 小當家 https://www.ou99.com/thread-498407-1-1.html
+犬夜叉 https://www.ou99.com/thread-452782-1-1.html
+芙莉蓮 https://www.ou99.com/thread-457780-1-1.html
+JoJo冒險野郎 空條承太郎 https://www.ou99.com/thread-497213-1-13.html 
+魔笛 MAGI 阿拉丁 https://www.ou99.com/thread-473324-1-1.html
+去死去死團的逆襲 白木卡迪那 https://www.ou99.com/thread-470225-1-107.html
+盾之勇者成名錄 岩谷尚文 https://www.ou99.com/thread-470782-1-104.html (刀劍移除)
+轉生成自動販賣機 阿箱＋拉蜜絲 https://www.ou99.com/thread-491448-1-32.html (外加一個白色矩形販賣機在背後)
+魔笛 MAGI 辛巴達 https://www.ou99.com/thread-491497-1-32.html
+魔術士歐菲 https://www.ou99.com/thread-496452-1-16.html
+覺醒了自動機能的十五年無成冒險者 克勞斯 https://www.ou99.com/thread-487487-1-46.html
+靈異教師神眉 鵺野鳴介 https://www.ou99.com/thread-487484-1-47.html
+去死去死團的逆襲 黑人牙膏 https://www.ou99.com/thread-495978-1-18.html
+臭作 https://www.ou99.com/thread-456546-1-240.html
+異世界舅舅https://www.ou99.com/thread-454482-1-265.html
+洛克人 https://www.ou99.com/thread-287871-1-716.html
+KOF 八神庵 https://www.ou99.com/thread-313646-1-624.html
+我想成為影之強者https://www.ou99.com/thread-481732-1-62.html
+尼古貓貓 https://www.ou99.com/thread-498214-1-7.html
+重騎士以遊戲知識開無雙 艾爾瑪  https://www.ou99.com/thread-472038-1-98.html
+去死去死團的逆襲 至尊學長「飛鼠先生」https://www.ou99.com/thread-469191-1-111.html
+Re:從零開始的異世界生活 菜月昴 https://www.ou99.com/thread-311294-1-694.html 
+UQHOLDER 近衛刀太 https://www.ou99.com/thread-470087-1-1.html
+膽大黨 高速婆婆 https://www.ou99.com/thread-458013-1-1.html
+鬼畜王蘭斯 https://www.ou99.com/thread-493578-1-1.html
+這個世界漏洞百出 羽賀 https://www.ou99.com/thread-495015-1-1.html
+回復術士的重來人生 凱亞爾 https://www.ou99.com/thread-458777-1-1.html (斗篷綠色、頭髮黃色)
+異世界転移魔法剣士 楓 https://www.ou99.com/thread-474258-1-1.html
+失格紋的最強賢者 馬提亞斯  https://www.ou99.com/thread-465884-1-1.html
+賭博默示錄 伊藤開司 https://www.ou99.com/thread-457710-1-1.html
+致不滅的你 不死 https://www.ou99.com/thread-467227-1-1.html
+蠟筆小新 野原新之助 https://www.ou99.com/thread-457874-1-1.html
+AVARTH 青蛙劍士 Ned https://www.ou99.com/thread-456917-1-1.html
+幸運超人 https://www.ou99.com/thread-457594-1-1.html (胸口補寫大吉)
+科學超電磁砲 御坂美琴 https://www.ou99.com/thread-283718-1-718.html
+異形 https://www.ou99.com/thread-312479-1-687.html
+Fate 遠坂凜 https://www.ou99.com/thread-310996-1-697.html
+Fate Berserker https://www.ou99.com/thread-328403-1-516.html
+魯魯修 https://www.ou99.com/thread-413694-1-376.html
+瘋狂假面 https://www.ou99.com/thread-455144-1-258.html
+獵人 奇犽 https://www.ou99.com/thread-497400-1-12.html
+英雄王吉爾伽美什 https://www.ou99.com/thread-497746-1-10.html 
+
+此區為加購選項區
+殺生丸 (可加購替換選項)
+https://www.ou99.com/thread-463252-1-160.html
+https://www.ou99.com/thread-474798-1-86.html
+https://www.ou99.com/thread-467258-1-123.html
+索隆 (可加購替換選項)
+https://www.ou99.com/thread-454064-1-1.html
+https://www.ou99.com/thread-455488-1-1.html
+夜神月 (可加購替換選項)
+https://www.ou99.com/thread-451392-1-1.html
+https://www.ou99.com/thread-433442-1-335.html
+鋼彈 (可加購替換選項)
+https://www.ou99.com/thread-472273-1-1.html
+https://www.ou99.com/thread-494307-1-1.html
+https://www.ou99.com/thread-493659-1-24.html
+魯夫 (可加購替換選項)
+https://www.ou99.com/thread-497129-1-1.html
+https://www.ou99.com/thread-497483-1-12.html
+賽菲洛斯 (可加購替換選項)
+https://www.ou99.com/thread-474312-1-1.html
+https://www.ou99.com/thread-453337-1-280.html
+夏娜 (可加購替換選項)
+https://www.ou99.com/thread-478203-1-1.html
+劍心 (可加購替換選項)
+https://www.ou99.com/thread-487482-1-1.html
+https://www.ou99.com/thread-470351-1-106.html
+呂布 (可加購替換選項)
+https://www.ou99.com/thread-487191-1-1.html
+https://www.ou99.com/thread-407884-1-384.html
+https://www.ou99.com/thread-498472-1-6.html
+桔梗 (可加購替換選項)
+https://www.ou99.com/thread-406299-1-388.html
+皮卡丘  (可加購替換選項)
+https://www.ou99.com/thread-497398-1-1.html
+https://www.ou99.com/thread-478915-1-70.html
+七龍珠 孫悟空  (可加購替換選項)
+https://www.ou99.com/thread-499084-1-2.html
+https://www.ou99.com/thread-497131-1-14.html
+BLEACH 黑崎一護  (可加購替換選項)
+https://www.ou99.com/thread-497434-1-12.html
+Fate Saber (可加購替換選項)
+https://www.ou99.com/thread-463625-1-1.html
+https://www.ou99.com/thread-462157-1-1.html
+https://www.ou99.com/thread-464207-1-1.html
+https://www.ou99.com/thread-464483-1-1.html
+https://www.ou99.com/thread-486403-1-1.html
+https://www.ou99.com/thread-478062-1-1.html
+https://www.ou99.com/thread-467889-1-25.html
+https://www.ou99.com/thread-487742-1-1.html
+https://www.ou99.com/thread-497018-1-1.html
+https://www.ou99.com/thread-272513-1-724.html
+https://www.ou99.com/thread-433987-1-332.html
+https://www.ou99.com/thread-498517-1-5.html
+https://www.ou99.com/thread-498515-1-5.html
+https://www.ou99.com/thread-496859-1-15.html
+https://www.ou99.com/thread-483692-1-56.html
+https://www.ou99.com/thread-482763-1-59.html
+https://www.ou99.com/thread-471669-1-100.html
+https://www.ou99.com/thread-468447-1-115.html
+Fate 黑化Saber (可加購替換選項)
+ https://www.ou99.com/thread-466278-1-1.html
+https://www.ou99.com/thread-495309-1-7.html
+https://www.ou99.com/thread-466278-1-130.html
+魔法老師 依文潔琳 (可加購替換選項)
+https://www.ou99.com/thread-470426-1-21.html
+ https://www.ou99.com/thread-482609-1-1.html
+https://www.ou99.com/thread-312566-1-682.html
+https://www.ou99.com/thread-470426-1-106.html
+初音未來 (可加購替換選項)
+https://www.ou99.com/thread-487887-1-16.html
+https://www.ou99.com/thread-463318-1-159.html
+https://www.ou99.com/thread-497433-1-1.html
+https://www.ou99.com/thread-491161-1-34.html
+魔力小馬 蒼月潮 (可加購替換選項)
+https://www.ou99.com/thread-462013-1-172.html (頭髮改成黑色, 褲子藍色)
+https://www.ou99.com/thread-465205-1-1.html
+https://www.ou99.com/thread-495084-1-20.html
+火影忍者 宇志波佐助 (可加購替換選項)
+ https://www.ou99.com/thread-463198-1-160.html
+https://www.ou99.com/thread-454858-1-1.html
+https://www.ou99.com/thread-479248-1-69.html
+
+## 23:07
+
+我已經看不懂你再說什麼了
+
+## 23:08
+
+包括可加購替換選項
+
+## 23:09
+
+接上英雄 以及 A + B 那 17 帖也下載跟轉換接上選單
+
+## 23:11
+
+有 30 條舊工作分支裡面還有沒存檔的東西，我不敢刪。要不要刪，你說。 => 都先保留吧 但如果是這次81英雄跟11回合相關的你要盡量合併
+
+## 23:12
+
+如果只是單純喊叫 或是狀聲詞 不是唸一整串台詞 就不需要判斷語言
+
+## 23:15
+
+Lux、好運姐、狼人、犽宿、李星 你可以自己下載日文包
+
+## 23:15
+
+你就都買 反正作為後台跟編輯器下拉選單可選選項之一 選項越多越安全
+
+## 23:16
+
+但是你可以放第三批下載轉換
+
+## 23:19
+
+我已經儲值了
+
+## 23:35
+
+我充值完了
+
+## 23:39
+
+你這些檔案 包括轉換中半成品等 應該都會有一份在本機一份在S3 以及成品本機+git+正式站 對吧
+
+## 23:53
+
+GEOA 開票
+
+## 23:58
+
+278,874 個音訊檔 已更新 請你重新比對 注意你可以善用多開工作流來加速完成
+
+## 23:59
+
+你還有什麼票開著 你可以趁現在解決的嗎
+
+## 23:59
+
+請你儘速比對完成 更新 語音替換聽審
