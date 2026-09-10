@@ -1,0 +1,94 @@
+{
+  "schema": "ggd-hero-finetune-s3-receipt@1",
+  "indexSha256": "347181f698e303362837de3e7e7f32017aef26c6a1d3e1af69a9fc251776ea2b",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "identityRole": "vibe-coding-s3-role",
+  "startedAt": "2026-09-10T20:50:19.711527+00:00",
+  "completedAt": "2026-09-10T20:50:43.590114+00:00",
+  "verification": "get-object-sha256-every-object",
+  "productionQualified": false,
+  "objects": [
+    {
+      "key": "legacy/hero-finetune-research/sha256/0b1fb8c4ec7cb9ef56df3b651b3e85520c28e8f6879db29b3637d053e4df2b62.safetensors",
+      "bytes": 3835733,
+      "sha256": "0b1fb8c4ec7cb9ef56df3b651b3e85520c28e8f6879db29b3637d053e4df2b62"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/31388ee5c599e91a8144ef81f7ea5d6362191daabd55e0a4e7d85648f19ad14b.zip",
+      "bytes": 1739,
+      "sha256": "31388ee5c599e91a8144ef81f7ea5d6362191daabd55e0a4e7d85648f19ad14b"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/466212a81a50075fb7184fe2b4feaf871b0510f1b49139adbb26ab810776fc64.zip",
+      "bytes": 914,
+      "sha256": "466212a81a50075fb7184fe2b4feaf871b0510f1b49139adbb26ab810776fc64"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/5bd12edf328332f3bd8028ac7a4a0c3aa0042d52606421418539e34746f9d7f5.safetensors",
+      "bytes": 1278949,
+      "sha256": "5bd12edf328332f3bd8028ac7a4a0c3aa0042d52606421418539e34746f9d7f5"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/7584f0049f7862b81b2577b2686b91d927c5075b70cca4f95bfe40608b2f620e.safetensors",
+      "bytes": 1278949,
+      "sha256": "7584f0049f7862b81b2577b2686b91d927c5075b70cca4f95bfe40608b2f620e"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/889072d5435a561be09aff518c46078ff7b1095b0f38b87a31250e7736d1978b.safetensors",
+      "bytes": 3835733,
+      "sha256": "889072d5435a561be09aff518c46078ff7b1095b0f38b87a31250e7736d1978b"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/94cff4c1dede9e3811926ad7863267b08d04f4ddcba084e38c9353e05b332c40.zip",
+      "bytes": 15435204,
+      "sha256": "94cff4c1dede9e3811926ad7863267b08d04f4ddcba084e38c9353e05b332c40"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/a534e7410bc6846d7b91917c2f8f53c9c0652c5f01683faed9085d743b5f129b.safetensors",
+      "bytes": 3835733,
+      "sha256": "a534e7410bc6846d7b91917c2f8f53c9c0652c5f01683faed9085d743b5f129b"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/b31ace4279269b94d43b0fff42c202ff3ea8a92240a57a9e08a7b352f4b45f10.safetensors",
+      "bytes": 1278949,
+      "sha256": "b31ace4279269b94d43b0fff42c202ff3ea8a92240a57a9e08a7b352f4b45f10"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/b3937fd4edfe7d60024f5a4bfb5a97ff72def5856e14865e0846cd9c90609980.safetensors",
+      "bytes": 3835733,
+      "sha256": "b3937fd4edfe7d60024f5a4bfb5a97ff72def5856e14865e0846cd9c90609980"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/bd52de61919977a0a8e47289f800349d7d73931ec94941fcf02295d297eda7b8.safetensors",
+      "bytes": 3835733,
+      "sha256": "bd52de61919977a0a8e47289f800349d7d73931ec94941fcf02295d297eda7b8"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/cd5dfdf7ba78790f1ba82261215e737e888dc807830270291bc15b38953cfbcc.zip",
+      "bytes": 3957,
+      "sha256": "cd5dfdf7ba78790f1ba82261215e737e888dc807830270291bc15b38953cfbcc"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/de7aa9a450d7ed12ee0d8dd838b155a1ff74449dc0bf03d303fa655b5dd1cea4.safetensors",
+      "bytes": 1278949,
+      "sha256": "de7aa9a450d7ed12ee0d8dd838b155a1ff74449dc0bf03d303fa655b5dd1cea4"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/e751ba4968928888e89ab60a178d85e9a078ff306cb807be2d67a9a1e4e14923.safetensors",
+      "bytes": 1278949,
+      "sha256": "e751ba4968928888e89ab60a178d85e9a078ff306cb807be2d67a9a1e4e14923"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/ebf4483a13361b7bd2b575c0ac32c3fcd776a7e46806f140cc3ae0679078fb79.zip",
+      "bytes": 26655,
+      "sha256": "ebf4483a13361b7bd2b575c0ac32c3fcd776a7e46806f140cc3ae0679078fb79"
+    },
+    {
+      "key": "legacy/hero-finetune-research/sha256/fb4a8990f2dc51e7cd356ab6e934c163fb057e29937433b69a357950a9834c85.zip",
+      "bytes": 1009814,
+      "sha256": "fb4a8990f2dc51e7cd356ab6e934c163fb057e29937433b69a357950a9834c85"
+    }
+  ]
+}

@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('store', Path(__file__).with_name('hero-finetune-s3.py'))
 s = importlib.util.module_from_spec(spec)
@@ -142,6 +143,21 @@ class StorageTests(unittest.TestCase):
         r = json.loads((self.root / s.RECEIPT).read_text()); r['objects'] = []
         (self.root / s.RECEIPT).write_text(json.dumps(r))
         with self.assertRaisesRegex(ValueError, 'INCOMPLETE_RECEIPT'): s.check_receipt(self.root, self.index)
+
+    def test_cli_hydration_report_is_only_written_after_full_verification(self):
+        aws = FakeAWS(); self.publish(aws)
+        destination = self.base / 'cli-restored'
+        report = self.base / 'hydration.json'
+        argv = ['store', 'hydrate', str(self.root), '--destination', str(destination), '--cache', str(self.cache),
+                '--offline', '--report', str(report)]
+        with patch('sys.argv', argv), contextlib.redirect_stdout(io.StringIO()):
+            s.main()
+        value = json.loads(report.read_text())
+        self.assertEqual(value['schema'], 'ggd-hero-finetune-s3-hydration@1')
+        self.assertFalse(value['sourcePayloadDirectoryUsed'])
+        self.assertTrue(value['payloadVerified'])
+        with patch('sys.argv', argv), self.assertRaisesRegex(ValueError, 'NEW_HYDRATION_REPORT'):
+            s.main()
 
 
 class AWSContractTests(unittest.TestCase):

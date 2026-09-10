@@ -17,7 +17,10 @@ spec = importlib.util.spec_from_file_location('storage', Path(__file__).with_nam
 s = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s)
 CHUNK = 256 * 1024**2
-PREFIX = 'hero-finetune-research/base-model/sha256/'
+# Do not overwrite the historical pre-legacy backup.  Every new backup uses
+# the corrected immutable namespace supplied for this project.
+PREFIX = 'legacy/hero-finetune-research/base-model/sha256/'
+HISTORICAL_PREFIX = 'hero-finetune-research/base-model/sha256/'
 MODEL = 'mlx-community/gemma-4-12B-it-8bit'
 REVISION = '200bb6db075e137a4deb08838865ac4ddb86292e'
 INDEX = 'BASE_S3_INDEX.json'
@@ -42,18 +45,18 @@ def objects(index):
     return list(result.values())
 
 
-def validate(index):
+def validate(index, prefix=PREFIX):
     s.require(index['schema'] == 'ggd-hero-base-s3-index@1' and index['model'] == MODEL
               and index['revision'] == REVISION and index['profile'] == s.PROFILE
               and index['region'] == s.REGION and index['bucket'] == s.BUCKET
-              and index['prefix'] == PREFIX and index['chunkBytes'] == CHUNK, 'BASE_POLICY_MISMATCH')
+              and index['prefix'] == prefix and index['chunkBytes'] == CHUNK, 'BASE_POLICY_MISMATCH')
     s.require(len(index['files']) == len(NAMES) and {f['name'] for f in index['files']} == NAMES, 'BASE_FILES_INCOMPLETE')
     for f in index['files']:
         s.require(s.re.fullmatch('[0-9a-f]{64}', f['sha256']) and bool(f['parts']), 'INVALID_FILE_HASH')
         offset = 0
         for n, part in enumerate(f['parts']):
             s.require(s.re.fullmatch('[0-9a-f]{64}', part['sha256'])
-                      and part['key'] == PREFIX + part['sha256'] + '.bin'
+                      and part['key'] == prefix + part['sha256'] + '.bin'
                       and part['offset'] == offset and type(part['bytes']) is int
                       and 0 < part['bytes'] <= CHUNK
                       and (n == len(f['parts']) - 1 or part['bytes'] == CHUNK), 'INVALID_CHUNK_LAYOUT')
@@ -66,6 +69,46 @@ def validate(index):
 
 def load(root):
     return validate(json.loads((root / INDEX).read_text()))
+
+
+def check_receipt_for(index, receipt):
+    s.require(receipt['schema'] == 'ggd-hero-base-s3-receipt@1'
+              and receipt['indexSha256'] == s.archive.digest(index)
+              and receipt['model'] == MODEL and receipt['revision'] == REVISION
+              and receipt['profile'] == s.PROFILE and receipt['region'] == s.REGION
+              and receipt['bucket'] == s.BUCKET and receipt['identityRole'] == 'vibe-coding-s3-role', 'INVALID_BASE_RECEIPT')
+    expected = objects(validate(json.loads(index.read_text()), json.loads(index.read_text())['prefix']))
+    s.require([r['object'] for r in receipt['objects']] == expected
+              and all(r['indexSha256'] == receipt['indexSha256'] for r in receipt['objects']), 'INCOMPLETE_BASE_RECEIPT')
+
+
+def relocate(root, source_index_path, source_receipt_path):
+    """Make a new legacy index from a previously read-back-verified index.
+
+    This never edits the historical evidence or trusts source bytes alone: the
+    source index and its receipt must agree first, and publish still hashes the
+    current local model before each conditional PUT/read-back.
+    """
+    root.mkdir(parents=True, exist_ok=True)
+    s.require(root.is_dir() and not (root / INDEX).exists(), 'BASE_INDEX_ALREADY_EXISTS')
+    source = json.loads(source_index_path.read_text())
+    validate(source, HISTORICAL_PREFIX)
+    check_receipt_for(source_index_path, json.loads(source_receipt_path.read_text()))
+    relocated = json.loads(json.dumps(source))
+    relocated['prefix'] = PREFIX
+    for entry in relocated['files']:
+        for part in entry['parts']:
+            part['key'] = PREFIX + part['sha256'] + '.bin'
+    relocated['relocatedFrom'] = {
+        'indexSha256': s.archive.digest(source_index_path),
+        'receiptSha256': s.archive.digest(source_receipt_path),
+        'prefix': HISTORICAL_PREFIX,
+        'reason': 'user-corrected legacy S3 prefix'
+    }
+    validate(relocated)
+    s.archive.write(root / INDEX, relocated)
+    return {'files': len(relocated['files']), 'chunks': len(objects(relocated)),
+            'bytes': relocated['totalBytes'], 'sourceReceiptVerified': True, 'gpuStarted': False}
 
 
 def verify_model(model_dir, index):
@@ -212,14 +255,7 @@ def publish(root, model_dir, cache, aws=None):
 
 
 def check_receipt(root, index):
-    receipt = json.loads((root / RECEIPT).read_text())
-    s.require(receipt['schema'] == 'ggd-hero-base-s3-receipt@1'
-              and receipt['indexSha256'] == s.archive.digest(root / INDEX)
-              and receipt['model'] == MODEL and receipt['revision'] == REVISION
-              and receipt['profile'] == s.PROFILE and receipt['region'] == s.REGION
-              and receipt['bucket'] == s.BUCKET and receipt['identityRole'] == 'vibe-coding-s3-role', 'INVALID_BASE_RECEIPT')
-    s.require([r['object'] for r in receipt['objects']] == objects(index)
-              and all(r['indexSha256'] == receipt['indexSha256'] for r in receipt['objects']), 'INCOMPLETE_BASE_RECEIPT')
+    check_receipt_for(root / INDEX, json.loads((root / RECEIPT).read_text()))
 
 
 def restore(root, destination, cache=None, offline=False, aws=None):
@@ -250,11 +286,13 @@ def restore(root, destination, cache=None, offline=False, aws=None):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('mode', choices=['prepare', 'publish', 'verify-index', 'restore'])
+    p.add_argument('mode', choices=['prepare', 'relocate', 'publish', 'verify-index', 'restore'])
     p.add_argument('root', type=Path)
     p.add_argument('--model-directory', type=Path)
     p.add_argument('--download-receipt', type=Path)
     p.add_argument('--training-preflight', type=Path)
+    p.add_argument('--source-index', type=Path)
+    p.add_argument('--source-receipt', type=Path)
     p.add_argument('--cache', type=Path)
     p.add_argument('--destination', type=Path)
     p.add_argument('--report', type=Path, help='Write a new restore-verification JSON receipt after full success')
@@ -267,6 +305,9 @@ def main():
     if a.mode == 'prepare':
         s.require(all([a.model_directory, a.download_receipt, a.training_preflight]), 'PREPARATION_ARGUMENTS_REQUIRED')
         result = prepare(root, a.model_directory.resolve(), a.download_receipt, a.training_preflight)
+    elif a.mode == 'relocate':
+        s.require(a.source_index and a.source_receipt, 'SOURCE_INDEX_AND_RECEIPT_REQUIRED')
+        result = relocate(root, a.source_index.resolve(), a.source_receipt.resolve())
     elif a.mode == 'publish':
         s.require(a.model_directory and a.cache, 'MODEL_AND_CACHE_REQUIRED')
         result = publish(root, a.model_directory.resolve(), a.cache.resolve())

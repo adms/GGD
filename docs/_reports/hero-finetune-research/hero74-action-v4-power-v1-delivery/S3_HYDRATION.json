@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-hero-finetune-s3-hydration@1",
+  "verifiedAt": "2026-09-10T20:53:06.851130+00:00",
+  "indexSha256": "347181f698e303362837de3e7e7f32017aef26c6a1d3e1af69a9fc251776ea2b",
+  "storageScriptSha256": "3a07ac047a89e43e4079bd21b96ac780f822a081ccb2c733e6ad15f970953ff2",
+  "source": "fresh-S3-downloads",
+  "sourcePayloadDirectoryUsed": false,
+  "bundles": 1,
+  "payloadPaths": 16,
+  "uniqueObjects": 16,
+  "uniqueBytes": 42051693,
+  "uniqueAdapters": 10,
+  "uniqueZipFiles": 6,
+  "payloadVerified": true,
+  "remoteReadThisRun": true,
+  "hydrated": "/private/tmp/ggd-hero74-action-s3-hydrated-with-receipt-20260911",
+  "gpuStarted": false
+}

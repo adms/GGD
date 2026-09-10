@@ -1,0 +1,1754 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/manifest.json",
+      "bytes": 7937,
+      "sha256": "cc34d0e00805fa3c80b51257ae6d34c131011ee4797d9b7f5179b9d5c07f30c3",
+      "archive": "archives/00-manifest.json.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/adapter-roundtrip.json",
+      "bytes": 549,
+      "sha256": "74e9684fa10830de40ae4aa1dc8ac0a2af81ff6732e9746455ddb0795c36f08a",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-12480/adapter_config.json",
+      "bytes": 143,
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-12480/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "e751ba4968928888e89ab60a178d85e9a078ff306cb807be2d67a9a1e4e14923",
+      "modelBlob": "models/e751ba4968928888e89ab60a178d85e9a078ff306cb807be2d67a9a1e4e14923.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-2496/adapter_config.json",
+      "bytes": 143,
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-2496/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "5bd12edf328332f3bd8028ac7a4a0c3aa0042d52606421418539e34746f9d7f5",
+      "modelBlob": "models/5bd12edf328332f3bd8028ac7a4a0c3aa0042d52606421418539e34746f9d7f5.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-4992/adapter_config.json",
+      "bytes": 143,
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-4992/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "b31ace4279269b94d43b0fff42c202ff3ea8a92240a57a9e08a7b352f4b45f10",
+      "modelBlob": "models/b31ace4279269b94d43b0fff42c202ff3ea8a92240a57a9e08a7b352f4b45f10.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-7488/adapter_config.json",
+      "bytes": 143,
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-7488/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "de7aa9a450d7ed12ee0d8dd838b155a1ff74449dc0bf03d303fa655b5dd1cea4",
+      "modelBlob": "models/de7aa9a450d7ed12ee0d8dd838b155a1ff74449dc0bf03d303fa655b5dd1cea4.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-9984/adapter_config.json",
+      "bytes": 143,
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoint-9984/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "7584f0049f7862b81b2577b2686b91d927c5075b70cca4f95bfe40608b2f620e",
+      "modelBlob": "models/7584f0049f7862b81b2577b2686b91d927c5075b70cca4f95bfe40608b2f620e.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/checkpoints.json",
+      "bytes": 579,
+      "sha256": "9f393c8f7cd40194bd6151de8658cbbbc66e027919e98f2eed5a00807d5f16f8",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/dev-after.json",
+      "bytes": 374471,
+      "sha256": "8b5c1a43da7ffdac7a9e02c837bd3106628f8bc5f40819b359ed0f786140af7a",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/dev-before.json",
+      "bytes": 368850,
+      "sha256": "567f532a6c3cae6133382b7c5f81df8d136e5612cc52cfdd5e41b948b5b2701f",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/latest-runtime-checkpoint.json",
+      "bytes": 347,
+      "sha256": "2a49b2b31e24674836637b10a3c580df3dc7486f4cd43276e8151528509a5509",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/memory-trace.jsonl",
+      "bytes": 154937562,
+      "sha256": "aaa79f24d36d3ec403c04e92d53f3e7806a571f9b6661ecc90d9fda45874cc01",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/order.json",
+      "bytes": 481701,
+      "sha256": "c89d94260fe541bf09be6aa8286cc9bbed85cb087941c7503ddc8520745b1e17",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/power-control.json",
+      "bytes": 107,
+      "sha256": "3caa1631d2c51e52df72f119166eada4a1da4914f459db3af9e06b3923665359",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/resource-sample.json",
+      "bytes": 150,
+      "sha256": "0ee2e4fbd5131830fee20c7527578bd71a525f4a8d81ebf54bcb4c65574d2bc6",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/result.json",
+      "bytes": 440,
+      "sha256": "050ac13cc6d31703844201c1ef818be75871c0f37367e7cc71664e57542edd1a",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/48e627e586f64432bee5cdedcb36508f/state.json",
+      "bytes": 2192744,
+      "sha256": "4b551f66be93215ded810849e1003d6cc6b34ed63bde8750f985083b01bb2e4b",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/48e627e586f64432bee5cdedcb36508f/tensors.safetensors",
+      "bytes": 3835733,
+      "sha256": "0b1fb8c4ec7cb9ef56df3b651b3e85520c28e8f6879db29b3637d053e4df2b62",
+      "modelBlob": "models/0b1fb8c4ec7cb9ef56df3b651b3e85520c28e8f6879db29b3637d053e4df2b62.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/6b3b79acfbe8418cbbbc626be4713808/state.json",
+      "bytes": 1528547,
+      "sha256": "14e54f64e81c9d4370948c7cfe21ef9d629958c797f36b9c007ac61dff6d9a38",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/6b3b79acfbe8418cbbbc626be4713808/tensors.safetensors",
+      "bytes": 3835733,
+      "sha256": "889072d5435a561be09aff518c46078ff7b1095b0f38b87a31250e7736d1978b",
+      "modelBlob": "models/889072d5435a561be09aff518c46078ff7b1095b0f38b87a31250e7736d1978b.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/72904e74c24145bfaef4ba201ead2dbd/state.json",
+      "bytes": 2857625,
+      "sha256": "1110383169675ec38862c02f77429d872d5617a371e85892c93daa17d645d14f",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/72904e74c24145bfaef4ba201ead2dbd/tensors.safetensors",
+      "bytes": 3835733,
+      "sha256": "b3937fd4edfe7d60024f5a4bfb5a97ff72def5856e14865e0846cd9c90609980",
+      "modelBlob": "models/b3937fd4edfe7d60024f5a4bfb5a97ff72def5856e14865e0846cd9c90609980.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/88e66a98967c4182b62799455a806d89/state.json",
+      "bytes": 4190325,
+      "sha256": "3b91b10d664458dcf8e217b4285bfe97f87263934680164b748ac428e3983157",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/88e66a98967c4182b62799455a806d89/tensors.safetensors",
+      "bytes": 3835733,
+      "sha256": "bd52de61919977a0a8e47289f800349d7d73931ec94941fcf02295d297eda7b8",
+      "modelBlob": "models/bd52de61919977a0a8e47289f800349d7d73931ec94941fcf02295d297eda7b8.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/9cf4705640cf4d88aa092d86cba3ef9a/state.json",
+      "bytes": 3522825,
+      "sha256": "96c1ce81733f74dab60fb08aa5661c09a9229cecbc0143993f1e65c8c4241c31",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/runtime-checkpoints/9cf4705640cf4d88aa092d86cba3ef9a/tensors.safetensors",
+      "bytes": 3835733,
+      "sha256": "a534e7410bc6846d7b91917c2f8f53c9c0652c5f01683faed9085d743b5f129b",
+      "modelBlob": "models/a534e7410bc6846d7b91917c2f8f53c9c0652c5f01683faed9085d743b5f129b.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/state.json",
+      "bytes": 20652,
+      "sha256": "e8040a8d35c8ebafe1dcada7c05f7c7bf5fc8f4aa24cb6d4dff3f00477b525a0",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/training-trace.json",
+      "bytes": 2001438,
+      "sha256": "7f9fb2970e85634450f14c82df6f3ae089255a558c416199344e083410e65e35",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/worker-progress.json",
+      "bytes": 72,
+      "sha256": "1ceaa23d200b9582af6ee57b3750147471896a545846797626f91a39f29f56e6",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive": "archives/01-train.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/action-metrics.json",
+      "bytes": 380,
+      "sha256": "ec5f41e4f428275229c6f6b6fe0c2e47e58ff27eb781897ee6d1603e3b43775a",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/call-index.json",
+      "bytes": 1874,
+      "sha256": "0fefdc2873430ec24b43cc3ab8583458985584fdc648d19c0e6355dc5c418e05",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00000-b2-fushi.json",
+      "bytes": 1055,
+      "sha256": "62c84bbada901c81b278d690af26f7a3f49dc2ce11fb99e2a5e9c558543bab93",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00001-b2-haga.json",
+      "bytes": 1879,
+      "sha256": "364453f6ecf6eef5e97f16790ccb7d2b8abfef66533ee4ca98ab8135c40fda1f",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00002-b2-nube.json",
+      "bytes": 1481,
+      "sha256": "786abf8566d488866d34c95582c817011974f2f498e8377ebd9a12b6851bf511",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00003-b2-uncle.json",
+      "bytes": 1858,
+      "sha256": "cd07e7f7f7a1d24f0329eaf95fe1876ba8a47f7b78d52bda79d654e7fc218516",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00004-community-review-09-20260907.json",
+      "bytes": 1642,
+      "sha256": "5a918565bf83533fcfa3e7890f7d412d212f2aa7589c86a1ae946fd130aa7c54",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00005-community-review-16-20260907.json",
+      "bytes": 1325,
+      "sha256": "d0fd58c885ec29663b0b478379f9b80e6daeddd3262a92f39937356935aa7b10",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00006-community-review-17-20260907.json",
+      "bytes": 1891,
+      "sha256": "a30663deaec87b17b487771818e8091cd8ed7900d965047e61f237e71c641bf3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00007-community-review-19-20260907.json",
+      "bytes": 1935,
+      "sha256": "7176550f195c7d7bd6fe2eab04d8cde1f0daa0d0d0ed72bd450e0c7365cf5ea8",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00008-community-review-20-20260907.json",
+      "bytes": 1777,
+      "sha256": "9cf51ba871fe9360e371e6ee7cea1218146f0c36411de04401294a921d4ed466",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00009-community-review-23-20260907.json",
+      "bytes": 2080,
+      "sha256": "12e3a33d2ae710662d08eb419aef63a13e495f77067876690ad339f0b5745b1f",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00010-community-review-24-20260907.json",
+      "bytes": 1570,
+      "sha256": "d47b67c84c6b495d6421f9c2f4583d12db288cbf31a563fb5c9ed17e845f22ea",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00011-community-review-26-20260907.json",
+      "bytes": 1993,
+      "sha256": "74fce2e7b86bca35526f2767375005774755e23ae5eb1b83c1168b330d326530",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00012-community-review-28-20260907.json",
+      "bytes": 1884,
+      "sha256": "f18775e1bd29456865c225fda5f1c5e3d9ee52e95df11cdde09c43412986dc47",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00013-community-review-33-20260907.json",
+      "bytes": 1815,
+      "sha256": "55aaf57511f95501ea6dafda2ec16b2de6e781a22a254dc0e511f5b1944e7b9e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/calls/00014-community-review-36-20260907.json",
+      "bytes": 1689,
+      "sha256": "563d119ebd7cc8577944cc9a5ed58ac1ab6b4b780a2360614b2ca6cfb73f00e4",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/hero-index.json",
+      "bytes": 1816,
+      "sha256": "e8df108a73c87aa38a394bdea6a19d139a938b9a219255d91526ba5315878b73",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/b2-fushi.json",
+      "bytes": 132,
+      "sha256": "9a405051db74b70dfac8160712eaca85761319e8e159d3b0ca71052f3c325840",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/b2-haga.json",
+      "bytes": 134,
+      "sha256": "f5695e9a4539eff629b1e21f6915608427e3d99bfe70cc87e3fd4b5a1a6d8f18",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/b2-nube.json",
+      "bytes": 131,
+      "sha256": "c10a5acd633fb7616c07977ac5513b862bec7e2a45717846e5736b08e6b1f5ab",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/b2-uncle.json",
+      "bytes": 135,
+      "sha256": "2aead4e5e41a42ac99c331c49fc76fc93c347072307d0490816b45816e7383b7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-09-20260907.json",
+      "bytes": 152,
+      "sha256": "f34e50459f5ef5c741ff421c18ffb77a429d250b35543225c96aece2bfc91a4c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-16-20260907.json",
+      "bytes": 152,
+      "sha256": "3a6660227d8949ec6a302592e41ae7aca6c1351721fdcb2d8bd3554ba12eb036",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-17-20260907.json",
+      "bytes": 152,
+      "sha256": "d2ed3ea6f9eee5ccd20cd0630d809c0df2caf875e6b165cb9efb350641d0b670",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-19-20260907.json",
+      "bytes": 152,
+      "sha256": "6cab710d71ea333507fab48533a85c6e0a82c57959149e5bfa2fb07214fca677",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-20-20260907.json",
+      "bytes": 152,
+      "sha256": "f43064b8ee8e5ba8206cb8774d19a330b7fe1a962e999d6c107e0051569b086e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-23-20260907.json",
+      "bytes": 152,
+      "sha256": "7aaeaca19177fd760b420f223587a312f07268aeebc3220ddb0324b08c2f50c7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-24-20260907.json",
+      "bytes": 152,
+      "sha256": "e2b3d62a571915b1fc11640c7809a369d3e1341ab7301ce54ee09ec9ae9a5e05",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-26-20260907.json",
+      "bytes": 152,
+      "sha256": "77ce8ff08811b4a26f871febcb504d9af0956b32bdebde4372d8c3c700a74624",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-28-20260907.json",
+      "bytes": 152,
+      "sha256": "164aa416eb05ac1184bf0ecc373e5fc7b9526e2559f63fb86c49bbbdc9a87930",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-33-20260907.json",
+      "bytes": 152,
+      "sha256": "f230b840ff402a39bd51422a06f31a5e08fe727b3d585daf873213f24cebf263",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/heroes/community-review-36-20260907.json",
+      "bytes": 152,
+      "sha256": "a8483f4925245799d6984295052baa0d1e28cba591daf8cde1aefa9205f09791",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/resources.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/result.json",
+      "bytes": 285,
+      "sha256": "a5733ad364d312f582c7e68499ec30a9ccb8da7724dd7ff3462e260e634273c1",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/state.json",
+      "bytes": 370,
+      "sha256": "9af667319acb61d5a964da222e6e93ceae204f9c98b2a6250eabf42d035c713e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/worker-progress.json",
+      "bytes": 150,
+      "sha256": "33a66b139e1b93964fd20a0197329f1bf054a563e3360a7307c1e69023932e90",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/base/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/action-metrics.json",
+      "bytes": 876,
+      "sha256": "59fd16f7e452321757078584f37a9f249ff039c2bfaffc9ebf24d8613d823f26",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/adapter-loaded.json",
+      "bytes": 563,
+      "sha256": "4b1b039e6f0dc7d0a99c46d6f4c726c0d909c40e204861c1e0d37833ae5d0286",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/call-index.json",
+      "bytes": 22700,
+      "sha256": "2f5c4e214ace22cd6b52fb8499fa75a51e2eeae3e3b02acbe23fdbf054735409",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00000-b2-fushi.json",
+      "bytes": 1052,
+      "sha256": "a2d01937ba85c426ad7d920c8b96ec1c0f04f6398eefd92ee35459dbd5870aae",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00001-b2-haga.json",
+      "bytes": 2175,
+      "sha256": "512b029836d91126020f3915660198b706b00b0678d60a2ad314a3c9afdda702",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00002-b2-nube.json",
+      "bytes": 1744,
+      "sha256": "2bf857b0276dc503581b401438fb30884a35fdd730847f769e3019f6820c2b5d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00003-b2-uncle.json",
+      "bytes": 1220,
+      "sha256": "d0b5f98d0352d8894b8ea0781d84598bc3ba67c4b1265e967702c2a7fa015506",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00004-b2-uncle.json",
+      "bytes": 1266,
+      "sha256": "445f45b5d3bb5cc7be30d07f7ca96d18ed6647bb0bdc47d926ec580b17e31dec",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00005-b2-uncle.json",
+      "bytes": 1347,
+      "sha256": "ed7b2efa97d5576b0f6b2624a471e73f5d9c8321f3e4ec00d3ceffca76343e1e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00006-b2-uncle.json",
+      "bytes": 1346,
+      "sha256": "c51a237f8d4f9228f10760a53ed946b67ee65ae4020c34861aa8e3d974a7fcef",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00007-b2-uncle.json",
+      "bytes": 1347,
+      "sha256": "5976c8d54496833f52782bbed0eec9b0665a488965828b7e1c3f979ea593bcb1",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00008-b2-uncle.json",
+      "bytes": 1377,
+      "sha256": "883e99463ec273feea25812cbf341eb6196e94d91563a662139ebcd422f58eaf",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00009-b2-uncle.json",
+      "bytes": 1353,
+      "sha256": "c6a3afe2b504c7ccd74d0354dcca59e9d340defc25e39784defa42506ee1804b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00010-b2-uncle.json",
+      "bytes": 1109,
+      "sha256": "574fc8179e15119610258080e2d87eb503577cdb25673e5b70b8a221ccd7b8f2",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00011-b2-uncle.json",
+      "bytes": 1198,
+      "sha256": "d3d5efd1be0d882e43073b107b67064df84df0f30ec88dda7b483a7e0b5ab13c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00012-b2-uncle.json",
+      "bytes": 1109,
+      "sha256": "caa29669dc7abbaf1fd0157a5abfa992f751afdabfb4a9baaea6ea8de213ea32",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00013-b2-uncle.json",
+      "bytes": 1197,
+      "sha256": "f23dbf8eaaf52c75192b3a3d6ea030ebb9a6194a4fcb335614587a145c151183",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00014-b2-uncle.json",
+      "bytes": 1078,
+      "sha256": "0aa9b187175bb16d779c8e406f213897d9907653cb640c9ef74cd06c21ef9aec",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00015-b2-uncle.json",
+      "bytes": 1073,
+      "sha256": "07eb105540f9934d03d52c7df7deac87667787b04a74b1a279b9794169d1c486",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00016-b2-uncle.json",
+      "bytes": 1068,
+      "sha256": "62868e680b75acd9aa42d7960883d0f68267d217adfe7578cff5f7621b0f8f34",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00017-b2-uncle.json",
+      "bytes": 1204,
+      "sha256": "99c398fde044dc667acf555358aa40981d6048cd1964beae4c09e9b2427d1ec6",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00018-b2-uncle.json",
+      "bytes": 1068,
+      "sha256": "ae7e53f6921409acb09f012a5cb376723a11024c4ceb9812e591d26782648b83",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00019-b2-uncle.json",
+      "bytes": 1072,
+      "sha256": "08a1f6cd051c5b039467cf390a5b756ccaca2f3eb15a2602f53f4c1b327aaf4a",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00020-b2-uncle.json",
+      "bytes": 1068,
+      "sha256": "dac50e7f6318eb02417d685a0790d9748d5525eec0ab7e0ef7c11cc512fa1fe5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00021-b2-uncle.json",
+      "bytes": 1207,
+      "sha256": "c72156cef7ebce390eb2b0f4680dd668364bdf3ba366bf4824479710e8c90884",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00022-b2-uncle.json",
+      "bytes": 1116,
+      "sha256": "dd2ce6d8eb72cf7010c5c88c140dd3a858ef9438c47b82835ba0116c08693a10",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00023-b2-uncle.json",
+      "bytes": 1196,
+      "sha256": "b07adce0b1637a5e252ef0199eb9402dd850cf9d8ce260cb4f2baea0de581b26",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00024-b2-uncle.json",
+      "bytes": 1073,
+      "sha256": "21e128d76acbc59bd51df2e89adf82938c9ea56268f6b27ee57e4b86b41be55c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00025-b2-uncle.json",
+      "bytes": 1061,
+      "sha256": "fe2e3686badbce22c8c2257d0a4f6cfd0599bc98e70fe0ef20f5dd87901e6638",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00026-b2-uncle.json",
+      "bytes": 1070,
+      "sha256": "14dac3fe8628434577c75104f9b40eb681bbbbe85423e48908a6515970a55c02",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00027-b2-uncle.json",
+      "bytes": 1133,
+      "sha256": "9b3034cd79a291f8b00ddb5cc37541939c12fcc3c68cd0d2cb308f72f4a76885",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00028-b2-uncle.json",
+      "bytes": 1057,
+      "sha256": "00c74f9ca33b8dbaa0336a6ccfe35061cac9fc946c1125285f1fd052d86c8331",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00029-b2-uncle.json",
+      "bytes": 1195,
+      "sha256": "09c651a63cbc3ce4943ede54d241f31f64dccfb2b44bb8d1bce0c1639efa9d13",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00030-b2-uncle.json",
+      "bytes": 1073,
+      "sha256": "f6fb4b75a4aef10422a9397c5bd5ef1ef8e968e2d123e638134a6cccb19205fb",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00031-b2-uncle.json",
+      "bytes": 1060,
+      "sha256": "f26a56e71e5b187f20a4856f238eee3c3cccf2d24d3ae9a7f9c512b23e23b348",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00032-b2-uncle.json",
+      "bytes": 1179,
+      "sha256": "0f60e80373252280f06081d604e68f62219ce7362dd3fc69be6bb8d843c8a30c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00033-b2-uncle.json",
+      "bytes": 1059,
+      "sha256": "bd96eccf477a365f303987be0c42d275971a20e2b31ac7614aacd173871b954d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00034-b2-uncle.json",
+      "bytes": 1200,
+      "sha256": "46e4a94f2c41588df28f6caf1e86b9399c54626c61ae075b14db1f4c6fcc9b23",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00035-b2-uncle.json",
+      "bytes": 1073,
+      "sha256": "92273f6687101a0178529346033b037ca72d43ee5f0e1c23faafacd3b925191c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00036-b2-uncle.json",
+      "bytes": 1064,
+      "sha256": "3c1e0259bb0f1aea97021461e6c932fb143d6248a8afa1dae34cd72680e776f1",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00037-b2-uncle.json",
+      "bytes": 1245,
+      "sha256": "37daf793914bb1e210e13274066094fededbb932fec0ecca3c5349b00249c64f",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00038-b2-uncle.json",
+      "bytes": 1072,
+      "sha256": "44563e7d0bbe7e4ef721e0290aeb68f3cdd5f2a8dba1c9797febf38d3d3830c9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00039-b2-uncle.json",
+      "bytes": 1060,
+      "sha256": "bf2622155fe829705028f11a72d8c8501310e367436eb305b006009c248c43fa",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00040-b2-uncle.json",
+      "bytes": 2075,
+      "sha256": "2ac76fda8a36cfe8ab55a4660350eddd82543f508d35a87cbfb3f1df8c901d04",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00041-community-review-09-20260907.json",
+      "bytes": 1169,
+      "sha256": "de7480ca290013f47e4d77ad976aba608f15c07a5c67bf94151cb382cf83ef5e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00042-community-review-09-20260907.json",
+      "bytes": 1285,
+      "sha256": "28d8439833903e3ed89bbf34e9c1ebbefb5171b631bf85a68c53b3c24e111257",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00043-community-review-09-20260907.json",
+      "bytes": 1322,
+      "sha256": "335a76b1498490935c100c7654a1e510d973641c7d88192ee8398e1b7e13c6aa",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00044-community-review-09-20260907.json",
+      "bytes": 1322,
+      "sha256": "6ad32442c7a0ddae22ab74a8609fd511432587bc8d5df760c02e975326e69987",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00045-community-review-09-20260907.json",
+      "bytes": 1321,
+      "sha256": "4debab82f1c4fe7ad23757eea746d65db147519c25c8127327a38ea4801ea536",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00046-community-review-09-20260907.json",
+      "bytes": 1321,
+      "sha256": "c9ddcbf683078348f1fe8e1ed77caf887caf305ba32dc01adb90914cf10911c3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00047-community-review-09-20260907.json",
+      "bytes": 1324,
+      "sha256": "4687fdceaa9f90c1441d37cacea9b475c678fd0f5a38ad8945bbff75e4885c5b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00048-community-review-09-20260907.json",
+      "bytes": 1131,
+      "sha256": "f471e5c4b6998abc2fb0902541dd7d47923c90ffe0c40f48561eb5af5005d7d9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00049-community-review-09-20260907.json",
+      "bytes": 1218,
+      "sha256": "73de54824f26d6991b1132d9a3430860489b98a0797749bfba898bff0337fa6d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00050-community-review-09-20260907.json",
+      "bytes": 1117,
+      "sha256": "6ba026eb2c4784dae488a2bc1f73370063478878155a66fb5e13f6048e24fd71",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00051-community-review-09-20260907.json",
+      "bytes": 1216,
+      "sha256": "eaeeb3b04d1157d20c01a7c27b27e974d44cf8b61be2f25f55c3da1e61654312",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00052-community-review-09-20260907.json",
+      "bytes": 1089,
+      "sha256": "bad41b3a0ccbd52f2bce763bd8b51b4e28056117fcea1231af2ed2b12a6f39c3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00053-community-review-09-20260907.json",
+      "bytes": 1088,
+      "sha256": "bd5a9652b376d36f540e11ce81002d27863ccff6c58cbc296ad91efa545ef395",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00054-community-review-09-20260907.json",
+      "bytes": 1253,
+      "sha256": "bb57de82e847caec580fc6e173d3f607992443e813f3f1de4c0e49b0b9397504",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00055-community-review-09-20260907.json",
+      "bytes": 1103,
+      "sha256": "2adec44d0b2d4899287fcbcb821f4a197db4d1546327edc4ce34b786fc60c0fd",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00056-community-review-09-20260907.json",
+      "bytes": 1180,
+      "sha256": "bd3548888002027fbd2e0bc4a0412a0670c1dfc2a2439e38a7b79cbdd4d014a6",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00057-community-review-09-20260907.json",
+      "bytes": 1091,
+      "sha256": "af6879396a06396c5c7ba0a98ad25dd2fce889e3647eca74c4a9e86414d14c23",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00058-community-review-09-20260907.json",
+      "bytes": 1093,
+      "sha256": "6dc0e6913043922867266330a48d3c29e73380446029e169de5e717f22a243f9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00059-community-review-09-20260907.json",
+      "bytes": 1204,
+      "sha256": "98bfb36957753e9236482bfc74ae569a893d4c07d8f50a84311a1dde95557886",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00060-community-review-09-20260907.json",
+      "bytes": 1103,
+      "sha256": "6c1b1c327dd70ad6da110eef3685edfd806cd8d596e426e768eb0078a256e2ab",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00061-community-review-09-20260907.json",
+      "bytes": 1285,
+      "sha256": "6060b8141c6b1d73763c60541f2088af949331c0b98c2f2e5d7b6cbc4ca2be5f",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00062-community-review-09-20260907.json",
+      "bytes": 1091,
+      "sha256": "dc81bc37768044f687b241e6178b752b374d0cf40c872df8ce8c2ed463c7fed5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00063-community-review-09-20260907.json",
+      "bytes": 1889,
+      "sha256": "f1b7fc87e8b5232cdc68007436296f51741c2afd944d3087414955e31bbae779",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00064-community-review-16-20260907.json",
+      "bytes": 1351,
+      "sha256": "b72a1d5cb52b6bd58f956dee63f4dd798c55a5d6e2a80ceb403cb06a68b6c3fd",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00065-community-review-16-20260907.json",
+      "bytes": 1324,
+      "sha256": "a0bc4d51170036aa11b65530efa317e5fa03e57bd625c5fe173d345e1fe47470",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00066-community-review-16-20260907.json",
+      "bytes": 1407,
+      "sha256": "53b2f60aefbe78d46cd9e0d054d59348f6070a4c0a59b0b6d45697da96f706c7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00067-community-review-16-20260907.json",
+      "bytes": 1407,
+      "sha256": "ce82a9ca52112284603af40b76b26050364d4f601271b00e0848fad2311cbd85",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00068-community-review-16-20260907.json",
+      "bytes": 1408,
+      "sha256": "e0aeb55dd089475b5e7fd345dc8a3a903858b83070f6ba1331c3e1138a4040ca",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00069-community-review-16-20260907.json",
+      "bytes": 1306,
+      "sha256": "86a057923cc573cb45eefa8026c741310ff32167273cdc2c481f6ccc9dde187b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00070-community-review-16-20260907.json",
+      "bytes": 1324,
+      "sha256": "c87b3d8b4966af24db07ee7ab64e5f39e413a487002bafd54fa1b4c97e1cc98d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00071-community-review-16-20260907.json",
+      "bytes": 1134,
+      "sha256": "776d96f24968f85e4e25effa6fdd33dfe356271ab61eaf253d208471e4b3577c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00072-community-review-16-20260907.json",
+      "bytes": 1220,
+      "sha256": "839955dbe3641bb67364d3978dccb671cafd4ae9e43c86fee45b75c7c0ab9b75",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00073-community-review-16-20260907.json",
+      "bytes": 1134,
+      "sha256": "23f93dd972e503f719035aab3be4750dc2c687495275615548a0ac41027cb64c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00074-community-review-16-20260907.json",
+      "bytes": 1226,
+      "sha256": "0f02b5b19c62b8aa7d41394af768e942962e836e9fb7309dfac88814322492be",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00075-community-review-16-20260907.json",
+      "bytes": 1098,
+      "sha256": "b76aa4ad83aa46db42025ebece69be49656749076310fb642547e868b081b820",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00076-community-review-16-20260907.json",
+      "bytes": 1097,
+      "sha256": "9736a196f8ad5b3f64dc6659bc3a60b1829c11ad96c0506366c5fa7157ab8dce",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00077-community-review-16-20260907.json",
+      "bytes": 1088,
+      "sha256": "3f652eab40fff7e04fd752f650197097a5a61f5f572a75f34ac36d16782f9b1d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00078-community-review-16-20260907.json",
+      "bytes": 1215,
+      "sha256": "e7485f8eebdf977585d45abf6d6d7bac91796f6d6037bd10a58d03a1b63b7f27",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00079-community-review-16-20260907.json",
+      "bytes": 1091,
+      "sha256": "46d213aa16b94b0e8917bcbebf79801830e566e92336e114b2f8782aeae3612d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00080-community-review-16-20260907.json",
+      "bytes": 1088,
+      "sha256": "ad0a5ce3924883458cac121a13f97b453722962a946a3b94febb6dde4d3e65e7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00081-community-review-16-20260907.json",
+      "bytes": 1092,
+      "sha256": "059d5096007910f1b9072449c0998621b8f693c1c5d5a5f1b3ffc9496552fe45",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00082-community-review-16-20260907.json",
+      "bytes": 1206,
+      "sha256": "ad3d0b12bf4b283261c18a02e16338ee9c3ca2296658a13da26e6584154f91c0",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00083-community-review-16-20260907.json",
+      "bytes": 1082,
+      "sha256": "8ff8a495e2b71b3b9c82be9ef92c125f71c85f612fcefdea3f5ad7d260118ccf",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00084-community-review-16-20260907.json",
+      "bytes": 1077,
+      "sha256": "0a7d3979178df9c3495ad7ef6f1c4b749db51df0c0704fa0306b30ad492b456a",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00085-community-review-16-20260907.json",
+      "bytes": 1243,
+      "sha256": "c18e8a7ce78ae93ca957c2ca57bc88fd5e00be1ff2f33b4ede3940457ea5f7ec",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00086-community-review-16-20260907.json",
+      "bytes": 1182,
+      "sha256": "0e7cced0b165cdf0c1ed55ed5ebea680312f1d22867bfdbb81ff5dd3b27434d8",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00087-community-review-17-20260907.json",
+      "bytes": 1435,
+      "sha256": "e15185808d7fa69bc6ea9c1c0f1dfc78d3f1e654e9f9342a78e9d12f8e55f9cc",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00088-community-review-17-20260907.json",
+      "bytes": 1773,
+      "sha256": "b83f478b5ca962a912b4358f4c3dab167bd7b169dd034357750299010e081eaf",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00089-community-review-19-20260907.json",
+      "bytes": 1364,
+      "sha256": "7d2707a48578b08d15ddece255947cc17f5a4a813b07550d895ae62e21cb64c9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00090-community-review-19-20260907.json",
+      "bytes": 1284,
+      "sha256": "f8c5b189a57c0ac44f939cd323cbc0f6e8f7c4d84021cf39c897e1e50d3d7078",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00091-community-review-19-20260907.json",
+      "bytes": 1335,
+      "sha256": "364799e7040aa8098a8e402962399803fcc77550ad66e45dbd3fbecf303ae559",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00092-community-review-19-20260907.json",
+      "bytes": 1307,
+      "sha256": "58cec88af9a8ab8171db42221a3c87376e6c9b821d82a99ac0fa74a97c7b313d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00093-community-review-19-20260907.json",
+      "bytes": 1404,
+      "sha256": "465a46aab6a207d8007f59a0c80c6c7e96aa8408c325ad451f26f59e8ab28a0c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00094-community-review-19-20260907.json",
+      "bytes": 1307,
+      "sha256": "140884231e9a61dad8c5c45e20fe1178a9d08ad756709621183bc1f3fa3d56a3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00095-community-review-19-20260907.json",
+      "bytes": 1408,
+      "sha256": "345c5fdd4eb00e4471b04cf54e7b2957464085fe00f4b922ab8e19bb00fefb0b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00096-community-review-19-20260907.json",
+      "bytes": 1128,
+      "sha256": "f0c11b9cc6b8095f4a2fc7a2916614fb813601f75c327be659bd760895a01b0b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00097-community-review-19-20260907.json",
+      "bytes": 1229,
+      "sha256": "00b907ec266d2f5e27af11a8701c015aea58fb542a8e62274b6dce3f094726d9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00098-community-review-19-20260907.json",
+      "bytes": 1116,
+      "sha256": "a6a46eb1b5fc5426bec2b2a754c2cdef48aa5c2d1018f277cf2c2117f50bf04b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00099-community-review-19-20260907.json",
+      "bytes": 1237,
+      "sha256": "e0adc2df55cfd729d68e0a1260f671b8aaffca0ff24fb86933147b129f91b05d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00100-community-review-19-20260907.json",
+      "bytes": 1087,
+      "sha256": "2a44f7782d04f30ebc618384b9e7135bc07e2908942ff4dc94e972d4bb7d5701",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00101-community-review-19-20260907.json",
+      "bytes": 1104,
+      "sha256": "d77762d17367585d8b36746c30a9e65ef14f90619ea554b35008296206568f4d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00102-community-review-19-20260907.json",
+      "bytes": 1089,
+      "sha256": "fd81916e5a34a2ffb6ed810709ad3cc8262d1d0ce70974a9515c1e3f097af12c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00103-community-review-19-20260907.json",
+      "bytes": 1254,
+      "sha256": "369b07fb3cfb3e50824143b8e9c1aa1a1112e85a1dd77be74cf167ee9ed519e5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00104-community-review-19-20260907.json",
+      "bytes": 1124,
+      "sha256": "7520639301fdd8733b72aea6bfc8b6ca911935ee7d11a349c52e43f4fecc7657",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00105-community-review-20-20260907.json",
+      "bytes": 1392,
+      "sha256": "22219fe58ebb46059b50f65ac3795754c2e65ec78eb8be7f826e1e62c3857f00",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00106-community-review-23-20260907.json",
+      "bytes": 1180,
+      "sha256": "15294520df4ec6b95bb0cd5505ca03087deb6163a6da1d06056b78d1c311c1fe",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00107-community-review-24-20260907.json",
+      "bytes": 1335,
+      "sha256": "1a9a289999e4194c88164a13c0e745602a4d280641c6263776e988b3aaf8d681",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00108-community-review-24-20260907.json",
+      "bytes": 1322,
+      "sha256": "8acb9b993c5150056371426d1ea5ec84299c576a6e1d363ac8fd5768b923ae70",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00109-community-review-24-20260907.json",
+      "bytes": 1294,
+      "sha256": "488a245632a01385644fe489ebecf2db8a4763b58b5d4960071ca70e1055c77b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00110-community-review-24-20260907.json",
+      "bytes": 1402,
+      "sha256": "ef53910c598ec08b57f9e4bdfb01107a8f265a7d17dd7e25f8730b08e24d8693",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00111-community-review-24-20260907.json",
+      "bytes": 1365,
+      "sha256": "502ad16b62e957149d26f373a4a1ae7c96ea68ed2f3cc8b4db5d95cb249c41e7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00112-community-review-24-20260907.json",
+      "bytes": 1402,
+      "sha256": "46a8e0ad9b070ff2b8889528937ee51f94c203204edae22ce030d50d4618935e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00113-community-review-24-20260907.json",
+      "bytes": 1330,
+      "sha256": "90a5dbb95bcb466ee21d689f49a2dfc8fe385131bd93cf3bc29dd278c6b386d0",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00114-community-review-24-20260907.json",
+      "bytes": 1130,
+      "sha256": "4b77f537848909fc32bf195c41f7b1dc7e7943a7e50542d3c9aed57c61740d16",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00115-community-review-24-20260907.json",
+      "bytes": 1220,
+      "sha256": "e1bfb18294e8219e7c459aca15aff73bed8f95c9b8e39da1f917b8ef3eb2ca62",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00116-community-review-24-20260907.json",
+      "bytes": 1750,
+      "sha256": "00347ee69add06385c8217f3707e4f282268042f6c5000e34dc5e8fd3256b3c4",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00117-community-review-26-20260907.json",
+      "bytes": 1156,
+      "sha256": "1d0d498b756f9c935a29901e6649cc21ae70d474ace81cb42f2f1ecd8363b0f6",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00118-community-review-26-20260907.json",
+      "bytes": 1320,
+      "sha256": "05cfcb78e2b1ce129fb7419f2d5557ea76cdc758ec23edad0c516bf264cc0cb7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00119-community-review-26-20260907.json",
+      "bytes": 1307,
+      "sha256": "244c6f5c080bc1137cafbf9b48c111657cb9434486e415eae602688a4343d63c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00120-community-review-26-20260907.json",
+      "bytes": 1307,
+      "sha256": "4b788d1431537a8661c62f14c4acec8ac240c2bcf5d3233066c58cccd45151e5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00121-community-review-26-20260907.json",
+      "bytes": 1306,
+      "sha256": "e2f0b4eae75e2168e5809a1f0a874c9d8e247c61c1a8b0cd1fe9646cfd2ea9f5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00122-community-review-26-20260907.json",
+      "bytes": 1301,
+      "sha256": "5062be839f9ab903837e8ecf63f71f7c3ea13d951619255ad26aad1b2739fbf5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00123-community-review-26-20260907.json",
+      "bytes": 1310,
+      "sha256": "69b74cbfec4c49faf27ed17ace945c7ce0a7f323895e14e95a4ebaa5ea3720d8",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00124-community-review-26-20260907.json",
+      "bytes": 1130,
+      "sha256": "fb7773082a7be940b7b1891f954aeca9fed1c23b4e72cae6f8d2119f30706a2e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00125-community-review-26-20260907.json",
+      "bytes": 1217,
+      "sha256": "eff32ceb903ce5c38dc18ee81301bd2f59b29f560c9a747345940cb768c0425b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00126-community-review-26-20260907.json",
+      "bytes": 1098,
+      "sha256": "77f107150f7fdb6d2e7ea7c7b6ee0814c32819a914ae6950fa8b28c1dfd5a4bc",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00127-community-review-26-20260907.json",
+      "bytes": 1313,
+      "sha256": "43ef2cba945995a44fdae7b89a6586c5c2a7004e23ff62b4b72ed5df68fd23f9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00128-community-review-26-20260907.json",
+      "bytes": 1250,
+      "sha256": "86774a2c681d86c88656962c66114459e45a680151e1e6e536d4fd7c5d6388eb",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00129-community-review-26-20260907.json",
+      "bytes": 1257,
+      "sha256": "949259010415348b920e807755983ed2f3de884e972cf0120b8fcddb8783200a",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00130-community-review-26-20260907.json",
+      "bytes": 1175,
+      "sha256": "7fefc2d1c458307e9169164ef5efa7a04a9d8820b393c289b49a24f07410c671",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00131-community-review-26-20260907.json",
+      "bytes": 1312,
+      "sha256": "c359f7470b487f6b612c513ad9b47ea976ee6e143d9cbad204fe27fa9874e3b3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00132-community-review-28-20260907.json",
+      "bytes": 1364,
+      "sha256": "aeece80012f71f113c3cb1f749e57536d055e47d6b12b12e15795c75715e0855",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00133-community-review-28-20260907.json",
+      "bytes": 1324,
+      "sha256": "9477b24a67c6093ed968cd0c09009168d91c36c48e6f63c1d302fa4c49c07ab3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00134-community-review-28-20260907.json",
+      "bytes": 1293,
+      "sha256": "4a753358cad461be35fbba027bb941569b781d86dd4790192eeb8a4656522b9a",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00135-community-review-28-20260907.json",
+      "bytes": 1291,
+      "sha256": "a8bb2a11d8cf96e9a443130c8c5495b93d374e7914e6d8c7e8a71c72601b55c9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00136-community-review-28-20260907.json",
+      "bytes": 1293,
+      "sha256": "4e06d942582c965f077a2a4be9857013de25e9b616a56ce1eb504d144a5eafd5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00137-community-review-28-20260907.json",
+      "bytes": 1305,
+      "sha256": "ec36f05f29bf77273cc1772cf38872530b13c9191603c1be330c524841ba3a39",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00138-community-review-28-20260907.json",
+      "bytes": 1303,
+      "sha256": "9df335391f7b5c930b4ca77ad717f9d8ffa2dc82a2f36e95dcaff563f7873644",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00139-community-review-28-20260907.json",
+      "bytes": 1134,
+      "sha256": "7a4800ed9ae4cd65ae8fa7d1b98e7cfaf558a77924be017142c9a68c126f1613",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00140-community-review-28-20260907.json",
+      "bytes": 1218,
+      "sha256": "2dc180b6a2bd42afe8761fb67702edf1195228771a06dfad218f3d49b8218342",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00141-community-review-28-20260907.json",
+      "bytes": 1138,
+      "sha256": "5b94851b0ff14205898b1167682508377c0e687ea96cb0d70e2c09549db99e1b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00142-community-review-28-20260907.json",
+      "bytes": 1225,
+      "sha256": "dfb61e8635dd775a085fa84dfc3f0b3c6a652329cf93a7328eb4c2e99af5b807",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00143-community-review-28-20260907.json",
+      "bytes": 1240,
+      "sha256": "7f79eca439e938d428ada7e1af1a5f530670ecbcdfde5e40b98bf2c096c2a04e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00144-community-review-28-20260907.json",
+      "bytes": 1177,
+      "sha256": "7db2c23851f2ab65b77e0d8bd613d59d87f2e4fc25fb019d24ab15de51b16da5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00145-community-review-28-20260907.json",
+      "bytes": 1175,
+      "sha256": "fbb1e72442d9cf93806afc50ac80eb7136dd79eb179a77edbab9307744d36ec3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00146-community-review-28-20260907.json",
+      "bytes": 1173,
+      "sha256": "49a881100e33ac212cc668c626ad38450fd3e0c626b85462b25724000eb43cf6",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00147-community-review-28-20260907.json",
+      "bytes": 1176,
+      "sha256": "fac5e92e9918c12b3805e5bc4ebfc48696f6ecd46cc4b53f236b27e38e24c1d9",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00148-community-review-28-20260907.json",
+      "bytes": 1175,
+      "sha256": "84f5225a26139bce439cc92cc35c87c12b84d1350e4dc720f94dc4b7ca0551df",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00149-community-review-28-20260907.json",
+      "bytes": 1176,
+      "sha256": "0fc0d3cabb60c922af5644d4ebca4f8a60b0dfb3b17244733d2ca4591e58d286",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00150-community-review-28-20260907.json",
+      "bytes": 1089,
+      "sha256": "41aea03d522f025034e67da0e8875bd7955aa76bc98e55b43804ac58d0bb9d32",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00151-community-review-28-20260907.json",
+      "bytes": 1209,
+      "sha256": "ad6fa1280565e13ec5a5475b7be3f306960d70f9e85cd655969969e43bc708b2",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00152-community-review-33-20260907.json",
+      "bytes": 1224,
+      "sha256": "ca7cf079fd05ce702f78f71856c410c5b163b6cdf0e15a2f6ddc034c5ff9ec7d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00153-community-review-33-20260907.json",
+      "bytes": 1320,
+      "sha256": "56faec82a455cade66196d0edb8ebe93dd6e91f9b9eae33d8fa35358183adcce",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00154-community-review-33-20260907.json",
+      "bytes": 1358,
+      "sha256": "6a97a0a8478fd083673d56f648dc8ef3720e801a70e3069c04a2588e0ede4ebf",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00155-community-review-33-20260907.json",
+      "bytes": 1358,
+      "sha256": "95854af3c7ccd661c5742e7e2a06c0b1eff83bdbf4d9fa14264015e6aff2d1d2",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00156-community-review-33-20260907.json",
+      "bytes": 1357,
+      "sha256": "d186a96fdde23a23744b7218bcfaf42960fe85937816b12ea4f1b716e750dfe1",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00157-community-review-33-20260907.json",
+      "bytes": 1372,
+      "sha256": "aa8b1129d5aea0b5a3b2f8d72c2bc11afe648eefec3b698b0cacff632ae4c5c1",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00158-community-review-33-20260907.json",
+      "bytes": 1388,
+      "sha256": "3ed47cc5f5b9fb33b7442b1065a511daae481effdb1d6839c74e7ff468f53041",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00159-community-review-33-20260907.json",
+      "bytes": 1129,
+      "sha256": "d436cdc009d1e68b843524e82f3a7d4746f0a1d2b727a1789864a3064a8df9a5",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00160-community-review-33-20260907.json",
+      "bytes": 1218,
+      "sha256": "f35f39c0a55d94f11908f0fbf09fdccfeec7769f0e485f6c0fdca2b50aacb6bb",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00161-community-review-33-20260907.json",
+      "bytes": 1117,
+      "sha256": "ba26e844488350e20370e75c2c8ac831692dcb6080f9bb0dc8d566fb16406230",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00162-community-review-33-20260907.json",
+      "bytes": 1215,
+      "sha256": "0c773d75b3d2849f218105e1c7993610ff34b41115d6fe3093293f6a9939bc6b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00163-community-review-33-20260907.json",
+      "bytes": 1087,
+      "sha256": "f4b3a0d3858cc8cc08b2fe663b12afa0a5bd87f34d28bdeb87cde9c6d206bf8d",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00164-community-review-33-20260907.json",
+      "bytes": 1091,
+      "sha256": "1efbc22c3cce3bc321d81b48cdf0b00f2996cfd99079423fdeffd38ac87c4cd6",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00165-community-review-33-20260907.json",
+      "bytes": 1253,
+      "sha256": "6a1c576f2193073cea4f8d5e0debbad06ba9dafb341c475c9f64a5afd8fa2048",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00166-community-review-33-20260907.json",
+      "bytes": 1125,
+      "sha256": "b81ae3f9741bece95e43f781c62096f6a16115df1ad4bbdbd56fda00520c0160",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/calls/00167-community-review-36-20260907.json",
+      "bytes": 1843,
+      "sha256": "52cd5ccf9e824de9bff02bcb03537497c59376f695e7c296bcee0c45da427dcd",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/hero-index.json",
+      "bytes": 1834,
+      "sha256": "260fec6f69094e77e7a9ff82b8a41ab87023f93069c60e26c8e89682547a25b8",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/b2-fushi.json",
+      "bytes": 135,
+      "sha256": "8ae14cdd22a79bf1067231c4dc1b83e79108433f1a28af3f7cbd2bab4998c325",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/b2-haga.json",
+      "bytes": 134,
+      "sha256": "f5695e9a4539eff629b1e21f6915608427e3d99bfe70cc87e3fd4b5a1a6d8f18",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/b2-nube.json",
+      "bytes": 134,
+      "sha256": "c23b9e4236460d2ba53546f266ac63a5ff0d6610034eb01ba48b0c6ab2916b51",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/b2-uncle.json",
+      "bytes": 145,
+      "sha256": "4a0bdbd34e6a211e03eb0c0a04ba1ceb06ecbb98241cd68531b36d6e7bc3af93",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-09-20260907.json",
+      "bytes": 153,
+      "sha256": "00d7ab067fd449ac4bba402558cee71ad49609d1381527af7d7366b5871d8262",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-16-20260907.json",
+      "bytes": 144,
+      "sha256": "d423e3151d106299b9ec4ed06e2a17b418a09964bc2b73d8f7aff1a3b7f6a844",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-17-20260907.json",
+      "bytes": 153,
+      "sha256": "b04e5aa332b255116e854d5a423f3b488c1519aa53a2bacca64541f2926af4cb",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-19-20260907.json",
+      "bytes": 144,
+      "sha256": "76b1e1f9ea1b64ae1299074dd7d0fde6c28356478aa17231e40eee106bfd4ddf",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-20-20260907.json",
+      "bytes": 155,
+      "sha256": "5b5f695f218f1c856a5150a395a2800123add6673395c7ce1fbe96381a246d37",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-23-20260907.json",
+      "bytes": 155,
+      "sha256": "ac6425da03324a36d924a4523dcf37aae255f6894905549c353634acb374b526",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-24-20260907.json",
+      "bytes": 165,
+      "sha256": "2ac288504d24597b2387d54a47d0ddb48e35cfb1180c60a103cd13588fff14d0",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-26-20260907.json",
+      "bytes": 153,
+      "sha256": "04bba06517c37044ec9b770c0234758505a7b60db5e408ff98d1cdb5eed95745",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-28-20260907.json",
+      "bytes": 153,
+      "sha256": "f24f11bfc60034043f2a853fcacac84cc472310e50c6c74b195e5fe8a62a5dc7",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-33-20260907.json",
+      "bytes": 144,
+      "sha256": "0ac0149b3b2ee411e8da514ab34731fd043eb8d2ebcf00490371a367f3fb52e1",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/heroes/community-review-36-20260907.json",
+      "bytes": 155,
+      "sha256": "8dc9781623f42b4e0c0588df6198bd21386f1490fc16300b9ab3773780ff04d6",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/resources.jsonl",
+      "bytes": 300,
+      "sha256": "d7031d7bbcfd1768a9bda393f9c72e40e14acfa73b1c8b4a09a97fae2be38643",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/result.json",
+      "bytes": 286,
+      "sha256": "ccec7a1f86ff223ee287caacbbcd47c24e61ead73f813951ce36e8b6da7774b3",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/state.json",
+      "bytes": 371,
+      "sha256": "557df8718189216230a086e33f30da078bacbb55b17325f88b5cfdb07e002340",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/worker-progress.json",
+      "bytes": 150,
+      "sha256": "c68bf1e53f0b9d909ce54e6b234692c39d8dae0ec6033031dc9eb77424ba103c",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/lora/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/manifest.json",
+      "bytes": 4486,
+      "sha256": "b472d529ed731b7f58fe80fd4f1e6ba2e860103afcd8a19c5b68348586d6da0b",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/public-heroes.json",
+      "bytes": 4362161,
+      "sha256": "40ee64d7456f51de954a94b704a1ec53980b9b95bc4c72200bee5613b84efb95",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/source/hero-distillation-action-evaluate.py",
+      "bytes": 23755,
+      "sha256": "8d428b552f7471112450c88d0cd31242d4bbce119b2fc98f2c1bea7dbd7165f2",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/source/hero-distillation-action-generation.py",
+      "bytes": 12173,
+      "sha256": "9bfc0a06aa0d6b2018923daa697965011dc462919c7810d2176b36cb3ba04289",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/source/hero-distillation-action-runtime-cli.mjs",
+      "bytes": 864,
+      "sha256": "e81a97b61d01108ddf678db3f31070af1fbdb2b226170cf4dffbe4ae693745c0",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/source/hero-distillation-action-runtime.mjs",
+      "bytes": 7093,
+      "sha256": "3d51c725ea704889c08c8ae0b7c71462a7e6a5c0a326625f6f1c78f606205e4f",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/source/hero-distillation-generation.py",
+      "bytes": 6870,
+      "sha256": "9f37694078a7d40bbb339bacb2ecc6212a6509b83f83b2ddae507aedc05cb64e",
+      "archive": "archives/02-hero74-action-v4-power-v1-evaluation.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/manifest.json",
+      "bytes": 2373,
+      "sha256": "37b83a6e20b063f951855e2c3c270d408c0ceead4cb7f8687c037df4aa681831",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/result.json",
+      "bytes": 680,
+      "sha256": "48ab0de175c9927326dad3594b65a0372c7a07a85743c3d0f32c0fc7b0f42387",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/source/hero-distillation-action-compile.mts",
+      "bytes": 6617,
+      "sha256": "470cf0f988a731b2624bf27b60fc801c69eaa0862d0b117d24585282a60919ad",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/source/hero-distillation-action-e2e.py",
+      "bytes": 11756,
+      "sha256": "be5b616df5a6d9a1ba87d5fa53fe2d6256650b79a65aca98c596a3a83ece1b13",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/source/hero-distillation-action-evaluate.py",
+      "bytes": 23755,
+      "sha256": "8d428b552f7471112450c88d0cd31242d4bbce119b2fc98f2c1bea7dbd7165f2",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/source/hero-distillation-import-roundtrip.mts",
+      "bytes": 16622,
+      "sha256": "24b07c32354817ccb96ff6fc79481c857292adf89370d0dd93de6c658f2fdb0e",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/source/hero-distillation-package-admission.mts",
+      "bytes": 9994,
+      "sha256": "e92e9164b7ccf28c65a07f79f48c2235ba64c4df62e9796a28845e202686f77e",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e/state.json",
+      "bytes": 200,
+      "sha256": "81654bc9cd2dd9014660b5de6f98e845772b287c8d0deb53fc0e0349c8cdbc33",
+      "archive": "archives/03-hero74-action-v4-power-v1-e2e.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e-match-entry/report.json",
+      "bytes": 5241,
+      "sha256": "b92300c979ffd1796080577ad9bc7a1df9f1deb2468cdae8e14dc0a9ab4b63bb",
+      "archive": "archives/04-hero74-action-v4-power-v1-e2e-match-entry.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-report.html",
+      "bytes": 3010,
+      "sha256": "6a8f64893744a3432bee61324ad1bf2e300ce3984e3b3aff452f2aba35e5274a",
+      "archive": "archives/05-hero74-action-v4-power-v1-report.html.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-manifest.json.zip",
+      "bytes": 3957,
+      "sha256": "cd5dfdf7ba78790f1ba82261215e737e888dc807830270291bc15b38953cfbcc"
+    },
+    {
+      "path": "archives/01-train.zip",
+      "bytes": 15435204,
+      "sha256": "94cff4c1dede9e3811926ad7863267b08d04f4ddcba084e38c9353e05b332c40"
+    },
+    {
+      "path": "archives/02-hero74-action-v4-power-v1-evaluation.zip",
+      "bytes": 1009814,
+      "sha256": "fb4a8990f2dc51e7cd356ab6e934c163fb057e29937433b69a357950a9834c85"
+    },
+    {
+      "path": "archives/03-hero74-action-v4-power-v1-e2e.zip",
+      "bytes": 26655,
+      "sha256": "ebf4483a13361b7bd2b575c0ac32c3fcd776a7e46806f140cc3ae0679078fb79"
+    },
+    {
+      "path": "archives/04-hero74-action-v4-power-v1-e2e-match-entry.zip",
+      "bytes": 914,
+      "sha256": "466212a81a50075fb7184fe2b4feaf871b0510f1b49139adbb26ab810776fc64"
+    },
+    {
+      "path": "archives/05-hero74-action-v4-power-v1-report.html.zip",
+      "bytes": 1739,
+      "sha256": "31388ee5c599e91a8144ef81f7ea5d6362191daabd55e0a4e7d85648f19ad14b"
+    }
+  ],
+  "sourceMirrors": [],
+  "omitted": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation/source/__pycache__",
+      "reason": "environment-cache-or-duplicate-engine"
+    }
+  ],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "976b3921a1e3592108c0e19a83adc5bd951a7dce7600f59b4280051348e24c14",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/manifest.json",
+    "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train",
+    "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-evaluation",
+    "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e",
+    "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-e2e-match-entry",
+    "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1-report.html"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1/train/state.json",
+    "sha256": "e8040a8d35c8ebafe1dcada7c05f7c7bf5fc8f4aa24cb6d4dff3f00477b525a0",
+    "status": "completed"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}

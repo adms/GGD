@@ -144,6 +144,29 @@ class BaseStorageTests(unittest.TestCase):
         with patch('sys.argv', argv), self.assertRaisesRegex(ValueError, 'NEW_RESTORE_REPORT'):
             b.main()
 
+    def test_verified_historical_index_can_only_relocate_to_legacy_prefix(self):
+        aws = FakeAWS(); self.publish(aws)
+        historical = self.base / 'historical-index.json'
+        old = copy.deepcopy(self.index)
+        old['prefix'] = b.HISTORICAL_PREFIX
+        for entry in old['files']:
+            for part in entry['parts']:
+                part['key'] = b.HISTORICAL_PREFIX + part['sha256'] + '.bin'
+        historical.write_text(json.dumps(old))
+        old_hash = b.s.archive.digest(historical)
+        receipt = json.loads((self.root / b.RECEIPT).read_text())
+        receipt['indexSha256'] = old_hash
+        for row in receipt['objects']:
+            row['indexSha256'] = old_hash
+            row['object']['key'] = b.HISTORICAL_PREFIX + row['object']['sha256'] + '.bin'
+        old_receipt = self.base / 'historical-receipt.json'; old_receipt.write_text(json.dumps(receipt))
+        relocated = self.base / 'relocated'; relocated.mkdir()
+        with contextlib.redirect_stdout(io.StringIO()):
+            result = b.relocate(relocated, historical, old_receipt)
+        self.assertTrue(result['sourceReceiptVerified'])
+        self.assertEqual(b.load(relocated)['prefix'], b.PREFIX)
+        self.assertEqual(b.load(relocated)['relocatedFrom']['prefix'], b.HISTORICAL_PREFIX)
+
 
 class TransferRetryTests(unittest.TestCase):
     def test_only_known_network_errors_get_bounded_retries(self):

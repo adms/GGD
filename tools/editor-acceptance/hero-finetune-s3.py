@@ -18,7 +18,10 @@ import tempfile
 PROFILE = 'vibe-coding'
 REGION = 'ap-east-2'
 BUCKET = 'ggd-390630837668-ap-east-2-an'
-PREFIX = 'hero-finetune-research/sha256/'
+# New immutable research payloads live under the user-designated legacy
+# namespace.  Historical indices retain their original prefix and therefore
+# remain verifiable as historical records; they must not be rewritten.
+PREFIX = 'legacy/hero-finetune-research/sha256/'
 SCHEMA = 'ggd-hero-finetune-s3-index@1'
 INDEX = 'S3_INDEX.json'
 RECEIPT = 'S3_RECEIPT.json'
@@ -307,10 +310,15 @@ def main():
     parser.add_argument('root', type=Path)
     parser.add_argument('--cache', type=Path)
     parser.add_argument('--destination', type=Path)
+    parser.add_argument('--report', type=Path,
+                        help='Write a new hydration-verification receipt only after full success')
     parser.add_argument('--offline', action='store_true')
     parser.add_argument('--receipt', action='store_true')
     args = parser.parse_args()
     root = args.root.resolve()
+    require(args.report is None or args.mode == 'hydrate', 'REPORT_ONLY_FOR_HYDRATE')
+    if args.report is not None:
+        require(not args.report.exists(), 'NEW_HYDRATION_REPORT_REQUIRED')
     if args.mode == 'plan':
         result = plan(root)
     elif args.mode == 'verify-index':
@@ -325,6 +333,16 @@ def main():
     else:
         require(args.destination is not None, 'DESTINATION_REQUIRED')
         result = hydrate(root, args.destination.resolve(), args.cache.resolve() if args.cache else None, args.offline)
+        if args.report is not None:
+            archive.write(args.report, {
+                'schema': 'ggd-hero-finetune-s3-hydration@1',
+                'verifiedAt': datetime.now(timezone.utc).isoformat(),
+                'indexSha256': archive.digest(root / INDEX),
+                'storageScriptSha256': archive.digest(Path(__file__)),
+                'source': 'verified-local-cache' if args.offline else 'fresh-S3-downloads',
+                'sourcePayloadDirectoryUsed': False,
+                **result
+            })
     print(json.dumps(result, ensure_ascii=False))
 
 
