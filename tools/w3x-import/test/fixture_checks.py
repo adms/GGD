@@ -160,14 +160,26 @@ def main(fixture: str, workdir: str) -> int:
     assert len(times) == 3 and abs(times[1] - 0.4) < 1e-4, times
     q = acc_floats(walk_rot["output"])[4:8]
     assert abs(abs(q[2]) - 1.0) < 1e-3, ("dup frame must keep last value", q)
-    # Death has NO rotation keys of its own → 1-key STEP hold, not a stale
-    # pose carried over from whatever clip played before
-    death_rot = channel(anims["Death"], "rotation")
-    assert death_rot is not None and death_rot["interpolation"] == "STEP"
-    assert gj["accessors"][death_rot["input"]]["count"] == 1
-    # Walk translation: bone keys only in Stand → held (1 key), not empty
-    walk_tr = channel(anims["Walk"], "translation")
-    assert walk_tr is not None and gj["accessors"][walk_tr["input"]]["count"] == 1
+    # Death has NO rotation keys of its own → a STEP **hold**, not a stale
+    # pose carried over from whatever clip played before.
+    # ⭐ GH#1164 —— 驗的是**行為**（每一顆 key 同值 ＋ 片段長度 > 0），
+    # ⛔ 不是「剛好一顆 key」那個實作細節：單一顆落在 t=0 的 key 會讓片段
+    # 長度變成 0，而 `inspectModelUpload` 逐字擋「動作長度必須大於零」
+    # ⇒ 整顆模型註冊不進去。撐成頭尾同值的兩顆 key，姿勢一樣被釘住，
+    #   而片段有了真實長度。
+    def assert_hold(sampler, label):
+        assert sampler is not None and sampler["interpolation"] == "STEP", label
+        times = acc_floats(sampler["input"])
+        vals = acc_floats(sampler["output"])
+        n = len(vals) // len(times)
+        first = vals[:n]
+        assert all(vals[i * n:(i + 1) * n] == first for i in range(len(times))), \
+            (label, "hold 的每一顆 key 必須同值", vals)
+        assert times[-1] > 0.0, (label, "hold 片段長度必須大於零", times)
+
+    assert_hold(channel(anims["Death"], "rotation"), "Death rotation")
+    # Walk translation: bone keys only in Stand → held, not empty
+    assert_hold(channel(anims["Walk"], "translation"), "Walk translation")
     print("PASS w3x-anim-timing")
 
     # -- clipMap auto-mapping -------------------------------------------------

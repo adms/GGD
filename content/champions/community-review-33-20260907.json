@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "ou99.470087",
+  "modelKey": "version.body.621e928d6f5f58a8b7fc18bde58c8e0b189843fd36202b2f",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -316,5 +316,37 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b15e95129206cf24ecb45592c44a25647a332db0ec8009f8",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.470087",
+      "modelSha256": "32aa1af9b31de22fb4b12a7c36d505fd517536f5171540225afac2779d9f57c2",
+      "binarySha256": "2449b2d8464537bded968198bbd77611af9678f20113af1604428924c26b5d74",
+      "registeredAt": "2026-09-10T11:35:34.333Z",
+      "source": {
+        "kind": "previous",
+        "character": "近衛刀太",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.470087.json"
+      }
+    },
+    {
+      "modelKey": "version.body.621e928d6f5f58a8b7fc18bde58c8e0b189843fd36202b2f",
+      "label": "ou99 「蓝瞳靓仔版远野志贵」（相似造型）",
+      "sourceModelKey": "ou99.470087",
+      "modelSha256": "f9ef79e632aff269deac7ea5f9b5b421c9dcdbb9d7d463cc2c60d952c506db41",
+      "binarySha256": "2449b2d8464537bded968198bbd77611af9678f20113af1604428924c26b5d74",
+      "registeredAt": "2026-09-10T11:35:34.346Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "UQHOLDER 近衛刀太",
+        "work": "蓝瞳靓仔版远野志贵",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-470087-1-1.html"
+      }
+    }
+  ]
 }

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "ou99.498214",
+  "modelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -308,5 +308,37 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.66347ee0e95b4a1960dd0b58b17e50bedd726e4dddea3a67",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.498214",
+      "modelSha256": "fe8af673566f33fdd934f3bb84e4fe4ada6c88e34e4ee059add42d1885c1ea01",
+      "binarySha256": "5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1",
+      "registeredAt": "2026-09-10T11:34:55.356Z",
+      "source": {
+        "kind": "previous",
+        "character": "尼古貓貓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.498214.json"
+      }
+    },
+    {
+      "modelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
+      "label": "ou99 「可爱娃娃」（相似造型）",
+      "sourceModelKey": "ou99.498214",
+      "modelSha256": "2993434fc651dd87df6ee418d5fa18d9c7a57f6c47d2a775ac3ad02100613d16",
+      "binarySha256": "5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1",
+      "registeredAt": "2026-09-10T11:34:55.362Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "尼古貓貓",
+        "work": "可爱娃娃",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html"
+      }
+    }
+  ]
 }

@@ -1,0 +1,33 @@
+{
+  "id": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+  "schema": "model@1",
+  "glbPath": "assets/models/champions/versions/2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "idle",
+    "run": "run",
+    "attack": "attack",
+    "cast": "cast",
+    "hurt": "hurt",
+    "death": "death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "champ.sela",
+    "legacyAppearance": true
+  },
+  "attachPoints": {
+    "rightHand": {
+      "x": 0.34,
+      "y": 0.73,
+      "z": 0.11
+    },
+    "overhead": {
+      "x": 0,
+      "y": 1.95,
+      "z": 0
+    }
+  },
+  "teamTintMaterials": [],
+  "yawOffsetDeg": 0
+}

@@ -1,4 +1,4 @@
-import { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { C_CHAN_MS, C_MESH_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT };
 
 /**
@@ -37,7 +37,7 @@ export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHA
  */
 
 export const TARGET = {
-  device: "iPad mini (A17 Pro)",
+  device: "iPad (M1)",
   fps: 30,
   phonesSupported: false,
   performanceBasis: "estimated",
@@ -45,16 +45,23 @@ export const TARGET = {
 } as const;
 export const FRAME_MS = 1000 / TARGET.fps;
 
-/** ms per resident mesh, measured (task #80 A/B). */
-export const C_MESH_MS = (9.2 - 5.6) / (713 - 279);
+/** ms per resident mesh, measured (task #80 A/B) —— ⭐ 住 budget.ts,⛔ 這裡只是 re-export。 */
+export { C_MESH_MS };
 
 /** ms per per-frame animation channel, measured (task #99 runtime probe). */
 // C_CHAN_MS is shared with the community model importer.
 
 /**
- * Planning slowdown versus the machine used for the cost constants. Retain the
- * existing 3× allowance while expanding the frame to 33.33 ms. This is a rough
- * conservative estimate, not a measured chip-to-chip performance ratio.
+ * Planning slowdown versus the machine used for the cost constants.
+ *
+ * > owner 2026-09-10（逐字）：「那**提升到至少 M1 等級**」
+ *
+ * ⭐ 2026-09-10：最低配備從 iPad mini (A17 Pro) 抬到 **iPad (M1)** ⇒ 3 → **2.4**。
+ * 依據：M1 是 8 核 GPU / ~2.6 TFLOPS / 68.25 GB/s，A17 Pro 是 6 核 / ~2.15 TFLOPS
+ * / 51.2 GB/s ⇒ 約 **1.25×** ⇒ 3 ÷ 1.25 = 2.4。
+ * ⚠️ ⛔ 這仍然**不是實機量測**（原本那句話「a rough conservative estimate, not a
+ * measured chip-to-chip performance ratio」照樣成立）—— 它只是把同一個估計值
+ * 依裝置代差重新標定。⭐ 真的要精確就得在 M1 上跑一次 task #80 的 A/B。
  */
 // DERATE is shared with the community model importer.
 

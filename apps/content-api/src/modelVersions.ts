@@ -9,6 +9,7 @@ import {
 } from "@ggd/shared/content/schema/championModelVersions";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
+import { normalizeUploadedModel } from "@ggd/shared/content/modelUpload/normalize";
 import { effectiveYawOffsetDeg } from "@ggd/shared/content/glbYaw";
 import { MODEL_UPLOAD_LIMITS, parseUploadGlb } from "@ggd/shared/content/modelUpload/glb";
 import { inspectModelUpload } from "@ggd/shared/content/modelUpload/inspect";
@@ -86,6 +87,16 @@ export class ModelVersions {
     return { doc, bytes };
   }
 
+  /** 合併畫法相同的網格 ＋ 丟掉零長度片段。⛔ 動不了就原樣回傳（fail-open，但下面會回報）。 */
+  private normalize(source: { doc: ModelDoc; bytes: Uint8Array }): { doc: ModelDoc; bytes: Uint8Array } {
+    try {
+      const { bytes, report } = normalizeUploadedModel(source.bytes);
+      return report.changed ? { doc: source.doc, bytes } : source;
+    } catch {
+      return source;
+    }
+  }
+
   private freeze(source: { doc: ModelDoc; bytes: Uint8Array }, label: string, provenance: ChampionModelVersion["source"], legacy: boolean): FrozenBody {
     // Keep the asset family prefix: legacy overlay detection depends on it.
     // Drop the live generator knob, since this GLB is already baked and immutable.
@@ -116,7 +127,12 @@ export class ModelVersions {
       return { champion: zChampionDoc.parse({ ...champion, modelKey: version.modelKey }), artifacts: [] };
     }
     if (command.source.kind === "previous") throw new ModelVersionError("舊版紀錄由系統自動保存。", 422);
-    const candidate = this.source(command.sourceModelKey);
+    // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
+    // ⇒ 後台下拉選單這條路與編輯器上傳走**同一支正規化**：合併畫法相同的網格、
+    //   丟掉長度為零的署名片段。⛔ 不做減面/縮圖/圖集（那些會改變畫面，屬離線批次）。
+    // ⚠️ 正規化在 `freeze()` **之前** ⇒ 凍結下來的就是正規化後的位元組，
+    //   而 `verify()` 比對的也是那一份 ⇒ 不可變性不受影響。
+    const candidate = this.normalize(this.source(command.sourceModelKey));
     if (candidate.doc.heroBody === false) throw new ModelVersionError("此模型已停用作為英雄身體。", 422);
     const inspected = await inspectModelUpload(candidate.bytes).catch((error: unknown) => { throw new ModelVersionError(error instanceof Error ? error.message : "模型驗證失敗。", 422); });
     const budget = heroModelBudgetIssues(inspected);

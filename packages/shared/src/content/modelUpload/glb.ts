@@ -1,6 +1,8 @@
 /** The uncompressed glTF subset used by community bodies and animation libraries. */
 export interface GlbAccessor {
   bufferView?: number; byteOffset?: number; componentType: number; count: number; type: string;
+  /** glTF 規範的逐分量精確界。⚠️ POSITION **必填**；合併幾何時一定要用真資料重算，⛔ 沿用任何一段的界都會讓真實資料「超界」。 */
+  min?: number[]; max?: number[];
   sparse?: { count: number; indices: { bufferView: number; byteOffset?: number; componentType: number }; values: { bufferView: number; byteOffset?: number } };
 }
 export interface GlbAnimation {
@@ -16,7 +18,7 @@ export interface GlbPrimitive { attributes: Record<string, number>; indices?: nu
 export interface GlbDocument {
   asset: { version: string; generator?: string };
   buffers: { byteLength: number }[];
-  bufferViews: { buffer: number; byteOffset?: number; byteLength: number; byteStride?: number }[];
+  bufferViews: { buffer: number; byteOffset?: number; byteLength: number; byteStride?: number; target?: number }[];
   accessors: GlbAccessor[];
   nodes?: GlbNode[];
   meshes?: { primitives: GlbPrimitive[] }[];

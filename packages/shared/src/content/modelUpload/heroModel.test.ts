@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 import { modelUploadFixture } from "./fixtures";
 import { prepareUploadedHeroModel, verifyUploadedHeroModel, heroModelBudgetIssues } from "./heroModel";
 import { inspectModelUpload } from "./inspect";
+import { HERO_MODEL_BUDGET } from "./budget";
 import { encodeUploadGlb } from "./glb";
 
 it("allows one clip to serve all six states and verifies the exact prepared bytes", async () => {
@@ -27,15 +28,28 @@ it("rejects omitted state mappings and unselected clips in a purported runtime b
 it("enforces the tablet budget on the selected runtime body", async () => {
   const source = modelUploadFixture();
   const original = await inspectModelUpload(source.bytes);
-  const metrics = { ...original, triangles: 28_001, meshes: 6, textures: [{ width: 1025, height: 4, bytes: 20, sha256: "x" }], clips: [{ index: 0, name: "A", duration: 1, channels: 161 }] };
+  // ⭐ 夾具從**出貨上限推導**，⛔ 不抄字面值 —— 這條在 2026-09-10 之前是紅的：
+  //    `channels: 161` 假設上限是 160，而 owner 那天把它改成 500 ⇒ 那一格再也不報錯，
+  //    測試卻仍然期望 4 個。⚠️ 同一天 `meshes` 從 5 變 6（最低配備抬到 M1）又會再破一次。
+  //    ⇒ 每一格都寫成 `limit + 1`，上限怎麼調它都還是「剛好超過」。
+  const over = (row: { limit: number }) => row.limit + 1;
+  const metrics = {
+    ...original,
+    triangles: over(HERO_MODEL_BUDGET.tris),
+    meshes: over(HERO_MODEL_BUDGET.meshes),
+    textures: [{ width: over(HERO_MODEL_BUDGET.texEdge), height: 4, bytes: 20, sha256: "x" }],
+    clips: [{ index: 0, name: "A", duration: 1, channels: over(HERO_MODEL_BUDGET.channels) }],
+  };
   expect(heroModelBudgetIssues(metrics).errors).toHaveLength(4);
   // One heavy unused clip must not block a small explicitly selected one.
-  const nodes = Array.from({ length: 161 }, (_, index) => ({ name: `extra-${index}` }));
+  // ⭐ 同樣從出貨上限推導 —— ⛔ 不抄 161（那個字面值假設上限是 160，2026-09-10 起是 500）。
+  const nodes = Array.from({ length: HERO_MODEL_BUDGET.channels.limit + 1 }, (_, index) => ({ name: `extra-${index}` }));
   const base = source.json.nodes!.length; source.json.nodes!.push(...nodes);
   source.json.scenes[0]!.nodes.push(...nodes.map((_, index) => base + index));
   source.json.animations![1]!.channels = nodes.map((_, index) => ({ sampler: 0, target: { node: base + index, path: "rotation" } }));
+  const overChannels = String(nodes.length);
   const bytes = encodeUploadGlb(source.json, source.bin);
   const selected = await prepareUploadedHeroModel(bytes, { idle: 0, run: 0, attack: 0, cast: 0, hurt: 0, death: 0 });
   expect(selected.inspected.clips[0]!.channels).toBe(1);
-  await expect(prepareUploadedHeroModel(bytes, { idle: 1, run: 1, attack: 1, cast: 1, hurt: 1, death: 1 })).rejects.toThrow("161");
+  await expect(prepareUploadedHeroModel(bytes, { idle: 1, run: 1, attack: 1, cast: 1, hurt: 1, death: 1 })).rejects.toThrow(overChannels);
 });

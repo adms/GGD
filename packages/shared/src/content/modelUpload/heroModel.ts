@@ -2,6 +2,7 @@ import { zModelDoc } from "../schema/model";
 import { contentSha256 } from "../import/jcs";
 import { inspectModelUpload, type InspectedModelUpload } from "./inspect";
 import { selectModelAnimations } from "./compose";
+import { normalizeUploadedModel } from "./normalize";
 import { HERO_MODEL_BUDGET } from "./budget";
 import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from "./heroModelSchema";
 export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
@@ -31,7 +32,10 @@ export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: st
 }
 
 /** Final bytes contain only clips explicitly mapped to GGD's six runtime states. */
-export async function prepareUploadedHeroModel(source: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0) {
+export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0) {
+  // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
+  // ⇒ 合併「畫起來一樣」的 primitive ＋ 丟掉長度為零的署名片段，⛔ 不要求作者自己先修。
+  const { bytes: source, report: normalized } = normalizeUploadedModel(rawSource);
   const indices = HERO_MODEL_STATES.map((state) => selections[state]);
   if (indices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
   const chosen = [...new Set(indices)];
@@ -40,7 +44,15 @@ export async function prepareUploadedHeroModel(source: Uint8Array, selections: H
   const model = zUploadedHeroModel.parse({ schema: "ggd-uploaded-hero-model@1", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg });
   const budget = heroModelBudgetIssues(prepared.inspected);
   if (budget.errors.length) throw new Error(budget.errors.join("\n"));
-  return { ...prepared, model, document: uploadedHeroModelDoc(model), warnings: budget.warnings };
+  const notes = [
+    normalized.drawCalls.after < normalized.drawCalls.before
+      ? `已把畫法相同的網格合併：draw call ${normalized.drawCalls.before} → ${normalized.drawCalls.after}。`
+      : null,
+    normalized.droppedZeroClips.length
+      ? `已移除 ${normalized.droppedZeroClips.length} 段長度為零的片段（多半是作者署名）：${normalized.droppedZeroClips.slice(0, 3).join("、")}。`
+      : null,
+  ].filter((note): note is string => note !== null);
+  return { ...prepared, model, document: uploadedHeroModelDoc(model), warnings: [...notes, ...budget.warnings], normalized };
 }
 
 /** Re-run from received bytes; a client report or descriptor grants no trust. */

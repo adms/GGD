@@ -483,7 +483,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-noor",
-  "modelKey": "ou99.453949",
+  "modelKey": "version.body.64d007d7082b6fb9e2ac7f3f0a77a91134edb89657b5fc81",
   "name": "諾爾",
   "origin": "坦克",
   "passiveAbility": "b2-noor.passive",
@@ -496,5 +496,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-noor.webp"
+  "icon": "assets/icons/champions/b2-noor.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:30:07.074Z",
+      "source": {
+        "kind": "previous",
+        "character": "諾爾",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.64d007d7082b6fb9e2ac7f3f0a77a91134edb89657b5fc81",
+      "label": "ou99 「狂刀风衣男」（相似造型）",
+      "sourceModelKey": "ou99.453949",
+      "modelSha256": "b624b6ec551427bd0a3e4be02c29cc6109ba1396d089a9b960617920eccca066",
+      "binarySha256": "09444fb17e1b1a8437c0bcb3e7ccecc3d61c1d86d2b33f039b5e0817ae4d9279",
+      "registeredAt": "2026-09-10T11:30:07.092Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "我要招架一切 諾爾",
+        "work": "狂刀风衣男",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-453949-1-1.html"
+      }
+    }
+  ]
 }

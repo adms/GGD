@@ -184,6 +184,24 @@ def _find_texture_png(raw_dir: str, path: str):
                 return _encode(decode_blp(open(full, "rb").read()))
             except Exception:
                 return None
+    # ⭐ GH#1164 —— 上面三個候選全部是**平坦的**（假設解壓時把路徑攤平成
+    # `war3mapImported__x.blp`）。⚠️ 而 ou99 的 zip **保留目錄**：BLP 真的住在
+    # `war3mapimported/` · `unit/` · `cyzc/` 這種子資料夾裡 ⇒ 三個候選全落空
+    # ⇒ 靜默退回 `_stock_texture_png()` 的 **8×8 佔位圖**。
+    #
+    # ⛔ 而「貼圖掉了」與「貼圖本來就這樣」在轉檔輸出上**長得一模一樣**：
+    #   status=ok、`missing_textures` 也不會出現（因為 stock 回了東西）。
+    #   量到的代價:41 顆裡 **11 顆**整組貼圖變成 8×8（512～2048 → 8）。
+    #
+    # ⇒ 落空之後**遞迴走一次**，用不分大小寫的檔名比對。
+    want = base.lower()
+    for dirpath, _dirs, files in os.walk(raw_dir):
+        for f in files:
+            if f.lower() == want:
+                try:
+                    return _encode(decode_blp(open(os.path.join(dirpath, f), "rb").read()))
+                except Exception:
+                    return None
     return _stock_texture_png(path)
 
 

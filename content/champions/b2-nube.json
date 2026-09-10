@@ -348,7 +348,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-nube",
-  "modelKey": "ou99.487484",
+  "modelKey": "version.body.8edb328689a62ca31c36c2c1f5d880366ecd1d05a805d552",
   "name": "鵺野鳴介",
   "origin": "硬輔",
   "passiveAbility": "b2-nube.passive",
@@ -361,5 +361,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-nube.webp"
+  "icon": "assets/icons/champions/b2-nube.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:30:34.341Z",
+      "source": {
+        "kind": "previous",
+        "character": "鵺野鳴介",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.8edb328689a62ca31c36c2c1f5d880366ecd1d05a805d552",
+      "label": "ou99 「中洲队潇洒哥」（相似造型）",
+      "sourceModelKey": "ou99.487484",
+      "modelSha256": "3e301cd45769c9082c5659459ba6e1eb82128ac0fcefbc1612473e032d57e124",
+      "binarySha256": "7ea2f636ff9d180424d801226fba1cf960171ad603f8ed484362560cb97839de",
+      "registeredAt": "2026-09-10T11:30:34.346Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "靈異教師神眉 鵺野鳴介",
+        "work": "中洲队潇洒哥",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html"
+      }
+    }
+  ]
 }

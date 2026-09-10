@@ -6,7 +6,7 @@
   "role": "marksman",
   "attackType": "ranged",
   "origin": "法師",
-  "modelKey": "imported.long",
+  "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
   "attackDamagePoint": 0.3,
   "baseStats": {
     "maxHealth": 150,
@@ -409,5 +409,37 @@
     "範圍法術",
     "續航"
   ],
-  "pitch": "用冰魔法限制敵人的行動與位置，持續掌控戰場，再以大型法術收尾。"
+  "pitch": "用冰魔法限制敵人的行動與位置，持續掌控戰場，再以大型法術收尾。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.898fdcfd172ad004c486fd263a0e9598b740d1dc5af543a7",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.long",
+      "modelSha256": "60025ba802ce6909cf59ebfa1e183a9c7d0b8648c1895d96c6b5e14aa0a9a0fa",
+      "binarySha256": "1c2440c732bffbef6fbed399d7727497d6887a9b211a78b0f3040d09cbb7466e",
+      "registeredAt": "2026-09-10T10:26:26.955Z",
+      "source": {
+        "kind": "previous",
+        "character": "黑暗福音 - 依文潔琳",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.long.json"
+      }
+    },
+    {
+      "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
+      "label": "ou99 二次元巫女（相似造型）",
+      "sourceModelKey": "ou99.470426",
+      "modelSha256": "079f897456eb198106fcd20cd362abf3ade5d914f0430625c365299ac551a21d",
+      "binarySha256": "fba8d82b18a88930248d5d593191d685f23f919d1b59e7760826685feb844310",
+      "registeredAt": "2026-09-10T10:26:26.979Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "依文潔琳",
+        "work": "魔法老師 ネギま！",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-470426-1-1.html"
+      }
+    }
+  ]
 }

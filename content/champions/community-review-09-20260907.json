@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "ou99.468771",
+  "modelKey": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -285,5 +285,37 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.7658e69c9564dbc14ca7ff12e6113e02678c8dcd0bb8e2c1",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.468771",
+      "modelSha256": "7cf5891c1f6a178aef974eb6a5b27570099b4f1bfb96081571e97fd64558e477",
+      "binarySha256": "0e7b88a4f1e55e5244a6c1f027d2053a095be970844c47314a80c0ce170632ce",
+      "registeredAt": "2026-09-10T11:23:02.253Z",
+      "source": {
+        "kind": "previous",
+        "character": "赫蘿",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.468771.json"
+      }
+    },
+    {
+      "modelKey": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
+      "label": "ou99 貼文 #468771（相似造型）",
+      "sourceModelKey": "ou99.468771",
+      "modelSha256": "d0e0a843e7e6f81d12d9bd16b01f59d6f4a35be9028414a6190592641d7a65f1",
+      "binarySha256": "0e7b88a4f1e55e5244a6c1f027d2053a095be970844c47314a80c0ce170632ce",
+      "registeredAt": "2026-09-10T11:23:02.263Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫蘿",
+        "work": "ou99 貼文 #468771",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-468771-1-1.html"
+      }
+    }
+  ]
 }
