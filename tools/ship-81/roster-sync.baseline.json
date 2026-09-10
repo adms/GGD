@@ -62,7 +62,8 @@
   "skeletonPlaceholders": {
     "note": [
       "⭐ 誰在用引擎骨架（champ.sela / champ.thorne），⭐ 而**為什麼**。⛔ 這不是豁免名單，是分類：一個暫時的佔位與一個刻意的選擇在 JSON 裡長得一模一樣（都只是 champ.thorne），⭐ 而它們的下一步完全不同。⚠️ 每一列的 why 必須引用得到盤點表上的一句話 —— ⛔ 「還沒排到」不是理由。⭐ 棘輪：pending-* 只能變少；一名轉檔完成之後把它那一列刪掉，⛔ 而如果忘了刪，skeletonStaleDeclarations 會紅。",
-      "⭐ 2026-09-11：ou99 模型批次併回 main 之後，7 名（aladdin · guts · kaiji · keyaru · maomao · naofumi · shinchan）都拿到真模型 ⇒ 那 7 列刪掉（棘輪只准變短）。剩下的 1 列是梅普露變身態，⛔ 那不是缺模型，是「變身態要不要沿用本體模型」的設計決定（GH#1217）。"
+      "⭐ 2026-09-11：ou99 模型批次併回 main 之後，7 名（aladdin · guts · kaiji · keyaru · maomao · naofumi · shinchan）都拿到真模型 ⇒ 那 7 列刪掉（棘輪只准變短）。剩下的 1 列是梅普露變身態，⛔ 那不是缺模型，是「變身態要不要沿用本體模型」的設計決定（GH#1217）。",
+      "⭐ 2026-09-11（GH#1217）：梅普露變身態改成**沿用本體的身體** ⇒ 這一列刪掉，`rows` 歸零。⛔ 判準不是「她變身後長這樣」（那要一顆專屬模型，屬於 #1154 英雄外觀商店的範圍），而是「⭐ 穿自己的身體嚴格優於穿一個陌生人的骨架」。回頭的開關是**後台的英雄模型下拉**（GH#1188 上架的那一格），⛔ 不必改程式也不必部署。"
     ],
     "kinds": {
       "pending-conversion": "來源**已取得**，還沒轉成 GGD 的 glb（⇒ 模型側工作流的待辦）",
@@ -70,12 +71,6 @@
       "pending-approval": "只有**相似外觀代理**，盤點表逐字標「未核准預設」⇒ 等 owner 核准",
       "alternate-inherits-base": "變身態，⛔ 玩家選不到它；本體已有真模型"
     },
-    "rows": [
-      {
-        "id": "b2-maple-alt-9769eb88b85b",
-        "kind": "alternate-inherits-base",
-        "why": "transform.role = alternate，counterpart b2-maple **已有真模型** community.body.449bf321…；⛔ 玩家在選角畫面選不到變身態"
-      }
-    ]
+    "rows": []
   }
 }
