@@ -16,10 +16,15 @@ def main():
     args=parser.parse_args()
     if args.files and not args.query:parser.error('--files requires a character or exact group ID')
     data=json.loads((ROOT/'voice-index.json').read_text());q=args.query.casefold()
-    exact=[g for g in data['groups'] if g['id'].casefold()==q]
-    groups=exact or [g for g in data['groups'] if q in json.dumps([g['id'],g['name'],g['heroIds'],g.get('work',''),g.get('candidateCharactersFromDefinitionPrefix',[])],ensure_ascii=False).casefold()]
+    exact=[g for g in data['groups'] if q in [g['id'].casefold()]+[a.casefold() for a in g.get('aliasGroupIds',[])]]
+    groups=exact or [g for g in data['groups'] if q in json.dumps([g['id'],g['name'],g['heroIds'],g.get('work',''),g.get('candidateCharactersFromDefinitionPrefix',[]),g.get('aliasGroupIds',[])],ensure_ascii=False).casefold()]
+    leads=[s for s in data.get('audioSourceLeads',[]) if q in json.dumps(
+        [s['id'],s['target'],s['heroIds']],ensure_ascii=False).casefold()]
+    native=[s for s in data.get('nativeAudioSources',[]) if q in json.dumps(
+        [s['id'],s['name'],s['heroIds']],ensure_ascii=False).casefold()]
     ids={g['id'] for g in groups};backup_ids={b for g in groups for b in g['backupIds']}
-    result=dict(groups=groups,backups={k:v for k,v in data['backups'].items() if k in backup_ids},synthesisContract=data['synthesisContract'])
+    backup_ids.update(s['backupId'] for s in native)
+    result=dict(groups=groups,sourceLeads=leads,nativeAudioSources=native,backups={k:v for k,v in data['backups'].items() if k in backup_ids},synthesisContract=data['synthesisContract'])
     if args.files:
         path=ROOT/data['sourceFileManifest'];blob=path.read_bytes()
         assert hashlib.sha256(blob).hexdigest()==data['sourceFileManifestSha256'],'File manifest changed; rebuild voice index'
@@ -27,8 +32,10 @@ def main():
     if args.json:print(json.dumps(result,ensure_ascii=False,indent=2))
     else:
         for g in groups:print(f'{g["id"]} | {g["name"]} | {g["fileCount"]} audio files | 說話者／語言／合成輸入尚未驗收')
+        for s in leads:print(f'{s["id"]} | {s["target"]} | 尚未取得 | {s["accessStatus"]}')
+        for s in native:print(f'{s["id"]} | {s["name"]} | {s["bankFileCount"]} 原生音訊庫 | 待解碼／聽審')
         for f in result.get('files',[]):print(f'{f["sha256"]}  {f["path"]}')
-    return 0 if groups else 1
+    return 0 if groups or leads or native else 1
 
 
 if __name__=='__main__':raise SystemExit(main())

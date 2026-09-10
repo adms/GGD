@@ -8,8 +8,9 @@ def acquired_sources(data):
 
 
 def is_model_source(source):
-    """Audio supplements must not satisfy a missing model or pause its acquisition."""
-    return source.get('resourceRole') != 'audio-supplement'
+    """Supplemental components must not satisfy a missing character model."""
+    return source.get('resourceRole') not in {
+        'audio-supplement', 'animation-supplement', 'vfx-supplement', 'component-supplement'}
 
 
 def plan_sources(data, manifest, policy):
@@ -65,6 +66,7 @@ def render_sources(data, policy):
         '預設依下方第二守則；**預設順位只決定預選哪個，不能拿來刪減可選來源。** 平行工作流使用相同角色 ID、獨立來源 ID 與逐檔 SHA-256 共編，合併來源後重建盤點，保留其他工作流登記。', '',
         '**擷取範圍不以新舊角色、是否已上架或是否已有 GGD 角色 ID 篩選。** 既有英雄、新增角色、未上架及尚未建立的角色都可以抓取；克勞德只是跨作品收錄的例子，不是限定對象。尚無 GGD 角色 ID 時，先以來源庫／作品／原生角色 ID 歸檔，標記待配對，保留全部素材，不杜撰 ID，也不因尚未配對就丟棄。', '',
         '**採用與 300 英雄相同的儲備方式：先整庫／整包取得並完整解包，建立可查詢的原始儲備，實際要用時再轉換。** 收錄不以目前需要的角色裁切；先保留原包、全部可取得檔案、來源版本與逐檔 SHA-256，登記已取得／未取得及解析缺口。儲備取得不要求所有角色立即轉換，尚未轉換者明列「儲備來源，按需轉換」，不能冒充後台可用成品；選用後再完成標準化、動作綁定與驗收，新增獨立下拉選項。', '',
+        '**查找管道包含原作遊戲擷取、MOD 網站、Steam 與其他遊戲工作坊、遊戲資源論壇、社群論壇、作者公開倉庫與分享頁，以及已獲使用者授權的付費工作流交付。** 多路平行查找使用獨立來源 ID 與存放目錄，保留原始來源頁、下載連結及取得／受阻證據，再統一合併索引；所有工作流的成果都要歸檔。管道名稱不代替原作出處或第二守則的選用類別；MOD 移植的音訊仍記錄實際來源遊戲與語言版本。', '',
         '**不同世代、平台與作品來源全部擷取、歸檔及登記整合。** PSP、PS Vita、PS2／PS3、N64、GameCube、Wii、NS（Nintendo Switch）都在來源範圍。每個來源／世代／版本／配色保留獨立 ID、來源依據與 SHA-256，模型、貼圖、骨架、動作、特效、音效及語音分別追蹤。完成配對與驗收後各自列入角色後台下拉選單，讓使用者選用；新版優先也不能刪除舊版或其他作品的選項。', '',
         '機器規則：`download-sources.json → ingestionPolicy`。免費來源放 `publicSources`，論壇付費交付放 `paidSources`，兩者走同一角色候選與整合流程；逐筆 `backendIntegration.required=true`，待完成轉換與後台切換驗證才可改為完成。目前實際上架狀態必須另有成品版本與驗證收據。', '']
     lines += ['## 第二守則：預設模型選用順序', '',
@@ -95,13 +97,14 @@ def render_sources(data, policy):
             '取得範圍只涵蓋表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組查找。付費權限依各工作流的使用者授權判斷。', '',
             '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 檔案保存狀態 | 後台整合 | 購買安排 |', '|---|---|---|---|---|---|']
         for s in public:
-            decision = ('**音訊補充；模型缺口繼續查找**' if not is_model_source(s) else
+            decision = ('**補充素材；角色模型本體缺口繼續查找**' if not is_model_source(s) else
                         '**已有實檔；保留來源，避免重買**' if s['heroIds'] or s.get('ownerEntryIds') else '素材池；待角色對應，仍須保留整合')
             ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
             if s.get('ownerEntryIds'): ids += '<br>未對應角色 ID 的清單組：' + '、'.join(f'`{i}`' for i in s['ownerEntryIds'])
             storage = ('**最新修訂僅本機已保存，S3 尚未上傳**；舊版備份仍保留' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' and s.get('backup', {}).get('readbackVerified') is True else
                        '**僅本機已保存，S3 尚未上傳**' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' else
                        '本機已保存；S3 legacy 備份已讀回驗證' if s.get('backup', {}).get('readbackVerified') is True else
+                       '**本機已保存；S3 封存準備中**' if s.get('publicationStatus') == 'local-only-preparing-s3-backup' else
                        '本機已保存；S3 備份狀態未確認')
             state = s.get('backendIntegration', {}).get('state')
             integration = {'pending-character-mapping': '必須整合；待角色 ID 對應', 'pending-standardization': '必須整合；待標準化／切換驗收'}.get(state, state or '尚未登記')
@@ -109,8 +112,8 @@ def render_sources(data, policy):
             lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{method}；{s["uploader"]}；{s["format"]} | {s["verification"]} | {storage} | {integration} | {decision} |')
         lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources／paidSources`；完整備份的逐檔清單統一在 `public-source-files.json`（沿用檔名，包含付費交付）。`pendingBackup.plannedS3Uri` 只是預定上傳位置，不能當成已存在的 S3 檔案；已上傳以 `backup.readbackVerified=true` 為準。`readiness` 尚未通過的來源只供人工處理，不進入成品自動取用；來源使用條件另行保留，不把下載或付款當成已確認可再散布。', '']
     if data.get('publicSourceLeads'):
-        lines += ['## 已找到來源頁，尚未取得檔案', '',
-            '以下來源尚未取得模型檔，不計入已下載數量，也不加入可用候選；同一角色可能已從上方其他來源取得模型。', '',
+        lines += ['## 已找到來源頁，待取得的素材', '',
+            '以下列出待取得的素材及尚未完整取得的來源目錄；目錄中的已驗證交付另列於上方來源表，未完成部分不計入已下載數量，也不加入可用候選。', '',
             '| 角色 | 公開來源頁 | 查核狀態 | 購買安排 |', '|---|---|---|---|']
         for s in data['publicSourceLeads']:
             ids = '、'.join(f'`{i}`' for i in s['heroIds'] + s.get('ownerEntryIds', []))

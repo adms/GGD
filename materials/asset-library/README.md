@@ -95,7 +95,9 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 
 Steam 來源僅在 [Valve 官方公開 API](https://partner.steamgames.com/doc/webapi/ISteamRemoteStorage#GetPublishedFileDetails) 回傳可用公開 `file_url` 時直接取得；可用 `acquire_steam.py <工坊 ID> <intake 目錄>` 保留中繼資料與下載收據。沒有回傳就保留未取得狀態。GMA／Steam LZMA 包使用同一解析器，檢查路徑、解壓大小及每個成員的 CRC32，不執行附帶的 Lua。Source MDL、VVD、VTX 與材質仍須另行轉換，不把解包成功當成成品可用。
 
-只找到來源頁時記在 `publicSourceLeads`，含角色／形態 ID、網址與未取得原因；盤點會列在「已找到來源頁，尚未取得檔案」，`query.py <角色> --downloads --json` 同時回傳整批 `purchasePolicy` 與該角色的線索。線索不得列入 `publicSources`、`publicCandidates` 或已取得的 `purchaseHoldFor`。
+查找管道包含 MOD、Steam／其他遊戲工作坊、遊戲資源論壇、社群論壇與作者公開倉庫／分享。各平行工作流使用獨立來源 ID 與 intake 目錄，交付保留作者、版本、原包、解包內容、來源條件與 SHA-256，再合併同一索引；不因管道或優先順位略過其他版本。
+
+只找到來源頁時記在 `publicSourceLeads`，含角色／形態 ID、網址與未取得原因；盤點會列在「已找到來源頁，待取得的素材」，`query.py <角色> --downloads --json` 同時回傳整批 `purchasePolicy` 與該角色的線索。目錄內已驗證的部分交付另記 `publicSources`，剩餘部分保留線索；未取得者不得列入 `publicCandidates` 或已取得的 `purchaseHoldFor`。
 
 GTA 模型常見 DFF／TXD 與 RAR／7z 包。RAR／7z 解析使用系統 libarchive（macOS 內建），只寫出通過路徑與大小檢查的普通檔案；解出的網址文字檔仍只是線索。內嵌壓縮包的原路徑、SHA 與解包位置保留在 intake 的 `nested-archives.json`，不可只靠外層 ZIP 存在就認列模型。
 

@@ -10503,6 +10503,204 @@
       ],
       "sourceUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/",
       "work": "Super Smash Bros. Brawl"
+    },
+    {
+      "id": "gamebanana-cloud-english-voice",
+      "name": "克勞德 Cloud（英文語音 MOD）",
+      "library": "公開來源",
+      "sourceId": "gamebanana-cloud-english-voice",
+      "heroIds": [
+        "godie-hart"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 49,
+      "bytes": 2007218,
+      "knownDurationSeconds": 29.65715625,
+      "durationMeasuredFiles": 49,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "extracted/EnglishCloudUMM/sound/bank/fighter_voice/vc_cloud_c00.nus3audio"
+      ],
+      "backupIds": [
+        "public:gamebanana-cloud-english-voice"
+      ],
+      "sourceUrl": "https://gamebanana.com/sounds/44580",
+      "work": "Dissidia Final Fantasy NT",
+      "conversion": {
+        "reportPath": "nus3audio-decoding.json",
+        "reportSha256": "3feac52b01797785ce0a6302dd06569343c78da9dbd601b3d537796de10aa479",
+        "decodedWavCount": 49,
+        "totalSeconds": 29.65715625,
+        "sourceBankRetained": true,
+        "eventBindingsVerified": false,
+        "listeningReviewComplete": false,
+        "confirmedVoiceCount": null,
+        "runtimeReady": false
+      },
+      "reportedLanguage": "English",
+      "languageEvidence": "source-author description; per-clip listening not verified"
+    },
+    {
+      "id": "parallel-voice-ssbm-kirby",
+      "name": "卡比 Kirby（Melee 語音／音效）",
+      "library": "公開來源",
+      "sourceId": "parallel-voice-ssbm-kirby",
+      "heroIds": [
+        "community-review-06-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 101,
+      "bytes": 4093370,
+      "knownDurationSeconds": 67.76255824829931,
+      "durationMeasuredFiles": 101,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:parallel-voice-ssbm-kirby"
+      ],
+      "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "work": "Super Smash Bros. Melee"
+    },
+    {
+      "id": "parallel-voice-ssbm-pikachu",
+      "name": "皮卡丘 Pikachu（Melee 語音／音效）",
+      "library": "公開來源",
+      "sourceId": "parallel-voice-ssbm-pikachu",
+      "heroIds": [
+        "godie-ofar"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 36,
+      "bytes": 1859254,
+      "knownDurationSeconds": 29.32466695011337,
+      "durationMeasuredFiles": 36,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:parallel-voice-ssbm-pikachu"
+      ],
+      "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "work": "Super Smash Bros. Melee"
+    },
+    {
+      "id": "parallel-voice-ssbm-marth",
+      "name": "馬爾斯 Marth（Melee 語音／音效）",
+      "library": "公開來源",
+      "sourceId": "parallel-voice-ssbm-marth",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 45,
+      "bytes": 1656908,
+      "knownDurationSeconds": 27.051531250000004,
+      "durationMeasuredFiles": 45,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:parallel-voice-ssbm-marth"
+      ],
+      "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "work": "Super Smash Bros. Melee"
+    },
+    {
+      "id": "parallel-ps-jumpforce-audio:JForce_Asta",
+      "name": "Asta / 亞斯塔",
+      "library": "公開來源",
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 223,
+      "bytes": 7130095,
+      "knownDurationSeconds": 372.220357,
+      "durationMeasuredFiles": 223,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:parallel-ps-jumpforce-audio"
+      ],
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "work": "JUMP FORCE"
+    },
+    {
+      "id": "parallel-ps-jumpforce-audio:JForce_Dai",
+      "name": "Dai / 達伊",
+      "library": "公開來源",
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 261,
+      "bytes": 7868623,
+      "knownDurationSeconds": 420.93145300000015,
+      "durationMeasuredFiles": 261,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:parallel-ps-jumpforce-audio"
+      ],
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "work": "JUMP FORCE"
+    },
+    {
+      "id": "parallel-ps-jumpforce-audio:JForce_Kenshiro",
+      "name": "Kenshiro / 拳四郎",
+      "library": "公開來源",
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "heroIds": [
+        "godie-umal"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 217,
+      "bytes": 6637110,
+      "knownDurationSeconds": 389.80372499999976,
+      "durationMeasuredFiles": 217,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:parallel-ps-jumpforce-audio"
+      ],
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "work": "JUMP FORCE"
     }
   ],
   "backups": {
@@ -10691,16 +10889,79 @@
       "readbackVerified": true,
       "usage": "manual-only legacy backup; not runtime-ready",
       "localRoot": "GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio"
+    },
+    "public:gamebanana-cloud-english-voice": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-cloud-english-voice/f804e0629bcc758daced67c5455ec8eb8f4541fe56be3a28faa654c93a9ecdd5.zip",
+      "bytes": 2959335,
+      "sha256": "f804e0629bcc758daced67c5455ec8eb8f4541fe56be3a28faa654c93a9ecdd5",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice"
+    },
+    "public:parallel-voice-ssbm-kirby": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbm-kirby/1f8c05f76b48672b1bf730944ceea6bee062aec1e80df61ce019e83542fafea2.zip",
+      "bytes": 7609594,
+      "sha256": "1f8c05f76b48672b1bf730944ceea6bee062aec1e80df61ce019e83542fafea2",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby"
+    },
+    "public:parallel-voice-ssbm-pikachu": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbm-pikachu/bb546e55885080746767f15f19e848f118c4eff5441fc4dbd21e2e5f27eab413.zip",
+      "bytes": 3383338,
+      "sha256": "bb546e55885080746767f15f19e848f118c4eff5441fc4dbd21e2e5f27eab413",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu"
+    },
+    "public:parallel-voice-ssbm-marth": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbm-marth/0eecb7f5c12f44a19c62220d6443df4d40cd43c1e8b69cd6e57c2bb968289820.zip",
+      "bytes": 3076988,
+      "sha256": "0eecb7f5c12f44a19c62220d6443df4d40cd43c1e8b69cd6e57c2bb968289820",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-marth"
+    },
+    "public:parallel-ps-jumpforce-audio": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-audio/e32b30ad5a9099f7d4654f93507d3823dcd6d797aafde463ee8a07c9959b5b15.zip",
+      "bytes": 37367280,
+      "sha256": "e32b30ad5a9099f7d4654f93507d3823dcd6d797aafde463ee8a07c9959b5b15",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio"
+    },
+    "public:parallel-ns-ultimate14": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ns-ultimate14/cbab4e5e60bc531f9167b6fe0f4aa44a392b786d36ef06d0c258a7be12d723fd.zip",
+      "bytes": 71540858,
+      "sha256": "cbab4e5e60bc531f9167b6fe0f4aa44a392b786d36ef06d0c258a7be12d723fd",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14"
+    },
+    "public:parallel-ns-alucard-ssbu": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ns-alucard-ssbu/aece04b7e7ad1ff5da8947264e75165d9c1ac6605ec7c8f445d0afb45449bf9b.zip",
+      "bytes": 122470967,
+      "sha256": "aece04b7e7ad1ff5da8947264e75165d9c1ac6605ec7c8f445d0afb45449bf9b",
+      "readbackVerified": true,
+      "usage": "manual-only legacy backup; not runtime-ready",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "670bea0eee86be37baa2e3ea5e95bd49f9107ec445a267028b196dc35b04ebba"
+      "sha256": "cb2e8b8e467bbedd2764d92e8cfa197eb1c48890dbd8f907f4c76ee683c2e543"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "3ca0c8e33ff4d4356ec32b435fe9ae7a7784516641165eb088bafff829989155"
+      "sha256": "76f51a94c839f719adc16b44cbcd4fbf621623eb092b508ea540bc46c153a5e4"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -10737,6 +10998,727 @@
     {
       "path": "outputs/game-asset-library-20260907/magical-battle-arena/indexes/audio.jsonl",
       "sha256": "af9015c2c54faf239408e97dd441878b8a0cd39f462b094787cf81289c78ad74"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/nus3audio-decoding.json",
+      "sha256": "3feac52b01797785ce0a6302dd06569343c78da9dbd601b3d537796de10aa479"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extraction-validation.json",
+      "sha256": "273e82184f30075c846f694808518a7eb96e1b7790a4460b7daf2265626c53d2"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extraction-validation.json",
+      "sha256": "4c77c4204e276a4ded5275432cd738b76de86623c0df592bbf1b7899107a5f70"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-marth/extraction-validation.json",
+      "sha256": "8f067f258aed3af42c8095a1bf4ffb31e73dba75356a82c33a2a599b95271b60"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/audio-validation.json",
+      "sha256": "2ad5611f375451ed893630141f360fe5ab1533deb812c8917119926ad96e122b"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
+      "sha256": "f4ce659af8e256eb70ce5b0632e8a224c78e4319b67d20d2e239d6b3f10896f7"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/native-format-validation.json",
+      "sha256": "8f5fe84d806d457b070296622a412ded724382125d51ea51515c9337843a13c6"
+    }
+  ],
+  "audioSourceLeads": [
+    {
+      "id": "sounds-resource-ssbu-cloud",
+      "target": "克勞德 Cloud（NS 原生語音／音效包）",
+      "heroIds": [
+        "godie-hart"
+      ],
+      "url": "https://sounds.spriters-resource.com/nintendo_switch/supersmashbrosultimate/asset/409625/",
+      "downloadUrl": "https://sounds.spriters-resource.com/media/assets/406/409625.zip?updated=1755536702",
+      "accessStatus": "http-403",
+      "verification": "來源頁列 201 項，含 se_cloud 音效與 vc_cloud 語音；正常公開下載回 HTTP 403，未取得任何包內檔案。不重試繞過限制。",
+      "ownerEntryIds": [],
+      "checkedAt": "2026-09-10T11:04:35.395548+00:00",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "assetKinds": [
+        "audio"
+      ],
+      "purchaseDecision": "audio-only-continue-model-search",
+      "backendIntegration": {
+        "required": true,
+        "state": "not-acquired",
+        "heroIds": [
+          "godie-hart"
+        ],
+        "selectionVerified": false
+      }
+    },
+    {
+      "id": "ssbmtextures-lucina-voice",
+      "target": "露琪娜 Lucina（NS 英日語音轉 Melee MOD）",
+      "heroIds": [],
+      "url": "https://ssbmtextures.com/other-mod-types/lucina-voice-mod/",
+      "downloadUrl": "https://ssbmtextures.com/wp-content/uploads/2025/04/Lucina_Voice_Mod.zip",
+      "accessStatus": "http-404",
+      "verification": "作者頁描述 NS 大亂鬥露琪娜英語／日語語音及 Melee DAT／音效庫；公開檔案連結回 HTTP 404。僅取得來源線索，未取得音訊，不計入語音數。",
+      "ownerEntryIds": [],
+      "checkedAt": "2026-09-10T11:04:35.395559+00:00",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "assetKinds": [
+        "audio"
+      ],
+      "purchaseDecision": "audio-only-continue-model-search",
+      "backendIntegration": {
+        "required": true,
+        "state": "not-acquired",
+        "heroIds": [],
+        "selectionVerified": false
+      }
+    },
+    {
+      "id": "mariomayhem-melee-audio-catalog",
+      "target": "Melee 全音訊目錄：角色／日語版本／場景等 51 包",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "checkedAt": "2026-09-10T11:14:03.850446+00:00",
+      "accessStatus": "public-catalog",
+      "acquisitionStatus": "remaining-packages-in-progress",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "assetKinds": [
+        "audio"
+      ],
+      "verification": "公開頁列 51 ZIP；卡比、皮卡丘、馬爾斯三包已歸檔，其餘 48 包交由平行工作流持續下載。後續交付驗證並完成 S3 備份後逐批入共用索引，尚未發布者不計入本批檔數。完整目錄見 console-audio-source-catalogs.json。",
+      "catalogPath": "materials/hero-model-library/console-audio-source-catalogs.json",
+      "backendIntegration": {
+        "required": true,
+        "state": "not-acquired",
+        "heroIds": [],
+        "selectionVerified": false
+      }
+    },
+    {
+      "id": "miner600-jumpforce-audio-full-catalog",
+      "target": "JUMP FORCE 全角色音訊目錄 58 包",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "checkedAt": "2026-09-10T11:14:03.850446+00:00",
+      "accessStatus": "public-catalog",
+      "acquisitionStatus": "remaining-packages-in-progress",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "assetKinds": [
+        "audio"
+      ],
+      "verification": "58 原始包共 424,652,930 bytes；Asta／Dai／Kenshiro 三包已歸檔，其餘 55 包由平行工作流持續下載。後續交付驗證並完成 S3 備份後逐批入共用索引，尚未發布者不計入本批檔數。作者逐包 SHA、大小與下載頁見 console-audio-source-catalogs.json。",
+      "catalogPath": "materials/hero-model-library/console-audio-source-catalogs.json",
+      "backendIntegration": {
+        "required": true,
+        "state": "not-acquired",
+        "heroIds": [],
+        "selectionVerified": false
+      }
+    },
+    {
+      "id": "miner600-psp-ys-sora-audio",
+      "target": "PSP Ys vs. 空之軌跡角色音訊目錄",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://www.mediafire.com/folder/di0dagtq841st/Y_vs_SnK_sound",
+      "checkedAt": "2026-09-10T11:14:03.850446+00:00",
+      "accessStatus": "public-catalog",
+      "acquisitionStatus": "catalog-only",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "assetKinds": [
+        "audio"
+      ],
+      "verification": "已找到作者公開資料夾；4 個根目錄包及 17 個角色子目錄包仍未下載，不能計入取得數。",
+      "catalogPath": "materials/hero-model-library/console-audio-source-catalogs.json",
+      "backendIntegration": {
+        "required": true,
+        "state": "not-acquired",
+        "heroIds": [],
+        "selectionVerified": false
+      }
+    }
+  ],
+  "nativeAudioSources": [
+    {
+      "id": "parallel-ns-ultimate14",
+      "name": "Ultimate14：NS 角色動作／武器部件／特效／音訊補丁庫",
+      "heroIds": [],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "backupId": "public:parallel-ns-ultimate14",
+      "bankFileCount": 56,
+      "standaloneFileCount": 0,
+      "files": [
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c02.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c03.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c03.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c07.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c03.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c05.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c06.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c00.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c06.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c03.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c07.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c02.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c06.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c06.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c05.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c05.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c01.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c04.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c00.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c05.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c03.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c05.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c06.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c00.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c04.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c00.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c00.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c01.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c03.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c07.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c07.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c06.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c02.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c07.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c01.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c07.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c04.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c02.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c02.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c02.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c06.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c06.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c03.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c03.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c00.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c05.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c01.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c01.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c01.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c07.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c07.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c04.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c02.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_samusd_c02.patch3audio",
+          "sha256": "7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd",
+          "bytes": 84880,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucina_c04.patch3audio",
+          "sha256": "7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4",
+          "bytes": 78784,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c01.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_lucas_c01.patch3audio",
+          "sha256": "d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260",
+          "bytes": 153184,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c05.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_sonic_c05.patch3audio",
+          "sha256": "8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023",
+          "bytes": 28624,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_toonlink_c04.patch3audio",
+          "sha256": "866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f",
+          "bytes": 130144,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c04.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_luigi_c04.patch3audio",
+          "sha256": "c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa",
+          "bytes": 29248,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c00.patch3audio",
+          "archiveMember": "extracted/Ultimate14/Ultimate14/sound/bank/fighter/se_link_c00.patch3audio",
+          "sha256": "3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c",
+          "bytes": 186048,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        }
+      ],
+      "confirmedVoiceCount": null,
+      "status": "native-banks-pending-decoding-and-listening",
+      "synthesisReady": false
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu",
+      "name": "Alucard 阿魯卡多（惡魔城／NS MOD）",
+      "heroIds": [],
+      "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+      "backupId": "public:parallel-ns-alucard-ssbu",
+      "bankFileCount": 3,
+      "standaloneFileCount": 1,
+      "files": [
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3audio",
+          "archiveMember": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3audio",
+          "sha256": "9a58cb45c0a1cf1e4f1be2a0e94842bdf8377caa909f17821c31f8fadbde6a56",
+          "bytes": 2683824,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_c120.nus3audio",
+          "archiveMember": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_c120.nus3audio",
+          "sha256": "2d35f36ef20d9673419f4c8cca1814b7887f620bb0784993ffe6d70da59cfde3",
+          "bytes": 1116080,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_cheer_c120.nus3audio",
+          "archiveMember": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_cheer_c120.nus3audio",
+          "sha256": "3bd10c93db3661274d5be7553fc3ce6f78c64abeeda793e016f09eca4418b87a",
+          "bytes": 2688,
+          "kind": "native-bank",
+          "decoded": false,
+          "synthesisReady": false
+        },
+        {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/narration/vc_narration_characall_alucard.idsp",
+          "archiveMember": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/narration/vc_narration_characall_alucard.idsp",
+          "sha256": "14e09378b8def217d172280a711e0d42553de1f2598a0de7ee47a7cc52448c84",
+          "bytes": 47072,
+          "kind": "native-standalone",
+          "decoded": false,
+          "synthesisReady": false
+        }
+      ],
+      "confirmedVoiceCount": null,
+      "status": "native-banks-pending-decoding-and-listening",
+      "synthesisReady": false
     }
   ],
   "acquisitionPolicy": {
@@ -10797,6 +11779,25 @@
       "rawStorage": "S3 legacy with full local copies",
       "finishedStorage": "Git with local copies",
       "sourceQueryAvailableBeforeConversion": true
+    },
+    "sourceDiscoveryChannels": [
+      "original-game-extractions",
+      "mod-sites",
+      "steam-workshop",
+      "other-game-workshops",
+      "game-resource-forums",
+      "community-forums",
+      "author-repositories",
+      "author-public-shares",
+      "authorized-paid-workflow-deliveries"
+    ],
+    "parallelDiscoveryPolicy": {
+      "useIndependentSourceIds": true,
+      "preserveOriginalSourceLinks": true,
+      "retainFailedAcquisitionEvidence": true,
+      "mergeAllWorkflowDeliveries": true,
+      "sourceChannelDoesNotOverrideDefaultClass": true,
+      "downloadsUseNormalPublicOrAlreadyAuthorizedAccess": true
     }
   },
   "synthesisContract": {
@@ -10809,12 +11810,12 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 335,
-    "audioFiles": 71750,
-    "bytes": 6235010525,
+    "groups": 342,
+    "audioFiles": 72682,
+    "bytes": 6266263103,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0
   },
-  "sourceFileManifestSha256": "fc25553ff1f3c75d307bca1bb486768d194484c78623c53152079f4e246d1718"
+  "sourceFileManifestSha256": "f33b50ec1706d63eeffb4124a2064dfac02a8ef903bfe1404bcf991d0a9b5307"
 }

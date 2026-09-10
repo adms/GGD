@@ -157,7 +157,7 @@ for section in ['既有角色／形態','第一批 37 名','第二批 37 名','L
    label='、'.join(c['name'] for c in bindings) or s['target']
    model_paths='；'+'、'.join(c['modelPath'] for c in bindings) if bindings else ''
    storage='；僅本機保存，S3 尚未上傳' if s.get('pendingBackup',{}).get('status')=='not-uploaded' else ''
-   prefix='新取得模型' if is_model_source(s) else '音訊補充（不含模型）'
+   prefix='新取得模型' if is_model_source(s) else '補充素材（非角色模型本體）'
    options+=f'<br>{prefix}：[{text(label)}]({s["url"]})／{text(s["uploader"])}（{text(s["format"])}{text(model_paths)}{storage}；待標準化，不自動預設）'
   cols=[text(r['work']),f"{text(r['name'])}<br>`{r['id']}`",text(d['name'])+('（手動指定）' if r['defaultSelectionMode']=='manual' else '') if d else '**待取得核准模型**',source_label(d) if d else '—',options,download]
   lines.append('| '+' | '.join(cols)+' |')
@@ -189,7 +189,8 @@ for r in rows:
  r['downloadSources']=[e['id'] for e in download_plan['entries'] if r['id'] in e['heroIds']]
  r['publicCandidates']=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds'] and is_model_source(s)]
  r['paidCandidates']=[s for s in download_plan.get('paidSources',[]) if r['id'] in s['heroIds'] and is_model_source(s)]
- r['audioSources']=[s for s in acquired_sources(download_plan) if r['id'] in s['heroIds'] and not is_model_source(s)]
+ r['supplementSources']=[s for s in acquired_sources(download_plan) if r['id'] in s['heroIds'] and not is_model_source(s)]
+ r['audioSources']=[s for s in r['supplementSources'] if s.get('resourceRole')=='audio-supplement']
  for option in r['options']:
   m=by_key.get(option['key'])
   if m:

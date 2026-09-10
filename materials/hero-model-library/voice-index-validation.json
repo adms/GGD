@@ -1,14 +1,20 @@
 {
   "schema": "ggd-voice-index-validation@1",
-  "groups": 335,
-  "files": 71750,
-  "uniquePaths": 71750,
+  "groups": 342,
+  "files": 72682,
+  "uniquePaths": 72682,
   "localSizeMismatches": 0,
   "perFileHashesFromSourceAndBackupIndexes": true,
   "rehashAllBinaryAudioThisRun": false,
+  "newAudioFilesRehashed": 932,
   "linaQueryFiles": 36,
   "linaGroupId": "mba:Chara02",
+  "blockedSourceQueriesReturnNoFiles": true,
+  "nativeBankOnlyQueriesSupported": true,
+  "nativeUndecodedBankFiles": 59,
+  "nativeUndecodedStandaloneFiles": 1,
+  "nsJapaneseIntakePendingS3Readback": true,
   "confirmedVoiceCount": null,
   "synthesisReadyGroups": 0,
-  "fileManifestSha256": "fc25553ff1f3c75d307bca1bb486768d194484c78623c53152079f4e246d1718"
+  "fileManifestSha256": "f33b50ec1706d63eeffb4124a2064dfac02a8ef903bfe1404bcf991d0a9b5307"
 }

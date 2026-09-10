@@ -43,7 +43,7 @@ def main():
     assert sha(backup_path) == latest['manifest_sha256']
     backup = read(backup_path)
     assert '/legacy/' in backup['backup_uri'] and '/leagcy/' not in backup['backup_uri']
-    groups, files, stores = {}, [], {}
+    groups, files, stores, native_audio = {}, [], {}, []
     source_models = {m['id']:m for m in models['models']}
 
     def hero_ids(source_id):
@@ -120,11 +120,48 @@ def main():
         audio=[f for f in archived['files'] if Path(f['path']).suffix.lower() in {'.wav','.ogg','.mp3','.flac'}]
         if source.get('audioConversion',{}).get('decodedFloatWavCount'):
             audio=[f for f in audio if not f['path'].startswith('decoded-audio/')]
-        if not audio:continue
+        native_files=[];native_bank_count=0
+        native_spec=source.get('nativeAudioIndex',{})
+        if native_spec:
+            native_path=(ws/source['localPath']/native_spec['reportPath']).resolve()
+            assert native_path.is_relative_to((ws/source['localPath']).resolve())
+            assert sha(native_path)==native_spec['reportSha256']
+            report=read(native_path);saved={f['path']:f for f in archived['files']}
+            for native_file in report['nativeAudioBanks']:
+                f=saved[native_file['path']]
+                assert native_file['sha256']==f['sha256']
+                local=ws/source['localPath']/f['path']
+                assert local.is_file() and local.stat().st_size==f['bytes']
+                native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=f['path'],
+                    sha256=f['sha256'],bytes=f['bytes'],kind='native-bank',decoded=False,synthesisReady=False))
+            native_bank_count=len(native_files)
+            for f in archived['files']:
+                if Path(f['path']).suffix.lower() not in {'.idsp','.wem'}:continue
+                local=ws/source['localPath']/f['path']
+                assert local.is_file() and local.stat().st_size==f['bytes']
+                native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=f['path'],
+                    sha256=f['sha256'],bytes=f['bytes'],kind='native-standalone',decoded=False,synthesisReady=False))
+        if not audio and not native_files:continue
         sid='public:'+source['id'];stores[sid]=dict(type='zip',**receipt,localRoot=source['localPath'])
+        if native_files:
+            native_audio.append(dict(id=source['id'],name=source['target'],heroIds=source['heroIds'],sourceUrl=source['url'],
+                backupId=sid,bankFileCount=native_bank_count,standaloneFileCount=len(native_files)-native_bank_count,files=native_files,confirmedVoiceCount=None,
+                status='native-banks-pending-decoding-and-listening',synthesisReady=False))
+        if not audio:continue
+        decoded_metadata={}
+        conversion=source.get('audioFileIndex',source.get('audioConversion',{}))
+        if conversion.get('reportPath'):
+            report_path=(ws/source['localPath']/conversion['reportPath']).resolve()
+            assert report_path.is_relative_to((ws/source['localPath']).resolve())
+            assert sha(report_path)==conversion['reportSha256']
+            decoded_metadata={f['path']:f for f in read(report_path)['files']}
         for f in audio:
             member=f['path'];part=None
-            if source['id']=='dayjo-ssbb-zelda-audio':
+            if source.get('audioGroups'):
+                matches=[p for p in source['audioGroups'] if any(member.startswith(prefix) for prefix in p['pathPrefixes'])]
+                assert len(matches)==1, 'Audio file requires one native-character group: '+member
+                part=matches[0]
+            elif source['id']=='dayjo-ssbb-zelda-audio':
                 part=next((p for p in source['packages'] if member.startswith('extracted/'+p['id']+'/')),None)
             elif source['id']=='github-chiikawa':
                 match=re.search(r'/sounds/([^/]+)/',member)
@@ -136,11 +173,26 @@ def main():
                 '來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認',ids=part['heroIds'] if part else source['heroIds'])
             g['sourceUrl']=source['url'];g['work']=source.get('sourceGame','見來源頁')
             if 'audioConversion' in source:g['conversion']=source['audioConversion']
-            add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,member)
+            if part and part.get('bankAliases'):
+                g['bankAliases']=part['bankAliases']
+                g['aliasGroupIds']=part.get('aliasGroupIds',[])
+            if source.get('reportedLanguage'):
+                g['reportedLanguage']=source['reportedLanguage']
+                g['languageEvidence']='source-author description; per-clip listening not verified'
+            decoded=decoded_metadata.get(member,{})
+            if decoded:
+                assert decoded['sha256']==f['sha256'] and decoded['bytes']==f['bytes']
+                bank=decoded.get('sourceBank')
+                if bank and bank not in g['originalBanks']:g['originalBanks'].append(bank)
+            add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,member,
+                seconds=decoded.get('seconds'),original_bank=decoded.get('sourceBank'))
+
+    audio_leads=[s for s in downloads.get('publicSourceLeads',[])
+                 if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
 
     summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl',
         scope='All indexed 300/MBA audio and all audio in current verified public/paid source archives; not all files are character voices.',
-        groups=list(groups.values()),backups=stores,inputs=inputs,
+        groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
@@ -154,7 +206,7 @@ def main():
     (OUT/'voice-index.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     lines=['# 角色語音索引','',
         '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬讀 `voice-files.jsonl`。', '',
-        f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA、悟空、利姆路、吉伊卡哇、闇影、地圖及 Wii 大亂鬥來源；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
+        f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
         '原始及待聽審音訊存 S3 `legacy/` 並全留本機；索引、SHA-256、轉錄設定與程式進 Git，驗收成品依第三守則進 Git。這份索引不改變 `legacy/` 的人工指定用途規則；其他工作流不得將整個備份自動匯入正式遊戲。', '',
@@ -174,7 +226,20 @@ def main():
     for g in groups.values():
         ids='、'.join(g['heroIds']) or '未綁 GGD ID／共用'
         status=f'Vo_ 檔名候選 {g["voiceFilenameCandidates"]}；待聽審' if g['voiceFilenameCandidates'] else '待聽審分類'
-        lines.append(f'| {g["name"].replace("|","／")} | `{g["id"]}`<br>{ids} | {g["fileCount"]} | {status}；語言待核 | '+ '、'.join('`'+b+'`' for b in g['backupIds'])+' |')
+        language='作者標示 '+g['reportedLanguage']+'；逐段待核' if g.get('reportedLanguage') else '語言待核'
+        lines.append(f'| {g["name"].replace("|","／")} | `{g["id"]}`<br>{ids} | {g["fileCount"]} | {status}；{language} | '+ '、'.join('`'+b+'`' for b in g['backupIds'])+' |')
+    if audio_leads:
+        lines += ['', '## 尚未取得的語音來源','',
+            '以下僅是來源線索，不列入已取得檔數；下載失敗不得用其他來源冒充，也不會取消對應模型的查找。','',
+            '| 角色／來源 | 來源頁 | 目前狀態 |','|---|---|---|']
+        for lead in audio_leads:
+            lines.append(f'| {lead["target"]} | [{lead["id"]}]({lead["url"]}) | {lead["verification"]} |')
+    if native_audio:
+        lines += ['', '## 尚未解碼的原生音訊庫','',
+            '原生音訊庫也已歸檔，可按來源 ID 查詢 `nativeAudioSources` 的逐檔 SHA、包內路徑及備份；不混入上方可播放檔數。音訊庫個數與索引條目數均不等於已確認語音數。','',
+            '| 來源 | 原生庫檔數 | 備份與狀態 |','|---|---:|---|']
+        for source in native_audio:
+            lines.append(f'| [{source["name"]}]({source["sourceUrl"]})／`{source["id"]}` | {source["bankFileCount"]} 庫＋{source["standaloneFileCount"]} 原生單檔 | `{source["backupId"]}`；待解碼、逐段說話者／語言核對 |')
     lines += ['', '## 原始包與儲存位置','',
         '| 備份 ID | S3 入口 | 驗證與取用方式 |','|---|---|---|']
     for sid,s in stores.items():
@@ -184,7 +249,8 @@ def main():
     lines += ['', '## 驗證範圍與待辦','',
         f'- 本次比較 300／MBA 音訊索引與既有備份逐檔 SHA-256、大小，並檢查本機檔案存在及大小；異常 {summary["summary"]["missingOrSizeChanged"]} 筆。本次未重新雜湊全部音訊二進位，也未重新下載歷史 S3 整包。',
         '- 公開來源使用 download-sources.json 所指的最新已讀回備份；所有角色／形態、語言與台詞需在逐段聽審後確認。合成可用狀態全部維持未驗收。',
-        '- NS 整庫模型仍下載中；模型庫並不等於語音庫。N64、GameCube、NS 與 J-Stars 語音未取得者繼續列於全角色模型盤點的來源範圍，不混進已取得音訊數。',
+        '- 模型庫、原生音訊庫與已解碼音訊分別記錄。模型取得狀態見全角色模型盤點；來源語音是否已取得以本索引逐筆收據為準，尚未取得的目錄或分享頁不混入檔數。',
+        '- NS 日語包的相同 bank 依 SHA 共用解碼，原始 350 banks／68 命名群與配色對照全部保留於 bankAliases；65 組解碼輸入涵蓋這些別名。vc_kirby_copy_cloud 是卡比複製能力音訊，不代表克勞德本人。查詢 aliasGroupIds 會返回明列別名的共用來源，不能據此推定說話者相同。',
         '- 尚無 GGD ID 的來源組仍可查詢及準備素材；不能因未上架而刪除。新增音訊來源後重跑本產生器，保留其他來源及不同語言版本。',
         '- 重建：`python3 tools/hero-model-library/voice_index.py --workspace ..`。模型／素材守則見 `全角色模型盤點.md`。','']
     report='\n'.join(lines)

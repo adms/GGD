@@ -9,6 +9,7 @@
 | [inventory.json](inventory.json) | 程序讀取：同份盤點的角色 ID、modelKey、Git／S3 路徑與取得狀態 |
 | [download-sources.json](download-sources.json) | 可共編：下載網址、改造備註、免費／論壇付費交付及每筆必要的後台整合追蹤 |
 | [public-source-files.json](public-source-files.json) | 免費／付費來源完整備份的逐檔 SHA-256、S3 位置與尚未上傳紀錄；沿用檔名，不是成品清單 |
+| [console-audio-source-catalogs.json](console-audio-source-catalogs.json) | Melee、JUMP FORCE 及 Ys／軌跡 PSP 公開音訊目錄；實際取得狀態另查 download-sources.json |
 | [pairing-inputs.json](pairing-inputs.json) | 可共編：第二批與舊英雄配對來源 |
 | [default-policy.json](default-policy.json) | 九級預設順位、來源分級與 11 組手動指定副本 |
 | [derivatives.json](derivatives.json) | 可共編：獨立模型副本的製作要求 |
@@ -30,6 +31,10 @@
 靜態解析使用 `tools/hero-model-library/public-source-requirements.txt` 的固定版本。`extract_public_sources.py` 會保存 DLL 中的原生資源，並以 `embedded_resources.py` 拆出 Wwise BNK 的 DIDX／DATA 媒體；保留原 bank 和事件資料，擷取出的 WEM 可能是串流預取片段，必須另行解碼及驗證。
 
 `decode_wwise_intake.py <WEM目錄> <新輸出目錄> --decoder <vgmstream-cli>` 使用官方 [vgmstream r2117](https://github.com/vgmstream/vgmstream/tree/r2117)（`71e2361042531fe767fb98300cf8c1ee95e539a0`）解碼，工具依官方建置說明準備，不執行 MOD。預設 Float32 WAV 保留原取樣率、聲道與超過 1 的峰值；不加循環、淡出、正規化或重取樣。逐檔檢查 RIFF 長度、來源 SHA、解碼器中繼資料與實際取樣數，結果寫入 `audio-index.json`，失敗檔也列入；`--sample-format pcm16` 僅供診斷，可能截波。原 bank、WEM 與歷次解碼產物全部保留。
+
+`decode_nus3audio_intake.py <intake> --vgmstream <vgmstream-cli>` 解碼 `extracted/` 下每個 NUS3AUDIO bank 的所有串流，檢查取樣數、聲道、取樣率與完整 PCM 內容。只讓 SHA 相同的 bank 共用解碼，所有原始 bank、配色與別名保留；輸出另放 `decoded-audio-nus3/` 及 `nus3audio-decoding.json`，既有輸出拒絕覆寫。解碼與逐段說話者／語言聽審是不同步驟。
+
+語音查詢使用 `query_voice.py <群組或來源 ID> --files --json`；例如 `parallel-ps-jumpforce-audio:JForce_Kenshiro` 可列健次郎包，`parallel-ns-alucard-ssbu` 可列尚待解碼的 `nativeAudioSources`。`sourceLeads` 只回傳未取得線索，`aliasGroupIds` 回傳明列原生別名的共用音訊群，兩者不會冒充已確認角色語音。新來源登記後重跑 `voice_index.py --workspace ..`，同步更新語音 MD 及逐檔索引。
 
 悟空已解碼 69 份浮點 WAV（178.307 秒），另以 FFmpeg 全檔解碼驗證。25 檔浮點峰值超過 1，播放增益與整數格式匯出仍待確認；先前 69 份 PCM16 診斷版不作母檔。逐檔索引在 intake 的 `decoded-audio-float/audio-index.json`，與整個素材包一併存 S3 legacy。尚缺逐檔聽審、bank 事件／技能對應、模型動作整合及後台切換，這批音訊不會自動進入正式成品庫。
 
