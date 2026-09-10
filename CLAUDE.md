@@ -982,9 +982,18 @@ python3 "$ggd_asset_root/query.py" --pending --limit 100 --offset 0
 
 owner 逐字：「只有文件、索引或 clone GGD，**不能假定已取得整座素材庫**」。
 ⇒ ⭐ 換機第一件事是**跑一次查詢**確認素材真的在，⛔ 不是看到 README 就當它在。
-（本 repo 的 `content/` 只有引用，⛔ 素材本體不在 git 裡。）
+（本 repo 的 `content/assets/` 已追蹤部分實檔；整座原始素材庫仍須另行查詢。）
 
-### ⛔⛔ 素材**不進 git** —— 要存就存 S3
+### 素材存放：依 2026-09-10 最新裁決
+
+目前規則與分類的唯一入口是 [素材庫與 S3 統一資源庫](docs/素材庫與-S3-統一資源庫.md) 第一節：**成品一律進 Git；半成品、來源及準備材料進 S3；本機全保留**。完成的模型、動畫、特效及音效實檔也包括在成品內，不能因為不能閱讀 diff 而排除。可維護的程式、模板、生成器與完成的英雄設定仍需版本控制。
+
+裁決原文與同步封包見 [owner-decision.finished-deliverables-git](docs/editor-contract/coordination/owner-decision.finished-deliverables-git.json)。此規則更新不代表既有 S3 成品已全部補入 Git，也不更改素材對應與正式發布狀態。
+
+<details>
+<summary>2026-09-08 舊裁決與當時成本（已被上述新裁決取代，非目前拒收規則）</summary>
+
+### 歷史：素材不進 Git、要存就存 S3
 
 owner 2026-09-08（逐字，⭐ 這是裁決，⛔ 不是我的判斷）：
 
@@ -1027,6 +1036,8 @@ Codex 的 PR 1112 把 **1.09 GB** 的 `payload.tar.gz` **切成 34 段**（每�
 
 ⇒ ⭐ **收到「素材進 git」的 PR 時：⛔ 不要合併**，請對方把
 ①程式與文件 ②素材本體 拆成兩份 —— 前者照常驗收，後者走 S3。
+
+</details>
 
 ---
 

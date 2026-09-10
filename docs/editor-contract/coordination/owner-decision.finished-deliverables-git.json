@@ -1,0 +1,35 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "owner-decision.finished-deliverables-git",
+  "kind": "owner-decision",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "更新素材存放規則：成品進 Git，其餘材料進 S3，本機全保留",
+  "claims": [
+    {
+      "kind": "owner-decision",
+      "text": "最新裁決按完成狀態分工，取代 owner-decision.20260908-assets-to-s3-not-git 的素材一律排除與 diff 判準。完成的素材實檔也須交付 Git；本次只同步規則與入口，不宣稱既有素材已搬移完畢。",
+      "repro": {
+        "command": "bash scripts/genguard.sh docs/素材庫與-S3-統一資源庫.md",
+        "expectedExit": 0
+      },
+      "commit": "649cc00325a0f9f1e433beb8028a32af8573e695",
+      "evidence": [
+        "docs/素材庫與-S3-統一資源庫.md",
+        "CLAUDE.md",
+        "materials/community-hero-forge/README.md"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-10",
+      "text": "我們上傳git的規則是 成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3 (本機全保留)"
+    }
+  ],
+  "asks": [
+    "請沿既有 PR 審查合併存放規則更新；素材上傳依完成狀態處理，不再按副檔名或能否閱讀 diff 排除成品。"
+  ]
+}

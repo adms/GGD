@@ -26,7 +26,7 @@ pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff
   --output /private/tmp/ggd-current-authoring-handoff
 ```
 
-首次需要模型時，先依固定 profile/bucket 使用 restore.py 還原 supplements/release-13956d93b；下節保留封存流程。本輪沒有新增或替換模型；修正後全部 37 份當前服務 ZIP 已另行 [S3 封存並重新下載還原](supplements/admission-37-20260909/README.md)。前次 32 份 ZIP、原始大型模擬證據及失敗截圖仍保留在 [歷史封存](supplements/parody-37-20260909/README.md)。圖片、模型等大型材料留在 S3，Git 留生成程式、英雄設定、版本／SHA 及驗證紀錄。正式整合由 [PR #1135](https://github.com/adms/GGD/pull/1135) 交 Main 審查與合併。
+首次需要模型時，先依固定 profile/bucket 使用 restore.py 還原 supplements/release-13956d93b；下節保留封存流程。本輪沒有新增或替換模型；修正後全部 37 份當前服務 ZIP 已另行 [S3 封存並重新下載還原](supplements/admission-37-20260909/README.md)。前次 32 份 ZIP、原始大型模擬證據及失敗截圖仍保留在 [歷史封存](supplements/parody-37-20260909/README.md)。上述位置是既有封存紀錄。2026-09-10 起依 [目前存放規則](../../docs/素材庫與-S3-統一資源庫.md)：成品實檔進 Git，其餘半成品、來源與準備材料進 S3，本機全保留；不能再以模型／圖片或二進位格式為由排除成品。本次文件更新尚未把既有封存內的成品逐項補入 Git。正式整合由 [PR #1135](https://github.com/adms/GGD/pull/1135) 交 Main 審查與合併。
 
 ## 歷史驗收
 
@@ -42,7 +42,7 @@ pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff
 
 ## 補充盤點與來源
 
-2026-09-08 全量盤點發現原三批未涵蓋所有既有 Git 素材，已另建 [素材補漏封存](supplements/workspace-assets-20260908/README.md)：5,444 份去重素材已上傳、重新下載並逐檔還原；四個工作樹目前 29,108 個資源路徑核對為 0 漏件。原 34 分段及 manifest 不變。[資源庫歷史快照與維護來源](asset-library-sources/README.md) 保留 156 份 script、JSON 與文件，以及另一任務維護的 Git 來源指標。原始模型、動畫與大型解析 JSON 放 S3；程式、英雄／技能設定、版本清單、SHA-256 及文件放 Git，這項分工已確認。共用素材庫來源由 [PR #1119](https://github.com/adms/GGD/pull/1119) 的 `codex/asset-library-management` 統一維護，已推送的固定來源見上述指標，本分支負責 37 英雄工作流與上述歷史證據。歷史備份、現有 Git 素材及未涵蓋範圍詳見補漏說明，不能擴大解讀為整台 Mac 所有檔案或正式上線均已完成。
+2026-09-08 全量盤點發現原三批未涵蓋所有既有 Git 素材，已另建 [素材補漏封存](supplements/workspace-assets-20260908/README.md)：5,444 份去重素材已上傳、重新下載並逐檔還原；四個工作樹目前 29,108 個資源路徑核對為 0 漏件。原 34 分段及 manifest 不變。[資源庫歷史快照與維護來源](asset-library-sources/README.md) 保留 156 份 script、JSON 與文件，以及另一任務維護的 Git 來源指標。當時採用的「原始模型、動畫與大型解析 JSON 放 S3；程式、設定及文件放 Git」分工屬歷史規則，目前依上方 2026-09-10 裁決按完成狀態處理。共用素材庫來源由 [PR #1119](https://github.com/adms/GGD/pull/1119) 的 `codex/asset-library-management` 統一維護，已推送的固定來源見上述指標，本分支負責 37 英雄工作流與上述歷史證據。歷史備份、現有 Git 素材及未涵蓋範圍詳見補漏說明，不能擴大解讀為整台 Mac 所有檔案或正式上線均已完成。
 
 ## 讀取與還原
 
