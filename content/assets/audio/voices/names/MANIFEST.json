@@ -840,7 +840,11 @@
           "lang": "ja-JP",
           "voice": "Kyoko",
           "text": "猫猫",
-          "clip": "assets/audio/voices/names/b2-maomao.name.mp3"
+          "clip": "assets/audio/voices/names/b2-maomao.name.mp3",
+          "readingOverride": {
+            "from": "貓貓",
+            "why": "`say -v Kyoko` renders 貓貓 as 0.030 s of silence (measured 2026-09-10) — 貓 is a Traditional-only glyph; the Japanese original writes 猫猫, which Kyoko reads as マオマオ."
+          }
         }
       ],
       "spokenLine": "マオマオ。",

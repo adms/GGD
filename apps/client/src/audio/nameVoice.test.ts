@@ -571,7 +571,18 @@ describe("the generated MANIFEST carries a zh-稱號 + ja-全名 clip per champi
       const name = e.voSegments.at(-1)!;
       expect(name.part, `${id} last segment is the 全名`).toBe("name");
       expect(name.voice, `${id} 全名 voice`).toBe(jaVoice);
-      expect(name.text, `${id} 全名 text is the Chinese 全名`).toBe(e.zhFullName);
+      // ⭐⭐ 預設：全名就是中文全名。
+      //   ⚠️ ⭐ 例外**必須自己說明理由**（`readingOverride.why`）——
+      //   那是日語聲音唸不出某個繁體專用字形時的發音修正
+      //   （前例：騜 → ホアン、貓貓 → 猫猫，兩個都量到 0.030 秒靜音）。
+      // ⇒ ⭐ 這裡驗的是**關係**：不一樣 ⇒ 必須有理由，⛔ 而不是把覆寫名單再抄一份。
+      const override = (name as { readingOverride?: { from: string; why: string } }).readingOverride;
+      if (override) {
+        expect(override.from, `${id} 覆寫要記得原本是什麼`).toBe(e.zhFullName);
+        expect(override.why.length, `${id} 覆寫必須帶一個能被反駁的理由`).toBeGreaterThan(20);
+      } else {
+        expect(name.text, `${id} 全名 text is the Chinese 全名`).toBe(e.zhFullName);
+      }
       expect(name.clip, `${id} 全名 clip`).toBe(`${NAME_VO_CLIP_DIR}/${id}.name.mp3`);
 
       if (e.zhTitle) {

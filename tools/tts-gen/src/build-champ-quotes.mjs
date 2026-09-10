@@ -722,8 +722,37 @@ const manifest = {
 };
 
 fs.mkdirSync(path.join(CONTENT, QUOTES_DIR), { recursive: true });
-fs.writeFileSync(path.join(CONTENT, QUOTES_DIR, "quotes.json"), `${JSON.stringify(manifest, null, 2)}\n`);
-fs.writeFileSync(path.join(CONTENT, QUOTES_DIR, TTS_MANIFEST), `${JSON.stringify(ttsLines, null, 2)}\n`);
+/**
+ * ⭐⭐ `--check` —— ⭐ 抄姊妹支 `build-champ-names.mjs` 的**同一個機制**，
+ * ⛔ 不是為這一支另發明一種（第〇·五守則：機制一份、用法 N 份）。
+ *
+ * ⚠️ ⭐ 為什麼非有不可：「產生器綠不綠」與「**產物新不新**」是**兩個名詞**。
+ * ⭐ 名單長了 7 名、82 名補了呼名 —— 這一支的產物**當場過期**，
+ * ⛔ 而在這一格出現之前 `skills:check` 裡沒有任何東西在問後者。
+ */
+const CHECK = process.argv.includes("--check");
+const outputs = [
+  [path.join(CONTENT, QUOTES_DIR, "quotes.json"), `${JSON.stringify(manifest, null, 2)}\n`],
+  [path.join(CONTENT, QUOTES_DIR, TTS_MANIFEST), `${JSON.stringify(ttsLines, null, 2)}\n`],
+];
+
+if (CHECK) {
+  const stale = [];
+  for (const [file, next] of outputs) {
+    const rel = path.relative(REPO, file);
+    if (!fs.existsSync(file)) stale.push(`${rel} — MISSING`);
+    else if (fs.readFileSync(file, "utf8") !== next) stale.push(`${rel} — STALE`);
+  }
+  if (stale.length) {
+    for (const s of stale) console.error(`build-champ-quotes --check: ${s}`);
+    console.error("build-champ-quotes --check: run `node tools/tts-gen/src/build-champ-quotes.mjs` and `git add content/`");
+    process.exit(1);
+  }
+  console.log(`build-champ-quotes --check: ${outputs.length} products up to date`);
+  process.exit(0);
+}
+
+for (const [file, next] of outputs) fs.writeFileSync(file, next);
 
 console.log(
   `build-champ-quotes: 出貨 roster ${ship.size} 位 → ${manifest.coverage.shippingWithQuote} 位有名言、` +

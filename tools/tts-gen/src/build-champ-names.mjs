@@ -567,6 +567,15 @@ for (const [id, zhName] of champs) {
     voice: MIX_JA_VOICE,
     text: MIX_JA_READING_OVERRIDE[id]?.text ?? zhFullName,
     clip: `${NAMES_DIR}/${id}.name.mp3`,
+    // ⭐⭐ 覆寫的**理由**跟著上線 —— ⛔ 不是只換掉字然後讓下游自己猜。
+    //
+    // ⚠️ ⭐ 沒有這一格的時候，消費端（與守衛）只看得到「text 與 zhFullName 不一樣」
+    //   ⇒ ⛔ 它分不出「這是刻意的發音修正」還是「產生器寫錯了」，
+    //   ⭐ 於是守衛只能把覆寫名單**再抄一份**（第〇·四守則：第二個住處）。
+    // ⇒ ⭐ 把理由送出去，關係就驗得起來：**不一樣 ⇒ 必須有理由**。
+    ...(MIX_JA_READING_OVERRIDE[id]
+      ? { readingOverride: { from: zhFullName, why: MIX_JA_READING_OVERRIDE[id].why } }
+      : {}),
   });
   for (const seg of voSegments) {
     mixLines.push({
