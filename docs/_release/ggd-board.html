@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.43.6 · 資料截至 2026-09-11 03:37 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-11 03:37 (GMT+8)</h1><div class="meta"><span>帳本 <b>24</b> 份</span><span>點名票號 <b>431</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.44.0 · 資料截至 2026-09-11 03:37 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-11 03:37 (GMT+8)</h1><div class="meta"><span>帳本 <b>24</b> 份</span><span>點名票號 <b>431</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1481,7 +1481,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>17:39</td><td>37 名英雄一句戰鬥語音都沒有 要錄音 技能喊招／受擊／擊殺／陣亡全缺。不擋選角，先前就紅 0 句名言刻意留空 要來源 每一句都有機器可讀的理由。查不到就留空——編一句會被當成原作台詞，而沒有測試分得出來 請你做一個81英雄語音補檔計劃書.md 裡面寫著如何透過我們之前寫好的 Cozyoice語音生成來自動話產生，我打算讓一個乾淨新工作流來製作</td><td>1170</td></tr>
 <tr><td>17:41</td><td>一起拍完</td><td>1169</td></tr>
 <tr><td>17:43</td><td>yes</td><td>— 確認回覆（yes），不開票</td></tr>
-<tr><td>17:45</td><td>我們上傳git的規則是 成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3 (本機全保留)</td><td>— 守則裁決：成品進 git／半成品與來源進 S3；已寫進記憶 ggd-git-vs-s3-rule 與 CLAUDE.md 第一·四守則</td></tr>
+<tr><td>17:45</td><td>我們上傳git的規則是 成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3 (本機全保留)</td><td>— 守則裁決：成品進 git／半成品與來源進 S3；已寫進記憶 ggd-git-vs-s3-rule 與 CLAUDE.md 第一·四守則 S3；已入記憶 同上（同一段話他講了三次：17:45／17:47／17:56）</td></tr>
 <tr><td>17:50</td><td>我們這批轉換 其實已經有很多是GGD本來就有模型，所以要請你合併時小心是增量多選項 而不是覆蓋</td><td>1188</td></tr>
 <tr><td>17:55</td><td>我舉例 依文 已經有模型，現在你新增新模型 依文這個角色要能在後台下拉選單選擇哪個是預設，商店也要能選擇是否上架這個模型被選擇可讓玩家購買動態替換</td><td>1188</td></tr>
 <tr><td>17:57</td><td>讀 /Users/Takuro/GGD/docs/81英雄語音補檔計劃書.md，照它執行。 任務：74 名新英雄（37 個 b2-* ＋ 37 個 community-review-*）一句戰鬥語音都沒有， 用 voice-reference-pipeline（CosyVoice 3）補完 11 格： select · skill-name.{q,w,e,r,ex} · hurt · hurt-heavy · kill-1 · victory · defeat ⛔ 排除 LOL 7 名（lol-lux/missfortune/xerath/karthus/yasuo/warwick/leesi…</td><td>1170</td></tr>
