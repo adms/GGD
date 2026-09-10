@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-03-20260907.q",
       "name": "花蝶扇",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出扇子，對沿途合法目標造成傷害。\n【待補機制】扇子模型及逐彈碰撞需補，模板是分段傷害波。",
       "slot": "Q",
       "castType": "skillshot",
@@ -135,7 +135,7 @@
     "W": {
       "id": "community-review-03-20260907.w",
       "name": "龍炎舞",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】向前揮出近身火焰弧，適合迎擊貼身敵人。\n【待補機制】目前為窄直線，需前方近身弧形判定。",
       "slot": "W",
       "castType": "skillshot",
@@ -207,7 +207,7 @@
     "E": {
       "id": "community-review-03-20260907.e",
       "name": "必殺忍蜂",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向指定方向突進 300 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線突進撞擊；遇牆或到達最大距離停止。",
       "slot": "E",
       "castType": "ground",
@@ -285,7 +285,7 @@
     "R": {
       "id": "community-review-03-20260907.r",
       "name": "超必殺忍蜂",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】有明顯起手的強化突進連擊，末段小範圍爆發。\n【待補機制】缺突進命中後才接連擊條件。",
       "slot": "R",
       "castType": "targeted",

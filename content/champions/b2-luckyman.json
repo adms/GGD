@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「剛好有張技能保單！」\n增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -72,7 +72,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「剛好香蕉皮滑了一下！」\n增加普攻迴避機會 3 秒；填入 1 仍受正式 evasion 上限約束，不是保證無敵，也不閃技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -133,7 +133,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「剛好天上掉贈品！」\n等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -266,7 +266,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「剛好拳頭在這裡！」\n單體小級物理打擊；幸運不等於所有攻擊必中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

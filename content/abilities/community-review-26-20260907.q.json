@@ -1,7 +1,7 @@
 {
   "id": "community-review-26-20260907.q",
   "name": "足球射擊",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】以腳力增強鞋踢出足球，依射線與碰撞命中。\n【待補機制】需足球單彈碰撞與腳踢動作。",
   "slot": "Q",
   "castType": "skillshot",

@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-18-20260907.q",
       "name": "王之財寶",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】開啟三個門，依序發射武器。\n【待補機制】目前三發落點打擊；需三門武器投射物及門的掛點。",
       "slot": "Q",
       "castType": "ground",
@@ -111,7 +111,7 @@
     "W": {
       "id": "community-review-18-20260907.w",
       "name": "天之鎖",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。\n【待補機制】鎖足可作基礎控制；需超距解鎖、鎖鏈端點。",
       "slot": "W",
       "castType": "targeted",
@@ -169,7 +169,7 @@
     "E": {
       "id": "community-review-18-20260907.e",
       "name": "〔黃金甲冑〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-18-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供短效護盾，降低正面承受的爆發。\n【待補機制】目前全方向盾；缺正面條件。",
       "slot": "E",
       "castType": "self",
@@ -228,7 +228,7 @@
     "R": {
       "id": "community-review-18-20260907.r",
       "name": "天地乖離開闢之星",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。\n【待補機制】Ea 造型、蓄力層與單一總傷害預算需補。",
       "slot": "R",
       "castType": "skillshot",

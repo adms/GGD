@@ -1,7 +1,7 @@
 {
   "id": "community-review-31-20260907.e",
   "name": "Repel Counter",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-31-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。\n【待補機制】護盾不是 Repel Counter；需格擋成功、擊退與 Q 窗口。",
   "slot": "E",
   "castType": "self",

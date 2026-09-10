@@ -1,7 +1,7 @@
 {
   "id": "community-review-10-20260907.q",
   "name": "〔戰術射擊〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】中距離單發射擊，對帶標記目標造成額外傷害。\n【待補機制】缺戰術標記額外傷害。",
   "slot": "Q",
   "castType": "targeted",

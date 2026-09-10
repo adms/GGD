@@ -1,7 +1,7 @@
 {
   "id": "community-review-34-20260907.r",
   "name": "〔全速追獵〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。\n【待補機制】3 秒移速增益；需上限与轉向能力独立参数。",
   "slot": "R",
   "castType": "self",

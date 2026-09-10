@@ -28,12 +28,19 @@
 from __future__ import annotations
 
 import glob
+import os  # noqa: E402（下面那行要用，⛔ 不依賴檔案更下方的 import 順序）
+import sys  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ship-81"))
+from model_map import SKELETON  # noqa: E402  ⭐ GH#1194：引擎骨架英雄的 id 由這裡推導
+SKELETON_HEADS = {v.split(".", 1)[-1] for v in SKELETON.values()}
 import json
 import os
 import re
 import sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# ⭐ GH#1194：可用 GGD_REPO_ROOT 指到一棵**匯出的樹**（git archive）—— 讓閘能對 origin/main 跑，
+#   ⛔ 而不是對一個併行 lane 正在改的工作區跑。預設不變。
+ROOT = os.environ.get("GGD_REPO_ROOT") or os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ABIL = os.path.join(ROOT, "content", "abilities")
 GEN = os.path.join(ROOT, "tools", "skill-remake", "batch1.py")
 
@@ -73,6 +80,15 @@ def classify(path: str, prefixes: set[str], champs: set[str] | None = None) -> s
     # ⭐ 兩邊現在是同一條規則。
     if champs is not None and head not in champs:
         return "owner-spec"
+    # ⭐ 2026-09-11（GH#1194）—— **第三種出身**：社群／第二批／LoL 英雄的技能是**編輯器產生的 JSON**
+    #   （階梯第 2 層 `editor-json`），⛔ 不是 w3x 匯入。在此之前這裡只有兩種答案，
+    #   494 支非 godie 技能全被蓋成 `w3x-import` ⇒ Go 的 `TestStarterSetMatchesContentTree`
+    #   要求 w3x-import 的名字帶 `xx-0N` 前綴 ⇒ CI go-platform 從 v0.43.5 起一直紅。
+    #   ⭐ `godie-` 是 w3x 的命名空間（JASS join key 的慣例）—— 只有它才可能是 `w3x-import`。
+    #   ⚠️ 引擎骨架英雄（sela／thorne，從 model_map.SKELETON 推導）不是 w3x 也不是編輯器產出 ——
+    #   它們今天標的是 `w3x-import`，這裡**不改它**（⛔ 不在這張票裡替它們發明一個出身）。
+    if not head.startswith("godie-") and head not in SKELETON_HEADS:
+        return "editor-json"
     return "w3x-import"
 
 
@@ -124,7 +140,7 @@ def main() -> int:
             if not isinstance(inner, dict) or "id" not in inner:
                 continue
             ih = str(inner["id"]).split(".")[0]
-            want = "owner-spec" if (ih in prefixes or ih not in champs) else "w3x-import"
+            want = classify(ih + ".x.json", prefixes, champs)  # ⭐ 與 standalone 同一條規則
             if inner.get("provenance") == want:
                 continue
             if check:
@@ -145,9 +161,10 @@ def main() -> int:
             wrote += 1
 
     n_owner = sum(1 for f in files if classify(f, prefixes, champs) == "owner-spec")
+    n_editor = sum(1 for f in files if classify(f, prefixes, champs) == "editor-json")
     if check:
         if not missing and not wrong:
-            print(f"provenance 齊了：{len(files)} 份（owner-spec {n_owner} / w3x-import {len(files)-n_owner}）")
+            print(f"provenance 齊了：{len(files)} 份（owner-spec {n_owner} / editor-json {n_editor} / w3x-import {len(files)-n_owner-n_editor}）")
             return 0
         if missing:
             print(f"⛔ {len(missing)} 份沒有 provenance，例：{missing[:5]}")
@@ -155,7 +172,7 @@ def main() -> int:
             print(f"⛔ {len(wrong)} 份的 provenance 對不上，例：{wrong[:5]}")
         print("跑 `python3 tools/skill-remake/stamp_provenance.py` 補齊")
         return 1
-    print(f"蓋章 {wrote} 份（總 {len(files)}：owner-spec {n_owner} / w3x-import {len(files)-n_owner}）")
+    print(f"蓋章 {wrote} 份（總 {len(files)}：owner-spec {n_owner} / editor-json {n_editor} / w3x-import {len(files)-n_owner-n_editor}）")
     return 0
 
 

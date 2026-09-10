@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「記憶形狀先借一塊！」\n指定友軍取得 190 點護盾 3 秒；若自己有 berserk 適應暫態，額外回復該友軍 100 生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -127,7 +127,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「請溫柔敲擊測試！」\n支付最大生命 8% 並取得 100 點護盾 2 秒；生命支付不是來襲傷害，不自行觸發受擊被動。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -222,7 +222,7 @@
         45.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「耐用形狀保固四秒！」\n獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -290,7 +290,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「把破掉的地方長回來！」\n消耗 berserk 適應暫態回復自身 220 生命；沒有實際受擊留下的暫態就不回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

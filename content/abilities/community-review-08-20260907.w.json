@@ -1,7 +1,7 @@
 {
   "id": "community-review-08-20260907.w",
   "name": "立體機動裝置",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】射出鉤索連接合法錨點，消耗氣體沿路徑移動。\n【待補機制】需合法場景錨點、鉤索路径、氣體消耗；不是自由跳躍。",
   "slot": "W",
   "castType": "ground",

@@ -1,7 +1,7 @@
 {
   "id": "community-review-27-20260907.w",
   "name": "盾牌",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-27-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為自己或指定友軍提供護盾。\n【待補機制】目前自身；需友軍選取。",
   "slot": "W",
   "castType": "self",

@@ -1,7 +1,7 @@
 {
   "id": "community-review-20-20260907.r",
   "name": "超電磁砲",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】彈出硬幣後發射有預警的高傷害直線攻擊。\n【待補機制】目前四段線；需硬幣彈出、單發射線與整體傷害上限。",
   "slot": "R",
   "castType": "skillshot",

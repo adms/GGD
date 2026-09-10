@@ -1,7 +1,7 @@
 {
   "id": "community-review-14-20260907.w",
   "name": "〔高速授課〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】沿指定路線快速移動，到達終點時給附近友軍短效加速。\n【待補機制】缺到達終點後的友軍加速。",
   "slot": "W",
   "castType": "ground",

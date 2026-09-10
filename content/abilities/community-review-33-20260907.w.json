@@ -1,7 +1,7 @@
 {
   "id": "community-review-33-20260907.w",
   "name": "〔重量切換〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：ad +15%。\n【目標設計】在輕劍與重劍模式間切換：輕模式較快、重模式傷害較高且動作較慢。\n【待補機制】固定 AD 增益；需輕／重模式、攻速與動作時長同步。",
   "slot": "W",
   "castType": "self",

@@ -1,7 +1,7 @@
 {
   "id": "community-review-02-20260907.e",
   "name": "百二十七式・葵花",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。\n【待補機制】目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
   "slot": "E",
   "castType": "targeted",

@@ -8,7 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "「下班通知已讀未回！」\n指定敵人取得 curse 通知 4 秒；此處只作條件標記，不假稱原作即死。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {

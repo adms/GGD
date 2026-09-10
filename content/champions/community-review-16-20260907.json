@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-16-20260907.q",
       "name": "〔魔力砲擊〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】由紅寶石之星發射直線魔力彈。\n【待補機制】魔杖彈体待製；目前分段光路。",
       "slot": "Q",
       "castType": "skillshot",
@@ -122,7 +122,7 @@
     "W": {
       "id": "community-review-16-20260907.w",
       "name": "〔魔力防壁〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-16-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】展開有限耐久的正面護盾。\n【待補機制】目前全方向自身盾；需正面防壁。",
       "slot": "W",
       "castType": "self",
@@ -181,7 +181,7 @@
     "E": {
       "id": "community-review-16-20260907.e",
       "name": "〔魔法少女飛行〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離浮空移動，仍受對決邊界與落點合法性限制。\n【待補機制】有限落點跳躍，不是持續飛行。",
       "slot": "E",
       "castType": "ground",
@@ -248,7 +248,7 @@
     "R": {
       "id": "community-review-16-20260907.r",
       "name": "夢幻召喚・Saber",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、as +20%。\n【目標設計】限時取得 Saber 武裝，替換普攻與 Q；結束後還原，生命與冷卻持續。\n【待補機制】目前 AD／攻速；需 Saber 武裝、普攻与 Q 替換與還原。",
       "slot": "R",
       "castType": "self",

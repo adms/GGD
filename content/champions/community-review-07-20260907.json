@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-07-20260907.q",
       "name": "〔撲克牌連射〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
       "slot": "Q",
       "castType": "ground",
@@ -111,7 +111,7 @@
     "W": {
       "id": "community-review-07-20260907.w",
       "name": "伸縮自在的愛",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n【待補機制】只有短暫鎖足；需有端點的彈性連線及斷線規則。",
       "slot": "W",
       "castType": "targeted",
@@ -169,7 +169,7 @@
     "E": {
       "id": "community-review-07-20260907.e",
       "name": "〔收線〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
       "slot": "E",
       "castType": "ground",
@@ -242,7 +242,7 @@
     "R": {
       "id": "community-review-07-20260907.r",
       "name": "〔彈性殺陣〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
       "slot": "R",
       "castType": "ground",

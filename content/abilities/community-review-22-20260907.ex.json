@@ -2,7 +2,7 @@
   "id": "community-review-22-20260907.ex",
   "schema": "ability@1",
   "name": "〔重新選擇〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。",
   "slot": "EX",
   "castType": "self",

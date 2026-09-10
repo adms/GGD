@@ -1,7 +1,7 @@
 {
   "id": "community-review-05-20260907.q",
   "name": "洛克砲",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】按住蓄力、放開射擊；依蓄力階段決定彈體與傷害。\n【待補機制】目前固定起手；需按住／放開與分段蓄力。",
   "slot": "Q",
   "castType": "skillshot",

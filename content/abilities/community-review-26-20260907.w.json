@@ -1,7 +1,7 @@
 {
   "id": "community-review-26-20260907.w",
   "name": "手錶型麻醉槍",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.7,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】單發針造成短暫睡眠；目標受到後續傷害時提前醒來。\n【待補機制】0.7 秒暈眩只是底稿；需受傷可喚醒的睡眠及針彈碰撞。",
   "slot": "W",
   "castType": "targeted",

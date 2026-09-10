@@ -1,7 +1,7 @@
 {
   "id": "community-review-04-20260907.q",
   "name": "歐拉連打",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】白金之星在前方進行多段拳擊，每段重新確認距離與目標。\n【待補機制】需逐段距離重新檢查、替身掛點及雙模型動作。",
   "slot": "Q",
   "castType": "targeted",

@@ -3,7 +3,7 @@
   "cooldown": [
     0
   ],
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "「我真的是劍士不是坐騎！」\n發生衝刺或瞬移事件後增加 25 護甲 2 秒，每 3 秒最多一次；本套由 EX 瞬移觸發，Q 的 leap 跳躍不派發此事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-ned.passive",
