@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T05:27:07+08:00",
-  "inputsSha256": "42b9c1d73df0b87c6b51fb82ba332f0b8e196e6093a75d3e1b6e314bd7ade838",
+  "generatedAt": "2026-09-11T05:45:08+08:00",
+  "inputsSha256": "3d28636331d12679a692ca734a3686f90beea26446e4590c8566036ac83ac2af",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -63813,7 +63813,24 @@
           "sha256": "cbab4e5e60bc531f9167b6fe0f4aa44a392b786d36ef06d0c258a7be12d723fd",
           "readbackVerified": true,
           "usage": "manual-only legacy backup; not runtime-ready"
-        }
+        },
+        "decodedAudioRevisions": [
+          {
+            "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+            "audioFormatRevisionOf": "parallel-ns-ultimate14",
+            "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1",
+            "audioFileIndex": {
+              "reportPath": "audioFileIndex.json",
+              "reportSha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e"
+            },
+            "decodedFiles": 19,
+            "uniqueNativeBanks": 7,
+            "physicalBankAliases": 56,
+            "physicalNativeEntries": 152,
+            "nativeSourcesPreserved": true,
+            "countAsNewPerformance": false
+          }
+        ]
       },
       {
         "id": "parallel-ns-bowser-big-blast",
@@ -99996,6 +100013,242 @@
           "s3ReadbackVerified": true
         },
         "verification": "revision-02 的 135 個 PCM16 WAV 逐檔大小與 SHA-256 已核對；保留 2 個全零 PCM dummy，其餘 133 段未聽審。原生 NUS3AUDIO／IDSP 與原始來源版本分開保留；不由 bank 名稱判定語言、說話者或技能事件。"
+      },
+      {
+        "id": "parallel-ns-ultimate14-audio-decoded-v1",
+        "target": "Ultimate14／NS 7 個原生 patch3audio 唯一內容／56 配色 alias 解碼音訊 v1",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+        "author": "CSharpM7",
+        "uploader": "CSharpM7",
+        "sourceGame": "Super Smash Bros. Ultimate",
+        "sourceWork": "任天堂明星大亂鬥 特別版／Ultimate14 MOD",
+        "platform": "Nintendo Switch",
+        "sourceVersion": "Ultimate14 1.0",
+        "selectionClass": "community-mod",
+        "sourceClass": "community-mod",
+        "nativeCharacterId": "multiple fighter sound-effect source labels; no verified speaker identity",
+        "originalCharacterName": "multiple source-labelled fighters",
+        "originalCharacterWork": "Super Smash Bros. Ultimate",
+        "format": "Nintendo patch3audio -> PCM16 WAV",
+        "accessStatus": "local-existing-source-conversion",
+        "acquisitionStatus": "downloaded-verified",
+        "acquisitionMethod": "decoded-existing-local-author-mod",
+        "countsAsNewAcquisition": false,
+        "resourceRole": "audio-supplement",
+        "assetKinds": [
+          "audio",
+          "sound-effect-candidate"
+        ],
+        "modelCount": 0,
+        "audioCount": 19,
+        "nativeAnimationCount": 0,
+        "vfxCount": 0,
+        "sourceBankAliasCount": 56,
+        "physicalNativeEntryCount": 152,
+        "uniqueNativeBankCount": 7,
+        "defaultEligible": false,
+        "automaticEligible": false,
+        "purchaseDecision": "no-purchase-existing-source",
+        "localPath": "GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1",
+        "audioFileIndex": {
+          "reportPath": "audioFileIndex.json",
+          "reportSha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e"
+        },
+        "primaryAudioFormats": [
+          ".wav"
+        ],
+        "audioGroups": [
+          {
+            "id": "ultimate14-se-link-c07",
+            "name": "Ultimate14 / se_link_c07 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-link-c07/"
+            ],
+            "fileCount": 2,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          },
+          {
+            "id": "ultimate14-se-lucina-c03",
+            "name": "Ultimate14 / se_lucina_c03 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-lucina-c03/"
+            ],
+            "fileCount": 4,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          },
+          {
+            "id": "ultimate14-se-samusd-c05",
+            "name": "Ultimate14 / se_samusd_c05 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-samusd-c05/"
+            ],
+            "fileCount": 2,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          },
+          {
+            "id": "ultimate14-se-toonlink-c03",
+            "name": "Ultimate14 / se_toonlink_c03 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-toonlink-c03/"
+            ],
+            "fileCount": 4,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          },
+          {
+            "id": "ultimate14-se-sonic-c02",
+            "name": "Ultimate14 / se_sonic_c02 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-sonic-c02/"
+            ],
+            "fileCount": 1,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          },
+          {
+            "id": "ultimate14-se-luigi-c03",
+            "name": "Ultimate14 / se_luigi_c03 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-luigi-c03/"
+            ],
+            "fileCount": 1,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          },
+          {
+            "id": "ultimate14-se-lucas-c06",
+            "name": "Ultimate14 / se_lucas_c06 / 原始 se_ 標籤未聽審音訊",
+            "heroIds": [],
+            "pathPrefixes": [
+              "decoded-audio/ultimate14-se-lucas-c06/"
+            ],
+            "fileCount": 5,
+            "audioCategory": "unclassified",
+            "sourceLabelCategory": "sound-effect-source-labelled",
+            "reportedLanguage": "unreviewed",
+            "speakerVerified": false,
+            "languageVerified": false,
+            "eventBindingsVerified": false,
+            "synthesisReady": false,
+            "countAsNewPerformance": false,
+            "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。"
+          }
+        ],
+        "audioFormatRevisionOf": "parallel-ns-ultimate14",
+        "audioFormatNote": "Decoded representation of seven byte-identical native bank contents. All 56 costume aliases and 152 source entries remain recorded; 19 decoded streams are not 152 unique clips or confirmed voices.",
+        "upstreamSourceId": "parallel-ns-ultimate14",
+        "upstreamLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14",
+        "upstreamNativeAudioIndex": {
+          "reportPath": "native-format-validation.json",
+          "reportSha256": "f4ce659af8e256eb70ce5b0632e8a224c78e4319b67d20d2e239d6b3f10896f7"
+        },
+        "upstreamBackupReference": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ns-ultimate14/cbab4e5e60bc531f9167b6fe0f4aa44a392b786d36ef06d0c258a7be12d723fd.zip",
+          "bytes": 71540858,
+          "sha256": "cbab4e5e60bc531f9167b6fe0f4aa44a392b786d36ef06d0c258a7be12d723fd",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        },
+        "sourceFileManifest": {
+          "path": "files-sha256.json",
+          "sha256": "2a458618b6cedfc5eabf6e6f1f39bfd3c53106157b79c072df51e1390fbd3963"
+        },
+        "readiness": "decoded-local-verified-pending-listening-classification-and-character-mapping",
+        "publicationStatus": "s3-readback-verified",
+        "reportedLanguage": "unreviewed",
+        "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+        "confirmedVoiceCount": null,
+        "synthesisReady": false,
+        "runtimeReady": false,
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-character-mapping",
+          "heroIds": [],
+          "selectionVerified": false,
+          "release": null,
+          "note": "Audio-only derivative of a MOD without a character body; no dropdown/default/deployment."
+        },
+        "audioAcquisition": {
+          "decodedWavFiles": 19,
+          "uniqueNativeBanks": 7,
+          "physicalBankAliases": 56,
+          "physicalNativeEntries": 152,
+          "seconds": 28.99874628579769,
+          "bytes": 2403472,
+          "countAsNewPerformance": false
+        },
+        "limitations": [
+          "No character body is included by Ultimate14.",
+          "The 56 costume-path aliases and 152 native entries are not 152 distinct clips.",
+          "Source se_ labels do not prove dialogue, speaker, language, voice or skill event.",
+          "No backend option, default or deployment is performed.",
+          "No original-game character body is in this MOD delivery.",
+          "No language/speaker/event listening classification or GGD hero mapping."
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ns-ultimate14-audio-decoded-v1/bc601eab94771daeff9c1ed64de0a9ea72569e41fd5c6a07f42d1c004b587fb3.zip",
+          "bytes": 3682381,
+          "sha256": "bc601eab94771daeff9c1ed64de0a9ea72569e41fd5c6a07f42d1c004b587fb3",
+          "archiveFormat": "zip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true
+        },
+        "verification": "56 個原生 patch3audio 配色路徑逐檔 SHA-256 核對，保留為 7 個 byte-identical bank alias；依 r2117 metadata 解出 19 個 stream。每段 WAV 皆核對 PCM frames/rate/channels、ffmpeg 全檔解碼與 vgmstream byte-identical 重播。S3 ZIP 及逐檔讀回另行驗證；se_ 名稱不作語言、說話者或技能事件確認。"
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

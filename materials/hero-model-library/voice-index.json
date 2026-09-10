@@ -42339,6 +42339,293 @@
       "categoryCounts": {
         "unclassified": 1
       }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-link-c07",
+      "name": "Ultimate14 / se_link_c07 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2,
+      "bytes": 649632,
+      "knownDurationSeconds": 9.107726373666173,
+      "durationMeasuredFiles": 2,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/01-3068ccb958ec5bd5a65d6d30bf66da25fb2a7ea82a3856ecae9f662fafb7753c.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 2
+      }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-lucina-c03",
+      "name": "Ultimate14 / se_lucina_c03 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 4,
+      "bytes": 272768,
+      "knownDurationSeconds": 2.8395,
+      "durationMeasuredFiles": 4,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/02-7b479ece42167d791d21e46038be44530417c5c40187adab7e4cb76135fab3b4.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 4
+      }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-samusd-c05",
+      "name": "Ultimate14 / se_samusd_c05 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2,
+      "bytes": 295430,
+      "knownDurationSeconds": 4.61471875,
+      "durationMeasuredFiles": 2,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/03-7cf8cf86ab281286c2f7d2b62bc04dec46d294c3749c90d8495ed14a468488dd.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 2
+      }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-toonlink-c03",
+      "name": "Ultimate14 / se_toonlink_c03 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 4,
+      "bytes": 452482,
+      "knownDurationSeconds": 4.711520833333333,
+      "durationMeasuredFiles": 4,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/04-866818a65852f6841ef36ec08f0d152d5cf37a2a40e7126d4f30650d0c44508f.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 4
+      }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-sonic-c02",
+      "name": "Ultimate14 / se_sonic_c02 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 99268,
+      "knownDurationSeconds": 1.1249886621315193,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/05-8f31aa6f26c9d5068c70362e49c616a9200dfc52e011906c968bbe1f65fc9023.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-luigi-c03",
+      "name": "Ultimate14 / se_luigi_c03 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 101420,
+      "knownDurationSeconds": 1.056,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/06-c25678d95f86c6ea76396a94fb413e82f1c1a4cd17b368bac0e0a8270a1dc8fa.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "parallel-ns-ultimate14-audio-decoded-v1:ultimate14-se-lucas-c06",
+      "name": "Ultimate14 / se_lucas_c06 / 原始 se_ 標籤未聽審音訊",
+      "library": "公開來源",
+      "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 5,
+      "bytes": 532472,
+      "knownDurationSeconds": 5.544291666666667,
+      "durationMeasuredFiles": 5,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "raw/07-d8e6da852b859790f69cd88bc578209f19c1c8ed65cefa33a8a58b9756c37260.patch3audio"
+      ],
+      "backupIds": [
+        "public:parallel-ns-ultimate14-audio-decoded-v1"
+      ],
+      "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+      "work": "Super Smash Bros. Ultimate",
+      "audioFormatRevisionOf": "parallel-ns-ultimate14",
+      "countAsNewPerformance": false,
+      "aliasGroupIds": [
+        "parallel-ns-ultimate14-audio-decoded-v1",
+        "parallel-ns-ultimate14"
+      ],
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": "se_ source labels do not establish language, speaker, dialogue, vocalization or skill-event identity.",
+      "classificationEvidence": "se_ 名稱僅為來源事件標籤；未確認說話者、語言、台詞或遊戲事件。",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 5
+      }
     }
   ],
   "backups": {
@@ -43024,16 +43311,31 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:parallel-ns-ultimate14-audio-decoded-v1": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ns-ultimate14-audio-decoded-v1/bc601eab94771daeff9c1ed64de0a9ea72569e41fd5c6a07f42d1c004b587fb3.zip",
+      "bytes": 3682381,
+      "sha256": "bc601eab94771daeff9c1ed64de0a9ea72569e41fd5c6a07f42d1c004b587fb3",
+      "archiveFormat": "zip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "s3ReadbackVerified": true,
+      "localRoot": "GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "11a2db4fa2860ac8e7f87e2aaa8d00c20d453d0f3d463dfb539991b360d04a23"
+      "sha256": "436999878d805f1c84c061f8ebbb46afbbd6b957e68e399b60882e17d98bce58"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "93198d129175b5d933d6876e1ffca7ab8ba3c0fe49c45ada80eb68b1980c9c76"
+      "sha256": "7ea2f5b4424e936dd6ce638b794c6b9173cca1685d495297f9f674bcd50f2f41"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -43414,6 +43716,14 @@
     {
       "path": "GGD-Asset-Library/conversions/alucard-audio-20260911-v1/integration-v1/audioFileIndex.json",
       "sha256": "e7652b516ad41da867b774c5ed3258b63bc9023cef066a99f5b4f6558b96a179"
+    },
+    {
+      "path": "GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1/audioFileIndex.json",
+      "sha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e"
+    },
+    {
+      "path": "GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1/audioFileIndex.json",
+      "sha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
@@ -94015,19 +94325,19 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 981,
-    "audioFiles": 284056,
-    "bytes": 138398465905,
-    "sourceFileRelationshipRows": 284056,
-    "uniqueLocalPaths": 283608,
-    "uniqueSha256Payloads": 251731,
-    "uniqueLocalPathBytes": 137825537189,
+    "groups": 988,
+    "audioFiles": 284075,
+    "bytes": 138400869377,
+    "sourceFileRelationshipRows": 284075,
+    "uniqueLocalPaths": 283627,
+    "uniqueSha256Payloads": 251750,
+    "uniqueLocalPathBytes": 137827940661,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "07e257c5519d56e144a8d9506796438010b3e92ae26237f578a472e2791fe4e9",
-  "uncompressedFileManifestSha256": "ff7567904c4fd4affac11115f79aaf8019df784a4e5cb0db02237dc0285f982e"
+  "sourceFileManifestSha256": "2f6fa6cbf0bdbf1e350b3eb6cf5a3e5bf9beb96f1965300648ad815b54200a85",
+  "uncompressedFileManifestSha256": "69369a777b6316975e35a67aaf95507f153459466e28b194db28b69fc80b4124"
 }
