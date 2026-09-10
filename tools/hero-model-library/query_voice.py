@@ -1,11 +1,23 @@
 #!/usr/bin/env python3
 """Look up character audio reserves without downloading assets or invoking synthesis."""
 import argparse
+import gzip
 import hashlib
 import json
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]/'materials/hero-model-library'
+
+
+def read_voice_files(data,root=ROOT):
+    blob=(root/data['sourceFileManifest']).read_bytes()
+    assert hashlib.sha256(blob).hexdigest()==data['sourceFileManifestSha256'],'File manifest changed; rebuild voice index'
+    encoding=data.get('sourceFileEncoding','jsonl')
+    if encoding=='gzip':
+        blob=gzip.decompress(blob)
+        assert hashlib.sha256(blob).hexdigest()==data['uncompressedFileManifestSha256']
+    elif encoding!='jsonl':raise ValueError('Unsupported voice manifest encoding')
+    return (json.loads(line) for line in blob.splitlines() if line)
 
 
 def main():
@@ -29,9 +41,7 @@ def main():
     result=dict(groups=groups,sourceLeads=leads,nativeAudioSources=native,backups={k:v for k,v in data['backups'].items() if k in backup_ids},
                 localWorkspace=str(workspace),localUseRequiresS3=False,languagePreference=data.get('languagePreference',[]),synthesisContract=data['synthesisContract'])
     if args.files:
-        path=ROOT/data['sourceFileManifest'];blob=path.read_bytes()
-        assert hashlib.sha256(blob).hexdigest()==data['sourceFileManifestSha256'],'File manifest changed; rebuild voice index'
-        result['files']=[r for line in blob.splitlines() if (r:=json.loads(line))['groupId'] in ids]
+        result['files']=[r for r in read_voice_files(data) if r['groupId'] in ids]
         order={g['id']:i for i,g in enumerate(groups)}
         result['files'].sort(key=lambda r:(order[r['groupId']],r['path']))
         for row in result['files']:row['absolutePath']=str(workspace/row['path'])

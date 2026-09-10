@@ -27,4 +27,6 @@ AWS 只用 vibe-coding profile、ap-east-2 region；不讀憑證、不切換 pro
 查詢尚未配對與下載中來源：python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
 完整規則：materials/hero-model-library/全角色模型盤點.md；機器規則：download-sources.json 的 ingestionPolicy、consoleSourceScope，以及 default-policy.json 的 sameClassPriority。
 
-角色語音索引：materials/hero-model-library/角色語音索引.md；voice-index.json／voice-files.jsonl 保存角色與逐檔 SHA-256，供合成素材挑選、聽審及轉錄。查詢：python3 tools/hero-model-library/query_voice.py 莉娜
+角色語音索引：materials/hero-model-library/角色語音索引.md；voice-index.json／voice-files.jsonl.gz 保存角色與逐檔 SHA-256，供合成素材挑選、聽審及轉錄。查詢：python3 tools/hero-model-library/query_voice.py 莉娜
+
+語音逐檔索引以 voice-index.json.sourceFileManifest 為準；目前 Git 儲存完整 voice-files.jsonl.gz，query_voice.py 自動驗證及解壓，本機另保留未壓縮 JSONL。音樂、音效及含合成播報來源保留並標記 excludedFromSpeechInput，不直接混入角色語音輸入。

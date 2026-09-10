@@ -121,3 +121,6 @@ docs/傳說武器道具.xlsx
 # Model release binaries are hydrated from the Git-pinned S3 release.
 /content/assets/models/community/*.glb
 /content/assets/models/**/versions/*.glb
+
+# Full local JSONL remains available; Git carries its complete gzip control index.
+/materials/hero-model-library/voice-files.jsonl

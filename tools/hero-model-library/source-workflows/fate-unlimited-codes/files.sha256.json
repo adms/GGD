@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-source-workflow-code-archive@1",
+  "files": [
+    {
+      "path": "first-batch/FPKCodes-FPKUnpacker.cs",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/FPKCodes-FPKUnpacker.cs",
+      "bytes": 3013,
+      "sha256": "a5fee118f64f27df2270a2084cf51f49b7a6c9e40c2154f032712e6675552595"
+    },
+    {
+      "path": "first-batch/FPKCodes-LICENSE",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/FPKCodes-LICENSE",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "path": "first-batch/FPKCodes-PRSUncompressor.cs",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/FPKCodes-PRSUncompressor.cs",
+      "bytes": 2897,
+      "sha256": "e8e2b1771dfd217b234140606875c0316ebdc36ba7b25df2da9bfad46257e9d3"
+    },
+    {
+      "path": "first-batch/FPKCodes-README.md",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/FPKCodes-README.md",
+      "bytes": 3010,
+      "sha256": "a4b91d691a3e881d21e0550f1462313f25748bc23c1bbe63187be55706f5320e"
+    },
+    {
+      "path": "first-batch/extract_fate_fpk.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/extract_fate_fpk.py",
+      "bytes": 4462,
+      "sha256": "6678a2995cadc9a133ec41aff3b73f846bfba3b2f4ea9ca2ea168ff750440d73"
+    },
+    {
+      "path": "first-batch/ggd-fuc-build-handoff.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-build-handoff.py",
+      "bytes": 7948,
+      "sha256": "09ac095de17b8bae5d0b4777330a4d37675a499aeba95aec95a8c5509967aa47"
+    },
+    {
+      "path": "first-batch/ggd-fuc-download-hd-tree.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-download-hd-tree.py",
+      "bytes": 4287,
+      "sha256": "b5fe96a88cea28956708e9422d94ffeed68db367a93eb46dbacbb4ecde263826"
+    },
+    {
+      "path": "first-batch/ggd-fuc-fpk-synthetic-validation.json",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-fpk-synthetic-validation.json",
+      "bytes": 319,
+      "sha256": "a3a75e5778ca2168a525f7444a6ec42beb7087d5df3cdf2ef772e5b751a4a91d"
+    },
+    {
+      "path": "first-batch/ggd-fuc-local-source-search.json",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-local-source-search.json",
+      "bytes": 518,
+      "sha256": "6cc84425c06f9995ee1b71affc55ae3c87012492d73b8882fb45b626b4df81cb"
+    },
+    {
+      "path": "first-batch/ggd-fuc-process-bgm.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-process-bgm.py",
+      "bytes": 7567,
+      "sha256": "b1f84d759f450ee0b3facd4572f0f9a338fab78c77d18ba5c3f02afbbb669b02"
+    },
+    {
+      "path": "first-batch/ggd-fuc-process-ps2-audio.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-process-ps2-audio.py",
+      "bytes": 5306,
+      "sha256": "372f30d2f4a75c713b093d77e826c44262e94cc989a57fbadcadaf40fbe9cca2"
+    },
+    {
+      "path": "first-batch/ggd-fuc-resume-public-downloads.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-resume-public-downloads.py",
+      "bytes": 2880,
+      "sha256": "72d429c51c5255548058d771ddf15e57ac8723adba51885ea869da04b01dfa42"
+    },
+    {
+      "path": "first-batch/ggd-fuc-zero-lancer-khronos-validation.json",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-zero-lancer-khronos-validation.json",
+      "bytes": 2733,
+      "sha256": "0f9ead7513e7d06c31f64b7f23b8e0210fd3ac78bc23611d6858f0bd38164cab"
+    },
+    {
+      "path": "first-batch/ggd-fuc-zero-lancer-process.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/ggd-fuc-zero-lancer-process.py",
+      "bytes": 9330,
+      "sha256": "34a156dbdc534acb9b84cdf840a8ecdf0bfd2f4885783de45b23add85f7828d0"
+    },
+    {
+      "path": "first-batch/hd-path-map-validation.json",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/tooling/hd-path-map-validation.json",
+      "bytes": 249,
+      "sha256": "9752fa3532e8a468e754cf854598675441c0c89c0c10125d10bc9901652c50fe"
+    },
+    {
+      "path": "first-batch/README.md",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-workflow-control-20260910/README.md",
+      "bytes": 5056,
+      "sha256": "97bb5fe3d9a08347d68930ba4bf04f8a4a0ff1a6c523eb713d0c91dbe314b498"
+    },
+    {
+      "path": "second-batch/ggd-fuc-convert-unity-outfit.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/control/tooling/ggd-fuc-convert-unity-outfit.py",
+      "bytes": 17886,
+      "sha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6"
+    },
+    {
+      "path": "second-batch/ggd-fuc-freeze-second.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/control/tooling/ggd-fuc-freeze-second.py",
+      "bytes": 9946,
+      "sha256": "e091f5839dd0f7c2bca5b73c1182ee776f0f03373179a6da8003fa90d0823b8e"
+    },
+    {
+      "path": "second-batch/ggd-fuc-process-second-models.py",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/control/tooling/ggd-fuc-process-second-models.py",
+      "bytes": 7379,
+      "sha256": "b120ad6d5905bafa9aa85d671ee75d1a9911312025b8de40fe38efbd1ec81a27"
+    },
+    {
+      "path": "second-batch/ggd-fuc-validate-second-models.cjs",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/control/tooling/ggd-fuc-validate-second-models.cjs",
+      "bytes": 1121,
+      "sha256": "69a20fb1959e48295cf5c91c11514b86b7980aec95d4a60628b67024d3b19465"
+    },
+    {
+      "path": "second-batch/README.md",
+      "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/control/README.md",
+      "bytes": 701,
+      "sha256": "f677bfed2974f6f9838d32ed8604f6dd40266e50221d3a1b9fedf194285b53ff"
+    }
+  ]
+}

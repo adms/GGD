@@ -32,5 +32,5 @@ source=next((s for s in d['publicSources'] if s['id']=='local-lol-decoded-audio'
 if source is None:
  source={k:v for k,v in next(s for s in d['publicSources'] if s['id']=='local-lol-installed-audio').items() if k not in ['nativeAudioIndex','extractionReports','audioFileIndex','audioAcquisition']};source.update(id='local-lol-decoded-audio',target='LOL 本機已解碼音訊（持續追加完整交付）',format='IEEE Float32 WAV');d['publicSources'].append(source)
 else:source.setdefault('audioFileIndexHistory',[]).append(source['audioFileIndex'])
-source.update(audioFileIndex=dict(reportPath=path.relative_to(root).as_posix(),reportSha256=sha(path)),audioGroups=groups,audioAcquisition=r['totals'],verification=f'{len(groups)}個完整 WAD 音訊轉換交付，共{len(files)}個Float32 WAV；原取樣率／聲道／frame核對，SHA已重新驗證。未逐段聽審；其他原生媒體仍分批轉換，不等待S3。')
+source.update(audioFileIndex=dict(reportPath=path.relative_to(root).as_posix(),reportSha256=sha(path)),audioGroups=groups,audioAcquisition=r['totals'],verification=f'{len(groups)}個WAD已完成當批處理，共{len(files)}個通過驗證的Float32 WAV；另{len(failures)}個媒體未通過解碼／格式驗證，原檔及錯誤保留，不列可播放數。原取樣率／聲道／frame核對，SHA已重新驗證。未逐段聽審；其他原生媒體仍分批轉換，不等待S3。')
 dp.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');print(json.dumps(dict(manifest=str(path),sha256=sha(path),**r['totals'])))

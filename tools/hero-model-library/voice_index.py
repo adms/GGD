@@ -6,6 +6,7 @@ The compact per-file SHA index is a Git control manifest; audio remains in S3/lo
 """
 import argparse
 from collections import Counter
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -27,6 +28,26 @@ def language_rank(value):
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def excluded_from_speech(role, source_is_synthetic=None, source_contains_synthetic=None):
+    """Mixed synthetic banks stay excluded without labelling every clip synthetic."""
+    for flag in (source_is_synthetic, source_contains_synthetic):
+        assert flag is None or isinstance(flag, bool)
+    return role in {'music', 'sound-effect'} or source_is_synthetic is True or source_contains_synthetic is True
+
+
+def primary_audio(archived, declared=None, formats=None):
+    """A full backup does not add alternate formats to an explicit delivery."""
+    saved={f['path']:f for f in archived}
+    selected=archived if declared is None else declared
+    assert len(selected)==len({f['path'] for f in selected}), 'Duplicate delivery path'
+    for f in selected:
+        assert f['path'] in saved, 'Delivery missing from current backup: '+f['path']
+        assert (f['sha256'],f['bytes'])==(saved[f['path']]['sha256'],saved[f['path']]['bytes'])
+    allowed=set(formats or ['.wav','.ogg','.mp3','.flac'])
+    assert allowed <= {'.wav','.ogg','.mp3','.flac'}
+    return [f for f in selected if Path(f['path']).suffix.lower() in allowed]
 
 
 def main():
@@ -69,11 +90,15 @@ def main():
                 voiceFilenameCandidates=0, originalBanks=[], backupIds=[])
         return groups[key]
 
-    def add(g, rel, digest, size, store_id, member, seconds=None, role='unclassified', original_bank=None):
+    def add(g, rel, digest, size, store_id, member, seconds=None, role='unclassified', original_bank=None,
+            source_is_synthetic=None, source_contains_synthetic=None):
         path=ws/rel
         local_ok=path.is_file() and path.stat().st_size==size
         row=dict(groupId=g['id'],path=rel,sha256=digest,bytes=size,backupId=store_id,
                  archiveMember=member,localSizeVerified=local_ok,category=role,synthesisReady=False)
+        row['sourceIsSynthetic']=source_is_synthetic
+        row['sourceContainsSynthetic']=source_contains_synthetic
+        row['excludedFromSpeechInput']=excluded_from_speech(role,source_is_synthetic,source_contains_synthetic)
         if seconds is not None:
             row['seconds']=seconds;g['knownDurationSeconds']+=seconds;g['durationMeasuredFiles']+=1
         if original_bank:row['sourceBank']=original_bank
@@ -143,7 +168,12 @@ def main():
             archived=read(report_path)
             receipt=dict(readbackVerified=False)
             local_only=True
-        audio=[f for f in archived['files'] if Path(f['path']).suffix.lower() in {'.wav','.ogg','.mp3','.flac'}]
+        declared=None
+        if source.get('audioFileIndex',{}).get('reportPath'):
+            spec=source['audioFileIndex'];path=(ws/source['localPath']/spec['reportPath']).resolve()
+            assert path.is_relative_to((ws/source['localPath']).resolve()) and sha(path)==spec['reportSha256']
+            declared=read(path)['files']
+        audio=primary_audio(archived['files'],declared,source.get('primaryAudioFormats'))
         if source.get('audioConversion',{}).get('decodedFloatWavCount'):
             audio=[f for f in audio if not f['path'].startswith('decoded-audio/')]
         native_files=[];native_bank_count=0
@@ -221,15 +251,28 @@ def main():
                 bank=decoded.get('sourceBank')
                 if bank and bank not in g['originalBanks']:g['originalBanks'].append(bank)
             add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,member,
-                seconds=decoded.get('seconds'),original_bank=decoded.get('sourceBank'))
+                seconds=decoded.get('seconds'),original_bank=decoded.get('sourceBank'),
+                role=(part or {}).get('audioCategory',source.get('audioCategory','unclassified')),
+                source_is_synthetic=decoded.get('sourceIsSynthetic',(part or {}).get('sourceIsSynthetic',source.get('sourceIsSynthetic'))),
+                source_contains_synthetic=(part or {}).get('sourceContainsSynthetic',source.get('sourceContainsSynthetic')))
+            for field in ['sampleRate','channels','frames','sampleFormat','bitsPerSample',
+                          'peakAbsFloat','samplesAboveUnity','gainDecisionRequired',
+                          'sourcePath','sourceSha256','reportedLocale','sourceManifestLocale']:
+                if field in decoded:files[-1][field]=decoded[field]
+            for field in ['sourceContainsSynthetic','sourceIsSynthetic','sourceSynthesisProvider','classificationEvidence']:
+                if field in (part or {}):g[field]=part[field]
 
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
     for g in groups.values():
         g['languagePreferenceRank']=language_rank(g.get('reportedLanguage'))
         g['languagePreferenceBasis']='reported-language-only; listening review still required'
+    categories={key:Counter() for key in groups}
+    for f in files:categories[f['groupId']][f['category']]+=1
+    for key,g in groups.items():g['categoryCounts']=dict(categories[key])
 
-    summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl',
+    summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl.gz',
+        sourceFileEncoding='gzip',localUncompressedFileManifest='voice-files.jsonl',
         localWorkspace=str(ws),localUseRequiresS3=False,
         languagePreference=['ja','en','other-or-unreviewed'],
         scope='All indexed 300/MBA audio and verified local public/paid source audio; S3 backup readiness is tracked separately. Not all files are character voices.',
@@ -243,12 +286,16 @@ def main():
             confirmedVoiceCount=None,synthesisReadyGroups=0))
     manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
     (OUT/'voice-files.jsonl').write_text(manifest)
-    summary['sourceFileManifestSha256']=hashlib.sha256(manifest.encode()).hexdigest()
+    compressed=gzip.compress(manifest.encode(),mtime=0)
+    (OUT/'voice-files.jsonl.gz').write_bytes(compressed)
+    summary['sourceFileManifestSha256']=hashlib.sha256(compressed).hexdigest()
+    summary['uncompressedFileManifestSha256']=hashlib.sha256(manifest.encode()).hexdigest()
     (OUT/'voice-index.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     lines=['# 角色語音索引','',
-        '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬讀 `voice-files.jsonl`。', '',
+        '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬，依 `sourceFileManifest` 讀取 `voice-files.jsonl.gz`。Git 保存完整 gzip 索引以免大量音訊清單超出單檔限制；解壓後為 JSONL，本機亦保留完整 `voice-files.jsonl`。`query_voice.py` 自動解壓並核對雜湊，無需另裝套件。', '',
         '**本機已驗證音訊立即供其他工作流讀取，不等待 S3 備份。** `query_voice.py --files --json` 回傳每檔 `absolutePath`；`voice-index.json.localWorkspace` 加上逐檔 `path` 也可直接定位。S3 狀態另列，待聽審不妨礙找檔、播放、轉錄及準備素材。', '',
         '**語音查找與選用優先順序：日文 → 英文 → 其他語言／待核。** 所有語言、版本仍完整保留。查詢按來源明列語言排序；作者或安裝包語系只算線索，不等於逐段聽審已確認。LOL 等已存在本機的素材先擷取建檔，不重複下載；缺少的日／英語版本另列補件。', '',
+        '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
@@ -256,7 +303,7 @@ def main():
         '## 一鍵複製給工作流','', '```text',
         'Git 分支：codex/hero-model-library-options；PR：https://github.com/adms/GGD/pull/1152',
         '先讀 materials/hero-model-library/角色語音索引.md 與 voice-index.json。',
-        '依角色／來源 groupId 篩選 voice-files.jsonl，保留各版本，相似模型與目標角色的說話者分開標記，不把借用聲音標成本尊。',
+        '依 voice-index.json.sourceFileManifest 讀取完整 voice-files.jsonl.gz，解壓後按角色／來源 groupId 篩選；保留各版本，不把借用聲音標成本尊。',
         '來源角色、GGD heroIds 與逐段說話者是三個不同欄位；未確認值保持 unknown。',
         '先聽審、轉錄、檢查語言與品質，再建立合成輸入清單；不要把音檔數當成語音數。',
         '本機驗證完成即可取用，不用等待 S3；逐檔查詢的 absolutePath 可直接讀取。',
@@ -271,7 +318,10 @@ def main():
         '| 角色／資源組 | 來源 ID／GGD 對應 | 可播放檔數 | 語音判定 | 取檔入口 |','|---|---|---:|---|---|']
     for g in groups.values():
         ids='、'.join(g['heroIds']) or '未綁 GGD ID／共用'
-        status=f'Vo_ 檔名候選 {g["voiceFilenameCandidates"]}；待聽審' if g['voiceFilenameCandidates'] else '待聽審分類'
+        status=('含合成播報的混合來源；排除語音輸入' if g.get('sourceContainsSynthetic') is True else
+                '音樂；排除語音輸入' if g['categoryCounts'].get('music')==g['fileCount'] else
+                '音效；排除語音輸入' if g['categoryCounts'].get('sound-effect')==g['fileCount'] else
+                f'Vo_ 檔名候選 {g["voiceFilenameCandidates"]}；待聽審' if g['voiceFilenameCandidates'] else '待聽審分類')
         language='作者標示 '+g['reportedLanguage']+'；逐段待核' if g.get('reportedLanguage') else '語言待核'
         lines.append(f'| {g["name"].replace("|","／")} | `{g["id"]}`<br>{ids} | {g["fileCount"]} | {status}；{language} | '+ '、'.join('`'+b+'`' for b in g['backupIds'])+' |')
     if audio_leads:

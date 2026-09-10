@@ -21,7 +21,7 @@
 | 我要做什麼 | 直接入口 |
 |---|---|
 | 看全部角色、預設模型、候選來源 | [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) |
-| 找角色語音作合成／轉錄素材 | [角色語音索引.md](../hero-model-library/角色語音索引.md)；`voice-index.json`／`voice-files.jsonl` 與 `query_voice.py` |
+| 找角色語音作合成／轉錄素材 | [角色語音索引.md](../hero-model-library/角色語音索引.md)；`voice-index.json`／`voice-files.jsonl.gz` 與 `query_voice.py` |
 | 查未上架、尚無 GGD ID 或下載中的儲備 | `query.py --downloads <來源／原生角色>`；例如 `gitlab-ssbu-models` |
 | 避免重複購買模型 | 先讀 `purchasePolicy.scope`；`publicSources`／`paidSources` 是已取得的免費／付費來源，`publicSourceLeads` 是未取得線索 |
 | 整合另一工作流付費取得的模型 | 同一 `download-sources.json` 的 `paidSources`；查詢回傳 `paidCandidates`，與免費來源一起保留整合 |
@@ -126,3 +126,5 @@ python3 tools/hero-model-library/inventory.py --workspace ..
 固定成品從已驗證本機 release 納入 Git：`python3 tools/hero-model-library/pin-git-release.py --library <本機庫>`；用 `--check` 可只靠 Git 檔案逐檔驗證。此工具保留全部 `ready/` 元件、依賴與驗證收據，不納入原始／半成品，既有不同內容拒絕覆蓋。
 
 語音與音效的取得、解碼、分類、事件／技能綁定分開記錄。利姆路新增 13 段浮點 WAV（23.672 秒）已與原始 BNK／WEM 一起在 S3 legacy 讀回驗證；其中 4 檔峰值超過 1，仍待聽審、增益與綁定，不計為已驗收語音成品。
+
+語音逐檔索引以 voice-index.json.sourceFileManifest 為準；目前 Git 儲存完整 voice-files.jsonl.gz，query_voice.py 自動驗證及解壓，本機另保留未壓縮 JSONL。音樂、音效及含合成播報來源保留並標記 excludedFromSpeechInput，不直接混入角色語音輸入。

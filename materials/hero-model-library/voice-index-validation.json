@@ -1,7 +1,7 @@
 {
   "schema": "ggd-local-audio-index-validation@1",
-  "audioFiles": 87822,
-  "groups": 486,
+  "audioFiles": 152738,
+  "groups": 643,
   "localMissing": 0,
   "duplicatePaths": 0,
   "languagePriority": [
@@ -9,16 +9,31 @@
     "en",
     "other-or-unreviewed"
   ],
-  "lolNativeBanks": 4604,
-  "lolOriginalWads": 360,
-  "lolWemFiles": 172700,
-  "newWavSha256Rechecked": {
-    "local-lol-decoded-audio": 6172,
-    "kof-xv-ash-audio": 86,
-    "gamebanana-zero-lancer-493444": 13,
-    "spritedatabase-fate-ps2-archer": 180
+  "priorPublishedAudioPreserved": 87822,
+  "priorVerifiedBackupRecordsUnchanged": 48,
+  "queriedDeliveryCounts": {
+    "local-lol-decoded-audio": 60190,
+    "lol-riot-ja-jp-16.18.8159717": 73,
+    "kof-xiv-mai-audio": 145,
+    "kof-xv-mai-audio": 82,
+    "gamebanana-fuc-shirou-473819": 16,
+    "gamebanana-fuc-rin-474593": 12,
+    "gamebanana-fate-bgm-dnf-62195": 30,
+    "parallel-community-lina-ssbu-ceruleancast": 120,
+    "parallel-ps-jumpforce-local-final3": 2271,
+    "parallel-voice-melee-local-29": 1584
   },
+  "cleanCheckoutGzipQueryVerified": true,
+  "compressedManifestSha256": "1ff2322c5609f17cff61eaa30bbaea78c4daf15053f1e5a6bf0c83409b01daba",
+  "compressedManifestBytes": 12076564,
+  "localUncompressedRetained": true,
+  "lolDecodedSuccess": 60190,
+  "lolFailedMediaPreserved": 12,
+  "japaneseOfficialWads": 2,
+  "japaneseOfficialFloatWavs": 73,
+  "japaneseGainDecisionRequired": 25,
+  "linaMixedAnnouncerAndMusicExcluded": 84,
   "documentMirrorsMatch": true,
   "synthesisReadyGroups": 0,
-  "scope": "Full listed audio lookup and local existence; new LoL/KOF/Fate hashes; native extraction receipts. Not listening or runtime acceptance."
+  "scope": "Full gzip and local path metadata; generator rehashes local pending deliveries; independent non-LoL-new-delivery hashes and real clean-checkout CLI; preserves all prior audio and S3 receipts. Not listening or runtime acceptance."
 }
