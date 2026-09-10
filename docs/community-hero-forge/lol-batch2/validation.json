@@ -1,0 +1,279 @@
+{
+  "schema": "ggd-lol-batch2-validation@1",
+  "recordedAt": "2026-09-11T00:56+08:00",
+  "implementationCommit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
+  "recipeSha256": "sha256:e4d74e5876afa72bcb6093dc5ab78563a9faca207050675087bba67fdef1ea4a",
+  "target": {
+    "gameRevision": "lol-batch2-local-473d6235",
+    "contentVersion": "cv_269b5e092a56",
+    "migrationFingerprint": "79d7bc384d11",
+    "processorFingerprint": "3763b014a5d4"
+  },
+  "releaseReady": false,
+  "published": false,
+  "checks": {
+    "sharedTypecheck": "passed",
+    "editorTypecheck": "passed",
+    "focusedTests": {
+      "shared": 15,
+      "editor": 3,
+      "status": "passed across focused runs; includes actual Editor UUID IDs"
+    },
+    "gitHygiene": "3 passed against committed tree",
+    "coordination": "27 packets, 0 missing",
+    "contentBuild": "passed",
+    "serviceRoundTrip": {
+      "status": "passed",
+      "heroes": 11,
+      "slots": 66,
+      "finishedAt": "2026-09-10T16:54:57.450Z",
+      "checks": [
+        "exact source project",
+        "compiled six slots",
+        "authored VFX scripts",
+        "pinned dependencies",
+        "model document",
+        "exact GLB bytes",
+        "asset closure",
+        "service inspection",
+        "stable target before and after"
+      ]
+    },
+    "skillsGate": {
+      "status": "failed",
+      "firstRemainingFailure": "contract:numbers:check: docs/技能編輯器引擎須知 20260811.md stale"
+    },
+    "editorReleaseGate": {
+      "status": "failed",
+      "failure": "skillAcceptanceCatalog.test.ts: selected fixtures lack consumeStatus/evasion/pull/spendHealth coverage; capability-only list is stale",
+      "comparison": "Failing catalog, abilities, champions, templates and contract inputs have no diff from merged origin/main 6da992509; no separate Main test run claimed."
+    },
+    "visual": {
+      "status": "blocked",
+      "observedHero": "艾希",
+      "client": "Codex in-app browser",
+      "route": "http://127.0.0.1:5211/editor/hero-forge",
+      "generation": "six slots passed; real hero UUID and model selection present",
+      "error": "3D 場景的 PBR 光照貼圖尚未就緒",
+      "source": "apps/editor/src/vfx-forge/VfxForgeStage.ts:2243",
+      "attempt": "Adding a render pump did not resolve it; experimental change reverted. No claim all models/VFX rendered."
+    }
+  },
+  "previousServiceAttempts": [
+    {
+      "attempt": 1,
+      "result": "sandbox loopback fetch failed before any hero"
+    },
+    {
+      "attempt": 2,
+      "result": "11 worker loader spawn EBADF failures"
+    },
+    {
+      "attempt": 3,
+      "result": "11 worker loader spawn EBADF failures"
+    },
+    {
+      "attempt": 4,
+      "result": "11 passed; previous intermittent process failure root cause undetermined, no worker patch"
+    }
+  ],
+  "remainingMainIssues": [
+    1187,
+    1189,
+    1190,
+    1191,
+    1197
+  ],
+  "remainingMainSlots": 14,
+  "sourceFidelity": "Per-slot adaptations remain authoritative; other 52 slots are not thereby declared complete source fidelity.",
+  "submission": "not performed: source-core and visual blockers remain",
+  "heroes": [
+    {
+      "id": "lol-sett",
+      "name": "賽特",
+      "status": "passed",
+      "sourceSha256": "sha256:fe2ded3de6b2c57f90267130129b46501c951bd0c0ca57401b795297f61e6252",
+      "archiveSha256": "sha256:1a98b4ed67238de57521678900fca74e7ab89c9dc067fb445ee46805992f5a71",
+      "archiveBytes": 7577129,
+      "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+      "modelPath": "assets/models/community/35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf.glb",
+      "modelDocumentSha256": "sha256:134357d318e87c2b11b0156d07642942341a1b3253095381a6e90c342e7d265d",
+      "modelBytesSha256": "sha256:35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf",
+      "packageDigest": "sha256:ff8749065cf22412ce5b936e9776b8531026db9df347b0fce5c7d43938e56c42",
+      "slots": 6,
+      "runtimeDocuments": 128,
+      "validationDocuments": 2,
+      "assets": 92
+    },
+    {
+      "id": "lol-fiddlesticks",
+      "name": "稻草人",
+      "status": "passed",
+      "sourceSha256": "sha256:ab40c953cd65466d4c22ccef2aae04b69958142a9a8f7225105882917e99cd86",
+      "archiveSha256": "sha256:62eb1621ef68e535eebc2e4f2b8b5b5feeb49afb2928bdc150dd40c44d4e59be",
+      "archiveBytes": 6466920,
+      "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+      "modelPath": "assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+      "modelDocumentSha256": "sha256:824221094474c6810ba3d79c1807e86253784bf56909c77c8a6e5092265dd013",
+      "modelBytesSha256": "sha256:8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40",
+      "packageDigest": "sha256:efcaad880dd0ed8a90290d5260cca6bebeda8b445a4542933c421a6d20365838",
+      "slots": 6,
+      "runtimeDocuments": 128,
+      "validationDocuments": 2,
+      "assets": 92
+    },
+    {
+      "id": "lol-ornn",
+      "name": "鄂爾",
+      "status": "passed",
+      "sourceSha256": "sha256:6031835d769eaba51a882c951456b14fb310848baeee01608ac1d1e2fc531093",
+      "archiveSha256": "sha256:804d265d67874b190e55c0f0ba1f8b17e34a2cfcd39efac6471ed9ef787a0e0b",
+      "archiveBytes": 6753933,
+      "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+      "modelPath": "assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+      "modelDocumentSha256": "sha256:7069cc3ca20ddc23f5348037b432d65047dbff02be3a4d2d096825bd978b3608",
+      "modelBytesSha256": "sha256:a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5",
+      "packageDigest": "sha256:40da7aaeff8e5df3ff2bc11caff33fcfb8b27f98e0b761064294f4af5c978bb2",
+      "slots": 6,
+      "runtimeDocuments": 128,
+      "validationDocuments": 2,
+      "assets": 92
+    },
+    {
+      "id": "lol-chogath",
+      "name": "科加斯",
+      "status": "passed",
+      "sourceSha256": "sha256:28b90cd15935e98871b9a9bc6f2bb0e495a4209704036770d1808cdcf1f2140c",
+      "archiveSha256": "sha256:5b7cb54b225d963c9b4d7c7e16f713be92303ada7a9511bddf89611aa38b1232",
+      "archiveBytes": 3503225,
+      "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+      "modelPath": "assets/models/community/75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20.glb",
+      "modelDocumentSha256": "sha256:88dc90fc5871c9342cbd573d49692f7ac3e9639090dffba386ef35d58d68af42",
+      "modelBytesSha256": "sha256:75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20",
+      "packageDigest": "sha256:014e74fae56572174e5cc16818f7a3527e7ad5c24fad3c460e1aec5e2ae3ebb0",
+      "slots": 6,
+      "runtimeDocuments": 129,
+      "validationDocuments": 2,
+      "assets": 92
+    },
+    {
+      "id": "lol-ashe",
+      "name": "艾希",
+      "status": "passed",
+      "sourceSha256": "sha256:f48a3e612b9f7e580d05f69d4abb399640adf88d9dbcc2e79de4293b8e66d3f2",
+      "archiveSha256": "sha256:55010b199a04b534c10f139463a9a77ff57a8b09a6efb40f880ce1debbfed4d6",
+      "archiveBytes": 4346953,
+      "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+      "modelPath": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
+      "modelDocumentSha256": "sha256:b943ec6106d6ec2521577167c3437458ffafe4f0810d54f57660dbffb0050925",
+      "modelBytesSha256": "sha256:c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06",
+      "packageDigest": "sha256:cae9f363befa48b338a6506cb0eba7f9a693afcd0929d609d4a98a6bb4f75826",
+      "slots": 6,
+      "runtimeDocuments": 131,
+      "validationDocuments": 2,
+      "assets": 93
+    },
+    {
+      "id": "lol-blitzcrank",
+      "name": "布里姿",
+      "status": "passed",
+      "sourceSha256": "sha256:63fac4335d547fccfed669a5fe5ad384bf016f61e1e7ad471efe348599cc110e",
+      "archiveSha256": "sha256:6881f90e2cc1af15bc392f534fa15ab16dee8c77b139b26b8649a6ed25d57210",
+      "archiveBytes": 3528289,
+      "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+      "modelPath": "assets/models/community/e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce.glb",
+      "modelDocumentSha256": "sha256:05e7a2a46d652e18ad0d3de0579e721c52cc7d7c5d60247d0b60a94fc33cbecf",
+      "modelBytesSha256": "sha256:e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce",
+      "packageDigest": "sha256:5f99f4548a4c4e6c9bc1339da9799352683f93b7f2d46c501a9c07877678511b",
+      "slots": 6,
+      "runtimeDocuments": 131,
+      "validationDocuments": 2,
+      "assets": 94
+    },
+    {
+      "id": "lol-ahri",
+      "name": "阿璃",
+      "status": "passed",
+      "sourceSha256": "sha256:ae8029e75ab2e07440f15fb53eb950ef4ada129c7a9e59b98366186cb0713212",
+      "archiveSha256": "sha256:86ea138d0584d72bbf9c63c0de9214b6ef27da3899282cb5d343e5bad65e6bcc",
+      "archiveBytes": 5590949,
+      "modelKey": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+      "modelPath": "assets/models/community/5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4.glb",
+      "modelDocumentSha256": "sha256:98fa31450054766ab60c97dcebde44fe11e2c2f2e96a281dda52c0c3aa49b6b0",
+      "modelBytesSha256": "sha256:5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4",
+      "packageDigest": "sha256:0d373a706d57e6cdf33d2e4ad36ef06e4ae9e34df83d03135ab196f8feeeba23",
+      "slots": 6,
+      "runtimeDocuments": 130,
+      "validationDocuments": 2,
+      "assets": 93
+    },
+    {
+      "id": "lol-thresh",
+      "name": "瑟雷西",
+      "status": "passed",
+      "sourceSha256": "sha256:d9d68f7c55ba3e5c2dcbaac1f49dbf8286325cd9eac24f7e41338c49c1d14150",
+      "archiveSha256": "sha256:266bf209fa419402b83de7e1ebeb3d9a2d806286c99b07375db0712b62e5a5e1",
+      "archiveBytes": 7557744,
+      "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+      "modelPath": "assets/models/community/c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d.glb",
+      "modelDocumentSha256": "sha256:9be5addceb3b660ff0d3e71213223cb551951b0d6b58f4dadcdc3a27238495d7",
+      "modelBytesSha256": "sha256:c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d",
+      "packageDigest": "sha256:4299f58977aa615c75880244b8590c620c806cbc014b5bf20c23227d73d98fb8",
+      "slots": 6,
+      "runtimeDocuments": 130,
+      "validationDocuments": 2,
+      "assets": 93
+    },
+    {
+      "id": "lol-velkoz",
+      "name": "威寇茲",
+      "status": "passed",
+      "sourceSha256": "sha256:40d0c9a26cfd046ab15e91f151e8a053f35e66a4424de5841a15cd3f16d7baed",
+      "archiveSha256": "sha256:fa71b6e9c10b0006489b43b74ce0b5f5c44125363bb64a5fcd6d90ecc5a42e1f",
+      "archiveBytes": 7619921,
+      "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+      "modelPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+      "modelDocumentSha256": "sha256:a5bb2f2a5c055962589c2110c70df0106f2cf5c5749de3af4c1a151b3cf4b12f",
+      "modelBytesSha256": "sha256:f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1",
+      "packageDigest": "sha256:286cce9f6af8fb05dfc961777cec41f266a772aca9cf28206937e7c53804a2fe",
+      "slots": 6,
+      "runtimeDocuments": 131,
+      "validationDocuments": 2,
+      "assets": 93
+    },
+    {
+      "id": "lol-malphite",
+      "name": "墨菲特",
+      "status": "passed",
+      "sourceSha256": "sha256:caff8607853921419fb858a3dce32ad0853957c37aa179443a1890b3c536bdba",
+      "archiveSha256": "sha256:c0015494796058c84527abf447c694e155ed9bb29207fd617a5ba0f29158c36c",
+      "archiveBytes": 3391019,
+      "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+      "modelPath": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+      "modelDocumentSha256": "sha256:abb5ddcf3d3f890188b33852da8e5d35449a7b7275bb894a0d113283dc4783c5",
+      "modelBytesSha256": "sha256:b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9",
+      "packageDigest": "sha256:9d5087d010c79128799b122bba1f008d330c3e9a0b5f5f4c7c6bfa006aa99c2c",
+      "slots": 6,
+      "runtimeDocuments": 128,
+      "validationDocuments": 2,
+      "assets": 92
+    },
+    {
+      "id": "lol-garen",
+      "name": "蓋倫",
+      "status": "passed",
+      "sourceSha256": "sha256:10b3893100054b9fac26cc0dd76a5e58f3b3e8900386d01bdca83bf8caa4e83d",
+      "archiveSha256": "sha256:e4069decb1d1ba6b5e4ba9f8f68a7076f48ccfaad28055afe3481cb7f49e5f44",
+      "archiveBytes": 5036382,
+      "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+      "modelPath": "assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+      "modelDocumentSha256": "sha256:d019e9f48dcc5a5167aaf69c914a93e6c4db35ce74d0b3c30bd3ea84fb0b2957",
+      "modelBytesSha256": "sha256:09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22",
+      "packageDigest": "sha256:ab6e56ffa6d50738d34a4ad7eaef302101d5664a11c5bae86853d41729a41d38",
+      "slots": 6,
+      "runtimeDocuments": 128,
+      "validationDocuments": 2,
+      "assets": 92
+    }
+  ]
+}
