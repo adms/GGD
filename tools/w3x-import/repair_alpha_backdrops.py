@@ -108,6 +108,7 @@ def main() -> int:
     mode.add_argument("--write", action="store_true")
     args = parser.parse_args()
     bad = 0
+    frozen = 0
     for path in sorted(MODEL_DIR.rglob("*.glb")):
         data = path.read_bytes()
         doc, binary = chunks(data)
@@ -116,8 +117,22 @@ def main() -> int:
             continue
         bad += len(changed)
         print(f"{path.relative_to(MODEL_DIR)}: " + "; ".join(changed))
+        # ⛔⛔ **凍結版本一個位元組都不可以改。** `ModelVersions.freeze()` 把來源位元組
+        #   逐位元組複製到 `…/versions/<binarySha256>.glb` —— ⭐ **檔名就是它的內容雜湊**，
+        #   而 `apps/content-api/src/modelVersions.ts:129` 的 `verify()` 拿
+        #   `sha256Bytes(bytes) !== version.binarySha256` 比對它。
+        #   ⇒ 在這裡就地改寫 = 檔名與內容對不上 = **那位英雄的模型版本驗證當場失效**，
+        #     ⚠️ 而且 `--write` 會回 0，看起來完全成功（fail-open 沒錯，靜默才是缺陷）。
+        # ⭐ 正解是**重新註冊**（修好來源 → 走 register 產生一份新雜湊的凍結副本），
+        #   ⛔ 不是原地修。所以這裡只指名它，⛔ 不動它。
+        if "/versions/" in path.as_posix():
+            frozen += 1
+            print(f"    ⛔ 凍結版本,⛔ **不原地修** —— 修好來源之後**重新註冊**（見 modelVersions.ts:129）")
+            continue
         if args.write:
             path.write_bytes(encode(doc, binary))
+    if frozen:
+        print(f"⚠️ 其中 {frozen} 份是凍結版本 ⇒ ⛔ 沒有被修,要走重新註冊")
     if args.check and bad:
         print(f"FAIL: {bad} OPAQUE transparent-atlas material(s)")
         return 1

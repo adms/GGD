@@ -14,5 +14,27 @@ it("bundles every pickable document template plus the offline preview inputs", (
   const baseline = createHeroSimulationBaseline(new Map(bundledHeroCatalog.simulationDocuments));
   for (const collection of HERO_SIMULATION_COLLECTIONS) expect(baseline.counts[collection], collection).toBeGreaterThan(0);
   const bodies = new Set(bundledHeroCatalog.simulationDocuments.filter(([key]) => key.startsWith("champions/")).map(([, doc]) => doc.modelKey));
-  expect(bundledHeroCatalog.modelIds.every((id) => bodies.has(id))).toBe(true);
+  // ⭐ owner 2026-09-11（逐字）：「如果你遇到該角色**還沒有實作** 卻下載了模型
+  //    你**還是要放在後台跟編輯器的模型庫列表** **等待認領實作**」
+  //
+  // ⛔ 在此之前這一行斷言的正是**相反**的事（`modelIds ⊆ bodies`）——
+  //    也就是把「**未認領的模型不可以出現**」寫死成了不變量，而
+  //    `catalog.ts` 上面那段註解（「a new catalog-approved body does not require a
+  //    fake official champion」）與 `zModelDoc.heroBody` 的檔頭其實**早就**寫著相反的政策。
+  //    ⇒ ⭐ 三者互相矛盾了很久，而唯一會紅的是這一行；它在 2026-09-11 之前**已經是紅的**。
+  //
+  // ⭐ 新的不變量問**兩件事**（⛔ 一件不夠）：
+  //    ① 每一顆列出來的都說得出**資格**：要嘛某支英雄在用它，要嘛文件自己宣告 `heroBody: true`
+  //       —— ⛔ 這一半擋的是「FX／道具／場景被倒進英雄身體選單」
+  //    ② ⭐ **待認領那一桶非空** —— ⛔ 這一半擋的是「預設被翻回去、待認領的靜靜地全部消失」，
+  //       而那正是 owner 這一則要防的事。⚠️ 只寫①的話，一個空清單也會通過。
+  const declared = new Set(
+    Object.values(import.meta.glob("../../../../content/models/*.json", { eager: true, import: "default" }))
+      .flatMap((raw) => {
+        const doc = raw as { id?: unknown; heroBody?: unknown };
+        return typeof doc.id === "string" && doc.heroBody === true ? [doc.id] : [];
+      }),
+  );
+  expect(bundledHeroCatalog.modelIds.every((id) => bodies.has(id) || declared.has(id))).toBe(true);
+  expect(bundledHeroCatalog.modelIds.filter((id) => !bodies.has(id)).length).toBeGreaterThan(0);
 });
