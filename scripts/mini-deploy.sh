@@ -319,11 +319,13 @@ cmd_deploy() {
   #
   # ⚠️ 代價:**必須先 push**。⭐ 而那是更好的紀律 ——
   #   ⛔ 不會部署到一個不在 repo 裡的東西。
-  local head_local; head_local=$(git -C "$REPO" rev-parse HEAD)
-  git -C "$REPO" merge-base --is-ancestor "$head_local" origin/main 2>/dev/null \
-    || die "⛔ HEAD（$(echo "$head_local" | cut -c1-8)）還沒 push 到 origin/main
-   ⭐ git 這條路的前提是「部署的東西在 repo 裡」⇒ 先 push,⛔ 不要繞過去。
+  # ⭐ GH#1184：部署目標 = origin/main 的 tip（⛔ 不是本機 HEAD —— 那會靜靜部署較舊的祖先）
+  local deploy_sha; deploy_sha=$(resolve_deploy_target "$REPO") \
+    || die "⛔ 算不出部署目標（見上一行）。
+   ⭐ git 這條路的前提是「部署的東西在 repo 裡」⇒ 先 push／fetch,⛔ 不要繞過去。
    （owner 常設：工作中的 session 不要自己 push —— ⇒ 請 owner 確認）"
+  git -C "$REPO" merge-base --is-ancestor HEAD "$deploy_sha" 2>/dev/null \
+    || warn "⚠️ 本機 HEAD 有 origin/main 沒有的 commit —— ⭐ 它們**不會**被部署（先 push）"
   git -C "$REPO" diff --quiet HEAD 2>/dev/null \
     || warn "⚠️ 工作區有未提交的改動 —— ⭐ 它們**不會**被部署"
 
@@ -385,7 +387,7 @@ cmd_deploy() {
     # ⭐ 所以在 checkout **之前**先問：目標 commit 會不會蓋到任何未追蹤檔？
     #   會 ⇒ **先備份**（⛔ 不是 `rm`、⛔ 也不是自動搬走：那是同一個動詞的兩個名字）。
     local clash
-    clash=$(r "cd $REMOTE_REPO && git ls-tree -r --name-only $head_local | while read -r f; do
+    clash=$(r "cd $REMOTE_REPO && git ls-tree -r --name-only $deploy_sha | while read -r f; do
                  [ -f \"\$f\" ] && ! git ls-files --error-unmatch \"\$f\" >/dev/null 2>&1 && printf '%s\n' \"\$f\"
                done" 2>/dev/null || true)
     if [ -n "${clash// /}" ]; then
@@ -409,7 +411,7 @@ cmd_deploy() {
      ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
       ok "已備份 $n_clash 份到 ${bdir}（⭐ 帳本：`ls $bdir`）"
     fi
-    r "cd $REMOTE_REPO && git checkout -f -q $head_local" || die "checkout $head_local 失敗"
+    r "cd $REMOTE_REPO && git checkout -f -q $deploy_sha" || die "checkout $deploy_sha 失敗"
     # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
     if [ -n "${clash// /}" ]; then
       local kept
@@ -418,9 +420,9 @@ cmd_deploy() {
       ok "備份複驗：$kept 份還在"
     fi
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
-  [ "$remote_head" = "$head_local" ] \
-    && ok "mini 對到 $(echo "$head_local" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
-    || die "⛔ 同步後版本對不上（mini=$remote_head 本機=${head_local}）"
+  [ "$remote_head" = "$deploy_sha" ] \
+    && ok "mini 對到 $(echo "$deploy_sha" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
+    || die "⛔ 同步後版本對不上（mini=$remote_head 本機=${deploy_sha}）"
 
   head_ "2. build（arm64）"
   # ⛔⛔ **裸的 `docker compose build` 會掉版本戳**。
@@ -752,6 +754,30 @@ cmd_tunnel_verify() {
   fi
   echo
   info "⚠️ 這只證明**路徑通**。真的一場比賽還要玩家實際連一次。"
+}
+
+# ⭐ GH#1184 —— **部署目標怎麼算**。⛔ 不是「本機 HEAD」。
+#   2026-09-10 實測：本機 HEAD 是 origin/main 的**較舊祖先**（PR tip 20bb3c827），
+#   合併 commit 07d90f991 已在 origin/main ⇒ 舊寫法**靜靜部署了舊的**，而七段後置條件全綠
+#   —— 它們驗的都是「部署的那一個好不好」，⛔ 沒有一段驗「部署的是不是最新」。
+#   ⭐ 預設 = origin/main 的 tip（push 過的最新）。要部署別的（回滾）要**明說** GGD_DEPLOY_SHA=<sha>。
+#   用法：resolve_deploy_target <repo> ⇒ stdout 印目標 sha；落後／明說時在 stderr 喊；
+#   ⛔ 目標不在本機 object store ⇒ 非零（先 git fetch）。純函式，miniDeployTargetsOriginMain.test.ts 真的跑它。
+resolve_deploy_target() {
+  local repo=$1
+  local head; head=$(git -C "$repo" rev-parse HEAD) || return 1
+  local tip; tip=$(git -C "$repo" ls-remote origin refs/heads/main 2>/dev/null | cut -f1)
+  [ -n "$tip" ] || tip=$(git -C "$repo" rev-parse origin/main 2>/dev/null) || { echo "⛔ 找不到 origin/main（沒網路且本機也沒有 origin/main）" >&2; return 1; }
+  local target=${GGD_DEPLOY_SHA:-$tip}
+  git -C "$repo" cat-file -e "${target}^{commit}" 2>/dev/null \
+    || { echo "⛔ 部署目標 ${target:0:9} 不在本機 object store —— 先 git fetch origin main" >&2; return 1; }
+  if [ -n "${GGD_DEPLOY_SHA:-}" ]; then
+    echo "⚠️ GGD_DEPLOY_SHA 明說了 ⇒ 部署 ${target:0:9}（⛔ 不是 origin/main 的 tip ${tip:0:9}）" >&2
+  elif [ "$head" != "$target" ]; then
+    local behind; behind=$(git -C "$repo" rev-list --count "${head}..${target}" 2>/dev/null || echo "?")
+    echo "⚠️ 本機 HEAD ${head:0:9} 落後 origin/main ${target:0:9} ${behind} 個 commit ⇒ 部署 origin/main（⭐ push 過的最新）。⛔ 舊寫法在這裡會靜靜部署本機 HEAD（GH#1184）" >&2
+  fi
+  echo "$target"
 }
 
 case "${1:-check}" in
