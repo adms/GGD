@@ -6,19 +6,22 @@
   "to": "main",
   "baseCommit": "b6686109a2946664827e8e59529de670b844d7c6",
   "contractFingerprint": "34e36ee3486cf36a",
-  "title": "第四批 LoL 11 名候選與模型已備妥；保留核心操作，待四張 Main 機制票接回",
+  "title": "第四批 LoL 11 名編輯草稿、基本演出與模型接入；14 槽核心操作待 Main",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "11 名／66 槽候選經既有模板與解析器全部編譯通過；艾希 E 延遲繳械在正常 SimWorld 指令中可執行、期間可走與施法、到期恢復普攻。這不代表全批原版機制完成。",
+      "text": "11 名／66 槽以真 Editor UUID 長度經 factory→generate→compile 通過；基本演出依成功事件接入，賽特 W/R 與稻草人 R 的窄修有 Sim 驗證；舊七名 factory 相容。這不代表尚缺的來源核心完成。",
       "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRecipe.test.ts packages/shared/src/content/heroForge/communityLolBatch2.test.ts --maxWorkers=2 --minWorkers=2",
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRecipe.test.ts packages/shared/src/content/heroForge/communityLolBatch2.test.ts packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts packages/shared/src/content/heroForge/communityLolBatch2Presentation.test.ts --maxWorkers=2 --minWorkers=2",
         "expectedExit": 0
       },
-      "commit": "dfcd62e64c1db0f3d297363ac05019ceed6dc2c0",
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
       "evidence": [
         "packages/shared/src/content/heroForge/communityLolBatch2.test.ts",
-        "packages/shared/src/content/heroForge/communityRecipe.test.ts"
+        "packages/shared/src/content/heroForge/communityRecipe.test.ts",
+        "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts",
+        "packages/shared/src/content/heroForge/communityLolBatch2Presentation.test.ts",
+        "docs/community-hero-forge/lol-batch2/validation.json"
       ]
     },
     {
@@ -28,26 +31,37 @@
         "command": "pnpm assets:manifest:check",
         "expectedExit": 0
       },
-      "commit": "dfcd62e64c1db0f3d297363ac05019ceed6dc2c0",
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
       "evidence": [
-        "materials/lol-batch2/models.json",
-        "materials/lol-batch2/model-receipts/ashe-motion.json",
-        "materials/lol-batch2/storage.json",
+        "docs/community-hero-forge/lol-batch2/models.json",
+        "docs/community-hero-forge/lol-batch2/storage.json",
         "content/assets-manifest.json"
       ]
     },
     {
       "kind": "confirmed",
-      "text": "候選 HeroProject 與編輯器備份可由同一配方重建；新批次仍未列為完成預設，Main 待接入項目為 6 類用法／8 槽。",
+      "text": "候選 HeroProject 與編輯器備份可由同一配方重建；新批次提供明示限制的獨立草稿入口，Main 待接入項目為 5 張票／14 槽，尚未正式發布。",
       "repro": {
         "command": "pnpm exec tsx tools/community-hero-forge/lol-batch2.mts --check",
         "expectedExit": 0
       },
-      "commit": "dfcd62e64c1db0f3d297363ac05019ceed6dc2c0",
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
       "evidence": [
-        "materials/lol-batch2/authoring-manifest.json",
-        "materials/lol-batch2/main-requirements.json",
+        "docs/community-hero-forge/lol-batch2/authoring-manifest.json",
+        "docs/community-hero-forge/lol-batch2/main-requirements.json",
         "apps/editor/src/hero/CommunityHeroExamples.tsx"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "11 名草稿的實際下載、file input 匯入與重新開啟保留出身、技能、模板快照、演出與模型；invalid 作品不能建 ZIP。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/hero/CommunityHeroExamples.test.tsx --maxWorkers=2 --minWorkers=2",
+        "expectedExit": 0
+      },
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
+      "evidence": [
+        "apps/editor/src/hero/CommunityHeroExamples.test.tsx"
       ]
     }
   ],
@@ -66,7 +80,8 @@
     }
   ],
   "asks": [
-    "請 Main 實作並在同票記錄 #1187（重施放）、#1189（隊友自選燈籠）、#1190（技能地形／撞地形）、#1191（持續引導），完成後回傳可用 schema／模板契約，Codex 接回 #1185。",
-    "請按草稿 PR 審查來源、成品與驗證；本 PR 不授權把候選簡化槽視為正式原設計，也不宣稱完成投稿或上架。"
+    "請 Main 實作並在同票記錄 #1187（重施放）、#1189（隊友自選燈籠）、#1190（技能地形／撞地形）、#1191（持續引導）、#1197（其餘六槽來源核心）；提供可用 schema／模板契約後，Codex 接回 #1185 並走投稿发布。",
+    "請按草稿 PR 審查來源、成品與驗證；本 PR 不授權把候選簡化槽視為正式原設計，也不宣稱完成投稿或上架。",
+    "本機 in-app 的共用 3D 預覽在 PBR 光照貼圖預載失敗；技能／模型已進編輯資料，但畫面尚未通過。本 PR 不以基本 VFX schema、CPU 動作或 ZIP 結果代替畫面驗收。"
   ]
 }

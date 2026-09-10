@@ -14,6 +14,8 @@
 
 艾希 E「鷹擊長空：強制簽收」依全圖可見情境改編：指定區域在 0.7 秒後使仍在半徑 2 內的敵人繳械 0.8 秒，仍可移動與施法，不提供視野、不造成傷害。W 緩速可協助命中；敵人可在預警期間離開。
 
+完整驗證結果及未通過項目見 [validation.json](./validation.json)。本機服務 11 名／66 槽 ZIP 往返已通過；實際 3D 預覽卡在共用 PBR 預載，因此畫面與發布仍未完成。
+
 ## Main 尚待接入的核心
 
 | 票 | 槽 | 操作缺口 |
@@ -24,7 +26,7 @@
 | [#1191](https://github.com/adms/GGD/issues/1191) | 稻草人 W、威寇茲 R | 可中斷持續引導，結束後停止後續波次；射線持續瞄準 |
 | [#1197](https://github.com/adms/GGD/issues/1197) | 阿璃 Q／E、瑟雷西 R、威寇茲 Q／W、蓋倫 Q | 法球返航／魅惑、觸碰破牆、當前彈體分裂／固定裂痕與充能、僅解除既有減速 |
 
-共 5 張票、14 槽，核對基準 Main `6da992509`；見 [main-requirements.json](./main-requirements.json)。這個數字不是其餘 52 槽均已取得完整來源驗收的宣稱。总票 [#1185](https://github.com/adms/GGD/issues/1185) 保持開啟；核心接回、必要驗證、投稿與管理員發布完成後才記錄關票。
+共 5 張票、14 槽，核對基準 Main `6da992509`；見 [main-requirements.json](./main-requirements.json)。這個數字不是其餘 52 槽均已取得完整來源驗收的宣稱。總票 [#1185](https://github.com/adms/GGD/issues/1185) 保持開啟；核心接回、必要驗證、投稿與管理員發布完成後才記錄關票。
 
 ## 重建與集中驗證
 
