@@ -59,6 +59,15 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 const LINES_DIR = join(REPO, "content/assets/audio/voices/lines");
 const OUT_PATH = join(REPO, "content/assets/audio/voices/champions/MANIFEST.json");
+/**
+ * 2026-09-10 — heroes the DAEMON does not own (the 74 b2-* / community-review-*)
+ * are scripted by `src/build-combat-lines.mjs` and cast in this table; they join
+ * ROSTER.json's champions below. The daemon republishing ROSTER.json from
+ * heroes.csv therefore cannot drop them (that file never lists them).
+ */
+const CASTING_PATH = join(LINES_DIR, "COMBAT_CASTING.json");
+/** `--check`: rebuild in memory and exit 1 when the shipped MANIFEST.json differs. */
+const CHECK = process.argv.includes("--check");
 /** Clip paths are content-mount relative; the client strips no prefix here. */
 const CLIP_BASE = "assets/audio/voices/lines";
 
@@ -103,11 +112,30 @@ function main() {
   const CANON = canonicalCategories(cats);
   if (CANON.length !== 46) fail(`expected 46 categories, expanded ${CANON.length}`);
 
+  // SHIP GATE (CATEGORIES.json.shipGate). `all` = every one of the 46 or the
+  // build fails (the daemon's 51). `combat-core` = a hero ships once the
+  // `required` set is complete; the other categories ride along when present
+  // and are listed as missing when not. The switch lives in content so the
+  // owner can flip it back to `all` without a code change (第一守則).
+  const gate = cats.shipGate && typeof cats.shipGate === "object" ? cats.shipGate : { mode: "all" };
+  const gateMode = gate.mode === "combat-core" ? "combat-core" : "all";
+  const REQUIRED = gateMode === "combat-core" ? gate.required ?? [] : CANON;
+  for (const r of REQUIRED) if (!CANON.includes(r)) fail(`shipGate.required names an unknown category ${r}`);
+
   const champions = {};
   let shipped = 0;
+  let partial = 0;
   let skipped = 0;
+  const partialNotes = [];
 
-  for (const champ of roster.champions) {
+  const casting = existsSync(CASTING_PATH) ? readJson(CASTING_PATH) : null;
+  const rosterIds = new Set(roster.champions.map((c) => c.championId));
+  const heroes = [...roster.champions];
+  for (const [id, c] of Object.entries(casting?.champions ?? {})) {
+    if (!rosterIds.has(id)) heroes.push({ championId: id, name: c.name ?? id, castBy: "COMBAT_CASTING.json" });
+  }
+
+  for (const champ of heroes) {
     const id = champ.championId;
     const dir = join(LINES_DIR, id);
     const statusPath = join(dir, "status.json");
@@ -119,18 +147,25 @@ function main() {
     const status = readJson(statusPath);
     const statusLines = status.lines ?? {};
 
-    // Completeness gate: all 46 clips present + status.current + byte match.
+    // Completeness gate: every REQUIRED clip present + status.current + byte
+    // match. An OPTIONAL category (combat-core mode only) is simply absent when
+    // its mp3 is not there; but an optional mp3 that IS there and disagrees with
+    // status.json is still a corrupt drop and still fails.
     const problems = [];
+    const missing = [];
     const clipByCat = {};
     for (const cat of CANON) {
       const mp3 = join(dir, `${cat}.mp3`);
       const entry = statusLines[cat];
+      const required = REQUIRED.includes(cat);
       if (!existsSync(mp3)) {
-        problems.push(`missing mp3 ${cat}`);
+        if (required) problems.push(`missing mp3 ${cat}`);
+        else missing.push(cat);
         continue;
       }
       if (!entry || !entry.current) {
-        problems.push(`no status.current ${cat}`);
+        if (required || (entry && entry.state === "failed")) problems.push(`no status.current ${cat}`);
+        else missing.push(cat);
         continue;
       }
       const cur = entry.current;
@@ -156,6 +191,14 @@ function main() {
     // any problem fails the build — a silent half-ship is the exact defect the
     // gate exists to prevent.
     if (problems.length > 0) {
+      // A scripted hero with NOTHING rendered yet is "not ready" (skip, say so);
+      // anything partially present is a corrupt drop and fails as before.
+      const rendered = REQUIRED.filter((cat) => existsSync(join(dir, `${cat}.mp3`))).length;
+      if (rendered === 0 && gateMode === "combat-core") {
+        skipped++;
+        console.warn(`[voice:index] skip ${id}: scripted but nothing rendered yet (run-combat-gen.mjs)`);
+        continue;
+      }
       fail(`${id} incomplete: ${problems.slice(0, 6).join("; ")}${problems.length > 6 ? " …" : ""}`);
     }
 
@@ -165,21 +208,32 @@ function main() {
       const c = clipByCat[cat];
       if (c) select.push({ ...c });
     }
-    if (select.length === 0) fail(`${id}: select pool empty (no ack clips)`);
+    const isPartial = missing.length > 0;
+    if (select.length === 0) {
+      // A full pack with no ack clips is a build defect. A partial pack is
+      // waiting on the owner's lines (OWNER_LINES.csv): ship what exists, say
+      // so, and let combatVoiceCoverage.test.ts name the silent click.
+      if (!isPartial) fail(`${id}: select pool empty (no ack clips)`);
+      partialNotes.push(`${id}: select pool empty — waiting on OWNER_LINES.csv`);
+    }
 
-    // Build the lines map: all 46 categories, category keys SORTED, plus select.
+    // Build the lines map: category keys SORTED, plus select. A partial pack
+    // carries ONLY the categories it has — an absent key reads as "no clip"
+    // through packClips(), never as a broken path.
     const lines = {};
-    lines[SELECT_CATEGORY] = select;
+    if (select.length > 0) lines[SELECT_CATEGORY] = select;
     for (const cat of [...CANON].sort()) {
-      lines[cat] = [clipByCat[cat]];
+      if (clipByCat[cat]) lines[cat] = [clipByCat[cat]];
     }
 
     champions[id] = {
       engine: roster.engine?.name ?? "cosyvoice3",
       variant: roster.engine?.version ?? "cv3-0.5b",
+      ...(isPartial ? { tier: "combat-core", missingCategories: missing } : {}),
       lines,
     };
     shipped++;
+    if (isPartial) partial++;
   }
 
   // FORM SHARING. Every pair with clips on exactly ONE side lends them to the
@@ -209,8 +263,12 @@ function main() {
       "CosyVoice3 cv3-0.5b clone, per-line takes; clips point directly at lines/ (verified by status.json bytes+hash).",
     selectSourceCategories: SELECT_SOURCE_CATEGORIES,
     categoryCount: CANON.length,
+    /** CATEGORIES.json.shipGate as applied: which categories a hero MUST have to ship. */
+    shipGate: { mode: gateMode, required: REQUIRED },
     /** Champions with clips of their OWN under lines/. */
     generatedCount: shipped,
+    /** Of those, packs shipped under the combat-core gate with categories still missing. */
+    partialCount: partial,
     /** Champions speaking with their w3x form counterpart's pack (see formShares). */
     sharedCount: landed.length,
     /** Total entries a client can resolve = generatedCount + sharedCount. */
@@ -225,10 +283,21 @@ function main() {
     champions: sortedChamps,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(manifest, null, 2) + "\n", "utf8");
+  const serialized = JSON.stringify(manifest, null, 2) + "\n";
+  if (CHECK) {
+    const current = existsSync(OUT_PATH) ? readFileSync(OUT_PATH, "utf8") : "";
+    if (current !== serialized) {
+      console.error(`[voice:index] ⛔ --check: ${OUT_PATH} is stale — run \`pnpm voice:index\` (or \`pnpm combat:build\`) and commit it.`);
+      process.exit(1);
+    }
+    console.log(`[voice:index] --check ✓ ${shipped} champions (${partial} partial), ${landed.length} form-shared — MANIFEST.json is current`);
+    return;
+  }
+  writeFileSync(OUT_PATH, serialized, "utf8");
   const byDir = landed.reduce((m, s) => ((m[s.direction] = (m[s.direction] ?? 0) + 1), m), {});
+  if (partialNotes.length) console.warn(`[voice:index] ⚠️ ${partialNotes.length} partial pack(s) with an empty select pool:\n    ${partialNotes.join("\n    ")}`);
   console.log(
-    `[voice:index] wrote ${OUT_PATH}\n  ${shipped} champions shipped, ${skipped} skipped, ${CANON.length} categories each + select pool.` +
+    `[voice:index] wrote ${OUT_PATH}\n  ${shipped} champions shipped (${partial} partial under shipGate=${gateMode}), ${skipped} skipped, ${CANON.length} categories + select pool.` +
       `\n  ${landed.length} form-shared entries (${JSON.stringify(byDir)}):` +
       landed.map((s) => `\n    ${s.championId} ← ${s.sharedFrom}  #${s.heroNumber}`).join(""),
   );

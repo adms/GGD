@@ -81,113 +81,41 @@
    "pitchDeg": 20,
    "attackClipPitchDeg": 14
   },
-  "community-review-02-20260907.e": {
-   "champion": "community-review-02-20260907",
-   "championName": "八神庵",
-   "ability": "百二十七式・葵花",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
-  "community-review-02-20260907.ex": {
-   "champion": "community-review-02-20260907",
-   "championName": "八神庵",
-   "ability": "裏三百十六式・豺華",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
-  "community-review-02-20260907.r": {
-   "champion": "community-review-02-20260907",
-   "championName": "八神庵",
-   "ability": "禁千二百十一式・八稚女",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
-  "community-review-07-20260907.w": {
-   "champion": "community-review-07-20260907",
-   "championName": "西索",
-   "ability": "伸縮自在的愛",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
-  "community-review-09-20260907.q": {
-   "champion": "community-review-09-20260907",
-   "championName": "赫蘿",
-   "ability": "〔狼牙警告〕",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
   "community-review-14-20260907.q": {
    "champion": "community-review-14-20260907",
    "championName": "殺老師",
    "ability": "〔觸手批改〕",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
+   "modelKey": "ou99.472112",
+   "clip": "Spell",
+   "blade": "Hand Right Ref←Chest Ref",
+   "sweptDeg": 123.8,
    "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "pitchDeg": 15,
+   "attackClipPitchDeg": 16
   },
   "community-review-14-20260907.w": {
    "champion": "community-review-14-20260907",
    "championName": "殺老師",
    "ability": "〔高速授課〕",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
+   "modelKey": "ou99.472112",
+   "clip": "Spell",
+   "blade": "Hand Right Ref←Chest Ref",
+   "sweptDeg": 123.8,
    "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
-  "community-review-15-20260907.q": {
-   "champion": "community-review-15-20260907",
-   "championName": "比利海靈頓",
-   "ability": "〔正面擒抱〕",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "pitchDeg": 15,
+   "attackClipPitchDeg": 16
   },
   "community-review-22-20260907.q": {
    "champion": "community-review-22-20260907",
    "championName": "菜月昴",
    "ability": "Shamac",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "modelKey": "ou99.311294",
+   "clip": "Spell One",
+   "blade": "Right Hand Ref←Bip001 R Forearm",
+   "sweptDeg": 159.0,
+   "planarity": 0.898,
+   "pitchDeg": 28,
+   "attackClipPitchDeg": 13
   },
   "community-review-33-20260907.e": {
    "champion": "community-review-33-20260907",
@@ -689,6 +617,33 @@
    "reason": "no-glb",
    "detail": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb"
   },
+  "community-review-02-20260907.e": {
+   "champion": "community-review-02-20260907",
+   "ability": "百二十七式・葵花",
+   "modelKey": "ou99.313646",
+   "reason": "short-sweep",
+   "detail": "掃過 0.0° < 25.0°",
+   "castClip": "Spell one",
+   "attackFallbackPitchDeg": 17
+  },
+  "community-review-02-20260907.ex": {
+   "champion": "community-review-02-20260907",
+   "ability": "裏三百十六式・豺華",
+   "modelKey": "ou99.313646",
+   "reason": "short-sweep",
+   "detail": "掃過 0.0° < 25.0°",
+   "castClip": "Spell one",
+   "attackFallbackPitchDeg": 17
+  },
+  "community-review-02-20260907.r": {
+   "champion": "community-review-02-20260907",
+   "ability": "禁千二百十一式・八稚女",
+   "modelKey": "ou99.313646",
+   "reason": "short-sweep",
+   "detail": "掃過 0.0° < 25.0°",
+   "castClip": "Spell one",
+   "attackFallbackPitchDeg": 17
+  },
   "community-review-03-20260907.e": {
    "champion": "community-review-03-20260907",
    "ability": "必殺忍蜂",
@@ -725,6 +680,15 @@
    "reason": "no-glb",
    "detail": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb"
   },
+  "community-review-07-20260907.w": {
+   "champion": "community-review-07-20260907",
+   "ability": "伸縮自在的愛",
+   "modelKey": "ou99.497211",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
   "community-review-08-20260907.ex": {
    "champion": "community-review-08-20260907",
    "ability": "〔立體機動・迴旋斬〕",
@@ -736,6 +700,15 @@
    "ability": "〔雙刃斬擊〕",
    "reason": "no-glb",
    "detail": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb"
+  },
+  "community-review-09-20260907.q": {
+   "champion": "community-review-09-20260907",
+   "ability": "〔狼牙警告〕",
+   "modelKey": "ou99.468771",
+   "reason": "short-sweep",
+   "detail": "掃過 13.4° < 25.0°",
+   "castClip": "spell",
+   "attackFallbackPitchDeg": 20
   },
   "community-review-10-20260907.q": {
    "champion": "community-review-10-20260907",
@@ -772,6 +745,15 @@
    "ability": "〔副武器應急射擊〕",
    "reason": "no-glb",
    "detail": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb"
+  },
+  "community-review-15-20260907.q": {
+   "champion": "community-review-15-20260907",
+   "ability": "〔正面擒抱〕",
+   "modelKey": "ou99.457123",
+   "reason": "short-sweep",
+   "detail": "掃過 17.7° < 25.0°",
+   "castClip": "spell",
+   "attackFallbackPitchDeg": 25
   },
   "community-review-17-20260907.q": {
    "champion": "community-review-17-20260907",
