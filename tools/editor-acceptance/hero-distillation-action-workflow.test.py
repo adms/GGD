@@ -27,16 +27,19 @@ class ActionWorkflowTest(unittest.TestCase):
                 'api_dependencies': paths['api'], 'asset_roots': [asset], 'source_repo': ROOT,
                 'e2e_out': e2e,
             }, execute=fake)
-            self.assertEqual(['prepare', 'base', 'lora', 'compile-package-import-readback', 'render-evidence-report'],
+            self.assertEqual(['prepare', 'base', 'lora', 'compile-package-import-readback', 'headless-match-entry', 'render-evidence-report'],
                              [log.removesuffix('.log') for _, log in calls])
             self.assertTrue(calls[0][0][1].endswith('hero-distillation-action-evaluate.py'))
             self.assertEqual('prepare', calls[0][0][2])
             self.assertEqual(['base', 'lora'], [calls[1][0][-1], calls[2][0][-1]])
             self.assertTrue(calls[3][0][1].endswith('hero-distillation-action-e2e.py'))
-            self.assertTrue(calls[4][0][1].endswith('hero-distillation-action-report.py'))
+            self.assertTrue(calls[4][0][1].endswith('hero-distillation-match-batch.py'))
+            self.assertTrue(calls[5][0][1].endswith('hero-distillation-action-report.py'))
             expected_report = str(root.resolve() / 'e2e-report.html')
             self.assertEqual(result['reportPath'], expected_report)
-            self.assertEqual(calls[4][0][-1], expected_report)
+            report_args = calls[5][0]
+            self.assertEqual(report_args[report_args.index('--out') + 1], expected_report)
+            self.assertEqual(report_args[report_args.index('--match-entry') + 1], str(root.resolve() / 'e2e-match-entry'))
             receipt = Path(result['workflowDirectory']) / 'state.json'
             self.assertEqual('completed', json.loads(receipt.read_text())['status'])
             self.assertFalse(json.loads((receipt.parent / 'manifest.json').read_text())['automaticRetry'])

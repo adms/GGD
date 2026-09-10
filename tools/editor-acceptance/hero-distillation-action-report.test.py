@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -30,6 +31,18 @@ class ActionReportTest(unittest.TestCase):
             self.assertIn('未執行編譯', html)
             self.assertIn('不宣告未見泛化', html)
             self.assertIn('0 / 1', html)
+            match = root / 'match'; match.mkdir()
+            evidence = {'schema': 'ggd-match-entry-batch@1', 'status': 'completed',
+                'e2eResultSha256': hashlib.sha256((e2e / 'result.json').read_bytes()).hexdigest(),
+                'arms': {name: {'wholeHeroes': 1, 'entryPassed': 0, 'rows': [{'entryPassed': False}]} for name in ['base', 'lora']}}
+            (match / 'report.json').write_text(json.dumps(evidence))
+            html = M.render(M.collect(training, evaluation, e2e, match))
+            self.assertIn('base：0 / 1', html)
+            self.assertIn('不是六槽機制完整驗收', html)
+            evidence['arms']['base']['entryPassed'] = 1
+            (match / 'report.json').write_text(json.dumps(evidence))
+            with self.assertRaisesRegex(AssertionError, 'MATCH_PASS_COUNT_DRIFT'):
+                M.collect(training, evaluation, e2e, match)
 
 
 if __name__ == '__main__':

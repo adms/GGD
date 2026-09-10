@@ -20,6 +20,7 @@ SCRIPT = Path(__file__).resolve()
 EVALUATE = SCRIPT.with_name('hero-distillation-action-evaluate.py')
 E2E = SCRIPT.with_name('hero-distillation-action-e2e.py')
 REPORT = SCRIPT.with_name('hero-distillation-action-report.py')
+MATCH = SCRIPT.with_name('hero-distillation-match-batch.py')
 
 
 def digest(path):
@@ -73,8 +74,8 @@ def run(options, execute=command):
     assert not workflow.exists(), 'WORKFLOW_RECEIPT_EXISTS'
     workflow.mkdir(parents=True)
     (workflow / 'source').mkdir()
-    sources = {path.name: digest(path) for path in [SCRIPT, EVALUATE, E2E, REPORT]}
-    for path in [SCRIPT, EVALUATE, E2E, REPORT]:
+    sources = {path.name: digest(path) for path in [SCRIPT, EVALUATE, E2E, MATCH, REPORT]}
+    for path in [SCRIPT, EVALUATE, E2E, MATCH, REPORT]:
         shutil.copyfile(path, workflow / 'source' / path.name)
     manifest = {
         'schema': 'ggd-action-evaluation-workflow@1',
@@ -83,7 +84,7 @@ def run(options, execute=command):
         'modelBindingsDirectory': str(models), 'dependenciesDirectory': str(dependencies),
         'apiDependenciesDirectory': str(api_dependencies), 'assetRoots': list(map(str, roots)),
         'nodeBinary': node,
-        'fixedSteps': ['prepare', 'base', 'lora', 'compile-package-import-readback', 'render-evidence-report'],
+        'fixedSteps': ['prepare', 'base', 'lora', 'compile-package-import-readback', 'headless-match-entry', 'render-evidence-report'],
         'automaticRetry': False, 'humanRepairsAllowed': False,
         'modelPromoted': False, 'fullHeroE2EProven': False,
         'note': 'Internal dev seen regression only; this workflow cannot establish unseen generalization or gameplay.',
@@ -112,11 +113,15 @@ def run(options, execute=command):
         for asset_root in roots:
             e2e_argv.extend(['--asset-root', str(asset_root)])
         step('compile-package-import-readback', e2e_argv)
+        match_out = root / (e2e_out.name + '-match-entry')
+        step('headless-match-entry', [sys.executable, str(MATCH), '--e2e', str(e2e_out), '--out', str(match_out),
+                                     '--source-repo', str(source), '--game-dependencies', str(source / 'apps/game-server/node_modules'),
+                                     '--shared-dependencies', str(dependencies), '--node-binary', node])
         report_out = root / (e2e_out.name + '-report.html')
         assert not report_out.exists(), 'REPORT_REFUSE_OVERWRITE'
         step('render-evidence-report', [sys.executable, str(REPORT), '--training', str(training),
                                         '--evaluation', str(evaluation), '--e2e', str(e2e_out),
-                                        '--out', str(report_out)])
+                                        '--out', str(report_out), '--match-entry', str(match_out)])
         state['status'] = 'completed'
     except BaseException as error:
         state.update(status='stopped-or-failed', error=repr(error))
