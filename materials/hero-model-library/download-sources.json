@@ -4475,7 +4475,7 @@
           "archiveMember": "raw/Granny_Suit-0.1.0.zip"
         }
       ],
-      "verification": "使用者 2026-09-10 明確確認採招財貓形態。已靜態擷取 20 Mesh、20 SkinnedMeshRenderer、63 Transform、20 貼圖、1 Avatar；包內 0 AnimationClip。取代舊稿排除招財貓的外觀限制，待骨架 GLB、動作與後台切換驗收。",
+      "verification": "使用者確認招財貓形態。已轉成保留 20 Mesh、20 蒙皮與共享 29 骨節、20 貼圖的 GLB；Khronos 格式驗證 0 錯誤／0 警告，瀏覽器正面／側面／背面確認可載入且高 1.8。原包 0 AnimationClip；目前 32 繪製批次超過上架上限 5，仍待合併材質／網格、補動作與後台切換驗收。",
       "reuseTerms": "作者署名與原始包保留；跨遊戲再散布權利未核實。",
       "usage": "intake-only; backend integration required after standardization",
       "publicationStatus": "s3-legacy-readback-verified",
@@ -4498,12 +4498,37 @@
         "supersedes": "materials/community-hero-forge/recipes/34.upload-recipe.json → presentation.visualDirection"
       },
       "backup": {
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2.zip",
-        "bytes": 2227840,
-        "sha256": "16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3.zip",
+        "bytes": 4505665,
+        "sha256": "ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3",
         "readbackVerified": true,
         "usage": "manual-only legacy backup; not runtime-ready"
-      }
+      },
+      "conversion": {
+        "path": "converted-prefab/body.glb",
+        "sha256": "06c7ec69bfe6c7b47de40566b77b28451f1f79e9b5ee6d1a1243ed52126bf83d",
+        "bytes": 857616,
+        "formatValidation": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "staticBrowserLoaded": true,
+        "runtimeReady": false,
+        "blockers": [
+          "draw primitives 32 > 5",
+          "no source AnimationClip",
+          "backend selection unverified"
+        ]
+      },
+      "backupHistory": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2.zip",
+          "bytes": 2227840,
+          "sha256": "16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
+      ]
     },
     {
       "id": "gtainside-lubu",
@@ -4548,6 +4573,150 @@
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-lubu/822167f0bf7f385e904949ddcd4e1cf9c4f6bbaae5c70f0dee95410db326cf89.zip",
         "bytes": 8574786,
         "sha256": "822167f0bf7f385e904949ddcd4e1cf9c4f6bbaae5c70f0dee95410db326cf89",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-goku",
+      "target": "孫悟空（一般形態；其他原生形態保留待核）",
+      "heroIds": [
+        "godie-ogrh"
+      ],
+      "url": "https://thunderstore.io/c/riskofrain2/p/kinggrinyov/Goku/",
+      "downloadUrl": "https://thunderstore.io/package/download/kinggrinyov/Goku/2.12.3/",
+      "uploader": "kinggrinyov",
+      "version": "2.12.3",
+      "format": "Unity AssetBundle／原生骨架、動畫、粒子；Wwise BNK／WEM",
+      "verification": "ZIP CRC 與 SHA-256 通過；靜態解析 65 Mesh、96 SkinnedMeshRenderer、556 Transform、93 Texture2D、48 AnimationClip、60 ParticleSystem。完整保留內嵌 Wwise bank，拆出 69 個 WEM 媒體片段；WEM 尚未解碼與核對事件，不能當作可播放音效完成。僅對應一般悟空 godie-ogrh；超三 godie-o00x 尚未驗證，不因同名或其他形態而勾銷缺口。",
+      "reuseTerms": "來源 README、作者署名與全部原檔保留；跨遊戲轉換與再散布使用條件尚待核對。",
+      "accessStatus": "public-manual-download",
+      "checkedAt": "2026-09-10T06:32:34.475939+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-goku",
+      "files": [
+        {
+          "path": "raw/Goku-2.12.3.zip",
+          "bytes": 21589817,
+          "sha256": "e6aa81b9c63b9194a9c8fcc0d817c325a9d89c3b88e06178d9a146b619778be5",
+          "archiveMember": "raw/Goku-2.12.3.zip"
+        }
+      ],
+      "usage": "manual-only intake; backend integration required after standardization and use-condition review",
+      "publicationStatus": "s3-legacy-readback-verified",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "heroIds": [
+          "godie-ogrh"
+        ],
+        "ownerEntryIds": [],
+        "release": null,
+        "selectionVerified": false
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e.zip",
+        "bytes": 131846504,
+        "sha256": "d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
+    },
+    {
+      "id": "gta5mod-shinchan-sd2",
+      "target": "蠟筆小新（GTA5OPMOD SD2 v1.2 貼圖版本）",
+      "heroIds": [
+        "b2-shinchan"
+      ],
+      "url": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+      "downloadUrl": "https://gta5mod.net/download-mod/136365",
+      "uploader": "GTA5OPMOD",
+      "version": "1.2",
+      "format": "GTA V RSC7 YDD／YFT／YMT／YTD",
+      "verification": "ZIP CRC 與 SHA-256 通過；取得 sd2.ydd、yft、ymt、ytd，四檔皆為 RSC7。與 KS PLAY TAMIL 包的 YDD／YFT／YMT 逐位元相同、YTD 不同，因此保留兩個來源與貼圖版本。尚未解析原生骨架或轉 GLB，無独立動作、特效或音效檔。",
+      "reuseTerms": "包內 Copyright Notice.txt 明列限制複製、修改與再散布；完整原文保留。僅作 manual-only legacy 交付紀錄；共享成品使用許可未解決，不能視為已獲授權發布。",
+      "accessStatus": "public-manual-download",
+      "checkedAt": "2026-09-10T06:32:34.475939+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-sd2",
+      "files": [
+        {
+          "path": "raw/sd2.zip",
+          "bytes": 1291244,
+          "sha256": "74bfcba4db8ccdcd4a5f9c4e89596b53719bef333fd33ddbfe3dd96fa67b0964",
+          "archiveMember": "raw/sd2.zip"
+        }
+      ],
+      "usage": "manual-only intake; backend integration required after standardization and use-condition review",
+      "publicationStatus": "s3-legacy-readback-verified",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "heroIds": [
+          "b2-shinchan"
+        ],
+        "ownerEntryIds": [],
+        "release": null,
+        "selectionVerified": false
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gta5mod-shinchan-sd2/9f7ab62beb3bdaa6115f1d31d421723a445f91dce6b615bbb0ee3b47081d989b.zip",
+        "bytes": 2584883,
+        "sha256": "9f7ab62beb3bdaa6115f1d31d421723a445f91dce6b615bbb0ee3b47081d989b",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
+    },
+    {
+      "id": "gta5mod-shinchan-kstamil",
+      "target": "蠟筆小新（KS PLAY TAMIL v1.0 貼圖版本）",
+      "heroIds": [
+        "b2-shinchan"
+      ],
+      "url": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+      "downloadUrl": "https://gta5mod.net/download-mod/136392",
+      "uploader": "Ksplaytamilyt／KS PLAY TAMIL",
+      "version": "1.0",
+      "format": "GTA V RSC7 YDD／YFT／YMT／YTD",
+      "verification": "ZIP CRC 與 SHA-256 通過；取得 shinchan1.ydd、yft、ymt、ytd，四檔皆為 RSC7。與 SD2 包的模型／骨架容器相同、貼圖 YTD 不同，全部來源版本保留。尚未解析原生骨架或轉 GLB，無獨立動作、特效或音效檔。",
+      "reuseTerms": "來源作者與包內圖片保留；原生模型與 SD2 包相同，需釐清原作者和使用條件，不能以換來源解除原始限制。共享成品使用許可尚未核實。",
+      "accessStatus": "public-manual-download",
+      "checkedAt": "2026-09-10T06:32:34.475939+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-kstamil",
+      "files": [
+        {
+          "path": "raw/shinchan.zip",
+          "bytes": 3581915,
+          "sha256": "40e95317e88d9e82b5fec10d55703418e871e74878a82855277b2781a9328f8d",
+          "archiveMember": "raw/shinchan.zip"
+        }
+      ],
+      "usage": "manual-only intake; backend integration required after standardization and use-condition review",
+      "publicationStatus": "s3-legacy-readback-verified",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "heroIds": [
+          "b2-shinchan"
+        ],
+        "ownerEntryIds": [],
+        "release": null,
+        "selectionVerified": false
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gta5mod-shinchan-kstamil/b31a524c76bd39a8d2b9d0a025a05a65ac7ed1ed4fdfe269508a3c5c4aaca389.zip",
+        "bytes": 7170384,
+        "sha256": "b31a524c76bd39a8d2b9d0a025a05a65ac7ed1ed4fdfe269508a3c5c4aaca389",
         "readbackVerified": true,
         "usage": "manual-only legacy backup; not runtime-ready"
       }

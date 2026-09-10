@@ -45,6 +45,22 @@ class IntakeArchive(unittest.TestCase):
                 for row in pending['files']:
                     self.assertEqual(z.read(row['path']), payloads[row['path']])
                     self.assertEqual(row['sha256'], hashlib.sha256(payloads[row['path']]).hexdigest())
+            # A later conversion must produce a new immutable archive, keeping the old receipt.
+            verified = {**pending, 's3Uri': pending['plannedS3Uri'], 'readbackVerified': True}
+            index['sources']=[verified]
+            index['pendingUploads']=[]
+            (data/'public-source-files.json').write_text(json.dumps(index))
+            previous={'s3Uri':verified['s3Uri'],'sha256':verified['sha256'],'readbackVerified':True}
+            source['backup']=previous
+            (data/'download-sources.json').write_text(json.dumps({'paidSources':[source]}))
+            (home/'extracted/body.glb').write_bytes(b'converted revision')
+            subprocess.run(cmd,check=True,capture_output=True)
+            revised=json.loads((data/'public-source-files.json').read_text())
+            self.assertEqual(revised['sources'],[verified])
+            self.assertEqual(len(revised['pendingUploads']),1)
+            self.assertNotEqual(revised['pendingUploads'][0]['sha256'],verified['sha256'])
+            self.assertTrue(archive.exists())
+            self.assertEqual(json.loads((data/'download-sources.json').read_text())['paidSources'][0]['backup'],previous)
             (home / 'link').symlink_to(workspace)
             result = subprocess.run(cmd, capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)

@@ -42,7 +42,6 @@ class InventoryHandoff(unittest.TestCase):
             self.assertEqual('僅本機已保存，S3 尚未上傳' in row, pending)
             if pending:
                 self.assertFalse(source['pendingBackup']['readbackVerified'])
-                self.assertNotIn('backup', source)
                 self.assertNotIn('S3 legacy 備份已讀回驗證', row)
         self.assertFalse(inventory['downloadPlan']['purchasePolicy']['paidPurchaseAllowed'])
         for entry in inventory['downloadPlan']['entries']:
@@ -79,9 +78,13 @@ class InventoryHandoff(unittest.TestCase):
         self.assertTrue(pikachu['partialPurchaseHold'])
         self.assertEqual(heroes['godie-o02l']['publicCandidates'], [])
         shinchan = next(e for e in inventory['downloadPlan']['entries'] if 'b2-shinchan' in e['heroIds'])
-        self.assertFalse(shinchan['purchaseHold'])
-        self.assertEqual(heroes['b2-shinchan']['publicCandidates'], [])
+        self.assertTrue(shinchan['purchaseHold'])
+        self.assertEqual([s['id'] for s in heroes['b2-shinchan']['publicCandidates']], ['gta5mod-shinchan-sd2', 'gta5mod-shinchan-kstamil'])
         self.assertEqual(shinchan['publicSourceLeadIds'], ['gtainside-shinchan-locator'])
+        goku = next(e for e in inventory['downloadPlan']['entries'] if 'godie-ogrh' in e['heroIds'])
+        self.assertEqual(goku['purchaseHoldFor'], ['godie-ogrh'])
+        self.assertEqual([s['id'] for s in heroes['godie-ogrh']['publicCandidates']], ['thunderstore-goku'])
+        self.assertEqual(heroes['godie-o00x']['publicCandidates'], [])
         billy = next(e for e in inventory['downloadPlan']['entries'] if 'community-review-15-20260907' in e['heroIds'])
         self.assertTrue(billy['purchaseHold'])
         self.assertEqual(billy['acquiredPublicSources'], ['steam-billy-herrington'])
@@ -150,6 +153,18 @@ class InventoryHandoff(unittest.TestCase):
             result=json.loads(subprocess.check_output([sys.executable,str(script.with_name('query.py')),'paid-fixture-unmapped','--downloads','--json'],text=True))
             self.assertEqual(result['entries'],[])
             self.assertEqual([s['id'] for s in result['paidSources']],['paid-fixture-unmapped'])
+            # A second paid model version must remain alongside both the first and public source.
+            from copy import deepcopy
+            version2 = deepcopy(paid)
+            version2.update(id='paid-fixture-naofumi-v2', version='2')
+            paid_data['paidSources'].append(version2)
+            original_sources=json.loads((DATA/'download-sources.json').read_text())['publicSources']
+            paid_data['publicSources'].append(next(s for s in original_sources if s['id']=='gtainside-naofumi'))
+            inputs.write_text(json.dumps(paid_data, ensure_ascii=False))
+            subprocess.run([sys.executable,str(script)],check=True,capture_output=True)
+            result=json.loads(subprocess.check_output([sys.executable,str(script.with_name('query.py')),'b2-naofumi','--json'],text=True))
+            self.assertEqual([s['id'] for s in result['heroes'][0]['paidCandidates']], ['paid-fixture-naofumi','paid-fixture-naofumi-v2'])
+            self.assertEqual([s['id'] for s in result['heroes'][0]['publicCandidates']], ['gtainside-naofumi'])
             valid_paid_text=inputs.read_text()
             # A parallel workflow cannot register an acquisition without tracking its required UI integration.
             del paid_data['paidSources'][0]['backendIntegration']
@@ -163,5 +178,16 @@ class InventoryHandoff(unittest.TestCase):
             changed=json.loads(valid_paid_text);changed['entries'][0]['ownerNotes'].append('changed handoff fixture')
             inputs.write_text(json.dumps(changed,ensure_ascii=False))
             self.assertNotEqual(subprocess.run([sys.executable,str(script),'--check'],capture_output=True).returncode,0)
+
+    def test_latest_pending_revision_does_not_look_fully_uploaded(self):
+        from source_links import render_sources
+        data=json.loads((DATA/'inventory.json').read_text())['downloadPlan']
+        source=next(s for s in data['publicSources'] if s.get('backup',{}).get('readbackVerified'))
+        source['pendingBackup']={'status':'not-uploaded','readbackVerified':False}
+        report='\n'.join(render_sources(data))
+        row=next(line for line in report.splitlines() if f'[{source["id"]}](' in line)
+        self.assertIn('最新修訂僅本機已保存，S3 尚未上傳',row)
+        self.assertIn('舊版備份仍保留',row)
+        self.assertNotIn('S3 legacy 備份已讀回驗證',row)
 
 if __name__ == '__main__': unittest.main()

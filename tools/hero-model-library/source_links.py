@@ -70,8 +70,9 @@ def render_sources(data):
             decision = '**已有實檔；保留來源，避免重買**' if s['heroIds'] or s.get('ownerEntryIds') else '素材池；待角色對應，仍須保留整合'
             ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
             if s.get('ownerEntryIds'): ids += '<br>未對應角色 ID 的清單組：' + '、'.join(f'`{i}`' for i in s['ownerEntryIds'])
-            storage = ('本機已保存；S3 legacy 備份已讀回驗證' if s.get('backup', {}).get('readbackVerified') is True else
+            storage = ('**最新修訂僅本機已保存，S3 尚未上傳**；舊版備份仍保留' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' and s.get('backup', {}).get('readbackVerified') is True else
                        '**僅本機已保存，S3 尚未上傳**' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' else
+                       '本機已保存；S3 legacy 備份已讀回驗證' if s.get('backup', {}).get('readbackVerified') is True else
                        '本機已保存；S3 備份狀態未確認')
             state = s.get('backendIntegration', {}).get('state')
             integration = {'pending-character-mapping': '必須整合；待角色 ID 對應', 'pending-standardization': '必須整合；待標準化／切換驗收'}.get(state, state or '尚未登記')

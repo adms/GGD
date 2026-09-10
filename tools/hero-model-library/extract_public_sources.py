@@ -322,6 +322,7 @@ def extract_unity(home):
 
 
 def process(home, stormlib):
+    from embedded_resources import extract_embedded_resources
     errors=[]
     for source in sorted((home/'raw').iterdir()):
         magic=source.read_bytes()[:8]
@@ -334,12 +335,14 @@ def process(home, stormlib):
         elif magic.startswith((b'HM3W',b'MPQ')):
             try: errors += read_map(source,home/'extracted',stormlib)
             except Exception as exc: errors.append({'member':source.name,'error':str(exc)})
+    embedded=extract_embedded_resources(home)
+    errors += [{'member': r['path'], 'error': r['mediaExtractionError']} for r in embedded if r.get('mediaExtractionError')]
     unity=extract_unity(home)
     files=[]
     for p in sorted(home.rglob('*')):
         if p.is_file() and p.name!='extraction.json':
             b=p.read_bytes();files.append({'path':str(p.relative_to(home)),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
-    result={'sourceId':home.name,'files':files,'errors':errors,'unity':unity,
+    result={'sourceId':home.name,'files':files,'errors':errors,'unity':unity,'embeddedResources':embedded,
             'extractedExtensions':dict(collections.Counter(Path(f['path']).suffix.lower() for f in files if f['path'].startswith('extracted/')))}
     (home/'extraction.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(home.name,'files',len(files),'errors',len(errors),'unity bundles',len(unity),flush=True)
