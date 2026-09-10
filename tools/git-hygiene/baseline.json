@@ -1,5 +1,5 @@
 {
-  "note": "⭐ GH#1160 —— 「素材／來源／準備材料不進 git」的**棘輪**。owner 2026-09-10 逐字：「成品一律上傳至 git，剩下半成品、來源、準備材料等都進 S3」。⛔ 這張表不是豁免名單：每一類的 files/bytes 只准變**少**，大於 5 MB 的 blob 要逐檔列在 bigBlobs 並寫理由。2026-09-11 第一次量（origin/main 66cb3787f）。判準：一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。 ⭐ 大檔檢查排除 content/assets/（成品）。",
+  "note": "⭐ GH#1160 —— 「素材／來源／準備材料不進 git」的**棘輪**。owner 2026-09-10 逐字：「成品一律上傳至 git，剩下半成品、來源、準備材料等都進 S3」。⛔ 這張表不是豁免名單：每一類的 files/bytes 只准變**少**，大於 5 MB 的 blob 要逐檔列在 bigBlobs 並寫理由。2026-09-11 第一次量（origin/main 66cb3787f）。判準：一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。 ⭐ 大檔檢查排除 content/assets/（成品）。 ⭐ legacy-overwrites 不走「只准變少」（留底 hook 會往那裡寫，owner 08-20 允許）——改走單檔上限 legacyPerFileBytes（= hook 的 MAX_BYTES，GH#1192）。",
   "bigBlobBytes": 5242880,
   "categories": {
     "archives": {
@@ -39,6 +39,39 @@
       "path": "materials/community-hero-forge/supplements/workspace-assets-20260908/inventory.json",
       "bytes": 5505405,
       "why": "既有（2026-09-11 基準線）—— ⛔ 只准變少；要留要寫得出它為什麼屬於 git"
+    }
+  ],
+  "legacyPerFileBytes": 1048576,
+  "legacyOverFiles": [
+    {
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260823-014219/content/bundle.json",
+      "bytes": 2439729,
+      "why": "既有（hook 上限曾是 8 MB）—— ⛔ 只准變少，⭐ 退休時從這裡刪"
+    },
+    {
+      "path": "docs/legacy/_overwrites/_ledger.tsv",
+      "bytes": 1721722,
+      "why": "既有（hook 上限曾是 8 MB）—— ⛔ 只准變少，⭐ 退休時從這裡刪"
+    },
+    {
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260908-173706/docs/legacy/_overwrites/_ledger.tsv",
+      "bytes": 1497116,
+      "why": "既有（hook 上限曾是 8 MB）—— ⛔ 只准變少，⭐ 退休時從這裡刪"
+    },
+    {
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260909-115601/tools/parallel-gates/sync-io.json",
+      "bytes": 1436479,
+      "why": "既有（hook 上限曾是 8 MB）—— ⛔ 只准變少，⭐ 退休時從這裡刪"
+    },
+    {
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260822-145842/lina.zip",
+      "bytes": 1055280,
+      "why": "既有（hook 上限曾是 8 MB）—— ⛔ 只准變少，⭐ 退休時從這裡刪"
+    },
+    {
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260830-164622/docs/legacy/_overwrites/_ledger.tsv",
+      "bytes": 1049862,
+      "why": "既有（hook 上限曾是 8 MB）—— ⛔ 只准變少，⭐ 退休時從這裡刪"
     }
   ]
 }

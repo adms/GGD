@@ -19,6 +19,8 @@ import { HYGIENE_CATS, isFinishedAssetPath, measureHygiene, treeBlobs, type Hygi
 
 interface Baseline {
   bigBlobBytes: number;
+  legacyPerFileBytes: number;
+  legacyOverFiles: Array<{ path: string; bytes: number; why: string }>;
   categories: Record<Cat, { files: number; bytes: number }>;
   bigBlobs: Array<{ path: string; bytes: number; why: string }>;
 }
@@ -37,6 +39,9 @@ describe("GH#1160 git 衛生棘輪（⭐ 只讀 commit 進去的樹）", () => {
     const { cats } = measure();
     const grew: string[] = [];
     for (const k of HYGIENE_CATS) {
+      // ⭐ legacy-overwrites 是留底 hook 的落點（owner 2026-08-20：備份到 legacy 資料夾沒關係）
+      //   ⇒ 它**會**長，⛔ 不能用「只准變少」；改用下面那條**單檔上限**（GH#1192）。
+      if (k === "legacy-overwrites") continue;
       const now = cats[k], was = base.categories[k];
       if (now.files > was.files || now.bytes > was.bytes) {
         grew.push(`${k}：files ${was.files}→${now.files}，bytes ${was.bytes}→${now.bytes} —— ⛔ 這一類不准長（owner 2026-09-10：準備材料進 S3，⭐ git 只留 manifest/SHA-256）`);
@@ -44,6 +49,20 @@ describe("GH#1160 git 衛生棘輪（⭐ 只讀 commit 進去的樹）", () => {
     }
     expect(grew).toEqual([]);
     console.log(Object.entries(cats).map(([k, v]) => `   ${k}: ${v.files} 檔 / ${(v.bytes / 1048576).toFixed(1)} MB`).join("\n"));
+  });
+
+  it("⭐ docs/legacy/_overwrites/ 單檔不可超過 legacyPerFileBytes（GH#1192：留底 hook 的上限要和這裡同一個數）", (ctx) => {
+    if (!base) { ctx.skip(); return; }
+    const cap = base.legacyPerFileBytes;
+    const known = new Set(base.legacyOverFiles.map((f) => f.path));
+    const blobs = measure().blobs;
+    // ⭐ 正向：新的超限留底 ⇒ 紅（既有的列在 legacyOverFiles，那是 8 MB 時代的債）
+    const over = blobs.filter((b) => b.path.startsWith("docs/legacy/_overwrites/") && b.bytes > cap && !known.has(b.path))
+      .map((b) => `${(b.bytes / 1048576).toFixed(2)} MB  ${b.path} —— ⛔ 超過留底單檔上限 ${(cap / 1048576).toFixed(2)} MB（preserve-before-overwrite.py 的 MAX_BYTES）`);
+    expect(over).toEqual([]);
+    // ⭐ 反向（形態⑫）：列了而樹裡已經沒有 ⇒ 那一列該退休
+    const present = new Set(blobs.map((b) => b.path));
+    expect(base.legacyOverFiles.filter((f) => !present.has(f.path)).map((f) => `${f.path} —— 樹裡沒有了 ⇒ 從 legacyOverFiles 刪掉`)).toEqual([]);
   });
 
   it("> 5 MB 的 blob 每一個都要列在 baseline.bigBlobs 並寫得出理由（⛔ 新的大檔 = 紅）", (ctx) => {

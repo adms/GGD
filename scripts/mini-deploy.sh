@@ -387,9 +387,12 @@ cmd_deploy() {
     # ⭐ 所以在 checkout **之前**先問：目標 commit 會不會蓋到任何未追蹤檔？
     #   會 ⇒ **先備份**（⛔ 不是 `rm`、⛔ 也不是自動搬走：那是同一個動詞的兩個名字）。
     local clash
-    clash=$(r "cd $REMOTE_REPO && git ls-tree -r --name-only $deploy_sha | while read -r f; do
-                 [ -f \"\$f\" ] && ! git ls-files --error-unmatch \"\$f\" >/dev/null 2>&1 && printf '%s\n' \"\$f\"
-               done" 2>/dev/null || true)
+    # ⭐ GH#1156 —— 在此之前這裡對**每一個**追蹤檔各開一支 `git ls-files --error-unmatch`
+    #   ⇒ 26,393 次子行程、每次部署白花 4 分鐘。⭐ 問的其實是集合差：
+    #   「目標 commit 有、而 mini 現在沒追蹤、而磁碟上又存在的檔」⇒ 兩支 git ＋ 一次 comm，
+    #   只對那個（通常是空的）差集逐檔 `[ -f ]`。語意逐位元組相同。
+    clash=$(r "cd $REMOTE_REPO && comm -23 <(git ls-tree -r --name-only $deploy_sha | sort) <(git ls-files | sort) \
+               | while read -r f; do [ -f \"\$f\" ] && printf '%s\n' \"\$f\"; done" 2>/dev/null || true)
     if [ -n "${clash// /}" ]; then
       local n_clash bdir
       n_clash=$(printf '%s\n' "$clash" | grep -c .)

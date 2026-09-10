@@ -42,7 +42,7 @@ REPO = (Path(_ENV_ROOT) if _ENV_ROOT else Path(__file__).resolve().parent.parent
 IN_REPO_DEST = REPO / "docs/legacy/_overwrites"
 OUT_REPO_DEST = Path.home() / ".claude/projects/-Users-Takuro-GGD/overwrite-backups"
 LOG = REPO / "docs/legacy/_overwrites/_ledger.tsv"
-MAX_BYTES = 8 * 1024 * 1024  # 超過就只記帳，⛔ 不把大二進位塞進 repo
+MAX_BYTES = 1 * 1024 * 1024  # 超過就只記帳，⛔ 不把大二進位塞進 repo（GH#1192：8 MB 時 docs/legacy/_overwrites 長到 212 MB；⭐ 對應 gitHygieneRatchet 的單檔上限）
 
 # ── 🪤 重導目標要吃**引號**（GH#976,2026-09-02 實測）───────────────────────────
 #
