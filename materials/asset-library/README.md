@@ -12,6 +12,8 @@
 
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
 
+**本機已驗證音訊可立即讀取，不等待 S3。** `query_voice.py <角色或來源群組> --files --json` 回傳逐檔 `absolutePath` 及 SHA-256；`voice-index.json.localWorkspace` 是本機工作區根目錄。S3 備份進度獨立追蹤，未上傳或未讀回不阻擋其他工作流聽審、轉錄及準備素材。
+
 **免費與論壇付費來源全部保留。** 本工作流不執行付費購買；使用者另行授權的論壇付費工作流照其授權進行，取得的不同模型／版本都必須整合。機器同時讀 `purchasePolicy.scope` 與 `paidPurchaseAllowed=false`，不可據此取消其他工作流的授權。購買前核對已取得版本，避免重買。
 
 ## 先選你要做的事

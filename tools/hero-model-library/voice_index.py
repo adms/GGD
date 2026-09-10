@@ -115,8 +115,24 @@ def main():
 
     for source in downloads.get('publicSources',[])+downloads.get('paidSources',[]):
         receipt=source.get('backup',{})
-        if not receipt.get('readbackVerified'):continue
-        archived=next(s for s in public_files['sources'] if s['id']==source['id'] and s['sha256']==receipt['sha256'])
+        pending=source.get('pendingBackup',{})
+        local_only=False
+        if pending:
+            archived=next(s for s in public_files.get('pendingUploads',[]) if s['id']==source['id'] and s['sha256']==pending['sha256'])
+            receipt={k:archived[k] for k in ['localArchive','plannedS3Uri','bytes','sha256']}
+            receipt['readbackVerified']=False
+            local_only=True
+        elif receipt.get('readbackVerified'):
+            archived=next(s for s in public_files['sources'] if s['id']==source['id'] and s['sha256']==receipt['sha256'])
+        else:
+            spec=source.get('audioFileIndex',source.get('audioConversion',{}))
+            if source.get('acquisitionStatus')!='downloaded-verified' or not spec.get('reportPath'):continue
+            report_path=(ws/source['localPath']/spec['reportPath']).resolve()
+            assert report_path.is_relative_to((ws/source['localPath']).resolve())
+            assert sha(report_path)==spec['reportSha256']
+            archived=read(report_path)
+            receipt=dict(readbackVerified=False)
+            local_only=True
         audio=[f for f in archived['files'] if Path(f['path']).suffix.lower() in {'.wav','.ogg','.mp3','.flac'}]
         if source.get('audioConversion',{}).get('decodedFloatWavCount'):
             audio=[f for f in audio if not f['path'].startswith('decoded-audio/')]
@@ -142,7 +158,15 @@ def main():
                 native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=f['path'],
                     sha256=f['sha256'],bytes=f['bytes'],kind='native-standalone',decoded=False,synthesisReady=False))
         if not audio and not native_files:continue
-        sid='public:'+source['id'];stores[sid]=dict(type='zip',**receipt,localRoot=source['localPath'])
+        if local_only:
+            for f in audio:
+                local=(ws/source['localPath']/f['path']).resolve()
+                assert local.is_relative_to((ws/source['localPath']).resolve())
+                assert local.is_file() and local.stat().st_size==f['bytes'] and sha(local)==f['sha256']
+            for f in native_files:assert sha(ws/f['path'])==f['sha256']
+        sid='public:'+source['id'];stores[sid]=dict(type='zip' if receipt.get('sha256') else 'local-intake',
+            **receipt,localRoot=source['localPath'],absoluteLocalRoot=str((ws/source['localPath']).resolve()),
+            localUseAvailable=True,publicationStatus='local-verified-s3-pending' if local_only else 's3-readback-verified')
         if native_files:
             native_audio.append(dict(id=source['id'],name=source['target'],heroIds=source['heroIds'],sourceUrl=source['url'],
                 backupId=sid,bankFileCount=native_bank_count,standaloneFileCount=len(native_files)-native_bank_count,files=native_files,confirmedVoiceCount=None,
@@ -191,7 +215,8 @@ def main():
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
 
     summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl',
-        scope='All indexed 300/MBA audio and all audio in current verified public/paid source archives; not all files are character voices.',
+        localWorkspace=str(ws),localUseRequiresS3=False,
+        scope='All indexed 300/MBA audio and verified local public/paid source audio; S3 backup readiness is tracked separately. Not all files are character voices.',
         groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
@@ -206,6 +231,7 @@ def main():
     (OUT/'voice-index.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     lines=['# 角色語音索引','',
         '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬讀 `voice-files.jsonl`。', '',
+        '**本機已驗證音訊立即供其他工作流讀取，不等待 S3 備份。** `query_voice.py --files --json` 回傳每檔 `absolutePath`；`voice-index.json.localWorkspace` 加上逐檔 `path` 也可直接定位。S3 狀態另列，待聽審不妨礙找檔、播放、轉錄及準備素材。', '',
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
@@ -216,7 +242,9 @@ def main():
         '依角色／來源 groupId 篩選 voice-files.jsonl，保留各版本，相似模型與目標角色的說話者分開標記，不把借用聲音標成本尊。',
         '來源角色、GGD heroIds 與逐段說話者是三個不同欄位；未確認值保持 unknown。',
         '先聽審、轉錄、檢查語言與品質，再建立合成輸入清單；不要把音檔數當成語音數。',
-        '有本機檔時使用 workspace-relative path；使用 S3 時僅用 vibe-coding profile / ap-east-2。',
+        '本機驗證完成即可取用，不用等待 S3；逐檔查詢的 absolutePath 可直接讀取。',
+        '本機 workspace：'+str(ws),
+        '索引原始 path 相對於上述 workspace；使用 S3 時僅用 vibe-coding profile / ap-east-2。',
         'S3 位置、完整包 SHA-256 與分片順序見 voice-index.json.backups；逐檔 SHA-256 見 voice-files.jsonl。',
         '查詢例：python3 tools/hero-model-library/query_voice.py 莉娜',
         '逐檔例：python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json',
@@ -244,11 +272,15 @@ def main():
         '| 備份 ID | S3 入口 | 驗證與取用方式 |','|---|---|---|']
     for sid,s in stores.items():
         uri=s.get('s3Uri',s.get('baseUri',''))
-        note='完整 ZIP SHA-256：`'+s['sha256']+'`；`archiveMember` 是包內路徑' if s['type']=='zip' else '分片 tar.gz；依 `parts` 原順序合併，核對各片 SHA-256，再按 archiveMember 解出。原始快照收據，不是本次重新讀回整包。'
+        if s.get('publicationStatus')=='local-verified-s3-pending':
+            uri='S3 尚未驗證；本機可立即讀取'
+            note='本機：`'+s['absoluteLocalRoot']+'`；逐檔 SHA 已驗證，備份另行完成'
+        else:
+            note='完整 ZIP SHA-256：`'+s['sha256']+'`；`archiveMember` 是包內路徑' if s['type']=='zip' else '分片 tar.gz；依 `parts` 原順序合併，核對各片 SHA-256，再按 archiveMember 解出。原始快照收據，不是本次重新讀回整包。'
         lines.append(f'| `{sid}` | `{uri}` | {note} |')
     lines += ['', '## 驗證範圍與待辦','',
         f'- 本次比較 300／MBA 音訊索引與既有備份逐檔 SHA-256、大小，並檢查本機檔案存在及大小；異常 {summary["summary"]["missingOrSizeChanged"]} 筆。本次未重新雜湊全部音訊二進位，也未重新下載歷史 S3 整包。',
-        '- 公開來源使用 download-sources.json 所指的最新已讀回備份；所有角色／形態、語言與台詞需在逐段聽審後確認。合成可用狀態全部維持未驗收。',
+        '- 公開／付費來源的已驗證本機音訊可立即使用；最新本機修訂優先，S3 備份是否讀回另列。所有角色／形態、語言與台詞需在逐段聽審後確認，合成可用狀態仍維持未驗收。',
         '- 模型庫、原生音訊庫與已解碼音訊分別記錄。模型取得狀態見全角色模型盤點；來源語音是否已取得以本索引逐筆收據為準，尚未取得的目錄或分享頁不混入檔數。',
         '- NS 日語包的相同 bank 依 SHA 共用解碼，原始 350 banks／68 命名群與配色對照全部保留於 bankAliases；65 組解碼輸入涵蓋這些別名。vc_kirby_copy_cloud 是卡比複製能力音訊，不代表克勞德本人。查詢 aliasGroupIds 會返回明列別名的共用來源，不能據此推定說話者相同。',
         '- 尚無 GGD ID 的來源組仍可查詢及準備素材；不能因未上架而刪除。新增音訊來源後重跑本產生器，保留其他來源及不同語言版本。',

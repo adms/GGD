@@ -8755,15 +8755,14 @@
         "selectionVerified": false,
         "note": "保留65組解碼輸入、68原生名稱及全部配色別名，逐段核對後再綁定角色與後台選項。"
       },
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/parallel-voice-ssbu-japanese/d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbu-japanese/d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b.zip",
+      "publicationStatus": "s3-legacy-readback-verified",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbu-japanese/d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b.zip",
         "bytes": 501815204,
         "sha256": "d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b",
-        "readbackVerified": false,
-        "status": "not-uploaded"
-      },
-      "publicationStatus": "local-only-awaiting-s3-upload"
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
     },
     {
       "id": "gitlab-ssbu-models",
@@ -10222,6 +10221,702 @@
       "files": [],
       "reuseTerms": "來源作者與使用說明完整保留；來源擷取與標準化驗收分開追蹤。",
       "usage": "reserved intake; no automatic runtime selection"
+    },
+    {
+      "id": "parallel-ps-jumpforce-local-10",
+      "target": "JUMP FORCE 新交付 10 包音訊（本機可用）",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "uploader": "miner600",
+      "format": "OGG / WAV + complete original packages",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "purchaseDecision": "supplement-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
+      "sourceGame": "JUMP FORCE",
+      "platform": "unknown",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "community-forum-public-soundrip",
+      "assetKinds": [
+        "audio"
+      ],
+      "audioFileIndex": {
+        "reportPath": "deliveries/ggd-parallel-ps-frozen-10-20260910T115413Z.json",
+        "reportSha256": "beb2d3487233d1f29bb2ab92704f71f412dcb32b8b96697077ac79599f20ab05"
+      },
+      "audioGroups": [
+        {
+          "id": "jumpforce-boruto",
+          "label": "Boruto",
+          "name": "Boruto",
+          "characterName": "Boruto",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Boruto/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "root",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 213,
+          "durationSeconds": 293.21529166666653,
+          "sourceCategoryCounts": {
+            "sfx": 1,
+            "voice": 212
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-ryo-saeba",
+          "label": "Ryo Saeba",
+          "name": "Ryo Saeba",
+          "characterName": "Ryo Saeba",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Ryo Saeba/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "root",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 324,
+          "durationSeconds": 622.1309583333333,
+          "sourceCategoryCounts": {
+            "sfx": 46,
+            "voice": 278
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-aizen",
+          "label": "Aizen",
+          "name": "Aizen",
+          "characterName": "Aizen",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Aizen/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 239,
+          "durationSeconds": 419.63785416666633,
+          "sourceCategoryCounts": {
+            "sfx": 4,
+            "voice": 235
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-grimmjow",
+          "label": "Grimmjow",
+          "name": "Grimmjow",
+          "characterName": "Grimmjow",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Grimmjow/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 235,
+          "durationSeconds": 345.42729166666646,
+          "sourceCategoryCounts": {
+            "sfx": 21,
+            "voice": 214
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-hitsugaya",
+          "label": "Hitsugaya",
+          "name": "Hitsugaya",
+          "characterName": "Hitsugaya",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Hitsugaya/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 435,
+          "durationSeconds": 669.3382291666663,
+          "sourceCategoryCounts": {
+            "sfx": 30,
+            "voice": 405
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-ichigo",
+          "label": "Ichigo",
+          "name": "Ichigo",
+          "characterName": "Ichigo",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Ichigo/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 222,
+          "durationSeconds": 326.0256041666666,
+          "sourceCategoryCounts": {
+            "sfx": 2,
+            "voice": 220
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-renji",
+          "label": "Renji",
+          "name": "Renji",
+          "characterName": "Renji",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Renji/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 278,
+          "durationSeconds": 531.33775,
+          "sourceCategoryCounts": {
+            "sfx": 44,
+            "voice": 234
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-rukia",
+          "label": "Rukia",
+          "name": "Rukia",
+          "characterName": "Rukia",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Rukia/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 213,
+          "durationSeconds": 313.35052083333346,
+          "sourceCategoryCounts": {
+            "sfx": 2,
+            "voice": 211
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-yoruichi",
+          "label": "Yoruichi",
+          "name": "Yoruichi",
+          "characterName": "Yoruichi",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Yoruichi/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Bleach",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 234,
+          "durationSeconds": 369.1135208333333,
+          "sourceCategoryCounts": {
+            "sfx": 25,
+            "voice": 209
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        },
+        {
+          "id": "jumpforce-cell",
+          "label": "Cell",
+          "name": "Cell",
+          "characterName": "Cell",
+          "heroIds": [],
+          "pathPrefixes": [
+            "JForce_Cell/extracted/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": null,
+          "sourceFolder": "Dbz",
+          "sourceId": "miner600-jumpforce-audio-remaining",
+          "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+          "author": "miner600",
+          "fileCount": 219,
+          "durationSeconds": 519.2900000000004,
+          "sourceCategoryCounts": {
+            "voice": 219
+          },
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Source pack character label; individual ActVoice clips may contain other speakers. Source directory labels only, not human-confirmed speech."
+        }
+      ],
+      "files": [
+        {
+          "path": "JForce_Boruto/original/JForce_Boruto.7z",
+          "bytes": 4438517,
+          "sha256": "651e27fd1e79501318a0b62cca3e01702f3e379116fe0f044ce3ffbf61f2d216"
+        },
+        {
+          "path": "JForce_Ryo Saeba/original/JForce_Ryo Saeba.7z",
+          "bytes": 9334054,
+          "sha256": "c8cc049fe569d8d06ac289a6f818e163177eb669c8a9b912dc122d86ebd42713"
+        },
+        {
+          "path": "JForce_Aizen/original/JForce_Aizen.7z",
+          "bytes": 6522930,
+          "sha256": "5699517f7d92efdede008143c3b563e86537511453c42db26d903bc6f1c1e9f8"
+        },
+        {
+          "path": "JForce_Grimmjow/original/JForce_Grimmjow.7z",
+          "bytes": 6130781,
+          "sha256": "60cb8beaaf02a910b40ca18d5dc8ca44aa9a1f0e37ca049c28e32d36b896c4f8"
+        },
+        {
+          "path": "JForce_Hitsugaya/original/JForce_Hitsugaya.7z",
+          "bytes": 10998153,
+          "sha256": "9a01cb20f8fdb41db67e42c96d40b5ac85de235e86bb3658b059a617be40c1da"
+        },
+        {
+          "path": "JForce_Ichigo/original/JForce_Ichigo.7z",
+          "bytes": 4717109,
+          "sha256": "b857f21855d37d85280e061753f23eb4b861460151091d6ac083292fed058de5"
+        },
+        {
+          "path": "JForce_Renji/original/JForce_Renji.7z",
+          "bytes": 8303343,
+          "sha256": "5b189315466162adb22e889e9bd8f9af12c5000ed2c09e3fa85df3b568cb1759"
+        },
+        {
+          "path": "JForce_Rukia/original/JForce_Rukia.7z",
+          "bytes": 4098768,
+          "sha256": "037461d3a8250b74bf1a27ad7d63320d90a935cce2c6ec4064fde891e49ee7b7"
+        },
+        {
+          "path": "JForce_Yoruichi/original/JForce_Yoruichi.7z",
+          "bytes": 5982551,
+          "sha256": "5bfa135ce587bb92698da4a71a8216626dc2e3396f1c2721cbce60814d9037c1"
+        },
+        {
+          "path": "JForce_Cell/original/JForce_Cell.7z",
+          "bytes": 8076979,
+          "sha256": "82bd84d7c6e0588020eff58f8220b7797804fb4bcd6e04803410cb7eb6cea904"
+        }
+      ],
+      "verifiedLocalDeliveryOnly": true,
+      "acquisitionScope": "Only the frozen packages and files listed in this immutable delivery; other sibling downloads are excluded.",
+      "publicationStatus": "local-only-preparing-s3-backup",
+      "usage": "Local audio may be used immediately for listening, transcription and preparation; not automatically imported into the game.",
+      "verification": "不可變交付索引已核對；10 個完整包／2612 個音訊檔可直接讀本機。OGG 結構全檔檢查、分類取樣解碼通過；未全檔解碼。S3 備份另行完成；其餘仍下載包不包含於本次交付。說話者、語言、逐字稿與品質待聽審。",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-character-mapping",
+        "heroIds": [],
+        "selectionVerified": false,
+        "note": "按原生包／角色群保留；本機音訊可立即準備，正式綁定另驗收。"
+      },
+      "reuseTerms": "原作者與來源頁資訊保留，取用狀態與正式發佈驗收分開。"
+    },
+    {
+      "id": "parallel-voice-melee-local-29",
+      "target": "Melee 新交付 29 包音訊（本機可用）",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "uploader": "Mario Mayhem；個別擷取者未署名",
+      "format": "OGG / WAV + complete original packages",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "purchaseDecision": "supplement-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-remaining",
+      "sourceGame": "Super Smash Bros. Melee",
+      "platform": "GameCube",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "community-forum-public-soundrip",
+      "assetKinds": [
+        "audio"
+      ],
+      "audioFileIndex": {
+        "reportPath": "deliveries/local-audio-delivery-20260910T115417111035Z.json",
+        "reportSha256": "09d4caa234bce3421244a4e89701cd1b87fc36ece34cbee0146a8bddc3ffb8db"
+      },
+      "audioGroups": [
+        {
+          "id": "SSBM_Characters_Bowser",
+          "name": "SSBM / Characters_Bowser",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Bowser/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Captain_Falcon",
+          "name": "SSBM / Characters_Captain_Falcon",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Captain_Falcon/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Donkey_Kong",
+          "name": "SSBM / Characters_Donkey_Kong",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Donkey_Kong/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Dr_Mario",
+          "name": "SSBM / Characters_Dr_Mario",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Dr_Mario/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Falco",
+          "name": "SSBM / Characters_Falco",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Falco/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Falco_JP",
+          "name": "SSBM / Characters_Falco_JP",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Falco_JP/"
+          ],
+          "reportedLanguage": "Japanese (JP filename label)",
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Fox JP",
+          "name": "SSBM / Characters_Fox JP",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Fox JP/"
+          ],
+          "reportedLanguage": "Japanese (JP filename label)",
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Fox",
+          "name": "SSBM / Characters_Fox",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Fox/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Ganondorf",
+          "name": "SSBM / Characters_Ganondorf",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Ganondorf/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Giga Bowser",
+          "name": "SSBM / Characters_Giga Bowser",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Giga Bowser/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Ice Climbers",
+          "name": "SSBM / Characters_Ice Climbers",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Ice Climbers/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Jigglypuff JP",
+          "name": "SSBM / Characters_Jigglypuff JP",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Jigglypuff JP/"
+          ],
+          "reportedLanguage": "Japanese (JP filename label)",
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Jigglypuff",
+          "name": "SSBM / Characters_Jigglypuff",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Jigglypuff/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Link",
+          "name": "SSBM / Characters_Link",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Link/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Luigi",
+          "name": "SSBM / Characters_Luigi",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Luigi/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Mario",
+          "name": "SSBM / Characters_Mario",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Mario/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Master_Hand_and_Crazy_Hand",
+          "name": "SSBM / Characters_Master_Hand_and_Crazy_Hand",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Master_Hand_and_Crazy_Hand/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Mewtwo",
+          "name": "SSBM / Characters_Mewtwo",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Mewtwo/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Mr_Game_and_Watch",
+          "name": "SSBM / Characters_Mr_Game_and_Watch",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Mr_Game_and_Watch/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Ness",
+          "name": "SSBM / Characters_Ness",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Ness/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Onett",
+          "name": "SSBM / Characters_Onett",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Onett/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Peach",
+          "name": "SSBM / Characters_Peach",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Peach/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Pichu",
+          "name": "SSBM / Characters_Pichu",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Pichu/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Pokemon",
+          "name": "SSBM / Characters_Pokemon",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Pokemon/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Princess_Peachs_Castle",
+          "name": "SSBM / Characters_Princess_Peachs_Castle",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Princess_Peachs_Castle/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Roy",
+          "name": "SSBM / Characters_Roy",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Roy/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Samus",
+          "name": "SSBM / Characters_Samus",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Samus/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Venom",
+          "name": "SSBM / Characters_Venom",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Venom/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        },
+        {
+          "id": "SSBM_Characters_Young_Link",
+          "name": "SSBM / Characters_Young_Link",
+          "heroIds": [],
+          "pathPrefixes": [
+            "extracted/SSBM_Characters_Young_Link/"
+          ],
+          "reportedLanguage": null,
+          "speakerVerified": false
+        }
+      ],
+      "files": [],
+      "verifiedLocalDeliveryOnly": true,
+      "acquisitionScope": "Only the frozen packages and files listed in this immutable delivery; other sibling downloads are excluded.",
+      "publicationStatus": "local-only-preparing-s3-backup",
+      "usage": "Local audio may be used immediately for listening, transcription and preparation; not automatically imported into the game.",
+      "verification": "不可變交付索引已核對；29 個完整包／950 個音訊檔可直接讀本機。ZIP CRC、完整 PCM 長度與原包／音訊 SHA-256 通過。S3 備份另行完成；其餘仍下載包不包含於本次交付。說話者、語言、逐字稿與品質待聽審。",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-character-mapping",
+        "heroIds": [],
+        "selectionVerified": false,
+        "note": "按原生包／角色群保留；本機音訊可立即準備，正式綁定另驗收。"
+      },
+      "reuseTerms": "原作者與來源頁資訊保留，取用狀態與正式發佈驗收分開。"
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -10588,7 +11283,10 @@
       "unreviewedMediaCategory": "unclassified",
       "audioFileCountIsConfirmedVoiceCount": false,
       "trackAcquisitionConversionClassificationBindingsAndBackendAcceptanceSeparately": true,
-      "missingStandaloneAudioProvesNoEmbeddedVoice": false
+      "missingStandaloneAudioProvesNoEmbeddedVoice": false,
+      "verifiedLocalAudioAvailableImmediately": true,
+      "localUseRequiresS3": false,
+      "localQueriesReturnAbsolutePaths": true
     },
     "finishedStorage": "Git; local copy retained",
     "storagePolicyPath": "materials/asset-library/STORAGE_POLICY.json",

@@ -127390,13 +127390,9 @@
       ],
       "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ns-bowser-big-blast/14d3c4c30d244f1a5ba19e7324b13901676109b4c23427b6132daaa5e5ad85f3.zip",
       "readbackVerified": true
-    }
-  ],
-  "pendingUploads": [
+    },
     {
       "id": "parallel-voice-ssbu-japanese",
-      "localArchive": "outputs/model-source-backups/parallel-voice-ssbu-japanese/d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b.zip",
-      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbu-japanese/d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b.zip",
       "bytes": 501815204,
       "sha256": "d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b",
       "contentKind": "complete-intake",
@@ -141822,7 +141818,9 @@
           "sha256": "d3058e0eac39d39f7f6e05bfb6d69ea5802dc02dd1bf88d0a8f2bbd1c6fe9748"
         }
       ],
-      "readbackVerified": false
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbu-japanese/d23a1563cbdb6b9a0117e43d6f4bb77b461fae18ddc1dc199c0fac335846729b.zip",
+      "readbackVerified": true
     }
-  ]
+  ],
+  "pendingUploads": []
 }

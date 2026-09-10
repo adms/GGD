@@ -24,17 +24,22 @@ def main():
         [s['id'],s['name'],s['heroIds']],ensure_ascii=False).casefold()]
     ids={g['id'] for g in groups};backup_ids={b for g in groups for b in g['backupIds']}
     backup_ids.update(s['backupId'] for s in native)
-    result=dict(groups=groups,sourceLeads=leads,nativeAudioSources=native,backups={k:v for k,v in data['backups'].items() if k in backup_ids},synthesisContract=data['synthesisContract'])
+    workspace=Path(data.get('localWorkspace',ROOT.parents[2]))
+    result=dict(groups=groups,sourceLeads=leads,nativeAudioSources=native,backups={k:v for k,v in data['backups'].items() if k in backup_ids},
+                localWorkspace=str(workspace),localUseRequiresS3=False,synthesisContract=data['synthesisContract'])
     if args.files:
         path=ROOT/data['sourceFileManifest'];blob=path.read_bytes()
         assert hashlib.sha256(blob).hexdigest()==data['sourceFileManifestSha256'],'File manifest changed; rebuild voice index'
         result['files']=[r for line in blob.splitlines() if (r:=json.loads(line))['groupId'] in ids]
+        for row in result['files']:row['absolutePath']=str(workspace/row['path'])
+    for source in native:
+        for row in source['files']:row['absolutePath']=str(workspace/row['path'])
     if args.json:print(json.dumps(result,ensure_ascii=False,indent=2))
     else:
         for g in groups:print(f'{g["id"]} | {g["name"]} | {g["fileCount"]} audio files | 說話者／語言／合成輸入尚未驗收')
         for s in leads:print(f'{s["id"]} | {s["target"]} | 尚未取得 | {s["accessStatus"]}')
         for s in native:print(f'{s["id"]} | {s["name"]} | {s["bankFileCount"]} 原生音訊庫 | 待解碼／聽審')
-        for f in result.get('files',[]):print(f'{f["sha256"]}  {f["path"]}')
+        for f in result.get('files',[]):print(f'{f["sha256"]}  {f["absolutePath"]}')
     return 0 if groups or leads or native else 1
 
 
