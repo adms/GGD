@@ -25,6 +25,10 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 os.environ['OMP_NUM_THREADS'] = '4'
 GIB = 1024 ** 3
 QUERY_BLOCK_TOKENS = 256
+# Resource reads wake macOS battery/RAM/swap sensors.  The user explicitly
+# requested a three-minute cadence.  Process/deadline supervision remains
+# frequent below; only resource sensor reads are rate-limited.
+RESOURCE_SAMPLE_INTERVAL_SECONDS = 180
 LOCK = Path('/private/tmp/ggd-forge-training-runtime/gpu.lock')
 SCRIPT = Path(__file__).resolve()
 MEMORY_SCRIPT = SCRIPT.with_name('hero-distillation-memory.py')
@@ -223,6 +227,7 @@ def prepare(args):
               'maxTrainOutputTokens': max(r['outputTokens'] for r in train), 'probeIds': probe_ids, 'capacityStrata': strata,
               'capacityEstimatePolicy': 'Per-format observed gradient max * (train tasks + 2 * dev tasks), sum * 1.5 + 300s; heuristic admission estimate, not a timing guarantee. No dev gradients.',
               'metalLimitGiB': 28, 'secondsMaximum': maximum_seconds, 'probeSecondsMaximum': 1200, 'stepSecondsMaximum': 120,
+              'resourceSampleIntervalSeconds': RESOURCE_SAMPLE_INTERVAL_SECONDS,
               'timeAuthorization':authorization,
               'batteryAuthorization':battery_record,
               'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, **battery_guard, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
@@ -544,10 +549,16 @@ def supervise(directory, phase):
             child = subprocess.Popen([sys.executable, str(SCRIPT), 'worker', '--run', str(directory), '--phase', phase, '--token', token],
                                      stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             state.update(status='running', workerPid=child.pid); atomic(work / 'state.json', state)
+            last_resource_sample = time.monotonic()
             while child.poll() is None:
                 time.sleep(2)
-                sample = resources(); state['samples'].append(sample); atomic(work / 'state.json', state)
-                reason = violation(start, sample, p['guard'])
+                # Keep the short process/step deadline, but do not wake
+                # battery/RAM/swap sensors more frequently than authorised.
+                reason = None
+                if time.monotonic() - last_resource_sample >= p['resourceSampleIntervalSeconds']:
+                    sample = resources(); state['samples'].append(sample); atomic(work / 'state.json', state)
+                    reason = violation(start, sample, p['guard'])
+                    last_resource_sample = time.monotonic()
                 if (work / 'STOP').exists(): reason = 'USER_STOP'
                 maximum = p['probeSecondsMaximum'] if phase == 'probe' else p['secondsMaximum']
                 if time.time() - state['startedAt'] > maximum: reason = 'RUN_TIME_LIMIT'
