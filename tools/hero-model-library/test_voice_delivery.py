@@ -3,6 +3,9 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from voice_index import primary_audio, excluded_from_speech
@@ -47,6 +50,36 @@ class VoiceDelivery(unittest.TestCase):
             self.assertEqual(list(read_voice_files(data,root)),rows)
             with self.assertRaises(AssertionError):
                 list(read_voice_files(dict(data,sourceFileManifestSha256='corrupt'),root))
+
+    def test_format_revision_keeps_old_group_and_all_alternate_paths_queryable(self):
+        """A consumer using either source ID gets one performance and its old encoding."""
+        primary=dict(groupId='kof-old:voice',path='new/float.wav',sha256='float-hash')
+        alternate=dict(groupId='kof-old:voice',path='old/pcm.wav',sha256='pcm-hash',primary=False)
+        raw=(json.dumps(primary)+'\n').encode();blob=gzip.compress(raw,mtime=0)
+        data=dict(groups=[dict(id='kof-old:voice',name='Ash',heroIds=[],backupIds=[],
+                              aliasGroupIds=['kof-old','kof-float'],fileCount=1)],
+                  alternateAudioSources=[dict(id='kof-old',preferredGroupId='kof-old:voice',
+                                              preferredSourceId='kof-float',files=[alternate])],
+                  localWorkspace='/local/assets',backups={},synthesisContract={},
+                  sourceFileManifest='voice-files.jsonl.gz',sourceFileEncoding='gzip',
+                  sourceFileManifestSha256=hashlib.sha256(blob).hexdigest(),
+                  uncompressedFileManifestSha256=hashlib.sha256(raw).hexdigest())
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);tool=root/'tools/hero-model-library/query_voice.py'
+            tool.parent.mkdir(parents=True)
+            shutil.copyfile(Path(__file__).with_name('query_voice.py'),tool)
+            index=root/'materials/hero-model-library';index.mkdir(parents=True)
+            (index/'voice-index.json').write_text(json.dumps(data))
+            (index/'voice-files.jsonl.gz').write_bytes(blob)
+            for query in ['kof-old:voice','kof-old','kof-float']:
+                with self.subTest(query=query):
+                    result=json.loads(subprocess.check_output(
+                        [sys.executable,str(tool),query,'--files','--json'],text=True))
+                    self.assertEqual([g['id'] for g in result['groups']],['kof-old:voice'])
+                    self.assertEqual(len(result['files']),1)
+                    self.assertEqual(result['files'][0]['absolutePath'],'/local/assets/new/float.wav')
+                    self.assertEqual(result['alternateFiles'],
+                                     [dict(alternate,absolutePath='/local/assets/old/pcm.wav')])
 
 
 if __name__=='__main__':unittest.main()

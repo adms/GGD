@@ -45,6 +45,9 @@ def main():
         order={g['id']:i for i,g in enumerate(groups)}
         result['files'].sort(key=lambda r:(order[r['groupId']],r['path']))
         for row in result['files']:row['absolutePath']=str(workspace/row['path'])
+        alternatives=[s for s in data.get('alternateAudioSources',[]) if s['preferredGroupId'] in ids]
+        result['alternateAudioSources']=[{k:v for k,v in s.items() if k!='files'} for s in alternatives]
+        result['alternateFiles']=[dict(f,absolutePath=str(workspace/f['path'])) for s in alternatives for f in s['files']]
     for source in native:
         for row in source['files']:row['absolutePath']=str(workspace/row['path'])
     if args.json:print(json.dumps(result,ensure_ascii=False,indent=2))

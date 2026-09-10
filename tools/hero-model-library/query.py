@@ -9,27 +9,64 @@ from source_links import acquired_sources
 
 REPO = Path(__file__).resolve().parents[2]
 
+def candidate_matches(candidate, query):
+    # Shared provenance paragraphs can mention siblings (e.g. a Dissidia pack's
+    # Cloud filename). Only this candidate's identity and own paths scope a hit.
+    fields=['candidateId','id','name','label','character','nativeCharacter','sourceLabel',
+            'heroIds','ownerEntryIds','unitId','sourceRigNode','variant','variantSlot',
+            'nativeModel','model','modelPath','convertedPath','convertedFile',
+            'sourceBodyNodes','sourceWork','sourceGame']
+    return query in json.dumps([candidate.get(k) for k in fields],ensure_ascii=False).casefold()
+
+
 def public_match_scope(sources, query):
     hero_ids, entry_ids = set(), set()
     for source in sources:
-        characters = [c for c in source.get('characters',[]) if query in json.dumps(c,ensure_ascii=False).casefold()]
+        scoped = source.get('characters',[]) + source.get('modelCandidates',[])
+        characters = [c for c in scoped if candidate_matches(c,query)]
         matches = characters or ([source] if query in json.dumps(source,ensure_ascii=False).casefold() else [])
         for match in matches:
-            hero_ids.update(match['heroIds'])
+            hero_ids.update(match.get('heroIds',[]))
             entry_ids.update(match.get('ownerEntryIds',[]))
     return hero_ids, entry_ids
+
+
+def candidate_records(sources, query):
+    """Native characters remain queryable without borrowing a package sibling's hero ID."""
+    result=[]
+    for source in sources:
+        whole_source=query==source['id'].casefold()
+        for candidate in source.get('modelCandidates',[]):
+            if not query or whole_source or candidate_matches(candidate,query):
+                result.append(dict(candidate,sourceId=source['id'],sourceUrl=source['url'],
+                    sourceLocalPath=source['localPath'],sourceReadiness=source['readiness'],
+                    sourceBackendIntegration=source.get('backendIntegration',{})))
+    return result
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('query', nargs='?', default='')
     parser.add_argument('--json', action='store_true', help='Return machine-readable records.')
-    parser.add_argument('--downloads', action='store_true', help='Search the owner download plan instead of hero models.')
+    mode=parser.add_mutually_exclusive_group()
+    mode.add_argument('--downloads', action='store_true', help='Search the owner download plan instead of hero models.')
+    mode.add_argument('--candidates', action='store_true', help='List acquired native model/variant/part candidates, including unmapped characters.')
     args = parser.parse_args()
     check = subprocess.run([sys.executable, str(Path(__file__).with_name('inventory.py')), '--check'], capture_output=True, text=True)
     if check.returncode:
         raise SystemExit(check.stderr.strip() or check.stdout.strip())
     data = json.loads((REPO/'materials/hero-model-library/inventory.json').read_text())
     query = args.query.casefold()
+    if args.candidates:
+        records=candidate_records(acquired_sources(data['downloadPlan']),query)
+        if args.json:
+            print(json.dumps(dict(candidates=records,candidateCount=len(records),
+                scope='Acquired source candidates; includes raw and unaccepted assets. No runtime readiness inferred.'),ensure_ascii=False,indent=2))
+        else:
+            for c in records:
+                print(f"{c.get('candidateId',c.get('id',''))} | {c.get('label',c.get('character',''))} | {c.get('resourceRole','model-candidate')} | {c.get('status',c.get('readyStage',c['sourceReadiness']))} | GGD: {', '.join(c.get('heroIds',[])) or '未對應'}")
+                print('  '+c['sourceId']+' | '+c['sourceLocalPath'])
+        return 0 if records else 1
     if args.downloads:
         direct = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]
         hero_ids, entry_ids = public_match_scope(acquired_sources(data['downloadPlan']) + data['downloadPlan'].get('publicSourceLeads',[]),query)

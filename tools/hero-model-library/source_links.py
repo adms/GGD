@@ -114,6 +114,19 @@ def render_sources(data, policy):
             method = '論壇付費' if s in data.get('paidSources', []) else '免費公開'
             lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{method}；{s["uploader"]}；{s["format"]} | {s["verification"]} | {storage} | {integration} | {decision} |')
         lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources／paidSources`；完整備份的逐檔清單統一在 `public-source-files.json`（沿用檔名，包含付費交付）。`pendingBackup.plannedS3Uri` 只是預定上傳位置，不能當成已存在的 S3 檔案；已上傳以 `backup.readbackVerified=true` 為準。`readiness` 尚未通過的來源只供人工處理，不進入成品自動取用；來源使用條件另行保留，不把下載或付款當成已確認可再散布。', '']
+        detailed=[(s,c) for s in public for c in s.get('modelCandidates',[])]
+        if detailed:
+            lines += ['## 已登記的原生角色、配色與部件候選', '',
+                '以下展開來源交付中的 `modelCandidates`，包含尚未對應 GGD ID 的角色與部件。相同素材包裡其他角色不能繼承莉娜等已知角色的 ID；配件不是完整本體，標準 GLB 格式通過也不代表動作／後台已驗收。', '',
+                '查詢單一角色或來源包：`python3 tools/hero-model-library/query.py Gourry --candidates --json`；來源 ID 可列出該包全部變體。`sourceLocalPath` 加候選內的相對檔案路徑可定位本機；既有英雄的可用模型仍以本文件下方全角色表為準。', '',
+                '| 原生角色／版本 | 候選 ID | GGD 對應 | 來源包 | 類型與目前狀態 |', '|---|---|---|---|---|']
+            for s,c in detailed:
+                name=c.get('label',c.get('character',c.get('nativeCharacter',c.get('candidateId',''))))
+                ids='、'.join('`'+i+'`' for i in c.get('heroIds',[])) or '未對應；保留儲備'
+                state=c.get('status',c.get('readyStage',s.get('readiness','待核')))
+                role=c.get('resourceRole',c.get('assetKind','model-candidate'))
+                lines.append(f'| {str(name).replace("|","／")} | `{c.get("candidateId",c.get("id",""))}` | {ids} | `{s["id"]}` | {role}；{state} |')
+            lines.append('')
     if data.get('publicSourceLeads'):
         lines += ['## 已找到來源頁，待取得的素材', '',
             '以下列出待取得的素材及尚未完整取得的來源目錄；目錄中的已驗證交付另列於上方來源表，未完成部分不計入已下載數量，也不加入可用候選。', '',

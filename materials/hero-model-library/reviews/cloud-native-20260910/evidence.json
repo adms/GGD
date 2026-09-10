@@ -1,0 +1,54 @@
+{
+  "sourceId": "psp-cloud-native-motion-batch4",
+  "handoffSha256": "a066764b62c2a16eb6c27be746de0431c4576eb6cada9614ec818b35d62aacf5",
+  "preview": {
+    "path": "preview/cloud-native-contact-sheet.png",
+    "bytes": 196546,
+    "sha256": "16e98a26b17cbdbf7a759af27b52aabf64fd90a4965151862833005ff60eb753"
+  },
+  "validation": {
+    "khronos": {
+      "path": "analysis/khronos-validation-unlimited.json",
+      "bytes": 71978,
+      "sha256": "60af9ae1f8fb6a2c8a8fbffb607977978f89a7974997883d372ccf907ab2044f"
+    },
+    "cpuPlayback": {
+      "path": "analysis/raw-key-and-cpu-playback-verification.json",
+      "bytes": 85754,
+      "sha256": "c6b6339a1a5a5f84de5906555bf7b34fe133b3374ad122a7ec972147c515d68e"
+    },
+    "sourceUvTexture": {
+      "path": "analysis/source-uv-and-texture-proof.json",
+      "bytes": 1786,
+      "sha256": "e5c49e1233b0802e1ed587dd54ded7a5783c2b1f5608667be51cd961e275eacb"
+    },
+    "boneScope": {
+      "path": "analysis/bone-scope-and-bind-pose.json",
+      "bytes": 41417,
+      "sha256": "489359f9aecccf83425984b24e521ce4bb1a4b5849ad9fe1cca9dd482bf792e5"
+    },
+    "visualReview": {
+      "path": "analysis/visual-review.json",
+      "bytes": 1148,
+      "sha256": "3d4d9e64cca410906ecc04375ceb381cbcc13c17772f21f6cc46a9bcc368a5eb"
+    }
+  },
+  "totals": {
+    "newDownloads": 0,
+    "models": 1,
+    "nativeMotionClips": 13,
+    "convertedTrsChannels": 1846,
+    "originalChannels": 1850,
+    "rawCurves": 1386,
+    "rawKeys": 20970,
+    "rawKeyReferencesVerified": 21438,
+    "interiorSamplesVerified": 19592,
+    "cpuSkinnedFrames": 65,
+    "originalGmoBonesMatched": 60,
+    "weightedSkinJoints": 44,
+    "sourceTriangleCornersVerified": 5643,
+    "audioFiles": 0,
+    "fucNativePackages": 0
+  },
+  "runtimeReady": false
+}

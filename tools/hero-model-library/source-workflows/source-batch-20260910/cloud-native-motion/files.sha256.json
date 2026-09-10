@@ -1,0 +1,27 @@
+[
+  {
+    "path": "control/tooling/ggd-check-cloud-native-playback.py",
+    "bytes": 12225,
+    "sha256": "5fb68bb8bd200514fa38a8881c0e65e4435f2a8cf462104ed1209779dc620246"
+  },
+  {
+    "path": "control/tooling/ggd-convert-cloud-native-motions.py",
+    "bytes": 16701,
+    "sha256": "4c4a5ffb82b7792dbf47fade8e4d540ee0735bca05762c6b075f89a6cdd7879f"
+  },
+  {
+    "path": "control/tooling/ggd-freeze-cloud-native-batch4.py",
+    "bytes": 12157,
+    "sha256": "eea7b75f9a38d92f70ae4ba11bcfa6a8b25d29f2e138b499d6695bef34d2635e"
+  },
+  {
+    "path": "control/tooling/ggd-validate-cloud-native.cjs",
+    "bytes": 1091,
+    "sha256": "373e8b670d104456814ce240f51c15e61ec32510299985cd8215886ba498c10f"
+  },
+  {
+    "path": "control/tooling/ggd-verify-cloud-source-uv.py",
+    "bytes": 2746,
+    "sha256": "2a5d06ccbaa2d429b051c4b07d96ade82de58b411379586a7a9da747f54898d6"
+  }
+]

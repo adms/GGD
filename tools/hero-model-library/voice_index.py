@@ -74,7 +74,7 @@ def main():
     assert sha(backup_path) == latest['manifest_sha256']
     backup = read(backup_path)
     assert '/legacy/' in backup['backup_uri'] and '/leagcy/' not in backup['backup_uri']
-    groups, files, stores, native_audio = {}, [], {}, []
+    groups, files, stores, native_audio, alternate_audio = {}, [], {}, [], []
     source_models = {m['id']:m for m in models['models']}
 
     def hero_ids(source_id):
@@ -149,6 +149,29 @@ def main():
         add(g,rel,r['sha256'],r['bytes'],sid,rel,role=role)
 
     for source in downloads.get('publicSources',[])+downloads.get('paidSources',[]):
+        if source.get('supersededPrimaryAudioBy'):
+            replacement=next(s for s in downloads.get('publicSources',[])+downloads.get('paidSources',[])
+                             if s['id']==source['supersededPrimaryAudioBy'])
+            assert replacement.get('audioFormatRevisionOf')==source['id']
+            parts=source.get('audioGroups',[])
+            assert len(parts)<=1,'Format revisions spanning multiple groups require an explicit group mapping'
+            old_group_id=source['id']+(':'+parts[0]['id'] if parts else '')
+            assert replacement.get('primaryAudioGroupId')==old_group_id
+            spec=source['audioFileIndex'];path=ws/source['localPath']/spec['reportPath']
+            assert sha(path)==spec['reportSha256']
+            report=read(path);old_files=primary_audio(report['files'],report['files'],source.get('primaryAudioFormats'))
+            rows=[]
+            for f in old_files:
+                rel=source['localPath']+'/'+f['path'];local=ws/rel
+                assert local.is_file() and local.stat().st_size==f['bytes'] and sha(local)==f['sha256']
+                rows.append(dict(f,path=rel,groupId=old_group_id,sourceId=source['id'],
+                                 primary=False,countAsNewPerformance=False,synthesisReady=False))
+            alternate_audio.append(dict(id=source['id'],name=source['target'],heroIds=source['heroIds'],
+                preferredSourceId=replacement['id'],preferredGroupId=old_group_id,
+                localRoot=source['localPath'],sourceFileIndex=spec,files=rows,
+                backup=source.get('backup'),pendingBackup=source.get('pendingBackup'),
+                reason=source.get('audioFormatNote','Historical format retained; use the preferred revision.')))
+            continue
         receipt=source.get('backup',{})
         pending=source.get('pendingBackup',{})
         local_only=False
@@ -233,10 +256,14 @@ def main():
                 if match:part=dict(id=match[1],name='吉伊卡哇素材包／'+match[1],heroIds=[])
             elif source['id']=='hive-anime-team-survival':
                 part=dict(id=Path(member).stem,name='地圖音訊檔名／'+Path(member).stem,heroIds=[])
-            key=source['id']+(':'+part['id'] if part else '')
+            key=source.get('primaryAudioGroupId') or source['id']+(':'+part['id'] if part else '')
             g=group(key,part['name'] if part else source['target'],'本機遊戲' if source.get('accessStatus')=='local-installed-game' else '公開來源',source['id'],
                 '來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認',ids=part['heroIds'] if part else source['heroIds'])
             g['sourceUrl']=source['url'];g['work']=source.get('sourceGame','見來源頁')
+            if source.get('audioFormatRevisionOf'):
+                g['audioFormatRevisionOf']=source['audioFormatRevisionOf']
+                g['countAsNewPerformance']=False
+                g['aliasGroupIds']=[source['id'],source['audioFormatRevisionOf']]
             if 'audioConversion' in source:g['conversion']=source['audioConversion']
             if part and part.get('bankAliases'):
                 g['bankAliases']=part['bankAliases']
@@ -277,13 +304,15 @@ def main():
         languagePreference=['ja','en','other-or-unreviewed'],
         scope='All indexed 300/MBA audio and verified local public/paid source audio; S3 backup readiness is tracked separately. Not all files are character voices.',
         groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
+        alternateAudioSources=alternate_audio,
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
             convertedAudioMustKeepSourceHash=True,generatedAudioMustBeLabeledSynthetic=True),
         summary=dict(groups=len(groups),audioFiles=len(files),bytes=sum(f['bytes'] for f in files),
             missingOrSizeChanged=sum(not f['localSizeVerified'] for f in files),
-            confirmedVoiceCount=None,synthesisReadyGroups=0))
+            confirmedVoiceCount=None,synthesisReadyGroups=0,
+            alternateFormatFiles=sum(len(s['files']) for s in alternate_audio)))
     manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
     (OUT/'voice-files.jsonl').write_text(manifest)
     compressed=gzip.compress(manifest.encode(),mtime=0)
@@ -296,6 +325,7 @@ def main():
         '**本機已驗證音訊立即供其他工作流讀取，不等待 S3 備份。** `query_voice.py --files --json` 回傳每檔 `absolutePath`；`voice-index.json.localWorkspace` 加上逐檔 `path` 也可直接定位。S3 狀態另列，待聽審不妨礙找檔、播放、轉錄及準備素材。', '',
         '**語音查找與選用優先順序：日文 → 英文 → 其他語言／待核。** 所有語言、版本仍完整保留。查詢按來源明列語言排序；作者或安裝包語系只算線索，不等於逐段聽審已確認。LOL 等已存在本機的素材先擷取建檔，不重複下載；缺少的日／英語版本另列補件。', '',
         '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
+        'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
