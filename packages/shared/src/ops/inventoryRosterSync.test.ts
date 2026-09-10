@@ -208,7 +208,6 @@ describe("盤點表 ↔ 上架設定的雙向同步（GH#1165）", () => {
       ctx.skip();
       return;
     }
-    ctx.task.meta ??= {};
     console.log(
       [
         `🦴 掛骨架 ${audit.skeletonDeclared.length} 名（全部有宣告）：`,

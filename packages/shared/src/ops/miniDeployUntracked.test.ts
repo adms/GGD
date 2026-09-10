@@ -60,7 +60,7 @@ describe("GH#884 未追蹤檔與 checkout", () => {
   it("★ ⭐ 腳本在 checkout **之前**先算出碰撞（⛔ 不是事後補救）", () => {
     const src = readFileSync(SCRIPT, "utf8");
     const iClash = src.indexOf("clash=$(r ");
-    const iCheckout = src.indexOf('git checkout -f -q $head_local"');
+    const iCheckout = src.indexOf('git checkout -f -q $deploy_sha"');
     expect(iClash, "⛔ 沒有碰撞偵測").toBeGreaterThan(0);
     expect(iClash, "⛔ 偵測寫在 checkout **之後** = 檔案已經沒了").toBeLessThan(iCheckout);
   });
@@ -68,7 +68,7 @@ describe("GH#884 未追蹤檔與 checkout", () => {
   it("⭐ 備份用 **`cp`**，⛔ 不是 `mv`（owner：「用 cp 避免資料不完整」）", () => {
     const src = readFileSync(SCRIPT, "utf8");
     const i = src.indexOf("clash=$(r ");
-    const win = src.slice(i, src.indexOf('git checkout -f -q $head_local"'));
+    const win = src.slice(i, src.indexOf('git checkout -f -q $deploy_sha"'));
     expect(win).toContain("cp -p");
     expect(win, "⛔ `mv` 會讓中斷時兩邊都不完整").not.toMatch(/\bmv\s+["'$]/);
   });
@@ -81,7 +81,7 @@ describe("GH#884 未追蹤檔與 checkout", () => {
 
   it("⭐ **後置條件**：checkout 之後備份還在（⛔「備份了」≠「備份成功了」）", () => {
     const src = readFileSync(SCRIPT, "utf8");
-    const i = src.indexOf('git checkout -f -q $head_local"');
+    const i = src.indexOf('git checkout -f -q $deploy_sha"');
     expect(
       src.slice(i, i + 700),
       "⛔ checkout 之後沒有複驗備份 —— 那正是「靜默失敗」的形狀",
