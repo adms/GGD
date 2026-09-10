@@ -1,9 +1,9 @@
 {
   "schema": "ggd.priority81.handoff@1",
   "generator": "tools/hero-model-library/build_priority81_handoff.py",
-  "generatorSha256": "7717febe08d6c780aea927f57c9c3dcb8be4135685d13cfa683ee97835862c35",
+  "generatorSha256": "5f6ee6159bf46033d2c8f200dbf5b6683eceb29f619e00aa7dbe400c3cec15e8",
   "scope": "Main review and merge of existing 81-hero content; Root owns remaining conversions",
-  "inputsSha256": "d6cf929541f5c3a4d9dde37ec16e8ffad95ebe2d5a0cd639953373655b48e6e3",
+  "inputsSha256": "62bb2618f944f183880f6c939eccb37c42ccc6cc4c37219f01882ed669a1a487",
   "inputs": [
     {
       "gitPath": null,
@@ -10270,6 +10270,14 @@
       "sha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f"
     },
     {
+      "gitPath": "content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "existsLocal": true,
+      "gitTracked": true,
+      "bytes": 319724,
+      "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a"
+    },
+    {
       "gitPath": "content/assets/models/community/versions/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/versions/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
       "existsLocal": true,
@@ -11274,8 +11282,8 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kaiji.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 14098,
-      "sha256": "ac7ec552502a39454f3f140bd90db26dab622a53c5654c73b08c14038ac4c076"
+      "bytes": 14947,
+      "sha256": "f7b55f97ea2763b6068ac73e59bc1f7f5782083697462ac1a5b88a118b55f45e"
     },
     {
       "gitPath": "content/champions/b2-keyaru.json",
@@ -11996,6 +12004,14 @@
       "gitTracked": true,
       "bytes": 457,
       "sha256": "783291279029e5bc6d9769b7fda69863480589c014f0de8900a4fcbd67e96feb"
+    },
+    {
+      "gitPath": "content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json",
+      "existsLocal": true,
+      "gitTracked": true,
+      "bytes": 504,
+      "sha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8"
     },
     {
       "gitPath": "content/models/community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128.json",
@@ -13092,6 +13108,14 @@
       "gitTracked": true,
       "bytes": 533,
       "sha256": "4f8c2e41466bfcc05b412c2213d2a082c70f26f0608c760f503d0f5e293edcd3"
+    },
+    {
+      "gitPath": "content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+      "existsLocal": true,
+      "gitTracked": true,
+      "bytes": 654,
+      "sha256": "28824201b18f322a7ccdf8a1d15ada51d4fdc36d068e2347d6b8d72541cdfec3"
     },
     {
       "gitPath": "content/models/version.body.0883dbe1f4facc6f264b2356d9579fa1ddfb639e3a349458.json",
@@ -15010,8 +15034,16 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 4083393,
-      "sha256": "83097facad51362a6aa3b3a4b69b632ac8e734c9f3532eaf85744bc4710fc3f5"
+      "bytes": 4406541,
+      "sha256": "a33a795f00d47fa7a77645bc19d479a389f4f595a4f084cc41c79f3478b5945e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+      "existsLocal": true,
+      "gitTracked": true,
+      "bytes": 4623,
+      "sha256": "ca1121dac7453ff534c66524d508f5ab907b6c07e8e88627ac7b45bf2d17ea9e"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
@@ -15138,16 +15170,16 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-registration.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 510607,
-      "sha256": "47dfd8633451d780ac693bf0577019085d471f6e96e34523a95fa5b54208d6f8"
+      "bytes": 511629,
+      "sha256": "663a60d5da649b688de2c320b3d1b1f07ecf9926a6fab066e276bcb2a6f868ac"
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 21273,
-      "sha256": "fecfead73c02b55bcd78c85ba8ab5180a753de2567b4e4a95114bfbee9ced98a"
+      "bytes": 24103,
+      "sha256": "51687d84afd506350dd9eda1fa2f26ff4dd6058d4c7098935a693eb4dc343e53"
     },
     {
       "gitPath": "materials/hero-model-library/workflow-model-options.json",
@@ -15431,12 +15463,12 @@
   },
   "summary": {
     "heroCount": 81,
-    "activeModelFilesAndMappingsPass": 80,
+    "activeModelFilesAndMappingsPass": 81,
     "activeModelsGitTracked": 81,
-    "activePlaceholderCount": 1,
-    "registeredCandidateCount": 282,
+    "activePlaceholderCount": 0,
+    "registeredCandidateCount": 283,
     "perHeroAudioAudits": 81,
-    "heroesWithReportedGaps": 8,
+    "heroesWithReportedGaps": 7,
     "mainBaselineAudioFiles": 1016,
     "currentBranchAudioAdditions": 2,
     "currentBranchAudioFiles": 1018,
@@ -99201,22 +99233,35 @@
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-kaiji.json",
         "existsLocal": true,
         "gitTracked": true,
-        "bytes": 14098,
-        "sha256": "ac7ec552502a39454f3f140bd90db26dab622a53c5654c73b08c14038ac4c076"
+        "bytes": 14947,
+        "sha256": "f7b55f97ea2763b6068ac73e59bc1f7f5782083697462ac1a5b88a118b55f45e"
       },
-      "activeModelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+      "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
       "selectionMode": "automatic",
       "registeredCandidateKeys": [
         "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
         "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
-        "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7"
+        "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
+        "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f"
       ],
       "inventoryCandidateKeys": [
+        "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
         "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
         "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
         "champ.thorne"
       ],
       "inventoryCandidates": [
+        {
+          "key": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+          "id": "runtime:kaiji-holya-procedural-six-state-v1",
+          "name": "伊藤開司",
+          "work": "賭博默示錄",
+          "tier": "original",
+          "library": "Lethal Company MOD／holya",
+          "kind": "exact",
+          "ready": true,
+          "selectionClass": "community-mod"
+        },
         {
           "key": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
           "id": "300heroes:118",
@@ -99638,25 +99683,200 @@
             "visualAndGameplayAcceptance": "not-established-by-this-index"
           },
           "gaps": []
+        },
+        {
+          "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+          "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+          "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+          "source": {
+            "kind": "exact",
+            "character": "伊藤開司",
+            "work": "賭博默示錄",
+            "library": "Lethal Company MOD／holya",
+            "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+            "tier": "original",
+            "selectionClass": "community-mod"
+          },
+          "automaticEligible": true,
+          "document": {
+            "gitPath": "content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+            "existsLocal": true,
+            "gitTracked": true,
+            "bytes": 654,
+            "sha256": "28824201b18f322a7ccdf8a1d15ada51d4fdc36d068e2347d6b8d72541cdfec3"
+          },
+          "glb": {
+            "gitPath": "content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+            "existsLocal": true,
+            "gitTracked": true,
+            "bytes": 319724,
+            "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a"
+          },
+          "externalDependencies": [],
+          "sourceChain": [
+            {
+              "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+              "document": {
+                "gitPath": "content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+                "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+                "existsLocal": true,
+                "gitTracked": true,
+                "bytes": 654,
+                "sha256": "28824201b18f322a7ccdf8a1d15ada51d4fdc36d068e2347d6b8d72541cdfec3"
+              }
+            },
+            {
+              "modelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+              "document": {
+                "gitPath": "content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json",
+                "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json",
+                "existsLocal": true,
+                "gitTracked": true,
+                "bytes": 504,
+                "sha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8"
+              }
+            }
+          ],
+          "clipMap": {
+            "idle": "GGD_procedural_idle",
+            "run": "GGD_procedural_run",
+            "attack": "GGD_procedural_attack",
+            "cast": "GGD_procedural_cast",
+            "hurt": "GGD_procedural_hurt",
+            "death": "GGD_procedural_death"
+          },
+          "mappedStateCount": 6,
+          "distinctMappedClipCount": 6,
+          "animations": [
+            {
+              "index": 0,
+              "name": "GGD_procedural_idle",
+              "channelCount": 14,
+              "samplerCount": 14,
+              "extras": {
+                "provenance": "GGD authored fallback; not native or retargeted",
+                "native": false,
+                "loopIntent": true
+              }
+            },
+            {
+              "index": 1,
+              "name": "GGD_procedural_run",
+              "channelCount": 14,
+              "samplerCount": 14,
+              "extras": {
+                "provenance": "GGD authored fallback; not native or retargeted",
+                "native": false,
+                "loopIntent": true
+              }
+            },
+            {
+              "index": 2,
+              "name": "GGD_procedural_attack",
+              "channelCount": 14,
+              "samplerCount": 14,
+              "extras": {
+                "provenance": "GGD authored fallback; not native or retargeted",
+                "native": false,
+                "loopIntent": false
+              }
+            },
+            {
+              "index": 3,
+              "name": "GGD_procedural_cast",
+              "channelCount": 14,
+              "samplerCount": 14,
+              "extras": {
+                "provenance": "GGD authored fallback; not native or retargeted",
+                "native": false,
+                "loopIntent": false
+              }
+            },
+            {
+              "index": 4,
+              "name": "GGD_procedural_hurt",
+              "channelCount": 14,
+              "samplerCount": 14,
+              "extras": {
+                "provenance": "GGD authored fallback; not native or retargeted",
+                "native": false,
+                "loopIntent": false
+              }
+            },
+            {
+              "index": 5,
+              "name": "GGD_procedural_death",
+              "channelCount": 14,
+              "samplerCount": 14,
+              "extras": {
+                "provenance": "GGD authored fallback; not native or retargeted",
+                "native": false,
+                "loopIntent": false
+              }
+            }
+          ],
+          "actualAnimationCount": 6,
+          "actualAnimationNames": [
+            "GGD_procedural_idle",
+            "GGD_procedural_run",
+            "GGD_procedural_attack",
+            "GGD_procedural_cast",
+            "GGD_procedural_hurt",
+            "GGD_procedural_death"
+          ],
+          "nativeAnimationCountDeclaredBySourceIndex": 0,
+          "proceduralAnimationCountDeclaredBySourceIndex": 6,
+          "motionProvenanceEvidence": {
+            "modelOptionId": "runtime:kaiji-holya-procedural-six-state-v1",
+            "binaryShaMatches": true,
+            "validation": "shared-prepare-verify-khronos-and-36-sample-babylon-render-passed",
+            "limitations": [
+              "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+              "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+              "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+              "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+              "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+              "技術模型驗收及後台登記與正式站部署分開記錄。"
+            ]
+          },
+          "readiness": {
+            "localFilesAndMappingsPass": true,
+            "gitTracked": true,
+            "placeholder": false,
+            "visualAndGameplayAcceptance": "not-established-by-this-index"
+          },
+          "gaps": []
         }
       ],
       "inventoryReadinessSnapshot": {
         "default": {
-          "key": "champ.thorne",
-          "id": "champ.thorne",
-          "name": "Thorne／方塊騎士",
-          "work": "GGD 模型預設",
+          "key": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+          "id": "runtime:kaiji-holya-procedural-six-state-v1",
+          "name": "伊藤開司",
+          "work": "賭博默示錄",
           "tier": "original",
-          "kind": "previous",
+          "library": "Lethal Company MOD／holya",
+          "selectionClass": "community-mod",
+          "kind": "exact",
           "ready": true,
-          "old": true,
-          "library": "GGD",
+          "old": false,
           "defaultEligible": true,
-          "selectionClass": "original",
           "asset": {
-            "modelKey": "champ.thorne",
-            "location": "existing-project-model",
-            "s3Uri": null
+            "modelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+            "glbPath": "assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+            "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+            "s3Uri": null,
+            "gitPath": "content/assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+            "limitations": [
+              "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+              "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+              "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+              "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+              "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+              "技術模型驗收及後台登記與正式站部署分開記錄。"
+            ]
           }
         },
         "pending": []
@@ -100302,9 +100522,7 @@
           }
         ]
       },
-      "gaps": [
-        "engine placeholder remains in model provenance"
-      ]
+      "gaps": []
     },
     {
       "heroId": "b2-fushi",
@@ -120022,7 +120240,7 @@
     {
       "character": "伊藤開司",
       "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
-      "status": "model-pending-conversion",
+      "status": "model-converted-registered",
       "countsAsFinishedModelOrMotion": false,
       "entry": {
         "gitPath": null,
@@ -120057,6 +120275,56 @@
         "newBodyCount": 1,
         "newNativeAnimationCount": 0,
         "newAudioCount": 0
+      },
+      "runtimeIntegration": {
+        "receipt": {
+          "gitPath": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+          "existsLocal": true,
+          "gitTracked": true,
+          "bytes": 4623,
+          "sha256": "ca1121dac7453ff534c66524d508f5ab907b6c07e8e88627ac7b45bf2d17ea9e"
+        },
+        "registeredModels": [
+          {
+            "heroId": "b2-kaiji",
+            "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+            "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+            "sourceOptionId": "runtime:kaiji-holya-procedural-six-state-v1",
+            "isActive": true,
+            "document": {
+              "gitPath": "content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+              "existsLocal": true,
+              "gitTracked": true,
+              "bytes": 654,
+              "sha256": "28824201b18f322a7ccdf8a1d15ada51d4fdc36d068e2347d6b8d72541cdfec3"
+            },
+            "glb": {
+              "gitPath": "content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+              "existsLocal": true,
+              "gitTracked": true,
+              "bytes": 319724,
+              "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a"
+            },
+            "actualAnimationCount": 6,
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 6,
+            "limitations": [
+              "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+              "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+              "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+              "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+              "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+              "技術模型驗收及後台登記與正式站部署分開記錄。"
+            ]
+          }
+        ],
+        "activeRuntimeModelReady": true,
+        "originalAcquisitionReadiness": "extracted-native-pending-conversion",
+        "rawSourceStillPreserved": true,
+        "countingNote": "Runtime models are counted in hero.candidateModels; the raw package is not an extra finished option."
       }
     },
     {

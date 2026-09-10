@@ -1,0 +1,45 @@
+{
+  "schema": "ggd.voice-archive-reader-fixed@1",
+  "checkedAt": "2026-09-10T17:07:53.663350+00:00",
+  "readerSha256": "ec04c67001f31c9cf540efaacb0c3470dd7c05087cd76c9439a8a311fc2e5750",
+  "tests": "12 passed, including real 5-file readback test; no skips",
+  "scopedReaderPassed": true,
+  "actualStoreType": "tar-gzip",
+  "actualArchiveMemberRoot": "fate-bounded-batch10/",
+  "actualReaderAudioRows": 5,
+  "actualTarMembersShaVerified": [
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/entity/heracles/roar.ogg",
+      "archiveMember": "fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/entity/heracles/roar.ogg",
+      "sha256": "7a09b8bae0c29f14dcd31b9f4385f8c20c208b47b7b4c69fe2fa845b96d2165e",
+      "bytes": 18301
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/slash.ogg",
+      "archiveMember": "fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/slash.ogg",
+      "sha256": "570ba24f99d1578a82c5883d26b89fddb5e92a5fddeca4570e56fd41b16cafda",
+      "bytes": 7344
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/slash_impact.ogg",
+      "archiveMember": "fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/slash_impact.ogg",
+      "sha256": "47ec7bc7745359e0046507aeb6433ecad65c40714dac13d4cd4503f8765ea8f1",
+      "bytes": 11995
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/swoosh.ogg",
+      "archiveMember": "fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/swoosh.ogg",
+      "sha256": "0fc3cba53c490de29aad9e428addbb7ad7da2efb1b2f0ff053db9636449db8a8",
+      "bytes": 6371
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/nero/aestus_domus_roses.ogg",
+      "archiveMember": "fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/nero/aestus_domus_roses.ogg",
+      "sha256": "50ab6dd24c679570d5644d78340c608c67c8a124f4eefb917856f44b496cbb0f",
+      "bytes": 23216
+    }
+  ],
+  "centralWrites": false,
+  "fullLibraryScan": false,
+  "backupSha256": "ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38"
+}

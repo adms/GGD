@@ -8256,7 +8256,9 @@
     {
       "heroId": "b2-kaiji",
       "runtimeHeroId": "b2-kaiji",
-      "registered": [],
+      "registered": [
+        "runtime:kaiji-holya-procedural-six-state-v1"
+      ],
       "retained": [
         "300heroes:319",
         "300heroes:118"
@@ -8325,8 +8327,8 @@
       },
       "after": {
         "championId": "b2-kaiji",
-        "expectedHash": "sha256:43a79a2ba72caf79453822ca55584388b5e82ee874b22e86fc82316b749bed7f",
-        "activeModelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+        "expectedHash": "sha256:b732d5307e2dd20623b383a5fc24dc04d9baea3261b814f8b8f3505f3d475709",
+        "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
         "versions": [
           {
             "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
@@ -8379,12 +8381,30 @@
               "selectionClass": "similar-proxy"
             },
             "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+            "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+            "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+            "modelSha256": "a2997a1e64f65dafd12709fce65bdec07b4eafa30aa519e9d28a68a9f4527481",
+            "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+            "registeredAt": "2026-09-10T17:03:36.321Z",
+            "source": {
+              "kind": "exact",
+              "character": "伊藤開司",
+              "work": "賭博默示錄",
+              "library": "Lethal Company MOD／holya",
+              "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+              "tier": "original",
+              "selectionClass": "community-mod"
+            },
+            "automaticEligible": true
           }
         ],
         "selectionMode": "automatic",
-        "preferredModelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82"
+        "preferredModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f"
       },
-      "status": "merged-readback-verified"
+      "status": "registered-readback-verified"
     },
     {
       "heroId": "b2-fushi",

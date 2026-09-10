@@ -36,5 +36,15 @@
   "rule": "成品一律上傳至 Git；半成品、來源、準備材料等進 S3；本機全部保留。",
   "git_release_pointer": "materials/asset-library/git-release.json",
   "s3_existing_finished_copies": "preserve as verified mirrors and historical versions; never replace required Git publication",
-  "completion_boundary": "Validated reusable components may be finished assets; decoded/unclassified audio and pending model conversions remain intermediate. A finished component is not proof of a complete hero or deployment."
+  "completion_boundary": "Validated reusable components may be finished assets; decoded/unclassified audio and pending model conversions remain intermediate. A finished component is not proof of a complete hero or deployment.",
+  "s3_backup_required": [
+    "original_assets",
+    "intermediate_assets",
+    "converted_assets",
+    "conversion_scripts_and_dependencies",
+    "versioned_control_indexes"
+  ],
+  "git_snapshot_backup_root": "s3://ggd-390630837668-ap-east-2-an/legacy/git-asset-snapshots/",
+  "git_snapshot_backup_tool": "tools/hero-model-library/backup_git_assets.py",
+  "backup_rule": "原始檔、半成品、轉換檔及轉換程式均保留一份 S3 備份並附 SHA-256；Git 仍是成品、程式與索引的共編發布來源，本機全保留。"
 }

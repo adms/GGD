@@ -14,10 +14,10 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
-      "sha256": "fecfead73c02b55bcd78c85ba8ab5180a753de2567b4e4a95114bfbee9ced98a"
+      "sha256": "51687d84afd506350dd9eda1fa2f26ff4dd6058d4c7098935a693eb4dc343e53"
     }
   ],
-  "modelSourceCount": 149,
+  "modelSourceCount": 150,
   "models": [
     {
       "id": "300heroes:20",
@@ -5600,6 +5600,44 @@
       ],
       "runtimeDropdownRegistered": true,
       "modelDocumentGitPath": "content/models/ou99.495015-native-visibility-v1.json"
+    },
+    {
+      "id": "runtime:kaiji-holya-procedural-six-state-v1",
+      "modelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+      "glbPath": "assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "bytes": 319724,
+      "documentSha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8",
+      "sourceCharacter": "伊藤開司",
+      "sourceWork": "賭博默示錄",
+      "sourceAssetId": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+        "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+        "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+        "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+        "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+        "技術模型驗收及後台登記與正式站部署分開記錄。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-khronos-and-36-sample-babylon-render-passed",
+      "fullCharacterPackage": false,
+      "registeredFor": [
+        "b2-kaiji"
+      ],
+      "runtimeDropdownRegistered": true,
+      "modelDocumentGitPath": "content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json"
     }
   ],
   "voiceIndex": "materials/hero-model-library/voice-index.json",

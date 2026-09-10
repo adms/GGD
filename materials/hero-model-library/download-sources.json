@@ -36563,6 +36563,1043 @@
         "bytes": 2259630,
         "sha256": "3e4ef12dc8d150acb2e9759fdd46b46b1231f72ca462b5eda6180195daa60149"
       }
+    },
+    {
+      "id": "thunderstore-holya-kaiji-suit2",
+      "target": "伊藤開司：holya Lethal Company 完整蒙皮社群模型",
+      "heroIds": [
+        "b2-kaiji"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+      "downloadUrl": "https://thunderstore.io/package/download/holya/kaiji_suit_2/0.1.1/",
+      "uploader": "holya",
+      "format": "ZIP → .NET DLL embedded UnityFS → skinned Mesh / Avatar / Transform / HDRP Material / Texture2D",
+      "accessStatus": "public-direct-download",
+      "checkedAt": "2026-09-10T16:06:32.004657+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "converted-registered-with-procedural-animation",
+      "resourceRole": "character-body",
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "texture",
+        "material"
+      ],
+      "defaultEligible": false,
+      "purchaseDecision": "hold-purchase-review-acquired-source",
+      "discoveryChannel": "mod-community",
+      "platform": "PC / Unity",
+      "sourceGame": "Lethal Company (community model replacement)",
+      "sourceWork": "賭博黙示録カイジ / Gyakkyou Burai Kaiji",
+      "selectionClass": "community-mod",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+      "files": [
+        {
+          "path": "original/holya-kaiji_suit_2-0.1.1.zip",
+          "bytes": 1216760,
+          "sha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc"
+        },
+        {
+          "path": "extracted/kaiji.dll",
+          "bytes": 888320,
+          "sha256": "079f98cc7f32c43bdd313e0b5350b7a5646fe4b903ad3aa751cd83e1cd1bc9cf"
+        },
+        {
+          "path": "embedded/kaiji-unityfs.bundle",
+          "bytes": 879249,
+          "sha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8"
+        }
+      ],
+      "upstreamArchiveSha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc",
+      "modelCount": 1,
+      "modelCandidates": [
+        {
+          "id": "candidate.holya-kaiji-suit2.0.1.1",
+          "heroIds": [
+            "b2-kaiji"
+          ],
+          "sourceId": "thunderstore-holya-kaiji-suit2",
+          "label": "伊藤開司／holya Lethal Company 社群模型",
+          "resourceRole": "character-body",
+          "identityClass": "named-character-community-model",
+          "readiness": "extracted-native-pending-conversion",
+          "sourceBundlePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/embedded/kaiji-unityfs.bundle",
+          "sourceBundleSha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8",
+          "meshCount": 1,
+          "vertexCount": 1766,
+          "triangleCount": 2176,
+          "boneCount": 33,
+          "weightedBoneCount": 32,
+          "materialCount": 3,
+          "textureCount": 3,
+          "nativeAnimationCount": 0,
+          "audioCount": 0,
+          "meshArrays": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-native.npz",
+          "skeleton": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/skeleton.json",
+          "nativeScene": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/native-scene.json",
+          "bindPosesAndSubmeshes": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-metadata.json",
+          "materials": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/materials.json",
+          "textures": [
+            {
+              "pathId": -4092671177842900150,
+              "name": "Baked kaiji 2",
+              "path": "analysis/textures/Baked-kaiji-2.-4092671177842900150.png",
+              "width": 2048,
+              "height": 2048,
+              "mode": "RGBA",
+              "bytes": 249046,
+              "sha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc",
+              "decode": "UnityPy Texture2D.image native DXT1 decode; no resizing or tinting"
+            },
+            {
+              "pathId": -1962654042311310318,
+              "name": "Shirt kaiji.001",
+              "path": "analysis/textures/Shirt-kaiji.001.-1962654042311310318.png",
+              "width": 2048,
+              "height": 1024,
+              "mode": "RGBA",
+              "bytes": 1795718,
+              "sha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b",
+              "decode": "UnityPy Texture2D.image native DXT1 decode; no resizing or tinting"
+            },
+            {
+              "pathId": 8619384907673432593,
+              "name": "Baked kaiji 4",
+              "path": "analysis/textures/Baked-kaiji-4.8619384907673432593.png",
+              "width": 2048,
+              "height": 2048,
+              "mode": "RGBA",
+              "bytes": 81779,
+              "sha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f",
+              "decode": "UnityPy Texture2D.image native DXT1 decode; no resizing or tinting"
+            }
+          ],
+          "defaultEligible": false,
+          "backendIntegration": "pending-conversion",
+          "requiredActions": [
+            "Convert native mesh + exact 33-joint hierarchy/bind poses/weights into GLB; preserve all three submeshes/materials.",
+            "Normalize native coordinates, unit scale and ground position. Do not treat raw mesh bounds as world-space stature.",
+            "Adapt Unity HDRP material semantics and 2048px textures to the actual GGD contract; preserve unmodified source textures.",
+            "No native animations: source separate compatible real motions or explicitly label any later procedural/retargeted motion.",
+            "Run GGD parser/prepare/verify, Khronos and actual rendered/animated acceptance before runtime selection."
+          ]
+        }
+      ],
+      "nativeAssetCounts": {
+        "bodyModelCount": 1,
+        "skeletonCount": 1,
+        "jointCount": 33,
+        "weightedJointCount": 32,
+        "materialCount": 3,
+        "texture2DCount": 3,
+        "nativeAnimationClipCount": 0,
+        "nativeAudioBankCount": 0,
+        "audioFileCount": 0,
+        "vfxAssetCount": 0
+      },
+      "sourceManifest": {
+        "path": "source.json",
+        "bytes": 2268,
+        "sha256": "bf9342317edb65d0f5cb57edd2503bc2f2eacdea2d05f46a6d05b7c342d14961"
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+        "nativeAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/checks.json",
+        "nativeScenePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/native-scene.json",
+        "meshArraysPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-native.npz",
+        "skeletonPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/skeleton.json",
+        "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/model-candidates.json",
+        "audioIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/audio-file-index.json",
+        "previousLocalEvidencePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/local-existing-evidence.json"
+      },
+      "verification": "Native source CRC/SHA and all mesh/bone/material references verified; derivative passed shared prepare/verify, Khronos 0 errors/warnings, 36 actual WebGL samples; native animation/audio/VFX counts remain zero.",
+      "gaps": [
+        "No native animations, audio or VFX in source package. Six procedural fallback motions are explicitly labelled.",
+        "Production deployment and complete gameplay acceptance remain pending."
+      ],
+      "reuseTerms": "No standalone LICENSE or explicit redistribution/conversion grant found in the six-file package or inspected source page. Preserve author/provenance; availability alone is not a licensing grant.",
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": true,
+        "state": "registered",
+        "heroIds": [
+          "b2-kaiji"
+        ],
+        "selectionVerified": true,
+        "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+        "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+        "receipt": "materials/hero-model-library/priority-evidence/kaiji-community/registration-readback.json"
+      },
+      "publicationStatus": "source-s3-readback-verified-runtime-git-staged",
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "verifiedLocalDeliveryOnly": false,
+      "rawSourceDefaultEligible": false,
+      "runtimeCandidateId": "runtime:kaiji-holya-procedural-six-state-v1",
+      "runtimeReceipt": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+      "sourceAcquisitionRecord": "materials/hero-model-library/priority-evidence/kaiji-community/original-source-entry.json",
+      "audioFileIndex": {
+        "reportPath": "audio-file-index.json",
+        "reportSha256": "07951fbe1a0b9fcc79c33e1e046d546eda0067d3c133fd773d8a8ce20db54e2d"
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/kaiji-holya-20260911/0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764.tar.gz",
+        "bytes": 5560719,
+        "sha256": "0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764",
+        "readbackVerified": true,
+        "receiptPath": "materials/hero-model-library/priority-evidence/kaiji-community/source-s3-backup.json",
+        "usage": "manual-only raw backup; select the registered runtime derivative"
+      }
+    },
+    {
+      "id": "github-flemmli97-fateubw-07e9d79b",
+      "target": "FateUBW 社群 Minecraft 素材／14英靈＋5道具生物／非FUC PSP",
+      "heroIds": [
+        "community-review-18-20260907",
+        "godie-e002",
+        "godie-e00l",
+        "godie-hapm",
+        "godie-hvsh"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://github.com/Flemmli97/FateUBW",
+      "uploader": "Flemmli97",
+      "author": "Flemmli97",
+      "format": "Minecraft cuboid geometry JSON / TenshiLib keyed animations / PNG / Ogg Vorbis",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-acquired-source",
+      "defaultEligible": false,
+      "resourceRole": "community-model-animation-audio-reserve",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "sourceVersion": "2.2.0",
+      "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+      "selectionClass": "community-mod",
+      "discoveryChannel": "author-public-repository",
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "texture",
+        "animation",
+        "audio"
+      ],
+      "nativeFucPsp": false,
+      "publicationStatus": "s3-legacy-readback-verified",
+      "license": "ARR",
+      "licenseEvidence": [
+        "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/fabric/src/main/resources/fabric.mod.json#/license",
+        "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/neoforge/src/main/resources/META-INF/neoforge.mods.toml"
+      ],
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "selectionVerified": false
+      },
+      "audioFileIndex": {
+        "reportPath": "audioFileIndex.json",
+        "reportSha256": "f3de1a762f1ae136298e15c6e413fb850a55316a195473c7b48ae6338aa34f0a"
+      },
+      "normalizedAudioIndexForIntegration": {
+        "path": "materials/hero-model-library/priority-evidence/fateubw-community/audio-file-index.json",
+        "sha256": "e66141aa4b51d17b2543f1eecf1ddf560a46799488574ca2894b209221d84c58"
+      },
+      "audioGroups": [
+        {
+          "id": "generic-sfx",
+          "name": "FateUBW／劃斬及揮動音效",
+          "pathPrefixes": [
+            "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/generic/"
+          ],
+          "classification": "sfx-source-labelled",
+          "heroIds": [],
+          "manualReview": "pending",
+          "audioCategory": "sound-effect",
+          "reportedLanguage": "unknown",
+          "classificationEvidence": "MOD source directory/file label only; no listening verification."
+        },
+        {
+          "id": "heracles-roar",
+          "name": "FateUBW／Heracles 咆哮來源標籤",
+          "pathPrefixes": [
+            "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/entity/heracles/"
+          ],
+          "classification": "unclassified",
+          "heroIds": [
+            "godie-hapm"
+          ],
+          "manualReview": "pending",
+          "character": "Heracles",
+          "audioCategory": "unclassified",
+          "reportedLanguage": "unknown",
+          "classificationEvidence": "MOD source directory/file label only; no listening verification."
+        },
+        {
+          "id": "nero-noble-phantasm",
+          "name": "FateUBW／Nero 固有結界來源標籤",
+          "pathPrefixes": [
+            "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/sounds/nero/"
+          ],
+          "classification": "unclassified",
+          "heroIds": [],
+          "manualReview": "pending",
+          "character": "Nero Claudius",
+          "audioCategory": "unclassified",
+          "reportedLanguage": "unknown",
+          "classificationEvidence": "MOD source directory/file label only; no listening verification."
+        }
+      ],
+      "audioAcquisition": {
+        "primaryAudioFiles": 5,
+        "seconds": 4.822858,
+        "confirmedVoiceCount": 0,
+        "sourceClassifiedSfxFiles": 3,
+        "unclassifiedFiles": 2
+      },
+      "modelCandidates": [
+        {
+          "candidateId": "fateubw-enuma_elish",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "enuma_elish",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/enuma_elish.geo.json",
+          "sourceModelBytes": 2921,
+          "sourceModelSha256": "1e3b7ad4f6277cbc1f82dc65f40251426ddea7d879e8bdbc12ba3f2f11c19fa9",
+          "sourceTexture": null,
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/enuma_elish.json",
+            "sha256": "a9544d386ab3a5d7f92a42a9662525f236fa5666c1a10997d19f4808152353da",
+            "clipCount": 1,
+            "clipsWithAllTargetsInThisSkeleton": 1,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 9,
+          "cubeCount": 9,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-gordius_wheel",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "gordius_wheel",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/gordius_wheel.geo.json",
+          "sourceModelBytes": 46630,
+          "sourceModelSha256": "9e492b346459a6db0c430faa2b333baad808bb3b97980507d362d723138e2d15",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/gordius_wheel.png",
+            "bytes": 10700,
+            "sha256": "ddb4faba5495838ca08a736b35ff28fe1f3de3261c6e5c64b7efb98c0bfc589d"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/gordius_wheel.json",
+            "sha256": "f1b99eeb476e99c5506d7423179e12049b315559bf114deeeb59ce6856345f8e",
+            "clipCount": 6,
+            "clipsWithAllTargetsInThisSkeleton": 6,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 134,
+          "cubeCount": 157,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-pegasus",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "pegasus",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/pegasus.geo.json",
+          "sourceModelBytes": 10943,
+          "sourceModelSha256": "d8bd020ad5a9543c2eaf60c2ab020b1c282404653f2777d414bea8591ac4551c",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/pegasus.png",
+            "bytes": 3908,
+            "sha256": "31871d8fa2e6222d97ab6c5b021c125da78179bc97dd066bd7c627f9ff8efdde"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/pegasus.json",
+            "sha256": "bf09057dd4a7c33aa231b537df89405c9349a62b5ba68a056bedc5f1afc1a102",
+            "clipCount": 7,
+            "clipsWithAllTargetsInThisSkeleton": 7,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 28,
+          "cubeCount": 44,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-artoria_pendragon_saber",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "artoria_pendragon_saber",
+          "heroIds": [
+            "godie-e002",
+            "godie-e00l"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/artoria_pendragon_saber.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/artoria_pendragon_saber.png",
+            "bytes": 2240,
+            "sha256": "7798993543371c893d8f513cd5252879759229c0eaa782affce79e65fff2a388"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/artoria_pendragon_saber.json",
+            "sha256": "359784b7df2de3a4bbb601937548572f51fd6ab9ba23728ac510a70ad5c6de72",
+            "clipCount": 10,
+            "clipsWithAllTargetsInThisSkeleton": 10,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+        },
+        {
+          "candidateId": "fateubw-cu_chulainn_lancer",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "cu_chulainn_lancer",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/cu_chulainn_lancer.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/cu_chulainn_lancer.png",
+            "bytes": 4054,
+            "sha256": "0879dbc8193850319b8e3afe26d7135c6c0d34cd0afee83a020acd5a195f7f5f"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/cu_chulainn_lancer.json",
+            "sha256": "0555c797f61baff0a67a532a6de5410c30d166f10aa1af8e80885b0015461f1c",
+            "clipCount": 8,
+            "clipsWithAllTargetsInThisSkeleton": 8,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "diarmuid_ua_duibhne_lancer",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/diarmuid_ua_duibhne_lancer.png",
+            "bytes": 2138,
+            "sha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
+            "sha256": "941f7b6d17d0e07660baf123bd6a82b177c2835e3f36db1782f550718e383cd0",
+            "clipCount": 8,
+            "clipsWithAllTargetsInThisSkeleton": 8,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-emiya_archer",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "emiya_archer",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/emiya_archer.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/emiya_archer.png",
+            "bytes": 1603,
+            "sha256": "ab103993cb5ee13244010225237261ec77b9a547d02c8497e03c637376f8eee5"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/emiya_archer.json",
+            "sha256": "19e807e7ba54a634fdbc6a84fa78c54332780df57655acab1b0991b21e8a417a",
+            "clipCount": 11,
+            "clipsWithAllTargetsInThisSkeleton": 11,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-gilgamesh_archer",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "gilgamesh_archer",
+          "heroIds": [
+            "community-review-18-20260907"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilgamesh_archer.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilgamesh_archer.png",
+            "bytes": 2548,
+            "sha256": "ad7cab6566a0be14edcab82ec16b5a17dbfc04e38abb23ec7866bb0ca3a6627d"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilgamesh_archer.json",
+            "sha256": "76ccce2382e3766096ddf6d522b99f31b9d78cf0ca97441332cb32ba2c0ae4ec",
+            "clipCount": 9,
+            "clipsWithAllTargetsInThisSkeleton": 9,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+        },
+        {
+          "candidateId": "fateubw-gilles_de_rais_caster",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "gilles_de_rais_caster",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilles_de_rais_caster.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilles_de_rais_caster.png",
+            "bytes": 1380,
+            "sha256": "dcabad0ba7d2dcbbd7dd39e11ff4f93b84a9cdb1e232558968fcc4b4432cf9b0"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilles_de_rais_caster.json",
+            "sha256": "3e61c98f483acfbf2965bf8378f7eca9e5ae6bc525e6b79b17f29b6c6e1ef97a",
+            "clipCount": 4,
+            "clipsWithAllTargetsInThisSkeleton": 4,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-hassan-i-sabbah_assassin",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "hassan-i-sabbah_assassin",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/hassan-i-sabbah_assassin.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/hassan-i-sabbah_assassin.png",
+            "bytes": 1357,
+            "sha256": "b9d39638863a3faaae4137922016a4ea2a529afb22ad2fd610dd95fa76426214"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/hassan-i-sabbah_assassin.json",
+            "sha256": "f0bcc4330eb9481bef4e6fc163f54aeaa339451c3f43adda311860b19d25a0a5",
+            "clipCount": 8,
+            "clipsWithAllTargetsInThisSkeleton": 8,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-heracles_berserker",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "heracles_berserker",
+          "heroIds": [
+            "godie-hapm"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
+          "sourceModelBytes": 11274,
+          "sourceModelSha256": "587028d53b1ff3ef5acf1ae9bbd0b0c4f51b7500c2e37c73d233bb5a66b556a7",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/heracles_berserker.png",
+            "bytes": 2657,
+            "sha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
+            "sha256": "e190324ff83cfb006664a1ecd6234c8e6f97e9e4ad4f6d2f943174bc9a11ee24",
+            "clipCount": 17,
+            "clipsWithAllTargetsInThisSkeleton": 17,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 36,
+          "cubeCount": 40,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+        },
+        {
+          "candidateId": "fateubw-iskander_rider",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "iskander_rider",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/iskander_rider.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/iskander_rider.png",
+            "bytes": 1588,
+            "sha256": "43260383c6ce3ffece15e23a0730728f5bec419a187e1e9e8b019ee0ab4d9b90"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/iskander_rider.json",
+            "sha256": "9262f9510ff21a0e2d7a55e11b6243f717c93fe808b90667e0b6d1d4ed7c1933",
+            "clipCount": 9,
+            "clipsWithAllTargetsInThisSkeleton": 9,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-lancelot_berserker",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "lancelot_berserker",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/lancelot_berserker.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/lancelot_berserker.png",
+            "bytes": 2048,
+            "sha256": "534973424b616146d6e5a188c77d1dfd2519cdc5b058c27d84b3ad1969869dd8"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/lancelot_berserker.json",
+            "sha256": "9f92bdaeded9f0d77b7c95917de67158c88cc596a111a5ba2e11772b322226d3",
+            "clipCount": 13,
+            "clipsWithAllTargetsInThisSkeleton": 13,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-medea_caster",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "medea_caster",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
+          "sourceModelBytes": 9189,
+          "sourceModelSha256": "e6b5ff01d97bed4d05448a5022e64107f6c9eb99f0d24285f6f0a8e0b6625efd",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medea_caster.png",
+            "bytes": 2892,
+            "sha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
+            "sha256": "f6b82558f0024f31fd6ade38ba89c8d8424d8bc06f4a2f880f5503f1a8df4b26",
+            "clipCount": 7,
+            "clipsWithAllTargetsInThisSkeleton": 7,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 25,
+          "cubeCount": 38,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-medusa_rider",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "medusa_rider",
+          "heroIds": [
+            "godie-hvsh"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medusa_rider.geo.json",
+          "sourceModelBytes": 7155,
+          "sourceModelSha256": "1797b9f5695d51e32a0b73ddd45a656720871b8e9317529a1d2cd932cce184dc",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medusa_rider.png",
+            "bytes": 1258,
+            "sha256": "bdc7e37394a01c7a7c267e0c8afbf1743a12ccdfa09802af1ce509819d1c0c30"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medusa_rider.json",
+            "sha256": "b05e9c70d66b9d5382052f2f61f600277cc5aed47252e4f355af2ccb5dd6c57d",
+            "clipCount": 11,
+            "clipsWithAllTargetsInThisSkeleton": 11,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+        },
+        {
+          "candidateId": "fateubw-nero_claudius_saber",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "nero_claudius_saber",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/nero_claudius_saber.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/nero_claudius_saber.png",
+            "bytes": 2192,
+            "sha256": "8ece9b274a39d8dd9cc2936dd776fad3003998034ec9900e8613cff04e026299"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/nero_claudius_saber.json",
+            "sha256": "0e5a8925deb16b2539b84d2e17c544675eb99df92007c88dac327580de4e9185",
+            "clipCount": 6,
+            "clipsWithAllTargetsInThisSkeleton": 6,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-sasaki_kojiro_assassin",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "sasaki_kojiro_assassin",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/sasaki_kojiro_assassin.geo.json",
+          "sourceModelBytes": 7142,
+          "sourceModelSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/sasaki_kojiro_assassin.png",
+            "bytes": 1963,
+            "sha256": "7ed74d7fca9b264278cbfec07f9bf14098d94b0ee7d6b4603f47884a95576cb3"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/sasaki_kojiro_assassin.json",
+            "sha256": "dc2e8cd51464fc8a702970f273fddb5c39eb435cb1d9b874f8566e23ce1e4914",
+            "clipCount": 11,
+            "clipsWithAllTargetsInThisSkeleton": 11,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 21,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-starfish",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "starfish",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/starfish.geo.json",
+          "sourceModelBytes": 14913,
+          "sourceModelSha256": "a29492c390d9e57578e9deee4e33b59a60e2a26e80e83bf07a8bc76bca8f841c",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/starfish.png",
+            "bytes": 287,
+            "sha256": "55113b65d692d19b7f30c8f7514f44530bfcd0d267551bb50d6acae8324b06eb"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/starfish.json",
+            "sha256": "921410a6e369a1e4235c614c386b24a3b97cd92fe019501bfc5dd472ba2736f8",
+            "clipCount": 4,
+            "clipsWithAllTargetsInThisSkeleton": 4,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 25,
+          "cubeCount": 61,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        },
+        {
+          "candidateId": "fateubw-tentacle",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "character": "tentacle",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "sourcePlatform": "Minecraft Java 1.21.1",
+          "platformEvidence": "Author metadata sets minecraft_version=1.21.1; geometry and animation are community MOD source data, not FUC PSP.",
+          "sourceClass": "community-mod",
+          "sourceModel": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/tentacle.geo.json",
+          "sourceModelBytes": 4962,
+          "sourceModelSha256": "2e8870c543eb60ffc5cd98a87da548c45fd6aa9c28dcdb71afc16b2b42fa85db",
+          "sourceTexture": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/tentacle.png",
+            "bytes": 11212,
+            "sha256": "2883621625a701413dffce13eee6df7aeab6fe6a6e7a66688b70e3d87f9bbefb"
+          },
+          "sourceAnimation": {
+            "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/tentacle.json",
+            "sha256": "b5124544a108a07772ca87ce6237a4acac940cfc229a0326aac4aa116b6391ee",
+            "clipCount": 2,
+            "clipsWithAllTargetsInThisSkeleton": 2,
+            "unmatchedBoneNames": []
+          },
+          "boneCount": 6,
+          "cubeCount": 28,
+          "readyStage": "raw-source-pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "pending",
+          "defaultEligible": false,
+          "defaultChanged": false,
+          "license": "ARR",
+          "nativeFucPsp": false,
+          "mappingEvidence": "No explicit same-character inventory match; retained as reserve."
+        }
+      ],
+      "candidateManifest": {
+        "path": "candidate-manifest.json",
+        "sha256": "94dc333ed5af5e0d75278c49dc4c191e68ebc545352822212b9417cfa144401f"
+      },
+      "animationIndex": {
+        "path": "animation-index.json",
+        "sha256": "fc8a53f64ac57095717fda87b260582165e991876bca448387123a1ca4a59716"
+      },
+      "filesManifest": {
+        "path": "files.sha256.json",
+        "sha256": "43da5ed1ab460d4f6398a9fd72e790b432a51500382868660014465cf693eb19"
+      },
+      "files": [
+        {
+          "path": "originals/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9.zip",
+          "bytes": 1533468,
+          "sha256": "8ebdefc492697e7899f1665a83f48d51a9cdbecc3baf85a7b35d3895689595e4",
+          "downloadUrl": "https://codeload.github.com/Flemmli97/FateUBW/zip/07e9d79b332c82b8fd10dada04cadbd84f4e6ce9"
+        }
+      ],
+      "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+      "verification": "Complete author archive preserved, ZIP CRC passed, all 782 Git blob hashes verified. 19 geometry JSON (14 servants),20 animation JSON/156 clips (134 with changing channels),168 PNG,5 OGG decode verified. No GLB/runtime conversion or visual/listening review.",
+      "mappingEvidence": "Exact named character mappings: Artoria to godie-e002/godie-e00l, Gilgamesh to community-review-18-20260907, Heracles to godie-hapm, Medusa to godie-hvsh. Archer is not automatically assigned to Shirou. Unknowns remain empty; no defaults changed.",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
+        "bytes": 2331974,
+        "sha256": "ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38",
+        "readbackVerified": true,
+        "verifiedArchiveMembers": 797,
+        "archiveMemberRoot": "fate-bounded-batch10/",
+        "receiptPath": "materials/hero-model-library/priority-evidence/fateubw-community/source-s3-backup.json",
+        "receiptSha256": "1bac544e2e0d5fc6f874bfee4a56e60acbd55a9dd9b536e723bb73aab808189a",
+        "usage": "manual-only legacy raw reserve; not runtime-ready",
+        "archiveFormat": "tar-gzip"
+      },
+      "limitations": [
+        "FUC PSP native asset gap remains open; this pack is unrelated Minecraft community implementation.",
+        "Animation key variation and bone-name compatibility are static evidence, not playback verification.",
+        "Five OGG contain three source-labelled SFX and two unclassified character-associated sounds; no confirmed Japanese voice.",
+        "No source/default selection or central content changes."
+      ],
+      "mappingReport": {
+        "path": "/private/tmp/ggd-fateubw-mapping-evidence.json",
+        "sha256": "de4b42336dc7a20c0b935e86f148b0ff2c9db1162302b0ae84001950e8e40b69"
+      },
+      "mappingEvidenceReport": "materials/hero-model-library/priority-evidence/fateubw-community/mapping.json"
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

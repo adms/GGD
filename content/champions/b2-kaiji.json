@@ -408,7 +408,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-kaiji",
-  "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+  "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
   "name": "伊藤開司",
   "origin": "軟輔",
   "passiveAbility": "b2-kaiji.passive",
@@ -474,6 +474,24 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+      "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+      "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+      "modelSha256": "a2997a1e64f65dafd12709fce65bdec07b4eafa30aa519e9d28a68a9f4527481",
+      "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "registeredAt": "2026-09-10T17:03:36.321Z",
+      "source": {
+        "kind": "exact",
+        "character": "伊藤開司",
+        "work": "賭博默示錄",
+        "library": "Lethal Company MOD／holya",
+        "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "automatic"

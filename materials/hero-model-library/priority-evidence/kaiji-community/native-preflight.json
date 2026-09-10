@@ -1,0 +1,928 @@
+{
+  "schema": "ggd.kaiji-conversion-preflight@1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+  "sourceBundle": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/embedded/kaiji-unityfs.bundle",
+    "sha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8",
+    "bytes": 879249,
+    "staticObjectCounts": {
+      "Shader": 3,
+      "Transform": 37,
+      "MonoBehaviour": 21,
+      "GameObject": 37,
+      "SkinnedMeshRenderer": 1,
+      "Mesh": 1,
+      "Texture2D": 3,
+      "MonoScript": 2,
+      "Material": 3,
+      "AssetBundle": 1,
+      "Avatar": 1,
+      "Animator": 1
+    }
+  },
+  "interpreter": "/private/tmp/ggd-public-model-venv/bin/python",
+  "unityPyVersion": "1.25.3",
+  "assemblyExecuted": false,
+  "conversionOrRuntimeWritten": false,
+  "exactPrefabName": "kaiji",
+  "prefabRootTransformPathId": "4855166098896891516",
+  "allTransformsReachable": true,
+  "transformCount": 37,
+  "inactiveBranches": [],
+  "rootSourceTRS": {
+    "m_LocalPosition": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "m_LocalRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "m_LocalScale": {
+      "x": 68.45426940917969,
+      "y": 68.45426940917969,
+      "z": 68.45426940917969
+    }
+  },
+  "otherNonJointTransforms": [
+    {
+      "name": "Cube.001",
+      "transformPathId": "1852138074721595234",
+      "parent": "kaiji",
+      "sourceTRS": {
+        "m_LocalPosition": {
+          "x": -0.0,
+          "y": 1.3112678527832031,
+          "z": 0.0
+        },
+        "m_LocalRotation": {
+          "x": 0.0,
+          "y": 0.7071067690849304,
+          "z": 0.0,
+          "w": 0.7071068286895752
+        },
+        "m_LocalScale": {
+          "x": 0.11571239680051804,
+          "y": 0.11571239680051804,
+          "z": 0.10998748987913132
+        }
+      }
+    },
+    {
+      "name": "rig",
+      "transformPathId": "-3435957998538531847",
+      "parent": "kaiji",
+      "sourceTRS": {
+        "m_LocalPosition": {
+          "x": -0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_LocalRotation": {
+          "x": -0.7071068286895752,
+          "y": 0.0,
+          "z": -0.0,
+          "w": 0.7071067094802856
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "name": "ItemHolderTransform",
+      "transformPathId": "-3652509795690746982",
+      "parent": "ORG-hand.R",
+      "sourceTRS": {
+        "m_LocalPosition": {
+          "x": 0.08032631874084473,
+          "y": 0.04510064050555229,
+          "z": 0.010803028009831905
+        },
+        "m_LocalRotation": {
+          "x": -0.04797494411468506,
+          "y": -0.03367135301232338,
+          "z": 0.9982767105102539,
+          "w": 0.002865289803594351
+        },
+        "m_LocalScale": {
+          "x": 1.0000001192092896,
+          "y": 1.0000003576278687,
+          "z": 1.0000004768371582
+        }
+      }
+    }
+  ],
+  "geometry": {
+    "meshName": "Cube.001",
+    "meshPathId": "-5065324217138717104",
+    "vertices": 1766,
+    "triangles": 2176,
+    "submeshCount": 3,
+    "rendererCount": 1,
+    "meshFilterCount": 0,
+    "meshRendererCount": 0,
+    "allNativePositionsMatchSnapshot": true,
+    "allNativeVerticesReferenced": true,
+    "unreferencedVertexCount": 0,
+    "blendShapeChannels": 0,
+    "submeshes": [
+      {
+        "slot": 0,
+        "materialName": "skin, t-shirt and crocs",
+        "materialPathId": "7977751421955492654",
+        "textureName": "Baked kaiji 2",
+        "texturePathId": "-4092671177842900150",
+        "texturePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures/Baked-kaiji-2.-4092671177842900150.png",
+        "textureBytesSha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc",
+        "textureFileHashMatches": true,
+        "textureDecodedPixelsMatchNative": true,
+        "textureDimensions": [
+          2048,
+          2048
+        ],
+        "textureAllOpaque": true,
+        "texturePatternedNotSolid": true,
+        "triangles": 1037,
+        "uniqueVertices": 864,
+        "firstVertex": 0,
+        "lastVertex": 863,
+        "indicesMatchSnapshot": true,
+        "uvMin": [
+          0.037353515625,
+          -0.0
+        ],
+        "uvMax": [
+          0.96728515625,
+          0.9228515625
+        ],
+        "skinnedBoundsBeforeStandardScale": {
+          "min": [
+            -0.999853257636265,
+            -0.036637550037532184,
+            -0.10091572710144285
+          ],
+          "max": [
+            0.9998087085189137,
+            1.858767595423499,
+            0.18941269609508066
+          ]
+        },
+        "topWeightedBones": [
+          {
+            "name": "ORG-spine.006",
+            "totalWeight": 331.4738924449678
+          },
+          {
+            "name": "ORG-spine.005",
+            "totalWeight": 56.92534907814409
+          },
+          {
+            "name": "ORG-forearm.L",
+            "totalWeight": 53.276401694829616
+          },
+          {
+            "name": "ORG-forearm.R",
+            "totalWeight": 53.208390227623504
+          },
+          {
+            "name": "ORG-pelvis.L",
+            "totalWeight": 22.04076737306793
+          }
+        ],
+        "materialExpectedGLTF": {
+          "metallicFactor": 0.0,
+          "roughnessFactor": 0.5,
+          "alphaMode": "OPAQUE",
+          "doubleSided": false,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "uvTransform": "identity"
+        }
+      },
+      {
+        "slot": 1,
+        "materialName": "hair and pants",
+        "materialPathId": "-3140479358338174091",
+        "textureName": "Baked kaiji 4",
+        "texturePathId": "8619384907673432593",
+        "texturePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures/Baked-kaiji-4.8619384907673432593.png",
+        "textureBytesSha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f",
+        "textureFileHashMatches": true,
+        "textureDecodedPixelsMatchNative": true,
+        "textureDimensions": [
+          2048,
+          2048
+        ],
+        "textureAllOpaque": true,
+        "texturePatternedNotSolid": true,
+        "triangles": 795,
+        "uniqueVertices": 571,
+        "firstVertex": 864,
+        "lastVertex": 1434,
+        "indicesMatchSnapshot": true,
+        "uvMin": [
+          0.0208587646484375,
+          0.00920867919921875
+        ],
+        "uvMax": [
+          0.95263671875,
+          0.9140625
+        ],
+        "skinnedBoundsBeforeStandardScale": {
+          "min": [
+            -0.2023056538733184,
+            -0.027797035219694434,
+            -0.08964663385031581
+          ],
+          "max": [
+            0.20120202953225266,
+            1.9536618429822297,
+            0.16392476105984646
+          ]
+        },
+        "topWeightedBones": [
+          {
+            "name": "ORG-spine.006",
+            "totalWeight": 291.49152247003315
+          },
+          {
+            "name": "ORG-shin.R",
+            "totalWeight": 53.7410772473069
+          },
+          {
+            "name": "ORG-shin.L",
+            "totalWeight": 50.29964980892677
+          },
+          {
+            "name": "ORG-thigh.R",
+            "totalWeight": 37.64151455022828
+          },
+          {
+            "name": "ORG-thigh.L",
+            "totalWeight": 37.61704089783545
+          }
+        ],
+        "materialExpectedGLTF": {
+          "metallicFactor": 0.0,
+          "roughnessFactor": 0.5,
+          "alphaMode": "OPAQUE",
+          "doubleSided": false,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "uvTransform": "identity"
+        }
+      },
+      {
+        "slot": 2,
+        "materialName": "shirt",
+        "materialPathId": "9032044311241632194",
+        "textureName": "Shirt kaiji.001",
+        "texturePathId": "-1962654042311310318",
+        "texturePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures/Shirt-kaiji.001.-1962654042311310318.png",
+        "textureBytesSha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b",
+        "textureFileHashMatches": true,
+        "textureDecodedPixelsMatchNative": true,
+        "textureDimensions": [
+          2048,
+          1024
+        ],
+        "textureAllOpaque": true,
+        "texturePatternedNotSolid": true,
+        "triangles": 344,
+        "uniqueVertices": 331,
+        "firstVertex": 1435,
+        "lastVertex": 1765,
+        "indicesMatchSnapshot": true,
+        "uvMin": [
+          0.0053253173828125,
+          0.01273345947265625
+        ],
+        "uvMax": [
+          0.99609375,
+          0.9873046875
+        ],
+        "skinnedBoundsBeforeStandardScale": {
+          "min": [
+            -0.48675250455315655,
+            0.9382930666857516,
+            -0.11926017031405729
+          ],
+          "max": [
+            0.4866143615395471,
+            1.6825786194338803,
+            0.11890631103404786
+          ]
+        },
+        "topWeightedBones": [
+          {
+            "name": "ORG-upper_arm.R",
+            "totalWeight": 67.31919621205293
+          },
+          {
+            "name": "ORG-upper_arm.L",
+            "totalWeight": 61.308847551181586
+          },
+          {
+            "name": "ORG-shoulder.R",
+            "totalWeight": 38.08512808400827
+          },
+          {
+            "name": "ORG-shoulder.L",
+            "totalWeight": 37.63785041875414
+          },
+          {
+            "name": "ORG-spine.003",
+            "totalWeight": 28.44406434105023
+          }
+        ],
+        "materialExpectedGLTF": {
+          "metallicFactor": 0.0,
+          "roughnessFactor": 0.5,
+          "alphaMode": "OPAQUE",
+          "doubleSided": false,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "uvTransform": "identity"
+        }
+      }
+    ]
+  },
+  "skin": {
+    "boneCount": 33,
+    "weightedBones": 32,
+    "bindCount": 33,
+    "finiteInvertibleBindMatrices": true,
+    "bindMatrixDeterminants": {
+      "min": 0.0014726613321612494,
+      "max": 0.0014726636125228093
+    },
+    "sourceWorldTimesBindVsRendererWorldMaxError": 0.48361985478355873,
+    "reflectionPositionMaxError": 0.0,
+    "heightBeforeStandardScale": 1.9902993930197619,
+    "targetHeightMeters": 1.8,
+    "expectedNormalizationScale": 0.904386549236177,
+    "expectedNormalizationTranslation": [
+      2.0144811256429935e-05,
+      0.033134507450911496,
+      -0.03172250035565083
+    ],
+    "jointOrder": [
+      {
+        "index": 0,
+        "name": "ORG-spine",
+        "transformPathId": "6853233492145485421",
+        "parentName": "rig",
+        "parentJointIndex": null,
+        "positiveWeightVertices": 45,
+        "globalOriginRootScaleRemoved": [
+          1.4552855067326005e-15,
+          0.9817076888638745,
+          -0.019470261138004537
+        ]
+      },
+      {
+        "index": 1,
+        "name": "ORG-spine.001",
+        "transformPathId": "6514479822461213735",
+        "parentName": "ORG-spine",
+        "parentJointIndex": 0,
+        "positiveWeightVertices": 0,
+        "globalOriginRootScaleRemoved": [
+          -1.491402210402088e-16,
+          1.1291077836407024,
+          0.01852968365826101
+        ]
+      },
+      {
+        "index": 2,
+        "name": "ORG-spine.002",
+        "transformPathId": "-8181727482506072566",
+        "parentName": "ORG-spine.001",
+        "parentJointIndex": 1,
+        "positiveWeightVertices": 137,
+        "globalOriginRootScaleRemoved": [
+          -1.9862998480602786e-15,
+          1.2647076963152255,
+          0.03532962831156105
+        ]
+      },
+      {
+        "index": 3,
+        "name": "ORG-spine.003",
+        "transformPathId": "-3434119737039448265",
+        "parentName": "ORG-spine.002",
+        "parentJointIndex": 2,
+        "positiveWeightVertices": 186,
+        "globalOriginRootScaleRemoved": [
+          -5.142797783274957e-15,
+          1.4375076712654902,
+          0.02982960648989666
+        ]
+      },
+      {
+        "index": 4,
+        "name": "ORG-spine.004",
+        "transformPathId": "8529250060680542734",
+        "parentName": "ORG-spine.003",
+        "parentJointIndex": 3,
+        "positiveWeightVertices": 322,
+        "globalOriginRootScaleRemoved": [
+          -9.175283662027136e-15,
+          1.6300075555954647,
+          0.024329576115006493
+        ]
+      },
+      {
+        "index": 5,
+        "name": "ORG-spine.005",
+        "transformPathId": "-2189337065169749508",
+        "parentName": "ORG-spine.004",
+        "parentJointIndex": 4,
+        "positiveWeightVertices": 491,
+        "globalOriginRootScaleRemoved": [
+          -1.0346548660665842e-14,
+          1.6915075904534218,
+          0.030246743733359727
+        ]
+      },
+      {
+        "index": 6,
+        "name": "ORG-spine.006",
+        "transformPathId": "-1141262938801985483",
+        "parentName": "ORG-spine.005",
+        "parentJointIndex": 5,
+        "positiveWeightVertices": 735,
+        "globalOriginRootScaleRemoved": [
+          -1.2280099116098798e-14,
+          1.7531076087969675,
+          0.04197646462248673
+        ]
+      },
+      {
+        "index": 7,
+        "name": "ORG-shoulder.L",
+        "transformPathId": "5764369688757029683",
+        "parentName": "ORG-spine.003",
+        "parentJointIndex": 3,
+        "positiveWeightVertices": 126,
+        "globalOriginRootScaleRemoved": [
+          -0.01830000057817192,
+          1.5769076078665514,
+          0.10412957943142206
+        ]
+      },
+      {
+        "index": 8,
+        "name": "ORG-upper_arm.L",
+        "transformPathId": "-8125731500388501639",
+        "parentName": "ORG-shoulder.L",
+        "parentJointIndex": 7,
+        "positiveWeightVertices": 134,
+        "globalOriginRootScaleRemoved": [
+          -0.24083591334992982,
+          1.564143097032338,
+          0.029429325960016656
+        ]
+      },
+      {
+        "index": 9,
+        "name": "ORG-forearm.L",
+        "transformPathId": "-942112763044877965",
+        "parentName": "ORG-upper_arm.L",
+        "parentJointIndex": 8,
+        "positiveWeightVertices": 102,
+        "globalOriginRootScaleRemoved": [
+          -0.5214419226698022,
+          1.559367796419449,
+          0.029332670911424583
+        ]
+      },
+      {
+        "index": 10,
+        "name": "ORG-hand.L",
+        "transformPathId": "-2257392040924232818",
+        "parentName": "ORG-forearm.L",
+        "parentJointIndex": 9,
+        "positiveWeightVertices": 15,
+        "globalOriginRootScaleRemoved": [
+          -0.8086902709491419,
+          1.5366552789198062,
+          0.036317610434023435
+        ]
+      },
+      {
+        "index": 11,
+        "name": "ORG-palm.01.L",
+        "transformPathId": "-8871890370166416962",
+        "parentName": "ORG-hand.L",
+        "parentJointIndex": 10,
+        "positiveWeightVertices": 25,
+        "globalOriginRootScaleRemoved": [
+          -0.9057329748822885,
+          1.5431378982001218,
+          0.045987876449423294
+        ]
+      },
+      {
+        "index": 12,
+        "name": "ORG-thumb.01.L",
+        "transformPathId": "-5342272857397004145",
+        "parentName": "ORG-palm.01.L",
+        "parentJointIndex": 11,
+        "positiveWeightVertices": 21,
+        "globalOriginRootScaleRemoved": [
+          -0.9051947618072753,
+          1.4945136813854987,
+          0.04095945300209727
+        ]
+      },
+      {
+        "index": 13,
+        "name": "ORG-shoulder.R",
+        "transformPathId": "-6159296411794939919",
+        "parentName": "ORG-spine.003",
+        "parentJointIndex": 3,
+        "positiveWeightVertices": 159,
+        "globalOriginRootScaleRemoved": [
+          0.01830000057815819,
+          1.576907607866552,
+          0.10412957943142151
+        ]
+      },
+      {
+        "index": 14,
+        "name": "ORG-upper_arm.R",
+        "transformPathId": "-159883640388399968",
+        "parentName": "ORG-shoulder.R",
+        "parentJointIndex": 13,
+        "positiveWeightVertices": 141,
+        "globalOriginRootScaleRemoved": [
+          0.2408359106659625,
+          1.5641430413830035,
+          0.029429327473558087
+        ]
+      },
+      {
+        "index": 15,
+        "name": "ORG-forearm.R",
+        "transformPathId": "5322809853928876259",
+        "parentName": "ORG-upper_arm.R",
+        "parentJointIndex": 14,
+        "positiveWeightVertices": 102,
+        "globalOriginRootScaleRemoved": [
+          0.5214419210352392,
+          1.559367801830703,
+          0.029332702310911375
+        ]
+      },
+      {
+        "index": 16,
+        "name": "ORG-hand.R",
+        "transformPathId": "3306193855435011840",
+        "parentName": "ORG-forearm.R",
+        "parentJointIndex": 15,
+        "positiveWeightVertices": 15,
+        "globalOriginRootScaleRemoved": [
+          0.8087103751346473,
+          1.53648549875375,
+          0.03476605984742302
+        ]
+      },
+      {
+        "index": 17,
+        "name": "ORG-palm.01.R",
+        "transformPathId": "-1803765275828689019",
+        "parentName": "ORG-hand.R",
+        "parentJointIndex": 16,
+        "positiveWeightVertices": 25,
+        "globalOriginRootScaleRemoved": [
+          0.9058074139813892,
+          1.54290679464419,
+          0.04391958691938984
+        ]
+      },
+      {
+        "index": 18,
+        "name": "ORG-thumb.01.R",
+        "transformPathId": "2356439686593993669",
+        "parentName": "ORG-palm.01.R",
+        "parentJointIndex": 17,
+        "positiveWeightVertices": 21,
+        "globalOriginRootScaleRemoved": [
+          0.9052139664797839,
+          1.4942856129961999,
+          0.03886819956128171
+        ]
+      },
+      {
+        "index": 19,
+        "name": "ORG-breast.L",
+        "transformPathId": "1868708917261808653",
+        "parentName": "ORG-spine.003",
+        "parentJointIndex": 3,
+        "positiveWeightVertices": 60,
+        "globalOriginRootScaleRemoved": [
+          -0.11840000003576846,
+          1.431407448637218,
+          -0.012770386912828821
+        ]
+      },
+      {
+        "index": 20,
+        "name": "ORG-breast.R",
+        "transformPathId": "3217526561670466104",
+        "parentName": "ORG-spine.003",
+        "parentJointIndex": 3,
+        "positiveWeightVertices": 85,
+        "globalOriginRootScaleRemoved": [
+          0.11840000003575711,
+          1.4314074486372228,
+          -0.01277038691283243
+        ]
+      },
+      {
+        "index": 21,
+        "name": "ORG-pelvis.L",
+        "transformPathId": "8982230042033573222",
+        "parentName": "ORG-spine",
+        "parentJointIndex": 0,
+        "positiveWeightVertices": 179,
+        "globalOriginRootScaleRemoved": [
+          1.4552854542465588e-15,
+          0.9817077077461422,
+          -0.01947024857594236
+        ]
+      },
+      {
+        "index": 22,
+        "name": "ORG-pelvis.R",
+        "transformPathId": "3917765999118277749",
+        "parentName": "ORG-spine",
+        "parentJointIndex": 0,
+        "positiveWeightVertices": 168,
+        "globalOriginRootScaleRemoved": [
+          1.4552854542465588e-15,
+          0.9817077077461422,
+          -0.01947024857594236
+        ]
+      },
+      {
+        "index": 23,
+        "name": "ORG-thigh.L",
+        "transformPathId": "-5576643715149454541",
+        "parentName": "ORG-spine",
+        "parentJointIndex": 0,
+        "positiveWeightVertices": 141,
+        "globalOriginRootScaleRemoved": [
+          -0.10319617390632432,
+          1.0030587167398748,
+          0.0233297385080917
+        ]
+      },
+      {
+        "index": 24,
+        "name": "ORG-shin.L",
+        "transformPathId": "-8088318677480447849",
+        "parentName": "ORG-thigh.L",
+        "parentJointIndex": 23,
+        "positiveWeightVertices": 109,
+        "globalOriginRootScaleRemoved": [
+          -0.11002577048375346,
+          0.5346199158833864,
+          0.025879327525636327
+        ]
+      },
+      {
+        "index": 25,
+        "name": "ORG-foot.L",
+        "transformPathId": "119285485627532720",
+        "parentName": "ORG-shin.L",
+        "parentJointIndex": 24,
+        "positiveWeightVertices": 78,
+        "globalOriginRootScaleRemoved": [
+          -0.13090152624784482,
+          0.05705070119398015,
+          -0.004669378709898916
+        ]
+      },
+      {
+        "index": 26,
+        "name": "ORG-toe.L",
+        "transformPathId": "3748110707254532435",
+        "parentName": "ORG-foot.L",
+        "parentJointIndex": 25,
+        "positiveWeightVertices": 47,
+        "globalOriginRootScaleRemoved": [
+          -0.13438262102202964,
+          -0.018600691596627958,
+          0.04484431522520116
+        ]
+      },
+      {
+        "index": 27,
+        "name": "ORG-heel.02.L",
+        "transformPathId": "6826977587087855439",
+        "parentName": "ORG-foot.L",
+        "parentJointIndex": 25,
+        "positiveWeightVertices": 51,
+        "globalOriginRootScaleRemoved": [
+          -0.09678969808183323,
+          -0.025368692467907558,
+          -0.025340811723192146
+        ]
+      },
+      {
+        "index": 28,
+        "name": "ORG-thigh.R",
+        "transformPathId": "-367641992883440828",
+        "parentName": "ORG-spine",
+        "parentJointIndex": 0,
+        "positiveWeightVertices": 141,
+        "globalOriginRootScaleRemoved": [
+          0.10319617390632826,
+          1.0030587167398781,
+          0.0233297385080876
+        ]
+      },
+      {
+        "index": 29,
+        "name": "ORG-shin.R",
+        "transformPathId": "-5072112894347326837",
+        "parentName": "ORG-thigh.R",
+        "parentJointIndex": 28,
+        "positiveWeightVertices": 113,
+        "globalOriginRootScaleRemoved": [
+          0.11002577053611433,
+          0.5346199158844058,
+          0.025879327572135614
+        ]
+      },
+      {
+        "index": 30,
+        "name": "ORG-foot.R",
+        "transformPathId": "7943646375391141261",
+        "parentName": "ORG-shin.R",
+        "parentJointIndex": 29,
+        "positiveWeightVertices": 82,
+        "globalOriginRootScaleRemoved": [
+          0.13108025263414202,
+          0.05705076700637529,
+          -0.004546549337546647
+        ]
+      },
+      {
+        "index": 31,
+        "name": "ORG-toe.R",
+        "transformPathId": "-6738131167037400928",
+        "parentName": "ORG-foot.R",
+        "parentJointIndex": 30,
+        "positiveWeightVertices": 47,
+        "globalOriginRootScaleRemoved": [
+          0.13427102233374036,
+          -0.018600636069891235,
+          0.044986691641264565
+        ]
+      },
+      {
+        "index": 32,
+        "name": "ORG-heel.02.R",
+        "transformPathId": "7688592762422282244",
+        "parentName": "ORG-foot.R",
+        "parentJointIndex": 30,
+        "positiveWeightVertices": 51,
+        "globalOriginRootScaleRemoved": [
+          0.0970901962933669,
+          -0.025368629693277592,
+          -0.025417623435186366
+        ]
+      }
+    ],
+    "authorHumanoidMapping": {
+      "Hips": "ORG-spine",
+      "LeftUpperLeg": "ORG-thigh.L",
+      "RightUpperLeg": "ORG-thigh.R",
+      "LeftLowerLeg": "ORG-shin.L",
+      "RightLowerLeg": "ORG-shin.R",
+      "LeftFoot": "ORG-foot.L",
+      "RightFoot": "ORG-foot.R",
+      "Spine": "ORG-spine.002",
+      "Chest": "ORG-spine.003",
+      "Neck": "ORG-spine.004",
+      "Head": "ORG-spine.005",
+      "LeftShoulder": "ORG-shoulder.L",
+      "RightShoulder": "ORG-shoulder.R",
+      "LeftUpperArm": "ORG-upper_arm.L",
+      "RightUpperArm": "ORG-upper_arm.R",
+      "LeftLowerArm": "ORG-forearm.L",
+      "RightLowerArm": "ORG-forearm.R",
+      "LeftHand": "ORG-hand.L",
+      "RightHand": "ORG-hand.R",
+      "LeftToes": "ORG-toe.L",
+      "RightToes": "ORG-toe.R",
+      "RightEye": "ORG-spine.006"
+    },
+    "authorHumanoidMappingEvidence": "Avatar.m_HumanDescription.m_Human",
+    "animatorControllerPathId": "0",
+    "nativeAnimationClips": 0,
+    "bindPoseCaution": "Observed source current hierarchy does not reproduce its authored mesh bind pose: maximum worldJoint*IBM versus rendererWorld matrix difference .4836198548, concentrated at forearms/hands. Preserve both source current transforms and original bind matrices; do not replace them with inverse current joint worlds or label this alone a source error.",
+    "misleadingEyeLabel": "Author labels ORG-spine.006 RightEye, but it carries most face/hair weights. Preserve it as a structural descendant of Head ORG-spine.005; never remove or drive it as an isolated eyeball based only on Avatar label."
+  },
+  "converter": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/convert_unity_prefab.py",
+    "sha256": "109bab326cbc62a3daf8a10ff40695e8a983cb351a4cbd2fdc2e4a8ce71674f1",
+    "assessment": "Suitable for all native body parts and material slots; preserve every descendant and original bind matrices. Root normalization is deliberate and downstream skin bind shape already includes Cube.001 local transform.",
+    "conventions": [
+      "Unity X reflection once for POSITION/NORMAL, mirrored joint TRS and S*IBM*S; reverse triangle winding once.",
+      "UnityPy image decoded orientation plus TEXCOORD_0 v=1-v once; do not flip both image and UV a second time.",
+      "Only top prefab root TRS is reset; keep rig -90deg X and Cube.001 local Y rotation/translation/nonuniform scale in native evidence.",
+      "Render node must remain at scene root as converter does; multiplying Cube.001 transform into skinned geometry again double-applies source bind shape.",
+      "Retain 33 bone indices and 33 bind matrices in source order, including zero-weight joint.",
+      "Unity custom HDRP shader becomes opaque metallic0/roughness0.5 base texture; no native motion payload exists to transfer."
+    ],
+    "unconvertedChannels": [
+      "Native tangents exist but converter omits them; all materials have no normal texture, so recomputation is possible if required.",
+      "Avatar retarget metadata retained in source analysis, not embedded as glTF animation."
+    ]
+  },
+  "compactor": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/compact_unity_skin.py",
+    "sha256": "3310b5b39f1930046776ea0253763773fe706886532d2f6df3c6ad9d25345744",
+    "assessment": "Not necessary: source already one mesh/one skin/three draw primitives. Preconditions hold for expected converter output: three non-solid opaque backculled patterned textures, no source animations/morphs/additional maps.",
+    "ifUsed": [
+      "Retains all three patterned texture slots; there are no solid-only material slots to replace.",
+      "Would decode RGBA to RGB and reencode PNG; all alpha is255, so compare decoded RGB, not original PNG byte hash.",
+      "No solid patch or roughness quantization should be introduced for this source.",
+      "Verify total2176 triangles, original per-material counts1037/795/344,33joints,3base textures after compaction."
+    ]
+  },
+  "partPreservation": {
+    "face": "Face drawing is part of Baked kaiji2, materialslot0 along with skin/t-shirt/crocs, not a detachable renderer.",
+    "outerShirt": "Green plaid Shirt kaiji.001 uses separate submesh2 but same mesh/skin; keep all344triangles.",
+    "hairPants": "Materialslot1 uses Baked kaiji4; keep795triangles.",
+    "additionalVariantFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/extracted/BepInEx/plugins/moresuits/kaijis2.png",
+    "additionalVariantStatus": "Standalone MoreSuits texture retained; not another Kaiji body or safe auto-replacement for native3materials.",
+    "sourceVariants": "one activebodyprefab; preserve full archive plus MoreSuits texture.",
+    "visualTextureReview": "All3 decodedtextureatlases opened; face ink, greenplaid and hair/pants atlas present. Body render not performed in this preflight.",
+    "additionalVariantFileSha256": "53c732543efe12f59592fb349f311eed7985564f204ecdb9d940ab68f8a2dfce",
+    "additionalVariantDimensions": [
+      2048,
+      2048
+    ]
+  },
+  "requiredFollowUp": [
+    "Run pinned converter with exact root kaiji to fresh independent output directory.",
+    "Khronos and GGD shared prepare/verify should follow; current default shared texture resize may be256—retain original2048/1024 textures as separate source.",
+    "Render front/back/side and compare face UV, greenplaid shirt, fingers/feet, rest proportions.",
+    "Use authorHead=.005 rather than guessing .006; .006 mappedRightEye is retained and should not drive wholehead.",
+    "Any synthesized/procedural states must be labelednon-native; source AnimationClip count0."
+  ],
+  "sourceAnalysisFiles": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/native-scene.json",
+      "sha256": "ab678f5338c60ee7c678b68a8426c9b31be48372cab2e3e844287e5d09bef8a1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-metadata.json",
+      "sha256": "9a303b0fb70cee3ce3efa1f1b197c69cd1c31b2af265032db6f14bc24650d7ce"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-native.npz",
+      "sha256": "dee9ebf2618cbc98574ca4aed4f15599e33dcbb65cd79a14dd3f0d11b91902d1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/skeleton.json",
+      "sha256": "c3e441a73acf372431947dba6b27b84ca5bfa78e352c2519249c091b1540f35d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/materials.json",
+      "sha256": "627066ccdf1b2155074ccbbd8320608ca45a394dc39b12ecffe38c72e0d69334"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures.json",
+      "sha256": "e8f428b104c436c4026c00b9386318a6af1ea29e7d14a2cedb9ea6b8d0b24d78"
+    }
+  ],
+  "validationLimits": [
+    "Source bundle parsed statically; DLL was never executed.",
+    "No GLB conversion or rendering performed by this preflight; observed texture atlases alone do not prove correct final face placement.",
+    "UnityPy import emitted sandbox sysctl probe warning but static parse and numerical/texture comparisons completed successfully."
+  ]
+}

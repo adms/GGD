@@ -87,6 +87,7 @@ def render_sources(data, policy):
         '來源庫與選用類別分欄保存，不用相同角色名稱推定原著來源。只有已取得、完成轉換並符合預設資格的模型參與自動選用；候選、半成品與網址不因順位較高就自動上架。Git 的 `default-policy.json` 是現行規則；舊版 S3 快照內的四級排序只作歷史紀錄。', '',
         '## 第三守則：成品進 Git，其餘素材進 S3，本機全保留', '',
         '**成品一律上傳至 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 成品包含已驗收的模型、貼圖、骨架／動作、特效、音效與語音。程式、角色／技能設定、版本清單、SHA-256 與文件仍以 Git 為準。', '',
+        '**原始檔、半成品、轉換檔及轉換程式都要另留一份 S3 備份，附逐檔 SHA-256 與完整讀回驗證。** 程式與成品的 Git 共編版本仍保留；Git 資產與工具快照位於 `legacy/git-asset-snapshots/<commit>/`，由 `tools/hero-model-library/backup_git_assets.py` 建立。原始／半成品另依來源與轉換批次保存，不能用 Git 快照冒稱涵蓋未追蹤的本機材料。', '',
         '成品固定入口：`materials/asset-library/current-resources.json`，包含本次 `content/assets/models/` 模型；既有 `materials/asset-library/git-release.json` 與 `materials/asset-library/releases/<版本>/` 仍完整保留；半成品與來源放 S3 `legacy/`，不供程序自動取用。既有 S3 成品版本保留作副本；新的成品不能只上 S3 而未進 Git。大型解析 JSON 屬於半成品，仍進 S3。已解碼但未完成分類／綁定驗收的音訊不能當成成品入 Git。', '',
         '此規則取代先前「二進位一律 S3」的分類方式，改按完成狀態區分；詳細機器規則見 `materials/asset-library/STORAGE_POLICY.json`。', '']
     scope = data.get('consoleSourceScope')

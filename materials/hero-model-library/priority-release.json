@@ -7,7 +7,7 @@
   "productionDeployed": false,
   "inventoryRoleCount": 157,
   "newHeroCount": 81,
-  "versionReferences": 282,
+  "versionReferences": 283,
   "registrationFailures": 0,
   "priority15": [
     {
@@ -488,17 +488,18 @@
   "preservedApprovedDerivatives": 11,
   "localFixedLibrary": {
     "before": 94,
-    "after": 138,
-    "added": 44,
+    "after": 139,
+    "added": 45,
     "receipt": "current-options-admission.json",
     "incrementalReceipts": [
-      "priority-evidence/haga-native-visibility/admission.json"
+      "priority-evidence/haga-native-visibility/admission.json",
+      "priority-evidence/kaiji-community/admission.json"
     ]
   },
   "finishedEntryPoint": "../asset-library/current-resources.json",
   "sourceCounts": {
-    "allIndexedModels": 149,
-    "runtimeConversionDeliveries": 8
+    "allIndexedModels": 150,
+    "runtimeConversionDeliveries": 9
   },
   "audio": {
     "lolScopeHeroes": 7,
@@ -520,7 +521,7 @@
     "currentBranchAudit": "priority-evidence/main-81-handoff/current-branch-audio/current-per-hero.json"
   },
   "limitations": [
-    "Seven runtime derivatives use six GGD procedural animation states, not acquired native actions. Original source meshes, rigs and textures remain preserved.",
+    "Eight runtime derivatives use six GGD procedural animation states, not acquired native actions. Original source meshes, rigs and textures remain preserved.",
     "Forum source identity classifications remain as delivered; visual matching does not establish canonical identity.",
     "Model readiness does not imply all native VFX, skill bindings, voices or sound effects are complete.",
     "Production deployment, every-source S3 backup and KOF full-roster acquisition are not completed by this receipt.",
@@ -533,7 +534,8 @@
     "priority-evidence/unpublished-v2-withdrawal.json",
     "parallel-deliveries-20260910/integration-receipt.json",
     "priority-evidence/haga-native-visibility/final-integrity.json",
-    "priority-evidence/main-81-handoff/final-integrity.json"
+    "priority-evidence/main-81-handoff/final-integrity.json",
+    "priority-evidence/kaiji-community/final-integrity.json"
   ],
   "postRegistrationReview": "post-registration-review.json",
   "fullReleaseChecksPassed": false,
@@ -564,8 +566,30 @@
     "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
     "productionDeployed": false
   },
-  "contentBuildVersion": "cv_469994722c04",
-  "latestValidation": "priority-evidence/kisaragi-train-audio/validation.json",
+  "contentBuildVersion": "cv_258401b6b5a6",
+  "latestValidation": "priority-evidence/kaiji-community/validation.json",
   "priority81Handoff": "priority-81-handoff.json",
-  "previousValidation": "priority-evidence/main-81-handoff/validation.json"
+  "previousValidation": "priority-evidence/kisaragi-train-audio/validation.json",
+  "kaijiCommunityModel": {
+    "receipt": "priority-evidence/kaiji-community/receipt.json",
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+    "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+    "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+    "nativeAnimations": 0,
+    "proceduralAnimations": 6,
+    "sourceAudio": 0,
+    "sourceVfx": 0,
+    "preservedPreviousOptions": 3,
+    "sourceBackup": "priority-evidence/kaiji-community/source-s3-backup.json",
+    "conversionBackup": "priority-evidence/kaiji-community/conversion-s3-backup.json"
+  },
+  "sourceSupplement": {
+    "sourceId": "github-flemmli97-fateubw-07e9d79b",
+    "models": 19,
+    "animationClips": 156,
+    "audioFiles": 5,
+    "runtimeReady": false,
+    "originalFucPsp": false,
+    "backupReceipt": "priority-evidence/fateubw-community/source-s3-backup.json"
+  }
 }

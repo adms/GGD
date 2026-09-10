@@ -223,7 +223,7 @@ class Builder:
             "gaps": errors,
         }
 
-    def raw_supplements(self):
+    def raw_supplements(self, heroes, runtime_options):
         base = self.repo.parent / "GGD-Asset-Library/intake/public-models-20260911"
         specs = [
             ("伊藤開司", "parallel-kaiji-source-audit", "delivery-receipt.json", "model-pending-conversion"),
@@ -248,8 +248,51 @@ class Builder:
                                         "newBodyCount", "newNativeAnimationCount", "newAudioCount") if k in receipt}
                 if receipt.get("manifestPath"):
                     row["immutableDelivery"] = self.evidence(Path(receipt["manifestPath"]))
+            # Keep the acquired package and its old readiness intact. A later
+            # runtime delivery is a separate, current registration observation.
+            if directory == "parallel-kaiji-source-audit":
+                row["runtimeIntegration"] = self.runtime_supplement(
+                    row, heroes, runtime_options,
+                    self.repo / BASE / "priority-evidence/kaiji-community/receipt.json")
+                if row["runtimeIntegration"]["registeredModels"]:
+                    row["status"] = "model-converted-registered"
+                elif row["runtimeIntegration"]["receipt"]["existsLocal"]:
+                    row["status"] = "conversion-receipt-awaiting-registration"
             rows.append(row)
         return rows
+
+    def runtime_supplement(self, source, heroes, runtime_options, receipt_path):
+        """Join an acquired source to verified current runtime options by hero/key."""
+        source_heroes = set(source.get("heroIds", []))
+        declared_keys = {option["sourceModelKey"]
+                         for hero in runtime_options.get("heroes", [])
+                         if hero["id"] in source_heroes
+                         for option in hero.get("options", [])}
+        declared_models = {model["modelKey"]: model for model in runtime_options.get("models", [])}
+        registered = []
+        for hero in heroes:
+            if hero["heroId"] not in source_heroes and hero["runtimeHeroId"] not in source_heroes:
+                continue
+            for model in hero["candidateModels"]:
+                key = model["sourceModelKey"]
+                meta = declared_models.get(key)
+                if key not in declared_keys or not meta or not model["readiness"]["localFilesAndMappingsPass"]:
+                    continue
+                if not model.get("glb") or meta.get("sha256") != model["glb"]["sha256"]:
+                    continue
+                registered.append({"heroId": hero["heroId"], "modelKey": model["modelKey"],
+                                   "sourceModelKey": key, "sourceOptionId": meta["id"],
+                                   "isActive": hero["activeModelKey"] == model["modelKey"],
+                                   "document": model["document"], "glb": model["glb"],
+                                   "actualAnimationCount": model["actualAnimationCount"],
+                                   "nativeAnimationCount": meta.get("nativeAnimationCount"),
+                                   "proceduralAnimationCount": meta.get("proceduralAnimationCount"),
+                                   "limitations": meta.get("limitations", [])})
+        return {"receipt": self.evidence(receipt_path), "registeredModels": registered,
+                "activeRuntimeModelReady": any(m["isActive"] for m in registered),
+                "originalAcquisitionReadiness": source.get("readiness"),
+                "rawSourceStillPreserved": True,
+                "countingNote": "Runtime models are counted in hero.candidateModels; the raw package is not an extra finished option."}
 
     def build(self):
         reg = self.read(self.repo / BASE / "priority-registration.json")
@@ -262,8 +305,12 @@ class Builder:
         by_id = {h["id"]: h for h in inventory["heroes"]}
         aliases = inventory.get("aliases", {})
         options = {}
+        runtime_options = {}
         for name in ("workflow-model-options.json", "priority-runtime-options.json"):
-            for option in self.read(self.repo / BASE / name).get("models", []):
+            option_document = self.read(self.repo / BASE / name)
+            if name == "priority-runtime-options.json":
+                runtime_options = option_document
+            for option in option_document.get("models", []):
                 options[option["modelKey"]] = option
         audio_evidence = self.evidence(self.audio_report)
         audio = self.read(self.audio_report) if audio_evidence["existsLocal"] else {}
@@ -421,7 +468,7 @@ class Builder:
                           "currentBranchFiles": finished_audio + branch_additions},
                 "gaps": gaps,
             })
-        supplements = self.raw_supplements()
+        supplements = self.raw_supplements(heroes, runtime_options)
         active_models = [next((m for m in h["candidateModels"] if m["modelKey"] == h["activeModelKey"]), None)
                          for h in heroes]
         inputs = [self.inputs[key] for key in sorted(self.inputs)]
@@ -479,6 +526,38 @@ def file_link(evidence):
     return f"[{cell(label)}](<{target}>)；SHA `{evidence.get('sha256') or 'missing'}`"
 
 
+def supplement_summary(rows):
+    descriptions = []
+    for row in rows:
+        runtime = row.get("runtimeIntegration") or {}
+        models = runtime.get("registeredModels", [])
+        if models:
+            selected = next((model for model in models if model["isActive"]), models[0])
+            state = "已切換成品模型" if selected["isActive"] else "成品已登記為候選"
+            description = f"{row['character']} {state}"
+            native, procedural = selected.get("nativeAnimationCount"), selected.get("proceduralAnimationCount")
+            if native == 0:
+                description += "；原生動作仍缺"
+            elif native is None:
+                description += "；原生動作數尚無已核證據"
+            if procedural is not None:
+                description += f"，目前含 {procedural} 段程序化動作"
+        elif row["status"] == "conversion-receipt-awaiting-registration":
+            description = f"{row['character']} 轉換收據已取得，成品尚待目前登記與檔案核對"
+        elif row["status"] == "animation-pending-retargeting":
+            counts = row.get("sourceCounts", {})
+            description = (f"{row['character']} 動作來源仍待轉換"
+                           f"（{counts.get('normalPortClips', 0)} Normal＋{counts.get('customVariantClips', 0)} Custom IFP）")
+        else:
+            description = f"{row['character']} 原始來源已保留，尚待成品登記與轉換"
+        receipt = runtime.get("receipt") or {}
+        if receipt.get("existsLocal"):
+            target = receipt["gitPath"].removeprefix(BASE + "/")
+            description += f"；[轉換收據]({quote(target, safe='/.-_')})"
+        descriptions.append(description)
+    return "補充來源：" + "。".join(descriptions) + "。原取得狀態、來源與 delivery 路徑保留於 JSON `rawSupplements`，不重複計為成品。"
+
+
 def render(data):
     """Keep the review sheet to 81 rows; detailed evidence lives in the JSON."""
     summary, rules = data["summary"], data["rules"]
@@ -488,7 +567,8 @@ def render(data):
     lines = ["# 81 英雄優先合併清單", "",
              f"交 Main 審查合併：**81 位英雄、{summary['registeredCandidateCount']} 個已登記候選**。"
              f"{summary['activeModelFilesAndMappingsPass']}/81 個作用中模型通過本機檔案與映射檢查；"
-             f"{summary['activePlaceholderCount']} 個仍為佔位。剩餘轉換由 Root 負責。", "",
+             + (f"{summary['activePlaceholderCount']} 個仍為佔位。" if summary['activePlaceholderCount']
+                else "目前無新增角色使用原有佔位。") + "剩餘轉換由 Root 負責。", "",
              f"Main 已合併音訊基準：{committed.get('heroesWithCommittedCharacterPack', 0)} 位有 "
              f"{committed.get('uniqueClipPaths', 0)} 個成品檔（來源沿用 "
              f"{classes.get('source-file-reused-not-speaker-verified', 0)}、自身參考合成 "
@@ -531,9 +611,8 @@ def render(data):
         lines.append(f"| `{hero['heroId']}` {cell(hero['name'])} | {cell(source_label)} | {link} | "
                      f"{model.get('actualAnimationCount', 0)} | {len(hero['candidateModels'])} | "
                      f"{audio_label} | {cell('；'.join(gaps) or '—')} |")
-    lines += ["", "補充儲備：伊藤開司新模型、Mai 的 DOA6→GTA SA 146 段 Normal＋16 段 Custom IFP 均待轉換，"
-              "不計入已完成模型／動作；原包與 delivery 路徑保留在 JSON 的 `rawSupplements`。", "",
-              "完整 282 候選、model/GLB 路徑與 SHA、clipMap、實際剪輯名稱、音訊逐檔分類與證據："
+    lines += ["", supplement_summary(data.get("rawSupplements", [])), "",
+              f"完整 {summary['registeredCandidateCount']} 候選、model/GLB 路徑與 SHA、clipMap、實際剪輯名稱、音訊逐檔分類與證據："
               "[priority-81-handoff.json](priority-81-handoff.json)。以下在專案根目錄查單一英雄：", "",
               "```sh", "jq --arg id community-review-03-20260907 '.heroes[] | select(.heroId == $id)' materials/hero-model-library/priority-81-handoff.json",
               "```", ""]

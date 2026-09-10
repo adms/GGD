@@ -41683,6 +41683,107 @@
       "categoryCounts": {
         "voice-label-unreviewed": 97
       }
+    },
+    {
+      "id": "github-flemmli97-fateubw-07e9d79b:heracles-roar",
+      "name": "FateUBW／Heracles 咆哮來源標籤",
+      "library": "公開來源",
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "heroIds": [
+        "godie-hapm"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 18301,
+      "knownDurationSeconds": 1.268934,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:github-flemmli97-fateubw-07e9d79b"
+      ],
+      "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+      "work": "Fate/Unlimited Block Works",
+      "reportedLanguage": "unknown",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "classificationEvidence": "MOD source directory/file label only; no listening verification.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "github-flemmli97-fateubw-07e9d79b:generic-sfx",
+      "name": "FateUBW／劃斬及揮動音效",
+      "library": "公開來源",
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 3,
+      "bytes": 25710,
+      "knownDurationSeconds": 1.63432,
+      "durationMeasuredFiles": 3,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:github-flemmli97-fateubw-07e9d79b"
+      ],
+      "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+      "work": "Fate/Unlimited Block Works",
+      "reportedLanguage": "unknown",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "classificationEvidence": "MOD source directory/file label only; no listening verification.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 3
+      }
+    },
+    {
+      "id": "github-flemmli97-fateubw-07e9d79b:nero-noble-phantasm",
+      "name": "FateUBW／Nero 固有結界來源標籤",
+      "library": "公開來源",
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 23216,
+      "knownDurationSeconds": 1.919604,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:github-flemmli97-fateubw-07e9d79b"
+      ],
+      "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+      "work": "Fate/Unlimited Block Works",
+      "reportedLanguage": "unknown",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "classificationEvidence": "MOD source directory/file label only; no listening verification.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
     }
   ],
   "backups": {
@@ -42257,16 +42358,33 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
       "localUseAvailable": true,
       "publicationStatus": "local-verified-s3-pending"
+    },
+    "public:github-flemmli97-fateubw-07e9d79b": {
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
+      "bytes": 2331974,
+      "sha256": "ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38",
+      "readbackVerified": true,
+      "verifiedArchiveMembers": 797,
+      "archiveMemberRoot": "fate-bounded-batch10/",
+      "receiptPath": "materials/hero-model-library/priority-evidence/fateubw-community/source-s3-backup.json",
+      "receiptSha256": "1bac544e2e0d5fc6f874bfee4a56e60acbd55a9dd9b536e723bb73aab808189a",
+      "usage": "manual-only legacy raw reserve; not runtime-ready",
+      "archiveFormat": "tar-gzip",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "6e167b891033abf5d570a05f6f22d35c1978ef8a1548379b6fa51e6851ad2a06"
+      "sha256": "c52739b8ebac77bcaaf8f647f60eb6fd69cef86b595487e31757d258a7f0f990"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "179130f92dedb770a056e7a0f14f8372906a3db8c36c1017464c76629d5bf021"
+      "sha256": "168e8449b47393ba9f05217cc645fb8ead3b34abbaf8e7bdecb08fcec98da6ee"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -42591,6 +42709,18 @@
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
       "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/audio-file-index.json",
+      "sha256": "07951fbe1a0b9fcc79c33e1e046d546eda0067d3c133fd773d8a8ce20db54e2d"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/audioFileIndex.json",
+      "sha256": "f3de1a762f1ae136298e15c6e413fb850a55316a195473c7b48ae6338aa34f0a"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/audioFileIndex.json",
+      "sha256": "f3de1a762f1ae136298e15c6e413fb850a55316a195473c7b48ae6338aa34f0a"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
@@ -93192,15 +93322,15 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 963,
-    "audioFiles": 278971,
-    "bytes": 132953272395,
+    "groups": 966,
+    "audioFiles": 278976,
+    "bytes": 132953339622,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
-  "uncompressedFileManifestSha256": "f9a3760bc9c403a35fb4e5122ebf9ec5c5a64cda60240441a7de27a64984b2c1"
+  "sourceFileManifestSha256": "ccf4e53ba7c2f5cff9b65a261135a779f9921af9dc510c3af040fcc7a17b2c79",
+  "uncompressedFileManifestSha256": "cdb7b9a9d57a7e50f29c4014f77e503785cccc84cd6bc9590c4bb92cd54a6112"
 }

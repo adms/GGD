@@ -164,7 +164,8 @@ for r in no_default:
  source_names='、'.join(f"`{s['id']}`" for s in sources) or '未登記新的完整角色模型來源'
  state='已取得來源；依下方逐來源證據完成形態確認、轉換與驗收' if sources else '既有候選轉換失敗；見下方失敗原因' if r['pending'] else '只有未核准相似候選；本尊來源仍待補／配對'
  progress.append(f"| {text(r['name'])} `{r['id']}` | {source_names} | {state} |")
-progress+=['',f"**另有 {len(placeholders)} 名新增角色仍使用原有佔位：** "+'、'.join(text(r['name']) for r in placeholders)+'。其中已取得本尊來源者見下方来源表，不能把取得等同切換完成。','',
+placeholder_message=(f"**另有 {len(placeholders)} 名新增角色仍使用原有佔位：** "+'、'.join(text(r['name']) for r in placeholders)+'。其中已取得本尊來源者見下方來源表，不能把取得等同切換完成。') if placeholders else '**目前無新增角色使用原有佔位。** 原生動作、特效與語音缺口仍依各自證據記錄。'
+progress+=['',placeholder_message,'',
 f'「尚未通過轉換」的 {len(pending_rows)} 筆只統計既有轉換失敗，不是全部待補角色。既有 W3X 若只證實檔名，仍須確認本尊／形態；已取得整庫但未配對者不能說成不存在。','']
 if quality_review.get('affectedSources'):
  progress+=['**全庫發布檢查仍未通過。** 幾何普查標出 '+ '、'.join(next((r['name'] for r in rows if r['id']==x['heroId']),x['heroId']) for x in quality_review['affectedSources'])+' 的原件／副本部件，保留全部原件並待確認；不以登記成功代替完整視覺驗收。精確來源與狀態見 `post-registration-review.json`，其他未解發布檢查見 `priority-release.md`。','']

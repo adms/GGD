@@ -1,0 +1,31 @@
+{
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
+  "archivePath": "/private/tmp/ggd-fateubw-s3-backup/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
+  "archiveBytes": 2331974,
+  "archiveSha256": "ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38",
+  "frozenInventoryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/files.sha256.json",
+  "frozenInventorySha256": "43da5ed1ab460d4f6398a9fd72e790b432a51500382868660014465cf693eb19",
+  "inventoryFileCount": 797,
+  "verifiedOriginalFiles": 796,
+  "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
+  "verified": true,
+  "schema": "ggd.s3-legacy-backup-receipt@1",
+  "verifiedAt": "2026-09-10T17:02:22.759109+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "identityArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789059405",
+  "identityMatchesExpectedRole": true,
+  "uploadExitCode": 0,
+  "readbackExitCode": 0,
+  "readbackPath": "/private/tmp/ggd-fateubw-s3-backup/readback.tar.gz",
+  "readbackSha256": "ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38",
+  "readbackArchiveMembersVerified": 797,
+  "actions": [
+    "sts:GetCallerIdentity",
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "centralWrites": false,
+  "localOriginalsPreserved": true,
+  "archiveMemberRoot": "fate-bounded-batch10/"
+}

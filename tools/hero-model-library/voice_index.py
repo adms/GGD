@@ -35,6 +35,38 @@ def source_audio_spec(source):
     return source.get('audioFileIndex') or source.get('audioConversion') or {}
 
 
+def public_archive_type(receipt):
+    """Use the declared container format; preserve the historical default."""
+    declared = receipt.get('archiveFormat')
+    if declared is None:
+        return 'zip' if receipt.get('sha256') else 'local-intake'
+    if declared not in {'zip', 'tar-gzip'}:
+        raise ValueError('Unsupported public archive format: ' + str(declared))
+    return declared
+
+
+def public_archive_member(receipt, member):
+    """Resolve a safe POSIX archive member, adding a declared root only once."""
+    def parts(value, root=False):
+        if not isinstance(value, str) or '\\' in value or '\0' in value:
+            raise ValueError('Archive paths must be POSIX relative strings')
+        if value.startswith('/') or re.match(r'^[A-Za-z]:', value):
+            raise ValueError('Absolute archive path is not allowed: ' + value)
+        value = value.rstrip('/') if root else value
+        if root and not value:
+            return []
+        result = value.split('/')
+        if any(p in {'', '.', '..'} for p in result):
+            raise ValueError('Invalid archive path component: ' + value)
+        return result
+
+    member_parts = parts(member)
+    root_parts = parts(receipt.get('archiveMemberRoot', ''), root=True)
+    if root_parts and member_parts[:len(root_parts)] != root_parts:
+        member_parts = root_parts + member_parts
+    return '/'.join(member_parts)
+
+
 def excluded_from_speech(role, source_is_synthetic=None, source_contains_synthetic=None):
     """Mixed synthetic banks stay excluded without labelling every clip synthetic."""
     for flag in (source_is_synthetic, source_contains_synthetic):
@@ -206,6 +238,9 @@ def main():
             archived=read(report_path)
             receipt=dict(readbackVerified=False)
             local_only=True
+        receipt=dict(receipt)
+        for field in ['archiveFormat','archiveMemberRoot']:
+            if field not in receipt and field in archived:receipt[field]=archived[field]
         audio=primary_audio(archived['files'],declared,source.get('primaryAudioFormats'))
         if source.get('audioConversion',{}).get('decodedFloatWavCount'):
             audio=[f for f in audio if not f['path'].startswith('decoded-audio/')]
@@ -221,14 +256,14 @@ def main():
                 assert native_file['sha256']==f['sha256']
                 local=ws/source['localPath']/f['path']
                 assert local.is_file() and local.stat().st_size==f['bytes']
-                native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=f['path'],
+                native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=public_archive_member(receipt,f['path']),
                     sha256=f['sha256'],bytes=f['bytes'],kind='native-bank',decoded=False,synthesisReady=False))
             native_bank_count=len(native_files)
             for f in archived['files']:
                 if Path(f['path']).suffix.lower() not in {'.idsp','.wem'}:continue
                 local=ws/source['localPath']/f['path']
                 assert local.is_file() and local.stat().st_size==f['bytes']
-                native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=f['path'],
+                native_files.append(dict(path=source['localPath']+'/'+f['path'],archiveMember=public_archive_member(receipt,f['path']),
                     sha256=f['sha256'],bytes=f['bytes'],kind='native-standalone',decoded=False,synthesisReady=False))
         if not audio and not native_files:continue
         if local_only:
@@ -237,7 +272,7 @@ def main():
                 assert local.is_relative_to((ws/source['localPath']).resolve())
                 assert local.is_file() and local.stat().st_size==f['bytes'] and sha(local)==f['sha256']
             for f in native_files:assert sha(ws/f['path'])==f['sha256']
-        sid='public:'+source['id'];stores[sid]=dict(type='zip' if receipt.get('sha256') else 'local-intake',
+        sid='public:'+source['id'];stores[sid]=dict(type=public_archive_type(receipt),
             **receipt,localRoot=source['localPath'],absoluteLocalRoot=str((ws/source['localPath']).resolve()),
             localUseAvailable=True,publicationStatus='local-verified-s3-pending' if local_only else 's3-readback-verified')
         if native_files:
@@ -287,7 +322,7 @@ def main():
                 assert decoded['sha256']==f['sha256'] and decoded['bytes']==f['bytes']
                 bank=decoded.get('sourceBank')
                 if bank and bank not in g['originalBanks']:g['originalBanks'].append(bank)
-            add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,member,
+            add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,public_archive_member(receipt,member),
                 seconds=decoded.get('seconds'),original_bank=decoded.get('sourceBank'),
                 role=(part or {}).get('audioCategory',source.get('audioCategory','unclassified')),
                 source_is_synthetic=decoded.get('sourceIsSynthetic',(part or {}).get('sourceIsSynthetic',source.get('sourceIsSynthetic'))),

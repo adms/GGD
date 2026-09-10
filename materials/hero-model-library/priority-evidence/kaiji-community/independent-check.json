@@ -1,0 +1,1298 @@
+{
+  "schema": "ggd.kaiji-runtime-v2-independent-check@1",
+  "files": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/native-glb/body.glb",
+      "sha256": "a96fee2daa503cca8d228201f11ffe7ba58cf06003df848bbe87edf253b9f76f",
+      "bytes": 2268184
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/animated-v1/body.glb",
+      "sha256": "fd3a30074df4ee1c5a5db9f47c97a21de2db5b6bf4891703fa12ad8beab0fc85",
+      "bytes": 2341236
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/runtime-v2/body.glb",
+      "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "bytes": 319724
+    }
+  ],
+  "result": "pass",
+  "nativeSourceComparison": {
+    "vertices": 1766,
+    "allIndicesAndAttributesMatchExpectedCoordinateConversion": true,
+    "attributes": {
+      "POSITION": {
+        "expectedUnityToGltfConvention": "X reflection",
+        "maxAbsDifference": 0.0,
+        "payloadSha256": "e8ce4a34b7f26cadb604ac6b758012d545a36f07682f73227f30c64d97af5568"
+      },
+      "NORMAL": {
+        "expectedUnityToGltfConvention": "unit normalized then X reflection",
+        "maxAbsDifference": 0.0,
+        "payloadSha256": "6929126b736db200e14660d840e3fdc265004c35c6987296e74e9946404f0c2c"
+      },
+      "JOINTS_0": {
+        "expectedUnityToGltfConvention": "native indices; zero-weight slots canonicalized to0",
+        "maxAbsDifference": 0.0,
+        "payloadSha256": "992bc14c6c4413ee917089909056c79b25e6aef12696b9377f136c046ff1a01a"
+      },
+      "WEIGHTS_0": {
+        "expectedUnityToGltfConvention": "native weights normalized to sum1",
+        "maxAbsDifference": 0.0,
+        "payloadSha256": "8da5524b7d1f1e27687a2db6f863022a723b78961f848c02081258d604c97f2c"
+      },
+      "TEXCOORD_0": {
+        "expectedUnityToGltfConvention": "native u,1-v",
+        "maxAbsDifference": 0.0,
+        "payloadSha256": "e53d628f457fabb630815119bb3d320eb829de182ccc6de320602044a8f41167"
+      }
+    },
+    "indicesBySubmesh": [
+      {
+        "slot": 0,
+        "material": 0,
+        "indices": 3111,
+        "triangles": 1037,
+        "sha256": "512949eed5b6b2787edd36ce881ab5b00ef1f5137bb9b173e1cf6bfe9c035112",
+        "nativeIndicesWithReversedWindingMatch": true
+      },
+      {
+        "slot": 1,
+        "material": 1,
+        "indices": 2385,
+        "triangles": 795,
+        "sha256": "2a34fa3ae9b31fa3a37a8df7eb2052cc0e8f29c0bdb6a51c93e12dd3b33ec694",
+        "nativeIndicesWithReversedWindingMatch": true
+      },
+      {
+        "slot": 2,
+        "material": 2,
+        "indices": 1032,
+        "triangles": 344,
+        "sha256": "475a033c0009a10a2bd73ac2aa25294ea4f5dd405c24ffcc1783e2eeb6360223",
+        "nativeIndicesWithReversedWindingMatch": true
+      }
+    ],
+    "inverseBindMatricesExactReflectionOfSource": true,
+    "omittedNativeTangents": "Converter omits tangents; source retained and no normal-mapped materials require them."
+  },
+  "geometryAndSkin": {
+    "nodes": 39,
+    "skinJoints": 33,
+    "weightedJoints": 32,
+    "allNodesAndTRSUnchangedAcrossThreeFiles": true,
+    "skinJointOrderAndIBMUnchangedAcrossThreeFiles": true,
+    "meshAttributeIndexPayloadsUnchangedAcrossThreeFiles": true,
+    "originalAccessorCount": 9,
+    "preparedAccessorCount": 99,
+    "all99AnimatedAccessorSemanticRecordsAndBytesRetained": true,
+    "triangles": 2176,
+    "drawPrimitives": 3
+  },
+  "materials": {
+    "count": 3,
+    "allMaterialTextureSamplerDefinitionsUnchanged": true,
+    "textures": [
+      {
+        "slot": 0,
+        "name": "-4092671177842900150",
+        "material": "skin, t-shirt and crocs",
+        "sourceSha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc",
+        "sourceSize": [
+          2048,
+          2048
+        ],
+        "runtimeSha256": "0d07e0936724d386187f241566d7aefd93d8fd8397b91c1b61f17dd29eabe731",
+        "runtimeSize": [
+          256,
+          256
+        ],
+        "runtimeBytes": 30818,
+        "pHYs": [
+          1,
+          1,
+          0
+        ],
+        "nativePixelsAndPNGPreservedUntilPreparation": true,
+        "runtimeBytesEqualExactExpectedFfmpegNormalization": true,
+        "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures/Baked-kaiji-2.-4092671177842900150.png"
+      },
+      {
+        "slot": 1,
+        "name": "8619384907673432593",
+        "material": "hair and pants",
+        "sourceSha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f",
+        "sourceSize": [
+          2048,
+          2048
+        ],
+        "runtimeSha256": "250fa89b09ee411179512eec57fa1e0b4ee6a960044e6dbbecb742ca2cc6dca2",
+        "runtimeSize": [
+          256,
+          256
+        ],
+        "runtimeBytes": 16839,
+        "pHYs": [
+          1,
+          1,
+          0
+        ],
+        "nativePixelsAndPNGPreservedUntilPreparation": true,
+        "runtimeBytesEqualExactExpectedFfmpegNormalization": true,
+        "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures/Baked-kaiji-4.8619384907673432593.png"
+      },
+      {
+        "slot": 2,
+        "name": "-1962654042311310318",
+        "material": "shirt",
+        "sourceSha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b",
+        "sourceSize": [
+          2048,
+          1024
+        ],
+        "runtimeSha256": "47b13ccd2ec02fa9607c3cdb4ebc536f6abe00f025605acf9ed51d49b84bf1ed",
+        "runtimeSize": [
+          256,
+          128
+        ],
+        "runtimeBytes": 57716,
+        "pHYs": [
+          1,
+          1,
+          0
+        ],
+        "nativePixelsAndPNGPreservedUntilPreparation": true,
+        "runtimeBytesEqualExactExpectedFfmpegNormalization": true,
+        "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/textures/Shirt-kaiji.001.-1962654042311310318.png"
+      }
+    ]
+  },
+  "animations": {
+    "sourceNativeClips": 0,
+    "proceduralClips": 6,
+    "sourceClassificationRetained": {
+      "ggdProceduralFallback": {
+        "sourceNativeAnimationCount": 0,
+        "authoringSampleRateHz": 30,
+        "worldAxisMappedToNativeBoneFrames": true,
+        "allNativePartsRetained": true
+      }
+    },
+    "nativeRetargetingClaimed": false,
+    "clips": [
+      {
+        "name": "GGD_procedural_idle",
+        "durationSeconds": 2.4000000953674316,
+        "channelCount": 14,
+        "nonconstantChannels": 4,
+        "allSamplesFinite": true,
+        "strictlyIncreasingTimes": true,
+        "allInputOutputBytesUnchangedFromAnimatedV1": true,
+        "channels": [
+          {
+            "targetNode": 4,
+            "targetName": "ORG-spine",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "cd6c1782afab0578c39e2caffe67c39985db0ee3f880c2637310120f96e76e50",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 8,
+            "targetName": "ORG-spine.002",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "69f28548730fe7c4a89ec75ca4d7e6c29cbb524eba49d29c0524baee075401c0",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 26,
+            "targetName": "ORG-spine.005",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "8ad819c1fd915fc50e2f8ccf486188a027adc0ae02530a56ed9f880918e9956c",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 13,
+            "targetName": "ORG-upper_arm.L",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "af127189db8c4010d380d5449acb40f90f28464aa1894ee6bc16f7a952449e18",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 19,
+            "targetName": "ORG-upper_arm.R",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "584bc708651efffecf0dc9e4ec5a916b43a878422c370298115517f623a83501",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 14,
+            "targetName": "ORG-forearm.L",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "e5d37e8f90150bb2d0d7e271cfc1c93f8fb6f2e5d8b61c80f0d64499df343296",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 20,
+            "targetName": "ORG-forearm.R",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "195c10db01c49927ab4a414cbcd8a279f02a73a0ebbc76a3e63ef16218985d6c",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 28,
+            "targetName": "ORG-thigh.L",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "2af58d538c1f2479f6dfed85aa00dc813e9930278ac97dafd45ea563047042b2",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 33,
+            "targetName": "ORG-thigh.R",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "5b423ed36057ded39faa94e90a0bb7ebb4c43ce9ef417650bf418cdbb73eea86",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 29,
+            "targetName": "ORG-shin.L",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "4677cbc5b8526968cb6ae3749dc0b003fb124432400fcd4ef928aa5e5e9a4734",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 34,
+            "targetName": "ORG-shin.R",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "b737b3b603f88e19f1acea010eeca63e51b5f1d7c00114d388ccac1b0c8a83fa",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 30,
+            "targetName": "ORG-foot.L",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "d6d928539ed79220b7a549a28f6a77403fd5911e44c8c6ae3b2c3cae62e1ef87",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 35,
+            "targetName": "ORG-foot.R",
+            "path": "rotation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "217a2e06f004e61bb04bafc2b459b614e9ec6cd5e6323a3a058e4c0cf10756b6",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 0,
+            "targetName": "GGD normalized root",
+            "path": "translation",
+            "keyCount": 73,
+            "firstSeconds": 0.0,
+            "lastSeconds": 2.4000000953674316,
+            "inputSha256": "372a04eb666204fe81eda2b4fb3442a2889b0214789f2c6c658a2bb0f82c9cd2",
+            "outputSha256": "312c1549bf5a07f1b4ce2a44827772018129aa5678ad8c32e7843cab6d15a03a",
+            "maxQuaternionNormError": null,
+            "nonconstant": false
+          }
+        ]
+      },
+      {
+        "name": "GGD_procedural_run",
+        "durationSeconds": 0.800000011920929,
+        "channelCount": 14,
+        "nonconstantChannels": 9,
+        "allSamplesFinite": true,
+        "strictlyIncreasingTimes": true,
+        "allInputOutputBytesUnchangedFromAnimatedV1": true,
+        "channels": [
+          {
+            "targetNode": 4,
+            "targetName": "ORG-spine",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "888ca7189d43fb77f4b254ec8fed75557a5b6acb8895cbc4db8412c64ad228c8",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 8,
+            "targetName": "ORG-spine.002",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "5933d120a2a24f062180ba3a871e09c33ab1285644b5498f7a2abb1cdb6306c2",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 26,
+            "targetName": "ORG-spine.005",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "5047eab4302ff5e6186279d0c522490b8f6471b566b6f72209f47b1831fc1d20",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 13,
+            "targetName": "ORG-upper_arm.L",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "52e038bab3e5e14c2e352ff41ade88bd95999629398929787e898b064535886a",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 19,
+            "targetName": "ORG-upper_arm.R",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "2ae704b116e4a0a520447f30a2f4d21d7bde6fa11575d34ba2f0941b20a4c05e",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 14,
+            "targetName": "ORG-forearm.L",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "93bc1a3420bbca5135a107cbe9760a1a6329ad1c9bafcc511612570865165055",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 20,
+            "targetName": "ORG-forearm.R",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "70707e7c1ab8746ebdaae97cdd41cd92957161268062d7d94080e423308e5c6c",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 28,
+            "targetName": "ORG-thigh.L",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "bfc4738a92eb1718b17c72e81475ce6b8acdc654e9ccbaed468e806e8ab48637",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 33,
+            "targetName": "ORG-thigh.R",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "c000e0f3bf1b6147d91564fb798886f02b50097e27d11f6d0f3ed9b7cd2464d5",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 29,
+            "targetName": "ORG-shin.L",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "3c21407aa86e787dd3a11f23a5a6a28b6e5734e25dd76f518db7bc0f1c33e1c3",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 34,
+            "targetName": "ORG-shin.R",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "ab05efd1a7ce7ce341ce6a9fa1e304256ed19e7b75434383f643fa2c37f72689",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 30,
+            "targetName": "ORG-foot.L",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "70c226e715e2e0a432bfa8630b4ecc39f670baf03a9bb15bfa73268596d04d99",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 35,
+            "targetName": "ORG-foot.R",
+            "path": "rotation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "6fe8edf055f6cd60f4fea144692e36a8cd7f650d290635d3e4714bad7eae17e3",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 0,
+            "targetName": "GGD normalized root",
+            "path": "translation",
+            "keyCount": 25,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.800000011920929,
+            "inputSha256": "01bd85956ef2459e00386fd1ce8f1f3e7ae7d08df2de37c739b40cce4fd1d79e",
+            "outputSha256": "e4bc3747249c111a33da6422a6ee29e8481bd34ee4d71452db5c381855691a7f",
+            "maxQuaternionNormError": null,
+            "nonconstant": true
+          }
+        ]
+      },
+      {
+        "name": "GGD_procedural_attack",
+        "durationSeconds": 1.0,
+        "channelCount": 14,
+        "nonconstantChannels": 3,
+        "allSamplesFinite": true,
+        "strictlyIncreasingTimes": true,
+        "allInputOutputBytesUnchangedFromAnimatedV1": true,
+        "channels": [
+          {
+            "targetNode": 4,
+            "targetName": "ORG-spine",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "1e7619e5fb3852a208ca2d940ad8b85c50ead2c71ff5f18c4b89223eec1144e5",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 8,
+            "targetName": "ORG-spine.002",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "8ff2b91a86caf81e4bad5868aa0d73aed6e349de924e0b2df07f63a7c2981bb6",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 26,
+            "targetName": "ORG-spine.005",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "e22f19261df67271bb43e1abd9f33d4b772dff460374cdd57b88099bac442d89",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 13,
+            "targetName": "ORG-upper_arm.L",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "052aefdbe4612f8c5abed60a5b89fa9c6b95c07bc2096c7ef111a340f2e9e54a",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 19,
+            "targetName": "ORG-upper_arm.R",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "342915762bae7c60f7a0f488034b19119b4335803247659e61e5b5a1c8bdfa76",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 14,
+            "targetName": "ORG-forearm.L",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "8d50d477b21a61834646042c4e7a36d3bc2676faad37ea281c1440e2d840b11e",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 20,
+            "targetName": "ORG-forearm.R",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "cc4cf55fe32e55f6651e77404317e2a6a83fdf15d29ec1c0446e9dee714a6ae2",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 28,
+            "targetName": "ORG-thigh.L",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "b5a9b00ebec4d9d4bc58d099187fb0896313aac8b3029193cb457468d9008f19",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 33,
+            "targetName": "ORG-thigh.R",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "4fed535fb1f84543e317d3eaf3719d3de8980b52f5b3cef4d3c0c17b9a261521",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 29,
+            "targetName": "ORG-shin.L",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "4692e8a6f0b1a8b35fb408bb6d1f0ed84e96f0b0c49652607fe913540f03d20d",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 34,
+            "targetName": "ORG-shin.R",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "aeb1dcc67a9c538a6a4e6151a4e74c5e63462a6c3b1d2df51fad52f9c4fc49ca",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 30,
+            "targetName": "ORG-foot.L",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "d84b35c89dfd0d1e57b8a031b77e02002ab41b93620a854b6a785cc4c6b99577",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 35,
+            "targetName": "ORG-foot.R",
+            "path": "rotation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "c2facc00fa7e13e95d949d61b6cfa291e404209e3fb15dfe07330d8df3b6fa60",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 0,
+            "targetName": "GGD normalized root",
+            "path": "translation",
+            "keyCount": 31,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.0,
+            "inputSha256": "ad1bd086a0eb3d329064d763c58b134bdebf8e6036407109f9475b3f6e1b8b67",
+            "outputSha256": "8eb1b182dd9b72f17c15dee11197c6c53bbb5e0cfd8fb1ebe28cb3c7e12d1929",
+            "maxQuaternionNormError": null,
+            "nonconstant": false
+          }
+        ]
+      },
+      {
+        "name": "GGD_procedural_cast",
+        "durationSeconds": 1.600000023841858,
+        "channelCount": 14,
+        "nonconstantChannels": 3,
+        "allSamplesFinite": true,
+        "strictlyIncreasingTimes": true,
+        "allInputOutputBytesUnchangedFromAnimatedV1": true,
+        "channels": [
+          {
+            "targetNode": 4,
+            "targetName": "ORG-spine",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "63603237e736adc4c5690ffb0a964c256d2e5dd3a286e21e963eb9142f0bd9a9",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 8,
+            "targetName": "ORG-spine.002",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "2c88ab243ef9fc7fb9323631e32efdaff6344a2ecdd73312a9dc7154e4a0a104",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 26,
+            "targetName": "ORG-spine.005",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "0532ec7b2148f825a9b037c3c13f628291e84d33c11b26d099d492fe9fb1ae61",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 13,
+            "targetName": "ORG-upper_arm.L",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "6d3cde19e8868e1b7254f92653b2064490ec0a8029f615f63693867f4a920e7a",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 19,
+            "targetName": "ORG-upper_arm.R",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "c54c355f8408a1d73103144347e7815e89d954fa2dd3d4de16157b0f8484e612",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 14,
+            "targetName": "ORG-forearm.L",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "374d063872ab735a79e7ea0c7b02bbb928e182490706cbbee6c3b12617fb44e5",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 20,
+            "targetName": "ORG-forearm.R",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "9379592619bca8dbe98acea045a56878a54312080314dce09b29c015935ced9e",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 28,
+            "targetName": "ORG-thigh.L",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "9aa7a24b04dac4844d82834f94695808852e9be15dfc492de36bdc5cad1e3ce0",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 33,
+            "targetName": "ORG-thigh.R",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "28aafff8f97d4fa8425fcdd5f48724f93f77cc91ab19e73449b2ef971a0de677",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 29,
+            "targetName": "ORG-shin.L",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "d60d8ecbde59e5deef929282b8a90ea2c8ec51a73ea58840be11f47e567729c9",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 34,
+            "targetName": "ORG-shin.R",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "b84dfa623f486298d68b4c05c97bde649ae204cdb1687d9d8838fe1dd8f6b4f1",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 30,
+            "targetName": "ORG-foot.L",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "7e9b6127b7099600902cc256c1996f4f507082fb028f7495955897b22907b8b1",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 35,
+            "targetName": "ORG-foot.R",
+            "path": "rotation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "548f31ad976da441adf8d083977a903eb14dc00158dccd899a4842e24773a0a3",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 0,
+            "targetName": "GGD normalized root",
+            "path": "translation",
+            "keyCount": 49,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.600000023841858,
+            "inputSha256": "7e9bcc30c37f070384abed49ad56594a86d755a3b8ca040083734abf30b8e4cc",
+            "outputSha256": "47f8ed7a81fc178c3855adb252bbf7cbe116a49ceefbdd870807266e12fbfbab",
+            "maxQuaternionNormError": null,
+            "nonconstant": false
+          }
+        ]
+      },
+      {
+        "name": "GGD_procedural_hurt",
+        "durationSeconds": 0.550000011920929,
+        "channelCount": 14,
+        "nonconstantChannels": 4,
+        "allSamplesFinite": true,
+        "strictlyIncreasingTimes": true,
+        "allInputOutputBytesUnchangedFromAnimatedV1": true,
+        "channels": [
+          {
+            "targetNode": 4,
+            "targetName": "ORG-spine",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "6280d637dccfe98cf6af27ea2297f7c70ff6561def2b8afa78b2cf8efd428128",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 8,
+            "targetName": "ORG-spine.002",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "d8dcc9512828a30bf2901bf517057fd5c4f7ab942f7be339175baf136e84ae91",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 26,
+            "targetName": "ORG-spine.005",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "c8734099babbae33eb7b782a55429a6419987655c5c84e41e1db0b346c08ab91",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 13,
+            "targetName": "ORG-upper_arm.L",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "a792d5ee7a92624463733f19795cfeb5886d499333c2a93fba7c1d8e85d40e97",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 19,
+            "targetName": "ORG-upper_arm.R",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "7f357cac94b032a4e7e5b122a2e741b1f7c15c982f1c6b994c87bbb6f43af92c",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 14,
+            "targetName": "ORG-forearm.L",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "4d8e8d93d197b8a38e3e548ed3a09da0e579ada92d74dd229c80c03e6db0f312",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 20,
+            "targetName": "ORG-forearm.R",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "4a2463f6916a596755603f4bf71b28bb429a41dd6529141f825500e75e708811",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 28,
+            "targetName": "ORG-thigh.L",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "2ce835ab0e40bb652ff4a50b041d30d662997904f4b91f0645016192a9217c33",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 33,
+            "targetName": "ORG-thigh.R",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "98204664e30ab259a8492a7f0cd27cc1faf5006b30097746386202e32be823da",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 29,
+            "targetName": "ORG-shin.L",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "af02330c7dcc54b019ca1c9fb4f23e4c01c0dae55502370c35ba583948bf0b04",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 34,
+            "targetName": "ORG-shin.R",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "9083a9025827ad469b4a20a6a1d72fd84d591f73250eb455da68a52ebf856032",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 30,
+            "targetName": "ORG-foot.L",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "921ad888e5205498cd81b0e5461cddca5f94b94c4ff5876692c316c261eaa304",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 35,
+            "targetName": "ORG-foot.R",
+            "path": "rotation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "488ccb159e3f44ddc915a3865d48981e2cce66e24966cfee3150e8ead80f3bf3",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 0,
+            "targetName": "GGD normalized root",
+            "path": "translation",
+            "keyCount": 18,
+            "firstSeconds": 0.0,
+            "lastSeconds": 0.550000011920929,
+            "inputSha256": "b5020182fd1475cfbf08c00684b03dba2d88d724a0ba3d669ff6e225ce9b3575",
+            "outputSha256": "51a06512acf5e90e9883438d3a3b12db115b7fe366418916483e327d085cea37",
+            "maxQuaternionNormError": null,
+            "nonconstant": false
+          }
+        ]
+      },
+      {
+        "name": "GGD_procedural_death",
+        "durationSeconds": 1.25,
+        "channelCount": 14,
+        "nonconstantChannels": 4,
+        "allSamplesFinite": true,
+        "strictlyIncreasingTimes": true,
+        "allInputOutputBytesUnchangedFromAnimatedV1": true,
+        "channels": [
+          {
+            "targetNode": 4,
+            "targetName": "ORG-spine",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "ff02c9d0c2bcd1fbeb35aae004f1ce23e57f750fe90049d04b698ebdc1e2996f",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 8,
+            "targetName": "ORG-spine.002",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "8b3e332d137f0a21e10a35add9ec70bd245d2701bf4886d6797cc06fc93f91a2",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 26,
+            "targetName": "ORG-spine.005",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "6b8823b5bfa53746f39590401f32aafbb98fbe80ccf656d7734573576f91bff4",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 13,
+            "targetName": "ORG-upper_arm.L",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "83e8eb851683f1eeca1db01babef2924dcfa18342165dee9a547ad77460d5a3f",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": true
+          },
+          {
+            "targetNode": 19,
+            "targetName": "ORG-upper_arm.R",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "227d12975955583ac0434b947f4bdb9ba11300c8a2b9231ae677550c85427ba8",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 14,
+            "targetName": "ORG-forearm.L",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "2e60ba24a2c6039ec9775d5457658ed4e4795cd898bce6f27c919d06efb0e296",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 20,
+            "targetName": "ORG-forearm.R",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "139b4d4288614fdff3625a97fc1a1ef247f134925497847546c9dc8a41ca15b4",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 28,
+            "targetName": "ORG-thigh.L",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "0477c4bf6c4aff19aff9f5b2b405a5b555fc0c10d968d87b6a666a690f35abec",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 33,
+            "targetName": "ORG-thigh.R",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "c9c38ef908f895432d075bcdefdd48269a483855d4c8545c5bc3f7383c1a1304",
+            "maxQuaternionNormError": 5.960464477539063e-08,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 29,
+            "targetName": "ORG-shin.L",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "4db9d23e4a4d2a2817ab936e3d9db4631802c292171907bd738daa8884f999cd",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 34,
+            "targetName": "ORG-shin.R",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "766d4e26278f22e8c276591c954c661f7a37d6fe9819542bceb7aba136c02716",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 30,
+            "targetName": "ORG-foot.L",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "2147c504d14e267320d26b4305d7d53ab02a53292bf8b654205b0d5ffb267e98",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 35,
+            "targetName": "ORG-foot.R",
+            "path": "rotation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "bb6ad19883fa2ee0bd02d14075843831e13ec9e89d42635585bd3e4ec3f6bb16",
+            "maxQuaternionNormError": 0.0,
+            "nonconstant": false
+          },
+          {
+            "targetNode": 0,
+            "targetName": "GGD normalized root",
+            "path": "translation",
+            "keyCount": 39,
+            "firstSeconds": 0.0,
+            "lastSeconds": 1.25,
+            "inputSha256": "2d9fabe67b51402147ea66f5678aa39f2465984d21b8c9dbaa256f98e66040a9",
+            "outputSha256": "7a02d9acbded881cd1830495ed7a909a11f0dd4de58d3b233047806ab2ac96b5",
+            "maxQuaternionNormError": null,
+            "nonconstant": true
+          }
+        ]
+      }
+    ],
+    "runtimeClipMap": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    }
+  },
+  "preparedChanges": {
+    "actualChangedJsonKeys": [
+      "meshes",
+      "bufferViews",
+      "accessors",
+      "images",
+      "buffers"
+    ],
+    "explanation": "Exactly3 embedded PNGs downscaled with lanczos+setsar1; accessors/bufferViews/references repacked, but all99 accessor payloads and metadata retained. No geometry, rig, node TRS, materials, sampler settings, native parts or procedural motion samples changed.",
+    "allOtherDocumentPropertiesUnchanged": true
+  },
+  "reportedKhronosReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/runtime-v2/khronos.json",
+    "sha256": "4c56db4ad28a5ab240808fa4fadb3bbca290e14a7b52b47aacbe0e6ff5d35f8c",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "verification": "Parsed parent-generated full Khronos receipt, not rerun renderer/Chrome."
+  },
+  "limitations": [
+    "Read-only numeric/payload verification, not a new visual or playback approval. Root owns actual36 WebGL frames.",
+    "The six clips are generic procedural authored gestures, with no foot IK or source-game choreography; this check confirms finite channels and preservation, not quality.",
+    "Texture downsampling intentionally changes pixel detail; all3 source images remain full resolution in native-glb and frozen intake."
+  ],
+  "inputsUnchangedAfterCheck": true
+}
