@@ -49,6 +49,7 @@ import {
   recordShopEvent,
   recordKillComboEvent,
   recordMobBossEvent,
+  recordRound11Event,
   recordMarkEvent,
   recordRoundSettlement,
   isShopEvent,
@@ -2286,6 +2287,12 @@ export class GameApp {
     // belongs to everyone on it — `parseMobBossEvent` records who summoned it
     // and who was paid, and the overlay decides the wording from that.
     if (isMobBossEvent(ev.type)) recordMobBossEvent(ev, nowMs);
+    // ⭐ GH#1151 H —— 第十一回合的四則（轟炸紅圈 / 寶具損壞 / 復活權 / 殭屍升級）。
+    // ⛔ 在這一行之前，伺服器把它們全部送上線了而**沒有任何一個收端** ——
+    // 而「一件寶具無聲消失」是這一整批裡最糟的那一種（玩家會把它讀成 bug）。
+    // ⚠️ ⛔ 不能沿用上面那個 `localId`：`round11ItemBroken` 帶的是 **seatId**
+    // （與 `coinDropRejected` 同一個理由），過濾在 `round11Model` 裡做。
+    recordRound11Event(ev, nowMs);
     // 【具名標記】(GH#278)。兩顆事件、兩個去處,而且兩個都是「玩家拿不拿得到」
     // 的唯一通道 —— 標記完全不在 MatchState 上。
     //   ① 層數 → HUD（自己那一列;`recordMarkEvent` 內部用 localEntityId 過濾）
