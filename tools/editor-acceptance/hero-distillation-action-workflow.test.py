@@ -27,12 +27,14 @@ class ActionWorkflowTest(unittest.TestCase):
                 'api_dependencies': paths['api'], 'asset_roots': [asset], 'source_repo': ROOT,
                 'e2e_out': e2e,
             }, execute=fake)
-            self.assertEqual(['prepare', 'base', 'lora', 'compile-package-import-readback'],
+            self.assertEqual(['prepare', 'base', 'lora', 'compile-package-import-readback', 'render-evidence-report'],
                              [log.removesuffix('.log') for _, log in calls])
             self.assertTrue(calls[0][0][1].endswith('hero-distillation-action-evaluate.py'))
             self.assertEqual('prepare', calls[0][0][2])
             self.assertEqual(['base', 'lora'], [calls[1][0][-1], calls[2][0][-1]])
             self.assertTrue(calls[3][0][1].endswith('hero-distillation-action-e2e.py'))
+            self.assertTrue(calls[4][0][1].endswith('hero-distillation-action-report.py'))
+            self.assertTrue(result['reportPath'].endswith('e2e-report.html'))
             receipt = Path(result['workflowDirectory']) / 'state.json'
             self.assertEqual('completed', json.loads(receipt.read_text())['status'])
             self.assertFalse(json.loads((receipt.parent / 'manifest.json').read_text())['automaticRetry'])

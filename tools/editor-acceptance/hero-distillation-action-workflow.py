@@ -19,6 +19,7 @@ import time
 SCRIPT = Path(__file__).resolve()
 EVALUATE = SCRIPT.with_name('hero-distillation-action-evaluate.py')
 E2E = SCRIPT.with_name('hero-distillation-action-e2e.py')
+REPORT = SCRIPT.with_name('hero-distillation-action-report.py')
 
 
 def digest(path):
@@ -72,8 +73,8 @@ def run(options, execute=command):
     assert not workflow.exists(), 'WORKFLOW_RECEIPT_EXISTS'
     workflow.mkdir(parents=True)
     (workflow / 'source').mkdir()
-    sources = {path.name: digest(path) for path in [SCRIPT, EVALUATE, E2E]}
-    for path in [SCRIPT, EVALUATE, E2E]:
+    sources = {path.name: digest(path) for path in [SCRIPT, EVALUATE, E2E, REPORT]}
+    for path in [SCRIPT, EVALUATE, E2E, REPORT]:
         shutil.copyfile(path, workflow / 'source' / path.name)
     manifest = {
         'schema': 'ggd-action-evaluation-workflow@1',
@@ -82,7 +83,7 @@ def run(options, execute=command):
         'modelBindingsDirectory': str(models), 'dependenciesDirectory': str(dependencies),
         'apiDependenciesDirectory': str(api_dependencies), 'assetRoots': list(map(str, roots)),
         'nodeBinary': node,
-        'fixedSteps': ['prepare', 'base', 'lora', 'compile-package-import-readback'],
+        'fixedSteps': ['prepare', 'base', 'lora', 'compile-package-import-readback', 'render-evidence-report'],
         'automaticRetry': False, 'humanRepairsAllowed': False,
         'modelPromoted': False, 'fullHeroE2EProven': False,
         'note': 'Internal dev seen regression only; this workflow cannot establish unseen generalization or gameplay.',
@@ -111,6 +112,11 @@ def run(options, execute=command):
         for root in roots:
             e2e_argv.extend(['--asset-root', str(root)])
         step('compile-package-import-readback', e2e_argv)
+        report_out = root / (e2e_out.name + '-report.html')
+        assert not report_out.exists(), 'REPORT_REFUSE_OVERWRITE'
+        step('render-evidence-report', [sys.executable, str(REPORT), '--training', str(training),
+                                        '--evaluation', str(evaluation), '--e2e', str(e2e_out),
+                                        '--out', str(report_out)])
         state['status'] = 'completed'
     except BaseException as error:
         state.update(status='stopped-or-failed', error=repr(error))
@@ -121,6 +127,7 @@ def run(options, execute=command):
         state['finishedAt'] = time.time(); write(workflow / 'state.json', state)
     return {'workflowDirectory': str(workflow), 'status': state['status'],
             'evaluationDirectory': str(evaluation), 'e2eDirectory': str(e2e_out),
+            'reportPath': str(root / (e2e_out.name + '-report.html')),
             'modelPromoted': False, 'fullHeroE2EProven': False}
 
 
