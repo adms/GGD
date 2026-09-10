@@ -56,46 +56,46 @@
     }
   },
   "population": {
-    "glbFiles": 508,
-    "animatedModels": 351,
+    "glbFiles": 538,
+    "animatedModels": 381,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 267,
-      "pct": 76.1
+      "models": 293,
+      "pct": 76.9
     },
     "cast": {
-      "models": 230,
-      "pct": 65.5
+      "models": 243,
+      "pct": 63.8
     },
     "celebrate": {
-      "models": 17,
-      "pct": 4.8
+      "models": 18,
+      "pct": 4.7
     },
     "death": {
-      "models": 290,
-      "pct": 82.6
+      "models": 306,
+      "pct": 80.3
     },
     "dodge": {
-      "models": 257,
-      "pct": 73.2
+      "models": 273,
+      "pct": 71.7
     },
     "guard": {
       "models": 6,
-      "pct": 1.7
+      "pct": 1.6
     },
     "hurt": {
       "models": 33,
-      "pct": 9.4
+      "pct": 8.7
     },
     "idle": {
-      "models": 330,
+      "models": 358,
       "pct": 94
     },
     "run": {
-      "models": 268,
-      "pct": 76.4
+      "models": 298,
+      "pct": 78.2
     }
   },
   "degradesTo": "idle",
@@ -143,6 +143,135 @@
     "content/assets/models/champions/voxel-placeholder.sanji.glb": [
       "dodge",
       "guard"
+    ],
+    "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/0ee1fcac10c24ce171186e192bf491a836980632e14dcb166917509c7e06c99e.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/11408a6a43c57f4905a0bb5175b824733aab0c1bf2625db4e08667438b8caaa4.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle"
+    ],
+    "content/assets/models/community/30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/4a3a7ca9bdbf6181e5be31e7ac645bb92d564d0e95a3b0bb5bfacac87db002ea.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/724fd97d0a808efe71d9d35023d19ca146988a817f4a848b25b0349df2a841ed.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle"
+    ],
+    "content/assets/models/community/e1e32ccdaace62784a340a57089ecab1b229c78aab7fb79259a187b7b84e8497.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/e22f6ef3cf9273e90c3a64c24725738ea2520c5918c60bb7f065882a2f26cd78.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/eafbcc61633f853566a1517ae5fea6f495465425b24749ceb9da259407122070.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/f3c310011262f6a18bdf8ceb86d08b228695d949f8e32db1ca48fe2e0e1f4604.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/fb40119b3d1dd96bb0af8374f69c028577093f8fbc2111ea8d4da1653b80a397.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/guardians/guardian_beast-mid.glb": [
       "cast",
@@ -1874,9 +2003,18 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_312479.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_313646.glb": [
       "celebrate",
       "guard"
+    ],
+    "content/assets/models/ou99/ou99_452782.glb": [
+      "guard",
+      "hurt"
     ],
     "content/assets/models/ou99/ou99_453949.glb": [
       "celebrate",
@@ -1884,6 +2022,11 @@
       "hurt"
     ],
     "content/assets/models/ou99/ou99_454482.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_455144.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -1949,6 +2092,11 @@
       "celebrate",
       "guard"
     ],
+    "content/assets/models/ou99/ou99_466278.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_467227.glb": [
       "celebrate",
       "death",
@@ -1963,6 +2111,12 @@
     "content/assets/models/ou99/ou99_470087.glb": [
       "celebrate",
       "guard"
+    ],
+    "content/assets/models/ou99/ou99_470351.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/ou99/ou99_470426.glb": [
       "celebrate",
@@ -1984,6 +2138,11 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_472273.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_473324.glb": [
       "celebrate",
       "guard",
@@ -1999,12 +2158,28 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_480489.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_481732.glb": [
       "celebrate",
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_485012.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_487191.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_487482.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -2039,12 +2214,32 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_493659.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_494307.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_495015.glb": [
       "celebrate",
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_495309.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_496452.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_496746.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -2065,6 +2260,11 @@
       "hurt"
     ],
     "content/assets/models/ou99/ou99_498214.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_498407.glb": [
       "celebrate",
       "guard",
       "hurt"

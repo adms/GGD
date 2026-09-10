@@ -100,8 +100,8 @@ import {
   type VisualAcceptanceMachineIssue,
 } from "./visualAcceptanceIssues";
 import {
-  SKILL_ACCEPTANCE_CANDIDATES,
-  SKILL_ACCEPTANCE_THEME_IDS,
+  SKILL_VISUAL_ACCEPTANCE_CANDIDATES,
+  SKILL_VISUAL_ACCEPTANCE_THEME_IDS,
   skillAcceptanceThemeId,
 } from "../forge/skillAcceptanceCatalog";
 import { normalizeLoopbackProofSink, proofSinkFromSearch } from "./proofAutomation";
@@ -272,12 +272,12 @@ export function VfxForgePage() {
     const params = new URLSearchParams(globalThis.location.search);
     if (params.get("qa") !== "accept-46") return null;
     const ids = new Set((params.get("ids") ?? "").split(",").map((id) => id.trim()).filter(Boolean));
-    return ids.size > 0 ? ids : new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
+    return ids.size > 0 ? ids : new Set(SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
   })());
   const previewRef = useRef<VfxForgePreviewHandle>(null);
   const basicVisualBatchTargetCount = basicVisualBatch.queue.length > 0
     ? basicVisualBatch.queue.length
-    : basicVisualBatchAutoRequest.current?.size ?? SKILL_ACCEPTANCE_CANDIDATES.length;
+    : basicVisualBatchAutoRequest.current?.size ?? SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length;
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
   const previewContent = useQuery({
@@ -812,7 +812,7 @@ export function VfxForgePage() {
         setBasicVisualSceneRevision((current) => current + 1);
         setBasicVisualBatch((current) => {
           const catalogIndex = current.queue[current.position];
-          if (!current.running || catalogIndex === undefined || SKILL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
+          if (!current.running || catalogIndex === undefined || SKILL_VISUAL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
             return current;
           }
           return { ...current, phase: "loading" };
@@ -825,11 +825,11 @@ export function VfxForgePage() {
       // A stale completion must neither clear the next case's busy latch nor
       // advance its cursor; dropping it is safer than racing two WebGL audits.
       const catalogIndex = current.queue[current.position];
-      if (!current.running || catalogIndex === undefined || SKILL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
+      if (!current.running || catalogIndex === undefined || SKILL_VISUAL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
         return current;
       }
       basicVisualBatchBusy.current = false;
-      const order = new Map(SKILL_ACCEPTANCE_CANDIDATES.map((row, index) => [row.id, index] as const));
+      const order = new Map(SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((row, index) => [row.id, index] as const));
       const results = [...current.results.filter((row) => row.id !== normalized.id), normalized]
         .sort((a, b) => (order.get(a.id) ?? 999) - (order.get(b.id) ?? 999));
       const nextPosition = current.position + 1;
@@ -840,7 +840,7 @@ export function VfxForgePage() {
   }, []);
 
   const startBasicVisualBatch = (ids: ReadonlySet<string> | null = null): void => {
-    const queue = SKILL_ACCEPTANCE_CANDIDATES.flatMap((row, index) =>
+    const queue = SKILL_VISUAL_ACCEPTANCE_CANDIDATES.flatMap((row, index) =>
       ids === null || ids.has(row.id) ? [index] : [],
     );
     if (queue.length === 0) {
@@ -863,7 +863,7 @@ export function VfxForgePage() {
   };
 
   const retryBasicVisualCases = (ids: ReadonlySet<string>, message: string): void => {
-    const queue = SKILL_ACCEPTANCE_CANDIDATES.flatMap((row, index) => ids.has(row.id) ? [index] : []);
+    const queue = SKILL_VISUAL_ACCEPTANCE_CANDIDATES.flatMap((row, index) => ids.has(row.id) ? [index] : []);
     if (queue.length === 0) return;
     basicVisualBatchBusy.current = false;
     for (const id of ids) {
@@ -909,7 +909,7 @@ export function VfxForgePage() {
   useEffect(() => {
     if (!basicVisualBatch.running || basicVisualBatchBusy.current) return;
     const catalogIndex = basicVisualBatch.queue[basicVisualBatch.position];
-    const row = catalogIndex === undefined ? undefined : SKILL_ACCEPTANCE_CANDIDATES[catalogIndex];
+    const row = catalogIndex === undefined ? undefined : SKILL_VISUAL_ACCEPTANCE_CANDIDATES[catalogIndex];
     if (!row) return;
     if (abilityId !== row.id) {
       setAbilityInput(row.id);
@@ -1121,7 +1121,7 @@ export function VfxForgePage() {
   useEffect(() => {
     if (!basicVisualBatch.running) return;
     const catalogIndex = basicVisualBatch.queue[basicVisualBatch.position];
-    const row = catalogIndex === undefined ? undefined : SKILL_ACCEPTANCE_CANDIDATES[catalogIndex];
+    const row = catalogIndex === undefined ? undefined : SKILL_VISUAL_ACCEPTANCE_CANDIDATES[catalogIndex];
     if (!row) return;
     const timer = globalThis.setTimeout(() => {
       if (basicVisualBatchBusy.current) return;
@@ -1135,7 +1135,7 @@ export function VfxForgePage() {
   }, [basicVisualBatch.position, basicVisualBatch.queue, basicVisualBatch.running, finishBasicVisualCase]);
 
   useEffect(() => {
-    const apiState = { ...basicVisualBatch, themes: SKILL_ACCEPTANCE_THEME_IDS.size, documents: SKILL_ACCEPTANCE_CANDIDATES.length };
+    const apiState = { ...basicVisualBatch, themes: SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size, documents: SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length };
     (globalThis as typeof globalThis & { __GGD_SKILL_VISUAL_ACCEPTANCE__?: typeof apiState })
       .__GGD_SKILL_VISUAL_ACCEPTANCE__ = apiState;
   }, [basicVisualBatch]);
@@ -1167,7 +1167,7 @@ export function VfxForgePage() {
 
   const basicVisualExportPayload = useMemo(() => {
     const caseIds = new Set(basicVisualBatch.results.map((row) => row.id));
-    const themes = new Set(SKILL_ACCEPTANCE_CANDIDATES
+    const themes = new Set(SKILL_VISUAL_ACCEPTANCE_CANDIDATES
       .filter((row) => caseIds.has(row.id))
       .map(skillAcceptanceThemeId));
     return {
@@ -1208,8 +1208,8 @@ export function VfxForgePage() {
       });
       if (!response.ok) throw new Error(`${response.status} ${await response.text()}`);
       setStatus(
-        basicVisualExportPayload.cases.length === SKILL_ACCEPTANCE_CANDIDATES.length
-          ? `${SKILL_ACCEPTANCE_CANDIDATES.length} 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器`
+        basicVisualExportPayload.cases.length === SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length
+          ? `${SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length} 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器`
           : `${basicVisualExportPayload.cases.length} 份聚焦 framebuffer 證據已寫入一次性本機驗收器`,
       );
     } catch (error) {
@@ -1366,14 +1366,14 @@ export function VfxForgePage() {
 
       <details className="vfx-basic-batch" open>
         <summary>
-          {SKILL_ACCEPTANCE_THEME_IDS.size} 主題／{SKILL_ACCEPTANCE_CANDIDATES.length} 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{basicVisualBatchTargetCount}
+          {SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size} 主題／{SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length} 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{basicVisualBatchTargetCount}
           {basicVisualBatch.results.length === basicVisualBatchTargetCount
             ? ` · 肉眼 ${basicVisualBatch.results.filter((row) => row.status === "captured" && row.humanVerdict !== "pending" && row.humanScore !== null && row.humanNote.trim().length > 0).length}/${basicVisualBatch.results.filter((row) => row.status === "captured").length}`
             : ""}
         </summary>
         <p>一鍵逐支載入真 Sim、以安全積木組裝可編輯基線、掃完整時間軸底板並擷取 framebuffer。顏色、方向、形狀、大小與物理意義等明顯大錯由 Editor 重做；亮度、密度、數幀節奏、鏡頭手感等細修交人工。自動衛生檢查不會代替人工看圖。</p>
         <div>
-          <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 {SKILL_ACCEPTANCE_CANDIDATES.length} 份</button>
+          <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 {SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length} 份</button>
           <button
             type="button"
             disabled={basicVisualBatch.running || !basicVisualBatch.results.some((row) => row.status === "failed")}

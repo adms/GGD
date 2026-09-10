@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import type { AbilityDef } from "@ggd/shared/sim";
-import { SKILL_ACCEPTANCE_CANDIDATES } from "../forge/skillAcceptanceCatalog";
+import { SKILL_VISUAL_ACCEPTANCE_CANDIDATES } from "../forge/skillAcceptanceCatalog";
 import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
 import {
   basicVisualProofRoute,
@@ -19,7 +19,7 @@ const ability = (id: string) => JSON.parse(
 
 describe("43 主題／47 技能的基本視覺自動組裝", () => {
   it("逐支產生可編輯基線，或精確回報缺少的真事件；永遠不拿假 cast 代替被動", () => {
-    const results = SKILL_ACCEPTANCE_CANDIDATES.map((row) => ({
+    const results = SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((row) => ({
       id: row.id,
       ability: ability(row.id),
       result: buildBasicVisualDraft(ability(row.id)),

@@ -239,7 +239,7 @@ export function ForgeGallery({
 
 function AcceptanceCatalog() {
   const owner = SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "owner-union");
-  const coverage = SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "runtime-coverage");
+  const coverage = SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group !== "owner-union");
   const capabilityOnly = [
     ...CAPABILITY_ONLY_EFFECT_KINDS.map((id) => `effect:${id}`),
     ...CAPABILITY_ONLY_HOOK_EVENTS.map((id) => `hook:${id}`),

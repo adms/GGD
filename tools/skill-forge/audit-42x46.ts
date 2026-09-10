@@ -12,8 +12,8 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  SKILL_ACCEPTANCE_CANDIDATES,
-  SKILL_ACCEPTANCE_THEME_IDS,
+  SKILL_VISUAL_ACCEPTANCE_CANDIDATES,
+  SKILL_VISUAL_ACCEPTANCE_THEME_IDS,
   STRICT_VISUAL_ACCEPTANCE,
   STRICT_VISUAL_ACCEPTANCE_IDS,
   skillAcceptanceThemeId,
@@ -74,7 +74,7 @@ const conditionVocabulary = new Set(capabilities.conditionLeafKinds);
 const presetById = new Map(SKILL_TYPE_PRESETS.map((preset) => [preset.id, preset] as const));
 const proofById = visualProofById();
 
-const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
+const rows = SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   const doc = json<AbilityDoc>(`content/abilities/${candidate.id}.json`);
   const surface = vocabularySurface(doc);
   const templateRefs = [
@@ -83,7 +83,7 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   ];
   const inheritedPreset = candidate.forgeTypeId ?? (
     candidate.mirrorOf
-      ? SKILL_ACCEPTANCE_CANDIDATES.find((row) => row.id === candidate.mirrorOf)?.forgeTypeId
+      ? SKILL_VISUAL_ACCEPTANCE_CANDIDATES.find((row) => row.id === candidate.mirrorOf)?.forgeTypeId
       : undefined
   );
   const preset = inheritedPreset ? presetById.get(inheritedPreset) : undefined;
@@ -198,7 +198,7 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
 });
 
 const summary = {
-  themes: SKILL_ACCEPTANCE_THEME_IDS.size,
+  themes: SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size,
   documents: rows.length,
   ownerUnion: rows.filter((row) => row.group === "owner-union").length,
   runtimeCoverage: rows.filter((row) => row.group === "runtime-coverage").length,

@@ -11,8 +11,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  SKILL_ACCEPTANCE_CANDIDATES,
-  SKILL_ACCEPTANCE_THEME_IDS,
+  SKILL_VISUAL_ACCEPTANCE_CANDIDATES,
+  SKILL_VISUAL_ACCEPTANCE_THEME_IDS,
 } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
 import type { VisualAcceptanceMachineIssue } from "../../apps/editor/src/vfx-forge/visualAcceptanceIssues";
 import type { BackdropTimelineAudit } from "../../apps/editor/src/vfx-forge/VfxForgeStage";
@@ -36,9 +36,9 @@ const source = (selfTest ? {
   schema: "ggd-editor-basic-visual-proof@1",
   issueClassifier: "ggd-editor-visual-issue-rules@1",
   generatedAt: "self-test",
-  themes: SKILL_ACCEPTANCE_THEME_IDS.size,
-  documents: SKILL_ACCEPTANCE_CANDIDATES.length,
-  cases: SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => ({
+  themes: SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size,
+  documents: SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length,
+  cases: SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((candidate) => ({
     id: candidate.id,
     name: candidate.name,
     status: "blocked",
@@ -60,7 +60,7 @@ if (source.schema !== "ggd-editor-basic-visual-proof@1") fail(`unexpected schema
 if (source.issueClassifier !== "ggd-editor-visual-issue-rules@1") {
   fail(`unexpected issue classifier: ${String(source.issueClassifier)}`);
 }
-if (source.themes !== SKILL_ACCEPTANCE_THEME_IDS.size || source.documents !== SKILL_ACCEPTANCE_CANDIDATES.length) {
+if (source.themes !== SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size || source.documents !== SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length) {
   fail(`scope mismatch: ${String(source.themes)} themes / ${String(source.documents)} documents`);
 }
 if (!Array.isArray(source.cases)) fail("cases must be an array");
@@ -74,7 +74,7 @@ for (const value of source.cases) {
   if (byId.has(id)) fail(`duplicate case id: ${id}`);
   byId.set(id, row);
 }
-const expected = new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
+const expected = new Set(SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
 const missing = [...expected].filter((id) => !byId.has(id));
 const extra = [...byId.keys()].filter((id) => !expected.has(id));
 if (missing.length || extra.length || byId.size !== expected.size) {
@@ -82,7 +82,7 @@ if (missing.length || extra.length || byId.size !== expected.size) {
 }
 
 if (!checkOnly && !selfTest) mkdirSync(FRAME_DIR, { recursive: true });
-const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
+const cases = SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   const row = byId.get(candidate.id)!;
   const status = row.status;
   if (status !== "captured" && status !== "blocked" && status !== "failed") {
@@ -183,8 +183,8 @@ const manifest = {
   sourceFile: inputPath ? basename(inputPath) : "self-test",
   sourceGeneratedAt: typeof source.generatedAt === "string" ? source.generatedAt : null,
   importedAt: taipeiMinute(),
-  themes: SKILL_ACCEPTANCE_THEME_IDS.size,
-  documents: SKILL_ACCEPTANCE_CANDIDATES.length,
+  themes: SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size,
+  documents: SKILL_VISUAL_ACCEPTANCE_CANDIDATES.length,
   summary: {
     captured: cases.filter((row) => row.status === "captured").length,
     blocked: cases.filter((row) => row.status === "blocked").length,
