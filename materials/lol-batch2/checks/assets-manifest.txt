@@ -1,5 +1,0 @@
-Command: pnpm assets:manifest:check
-Exit: 0
-assets:manifest:check OK
-
-The first sandbox attempt was blocked by tsx IPC socket EPERM. The same command passed after permission escalation.

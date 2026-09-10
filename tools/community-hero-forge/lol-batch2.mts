@@ -12,10 +12,17 @@ const root = resolve(import.meta.dirname, "../..");
 const check = process.argv.includes("--check");
 const catalog = shippedHeroCatalog();
 const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
-const out = resolve(root, "materials/lol-batch2");
+const outArg = process.argv.indexOf("--out");
+if (outArg !== -1 && !process.argv[outArg + 1]) throw new Error("--out requires a directory");
+const out = resolve(outArg === -1 ? resolve(root, "outputs/lol-batch2-authoring") : process.argv[outArg + 1]);
+const versionFile = resolve(root, "docs/community-hero-forge/lol-batch2/authoring-manifest.json");
 const write = (relative: string, value: unknown) => {
-  const path = resolve(out, relative), text = JSON.stringify(value, null, 2) + "\n";
+  const manifest = relative === "authoring-manifest.json";
+  const path = manifest ? versionFile : resolve(out, relative), text = JSON.stringify(value, null, 2) + "\n";
   if (check) {
+    // Candidate project/draft bytes are represented by the committed version
+    // manifest; preparation artifacts stay local/S3, and need not exist in a clone.
+    if (!manifest) return;
     if (!existsSync(path) || readFileSync(path, "utf8") !== text) throw new Error(`候選來源已更新，需重建：${relative}`);
   } else { mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, text); }
 };
@@ -27,7 +34,7 @@ const rows = COMMUNITY_LOL_BATCH2_EXAMPLES.map((recipe) => {
   draft.updatedAt = 0; // Stable distributable authoring snapshot, not a user's last-edit timestamp.
   write(`drafts/${projectId}.json`, draft);
   return { id: projectId, name: recipe.name, revision: project.revision, projectSha256: contentSha256(project),
-    slots: Object.keys(recipe.moves), sourceUrl: recipe.sourceUrl,
+    draftSha256: contentSha256(draft), slots: Object.keys(recipe.moves), sourceUrl: recipe.sourceUrl,
     templateVersions: Object.keys(project.acceptedPlan!.templateVersions ?? {}) };
 });
 if (rows.length !== 11 || rows.reduce((n, row) => n + row.slots.length, 0) !== 66) throw new Error("第四批名單必須為 11 名／66 槽");

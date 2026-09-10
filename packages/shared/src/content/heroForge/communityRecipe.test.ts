@@ -4,6 +4,7 @@ import type { TemplateDoc } from "../schema/template";
 import type { VfxSubtypeDoc } from "../schema/vfxSubtype";
 import { COMMUNITY_HERO_EXAMPLES, createCommunityHeroRecipe, type CommunityHeroExample } from "./communityExamples";
 import { COMMUNITY_ACQUIRED_HEROES } from "./communityAcquired";
+import { COMMUNITY_LOL_BATCH2_EXAMPLES } from "./communityLolBatch2";
 import { HERO_SLOTS } from "./constants";
 import { compileGeneratedHeroDraft, generateHeroDraft } from "./generator";
 
@@ -109,5 +110,28 @@ describe("community recipe factory", () => {
     }
     expect(failures, JSON.stringify(failures, null, 2)).toEqual([]);
     expect(slots).toBe(COMMUNITY_ACQUIRED_HEROES.length * 6);
+  });
+
+  it("compiles all eleven LoL batch-two recipes and 66 slots with real Editor UUID-length project identities", () => {
+    const configs = [...catalog.documents].filter(([key]) => key.startsWith("config/")).map(([, doc]) => doc);
+    const subtypes = [...catalog.documents].filter(([key]) => key.startsWith("vfx-subtypes/")).map(([, doc]) => doc as VfxSubtypeDoc);
+    const failures: unknown[] = [];
+    let slots = 0;
+    for (const [index, source] of COMMUNITY_LOL_BATCH2_EXAMPLES.entries()) {
+      const projectId = `hero-12345678-1234-4234-8234-${String(index + 1).padStart(12, "0")}`;
+      expect(projectId).toHaveLength(41);
+      try {
+        const project = createCommunityHeroRecipe(source, projectId, templates);
+        const generated = generateHeroDraft(project.acceptedPlan!, { heroId: projectId, heroName: project.brief.name, presentation: project.presentation });
+        const result = compileGeneratedHeroDraft(generated, templates, configs, subtypes);
+        if (!result.ok) failures.push(...result.failures.map((failure) => ({ hero: source.id, ...failure })));
+        else for (const slot of HERO_SLOTS) {
+          expect(result.draft.abilityDrafts[slot].id).toBe(`${projectId}.${slot.toLowerCase()}`);
+          slots++;
+        }
+      } catch (error) { failures.push({ hero: source.id, phase: "project-or-generation", message: String(error) }); }
+    }
+    expect(failures, JSON.stringify(failures, null, 2)).toEqual([]);
+    expect(slots).toBe(COMMUNITY_LOL_BATCH2_EXAMPLES.length * 6);
   });
 });

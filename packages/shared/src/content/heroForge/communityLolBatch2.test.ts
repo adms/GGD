@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { shippedHeroCatalog } from "../../../testkit/heroPackageFixture";
 import { TICK_HZ } from "../../constants";
-import { asSeatId, asTeamId } from "../../ids";
+import { asSeatId, asTeamId, type ChampionId } from "../../ids";
 import { Abilities, SimWorld, rankUpAbility, registerChampion, spawnChampion, type IntentFrame, type SimEvent } from "../../sim";
 import { extendRegistryContext, withRegistryContext } from "../../sim/content/registryContext";
 import type { TemplateDoc } from "../schema/template";
@@ -63,7 +63,7 @@ describe("LoL batch 2 candidate recipes", () => {
       world.combatActive = true;
       const center = baseline.arena.zones[0]!.center;
       const caster = spawnChampion(world, { championId: draft.champion.id, seatId: asSeatId(0), teamId: asTeamId(0), pos: { ...center }, zone: 0, level: 18 });
-      const foe = spawnChampion(world, { championId: "thorne", seatId: asSeatId(1), teamId: asTeamId(1), pos: { x: center.x + 1, z: center.z }, zone: 0, level: 18 });
+      const foe = spawnChampion(world, { championId: "thorne" as ChampionId, seatId: asSeatId(1), teamId: asTeamId(1), pos: { x: center.x + 1, z: center.z }, zone: 0, level: 18 });
       world.step(new Map());
       expect(rankUpAbility(world, caster, "E")).toBe(true);
       expect(rankUpAbility(world, foe, "W")).toBe(true);

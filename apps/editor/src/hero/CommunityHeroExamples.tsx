@@ -34,5 +34,19 @@ export function CommunityHeroExamples({ onOpen }: { onOpen(draft: LocalDraft): v
       </details>
       <button type="button" disabled={pending !== null} onClick={() => void create(example)}>{pending === example.id ? "正在保存…" : `建立${example.inspiration}改編作品`}</button>
     </li>)}</ul>
-  </section><AcquiredHeroExamples onOpen={onOpen} /></>;
+  </section>
+  <AcquiredHeroExamples onOpen={onOpen} />
+  <section className="community-hero-examples" aria-label="LoL 第四批可編輯草稿候選">
+    <h2>LoL 第四批・11 名可編輯草稿候選</h2>
+    <p>建立獨立本機草稿後可繼續編輯與備份；發布狀態依服務端審查結果為準。</p>
+    {!COMMUNITY_LOL_BATCH2_RELEASE_READY ? <p role="note"><strong>核心機制相依尚待 Main。</strong>各角色目前的簡化與待補項目列在下方，仍可建立並送審現有版本。</p> : null}
+    <ul className="draft-cards">{COMMUNITY_LOL_BATCH2_EXAMPLES.map((example) => <li key={example.id}>
+      <h3>{example.name}</h3><p>{example.summary}</p>
+      <p><strong>目前改編差異與待完成項目</strong></p>
+      <ul>{example.adaptations.map((text) => <li key={text}>{text}</li>)}</ul>
+      <a href={example.sourceUrl} target="_blank" rel="noreferrer">角色概念來源</a>
+      {example.modelKey && !catalog.modelIds.includes(example.modelKey) ? <p role="note">此草稿引用的模型目前不在可用目錄；建立草稿會保留原引用，需待模型可用後才能完成模型檢查。</p> : null}
+      <button type="button" disabled={pending !== null} onClick={() => void create(example)}>{pending === example.id ? "正在保存…" : `建立${example.inspiration}改編作品`}</button>
+    </li>)}</ul>
+  </section></>;
 }

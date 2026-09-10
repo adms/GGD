@@ -4,7 +4,7 @@
   "releaseReady": false,
   "source": "packages/shared/src/content/heroForge/communityLolBatch2.ts",
   "generator": "tools/community-hero-forge/lol-batch2.mts",
-  "recipeSha256": "sha256:20ed31822521229741842f3e4d771c3be991560e85616d88125cc475195dfc8a",
+  "recipeSha256": "sha256:e4d74e5876afa72bcb6093dc5ab78563a9faca207050675087bba67fdef1ea4a",
   "status": "candidate; source-critical mechanics pending Main",
   "serviceImported": false,
   "published": false,
@@ -13,7 +13,8 @@
       "id": "lol-sett",
       "name": "賽特",
       "revision": 1,
-      "projectSha256": "sha256:1c2302bd14681a7ee4132155f7142096e6f6aa811884e21e35b67661064d0110",
+      "projectSha256": "sha256:fe2ded3de6b2c57f90267130129b46501c951bd0c0ca57401b795297f61e6252",
+      "draftSha256": "sha256:9d45bc06d247ccf9f7be0e15d2e96c3718741f7f72a92e8aad313b53c493df1f",
       "slots": [
         "PASSIVE",
         "Q",
@@ -32,7 +33,8 @@
       "id": "lol-fiddlesticks",
       "name": "稻草人",
       "revision": 1,
-      "projectSha256": "sha256:f5ecc6cf80f1a73785b57b2637d5a33a39dc678e33380cb90e28abbb6bf426a2",
+      "projectSha256": "sha256:ab40c953cd65466d4c22ccef2aae04b69958142a9a8f7225105882917e99cd86",
+      "draftSha256": "sha256:bc1ef23109827c6dcb91b4e42dd617033b9b3c05137ac515772e3f9ef48b45ae",
       "slots": [
         "PASSIVE",
         "Q",
@@ -53,7 +55,8 @@
       "id": "lol-ornn",
       "name": "鄂爾",
       "revision": 1,
-      "projectSha256": "sha256:1b2d48a6a66e7b8f903017f645925c7b6f4efec26a12cd742c17a8c7fdaf9445",
+      "projectSha256": "sha256:6031835d769eaba51a882c951456b14fb310848baeee01608ac1d1e2fc531093",
+      "draftSha256": "sha256:3ab8c2752b99137aaa5d82c186869a1686306e0cdc97f45c719991108526fe81",
       "slots": [
         "PASSIVE",
         "Q",
@@ -74,7 +77,8 @@
       "id": "lol-chogath",
       "name": "科加斯",
       "revision": 1,
-      "projectSha256": "sha256:90c1fbbeecdc80b0acb2341809a562a16ef7f70e8a8a281fc5c57f393965329b",
+      "projectSha256": "sha256:28b90cd15935e98871b9a9bc6f2bb0e495a4209704036770d1808cdcf1f2140c",
+      "draftSha256": "sha256:cc2fc237c25fb94c41e15e8529398097b29a14b723aa172cb673b7a4b1137b26",
       "slots": [
         "PASSIVE",
         "Q",
@@ -93,7 +97,8 @@
       "id": "lol-ashe",
       "name": "艾希",
       "revision": 1,
-      "projectSha256": "sha256:ae02bc409d2df4a4b1e4b08211725af7c0988d29e29de42d63bd9f1daaa1d68f",
+      "projectSha256": "sha256:f48a3e612b9f7e580d05f69d4abb399640adf88d9dbcc2e79de4293b8e66d3f2",
+      "draftSha256": "sha256:eb97bbe4c20d8c089053c519ed0c70c00613ced577fe5fdf4eeaa3eb98f60d07",
       "slots": [
         "PASSIVE",
         "Q",
@@ -113,7 +118,8 @@
       "id": "lol-blitzcrank",
       "name": "布里姿",
       "revision": 1,
-      "projectSha256": "sha256:c88ed97f3aadf6ef85f9a6f54ddc26f06009f3dd48ed9e467838906016bfdf20",
+      "projectSha256": "sha256:63fac4335d547fccfed669a5fe5ad384bf016f61e1e7ad471efe348599cc110e",
+      "draftSha256": "sha256:50287604c4abbd14b4ea84d41cc82a78238c43ac20713382212186b2957fbe52",
       "slots": [
         "PASSIVE",
         "Q",
@@ -132,7 +138,8 @@
       "id": "lol-ahri",
       "name": "阿璃",
       "revision": 1,
-      "projectSha256": "sha256:09aab6139665d0228ee138d182c18f67f051136086bcd7d74c5d4906a2c783e0",
+      "projectSha256": "sha256:ae8029e75ab2e07440f15fb53eb950ef4ada129c7a9e59b98366186cb0713212",
+      "draftSha256": "sha256:7c5cbc6a28174c7237ce28fde1e48f4ad23c847baf302d9535c84810e44496c8",
       "slots": [
         "PASSIVE",
         "Q",
@@ -151,7 +158,8 @@
       "id": "lol-thresh",
       "name": "瑟雷西",
       "revision": 1,
-      "projectSha256": "sha256:91655ba922582089ae5cc3149b2acf70daf076fb3133c9b25a38dd5281ac4f6c",
+      "projectSha256": "sha256:d9d68f7c55ba3e5c2dcbaac1f49dbf8286325cd9eac24f7e41338c49c1d14150",
+      "draftSha256": "sha256:38a2976fc09f453fc4b0a36e73ba12c62d0a57ff0a9c2dfef60fc6bcadca047d",
       "slots": [
         "PASSIVE",
         "Q",
@@ -171,7 +179,8 @@
       "id": "lol-velkoz",
       "name": "威寇茲",
       "revision": 1,
-      "projectSha256": "sha256:e9610799628739f15234e5ecef88533a6a9126c715039e0d915ad2354ccbf0b1",
+      "projectSha256": "sha256:40d0c9a26cfd046ab15e91f151e8a053f35e66a4424de5841a15cd3f16d7baed",
+      "draftSha256": "sha256:a38f805496b233a72a1b82d6ce7278bb64611df92a144012f1d41f3c39055dd0",
       "slots": [
         "PASSIVE",
         "Q",
@@ -191,7 +200,8 @@
       "id": "lol-malphite",
       "name": "墨菲特",
       "revision": 1,
-      "projectSha256": "sha256:2790625ae2be4b22adddb93a4f3484be3da0e65650c56733fc10e0540c5e1b9b",
+      "projectSha256": "sha256:caff8607853921419fb858a3dce32ad0853957c37aa179443a1890b3c536bdba",
+      "draftSha256": "sha256:8ba3b27ee6911708b0d56ae946d5a322ebdacb45967b13d05e69f8fae2555222",
       "slots": [
         "PASSIVE",
         "Q",
@@ -210,7 +220,8 @@
       "id": "lol-garen",
       "name": "蓋倫",
       "revision": 1,
-      "projectSha256": "sha256:314483d025ac1897967aad4b583a6e16f2dbe92060b6c24225e1f3522c2847b9",
+      "projectSha256": "sha256:10b3893100054b9fac26cc0dd76a5e58f3b3e8900386d01bdca83bf8caa4e83d",
+      "draftSha256": "sha256:ff5bc2d23aa4832a268a03c1fd70d9187daf860bda2575ef580484ebea816908",
       "slots": [
         "PASSIVE",
         "Q",
