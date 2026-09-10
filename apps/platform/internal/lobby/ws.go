@@ -130,6 +130,35 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 	// lobby socket on the clock. See httpx.ClearDeadlines.
 	httpx.ClearDeadlines(w)
 
+	// ⛔⛔ GH#1213 —— **訂閱要在握手回覆之前完成**，⛔ 不是之後。
+	//
+	// 在此之前順序是 `websocket.Accept` → `hub.register`，⭐ 而 `Accept` 一寫出 101 回應，
+	// 客戶端的 `Dial` 就返回了 ⇒ **中間有一個窗口：客戶端以為連上了，而 hub 還不認得它**。
+	// 這段時間推的每一則（邀請／集合／好友上線）都推到空氣裡 —— ⛔ 沒有任何東西會報錯。
+	//
+	// 📏 量到的（2026-09-11）：`TestInvitePush` 在 CI 上間歇死在 **30.11s**，⭐ 正好是
+	// `WSWait` 的**整個**上限 ⇒ 訊息從頭到尾沒來（⛔ 不是「來得慢」——來得慢會是 5.1x 秒那種數字）。
+	// ⚠️ 而它已經被「拉長逾時」修過兩次（GH#979：5s→30s、撥號期限與連線期限分開）
+	// ⇒ ⭐ 那兩次都在治症狀：**再長的逾時也等不到一則沒有被送出的訊息**。
+	//
+	// ⭐ `register` 不需要 `conn`（它只要 `out`／`closed` 兩個 channel）⇒ 提前它零成本，
+	// 而 `out` 有 64 的緩衝 ⇒ 握手期間到的訊息會排隊，等 writer goroutine 起來就送出去。
+	// ⛔ 這**不是**協定變更：線上格式一個位元組都沒動。
+	c := &client{
+		accountID: ident.AccountID,
+		username:  ident.Username,
+		out:       make(chan []byte, 64),
+		closed:    make(chan struct{}),
+	}
+	evicted := s.hub.register(c)
+	registered := true
+	defer func() {
+		// 握手失敗時要把自己收回去，⛔ 否則 hub 會記著一個永遠不會讀的連線。
+		if registered {
+			s.hub.unregister(c)
+		}
+	}()
+
 	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
 		OriginPatterns: []string{"*"}, // the edge enforces origin; skeleton accepts all
 	})
@@ -139,13 +168,7 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close(websocket.StatusInternalError, "closing")
 	conn.SetReadLimit(s.readLimit)
 
-	c := &client{
-		accountID: ident.AccountID,
-		username:  ident.Username,
-		out:       make(chan []byte, 64),
-		closed:    make(chan struct{}),
-	}
-	for _, old := range s.hub.register(c) {
+	for _, old := range evicted {
 		old.close() // over the per-account cap — its handler unblocks and cleans up
 	}
 	ctx := r.Context()
@@ -217,6 +240,7 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 
 	// Cleanup: drop the conn; last conn of the account clears presence.
 	c.close()
+	registered = false // ⭐ 收尾自己 unregister ⇒ 上面那個 defer 不要再做一次
 	if last := s.hub.unregister(c); last {
 		_ = s.pres.Clear(context.WithoutCancel(ctx), ident.AccountID)
 	}
