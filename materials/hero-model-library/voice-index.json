@@ -43060,12 +43060,19 @@
       "publicationStatus": "s3-readback-verified"
     },
     "public:parallel-ps-jumpforce-local-next32": {
-      "type": "local-intake",
-      "readbackVerified": false,
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-next32/085793d0aa512d4d14fca6ab284a1eee1ad8e5a57674cbcb81d6f88acd526fc3.tar.gz",
+      "bytes": 397865535,
+      "sha256": "085793d0aa512d4d14fca6ab284a1eee1ad8e5a57674cbcb81d6f88acd526fc3",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "s3ReadbackVerified": true,
       "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
       "localUseAvailable": true,
-      "publicationStatus": "local-verified-s3-pending"
+      "publicationStatus": "s3-readback-verified"
     },
     "public:parallel-ps-jumpforce-local-final3": {
       "type": "zip",
@@ -43345,11 +43352,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "555addeaab69b1488f32d4f2179d0962e497f95262be99d5c2e732b93a041f5f"
+      "sha256": "3ca02995e2755645ac4b714aa1f87b5d8578fd7f8058b05359f7de50db4c3cd7"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "3950e6e7cf52f11272a66a690ca2687b179dd5c5d59e9ea41904fef394538d2c"
+      "sha256": "cfb34d1575cd4cffe9f57740a823def65838f7a7533ca2549b7d2ebbed312acb"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -43538,10 +43545,6 @@
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-bgm-dnf/audioFileIndex.json",
       "sha256": "2fd45e432f212d171294fd7c305b573ce5e6a7bb1726a074b25eb9c65cf493df"
-    },
-    {
-      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/deliveries/ggd-parallel-ps-frozen-32-20260910T123428Z.json",
-      "sha256": "1fb0b11763b295a5414fbcfd55f27ec22720809377c637aa7388af2ef017e793"
     },
     {
       "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/deliveries/ggd-parallel-ps-frozen-32-20260910T123428Z.json",

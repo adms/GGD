@@ -19980,7 +19980,7 @@
       ],
       "verifiedLocalDeliveryOnly": true,
       "acquisitionScope": "Only the frozen packages and files listed in this immutable delivery; other sibling downloads are excluded.",
-      "publicationStatus": "local-verified-s3-pending",
+      "publicationStatus": "s3-readback-verified",
       "usage": "Local audio may be used immediately for listening, transcription and preparation; not automatically imported into the game.",
       "backendIntegration": {
         "required": true,
@@ -20004,7 +20004,17 @@
         "confirmedVoiceCount": null,
         "synthesisReady": false
       },
-      "verification": "32個新凍結原包、7,385 OGG 已逐檔 SHA 核對，與之前20包不重複；OGG結構及分類抽樣完整解碼通過，並非每檔重新完整解碼。待逐段聲音分類／語言／說話者聽審。"
+      "verification": "32個新凍結原包、7,385 OGG 已逐檔 SHA 核對，與之前20包不重複；OGG結構及分類抽樣完整解碼通過，並非每檔重新完整解碼。待逐段聲音分類／語言／說話者聽審。 此固定交付與其 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；同根目錄的其他交付不在此備份範圍。",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-next32/085793d0aa512d4d14fca6ab284a1eee1ad8e5a57674cbcb81d6f88acd526fc3.tar.gz",
+        "bytes": 397865535,
+        "sha256": "085793d0aa512d4d14fca6ab284a1eee1ad8e5a57674cbcb81d6f88acd526fc3",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "s3ReadbackVerified": true
+      }
     },
     {
       "id": "parallel-ps-jumpforce-local-final3",

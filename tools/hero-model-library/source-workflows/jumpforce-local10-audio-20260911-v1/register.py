@@ -59,7 +59,8 @@ def main():
     if len(sources) != 1:
         raise ValueError('Expected exactly one central source record')
     source = sources[0]
-    if source.get('backup') is not None or source.get('publicationStatus') != 'local-only-preparing-s3-backup':
+    if (source.get('backup') is not None or source.get('publicationStatus') not in {
+            'local-only-preparing-s3-backup', 'local-verified-s3-pending'}):
         raise ValueError('Source publication state changed; preserve for review')
     if any(row['id'] == source_id for row in index.get('sources', [])) or any(row['id'] == source_id for row in index.get('pendingUploads', [])):
         raise ValueError('Central archive record already exists or is pending')
