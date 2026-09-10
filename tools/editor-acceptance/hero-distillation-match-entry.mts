@@ -26,6 +26,32 @@ export function runtimeOverlay(documents:any[]){
   return {generation:1,docs,deleted:{}};
 }
 
+export function authoringOverlay(pkg:any,generator:any,heroId:string){
+  const projects=pkg.documents.filter((item:any)=>item.path.startsWith('authoring/hero-projects/'));
+  assert.equal(projects.length,1,'ONE_SOURCE_PROJECT_REQUIRED');const project=projects[0].document;
+  assert.equal(project.projectId,heroId,'SOURCE_PROJECT_ID_DRIFT');
+  const docs:Record<string,any>={};
+  const add=(collection:string,document:any)=>{
+    assert(/^[A-Za-z0-9_.-]+$/.test(document.id),'INVALID_SOURCE_DOCUMENT_ID');
+    const key=collection+'/'+document.id;
+    if(Object.hasOwn(docs,key))assert.deepEqual(docs[key],document,'SOURCE_DOCUMENT_CONFLICT');
+    docs[key]=JSON.parse(JSON.stringify(document));
+  };
+  for(const item of pkg.documents){
+    const match=/^authoring\/([a-z-]+)\/[^/]+\.json$/.exec(item.path);assert(match,'INVALID_AUTHORING_PATH');
+    if(match[1]!=='hero-projects')add(match[1],item.document);
+  }
+  const generated=generator.generateHeroDraft(project.acceptedPlan,{heroId:project.projectId,
+    heroName:project.brief.name,presentation:project.presentation});
+  add('champions',generated.champion);
+  for(const value of generated.relatedChampions??[])add('champions',value);
+  for(const value of Object.values(generated.abilityDrafts))add('abilities',value);
+  for(const value of generated.standaloneAbilities??[])add('abilities',value);
+  for(const value of generated.vfxScripts??[])add('vfx-scripts',value);
+  for(const value of generated.templateInstances??[])add('ability-templates',value);
+  return {generation:1,docs,deleted:{}};
+}
+
 export async function run(options:Record<string,string>){
   const out=path.resolve(options.out);assert(!fs.existsSync(out),'REFUSE_OVERWRITE_OR_RETRY');
   const reportBytes=fs.readFileSync(options['import-report']),report=JSON.parse(reportBytes.toString());
@@ -50,13 +76,16 @@ export async function run(options:Record<string,string>){
     receipt.dependencies=linkDependencies(root,path.resolve(options['game-dependencies']),path.resolve(options['shared-dependencies']));
     const load=(file:string)=>import(pathToFileURL(path.join(root,file)).href);
     receipt.stage='load-content';
-    const [content,source,reader,registry,controller,phase]=await Promise.all([
+    const [content,source,reader,registry,controller,phase,generator]=await Promise.all([
       'packages/shared/src/content/index.ts','packages/shared/src/content/node/index.ts',
       'packages/shared/src/content/import/readPackageZip.ts','packages/shared/src/sim/content/registry.ts',
-      'apps/game-server/src/match/MatchController.ts','apps/game-server/src/match/phaseConfig.ts'].map(load));
+      'apps/game-server/src/match/MatchController.ts','apps/game-server/src/match/phaseConfig.ts',
+      'packages/shared/src/content/heroForge/generator.ts'].map(load));
     const restored=reader.readPackageZip(new Uint8Array(zip));
     assert.equal(restored.manifest.packageDigest,imported.packageDigest,'IMPORTED_PACKAGE_DIGEST_DRIFT');
-    const overlay=runtimeOverlay(restored.compiled);
+    runtimeOverlay(restored.compiled); // Verify path/identity shape, but do not parse resolved runtime as authoring.
+    const overlay=authoringOverlay(restored,generator,imported.heroId);
+    receipt.loaderInput='ZIP authoring dependencies plus pinned generateHeroDraft(source project); no resolved compiled-as-authoring';
     assert(Object.hasOwn(overlay.docs,'champions/'+imported.heroId),'IMPORTED_CHAMPION_MISSING');
     // Fail-closed even for unrelated pinned catalog errors. A platform problem
     // must be recorded, not repaired or confused with a generated-hero failure.

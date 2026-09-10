@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-match-entry@1",
+  "heroId": "community-review-16-20260907",
+  "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+  "importReportSha256": "d4e3be741fd3f3bac5da441a655cc543567ec0081a8c9edafe2f7e78744c4ee8",
+  "archiveSha256": "dc5fa9de07a18ef3a7b0d37ffbc7a42748f6a7a660f9f6b74d340f9661ba1240",
+  "scriptSha256": "c75eb8b2121ccc09154e5f4c03b22e29bf5f1ccc907ca19c1a2cb62d84231536",
+  "startedAt": "2026-09-10T14:00:05.048Z",
+  "status": "failed",
+  "stage": "load-content",
+  "humanRepairs": 0,
+  "selectionPassed": false,
+  "spawnPassed": false,
+  "combatEntryPassed": false,
+  "unknownSelectionRejected": false,
+  "sixSlotSemanticsMeasured": false,
+  "networkClientMeasured": false,
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "scope": "Pinned headless game-server controller in disposable memory. No production overlay, UI, publication, visual inspection or skill-mechanic equivalence claim.",
+  "sourceArchiveSha256": "c46ee99ea6f377f0efac0c03256640b067bffddfe7c8be277b7d0171ec1718ec",
+  "dependencies": {
+    "@colyseus/core": {
+      "version": "0.16.24",
+      "packageJsonSha256": "6c2a7933a6ce3e80454195126a344d7e3e2a795ceaa7a71a06ac7f1e6a7ee9aa"
+    },
+    "@colyseus/redis-driver": {
+      "version": "0.16.1",
+      "packageJsonSha256": "43bf8402d6bf5529df23094945ecd1590c3df01defc159de2b359b3bebdbf555"
+    },
+    "@colyseus/redis-presence": {
+      "version": "0.16.4",
+      "packageJsonSha256": "3f5d493b4d4f99200c33ac5ac6ecf33fc699d7fa12db8729bc6de0fecb9e8b4a"
+    },
+    "@colyseus/schema": {
+      "version": "3.0.76",
+      "packageJsonSha256": "21f9756e5bc0af17706bc5767815642bb261037621d22fb5606e50e73167f5e6"
+    },
+    "@colyseus/testing": {
+      "version": "0.16.3",
+      "packageJsonSha256": "00c08a4e055a00dc1a1fba37fb798154c71320313e718cf030b1c77b20ecac07"
+    },
+    "@colyseus/ws-transport": {
+      "version": "0.16.5",
+      "packageJsonSha256": "aff82a51155dca44d0122172e4e7db289ccc87f087ba59f3d2dae662194b1fd8"
+    },
+    "@types/node": {
+      "version": "22.20.1",
+      "packageJsonSha256": "1e6d3bbbc5082745123d236b38dce0eacdab987d4ac9e57e299e55f780c170de"
+    },
+    "colyseus": {
+      "version": "0.16.5",
+      "packageJsonSha256": "3db3f1921b8accfcaa11955eadac92f21d51a3a6a3a1f4c1c6d8a9b4687c50d9"
+    },
+    "tsx": {
+      "version": "4.23.1",
+      "packageJsonSha256": "116662201c06041c63de8837cf7bf6743f79a10187d0a210b377476071550a40"
+    },
+    "typescript": {
+      "version": "5.9.3",
+      "packageJsonSha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    "vitest": {
+      "version": "2.1.9",
+      "packageJsonSha256": "6ea35e567829660d9832744086c18526b9ddebd5358c4a0cadfb0a355925f917"
+    },
+    "safe-stable-stringify": {
+      "version": "2.5.0",
+      "packageJsonSha256": "797e552ecb0f8ffe8ffb714e6c4888b28a8ca39eb9c0040836b2b6f640037798"
+    },
+    "zod": {
+      "version": "3.25.76",
+      "packageJsonSha256": "70eedbe34fd52385a4ae2f3e5759b19682189f0118ea73a6e7c32c677f61668e"
+    }
+  },
+  "error": "ContentLoadError: content load failed with 12 error(s):\n  - items/godie-i00s: schema validation failed — modifiers.3.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。\n  - items/godie-i014: schema validation failed — modifiers.1.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。\n  - items/odm-gear: schema validation failed — modifiers.1.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。\n  - items/shining-golden-orbs: schema validation failed — passive.0.effects.0.modifiers.11.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。; passive.0.effects.1.modifiers.11.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。\n  - items/stone-mask: schema validation failed — passive.0.effects.0.modifiers.5.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。\n  - items/teardrop-of-rebirth: schema validation failed — passive.0.effects.1.effects.1.modifiers.3.value: msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。\n  - loot-tables/ex-release-weapons field \"entries.9.itemId\" references missing items/godie-i014\n  - loot-tables/ex-release-weapons field \"entries.28.itemId\" references missing items/odm-gear\n  - loot-tables/ex-release-weapons field \"entries.30.itemId\" references missing items/shining-golden-orbs\n  - loot-tables/ex-release-weapons field \"entries.34.itemId\" references missing items/stone-mask\n  - loot-tables/ex-release-weapons field \"entries.35.itemId\" references missing items/teardrop-of-rebirth\n  - loot-tables/legendary-weapons field \"entries.5.itemId\" references missing items/godie-i00s",
+  "finishedAt": "2026-09-10T14:00:17.042Z"
+}
