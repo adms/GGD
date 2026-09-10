@@ -1,0 +1,79 @@
+{
+ "wiredAt": "2026-09-10T17:31:09+08:00",
+ "batch": "priority-8",
+ "wired": [
+  {
+   "heroId": "community-review-02-20260907",
+   "name": "八神庵",
+   "char": "八神庵",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.313646",
+   "threadId": "313646",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-05-20260907",
+   "name": "洛克人",
+   "char": "洛克人",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.287871",
+   "threadId": "287871",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-07-20260907",
+   "name": "西索",
+   "char": "西索",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.497211",
+   "threadId": "497211",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-14-20260907",
+   "name": "殺老師",
+   "char": "殺老師",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.472112",
+   "threadId": "472112",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-15-20260907",
+   "name": "比利海靈頓",
+   "char": "比利海靈頓",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.457123",
+   "threadId": "457123",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-22-20260907",
+   "name": "菜月昴",
+   "char": "菜月昴",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.311294",
+   "threadId": "311294",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-09-20260907",
+   "name": "赫蘿",
+   "char": "赫蘿",
+   "oldModelKey": "champ.thorne",
+   "newModelKey": "ou99.468771",
+   "threadId": "468771",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  },
+  {
+   "heroId": "community-review-11-20260907",
+   "name": "利姆路",
+   "char": "利姆路",
+   "oldModelKey": "champ.sela",
+   "newModelKey": "ou99.457280",
+   "threadId": "457280",
+   "wiredAt": "2026-09-10T17:31:09+08:00"
+  }
+ ],
+ "skipped": []
+}
