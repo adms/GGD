@@ -1,0 +1,56 @@
+{
+  "schema": "ggd-distillation-atomic-frozen-data@1",
+  "counts": {
+    "train": {
+      "tasks": 2178,
+      "heroes": 59
+    },
+    "dev": {
+      "tasks": 612,
+      "heroes": 15
+    },
+    "all": {
+      "tasks": 2790,
+      "heroes": 74
+    }
+  },
+  "outputs": {
+    "examples.json": "7f5c66174e855858cb2d62b88e8f1df0cd4f6223c5159f6fd647b08b7116582e",
+    "train.jsonl": "83e8405300f6a53df6c48882ba1042bc74c8f453ac38103fd0d0987b3a1fe2c9",
+    "dev.jsonl": "2154b241021985cd7c3e6633a5a71f5b08cda9bc389159df71f139340f111de5",
+    "metrics.json": "fa8badaba3bcb09cbb8b276889e53aedd0e7df8a8378d5981009f4b0e5916163",
+    "projection-report.json": "1911f320aedd4a567935b6d3ac725a7f2112ef57d12f20c37a903b0ae0770de6"
+  },
+  "projectionReport": {
+    "schema": "ggd-atomic-forge-projection@1",
+    "source": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-compact-v8",
+    "sourceManifestSha256": "1d58be824bd5a211aa93c3e02f3eabb0147cbce30811b3cd512077120de6f785",
+    "counts": {
+      "train": {
+        "tasks": 2178,
+        "heroes": 59
+      },
+      "dev": {
+        "tasks": 612,
+        "heroes": 15
+      },
+      "all": {
+        "tasks": 2790,
+        "heroes": 74
+      }
+    },
+    "outputLimitChars": 600,
+    "maxOutputChars": 599,
+    "allTeacherConfigurationsReplayed": true,
+    "stages": [
+      "identity",
+      "selection:<slot>",
+      "core:<slot>",
+      "atom:<slot>"
+    ],
+    "noNewHeroes": true,
+    "noTeacherRepair": true,
+    "scriptSha256": "bea2ad13a1d6cbe1304d20e74aeb7c7f4d2a373b192bf3ea7a34137b696f2dcd"
+  },
+  "releaseQualified": false
+}
