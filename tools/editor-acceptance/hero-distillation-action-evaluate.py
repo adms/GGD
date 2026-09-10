@@ -7,9 +7,18 @@ that no assistant/teacher answer is placed in a model prompt.  Binding a
 completed adapter, GPU decoding, and scoring are separate later stages.
 """
 import argparse
+from contextlib import contextmanager
+import gc
 import hashlib
+import importlib.util
 import json
+import os
+import signal
+import subprocess
 import shutil
+import sys
+import time
+import uuid
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve()
@@ -30,6 +39,16 @@ def read(path):
 
 def atomic(path, value):
     Path(path).write_text(compact(value) + '\n')
+
+
+def module(name, file):
+    spec = importlib.util.spec_from_file_location(name, Path(file))
+    result = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(result)
+    return result
+
+
+t = module('action_evaluation_training', SCRIPT.with_name('hero-distillation-train.py'))
 
 
 def frozen_source(dataset):
@@ -144,15 +163,187 @@ def verify(directory):
     return result, public['heroes']
 
 
+def final_checkpoint(training):
+    """Accept only the fixed final full-epoch adapter, never a chosen dev checkpoint."""
+    training = Path(training).resolve()
+    manifest = read(training / 'manifest.json')
+    state = read(training / 'train' / 'state.json')
+    assert state['status'] == 'completed' and state['workerPid'] is None, 'TRAIN_NOT_TERMINAL_SUCCESS'
+    result = read(training / 'train' / 'result.json')
+    assert result['steps'] == manifest['steps'] and result['uniqueTrainingTasks'] == manifest['steps'], 'TRAINING_INCOMPLETE'
+    receipt = read(training / 'train' / 'adapter-roundtrip.json')
+    assert receipt['passed'] is True, 'ADAPTER_ROUNDTRIP_REQUIRED'
+    folder = training / 'train' / result['checkpoint']['path']
+    assert t.digest(folder / 'adapters.safetensors') == result['checkpoint']['sha256'], 'ADAPTER_DRIFT'
+    return manifest, result, receipt, folder
+
+
+def prepare(training, dataset, out):
+    """Make a bound, no-teacher A/B evaluation after terminal training only."""
+    out = Path(out).resolve()
+    base = freeze(dataset, out)
+    train, result, receipt, adapter = final_checkpoint(training)
+    assert train['dataDirectory'] == str(Path(dataset).resolve()), 'TRAINING_DATASET_PATH_MISMATCH'
+    assert train['frozenManifestSha256'] == t.digest(Path(dataset) / 'manifest.json'), 'TRAINING_DATASET_HASH_MISMATCH'
+    base.update({'trainingDirectory': str(Path(training).resolve()),
+                 'trainingManifestSha256': t.digest(Path(training) / 'manifest.json'),
+                 'trainingResultSha256': t.digest(Path(training) / 'train' / 'result.json'),
+                 'modelDirectory': train['modelDirectory'], 'modelRevision': train['modelRevision'],
+                 'baseFiles': train['baseFiles'], 'adapterDirectory': str(adapter),
+                 'adapterSha256': t.digest(adapter / 'adapters.safetensors'), 'adapterTensorKeys': receipt['tensorKeys'],
+                 'guard': train['guard'], 'minimumAvailableBytes': train['minimumAvailableBytes'],
+                 'metalLimitGiB': train['metalLimitGiB'], 'callsPerHero': 'variable bounded action sequence',
+                 'attemptsPerCall': 1, 'fullHeroE2EProven': False})
+    atomic(out / 'manifest.json', base)
+    return base
+
+
+@contextmanager
+def fp32_attention(mx, language):
+    original = language.scaled_dot_product_attention
+    def attention(queries, keys, values, cache, scale, mask, sinks=None):
+        assert cache is None or type(cache).__name__ in ['KVCache', 'RotatingKVCache'], 'UNTESTED_KV_CACHE'
+        if hasattr(mask, 'dtype') and mx.issubdtype(mask.dtype, mx.floating): mask = mask.astype(mx.float32)
+        if sinks is not None: sinks = sinks.astype(mx.float32)
+        return mx.fast.scaled_dot_product_attention(queries.astype(mx.float32), keys.astype(mx.float32), values.astype(mx.float32),
+                                                    scale=scale, mask=mask, sinks=sinks).astype(queries.dtype)
+    language.scaled_dot_product_attention = attention
+    try:
+        yield
+    finally:
+        language.scaled_dot_product_attention = original
+
+
+def safe_name(value):
+    assert isinstance(value, str) and value and all(c.isascii() and (c.isalnum() or c in '-_.') for c in value), 'UNSAFE_HERO_ID'
+    return value
+
+
+def worker(directory, arm, token):
+    assert arm in ['base', 'lora'], 'UNKNOWN_ARM'
+    directory, work = Path(directory).resolve(), Path(directory).resolve() / arm
+    lock = read(t.LOCK); assert lock['token'] == token and lock['task'] == str(work), 'OWNED_LOCK_REQUIRED'
+    p, heroes = verify(directory)
+    for key in ['modelDirectory', 'adapterDirectory', 'adapterSha256', 'adapterTensorKeys', 'baseFiles', 'guard', 'metalLimitGiB']:
+        assert key in p, 'UNBOUND_EVALUATION:' + key
+    def interrupted(signum, frame): raise InterruptedError('SUPERVISOR_STOP')
+    signal.signal(signal.SIGTERM, interrupted)
+    def progress(phase, **fields): atomic(work / 'worker-progress.json', {'pid': os.getpid(), 'phase': phase, 'startedAt': time.time(), **fields})
+    progress('verify-model')
+    for entry in p['baseFiles']:
+        file = Path(p['modelDirectory']) / entry['name']
+        assert file.resolve().is_relative_to(Path(p['modelDirectory']).resolve()), 'UNSAFE_BASE_PATH'
+        assert file.stat().st_size == entry['bytes'] and t.digest(file) == entry['sha256'], 'BASE_DRIFT'
+    import mlx.core as mx
+    from mlx.utils import tree_flatten
+    from mlx_vlm import load
+    from mlx_vlm.models.gemma4 import language
+    from mlx_vlm.trainer.adapter_utils import linear_to_lora_layers
+    generation = module('action_eval_generation', directory / 'source' / 'hero-distillation-action-generation.py')
+    mx.set_memory_limit(min(p['metalLimitGiB'] * t.GIB, mx.device_info()['max_recommended_working_set_size']))
+    mx.set_cache_limit(128 * 1024 ** 2)
+    progress('load-model'); model, processor = load(p['modelDirectory'], lazy=True, strict=True, trust_remote_code=False); model.freeze()
+    if arm == 'lora':
+        adapter = Path(p['adapterDirectory']); assert t.digest(adapter / 'adapters.safetensors') == p['adapterSha256'], 'ADAPTER_DRIFT'
+        config = read(adapter / 'adapter_config.json'); linear_to_lora_layers(model, config['num_layers'], config['lora_parameters'])
+        params, saved = dict(tree_flatten(model.trainable_parameters())), mx.load(str(adapter / 'adapters.safetensors'))
+        assert set(params) == set(saved) == set(p['adapterTensorKeys']), 'ADAPTER_KEYS_MISMATCH'
+        assert all(params[key].shape == saved[key].shape for key in params), 'ADAPTER_SHAPE_MISMATCH'
+        model.load_weights(list(saved.items()), strict=False)
+        actual = dict(tree_flatten(model.trainable_parameters()))
+        assert all(mx.array_equal(actual[key], saved[key]).item() for key in saved), 'ADAPTER_LOAD_MISMATCH'
+        atomic(work / 'adapter-loaded.json', {'sha256': p['adapterSha256'], 'tensorKeys': sorted(saved), 'passed': True})
+    model.eval(); mx.eval(model.parameters()); mx.reset_peak_memory(); tokenizer = getattr(processor, 'tokenizer', processor)
+    calls, completed = [], []; (work / 'calls').mkdir(); (work / 'heroes').mkdir()
+    def emit(record):
+        record.update(arm=arm, peakMetalBytes=mx.get_peak_memory()); number = len(calls)
+        atomic(work / 'calls' / f'{number:05d}-{safe_name(record["id"].split(":", 1)[0])}.json', record)
+        calls.append({key: record[key] for key in ['id', 'stage', 'complete', 'seconds', 'jsonAccepted']}); atomic(work / 'call-index.json', calls)
+        gc.collect(); mx.clear_cache(); mx.reset_peak_memory()
+    with fp32_attention(mx, language):
+        for hero in heroes:
+            progress('hero', heroId=hero['heroId'])
+            try:
+                value = generation.generate_hero(hero, directory / 'source' / 'hero-distillation-action-runtime-cli.mjs', tokenizer,
+                                                 generation.g.mlx_stream_factory(model, processor), progress, emit)
+                assert value['target']['format'] == 'hero-plan', 'ASSEMBLY_FORMAT_DRIFT'
+                value.update(status='complete'); completed.append({'heroId': hero['heroId'], 'status': 'complete',
+                                                                    'targetSha256': value['targetSha256'], 'humanRepairs': 0})
+            except Exception as error:
+                value = {'heroId': hero['heroId'], 'status': 'failed', 'error': repr(error), 'humanRepairs': 0,
+                         'fullHeroE2EProven': False}
+                completed.append({'heroId': hero['heroId'], 'status': 'failed', 'error': repr(error), 'humanRepairs': 0})
+            atomic(work / 'heroes' / (safe_name(hero['heroId']) + '.json'), value); atomic(work / 'hero-index.json', completed)
+    assert len(completed) == len(heroes), 'INCOMPLETE_ACTION_EVALUATION'
+    successful = sum(row['status'] == 'complete' for row in completed)
+    atomic(work / 'result.json', {'arm': arm, 'kind': p['kind'], 'attemptedHeroes': len(completed), 'attemptedCalls': len(calls),
+                                   'completeHeroes': successful, 'failedHeroes': len(completed) - successful,
+                                   'humanRepairs': 0, 'modelPromoted': False, 'fullHeroE2EProven': False})
+
+
+def supervise(directory, arm):
+    assert arm in ['base', 'lora'], 'UNKNOWN_ARM'
+    directory = Path(directory).resolve(); p, _ = verify(directory); work = directory / arm
+    assert 'trainingDirectory' in p, 'UNBOUND_EVALUATION'
+    assert not work.exists(), 'REFUSE_RESTART_OR_OVERWRITE'
+    start = t.resources(); assert start['acPower'] and start['availableBytes'] >= p['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
+    assert not t.violation(start, start, p['guard']), 'RESOURCE_GUARD'
+    token, child, locked, created = uuid.uuid4().hex, None, False, False
+    state = {'status': 'starting', 'pid': os.getpid(), 'workerPid': None, 'arm': arm, 'startedAt': time.time(),
+             'manifestSha256': t.digest(directory / 'manifest.json'), 'preflight': start}
+    def interrupted(signum, frame): raise InterruptedError('INTERRUPTED')
+    previous = {sig: signal.getsignal(sig) for sig in [signal.SIGINT, signal.SIGTERM]}
+    try:
+        t.LOCK.parent.mkdir(parents=True, exist_ok=True)
+        with t.LOCK.open('x') as stream: locked = True; stream.write(compact({'pid': os.getpid(), 'task': str(work), 'token': token}))
+        work.mkdir(); created = True
+        for sig in previous: signal.signal(sig, interrupted)
+        with (work / 'worker.log').open('x') as log, (work / 'resources.jsonl').open('x') as trace:
+            child = subprocess.Popen([sys.executable, str(SCRIPT), 'worker', '--run', str(directory), '--arm', arm, '--token', token], stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+            state.update(status='running', workerPid=child.pid); atomic(work / 'state.json', state)
+            while child.poll() is None:
+                time.sleep(2); sample = t.resources(); trace.write(compact(sample) + '\n'); trace.flush(); reason = t.violation(start, sample, p['guard'])
+                if (work / 'STOP').exists(): reason = 'USER_STOP'
+                if time.time() - state['startedAt'] > p.get('secondsMaximumPerArm', 7200): reason = 'RUN_TIME_LIMIT'
+                if (work / 'worker-progress.json').exists():
+                    progress = read(work / 'worker-progress.json'); assert progress['pid'] == child.pid, 'WORKER_PID_MISMATCH'
+                    if time.time() - progress['startedAt'] > 610: reason = 'PHASE_TIME_LIMIT'
+                if reason: raise RuntimeError(reason)
+            assert child.returncode == 0, f'WORKER_EXIT:{child.returncode}'; result = read(work / 'result.json')
+            assert result['attemptedHeroes'] == p['heroes'], 'INCOMPLETE_RESULT'; state['status'] = 'completed'
+    except BaseException as error:
+        state.update(status='stopped-or-failed', error=repr(error))
+    finally:
+        try:
+            if child is not None and child.poll() is None:
+                os.killpg(child.pid, signal.SIGTERM)
+                try: child.wait(timeout=5)
+                except subprocess.TimeoutExpired: os.killpg(child.pid, signal.SIGKILL); child.wait(timeout=5)
+            state.update(workerPid=None, finishedAt=time.time())
+            if created: atomic(work / 'state.json', state)
+        finally:
+            if locked and t.LOCK.exists() and read(t.LOCK).get('token') == token: t.LOCK.unlink()
+            for sig, handler in previous.items(): signal.signal(sig, handler)
+    print(compact(state), flush=True)
+    if state['status'] != 'completed': raise SystemExit(1)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['freeze', 'verify'])
-    parser.add_argument('--dataset', type=Path); parser.add_argument('--out', type=Path)
-    parser.add_argument('--run', type=Path)
+    parser.add_argument('action', choices=['freeze', 'prepare', 'verify', 'run', 'worker'])
+    parser.add_argument('--dataset', type=Path); parser.add_argument('--out', type=Path); parser.add_argument('--training', type=Path)
+    parser.add_argument('--run', type=Path); parser.add_argument('--arm', choices=['base', 'lora']); parser.add_argument('--token')
     args = parser.parse_args()
     if args.action == 'freeze':
         assert args.dataset and args.out
         print(compact(freeze(args.dataset, args.out)))
-    else:
+    elif args.action == 'prepare':
+        assert args.training and args.dataset and args.out
+        print(compact(prepare(args.training, args.dataset, args.out)))
+    elif args.action == 'verify':
         assert args.run
         print(compact({'manifest': verify(args.run)[0]}))
+    elif args.action == 'worker':
+        assert args.run and args.arm and args.token; worker(args.run, args.arm, args.token)
+    else:
+        assert args.run and args.arm; supervise(args.run, args.arm)
