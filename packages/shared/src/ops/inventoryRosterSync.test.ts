@@ -51,10 +51,14 @@ interface Audit {
     skeletonHeroIds: string[];
     alternatesExempted: Array<{ id: string; counterpartId: string }>;
     inventorySections: string[];
+    /** ⭐ 驗過**才**套用的 rowId→出貨 id（`roster-sync.baseline.json` 的 `idAliases`）。 */
+    idAliasesApplied: Array<{ rowId: string; shippedId: string }>;
   };
   staleBlockers: Array<{ rowId: string; row: string; value: number; citedLimit: number }>;
   forwardGap: string[];
   reverseGap: string[];
+  /** ⭐ 別名**驗不過**的那幾筆（⛔ 它們不套用 —— 落差會照樣浮出來）。 */
+  aliasIssues: Array<{ rowId: string; shippedId: string; reason: string; detail: string }>;
 }
 
 const BASELINE = JSON.parse(
@@ -110,12 +114,19 @@ describe("盤點表 ↔ 上架設定的雙向同步（GH#1165）", () => {
         `        （⛔ 扣掉 godie-* 與引擎骨架 ${audit.probes.skeletonHeroIds.join("／")}）`,
         `🔬 探針：變身態豁免 ${audit.probes.alternatesExempted.length} 筆` +
           audit.probes.alternatesExempted.map((a) => `（${a.id} → ${a.counterpartId}）`).join(""),
+        `🔑 別名：${audit.probes.idAliasesApplied.length} 筆驗過的 rowId→出貨 id` +
+          audit.probes.idAliasesApplied.map((a) => `（${a.rowId}→${a.shippedId}）`).join(""),
         `📐 出貨通道上限 = ${audit.shippedLimit}（content/config/model-lod.json）`,
       ].join("\n"),
     );
     // ⛔ 母體塌了讀起來跟全過一樣 —— 先把它擋掉。
     expect(d.inventoryRows).toBeGreaterThan(0);
     expect(d.shippedCommunity).toBeGreaterThan(0);
+    // ⭐ **先驗那把鑰匙**（第〇·六守則 / GH#635）：別名是唯一能讓兩個方向同時
+    //   消掉落差的機制 ⇒ ⛔ 它自己壞掉的時候必須指名，而不是靜靜地把落差藏起來。
+    //   ⚠️ `_resolve_aliases()` 驗不過的那幾筆**不套用** ⇒ 落差會回來 ⇒ 下面兩條也會紅；
+    //   這一條的工作是**說出是哪一筆、為什麼**。
+    expect(audit.aliasIssues.map((i) => `${i.rowId}→${i.shippedId}：${i.reason} —— ${i.detail}`)).toEqual([]);
   });
 
   it("⭐ 阻塞理由：冒出**沒登記**的過期理由 ⇒ 🔴 並指名那一列", (ctx) => {
