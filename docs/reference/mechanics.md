@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_4748bfda8d8d`
+contentVersion `cv_a82b2e6c3891`
 
 ---
 
