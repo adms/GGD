@@ -25,6 +25,8 @@ export const zChampionModelVersion = z.object({
   binarySha256: zDigest,
   registeredAt: z.string().datetime(),
   source: zModelVersionSource,
+  // Explicit approval lets the 11 owner-approved proxy copies participate in defaults.
+  automaticEligible: z.boolean().optional(),
 }).strict();
 export const zChampionModelVersions = z.array(zChampionModelVersion).min(1).max(64);
 export type ChampionModelVersion = z.infer<typeof zChampionModelVersion>;
@@ -44,10 +46,20 @@ export function sortModelVersions(versions: readonly ChampionModelVersion[]): Ch
   return [...versions].reverse().sort((a, b) => MODEL_SOURCE_ORDER.indexOf(modelSourceTier(a.source)) - MODEL_SOURCE_ORDER.indexOf(modelSourceTier(b.source)));
 }
 
+/** Eligibility changes automatic selection, never the retained dropdown list. */
+export function preferredModelVersion(versions: readonly ChampionModelVersion[]): ChampionModelVersion | undefined {
+  return sortModelVersions(versions).find(modelVersionAutomaticEligible);
+}
+
+export function modelVersionAutomaticEligible(version: ChampionModelVersion): boolean {
+  return version.automaticEligible ?? version.source.kind !== "style-proxy";
+}
+
 export const zModelVersionCommand = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("register"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/),
     sourceModelKey: zId, label: z.string().trim().min(1).max(160), source: zModelVersionSource,
+    automaticEligible: z.boolean().optional(),
   }).strict(),
   z.object({
     action: z.literal("activate"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/), modelKey: zId,

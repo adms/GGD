@@ -1,4 +1,5 @@
 import { defaultEligible } from './default-policy.mts';
+import { contentSha256 } from '../../packages/shared/src/content/import/jcs';
 import { spliceMembers } from "../../packages/shared/src/content/editModel";
 /** Apply validated library choices, preserving existing bytes, versions and manual overrides. */
 import { existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, renameSync, realpathSync } from 'node:fs';
@@ -7,7 +8,7 @@ import { parseArgs } from 'node:util';
 import { createHash, randomUUID } from 'node:crypto';
 import { ModelVersions } from '../../apps/content-api/src/modelVersions';
 import { rebuildAllIndexes } from '../../packages/shared/src/content/node';
-import { zModelVersionCommand } from '../../packages/shared/src/content/schema/championModelVersions';
+import { zModelVersionCommand, modelVersionAutomaticEligible } from '../../packages/shared/src/content/schema/championModelVersions';
 const {values}=parseArgs({options:{release:{type:'string'},content:{type:'string'},report:{type:'string'}}});
 if(!values.release||!values.content||!values.report)throw Error('--release, --content and --report required');
 const release=resolve(values.release),root=resolve(values.content),read=(p:string)=>JSON.parse(readFileSync(p,'utf8'));
@@ -33,16 +34,17 @@ for(const hero of manifest.heroes){
  try{
   // Import lower tiers first; automatic mode still always chooses the highest available tier.
   for(const option of [...hero.options].reverse()){
-   if(!defaultEligible(hero.id,option)){(result.candidateOnly??=[]).push(option.sourceId);continue;}
+   const automaticEligible=defaultEligible(hero.id,option);
    const state=service.state(hero.id);
-   if(state.versions.some(v=>v.sourceModelKey===option.sourceModelKey&&v.source.tier===option.source.tier)){continue;}
-   const command=zModelVersionCommand.parse({action:'register',expectedHash:state.expectedHash,sourceModelKey:option.sourceModelKey,label:option.label,source:option.source});
+   if(state.versions.some(v=>v.sourceModelKey===option.sourceModelKey&&v.label===option.label&&contentSha256(v.source)===contentSha256(option.source)&&modelVersionAutomaticEligible(v)===automaticEligible)){continue;}
+   const command=zModelVersionCommand.parse({action:'register',expectedHash:state.expectedHash,sourceModelKey:option.sourceModelKey,label:option.label,source:option.source,automaticEligible});
    const prepared=await service.prepare(hero.id,command);service.assertCurrent(hero.id,state.expectedHash);service.writeArtifacts(prepared.artifacts);
    const file=join(root,'champions',hero.id+'.json'),before=readFileSync(file,'utf8');
    service.assertCurrent(hero.id,state.expectedHash);
    const after=spliceMembers(before,{modelKey:prepared.champion.modelKey,modelVersions:prepared.champion.modelVersions,modelSelectionMode:prepared.champion.modelSelectionMode});
    const temporary=file+'.'+randomUUID()+'.tmp';writeFileSync(temporary,after,{flag:'wx'});renameSync(temporary,file);
    result.registered.push(option.sourceId);
+   if(!automaticEligible)(result.manualOnly??=[]).push(option.sourceId);
   }
   result.state=service.state(hero.id);result.status=result.registered.length?'registered':'unchanged';
  }catch(error){result.status='failed';result.error=String(error);}

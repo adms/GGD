@@ -23,14 +23,24 @@ type ModelSelectionCommand struct {
 	ModelKey     string `json:"modelKey,omitempty"`
 }
 type retainedModel struct {
-	ModelKey     string `json:"modelKey"`
-	ModelSHA256  string `json:"modelSha256"`
-	BinarySHA256 string `json:"binarySha256"`
-	Source       struct {
+	ModelKey          string `json:"modelKey"`
+	ModelSHA256       string `json:"modelSha256"`
+	BinarySHA256      string `json:"binarySha256"`
+	AutomaticEligible *bool  `json:"automaticEligible,omitempty"`
+	Source            struct {
+		Kind    string `json:"kind"`
 		Tier    string `json:"tier"`
 		Library string `json:"library"`
 	} `json:"source"`
 }
+
+func modelAutomaticEligible(v retainedModel) bool {
+	if v.AutomaticEligible != nil {
+		return *v.AutomaticEligible
+	}
+	return v.Source.Kind != "style-proxy"
+}
+
 type ModelSelectionState struct {
 	ChampionID        string          `json:"championId"`
 	ExpectedHash      string          `json:"expectedHash"`
@@ -107,6 +117,9 @@ func selectionState(id string, raw json.RawMessage) (ModelSelectionState, []reta
 	preferred := doc.ModelKey
 	best := 5
 	for _, v := range versions {
+		if !modelAutomaticEligible(v) {
+			continue
+		}
 		if rank := modelTier(v); rank <= best {
 			best = rank
 			preferred = v.ModelKey
@@ -170,6 +183,9 @@ func (s *Service) SelectModel(ctx context.Context, id string, command ModelSelec
 	}
 	if version == nil {
 		return state, httpx.BadRequest("此英雄沒有該模型版本。")
+	}
+	if command.Action == "automatic" && !modelAutomaticEligible(*version) {
+		return state, httpx.BadRequest("沒有核准自動選用的模型；候選仍保留供手動選用。")
 	}
 	model, err := s.modelSelectionDoc(o, "models", selected)
 	if err != nil {

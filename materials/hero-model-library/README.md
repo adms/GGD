@@ -17,6 +17,7 @@
 | [derivative-validation.json](derivative-validation.json) | 11 個副本的獨立檔案、貼圖、骨架、動作與來源不變證據 |
 | [spider-identity.json](spider-identity.json) | 蜘蛛子原生表格與模型身分對應證據 |
 | [s3-publication-receipt.json](s3-publication-receipt.json) | S3 上傳後讀回驗證；不是網站部署收據 |
+| [turbo-granny-compaction-validation.json](turbo-granny-compaction-validation.json) | 招財貓合併版的 GGD 格式與網格／貼圖預算檢查；尚缺動作與後台切換驗收 |
 
 本版包含 97 筆來源選項、90 個不同模型，以及成品庫中既有的 60 個 GGD 作者化 VFX 元件。模型／動作元件與完整英雄包分開計算；不得宣稱 156 筆盤點 ID 已全部上架。
 
@@ -24,6 +25,8 @@
 
 靜態解析使用 `tools/hero-model-library/public-source-requirements.txt` 的固定版本。`extract_public_sources.py` 會保存 DLL 中的原生資源，並以 `embedded_resources.py` 拆出 Wwise BNK 的 DIDX／DATA 媒體；保留原 bank 和事件資料，WEM 尚未解碼、可能是串流預取片段，不計為完整可播放音效。
 
-`convert_unity_prefab.py <bundle> <intake輸出目錄> --root-name <精確 prefab 名稱>` 僅將已檢查的 Unity 蒙皮模型轉為自包含 GLB，保留骨節順序與綁定矩陣，驗證座標轉換前後頂點位置。遇到未支援的 morph、透明材質或 UV 變換會停止；動作尚未轉換，輸出屬於 intake 半成品。高速婆婆的 `converted-prefab/` 保存 GLB、格式驗證、三面截圖及瀏覽器收據；32 繪製批次尚超過上架上限 5，不能據 GLB 可開啟就登記成品。
+`convert_unity_prefab.py <bundle> <intake輸出目錄> --root-name <精確 prefab 名稱>` 僅將已檢查的 Unity 蒙皮模型轉為自包含 GLB，保留骨節順序與綁定矩陣，驗證座標轉換前後頂點位置。遇到未支援的 morph、透明材質或 UV 變換會停止；動作尚未轉換，輸出屬於 intake 半成品。`compact_unity_skin.py <GLB> <新輸出目錄>` 進一步合併共骨節蒙皮與單色材質，在多組骨節姿勢下比對頂點位置，保留有圖案貼圖的原尺寸。高速婆婆已由 32 降至 5 繪製批次，全部 9,432 面及 29 骨節保留；`converted-prefab/`、`compacted-prefab/` 各自保存 GLB、格式驗證、三面截圖及瀏覽器收據。仍缺動作與後台切換驗收，不能據 GLB 可開啟就登記成品。
 
 靜態預覽來源為 `tools/hero-model-library/preview-unity.html` 與 `preview-unity.mjs`：以工作區的 esbuild 將 JS 和 Babylon.js／glTF loader 打包成 `preview.js`，HTML 另存 `index.html`，與 `body.glb` 放同一個本機 HTTP 目錄即可檢查；三面預覽不等於後台實際切換驗證。
+
+已通過標準化的來源，由 `register.mts` 全部註冊；`automaticEligible` 只控制自動預選，不再以預設資格略過候選。未核准相似模型保留為「手動選用」，11 組核准副本由同一 `default-policy.json` 明確給予預設資格。未帶此欄位的舊相似模型不會自動取得核准；再次匯入時，核准副本會追加具明確資格的新版本，保留舊版本。不同來源／版本即使二進位相同，也依來源及版本名稱保存獨立選項；同一筆完整交付重複註冊則拒絕。開發 Content API、正式站 Go 選擇服務與後台共同遵守此規則，實際站點仍須發布該程式與資料版本才生效。

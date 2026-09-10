@@ -48,6 +48,48 @@ beforeEach(async () => {
 afterEach(async () => { await app.close(); rmSync(root, { recursive: true, force: true }); });
 
 describe("retained hero model versions", () => {
+  it("retains paid delivery aliases of identical bytes as independent selectable versions", async () => {
+    const add = async (reference: string, label: string) => update({ action: "register", expectedHash: (await state()).expectedHash,
+      sourceModelKey: "candidate", label, source: { ...source, library: "論壇付費", reference } });
+    const first = await add("forum:attachment-a:v1", "付費來源 A v1");
+    expect(first.statusCode, first.body).toBe(200);
+    const second = await add("forum:attachment-b:v2", "付費來源 B v2");
+    expect(second.statusCode, second.body).toBe(200);
+    const versions = second.json<ChampionModelVersionState>().versions;
+    expect(versions).toHaveLength(3);
+    expect(versions[1]!.binarySha256).toBe(versions[2]!.binarySha256);
+    expect(versions[1]!.modelKey).not.toBe(versions[2]!.modelKey);
+    expect(versions.slice(1).map((v) => v.source.reference)).toEqual(["forum:attachment-a:v1", "forum:attachment-b:v2"]);
+    for (const version of versions.slice(1)) {
+      const selected = await update({ action: "activate", expectedHash: (await state()).expectedHash, modelKey: version.modelKey });
+      expect(selected.statusCode, selected.body).toBe(200);
+      expect(selected.json().activeModelKey).toBe(version.modelKey);
+      expect(selected.json().versions).toEqual(versions);
+    }
+    expect((await add("forum:attachment-b:v2", "付費來源 B v2")).statusCode).toBe(409);
+  });
+
+  it("retains unapproved high-tier proxies for manual selection while automatic mode uses approved candidates", async () => {
+    const approved = (await register()).json<ChampionModelVersionState>();
+    const response = await update({ action: "register", expectedHash: approved.expectedHash, sourceModelKey: "candidate", label: "保留的相似模型",
+      source: { ...source, kind: "style-proxy", tier: "300heroes" } });
+    expect(response.statusCode, response.body).toBe(200);
+    const saved = response.json<ChampionModelVersionState>();
+    const proxy = saved.versions.at(-1)!;
+    expect(proxy.automaticEligible).toBe(false);
+    expect(saved.activeModelKey).toBe(approved.activeModelKey);
+    expect(saved.preferredModelKey).toBe(approved.activeModelKey);
+    const manual = await update({ action: "activate", expectedHash: saved.expectedHash, modelKey: proxy.modelKey });
+    expect(manual.json().activeModelKey).toBe(proxy.modelKey);
+    const automatic = await update({ action: "automatic", expectedHash: manual.json().expectedHash });
+    expect(automatic.json().activeModelKey).toBe(approved.activeModelKey);
+    expect(automatic.json().versions).toHaveLength(3);
+    const ownerApproved = await update({ action: "register", expectedHash: automatic.json().expectedHash, sourceModelKey: "candidate", label: "Owner 核准加工副本",
+      source: { ...source, kind: "style-proxy", tier: "300heroes" }, automaticEligible: true });
+    expect(ownerApproved.statusCode, ownerApproved.body).toBe(200);
+    expect(ownerApproved.json().activeModelKey).toBe(ownerApproved.json().versions.at(-1).modelKey);
+  });
+
   it("defaults to the new frozen body, retains old bytes/bindings, and rolls both ways after the import source is deleted", async () => {
     const before = read("champions", heroId);
     const beforeBytes = readFileSync(join(root, "models/old-body.json"));

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T14:38:16+08:00",
-  "inputsSha256": "5c88cfe23030c0313283f868c1ccb2cd70b2099d5690bc4e4ca7d170bc749acd",
+  "generatedAt": "2026-09-10T15:00:57+08:00",
+  "inputsSha256": "71eeceeb7ab3ddf3626ee25fb312413e7d0a1ae8e628db0978593ec7ca0242fe",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -8410,7 +8410,7 @@
               "archiveMember": "raw/Granny_Suit-0.1.0.zip"
             }
           ],
-          "verification": "使用者確認招財貓形態。已轉成保留 20 Mesh、20 蒙皮與共享 29 骨節、20 貼圖的 GLB；Khronos 格式驗證 0 錯誤／0 警告，瀏覽器正面／側面／背面確認可載入且高 1.8。原包 0 AnimationClip；目前 32 繪製批次超過上架上限 5，仍待合併材質／網格、補動作與後台切換驗收。",
+          "verification": "使用者確認招財貓形態。已保留全部 9,432 三角面，合併至 1 個蒙皮、29 骨節、5 繪製批次；5 張有圖案貼圖維持原生 1024×1024，其餘單色轉線性色彩頂點。Khronos 驗證 0 錯誤／0 警告，瀏覽器三面可載入。原包 0 AnimationClip；仍待動作綁定、六狀態驗證與後台切換，未列成品。",
           "reuseTerms": "作者署名與原始包保留；跨遊戲再散布權利未核實。",
           "usage": "intake-only; backend integration required after standardization",
           "publicationStatus": "s3-legacy-readback-verified",
@@ -8433,9 +8433,9 @@
             "supersedes": "materials/community-hero-forge/recipes/34.upload-recipe.json → presentation.visualDirection"
           },
           "backup": {
-            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3.zip",
-            "bytes": 4505665,
-            "sha256": "ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/4b3950578db1861e3a037492c4a93ec9878343bbffa7e0027e9c7aad0f6088d5.zip",
+            "bytes": 4820097,
+            "sha256": "4b3950578db1861e3a037492c4a93ec9878343bbffa7e0027e9c7aad0f6088d5",
             "readbackVerified": true,
             "usage": "manual-only legacy backup; not runtime-ready"
           },
@@ -8450,7 +8450,7 @@
             "staticBrowserLoaded": true,
             "runtimeReady": false,
             "blockers": [
-              "draw primitives 32 > 5",
+              "uncompacted revision retained for comparison; use compaction for next processing",
               "no source AnimationClip",
               "backend selection unverified"
             ]
@@ -8462,8 +8462,37 @@
               "sha256": "16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2",
               "readbackVerified": true,
               "usage": "manual-only legacy backup; not runtime-ready"
+            },
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3.zip",
+              "bytes": 4505665,
+              "sha256": "ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3",
+              "readbackVerified": true,
+              "usage": "manual-only legacy backup; not runtime-ready"
             }
-          ]
+          ],
+          "compaction": {
+            "path": "compacted-prefab/body.glb",
+            "sha256": "c8a1d6accb1c1fbb892296a5c955d09f84944166db81020ee0e8161a2b1c4141",
+            "bytes": 817196,
+            "meshes": 1,
+            "skins": 1,
+            "bones": 29,
+            "drawPrimitives": 5,
+            "triangles": 9432,
+            "formatValidation": {
+              "errors": 0,
+              "warnings": 0
+            },
+            "staticBrowserLoaded": true,
+            "runtimeReady": false,
+            "blockers": [
+              "no source AnimationClip",
+              "runtime state binding unverified",
+              "backend selection unverified"
+            ],
+            "validationPath": "materials/hero-model-library/turbo-granny-compaction-validation.json"
+          }
         }
       ],
       "paidCandidates": []
@@ -17729,7 +17758,7 @@
             "archiveMember": "raw/Granny_Suit-0.1.0.zip"
           }
         ],
-        "verification": "使用者確認招財貓形態。已轉成保留 20 Mesh、20 蒙皮與共享 29 骨節、20 貼圖的 GLB；Khronos 格式驗證 0 錯誤／0 警告，瀏覽器正面／側面／背面確認可載入且高 1.8。原包 0 AnimationClip；目前 32 繪製批次超過上架上限 5，仍待合併材質／網格、補動作與後台切換驗收。",
+        "verification": "使用者確認招財貓形態。已保留全部 9,432 三角面，合併至 1 個蒙皮、29 骨節、5 繪製批次；5 張有圖案貼圖維持原生 1024×1024，其餘單色轉線性色彩頂點。Khronos 驗證 0 錯誤／0 警告，瀏覽器三面可載入。原包 0 AnimationClip；仍待動作綁定、六狀態驗證與後台切換，未列成品。",
         "reuseTerms": "作者署名與原始包保留；跨遊戲再散布權利未核實。",
         "usage": "intake-only; backend integration required after standardization",
         "publicationStatus": "s3-legacy-readback-verified",
@@ -17752,9 +17781,9 @@
           "supersedes": "materials/community-hero-forge/recipes/34.upload-recipe.json → presentation.visualDirection"
         },
         "backup": {
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3.zip",
-          "bytes": 4505665,
-          "sha256": "ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/4b3950578db1861e3a037492c4a93ec9878343bbffa7e0027e9c7aad0f6088d5.zip",
+          "bytes": 4820097,
+          "sha256": "4b3950578db1861e3a037492c4a93ec9878343bbffa7e0027e9c7aad0f6088d5",
           "readbackVerified": true,
           "usage": "manual-only legacy backup; not runtime-ready"
         },
@@ -17769,7 +17798,7 @@
           "staticBrowserLoaded": true,
           "runtimeReady": false,
           "blockers": [
-            "draw primitives 32 > 5",
+            "uncompacted revision retained for comparison; use compaction for next processing",
             "no source AnimationClip",
             "backend selection unverified"
           ]
@@ -17781,8 +17810,37 @@
             "sha256": "16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2",
             "readbackVerified": true,
             "usage": "manual-only legacy backup; not runtime-ready"
+          },
+          {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3.zip",
+            "bytes": 4505665,
+            "sha256": "ea4dca68cff200ccf36e6e4b71f16d8a94e2b1abc538792ccf44d051737184b3",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
           }
-        ]
+        ],
+        "compaction": {
+          "path": "compacted-prefab/body.glb",
+          "sha256": "c8a1d6accb1c1fbb892296a5c955d09f84944166db81020ee0e8161a2b1c4141",
+          "bytes": 817196,
+          "meshes": 1,
+          "skins": 1,
+          "bones": 29,
+          "drawPrimitives": 5,
+          "triangles": 9432,
+          "formatValidation": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "staticBrowserLoaded": true,
+          "runtimeReady": false,
+          "blockers": [
+            "no source AnimationClip",
+            "runtime state binding unverified",
+            "backend selection unverified"
+          ],
+          "validationPath": "materials/hero-model-library/turbo-granny-compaction-validation.json"
+        }
       },
       {
         "id": "gtainside-lubu",
