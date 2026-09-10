@@ -140,7 +140,11 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     //
     // 加總單獨驗一次：⛔ 不要讓「有人靜靜地掉出所有階梯」躲在四個數字的算術裡。
     expect(Object.values(byTier).reduce((a, b) => a + b, 0)).toBe(CHAMP_IDS.length);
-    expect(byTier).toEqual({ authored: 13, generated: 52, name: 6 });
+    // ⭐ 2026-09-10：`name` 6 → **88**（+82）—— 82 名社群／LOL 英雄補上了
+    //   `champion-voices.json` 的 key。⭐ 他們**沒有** w3x map quip（他們不是從那張圖來的）
+    //   ⇒ `source: "none"` 是**真話**,⛔ 不是佔位 ⇒ 他們落在「只有呼名」這一階。
+    //   ⚠️ 上面那條加總斷言同時在守：⛔ 不會有人靜靜地掉出所有階梯。
+    expect(byTier).toEqual({ authored: 13, generated: 52, name: 88 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {

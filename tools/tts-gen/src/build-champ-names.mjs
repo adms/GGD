@@ -103,6 +103,19 @@ const MIX_JA_READING_OVERRIDE = Object.freeze({
     text: "ホアン",
     why: "`say -v Kyoko` renders 騜 as 0.030 s of silence (measured 2026-08-27); ホアン is this entry's own spokenName reading.",
   },
+  "b2-maomao": {
+    // 貓貓（薬屋のひとりごと）
+    //
+    // ⭐ 還原日文原作的字形：原作寫「猫猫」，⛔ 而顯示名用的是繁體專用的「貓」。
+    // ⚠️ `say -v Kyoko 貓貓` 量到 0.030 s 靜音（2026-09-10）—— ⭐ 與 騜 同一個坑：
+    //   ⛔ 那個字形日文根本沒有，Kyoko 沒有音可以發。
+    // ⇒ ⭐ 這裡換的是**字形**，⛔ 不是讀音：Kyoko 讀「猫猫」＝ マオマオ，
+    //   ⭐ 與 canonical pack 那一列（`["ja", null, null, "マオマオ", "Maomao"]`）一致，
+    //   ⭐ 而「Kyoko 用日語讀音唸中文全名」那個梗**完整保留**（⛔ 換成片假名就沒梗了）。
+    // ⚠️ 顯示名一個字都沒動（RULE：⛔ 只改唸的，不改看的）。
+    text: "猫猫",
+    why: "`say -v Kyoko` renders 貓貓 as 0.030 s of silence (measured 2026-09-10) — 貓 is a Traditional-only glyph; the Japanese original writes 猫猫, which Kyoko reads as マオマオ.",
+  },
 });
 
 const MIX_ZH_VOICE = "Tingting";
