@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "ou99.459617",
+  "modelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -323,5 +323,37 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:39:18.863Z",
+      "source": {
+        "kind": "previous",
+        "character": "吉伊卡哇",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
+      "label": "ou99 「可爱小宠物chii吉伊」（相似造型）",
+      "sourceModelKey": "ou99.459617",
+      "modelSha256": "7ab0c5e7ba541cf2f14b05d4bbcb0c190e213a9801dbfa0f3e10529deb6ea243",
+      "binarySha256": "4382e2d43746df99fc68fb36b6b466e2bac8b4abd5c94a679b3153946c6cdcc5",
+      "registeredAt": "2026-09-10T11:39:18.885Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "吉伊卡哇",
+        "work": "可爱小宠物chii吉伊",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html"
+      }
+    }
+  ]
 }

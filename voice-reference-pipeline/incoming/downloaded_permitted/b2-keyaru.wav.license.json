@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-keyaru",
+  "source_name": "youtube: TVアニメ『回復術士のやり直し』PV第1弾（2020-10-30、ケヤルガの声初お披露目）",
+  "source_url": "https://www.youtube.com/watch?v=yfXlXJp8ALQ",
+  "direct_url": "https://www.youtube.com/watch?v=yfXlXJp8ALQ",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "保住有哉",
+  "source_sha256": "9bef67d854990a0c7e1aa0074c09b04fdafbe8e2868a19eb033c2448137c5730",
+  "downloaded_at": "2026-09-10T10:56:57.311025Z",
+  "notes": "公式PV第1弾。ケヤルガ（保住有哉）の台詞入り。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 10.0,
+    "window_s": 10.0,
+    "score": 0.45,
+    "metrics": {
+      "multiple_speaker_probability": 0.257,
+      "music_probability": 0.693,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 8.9
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-keyaru.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

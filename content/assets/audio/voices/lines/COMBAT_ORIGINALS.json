@@ -1,0 +1,2939 @@
+{
+ "id": "combat-originals",
+ "schema": "voice.combat-originals@1",
+ "note": "⭐ owner 2026-09-10「有原檔 已經足夠表達該意思 我們就直接採用」：這張表列出哪一格用原作遊戲語音（來源＝角色語音索引 groupId／檔名），那一格就不合成。mp3 已轉成包裡的規格（loudnorm I=-16 TP=-1.5、128k/44.1k/mono）放在 lines/<id>/<cat>.mp3；build-combat-lines.mjs 讀這張表把它記成 textSource=original。要換一格：改這裡的 src 再跑 import_originals；要改成合成：刪掉那一格。",
+ "rules": {
+  "300heroes": {
+   "defeat": [
+    "^voice_death"
+   ],
+   "kill-1": [
+    "^voice_kill",
+    "^voice_killing",
+    "^voice_3gamerkills"
+   ],
+   "first-blood": [
+    "^voice_firstblood"
+   ],
+   "kill-2": [
+    "^voice_multikill0?2"
+   ],
+   "kill-3": [
+    "^voice_multikill0?3"
+   ],
+   "kill-4": [
+    "^voice_multikill0?4"
+   ],
+   "kill-5": [
+    "^voice_multikill0?5"
+   ],
+   "hurt": [
+    "^voice_hp30",
+    "^voice_30_hp"
+   ],
+   "skill-name.q": [
+    "^voice_q\\b",
+    "^voice_q_",
+    "^voice_q\\d",
+    "^voice_skill",
+    "^voice_attack"
+   ],
+   "skill-name.w": [
+    "^voice_w\\b",
+    "^voice_w_",
+    "^voice_w\\d",
+    "^voice_attack"
+   ],
+   "skill-name.e": [
+    "^voice_e\\b",
+    "^voice_e_",
+    "^voice_e\\d",
+    "^voice_attack"
+   ],
+   "skill-name.r": [
+    "^voice_dazhao"
+   ],
+   "skill-name.ex": [
+    "^voice_dazhao2",
+    "^voice_dazhao1",
+    "^voice_dazhao"
+   ],
+   "taunt": [
+    "^voice_to_",
+    "^voice_joke"
+   ],
+   "puzzled": [
+    "^voice_joke"
+   ],
+   "victory": [
+    "^voice_shenglijinjun"
+   ],
+   "sprint": [
+    "^voice_move"
+   ],
+   "free-move": [
+    "^voice_move"
+   ],
+   "charge": [
+    "^voice_move"
+   ],
+   "attack-light": [
+    "^voice_attack"
+   ],
+   "attack-heavy": [
+    "^voice_attack"
+   ]
+  },
+  "gamebanana-shadow": {
+   "defeat": [
+    "pain_death"
+   ],
+   "hurt": [
+    "pain_small"
+   ],
+   "hurt-heavy": [
+    "pain_big"
+   ],
+   "kill-1": [
+    "kill_anyhero",
+    "melee_kill"
+   ],
+   "skill-name.q": [
+    "use_power1"
+   ],
+   "skill-name.w": [
+    "use_power2"
+   ],
+   "skill-name.e": [
+    "use_power3"
+   ],
+   "skill-name.r": [
+    "use_power4_start"
+   ],
+   "skill-name.ex": [
+    "super_slash_cast$"
+   ],
+   "taunt": [
+    "fencer_select_"
+   ],
+   "respond.ok": [
+    "fencer_select_"
+   ],
+   "respond.no": [
+    "fencer_unselect_"
+   ],
+   "puzzled": [
+    "fencer_select_"
+   ],
+   "thanks": [
+    "pick_up_gold"
+   ],
+   "dodge": [
+    "effort_dash"
+   ],
+   "sprint": [
+    "effort_dash"
+   ],
+   "block": [
+    "parry"
+   ],
+   "unstoppable": [
+    "revenge_kill"
+   ],
+   "kill-2": [
+    "kill_anyhero"
+   ],
+   "kill-3": [
+    "kill_anyhero"
+   ]
+  },
+  "github-chiikawa": {
+   "hurt": [
+    "injured_1"
+   ],
+   "hurt-heavy": [
+    "injured_2"
+   ],
+   "defeat": [
+    "injured_2"
+   ],
+   "kill-1": [
+    "tame_1"
+   ],
+   "skill-name.q": [
+    "tame_1"
+   ],
+   "skill-name.w": [
+    "injured_1"
+   ],
+   "skill-name.e": [
+    "tame_1"
+   ],
+   "skill-name.r": [
+    "tame_1"
+   ],
+   "skill-name.ex": [
+    "injured_2"
+   ],
+   "taunt": [
+    "tame_1"
+   ],
+   "puzzled": [
+    "injured_1"
+   ]
+  },
+  "wikirby": {
+   "skill-name.q": [
+    "^voice/"
+   ],
+   "skill-name.w": [
+    "^voice/"
+   ],
+   "skill-name.e": [
+    "^voice/"
+   ],
+   "skill-name.r": [
+    "^voice/"
+   ],
+   "skill-name.ex": [
+    "^voice/"
+   ],
+   "kill-1": [
+    "^voice/"
+   ],
+   "taunt": [
+    "^voice/"
+   ],
+   "hurt": [
+    "^voice/"
+   ],
+   "hurt-heavy": [
+    "^voice/"
+   ],
+   "defeat": [
+    "^voice/"
+   ],
+   "puzzled": [
+    "^voice/"
+   ],
+   "attack-light": [
+    "^voice/"
+   ],
+   "attack-heavy": [
+    "^voice/"
+   ],
+   "jump": [
+    "^voice/"
+   ]
+  }
+ },
+ "champions": {
+  "b2-maple": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0016-272_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:272",
+    "sha256": "31542387c84fade6c2aae76e17179ff05ed10539e8415907a8423bad71524975",
+    "seconds": 2.86,
+    "importedAt": "2026-09-10T12:02:27.837337+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0013-272_voice_q2_1.ogg",
+    "name": "voice_q2_1",
+    "group": "300heroes:272",
+    "sha256": "0962151be9dfab3ef345c6b3f77ce4bca79937bf7d89fd88a9713bfd98bbff6b",
+    "seconds": 0.71,
+    "importedAt": "2026-09-10T12:02:27.967652+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0025-272_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:272",
+    "sha256": "649a5e75ca5cf4d1863e827f62a7d3826eaac909d133aeff10cad26f7d1f39bd",
+    "seconds": 2.1,
+    "importedAt": "2026-09-10T12:02:28.114181+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0001-272_voice_e_1.ogg",
+    "name": "voice_e_1",
+    "group": "300heroes:272",
+    "sha256": "9708037227189267a600e3e25b9dc6375dcfe41cc36a8807973cf61a7272eceb",
+    "seconds": 0.66,
+    "importedAt": "2026-09-10T12:02:28.241723+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0004-272_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:272",
+    "sha256": "285f087f60b92ffdcb425073056a4a89ebbc958e104bfcf32be10e9f3b9b49e5",
+    "seconds": 1.21,
+    "importedAt": "2026-09-10T12:02:28.383762+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0004-272_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:272",
+    "sha256": "285f087f60b92ffdcb425073056a4a89ebbc958e104bfcf32be10e9f3b9b49e5",
+    "seconds": 1.21,
+    "importedAt": "2026-09-10T12:02:28.520062+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0012-272_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:272",
+    "sha256": "32a887f066358224cf52df5c290c66938a97321093fbc72d47b1ba6a65b55114",
+    "seconds": 3.82,
+    "importedAt": "2026-09-10T12:02:28.754614+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0023-272_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:272",
+    "sha256": "d6fcaa3e61f8c2c3c2b006f76ae76a38936a56e27de6096c170a2ba7c1c56dd7",
+    "seconds": 2.48,
+    "importedAt": "2026-09-10T12:02:28.905846+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0017-272_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:272",
+    "sha256": "2f63f0fa55dd941d5e3d5eaf8f497743d1b953751a9aac9bd6b405c668eaaa77",
+    "seconds": 4.43,
+    "importedAt": "2026-09-10T12:02:29.155239+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0006-272_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:272",
+    "sha256": "403ad2a19520a8f1857a3f49d52789e7b1df05f6953e29609f8c7997584b7d07",
+    "seconds": 3.38,
+    "importedAt": "2026-09-10T12:02:29.338404+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0020-272_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:272",
+    "sha256": "00cdd77bd6105ab324be34177676866911c4cb0d0749dd7d3b397e54f200a070",
+    "seconds": 1.44,
+    "importedAt": "2026-09-10T12:02:29.477009+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0015-272_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:272",
+    "sha256": "6e4281b509b0dc22eea31916e0befb155c8c81cba558f714ca7772019d80d096",
+    "seconds": 2.47,
+    "importedAt": "2026-09-10T12:02:29.629878+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0008-272_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:272",
+    "sha256": "6393bf46418b06f88caf9086421d2c594aed4ad0d51bafb562053412ea0cce8a",
+    "seconds": 2.83,
+    "importedAt": "2026-09-10T12:02:29.795967+00:00"
+   }
+  },
+  "b2-rem": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0009-310_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:310",
+    "sha256": "8b331c83c52d698c01ad4c2225a45687ebd7500c6d66846db61af7519d73f7bc",
+    "seconds": 2.12,
+    "importedAt": "2026-09-10T12:02:29.957356+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0033-310_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:310",
+    "sha256": "e3389291e88d2e9354163840b3697551c4bd4656a136e3c57b85c9510ca1002b",
+    "seconds": 2.99,
+    "importedAt": "2026-09-10T12:02:30.117599+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0007-310_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:310",
+    "sha256": "aa96bbe6ebca16e3b8977d3626dcfc7133509001b10f3821c5e6e47a118a0314",
+    "seconds": 0.82,
+    "importedAt": "2026-09-10T12:02:30.250781+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0033-310_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:310",
+    "sha256": "e3389291e88d2e9354163840b3697551c4bd4656a136e3c57b85c9510ca1002b",
+    "seconds": 2.99,
+    "importedAt": "2026-09-10T12:02:30.411211+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0021-310_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:310",
+    "sha256": "4af348d3da7bc98a7747b32619e66901633997de20fe324d948a4d0acb475000",
+    "seconds": 0.51,
+    "importedAt": "2026-09-10T12:02:30.542283+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0022-310_voice_dazhao_2.ogg",
+    "name": "voice_dazhao_2",
+    "group": "300heroes:310",
+    "sha256": "c6f6f3d07ebf56ae7ae58cd206885de030862d7901b00f7f0a84698370b620de",
+    "seconds": 1.61,
+    "importedAt": "2026-09-10T12:02:30.685654+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0016-310_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:310",
+    "sha256": "3c9d5c6175a5c2b5e7248687d9e8e51d8733f8853a41f95140bd62f7ca0e537a",
+    "seconds": 1.63,
+    "importedAt": "2026-09-10T12:02:30.824192+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0003-310_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:310",
+    "sha256": "92132cfe2f01f63600adc68fc9317b840547237093d53ad9a7a10ae0690a3347",
+    "seconds": 7.53,
+    "importedAt": "2026-09-10T12:02:31.066157+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0036-310_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:310",
+    "sha256": "2de285bba1b711aaab0b8881eab29616aadb80f84d791f969eddd01ac57f7221",
+    "seconds": 4.77,
+    "importedAt": "2026-09-10T12:02:31.266484+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0033-310_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:310",
+    "sha256": "e3389291e88d2e9354163840b3697551c4bd4656a136e3c57b85c9510ca1002b",
+    "seconds": 2.99,
+    "importedAt": "2026-09-10T12:02:31.425158+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/01-0033-310_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:310",
+    "sha256": "e3389291e88d2e9354163840b3697551c4bd4656a136e3c57b85c9510ca1002b",
+    "seconds": 2.99,
+    "importedAt": "2026-09-10T12:02:31.581497+00:00"
+   }
+  },
+  "b2-rin": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0013-160_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:160",
+    "sha256": "b8b3840e1cfe4be347d40c62636f2b75c755fbc15d4f8c1e0344b9709d15cff3",
+    "seconds": 1.39,
+    "importedAt": "2026-09-10T12:02:31.717838+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0003-160_voice_skill_ersts_1.ogg",
+    "name": "voice_skill_ersts_1",
+    "group": "300heroes:160",
+    "sha256": "c3b694d691cabf4cc631dab38549063b9ac555fb31ab074fbcb7548bd4bbad0e",
+    "seconds": 4.14,
+    "importedAt": "2026-09-10T12:02:31.909353+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0007-160_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:160",
+    "sha256": "c397ac2c467941cceff606455128e9f3c6ea22c08ac4bba25abdf4cb6d55b18a",
+    "seconds": 1.24,
+    "importedAt": "2026-09-10T12:02:32.048558+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0000-160_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:160",
+    "sha256": "37bda1effa04e8eef1c32754499a82a1df0883686220a79be9425089b8b8c59a",
+    "seconds": 1.58,
+    "importedAt": "2026-09-10T12:02:32.190449+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0018-160_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:160",
+    "sha256": "b1b37e960693cb071abbc7b67c7171b127ef7723a7bdb0ec9c083ec41b1961bf",
+    "seconds": 2.74,
+    "importedAt": "2026-09-10T12:02:32.348189+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0018-160_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:160",
+    "sha256": "b1b37e960693cb071abbc7b67c7171b127ef7723a7bdb0ec9c083ec41b1961bf",
+    "seconds": 2.74,
+    "importedAt": "2026-09-10T12:02:32.503163+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0009-160_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:160",
+    "sha256": "40b0e7dc02fdf9f371e6ba4eb69af79430ecc95f5143a1765fd9641b57e542e0",
+    "seconds": 2.0,
+    "importedAt": "2026-09-10T12:02:32.654818+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0016-160_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:160",
+    "sha256": "4510736e33c712142bf8964f4637e576e04d65255daaf549f95bcef975cbb57e",
+    "seconds": 1.65,
+    "importedAt": "2026-09-10T12:02:32.798593+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0002-160_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:160",
+    "sha256": "c2343421be3add817bdcf132d1a4a8ad5f7d6f0ae8af04e4488e6666828b90e0",
+    "seconds": 1.3,
+    "importedAt": "2026-09-10T12:02:32.936559+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0005-160_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:160",
+    "sha256": "ccfac83b69cf6eb1a41adb49a27b438c21069d38e6cd1f5de849837ffe131107",
+    "seconds": 1.22,
+    "importedAt": "2026-09-10T12:02:33.075201+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0006-160_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:160",
+    "sha256": "6d0bbb57dbc726c94b677998953f08549477d299c1d197583eadcf5a2b4f3b80",
+    "seconds": 1.26,
+    "importedAt": "2026-09-10T12:02:33.213053+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0014-160_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:160",
+    "sha256": "75fb48dab06940efe490e816e8a23ebc1088b001e4be57b88c88eb271cdd0bd6",
+    "seconds": 1.17,
+    "importedAt": "2026-09-10T12:02:33.349229+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/01-0011-160_voice_attack_4.ogg",
+    "name": "voice_attack_4",
+    "group": "300heroes:160",
+    "sha256": "20ed9856e0e7914dac42b4ecb4a8a8f1b6f5c4a5acfba92b3552825d11c1efdd",
+    "seconds": 1.03,
+    "importedAt": "2026-09-10T12:02:33.483968+00:00"
+   }
+  },
+  "b2-shadow": {
+   "defeat": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_pain_death_01.mp3",
+    "name": "fencer_pain_death_01",
+    "group": "gamebanana-shadow",
+    "sha256": "a83fd9aab6c5b3ab9cb51ba20e48d97576917e79c9b00cf825389d149a988586",
+    "seconds": 4.22,
+    "importedAt": "2026-09-10T12:02:33.808444+00:00"
+   },
+   "hurt": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_pain_small_01.mp3",
+    "name": "fencer_pain_small_01",
+    "group": "gamebanana-shadow",
+    "sha256": "26087db146bffbe43bdfbf54f54ebac70df964b2d58a2087fd3afaa835f8f801",
+    "seconds": 2.53,
+    "importedAt": "2026-09-10T12:02:34.072431+00:00"
+   },
+   "hurt-heavy": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_pain_big_01.mp3",
+    "name": "fencer_pain_big_01",
+    "group": "gamebanana-shadow",
+    "sha256": "8e78dac507db1a01e01561d708837d620638ce2f283ef7e7f7bfd61ecf3141f0",
+    "seconds": 1.48,
+    "importedAt": "2026-09-10T12:02:34.303915+00:00"
+   },
+   "kill-1": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_kill_anyhero_01.mp3",
+    "name": "fencer_kill_anyhero_01",
+    "group": "gamebanana-shadow",
+    "sha256": "beccb7b1da941f898bd971218c3c2a2d6152c3c323ba1553a294aac8ce104405",
+    "seconds": 5.6,
+    "importedAt": "2026-09-10T12:02:34.662487+00:00"
+   },
+   "skill-name.q": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power1_01.mp3",
+    "name": "fencer_use_power1_01",
+    "group": "gamebanana-shadow",
+    "sha256": "48088679612f5ab564ccec69b5a522db1abb594a493382efded84cd0c4e89bd0",
+    "seconds": 1.36,
+    "importedAt": "2026-09-10T12:02:34.896265+00:00"
+   },
+   "skill-name.w": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power2_01.mp3",
+    "name": "fencer_use_power2_01",
+    "group": "gamebanana-shadow",
+    "sha256": "71688a6cc8ae8f6eff12072baaa08dae6af775584c23e1075bec703971593dda",
+    "seconds": 2.32,
+    "importedAt": "2026-09-10T12:02:35.142694+00:00"
+   },
+   "skill-name.e": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power3_01.mp3",
+    "name": "fencer_use_power3_01",
+    "group": "gamebanana-shadow",
+    "sha256": "1a5fdc3c1998a8f5e9276848f8ef9beeedbf9f1210a7dc51a93a228fd2896aef",
+    "seconds": 2.74,
+    "importedAt": "2026-09-10T12:02:35.406949+00:00"
+   },
+   "skill-name.r": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power4_start_01.mp3",
+    "name": "fencer_use_power4_start_01",
+    "group": "gamebanana-shadow",
+    "sha256": "76b47985422cc7b56a4a5637f9c6dd63fcc4142e8955d59d15aae41c4c1b489f",
+    "seconds": 3.17,
+    "importedAt": "2026-09-10T12:02:35.705427+00:00"
+   },
+   "skill-name.ex": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/abilities/fencer/super_slash/fencer_super_slash_cast.mp3",
+    "name": "fencer_super_slash_cast",
+    "group": "gamebanana-shadow",
+    "sha256": "a8c6eaaca271eda500c04e92dd4be05c8d2094f7a976297b5a8ac990fa99c4e1",
+    "seconds": 4.37,
+    "importedAt": "2026-09-10T12:02:36.029192+00:00"
+   },
+   "taunt": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_select_01.mp3",
+    "name": "fencer_select_01",
+    "group": "gamebanana-shadow",
+    "sha256": "5003803ecd09906411c953a34cf4c43a81eb69f9da62c6030e64d2b0276832d0",
+    "seconds": 6.46,
+    "importedAt": "2026-09-10T12:02:36.411620+00:00"
+   },
+   "respond.ok": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_select_02.mp3",
+    "name": "fencer_select_02",
+    "group": "gamebanana-shadow",
+    "sha256": "5003803ecd09906411c953a34cf4c43a81eb69f9da62c6030e64d2b0276832d0",
+    "seconds": 6.46,
+    "importedAt": "2026-09-10T12:02:36.798205+00:00"
+   },
+   "respond.no": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_unselect_01.mp3",
+    "name": "fencer_unselect_01",
+    "group": "gamebanana-shadow",
+    "sha256": "f497991758d048def3dce4a639ba6b5a4de091797ad607ba3bc0c03ead9d0be5",
+    "seconds": 1.03,
+    "importedAt": "2026-09-10T12:02:37.037944+00:00"
+   },
+   "puzzled": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_select_03.mp3",
+    "name": "fencer_select_03",
+    "group": "gamebanana-shadow",
+    "sha256": "5003803ecd09906411c953a34cf4c43a81eb69f9da62c6030e64d2b0276832d0",
+    "seconds": 6.46,
+    "importedAt": "2026-09-10T12:02:37.449354+00:00"
+   },
+   "thanks": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_pick_up_gold_01.mp3",
+    "name": "fencer_pick_up_gold_01",
+    "group": "gamebanana-shadow",
+    "sha256": "beccb7b1da941f898bd971218c3c2a2d6152c3c323ba1553a294aac8ce104405",
+    "seconds": 5.6,
+    "importedAt": "2026-09-10T12:02:37.820476+00:00"
+   },
+   "dodge": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_effort_dash_01.mp3",
+    "name": "fencer_effort_dash_01",
+    "group": "gamebanana-shadow",
+    "sha256": "fb8848e1aa17c6240c5999aa238931de03581be0df476ffe5f51b17d9dac1531",
+    "seconds": 1.91,
+    "importedAt": "2026-09-10T12:02:38.063751+00:00"
+   },
+   "sprint": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_effort_dash_02.mp3",
+    "name": "fencer_effort_dash_02",
+    "group": "gamebanana-shadow",
+    "sha256": "dfff134b66471ca2c0d2205e278927672f8e9208aede3875ef2c8ecc83d276dc",
+    "seconds": 2.51,
+    "importedAt": "2026-09-10T12:02:38.325865+00:00"
+   },
+   "block": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_parry_01.mp3",
+    "name": "fencer_parry_01",
+    "group": "gamebanana-shadow",
+    "sha256": "c443b8b27b2368a14b877073bd858feff6c891a6566449d9adcd025c4df68980",
+    "seconds": 2.57,
+    "importedAt": "2026-09-10T12:02:38.610659+00:00"
+   },
+   "unstoppable": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_revenge_kill.mp3",
+    "name": "fencer_revenge_kill",
+    "group": "gamebanana-shadow",
+    "sha256": "10a418de9ac02cc83556d5dc9d09f6878a5b1096fc0c4152a6518ab5d793c4f5",
+    "seconds": 2.06,
+    "importedAt": "2026-09-10T12:02:38.867556+00:00"
+   },
+   "kill-2": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_kill_anyhero_02.mp3",
+    "name": "fencer_kill_anyhero_02",
+    "group": "gamebanana-shadow",
+    "sha256": "8698c49a8fd1536598cf992217d35203c0c3334a1cd44eead7c05852a1210acd",
+    "seconds": 4.8,
+    "importedAt": "2026-09-10T12:02:39.225041+00:00"
+   },
+   "kill-3": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_kill_anyhero_03.mp3",
+    "name": "fencer_kill_anyhero_03",
+    "group": "gamebanana-shadow",
+    "sha256": "4fba9492311b39229ceef6e4c36a10a28499302382f69d579521c7cd635abac8",
+    "seconds": 6.61,
+    "importedAt": "2026-09-10T12:02:39.663185+00:00"
+   }
+  },
+  "b2-zenitsu": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0040-332_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:332",
+    "sha256": "4678bedd9968f8f44937640e49543619b5e93caa4d073ed33bcdc133b4b1961d",
+    "seconds": 3.06,
+    "importedAt": "2026-09-10T12:02:39.919426+00:00"
+   },
+   "kill-1": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0002-332_voice_3gamerkills_1.ogg",
+    "name": "voice_3gamerkills_1",
+    "group": "300heroes:332",
+    "sha256": "baf6b310571f4ec92d106a3d3848ec820d9a7bb3027582c5dfeb6e3759091ea1",
+    "seconds": 0.45,
+    "importedAt": "2026-09-10T12:02:40.108930+00:00"
+   },
+   "hurt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0004-332_voice_hp30_1.ogg",
+    "name": "voice_hp30_1",
+    "group": "300heroes:332",
+    "sha256": "18b360e63db1c93c87b6357ea38421351f787d2d4d2d252891b46670e446eede",
+    "seconds": 0.63,
+    "importedAt": "2026-09-10T12:02:40.300591+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0042-332_voice_q1_1.ogg",
+    "name": "voice_q1_1",
+    "group": "300heroes:332",
+    "sha256": "2b02ed35dd94ef5e0b03484313000ef9af82691a4c6c4f44da9d5e7bfe72228f",
+    "seconds": 1.0,
+    "importedAt": "2026-09-10T12:02:40.527252+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0007-332_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:332",
+    "sha256": "3196a2c5ae2730de0b694f57254db13d7e85654f514aba1c84c905b6de2a60ef",
+    "seconds": 1.46,
+    "importedAt": "2026-09-10T12:02:40.741417+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0017-332_voice_e_1.ogg",
+    "name": "voice_e_1",
+    "group": "300heroes:332",
+    "sha256": "451898c89d2d582465846b0e33e4c4ea0d403fd7b5754b0820766722c3b333d9",
+    "seconds": 1.14,
+    "importedAt": "2026-09-10T12:02:40.957331+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0049-332_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:332",
+    "sha256": "47e7d0231dc4fa42af31ef683a1575f7dab6db9e75c06e1bdcacf13b0ca5ee7f",
+    "seconds": 2.63,
+    "importedAt": "2026-09-10T12:02:41.188858+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0030-332_voice_dazhao_2.ogg",
+    "name": "voice_dazhao_2",
+    "group": "300heroes:332",
+    "sha256": "50a32e6611220e046b0d37c3a78715762e83083b79900ca234e515eb10956971",
+    "seconds": 2.61,
+    "importedAt": "2026-09-10T12:02:41.372524+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0033-332_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:332",
+    "sha256": "ceb988f4420e17732d2e7e0883c207565fd0a965d18dea24966a39cac0863c02",
+    "seconds": 5.43,
+    "importedAt": "2026-09-10T12:02:41.611038+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0012-332_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:332",
+    "sha256": "64ae90b2f5e99a8762d1652f9bab1aafb86bf44e5d3b545a83a69bffe0e54622",
+    "seconds": 2.06,
+    "importedAt": "2026-09-10T12:02:41.787682+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0014-332_voice_move_10.ogg",
+    "name": "voice_move_10",
+    "group": "300heroes:332",
+    "sha256": "6978403ec7d122fda2a4abf3fbd0f33d22977fe205e7c1b1fcbd4152515281ed",
+    "seconds": 2.74,
+    "importedAt": "2026-09-10T12:02:41.974094+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0070-332_voice_move_11.ogg",
+    "name": "voice_move_11",
+    "group": "300heroes:332",
+    "sha256": "3dd2dc35db6434f3a84e0fee73f54685d7cb94abe5c354dc1b2fb20a3f06961c",
+    "seconds": 3.12,
+    "importedAt": "2026-09-10T12:02:42.198957+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0046-332_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:332",
+    "sha256": "1d33fa8b3b110e81818a21ea232a1706cfbb7ae8fdcf31a59b18e87c51526a82",
+    "seconds": 3.18,
+    "importedAt": "2026-09-10T12:02:42.393416+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0064-332_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:332",
+    "sha256": "5fd42772d6db2284fdcb291ea2034e10d7247517cb8a34c15869c58c882809fc",
+    "seconds": 2.1,
+    "importedAt": "2026-09-10T12:02:42.553780+00:00"
+   }
+  },
+  "community-review-04-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0015-163_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:163",
+    "sha256": "95e69c5f01cd60a3a07ced06eccc3e5f92769898994778ecf8abf73b520b2211",
+    "seconds": 2.4,
+    "importedAt": "2026-09-10T12:02:42.723629+00:00"
+   },
+   "kill-1": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0007-163_voice_kill_255_1_1.ogg",
+    "name": "voice_kill_255_1_1",
+    "group": "300heroes:163",
+    "sha256": "b77ff4e4c44639d64e6c2c2a17957a401d34dbfb76c04a903f1ad17b8482e863",
+    "seconds": 5.67,
+    "importedAt": "2026-09-10T12:02:42.941414+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0018-163_voice_q_1_1.ogg",
+    "name": "voice_q_1_1",
+    "group": "300heroes:163",
+    "sha256": "b70de17d34e73fa58a4cef568c39cd8635dc6776e8ff66d9fc5241fe7d590751",
+    "seconds": 3.39,
+    "importedAt": "2026-09-10T12:02:43.132915+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0014-163_voice_w_1_1.ogg",
+    "name": "voice_w_1_1",
+    "group": "300heroes:163",
+    "sha256": "5a413ad8a97a811d986b242643cbb4050751a723757e49fd8d699dd17638edb4",
+    "seconds": 1.34,
+    "importedAt": "2026-09-10T12:02:43.279541+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0024-163_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:163",
+    "sha256": "35b1013ae5bf95711d91127c94a83b64f6fb03688a515d78572f3758b4ec382f",
+    "seconds": 2.47,
+    "importedAt": "2026-09-10T12:02:43.446544+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0024-163_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:163",
+    "sha256": "35b1013ae5bf95711d91127c94a83b64f6fb03688a515d78572f3758b4ec382f",
+    "seconds": 2.47,
+    "importedAt": "2026-09-10T12:02:43.606674+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0019-163_voice_to_270_1.ogg",
+    "name": "voice_to_270_1",
+    "group": "300heroes:163",
+    "sha256": "dfccb9d6fdad67d62ffe8628e2d4b2813292d236f08cabf0561d49d612e6bc04",
+    "seconds": 3.62,
+    "importedAt": "2026-09-10T12:02:43.799894+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0009-163_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:163",
+    "sha256": "3e8b05d5ba8df0370acc2b11bb40c7f741045f039afc01828dc2dc678910d188",
+    "seconds": 1.39,
+    "importedAt": "2026-09-10T12:02:43.949452+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0025-163_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:163",
+    "sha256": "3d5b29c1c20393d92e85b597b1b7b8890de6fb81e47e6b0cae423d853c2b1dbd",
+    "seconds": 4.63,
+    "importedAt": "2026-09-10T12:02:44.159257+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0001-163_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:163",
+    "sha256": "1fff6198b6a117a5a138e8482f6803d10258f45705740e32dcbf6ac33052e232",
+    "seconds": 3.85,
+    "importedAt": "2026-09-10T12:02:44.360560+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0008-163_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:163",
+    "sha256": "ba0187603c161d6f2bb28144d596485cfbaaaaf08e6a30dff463f3c090a5544e",
+    "seconds": 3.02,
+    "importedAt": "2026-09-10T12:02:44.547459+00:00"
+   }
+  },
+  "community-review-06-20260907": {
+   "skill-name.q": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2a.dsp.wav",
+    "name": "voice/kirby2a.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "012db87a5bae42fb347dee8601f115ce8cfa31ea28228bca440048a4f1ea969e",
+    "seconds": 2.29,
+    "importedAt": "2026-09-10T12:02:44.717655+00:00"
+   },
+   "skill-name.w": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby00.dsp.wav",
+    "name": "voice/kirby00.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "c9c0644adbd6f35203d6a3d42df869b439f43a062876d66c94bdb9b97e436efb",
+    "seconds": 2.16,
+    "importedAt": "2026-09-10T12:02:44.866830+00:00"
+   },
+   "skill-name.e": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2f.dsp.wav",
+    "name": "voice/kirby2f.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "a52a7f8e142d20746e885ccf5d3acd57dccfd5c1f65fb2d40683c28407774ce3",
+    "seconds": 2.11,
+    "importedAt": "2026-09-10T12:02:45.014632+00:00"
+   },
+   "skill-name.r": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby22.dsp.wav",
+    "name": "voice/kirby22.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "f2b67e706b53fb155a8abe928a8927e2b150bb7f84a374008b5f3961eacd7452",
+    "seconds": 1.75,
+    "importedAt": "2026-09-10T12:02:45.172224+00:00"
+   },
+   "skill-name.ex": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby14.dsp.wav",
+    "name": "voice/kirby14.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "be89c782a8cd0b0da219b395459eeb085576ce382105d97877e2692221335485",
+    "seconds": 1.28,
+    "importedAt": "2026-09-10T12:02:45.330548+00:00"
+   },
+   "kill-1": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby25.dsp.wav",
+    "name": "voice/kirby25.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "08cff5174488ee083a957d4c39b9c5a8e385fe9403b371eb1eabddd9c88e3519",
+    "seconds": 1.16,
+    "importedAt": "2026-09-10T12:02:45.475319+00:00"
+   },
+   "taunt": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby24.dsp.wav",
+    "name": "voice/kirby24.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "0b42c8388a6c8f17a6fb5f788cea34ed7254f1d9fe57081ef85e9520fbf4c090",
+    "seconds": 1.13,
+    "importedAt": "2026-09-10T12:02:45.611360+00:00"
+   },
+   "hurt": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby1b.dsp.wav",
+    "name": "voice/kirby1b.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "026d5999bde5c28338eb30a7f6352cb672758cf2b2733b5d3814df833315df88",
+    "seconds": 1.01,
+    "importedAt": "2026-09-10T12:02:45.742827+00:00"
+   },
+   "hurt-heavy": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby1c.dsp.wav",
+    "name": "voice/kirby1c.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "babfa5eb70d508f8cc34b6ac4fc73057ecb69de34093bc4a535bcd60c7a9aaa2",
+    "seconds": 1.01,
+    "importedAt": "2026-09-10T12:02:45.871806+00:00"
+   },
+   "defeat": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2c.dsp.wav",
+    "name": "voice/kirby2c.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "f5ab9a550b87c44b6b2b017ba46e5aa7ef6a7ce9f18aeda1a5909512a19de7d0",
+    "seconds": 1.0,
+    "importedAt": "2026-09-10T12:02:46.008728+00:00"
+   },
+   "puzzled": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby0a.dsp.wav",
+    "name": "voice/kirby0a.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "02ebd3ccca43f9797b5c996d2c29d950f536123605bdb69ce6c76802e4301285",
+    "seconds": 0.97,
+    "importedAt": "2026-09-10T12:02:46.149613+00:00"
+   },
+   "attack-light": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2d.dsp.wav",
+    "name": "voice/kirby2d.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "2f4b90038d4a6f130252cfd07f3749fa0dbbc35d5acfe18c818790d982d8193f",
+    "seconds": 0.96,
+    "importedAt": "2026-09-10T12:02:46.288002+00:00"
+   },
+   "attack-heavy": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby13.dsp.wav",
+    "name": "voice/kirby13.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "c50ff66d7dc0311c3ed85e692424bb41c3d8c4a0baf1ceb1a59fe03a2e53fb14",
+    "seconds": 0.95,
+    "importedAt": "2026-09-10T12:02:46.435736+00:00"
+   },
+   "jump": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby20.dsp.wav",
+    "name": "voice/kirby20.dsp",
+    "group": "parallel-voice-ssbm-kirby",
+    "sha256": "aff490f538f715f5854eb3071361cd0ae6c191b696e809b821f8805cb99bfbb1",
+    "seconds": 0.83,
+    "importedAt": "2026-09-10T12:02:46.570372+00:00"
+   }
+  },
+  "community-review-10-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0012-213_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:213",
+    "sha256": "b74bd53fbcaaf73effcf90505ce81ad2c01314f24f8b6106c6660636ce77610f",
+    "seconds": 2.53,
+    "importedAt": "2026-09-10T12:02:46.732210+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0005-213_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:213",
+    "sha256": "03053c12e5b1a353c13626ecbd80063144b8ad1687f3c54913fc338681fba225",
+    "seconds": 3.7,
+    "importedAt": "2026-09-10T12:02:46.936478+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0020-213_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:213",
+    "sha256": "28daed00850af15ad0de39bd4d75fe89e297226cd5abce466898dc0acb39bf10",
+    "seconds": 2.06,
+    "importedAt": "2026-09-10T12:02:47.084532+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0019-213_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:213",
+    "sha256": "8cef50d863a223cbe9c4a415b8273d818fb59e44e704ba2e7ed775abbf560f65",
+    "seconds": 2.23,
+    "importedAt": "2026-09-10T12:02:47.228213+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0007-213_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:213",
+    "sha256": "3dab4111df669c7de06935140d064826da9e60585ab854acb0dcb95b11bf2cfb",
+    "seconds": 4.74,
+    "importedAt": "2026-09-10T12:02:47.420749+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0007-213_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:213",
+    "sha256": "3dab4111df669c7de06935140d064826da9e60585ab854acb0dcb95b11bf2cfb",
+    "seconds": 4.74,
+    "importedAt": "2026-09-10T12:02:47.623936+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0010-213_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:213",
+    "sha256": "d188bc1235a8228df9e511a118bbd242e2e835b08ba7b3846b5033b8269a3760",
+    "seconds": 3.58,
+    "importedAt": "2026-09-10T12:02:47.814503+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0009-213_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:213",
+    "sha256": "f5cf686a05874163610333a78d8be152738cfc441ef56357ede0442e4ac4b4b8",
+    "seconds": 6.32,
+    "importedAt": "2026-09-10T12:02:48.044053+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0011-213_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:213",
+    "sha256": "453845975e347f0cda6cfd7c6a659f5850093521a42d431a79ed7c16c8256a8a",
+    "seconds": 2.84,
+    "importedAt": "2026-09-10T12:02:48.214249+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0002-213_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:213",
+    "sha256": "ef44cafa932387add4646c1e51d6bcfe14b7bc0645734eaef2c123c63cee0fa4",
+    "seconds": 2.57,
+    "importedAt": "2026-09-10T12:02:48.368381+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0001-213_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:213",
+    "sha256": "3965b08f9dbcb14e4adc0722e841c75007ae86b07a2faa79cde5ef05d2f20e18",
+    "seconds": 1.6,
+    "importedAt": "2026-09-10T12:02:48.512146+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0005-213_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:213",
+    "sha256": "03053c12e5b1a353c13626ecbd80063144b8ad1687f3c54913fc338681fba225",
+    "seconds": 3.7,
+    "importedAt": "2026-09-10T12:02:48.702141+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/213/00-0005-213_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:213",
+    "sha256": "03053c12e5b1a353c13626ecbd80063144b8ad1687f3c54913fc338681fba225",
+    "seconds": 3.7,
+    "importedAt": "2026-09-10T12:02:48.892627+00:00"
+   }
+  },
+  "community-review-13-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0000-167_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:167",
+    "sha256": "d0056d3bfd8c1d7eaff471b4afb04385116e103921dde910e7bb5ddf16477b08",
+    "seconds": 5.88,
+    "importedAt": "2026-09-10T12:02:52.133817+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0002-167_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:167",
+    "sha256": "0692cabbafe011eb65323e46eb5b5537cec8433ed004e21699a6af95e17bf62e",
+    "seconds": 1.06,
+    "importedAt": "2026-09-10T12:02:52.269527+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0011-167_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:167",
+    "sha256": "b3f540d0d87a648f423ac09895be8cf1cf901b9d48a2ebbdf38e979a5835aebd",
+    "seconds": 1.2,
+    "importedAt": "2026-09-10T12:02:52.465332+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0014-167_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:167",
+    "sha256": "84045b2ff71ef9bd82ab63d1416b13731f9b9ef863940467e48e1980d095ae18",
+    "seconds": 3.6,
+    "importedAt": "2026-09-10T12:02:52.729403+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0003-167_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:167",
+    "sha256": "2301767da138961874adb2031729ffb2b1c77bd1137b0f97018026847d68b050",
+    "seconds": 1.29,
+    "importedAt": "2026-09-10T12:02:52.904008+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0003-167_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:167",
+    "sha256": "2301767da138961874adb2031729ffb2b1c77bd1137b0f97018026847d68b050",
+    "seconds": 1.29,
+    "importedAt": "2026-09-10T12:02:53.072215+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0012-167_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:167",
+    "sha256": "119058b59fa515e58fbc7c1c2f2ca264afa95b31651da729108d476ed06367b6",
+    "seconds": 4.92,
+    "importedAt": "2026-09-10T12:02:53.304128+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0001-167_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:167",
+    "sha256": "6c768567aeefd4d7d1d3165e6cdf29dabdfddd6969eeeefb45d2ba588684005f",
+    "seconds": 6.6,
+    "importedAt": "2026-09-10T12:02:53.536341+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0006-167_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:167",
+    "sha256": "33503d53de84b20c366adc03ea8492f390ec578442aa60b72dd93af376e07a08",
+    "seconds": 1.23,
+    "importedAt": "2026-09-10T12:02:53.682496+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0013-167_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:167",
+    "sha256": "c91c313f225d8367cc111c4c0897c89478ae297b4b8f6dcc95dc45bd6f46a79e",
+    "seconds": 3.17,
+    "importedAt": "2026-09-10T12:02:53.866482+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0005-167_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:167",
+    "sha256": "387e56ff5074edc169b92cf75a4957f76a7d2f6639faeb320112f7aa1c92090d",
+    "seconds": 2.2,
+    "importedAt": "2026-09-10T12:02:54.021008+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0002-167_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:167",
+    "sha256": "0692cabbafe011eb65323e46eb5b5537cec8433ed004e21699a6af95e17bf62e",
+    "seconds": 1.06,
+    "importedAt": "2026-09-10T12:02:54.156044+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/167/01-0002-167_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:167",
+    "sha256": "0692cabbafe011eb65323e46eb5b5537cec8433ed004e21699a6af95e17bf62e",
+    "seconds": 1.06,
+    "importedAt": "2026-09-10T12:02:54.290103+00:00"
+   }
+  },
+  "community-review-16-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0013-168_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:168",
+    "sha256": "8b286705bbb542798546b4f3100bc727a74812027441b73fcdd9caecc9cf30fb",
+    "seconds": 2.9,
+    "importedAt": "2026-09-10T12:02:54.482978+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0003-168_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:168",
+    "sha256": "7cd9f1d85076bc96e0680f2bda3cf10925363d9630cc8ab2fcbc5cbc6e5bcfed",
+    "seconds": 1.77,
+    "importedAt": "2026-09-10T12:02:54.647180+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0009-168_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:168",
+    "sha256": "f4e9f88e76a8463157ab1be96238a83e70d31a2f034666f6340e4d255de8a089",
+    "seconds": 2.54,
+    "importedAt": "2026-09-10T12:02:54.800426+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0000-168_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:168",
+    "sha256": "6e856fc77c25913e00ece36717db458f9dd198670dbb3acc6d5611a57ab7c782",
+    "seconds": 2.16,
+    "importedAt": "2026-09-10T12:02:54.945587+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0006-168_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:168",
+    "sha256": "363dcedab5856554f4ddc2719d5ded456ce192baf38963080f8e6478edb14837",
+    "seconds": 2.34,
+    "importedAt": "2026-09-10T12:02:55.111848+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0001-168_voice_dazhao_2.ogg",
+    "name": "voice_dazhao_2",
+    "group": "300heroes:168",
+    "sha256": "b0ebef8c654ebb54566df0a362c9aea7db64c7e0bfc832ef7648a933eef32301",
+    "seconds": 2.55,
+    "importedAt": "2026-09-10T12:02:55.266113+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0011-168_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:168",
+    "sha256": "cb271446b20f01c42d7f9097e47f685f3348f1e7700eb6830e4296887bdf98ef",
+    "seconds": 5.49,
+    "importedAt": "2026-09-10T12:02:55.539244+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0002-168_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:168",
+    "sha256": "9c9fc2947fd1e3ae8605a963825ebdf565488e5104bfba6b90ee8edc2862b973",
+    "seconds": 3.39,
+    "importedAt": "2026-09-10T12:02:55.757209+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0010-168_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:168",
+    "sha256": "99f0d3b7663a4d8f28e68dfcb60e2231f2e4124a5e915fd2583dd415fca7928f",
+    "seconds": 2.99,
+    "importedAt": "2026-09-10T12:02:55.946159+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0008-168_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:168",
+    "sha256": "9aed4145c1c1ae9059feae738c6c1d2179cfc1e62c3e849d5bea8b3eab518308",
+    "seconds": 2.88,
+    "importedAt": "2026-09-10T12:02:56.131530+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0005-168_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:168",
+    "sha256": "765c44ff58143817803e907cde554bf4fd21f87e858452dc4839dadf0b121b5c",
+    "seconds": 1.22,
+    "importedAt": "2026-09-10T12:02:56.282082+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0003-168_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:168",
+    "sha256": "7cd9f1d85076bc96e0680f2bda3cf10925363d9630cc8ab2fcbc5cbc6e5bcfed",
+    "seconds": 1.77,
+    "importedAt": "2026-09-10T12:02:56.452380+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0003-168_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:168",
+    "sha256": "7cd9f1d85076bc96e0680f2bda3cf10925363d9630cc8ab2fcbc5cbc6e5bcfed",
+    "seconds": 1.77,
+    "importedAt": "2026-09-10T12:02:56.613280+00:00"
+   }
+  },
+  "community-review-17-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0001-229_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:229",
+    "sha256": "6d0547a7f2b0fdae76157c00d91e80a39b7f041476f43468c1a8e50fc49a7d6d",
+    "seconds": 2.2,
+    "importedAt": "2026-09-10T12:02:56.769858+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0008-229_voice_q_1.ogg",
+    "name": "voice_q_1",
+    "group": "300heroes:229",
+    "sha256": "390a9aae61b2d34f98d9d075c03c1b4d27d4ccece9b630f68bfedd45bf4181ae",
+    "seconds": 1.36,
+    "importedAt": "2026-09-10T12:02:56.908606+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0000-229_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:229",
+    "sha256": "451ad8f7ed69345325c3997d37e489fdf3fd73ea451a70508b748ebe2c97ded4",
+    "seconds": 4.67,
+    "importedAt": "2026-09-10T12:02:57.107623+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0007-229_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:229",
+    "sha256": "cce47030aff361f3a14d21f7166a55e1037339237f51b9daf89a335e7e0e0d4f",
+    "seconds": 3.14,
+    "importedAt": "2026-09-10T12:02:57.283470+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0003-229_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:229",
+    "sha256": "42a0fc7690fd66074d7a8c49e73ee900b5a37c92a15556a9d5922b632086e39b",
+    "seconds": 3.38,
+    "importedAt": "2026-09-10T12:02:57.461287+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0003-229_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:229",
+    "sha256": "42a0fc7690fd66074d7a8c49e73ee900b5a37c92a15556a9d5922b632086e39b",
+    "seconds": 3.38,
+    "importedAt": "2026-09-10T12:02:57.637474+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0016-229_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:229",
+    "sha256": "0a765f399fc299bcaad01810a771281ec9edec550df9915fbc39ea2036872e0b",
+    "seconds": 2.38,
+    "importedAt": "2026-09-10T12:02:57.783365+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0017-229_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:229",
+    "sha256": "7c100675291174feddc62bff534824e7652758140a76b6552333714ca8ed649c",
+    "seconds": 4.07,
+    "importedAt": "2026-09-10T12:02:57.971049+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0011-229_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:229",
+    "sha256": "6d721b3bacb431ce04f5d87c98710f54c85fe0a7eaaf51be28352890b5bb6ea9",
+    "seconds": 2.66,
+    "importedAt": "2026-09-10T12:02:58.119789+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0014-229_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:229",
+    "sha256": "11cbbe4136cbeb7887544d715689b132cb9a594cc2f77489a1500475fb4442cc",
+    "seconds": 5.5,
+    "importedAt": "2026-09-10T12:02:58.326294+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0002-229_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:229",
+    "sha256": "34cc21df20bc7b2ec0ac5eb6e9d6abb64103e2cdcf6c5e958a1be592b500f4d2",
+    "seconds": 2.63,
+    "importedAt": "2026-09-10T12:02:58.476784+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0004-229_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:229",
+    "sha256": "e5395ec40fdf2eb5b0add7b6f753d704324a3cb2efd0232a1940f490f4a2c840",
+    "seconds": 2.99,
+    "importedAt": "2026-09-10T12:02:58.636963+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/229/00-0022-229_voice_attack_4.ogg",
+    "name": "voice_attack_4",
+    "group": "300heroes:229",
+    "sha256": "347b452f6005429bdbaef910954f09dc8a097a5020b42c9bef853f278e4fe108",
+    "seconds": 1.64,
+    "importedAt": "2026-09-10T12:02:58.781859+00:00"
+   }
+  },
+  "community-review-18-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0008-104_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:104",
+    "sha256": "bd2e09874f7b88adb4b8077029e613ede61442fc80df8bd1c7680568a9ae0800",
+    "seconds": 3.35,
+    "importedAt": "2026-09-10T12:02:59.012248+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0009-104_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:104",
+    "sha256": "06ec2b93aab5ce93e5dc7329a0d48333f51719213b663cf142e60c95fef73d64",
+    "seconds": 2.68,
+    "importedAt": "2026-09-10T12:02:59.200998+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0000-104_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:104",
+    "sha256": "9c751c4ebcdbce90e3a28c24e44d4c340d98a1498a82ce407cd7e67ab362c9b0",
+    "seconds": 4.77,
+    "importedAt": "2026-09-10T12:02:59.460478+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0009-104_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:104",
+    "sha256": "06ec2b93aab5ce93e5dc7329a0d48333f51719213b663cf142e60c95fef73d64",
+    "seconds": 2.68,
+    "importedAt": "2026-09-10T12:02:59.647143+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0007-104_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:104",
+    "sha256": "18459137b02778c4861904f979f5b617c2262c2230a8cf3398b4616eb310873e",
+    "seconds": 3.94,
+    "importedAt": "2026-09-10T12:02:59.899324+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0007-104_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:104",
+    "sha256": "18459137b02778c4861904f979f5b617c2262c2230a8cf3398b4616eb310873e",
+    "seconds": 3.94,
+    "importedAt": "2026-09-10T12:03:00.153886+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0005-104_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:104",
+    "sha256": "a5e1d1206862c0d18140546d4f4ed139cb79a2e38154fd80ca0e6604ac9a2b3d",
+    "seconds": 6.18,
+    "importedAt": "2026-09-10T12:03:00.455953+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0001-104_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:104",
+    "sha256": "6700f6c0970a5b0830518d6b59ac0fd52edf716dc3c94cd5b8f8d342603d1f9f",
+    "seconds": 3.77,
+    "importedAt": "2026-09-10T12:03:00.710180+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0011-104_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:104",
+    "sha256": "c93722b6156080cc52283f440c3d49b2eb237cc939e40cbb546155732ad3becb",
+    "seconds": 2.55,
+    "importedAt": "2026-09-10T12:03:00.886822+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0010-104_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:104",
+    "sha256": "b0199199b53331c044533c92ee3113a2b936a82ac5250e3d2ab8fb00bcd9b1c9",
+    "seconds": 4.2,
+    "importedAt": "2026-09-10T12:03:01.148765+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0009-104_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:104",
+    "sha256": "06ec2b93aab5ce93e5dc7329a0d48333f51719213b663cf142e60c95fef73d64",
+    "seconds": 2.68,
+    "importedAt": "2026-09-10T12:03:01.338172+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0009-104_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:104",
+    "sha256": "06ec2b93aab5ce93e5dc7329a0d48333f51719213b663cf142e60c95fef73d64",
+    "seconds": 2.68,
+    "importedAt": "2026-09-10T12:03:01.527868+00:00"
+   }
+  },
+  "community-review-19-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0046-102_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:102",
+    "sha256": "f928ab1518f0ec8523d8f03e50a14359dd3d187eb71a7fe19736f84bf11eef02",
+    "seconds": 3.35,
+    "importedAt": "2026-09-10T12:03:01.761179+00:00"
+   },
+   "kill-1": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0011-102_voice_kill_to_224_1.ogg",
+    "name": "voice_kill_to_224_1",
+    "group": "300heroes:102",
+    "sha256": "02eed958298dfe0e8fd561b64943de66a4471956255239ac95bee367fe25d643",
+    "seconds": 6.63,
+    "importedAt": "2026-09-10T12:03:01.992910+00:00"
+   },
+   "first-blood": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0004-102_voice_firstblood_1.ogg",
+    "name": "voice_firstblood_1",
+    "group": "300heroes:102",
+    "sha256": "e61e72625cd5b07e93622add1bd2d188a803cab3b335ed868aed0c1c90750bc1",
+    "seconds": 3.39,
+    "importedAt": "2026-09-10T12:03:02.190775+00:00"
+   },
+   "kill-2": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0006-102_voice_multikill02_1.ogg",
+    "name": "voice_multikill02_1",
+    "group": "300heroes:102",
+    "sha256": "9b71b66a85a97af37f6d4358bccf55f6ca03777c36b5fb4950c1d7e50f225e9e",
+    "seconds": 1.57,
+    "importedAt": "2026-09-10T12:03:02.334074+00:00"
+   },
+   "kill-3": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0048-102_voice_multikill03_1.ogg",
+    "name": "voice_multikill03_1",
+    "group": "300heroes:102",
+    "sha256": "fd45810def08c932372ccc7ee8f6a81f099526ec49642eee0a3e2f59d898d523",
+    "seconds": 1.68,
+    "importedAt": "2026-09-10T12:03:02.470677+00:00"
+   },
+   "kill-4": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0030-102_voice_multikill04_1.ogg",
+    "name": "voice_multikill04_1",
+    "group": "300heroes:102",
+    "sha256": "6316605a85cef653ead8bb2eecfc29401db45b9cf6e3a10177ba870d09f347df",
+    "seconds": 2.09,
+    "importedAt": "2026-09-10T12:03:02.625296+00:00"
+   },
+   "kill-5": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0020-102_voice_multikill05_1.ogg",
+    "name": "voice_multikill05_1",
+    "group": "300heroes:102",
+    "sha256": "70cb0192d829535785934e01ade1b26093b75f6f2768fac93d017d628e4a821c",
+    "seconds": 2.71,
+    "importedAt": "2026-09-10T12:03:02.787007+00:00"
+   },
+   "hurt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0025-102_voice_30_hp_1.ogg",
+    "name": "voice_30_hp_1",
+    "group": "300heroes:102",
+    "sha256": "60a5f8e9c6165a806356ffc7b5840ba3bfc87dc5d47b32a79f6f9021182b9feb",
+    "seconds": 4.75,
+    "importedAt": "2026-09-10T12:03:02.989808+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0045-102_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:102",
+    "sha256": "760948fd945f1f7addf4917399156e5c22f6f3d659b46b4977763b0af358d534",
+    "seconds": 2.6,
+    "importedAt": "2026-09-10T12:03:03.170433+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0001-102_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:102",
+    "sha256": "bdf645f0cac2cb487acf0bc020c9a94bcf028e29f7c254112c2fbf1b94c85f82",
+    "seconds": 2.14,
+    "importedAt": "2026-09-10T12:03:03.339915+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0052-102_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:102",
+    "sha256": "e24dce0b37e798c2cc6e8ab85736c13981798ac81d7116edc320e6c50d595f7a",
+    "seconds": 5.92,
+    "importedAt": "2026-09-10T12:03:03.550915+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0002-102_voice_dazhao1_1.ogg",
+    "name": "voice_dazhao1_1",
+    "group": "300heroes:102",
+    "sha256": "fdde02db7b3c720ca8676ff52a28494c21092c91b2703a5373983dd60ee82a96",
+    "seconds": 3.8,
+    "importedAt": "2026-09-10T12:03:03.733495+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0043-102_voice_dazhao1_2.ogg",
+    "name": "voice_dazhao1_2",
+    "group": "300heroes:102",
+    "sha256": "5e283a8f32b65811a1bc83369a9b74b4dc903a4a8591957d6f533e832e1cf225",
+    "seconds": 1.64,
+    "importedAt": "2026-09-10T12:03:03.891144+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0057-102_voice_to_107_1.ogg",
+    "name": "voice_to_107_1",
+    "group": "300heroes:102",
+    "sha256": "4f7d9950060cd3a2a7e949842dee36a13b939d0aa68d22c2536b38ec12ed3cf4",
+    "seconds": 4.42,
+    "importedAt": "2026-09-10T12:03:04.082503+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0024-102_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:102",
+    "sha256": "5076ca464fba123b0db2270cb182ef9e58b0718b0ecd8792b7628d9f5f46d449",
+    "seconds": 2.72,
+    "importedAt": "2026-09-10T12:03:04.264325+00:00"
+   },
+   "victory": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0026-102_voice_shenglijinjun_1.ogg",
+    "name": "voice_shenglijinjun_1",
+    "group": "300heroes:102",
+    "sha256": "5b256f8e2cc61b3067f224ce38ae07b4a21fb222996036abb1dd9f440638e55e",
+    "seconds": 1.44,
+    "importedAt": "2026-09-10T12:03:04.403863+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0059-102_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:102",
+    "sha256": "5f4499c284812242489a82920f9307192b0a06160af9a722e6c3903fbbeb16b1",
+    "seconds": 0.92,
+    "importedAt": "2026-09-10T12:03:04.547232+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0016-102_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:102",
+    "sha256": "6c4e881568f11f6a9d0fd49a4c76685a069e53dba03035a3bb5189a9c61127ed",
+    "seconds": 2.27,
+    "importedAt": "2026-09-10T12:03:04.714489+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0000-102_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:102",
+    "sha256": "480483f41976293c25bc836a01eba5c7f41dade7b4bcbbf87a13d37a08ec7912",
+    "seconds": 6.5,
+    "importedAt": "2026-09-10T12:03:04.940212+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0045-102_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:102",
+    "sha256": "760948fd945f1f7addf4917399156e5c22f6f3d659b46b4977763b0af358d534",
+    "seconds": 2.6,
+    "importedAt": "2026-09-10T12:03:05.120837+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0045-102_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:102",
+    "sha256": "760948fd945f1f7addf4917399156e5c22f6f3d659b46b4977763b0af358d534",
+    "seconds": 2.6,
+    "importedAt": "2026-09-10T12:03:05.302548+00:00"
+   }
+  },
+  "community-review-20-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0004-96_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:96",
+    "sha256": "35c3be11d9849d7476d613e17801ef523805e65fade9bab2ba9af622bc553bcb",
+    "seconds": 2.02,
+    "importedAt": "2026-09-10T12:03:05.476761+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0003-96_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:96",
+    "sha256": "441407d8458ee6677615804050ba4a4834d0f18767ed025d1a82af7f38adee19",
+    "seconds": 2.43,
+    "importedAt": "2026-09-10T12:03:05.652440+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0008-96_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:96",
+    "sha256": "0dc83b61acb90d7c7bdbfaf95e68db6e8bab7814ebac2a8dc1b89bd47478c83c",
+    "seconds": 1.6,
+    "importedAt": "2026-09-10T12:03:05.810226+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0003-96_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:96",
+    "sha256": "441407d8458ee6677615804050ba4a4834d0f18767ed025d1a82af7f38adee19",
+    "seconds": 2.43,
+    "importedAt": "2026-09-10T12:03:05.982084+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0012-96_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:96",
+    "sha256": "2b84a25a1ca514cd3513120c7402ef6abdf8ebcc4169c483c75e2054a44e3899",
+    "seconds": 1.67,
+    "importedAt": "2026-09-10T12:03:06.137293+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0012-96_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:96",
+    "sha256": "2b84a25a1ca514cd3513120c7402ef6abdf8ebcc4169c483c75e2054a44e3899",
+    "seconds": 1.67,
+    "importedAt": "2026-09-10T12:03:06.293520+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0005-96_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:96",
+    "sha256": "bd92ada36aceb99f0a0046fb58ede97d86798d0a8a2b9931118e40cb99dcc1ab",
+    "seconds": 1.4,
+    "importedAt": "2026-09-10T12:03:06.448471+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0010-96_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:96",
+    "sha256": "9fe7fb313db0fc2399790b2c2fc0be80bdb165a0569232706a6b9c60ad682e8f",
+    "seconds": 4.47,
+    "importedAt": "2026-09-10T12:03:06.701593+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0000-96_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:96",
+    "sha256": "9058c09c42e8592ecb7ea2c9d5edb184a5045ebceebf6397d8fa120cd8885705",
+    "seconds": 2.08,
+    "importedAt": "2026-09-10T12:03:06.863280+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0011-96_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:96",
+    "sha256": "e0ab5b46e108860bbf7fa6ec72884f94960685533d1e5c1fa3c529ab72dfe490",
+    "seconds": 1.48,
+    "importedAt": "2026-09-10T12:03:07.015284+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0001-96_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:96",
+    "sha256": "ac714613af1fcf82e0b8f5eb7ec84153722d5d3ad5c00233516d19ba1b236463",
+    "seconds": 1.72,
+    "importedAt": "2026-09-10T12:03:07.175491+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0003-96_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:96",
+    "sha256": "441407d8458ee6677615804050ba4a4834d0f18767ed025d1a82af7f38adee19",
+    "seconds": 2.43,
+    "importedAt": "2026-09-10T12:03:07.353606+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0003-96_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:96",
+    "sha256": "441407d8458ee6677615804050ba4a4834d0f18767ed025d1a82af7f38adee19",
+    "seconds": 2.43,
+    "importedAt": "2026-09-10T12:03:07.547766+00:00"
+   }
+  },
+  "community-review-21-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0007-150_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:150",
+    "sha256": "4bbfcb9375f8e4fe847a6fae1647f3d325af52b95683f35c2e7bdb9d25e5a3f8",
+    "seconds": 3.65,
+    "importedAt": "2026-09-10T12:03:07.827061+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0005-150_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:150",
+    "sha256": "0fd4755fb76b47b5a81370a689e3640b55e1b53be3f4d168507c97debe13b5c8",
+    "seconds": 1.35,
+    "importedAt": "2026-09-10T12:03:08.043093+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0000-150_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:150",
+    "sha256": "4005eeb7c4ee2edc19454dc398548095f3456197263966ea586423c428970948",
+    "seconds": 2.54,
+    "importedAt": "2026-09-10T12:03:08.260283+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0005-150_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:150",
+    "sha256": "0fd4755fb76b47b5a81370a689e3640b55e1b53be3f4d168507c97debe13b5c8",
+    "seconds": 1.35,
+    "importedAt": "2026-09-10T12:03:08.445228+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0013-150_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:150",
+    "sha256": "8ca2892550428f8614bf55f7b8aad47ea26ec151922ef813ee83ac81d4c13d06",
+    "seconds": 3.33,
+    "importedAt": "2026-09-10T12:03:08.680409+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0013-150_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:150",
+    "sha256": "8ca2892550428f8614bf55f7b8aad47ea26ec151922ef813ee83ac81d4c13d06",
+    "seconds": 3.33,
+    "importedAt": "2026-09-10T12:03:08.908805+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0004-150_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:150",
+    "sha256": "0443e4d4ad0cb91ab965b2855af81cc2d89df499ccca9f0867a50ad5c1139601",
+    "seconds": 5.69,
+    "importedAt": "2026-09-10T12:03:09.200165+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0001-150_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:150",
+    "sha256": "dfa70d6896c55d210945cc2d441216ffb9851c47099293effae97a8b7f2035f6",
+    "seconds": 3.97,
+    "importedAt": "2026-09-10T12:03:09.461886+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0009-150_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:150",
+    "sha256": "09854bcc5227b64205592662cbb127f85e103ce2838b6ed519a9e6af11ebbeac",
+    "seconds": 4.27,
+    "importedAt": "2026-09-10T12:03:09.715887+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0002-150_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:150",
+    "sha256": "53d1a8b33427d91134e1efcafd2d5b7779f65842000261b9b52960e786837bfd",
+    "seconds": 2.0,
+    "importedAt": "2026-09-10T12:03:09.883744+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0003-150_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:150",
+    "sha256": "39d3d5ff735ba690ad29f3aa69b8e867fa85c82be82aea29fa8fa3a1d0707926",
+    "seconds": 4.02,
+    "importedAt": "2026-09-10T12:03:10.128221+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0005-150_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:150",
+    "sha256": "0fd4755fb76b47b5a81370a689e3640b55e1b53be3f4d168507c97debe13b5c8",
+    "seconds": 1.35,
+    "importedAt": "2026-09-10T12:03:10.287418+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/150/01-0005-150_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:150",
+    "sha256": "0fd4755fb76b47b5a81370a689e3640b55e1b53be3f4d168507c97debe13b5c8",
+    "seconds": 1.35,
+    "importedAt": "2026-09-10T12:03:10.452596+00:00"
+   }
+  },
+  "community-review-23-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0004-137_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:137",
+    "sha256": "94ca714af0cbc185e08b2477616169b412b1170ecf98879d0d7e379b0e452199",
+    "seconds": 2.71,
+    "importedAt": "2026-09-10T12:03:10.641132+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0009-137_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:137",
+    "sha256": "425ae6c9e7d45efd06f52d42bfa880463e95950f7e2b642f14904816b72040e7",
+    "seconds": 3.84,
+    "importedAt": "2026-09-10T12:03:10.901892+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0009-137_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:137",
+    "sha256": "425ae6c9e7d45efd06f52d42bfa880463e95950f7e2b642f14904816b72040e7",
+    "seconds": 3.84,
+    "importedAt": "2026-09-10T12:03:11.151324+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0009-137_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:137",
+    "sha256": "425ae6c9e7d45efd06f52d42bfa880463e95950f7e2b642f14904816b72040e7",
+    "seconds": 3.84,
+    "importedAt": "2026-09-10T12:03:11.386495+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0008-137_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:137",
+    "sha256": "b21588a8cd2f60590e9b6b0cb9fd5f7803541132b303daef35fc785376748558",
+    "seconds": 3.75,
+    "importedAt": "2026-09-10T12:03:11.653235+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0007-137_voice_dazhao_2.ogg",
+    "name": "voice_dazhao_2",
+    "group": "300heroes:137",
+    "sha256": "882a2271341b02f69426af025895e6895ee2f96c747386c04ca973cc63dfea25",
+    "seconds": 2.64,
+    "importedAt": "2026-09-10T12:03:11.854487+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0001-137_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:137",
+    "sha256": "9f5da41107eecdfce9384523b5d8f0dd102f5c7bf83fd71d20c20a9ab7b3c16d",
+    "seconds": 4.17,
+    "importedAt": "2026-09-10T12:03:12.158695+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0000-137_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:137",
+    "sha256": "2981747b1d40779b4264439e0f3e763885a7419bb6accd57a9586ff00e40589a",
+    "seconds": 2.09,
+    "importedAt": "2026-09-10T12:03:12.382155+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0010-137_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:137",
+    "sha256": "7b3120f33703671913f3bb21598f7bce2d9759ed93bc7fae34fecac1066f9c38",
+    "seconds": 5.43,
+    "importedAt": "2026-09-10T12:03:12.728622+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0005-137_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:137",
+    "sha256": "7b05e19ee5ee88e35088ce90a3762374b3eb10229373d2d5971f2e2d3f42e48b",
+    "seconds": 4.09,
+    "importedAt": "2026-09-10T12:03:13.027229+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0010-137_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:137",
+    "sha256": "7b3120f33703671913f3bb21598f7bce2d9759ed93bc7fae34fecac1066f9c38",
+    "seconds": 5.43,
+    "importedAt": "2026-09-10T12:03:13.324178+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0009-137_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:137",
+    "sha256": "425ae6c9e7d45efd06f52d42bfa880463e95950f7e2b642f14904816b72040e7",
+    "seconds": 3.84,
+    "importedAt": "2026-09-10T12:03:13.598674+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/01-0009-137_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:137",
+    "sha256": "425ae6c9e7d45efd06f52d42bfa880463e95950f7e2b642f14904816b72040e7",
+    "seconds": 3.84,
+    "importedAt": "2026-09-10T12:03:13.842964+00:00"
+   }
+  },
+  "community-review-24-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0002-161_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:161",
+    "sha256": "1bb80a10a2fe127360ad9365973f0b5d715f95157624ae99c7622e4c4b769670",
+    "seconds": 2.78,
+    "importedAt": "2026-09-10T12:03:14.016432+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0007-161_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:161",
+    "sha256": "090afd2b1c1969d3a4a6534c39a2c84c7c9d6fc3c436124695d22acae53d4622",
+    "seconds": 3.94,
+    "importedAt": "2026-09-10T12:03:14.214032+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0006-161_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:161",
+    "sha256": "f5199d088031a977b32504a8c6a5307edfe011b74fe067d64947d6b1303231fa",
+    "seconds": 2.69,
+    "importedAt": "2026-09-10T12:03:14.377458+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0005-161_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:161",
+    "sha256": "f5199d088031a977b32504a8c6a5307edfe011b74fe067d64947d6b1303231fa",
+    "seconds": 2.69,
+    "importedAt": "2026-09-10T12:03:14.541527+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0003-161_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:161",
+    "sha256": "f02149d532abf16db3d707e02b6a0367bc84c6389085f6557fc0c1ce5f6b58dc",
+    "seconds": 4.68,
+    "importedAt": "2026-09-10T12:03:14.748484+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0003-161_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:161",
+    "sha256": "f02149d532abf16db3d707e02b6a0367bc84c6389085f6557fc0c1ce5f6b58dc",
+    "seconds": 4.68,
+    "importedAt": "2026-09-10T12:03:14.950338+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0009-161_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:161",
+    "sha256": "a3f8e5dfd89b623fd79a4a2d5b530791d0c47d26b12bcfcd895f55725a1a73f9",
+    "seconds": 6.21,
+    "importedAt": "2026-09-10T12:03:15.173117+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0012-161_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:161",
+    "sha256": "453064cdcd063ea4e34692a14ea6cba092ed987555ecee59c32f93e3d18a4137",
+    "seconds": 5.44,
+    "importedAt": "2026-09-10T12:03:15.385525+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0010-161_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:161",
+    "sha256": "fa6656d6e29b5749319609b9d8aa9cf332556e9e2bdf892a3050394c85a8c632",
+    "seconds": 4.22,
+    "importedAt": "2026-09-10T12:03:15.580759+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0013-161_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:161",
+    "sha256": "e85f4021430a692b6d1604b760a77620c12348e526e7614f0610596075341285",
+    "seconds": 5.79,
+    "importedAt": "2026-09-10T12:03:15.791707+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0008-161_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:161",
+    "sha256": "63e96428d7df6f97b91e5f8316a66690d3fed11bea6b39150df8e685f08e0660",
+    "seconds": 3.12,
+    "importedAt": "2026-09-10T12:03:15.971149+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0007-161_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:161",
+    "sha256": "090afd2b1c1969d3a4a6534c39a2c84c7c9d6fc3c436124695d22acae53d4622",
+    "seconds": 3.94,
+    "importedAt": "2026-09-10T12:03:16.157036+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/161/01-0007-161_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:161",
+    "sha256": "090afd2b1c1969d3a4a6534c39a2c84c7c9d6fc3c436124695d22acae53d4622",
+    "seconds": 3.94,
+    "importedAt": "2026-09-10T12:03:16.342324+00:00"
+   }
+  },
+  "community-review-25-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0006-256_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:256",
+    "sha256": "11f6b0785d8434c1d2a293085a143380b1dd13ed3ceb2cec5868e805482237fc",
+    "seconds": 1.0,
+    "importedAt": "2026-09-10T12:03:16.520227+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0000-256_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:256",
+    "sha256": "b44a248d01f665dc4e7ffea7b5a67070a7751536e9fbcd11f22e259fe0bb8d44",
+    "seconds": 1.66,
+    "importedAt": "2026-09-10T12:03:16.682475+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0007-256_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:256",
+    "sha256": "c198b44c08071ffa5e4495a40e41e3a467c0bac71df52c6b6f265dd0d4b64c0a",
+    "seconds": 0.34,
+    "importedAt": "2026-09-10T12:03:16.810253+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0000-256_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:256",
+    "sha256": "b44a248d01f665dc4e7ffea7b5a67070a7751536e9fbcd11f22e259fe0bb8d44",
+    "seconds": 1.66,
+    "importedAt": "2026-09-10T12:03:16.965164+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0012-256_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:256",
+    "sha256": "23c9e3eb45d36a8543e16daad945e5f99874a9fac7f141f5ee3db861a9e909c8",
+    "seconds": 0.45,
+    "importedAt": "2026-09-10T12:03:17.100839+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0012-256_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:256",
+    "sha256": "23c9e3eb45d36a8543e16daad945e5f99874a9fac7f141f5ee3db861a9e909c8",
+    "seconds": 0.45,
+    "importedAt": "2026-09-10T12:03:17.239657+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0004-256_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:256",
+    "sha256": "f5acf09aa34c781ef2f49ddd5daaaef005f2fa052aade60c18bb77fb29599deb",
+    "seconds": 2.85,
+    "importedAt": "2026-09-10T12:03:17.406797+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0004-256_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:256",
+    "sha256": "f5acf09aa34c781ef2f49ddd5daaaef005f2fa052aade60c18bb77fb29599deb",
+    "seconds": 2.85,
+    "importedAt": "2026-09-10T12:03:17.565079+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0009-256_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:256",
+    "sha256": "01249d97a85546a95579c39850a8b1c9cdd2d97ea4cc8a8edbac734009f33bbf",
+    "seconds": 1.66,
+    "importedAt": "2026-09-10T12:03:17.705897+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0005-256_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:256",
+    "sha256": "ac28d55016c6ae9ff2c829172d3b70a3a5e796748c3e4f96abf920127818d6cc",
+    "seconds": 0.31,
+    "importedAt": "2026-09-10T12:03:17.826986+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0003-256_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:256",
+    "sha256": "45ce0e50acd7c177e248affd57b31a7b04d569cb8a4e7821356540a176a57572",
+    "seconds": 1.23,
+    "importedAt": "2026-09-10T12:03:17.961040+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0000-256_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:256",
+    "sha256": "b44a248d01f665dc4e7ffea7b5a67070a7751536e9fbcd11f22e259fe0bb8d44",
+    "seconds": 1.66,
+    "importedAt": "2026-09-10T12:03:18.103764+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/256/00-0000-256_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:256",
+    "sha256": "b44a248d01f665dc4e7ffea7b5a67070a7751536e9fbcd11f22e259fe0bb8d44",
+    "seconds": 1.66,
+    "importedAt": "2026-09-10T12:03:18.245163+00:00"
+   }
+  },
+  "community-review-26-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0006-139_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:139",
+    "sha256": "fb73d876c1cf95b5ed1857663163a2326a6ddfab278870692ad1c30345dd8eb6",
+    "seconds": 1.44,
+    "importedAt": "2026-09-10T12:03:18.404963+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0014-139_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:139",
+    "sha256": "1f7bb7a776666a9c17cf123389f111ef23da69de45fce006d02c85d2efcb859d",
+    "seconds": 1.72,
+    "importedAt": "2026-09-10T12:03:18.565487+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0004-139_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:139",
+    "sha256": "e124850c1c5be2c0203caa91a4b00ea51cb24f4d6d8ac5811b2f5296832df63f",
+    "seconds": 1.74,
+    "importedAt": "2026-09-10T12:03:18.722322+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0012-139_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:139",
+    "sha256": "e1519b64a8b5b296897d0386faa9ed51c24439f0f10164f3553dec3fbacd7990",
+    "seconds": 1.77,
+    "importedAt": "2026-09-10T12:03:18.879392+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0000-139_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:139",
+    "sha256": "3326efb261146cbcb63a8e7136b8e788d9e0c66fb3e416bc61e0470e89a7b674",
+    "seconds": 2.2,
+    "importedAt": "2026-09-10T12:03:19.041825+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0000-139_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:139",
+    "sha256": "3326efb261146cbcb63a8e7136b8e788d9e0c66fb3e416bc61e0470e89a7b674",
+    "seconds": 2.2,
+    "importedAt": "2026-09-10T12:03:19.211920+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0013-139_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:139",
+    "sha256": "a1101e6f357e38427427d1798cdb5dac1aa4853228275ba32ca250d73b2f26d2",
+    "seconds": 3.11,
+    "importedAt": "2026-09-10T12:03:19.425801+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0008-139_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:139",
+    "sha256": "51ba704b65ae2524c6c47703fbd6192517e38fd4b20a8305a2e851475581590b",
+    "seconds": 2.29,
+    "importedAt": "2026-09-10T12:03:19.592019+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0010-139_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:139",
+    "sha256": "9a62f694dc27da48543f69d1b6d9f5c7c3f91623ace5dbeb543b036819158716",
+    "seconds": 2.36,
+    "importedAt": "2026-09-10T12:03:19.757577+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0001-139_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:139",
+    "sha256": "a3efd6c24a843ec4208df539e4e4f95f61982ed14b6402c723cbe9c2d242e9c9",
+    "seconds": 1.49,
+    "importedAt": "2026-09-10T12:03:19.906704+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0016-139_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:139",
+    "sha256": "56bd26bdc4680ceaf5349800c1a3af930f7704839d28194a8e213e1a65fb3816",
+    "seconds": 0.74,
+    "importedAt": "2026-09-10T12:03:20.039755+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0009-139_voice_attack_4.ogg",
+    "name": "voice_attack_4",
+    "group": "300heroes:139",
+    "sha256": "a348f1870efeae855573491625ee8a6185babbbdb206f62eb4e5b2d011bacbe5",
+    "seconds": 0.97,
+    "importedAt": "2026-09-10T12:03:20.180121+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/139/01-0014-139_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:139",
+    "sha256": "1f7bb7a776666a9c17cf123389f111ef23da69de45fce006d02c85d2efcb859d",
+    "seconds": 1.72,
+    "importedAt": "2026-09-10T12:03:20.331814+00:00"
+   }
+  },
+  "community-review-27-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0013-292_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:292",
+    "sha256": "bbe3f10b706945d2d9f45b83276d7e00e4e3d6700bdbc610334aeea03c318a74",
+    "seconds": 0.84,
+    "importedAt": "2026-09-10T12:03:20.467841+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0006-292_voice_skill_voice_1.ogg",
+    "name": "voice_skill_voice_1",
+    "group": "300heroes:292",
+    "sha256": "2ad675c40836a20d27b1e43febf70d0b437543cb98e03176e1cd6f17a2cf6890",
+    "seconds": 2.25,
+    "importedAt": "2026-09-10T12:03:20.614406+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0008-292_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:292",
+    "sha256": "2fc7c4d6f2d181161a8d749f95afe44c009e54de2d7ab73095535a1274af5f96",
+    "seconds": 2.35,
+    "importedAt": "2026-09-10T12:03:20.765205+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0008-292_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:292",
+    "sha256": "2fc7c4d6f2d181161a8d749f95afe44c009e54de2d7ab73095535a1274af5f96",
+    "seconds": 2.35,
+    "importedAt": "2026-09-10T12:03:20.912457+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0015-292_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:292",
+    "sha256": "31d9ee31b1f18e2f615d7085bda45ab33db31132a91b238556ef9361c87c25a3",
+    "seconds": 3.28,
+    "importedAt": "2026-09-10T12:03:21.089865+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0003-292_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:292",
+    "sha256": "f86792b81b8c8f33c4df3ac32d6d3ffdb367da2e41015f18dca551239ae9be7b",
+    "seconds": 1.46,
+    "importedAt": "2026-09-10T12:03:21.228024+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0012-292_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:292",
+    "sha256": "a324cf20ae9c638f531d7db7f772cab9b9c531da526d1799a1ca4609729e4cb8",
+    "seconds": 3.32,
+    "importedAt": "2026-09-10T12:03:21.412377+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0011-292_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:292",
+    "sha256": "3978aeeb8d6c65b800e09d5b1066a9dd0c2086c836bbbf0656f638759420f5a0",
+    "seconds": 1.91,
+    "importedAt": "2026-09-10T12:03:21.557393+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0018-292_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:292",
+    "sha256": "c6ec85af3ee52d60c5c7b9a541f03c8dfc58e6a4fba1663de5ee1bf78c8f54e8",
+    "seconds": 0.76,
+    "importedAt": "2026-09-10T12:03:21.680726+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0008-292_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:292",
+    "sha256": "2fc7c4d6f2d181161a8d749f95afe44c009e54de2d7ab73095535a1274af5f96",
+    "seconds": 2.35,
+    "importedAt": "2026-09-10T12:03:21.824729+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/292/01-0008-292_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:292",
+    "sha256": "2fc7c4d6f2d181161a8d749f95afe44c009e54de2d7ab73095535a1274af5f96",
+    "seconds": 2.35,
+    "importedAt": "2026-09-10T12:03:21.971124+00:00"
+   }
+  },
+  "community-review-28-20260907": {},
+  "community-review-29-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0023-333_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:333",
+    "sha256": "1a75c602c8460e014306f2a18ba2577cb80045e0990fdca6b62e07181918b693",
+    "seconds": 1.99,
+    "importedAt": "2026-09-10T12:03:22.115985+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0016-333_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:333",
+    "sha256": "72872e970f9c7bcd0e05e8842346b88eda08260ce0b29b44aa970ae8879d4ad4",
+    "seconds": 2.09,
+    "importedAt": "2026-09-10T12:03:22.262689+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0021-333_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:333",
+    "sha256": "c96afe1bfea6feb7af811527c66bc8b65a9246c851e52a66aed55d79ad65d520",
+    "seconds": 3.95,
+    "importedAt": "2026-09-10T12:03:22.445810+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0027-333_voice_attack_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:333",
+    "sha256": "861b167182817237bbc7d3edc1602bcfc6aa47d44da561831fb03bb50a8d850e",
+    "seconds": 1.98,
+    "importedAt": "2026-09-10T12:03:22.590470+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0057-333_voice_dazhao2_1.ogg",
+    "name": "voice_dazhao2_1",
+    "group": "300heroes:333",
+    "sha256": "3296dfc8e8c1a49103a4fc402166b46d3badb33faae9b818401e963579178051",
+    "seconds": 4.5,
+    "importedAt": "2026-09-10T12:03:22.781005+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0047-333_voice_dazhao2_2.ogg",
+    "name": "voice_dazhao2_2",
+    "group": "300heroes:333",
+    "sha256": "a35fb2393406b30490e9ecf1939e346f25f3781db117f3d98b8af990b6724756",
+    "seconds": 3.7,
+    "importedAt": "2026-09-10T12:03:22.958941+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0039-333_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:333",
+    "sha256": "e81d10806a5ff604624f68059b4efb2a01628d4e36ddf739b9f39637a8fdb781",
+    "seconds": 6.58,
+    "importedAt": "2026-09-10T12:03:23.184397+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0050-333_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:333",
+    "sha256": "d83d908e058b0151d120c3fec39de853c4b6975345c4cc66c727a749916f9157",
+    "seconds": 7.46,
+    "importedAt": "2026-09-10T12:03:23.418776+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0017-333_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:333",
+    "sha256": "24adbee2bb8afa46187262f36ca775e891aa9a1d0914b931ad2e8b451a27cf4d",
+    "seconds": 2.29,
+    "importedAt": "2026-09-10T12:03:23.567737+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0032-333_voice_move_10.ogg",
+    "name": "voice_move_10",
+    "group": "300heroes:333",
+    "sha256": "8b146e052c685ed1f932049653157bd4d75359c08b763c262fe76f46eb5cfab1",
+    "seconds": 3.79,
+    "importedAt": "2026-09-10T12:03:23.752389+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0046-333_voice_move_11.ogg",
+    "name": "voice_move_11",
+    "group": "300heroes:333",
+    "sha256": "5d4ccc78e8969401666b5dc99f7013c18876e11fee4d7c3a5df689c46e400201",
+    "seconds": 1.24,
+    "importedAt": "2026-09-10T12:03:23.886638+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0035-333_voice_attack_4.ogg",
+    "name": "voice_attack_4",
+    "group": "300heroes:333",
+    "sha256": "8fd48352a6bbde3a40beb28ee22d1e9f176f05143ffb483a6d66c0394dd18437",
+    "seconds": 3.05,
+    "importedAt": "2026-09-10T12:03:24.057737+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0016-333_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:333",
+    "sha256": "72872e970f9c7bcd0e05e8842346b88eda08260ce0b29b44aa970ae8879d4ad4",
+    "seconds": 2.09,
+    "importedAt": "2026-09-10T12:03:24.199996+00:00"
+   }
+  },
+  "community-review-35-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0043-267_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:267",
+    "sha256": "8039c3c29130ee426cc221c30aede463786601bf75e505765e9e2ab86bac06e5",
+    "seconds": 2.05,
+    "importedAt": "2026-09-10T12:03:24.351344+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0005-267_voice_q_1_01_11354_1.ogg",
+    "name": "voice_q_1_01_11354_1",
+    "group": "300heroes:267",
+    "sha256": "48253f848698b770b8fba67d11fe1c9ee82d2e43805e8bf065b59a534171e7b7",
+    "seconds": 0.68,
+    "importedAt": "2026-09-10T12:03:24.476809+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0025-267_voice_w_2_01_11363_1.ogg",
+    "name": "voice_w_2_01_11363_1",
+    "group": "300heroes:267",
+    "sha256": "a9df1c8b0be5907c6a6817e5a2780b059100d09a45e3855e58074f0c59aecfe7",
+    "seconds": 0.61,
+    "importedAt": "2026-09-10T12:03:24.602365+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0034-267_voice_e_1_01_11360_1.ogg",
+    "name": "voice_e_1_01_11360_1",
+    "group": "300heroes:267",
+    "sha256": "5971da15482ffa56d0afc3aee55ec7bf1821f47517eb07c1ba576a025a38e79a",
+    "seconds": 0.69,
+    "importedAt": "2026-09-10T12:03:24.731425+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0040-267_voice_dazhao_11383_1.ogg",
+    "name": "voice_dazhao_11383_1",
+    "group": "300heroes:267",
+    "sha256": "226a2d3231c8dabf457699a3f2180c967d02d8e4122217bf56eaac9b2d70e8f3",
+    "seconds": 1.18,
+    "importedAt": "2026-09-10T12:03:24.900936+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0010-267_voice_dazhao_11389_1.ogg",
+    "name": "voice_dazhao_11389_1",
+    "group": "300heroes:267",
+    "sha256": "52c20f932192eed0d6f95665b3fecc2bf76870a950ba8ec137851a6f8bfdc9c8",
+    "seconds": 0.75,
+    "importedAt": "2026-09-10T12:03:25.033448+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0026-267_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:267",
+    "sha256": "4c3d521f254dac222ad8973589c6c7e7f3cd6db6ba3e0465e8bc75a1674d1a07",
+    "seconds": 1.69,
+    "importedAt": "2026-09-10T12:03:25.184211+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0053-267_voice_joke_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:267",
+    "sha256": "86aa8176ee68d2a903c11646f09cea57f002e8eb63efa4a57f42931bb92dd412",
+    "seconds": 0.85,
+    "importedAt": "2026-09-10T12:03:25.319164+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0055-267_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:267",
+    "sha256": "4aad8b9465c672c1417027481de789bc8dc1fbafae9bf974aa8b52f69a19988d",
+    "seconds": 1.23,
+    "importedAt": "2026-09-10T12:03:25.461741+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0006-267_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:267",
+    "sha256": "06e56cb70b01048f897653843ecfb27fd7f511b624be0d89faff59219e40a289",
+    "seconds": 2.9,
+    "importedAt": "2026-09-10T12:03:25.625823+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0046-267_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:267",
+    "sha256": "a49339d3fd2ade5e79392a7ecb7f44886bdfe9086eb6e810d00f0b87bf6e4b2d",
+    "seconds": 1.31,
+    "importedAt": "2026-09-10T12:03:25.758993+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0048-267_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:267",
+    "sha256": "949e6cfca5e7229f33d66b7cb537f0241031d9d7c378b7faa2a641c698028638",
+    "seconds": 1.95,
+    "importedAt": "2026-09-10T12:03:25.902935+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0045-267_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:267",
+    "sha256": "b3862215db555951eb63f5cb76f112d3b11f5027d9984a0f0bad48f058c78ec8",
+    "seconds": 1.6,
+    "importedAt": "2026-09-10T12:03:26.042388+00:00"
+   }
+  },
+  "community-review-37-20260907": {
+   "hurt": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_1.ogg",
+    "name": "injured_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "8acef511353a5e27e01f52248f77d02af6bb4bfb395830ccfb15c54d11735480",
+    "seconds": 0.86,
+    "importedAt": "2026-09-10T12:03:26.257113+00:00"
+   },
+   "hurt-heavy": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_2.ogg",
+    "name": "injured_2",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "5a04bce0de3ea1d2201e1b4b6a4d6006221990d1f707291cbdb740ef9a41488d",
+    "seconds": 0.86,
+    "importedAt": "2026-09-10T12:03:26.481726+00:00"
+   },
+   "defeat": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_2.ogg",
+    "name": "injured_2",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "5a04bce0de3ea1d2201e1b4b6a4d6006221990d1f707291cbdb740ef9a41488d",
+    "seconds": 0.86,
+    "importedAt": "2026-09-10T12:03:26.717410+00:00"
+   },
+   "kill-1": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+    "name": "tame_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "ea997e66d22f160f83a7c996fd8373ddb9767ddc8272a6b1fc1248f997f33f55",
+    "seconds": 1.11,
+    "importedAt": "2026-09-10T12:03:26.951632+00:00"
+   },
+   "skill-name.q": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+    "name": "tame_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "ea997e66d22f160f83a7c996fd8373ddb9767ddc8272a6b1fc1248f997f33f55",
+    "seconds": 1.11,
+    "importedAt": "2026-09-10T12:03:27.168739+00:00"
+   },
+   "skill-name.w": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_1.ogg",
+    "name": "injured_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "8acef511353a5e27e01f52248f77d02af6bb4bfb395830ccfb15c54d11735480",
+    "seconds": 0.86,
+    "importedAt": "2026-09-10T12:03:27.399146+00:00"
+   },
+   "skill-name.e": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+    "name": "tame_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "ea997e66d22f160f83a7c996fd8373ddb9767ddc8272a6b1fc1248f997f33f55",
+    "seconds": 1.11,
+    "importedAt": "2026-09-10T12:03:27.619655+00:00"
+   },
+   "skill-name.r": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+    "name": "tame_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "ea997e66d22f160f83a7c996fd8373ddb9767ddc8272a6b1fc1248f997f33f55",
+    "seconds": 1.11,
+    "importedAt": "2026-09-10T12:03:27.841947+00:00"
+   },
+   "skill-name.ex": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_2.ogg",
+    "name": "injured_2",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "5a04bce0de3ea1d2201e1b4b6a4d6006221990d1f707291cbdb740ef9a41488d",
+    "seconds": 0.86,
+    "importedAt": "2026-09-10T12:03:28.052748+00:00"
+   },
+   "taunt": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+    "name": "tame_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "ea997e66d22f160f83a7c996fd8373ddb9767ddc8272a6b1fc1248f997f33f55",
+    "seconds": 1.11,
+    "importedAt": "2026-09-10T12:03:28.269156+00:00"
+   },
+   "puzzled": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_1.ogg",
+    "name": "injured_1",
+    "group": "github-chiikawa:chiikawa",
+    "sha256": "8acef511353a5e27e01f52248f77d02af6bb4bfb395830ccfb15c54d11735480",
+    "seconds": 0.86,
+    "importedAt": "2026-09-10T12:03:28.478030+00:00"
+   }
+  },
+  "community-review-01-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0013-204_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:204",
+    "sha256": "539e97496a23a3e9e44fb29be7def9229a3a388d4b91cf523914b8f4fc31efe6",
+    "seconds": 3.39,
+    "importedAt": "2026-09-10T12:24:35.905091+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0011-204_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:204",
+    "sha256": "e270170be06e4f4d75aa4145ccce4cb93ce6c56daab423f9be798f33d58e23d7",
+    "seconds": 2.78,
+    "importedAt": "2026-09-10T12:24:36.072984+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0005-204_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:204",
+    "sha256": "34efdb0462c585177343ea1cca4068fead3cff3fd8c0bb5a53ae64011860cace",
+    "seconds": 1.01,
+    "importedAt": "2026-09-10T12:24:36.212883+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0011-204_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:204",
+    "sha256": "e270170be06e4f4d75aa4145ccce4cb93ce6c56daab423f9be798f33d58e23d7",
+    "seconds": 2.78,
+    "importedAt": "2026-09-10T12:24:36.374802+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0010-204_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:204",
+    "sha256": "74daa1154880421266508a80281e83045356d0cb494ecebbd538319b07c2a558",
+    "seconds": 2.27,
+    "importedAt": "2026-09-10T12:24:36.536822+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0010-204_voice_dazhao_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:204",
+    "sha256": "74daa1154880421266508a80281e83045356d0cb494ecebbd538319b07c2a558",
+    "seconds": 2.27,
+    "importedAt": "2026-09-10T12:24:36.695651+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0006-204_voice_joke_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:204",
+    "sha256": "6cd9c04e53a36d687addd99d09553905f434952cd5dcd0b3ad110649e99e1ec4",
+    "seconds": 3.22,
+    "importedAt": "2026-09-10T12:24:36.887186+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0001-204_voice_move_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:204",
+    "sha256": "ac3bab4e9c2540adab30b774ba26f35f2b6f7a2533a1c1411f2813e826be15d5",
+    "seconds": 4.55,
+    "importedAt": "2026-09-10T12:24:37.091062+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0017-204_voice_move_2.ogg",
+    "name": "voice_move_2",
+    "group": "300heroes:204",
+    "sha256": "015239da44ad409158aba497b86283c79732d3e62f39952e5e3b94275db09f33",
+    "seconds": 2.02,
+    "importedAt": "2026-09-10T12:24:37.240679+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0016-204_voice_move_3.ogg",
+    "name": "voice_move_3",
+    "group": "300heroes:204",
+    "sha256": "6dd236c96508667a52840147c73f3e3d70f3a6ed4b63a694b0c54516586ed0a4",
+    "seconds": 2.49,
+    "importedAt": "2026-09-10T12:24:37.397240+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0011-204_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:204",
+    "sha256": "e270170be06e4f4d75aa4145ccce4cb93ce6c56daab423f9be798f33d58e23d7",
+    "seconds": 2.78,
+    "importedAt": "2026-09-10T12:24:37.556348+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/204/01-0011-204_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:204",
+    "sha256": "e270170be06e4f4d75aa4145ccce4cb93ce6c56daab423f9be798f33d58e23d7",
+    "seconds": 2.78,
+    "importedAt": "2026-09-10T12:24:37.715161+00:00"
+   }
+  },
+  "community-review-08-20260907": {
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0032-107_voice_death_skin9_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:107",
+    "sha256": "526fb21eb3c37630d309bb86135acaadc8949a63ada26ca9fc13a04f69a14d8f",
+    "seconds": 4.45,
+    "importedAt": "2026-09-10T12:25:16.538090+00:00"
+   },
+   "skill-name.q": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0015-107_voice_attack_skin9_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:107",
+    "sha256": "1dbbdf41da865ea37f5c22805fa44b593101658316add051e64d2d938fb04dce",
+    "seconds": 2.11,
+    "importedAt": "2026-09-10T12:25:16.692778+00:00"
+   },
+   "skill-name.w": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0023-107_voice_attack_skin9_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:107",
+    "sha256": "1edd01e077be28a7f50a22c9197cb663a3e798896fd097f9bc758130c615e5cf",
+    "seconds": 2.69,
+    "importedAt": "2026-09-10T12:25:16.849182+00:00"
+   },
+   "skill-name.e": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0021-107_voice_attack_skin9_3.ogg",
+    "name": "voice_attack_3",
+    "group": "300heroes:107",
+    "sha256": "db92c3a5c2217e4127f3bc4c1c13149b0045938d571becb9959714e3a880891b",
+    "seconds": 2.25,
+    "importedAt": "2026-09-10T12:25:17.002666+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0040-107_voice_dazhao_skin9_1.ogg",
+    "name": "voice_dazhao_1",
+    "group": "300heroes:107",
+    "sha256": "52dcf3b3d1d3064c27dbd9494908c1c781522a82f0f40baa9c7a9e0975d31a10",
+    "seconds": 1.71,
+    "importedAt": "2026-09-10T12:25:17.148377+00:00"
+   },
+   "skill-name.ex": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0037-107_voice_dazhao_skin9_2.ogg",
+    "name": "voice_dazhao_2",
+    "group": "300heroes:107",
+    "sha256": "ee7c2f891e39867dec5038e898719be8970a5714bfc800af8a513e0561de090c",
+    "seconds": 1.95,
+    "importedAt": "2026-09-10T12:25:17.300329+00:00"
+   },
+   "taunt": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0005-107_voice_joke_skin9_1.ogg",
+    "name": "voice_joke_1",
+    "group": "300heroes:107",
+    "sha256": "5f7814ac716108352b8bef4499fc0c97788911b170aec8741bd67a52a4427382",
+    "seconds": 4.58,
+    "importedAt": "2026-09-10T12:25:17.497014+00:00"
+   },
+   "puzzled": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0004-107_voice_joke_skin9_2.ogg",
+    "name": "voice_joke_2",
+    "group": "300heroes:107",
+    "sha256": "88cf47e1923178f3598d39b13ecce77766e85aa8a87dc03d4d5081abe66f6b3e",
+    "seconds": 6.74,
+    "importedAt": "2026-09-10T12:25:17.721400+00:00"
+   },
+   "sprint": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0033-107_voice_move_skin9_1.ogg",
+    "name": "voice_move_1",
+    "group": "300heroes:107",
+    "sha256": "f10fc829ae3b56976cda20b7f00dd5eb3788e09507028aeb00ba5959de56a154",
+    "seconds": 1.37,
+    "importedAt": "2026-09-10T12:25:17.859590+00:00"
+   },
+   "free-move": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0017-107_voice_move_skin9_10.ogg",
+    "name": "voice_move_10",
+    "group": "300heroes:107",
+    "sha256": "2e74a687f87dfb1efd61e17f8900f94cd2a5950bee974b8d1e1663f19ecdc794",
+    "seconds": 1.55,
+    "importedAt": "2026-09-10T12:25:18.003960+00:00"
+   },
+   "charge": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0035-107_voice_move_skin9_11.ogg",
+    "name": "voice_move_11",
+    "group": "300heroes:107",
+    "sha256": "a0ff75457516335c72ac56f3e05d901c491ea12f5389de0b3985b0834d9b1009",
+    "seconds": 3.23,
+    "importedAt": "2026-09-10T12:25:18.183923+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0014-107_voice_attack_skin9_4.ogg",
+    "name": "voice_attack_4",
+    "group": "300heroes:107",
+    "sha256": "b50171be88dd0eb22ed1efd3b804376bd71f8d90c3b3072e402c436fe9efaa00",
+    "seconds": 3.65,
+    "importedAt": "2026-09-10T12:25:18.367875+00:00"
+   },
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/107_9/00-0031-107_voice_attack_skin9_5.ogg",
+    "name": "voice_attack_5",
+    "group": "300heroes:107",
+    "sha256": "9bb9b1391f6b4d576b3c97b580b9d04974d097124bc1901d101b67ea63a3b6b8",
+    "seconds": 3.02,
+    "importedAt": "2026-09-10T12:25:18.542392+00:00"
+   }
+  }
+ }
+}

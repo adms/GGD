@@ -418,7 +418,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-fushi",
-  "modelKey": "ou99.467227",
+  "modelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
   "name": "不死",
   "origin": "硬輔",
   "passiveAbility": "b2-fushi.passive",
@@ -431,5 +431,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-fushi.webp"
+  "icon": "assets/icons/champions/b2-fushi.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:26:17.488Z",
+      "source": {
+        "kind": "previous",
+        "character": "不死",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
+      "label": "ou99 「天使可爱小女孩派蒙」（相似造型）",
+      "sourceModelKey": "ou99.467227",
+      "modelSha256": "374117ff9d298ea883002a4baf83f6e77f9d670e5370161685bb82097a1b239e",
+      "binarySha256": "e6e88168e26db99e0ab4276ee55b86808f1a2998e7f64ba415086159a6dc4db0",
+      "registeredAt": "2026-09-10T11:26:17.495Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "致不滅的你 不死",
+        "work": "天使可爱小女孩派蒙",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html"
+      }
+    }
+  ]
 }

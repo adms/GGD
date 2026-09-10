@@ -1,0 +1,2360 @@
+[
+ {
+  "id": "community-review-01-20260907",
+  "character": "武藤遊戯（闇遊戯／アテム）",
+  "official_voice_actor": "風間俊介",
+  "version": "TVアニメ『遊☆戯☆王デュエルモンスターズ』(2000–2004) 以降の全作品（劇場版・Duel Links 含む）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/武藤遊戯",
+  "source_url_2": "https://ja.wikipedia.org/wiki/遊☆戯☆王デュエルモンスターズ",
+  "voice_characteristics": "表の遊戯は柔らかく高めの少年声、闇遊戯（アテム）は同じ声優が喉を落とした張りのある中低音。デュエル中は一語一語を区切って言い切る、決め台詞型の演劇的な口調。",
+  "recommended_emotion": "闇遊戯の「俺のターン、ドロー！」／「ブラック・マジシャン！」の召喚宣言",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/mobile/yugiohduellinks/sound/17187/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Yu-Gi-Oh! Duel Links (Yami Yugi voice rip)",
+    "timestamp": "",
+    "notes": "Search-indexed sounds-resource page for Yami Yugi. Fetch returned a Cloudflare challenge (HTTP 403), so file count and voice language are unverified — Duel Links ships both JP and EN voice; confirm the rip is the 風間俊介 (JP) set before use. Download is a zip, not a direct audio URL."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=0-aFpbsNUKE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "Yu-Gi-Oh! Duel Links (DSOD Yugi Muto, CV 風間俊介)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed: 【遊戯王デュエルリンクス】マジシャン・オブ・カオス 武藤遊戯 DSOD ボイス CV 風間俊介 (channel: Hiria Games). In-game JP voice lines; card-summon SFX likely overlap — pick a summon/quote line."
+   }
+  ],
+  "notes": "Two personas share one VA: 風間俊介 voices both 武藤遊戯 (soft) and 闇遊戯 (low, commanding); GGD's black-magician deck concept maps to 闇遊戯. Older 1998 東映 anime used 緒方恵美; TAG FORCE SPECIAL used 鯨井康介 — not the canonical voice. Web-search budget ran out before a JP-confirmed direct audio file could be located. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-02-20260907",
+  "character": "八神庵",
+  "official_voice_actor": "星野貴紀",
+  "version": "THE KING OF FIGHTERS XV (2022)；KOF XIV (2016) 以降の担当。KOF '95〜XIII は安井邦彦",
+  "source_url_1": "https://www.snk-corp.co.jp/official/kof-xv/characters/characters_iori.php",
+  "source_url_2": "https://ja.wikipedia.org/wiki/八神庵",
+  "voice_characteristics": "掠れた低音で吐き捨てるような荒々しい男声。抑えた唸りから一気に爆発する狂気じみた高笑い、言葉は短く冷たい。",
+  "recommended_emotion": "「泣け！叫べ！そして死ね！」の狂気の咆哮／勝利時の嘲笑",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/pc_computer/kingoffightersxiv/sound/13653/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "THE KING OF FIGHTERS XIV (PC) — Iori Yagami voice rip (星野貴紀, same VA as XV)",
+    "timestamp": "",
+    "notes": "Search-indexed; fetch hit Cloudflare challenge (403) so contents unverified. Zip download. KOF XIV/XV voice = 星野貴紀."
+   },
+   {
+    "url": "https://sounds.spriters-resource.com/playstation_3/kingoffightersxiii/asset/417177/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "THE KING OF FIGHTERS XIII (PS3) — Iori Yagami voice rip (安井邦彦)",
+    "timestamp": "",
+    "notes": "Older VA (安井邦彦). Unverified (Cloudflare 403). Use only if the classic '95–XIII voice is preferred."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=XeAg8B2Vyeg",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "KOF XV｜IORI YAGAMI｜Trailer #4 (SNK OFFICIAL)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed (channel SNK OFFICIAL). Trailer has BGM/SFX; intro/win quotes are the cleanest spots."
+   }
+  ],
+  "notes": "VA changed: 安井邦彦 (KOF '95–XIII, drama CD, 『Another Day』) → 星野貴紀 (KOF XIV 以降, 『KOF: DESTINY』). Current official (KOF XV) is 星野貴紀; GAME Watch (https://game.watch.impress.co.jp/docs/news/1304488.html) also confirms. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-03-20260907",
+  "character": "不知火舞",
+  "official_voice_actor": "小清水亜美",
+  "version": "THE KING OF FIGHTERS XV (2022)；KOF XIII (2010) 以降の担当。'94〜XI は曽木亜古弥",
+  "source_url_1": "https://www.snk-corp.co.jp/official/kof-xv/characters/characters_mai.php",
+  "source_url_2": "https://ja.wikipedia.org/wiki/不知火舞",
+  "voice_characteristics": "艶のある明るい中音域の女性声。語尾を伸ばす色っぽい甘さと、くノ一らしい快活で勝ち気な張りが同居する。",
+  "recommended_emotion": "「日本一！」の勝利ポーズ／「超必殺忍蜂！」の技名叫び",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://sounds.spriters-resource.com/pc_computer/kingoffightersxiv/asset/407193/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "THE KING OF FIGHTERS XIV (PC) — Mai Shiranui voice rip (小清水亜美)",
+    "timestamp": "",
+    "notes": "Search-indexed; fetch hit Cloudflare challenge (403), contents unverified. Zip download."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=WULO-M2wOYs",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "KOF XV｜MAI SHIRANUI｜Trailer #13 (SNK OFFICIAL)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed (SNK OFFICIAL). Opening line 「不知火の炎、たっぷり味わってね！」 per SNK JAPAN's tweet; BGM present."
+   }
+  ],
+  "notes": "VA history: 曽木亜古弥 (餓狼伝説／KOF '94–XI), 小清水亜美 (KOF SKY STAGE, XIII 以降, 『餓狼伝説 City of the Wolves』, 『ストリートファイター6』), 三石琴乃 (anime 『バトルファイターズ 餓狼伝説』), 林原めぐみ (drama CD). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-04-20260907",
+  "character": "空条承太郎",
+  "official_voice_actor": "小野大輔",
+  "version": "TVアニメ『ジョジョの奇妙な冒険 スターダストクルセイダース』(2014–2015) および『オールスターバトル』系ゲーム",
+  "source_url_1": "https://ja.wikipedia.org/wiki/空条承太郎",
+  "source_url_2": "https://animeanime.jp/article/2013/12/22/16807.html",
+  "voice_characteristics": "腹に響く深い低音の男声。感情を殺した無愛想で短い言い回しから、ラッシュ時の「オラオラ」で一気に張り上げる。",
+  "recommended_emotion": "「やれやれだぜ」の低い呟き／「スタープラチナ・ザ・ワールド！」の時止め宣言",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://archive.org/download/jjbaasb-ps3-audio-rips/JJBAASB_In-Game%20Dialogue_%28Part%203%29%20Jotaro%20Kujo.zip/v_btl_3jtr01%2FV_btl_win_3jtr01_01.wav",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "JoJo's Bizarre Adventure: All Star Battle (PS3, 2013) — Jotaro win quote (JP, 小野大輔)",
+    "timestamp": "",
+    "notes": "HEAD verified HTTP 200 (served from inside the zip; content-type application/octet-stream but the URL is a .wav). The zip index lists 208 files: V_btl_win_3jtr01_01–17 (win quotes), V_btl_st_3jtr01_01–22 (battle start), S_PL_special_01–04, SPL_vo_01–02 (super move). Battle-start variant: https://archive.org/download/jjbaasb-ps3-audio-rips/JJBAASB_In-Game%20Dialogue_%28Part%203%29%20Jotaro%20Kujo.zip/v_btl_3jtr01%2FV_btl_st_3jtr01_01.wav"
+   },
+   {
+    "url": "https://archive.org/details/jjbaasb-ps3-audio-rips",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "JoJo's Bizarre Adventure: All Star Battle (PS3) audio rips — Internet Archive item",
+    "timestamp": "",
+    "notes": "Verified. Japanese voice, exported to .wav; Jotaro zip is 39.4 MB."
+   },
+   {
+    "url": "https://sounds-resource.com/pc_computer/jojosbizarreadventureallstarbattler/sound/47612",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "JoJo's Bizarre Adventure: All-Star Battle R (PC) — Jotaro Kujo voice rip",
+    "timestamp": "",
+    "notes": "Search-indexed; Cloudflare challenge (403) on fetch, unverified."
+   }
+  ],
+  "notes": "Other versions: 梁田清之 (drama CD / 1998 格ゲー), 小杉十郎太 (OVA), 稲田徹 (『黄金の旋風』), 高森奈津美 (小学生時代). Part-3 late (time-stop) matches the 2014 TV anime and ASB, both 小野大輔. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-05-20260907",
+  "character": "ロックマン",
+  "official_voice_actor": "福原綾香",
+  "version": "『ロックマン11 運命の歯車!!』(2018)",
+  "source_url_1": "https://www.famitsu.com/news/201807/26161411.html",
+  "source_url_2": "https://game.watch.impress.co.jp/docs/news/1134902.html",
+  "voice_characteristics": "女性声優による少年ロボットの声。澄んだ高めの中音で、素直でまっすぐな明るさと決意のこもった張り。",
+  "recommended_emotion": "「行くぞ、ワイリー！」の出撃宣言／チャージショット発射時の気合",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=_6s18TixcJ4",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "Mega Man 11 – Voice Acting Samples (English vs. Japanese Comparison)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed (channel ShadowRockZX). Compiles the official-site sample voices; JP Mega Man lines are solo with no BGM in the original samples."
+   },
+   {
+    "url": "https://sounds.spriters-resource.com/pc_computer/megaman11/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Mega Man 11 (PC) — The Sounds Resource game page",
+    "timestamp": "",
+    "notes": "Cloudflare challenge (403) on fetch; asset list unverified. Game ships JP voice, so a rip should contain 福原綾香 lines."
+   }
+  ],
+  "notes": "Classic Rockman has had several VAs across games (e.g. 折笠愛 in ロックマン8); the current official voice is 福原綾香 (ロックマン11, also sings the image song 'RM11'). Smash Bros. Mega Man is non-voiced. The Capcom official ロックマン11 site with sample voices (capcom.co.jp/rockman11/) now returns 404. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-06-20260907",
+  "character": "カービィ",
+  "official_voice_actor": "大本眞基子",
+  "version": "『ニンテンドウオールスター! 大乱闘スマッシュブラザーズ』(1999) 以降の全ゲーム／TVアニメ『星のカービィ』(2001–2003)",
+  "source_url_1": "https://ja.wikipedia.org/wiki/大本眞基子",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=1910",
+  "voice_characteristics": "幼児のような甲高くまるい声。言葉はほぼ無く「ぽよ」「ハーイ」「ぴょい」といった短い発声と掛け声で感情を表す。",
+  "recommended_emotion": "吸い込み時の「んー…ぷはっ」／コピー能力発動の「ハイッ！」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://cdn.wikirby.com/7/7e/KatFL_Kirby_voice_sample.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "星のカービィ ディスカバリー (Kirby and the Forgotten Land, 2022) — Kirby voice sample",
+    "timestamp": "",
+    "notes": "HEAD verified HTTP 200 audio/mpeg (27 KB). Hosted by WiKirby."
+   },
+   {
+    "url": "https://cdn.wikirby.com/8/8c/KTD_Kirby_voice_sample.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "星のカービィ トリプルデラックス (Kirby: Triple Deluxe, 2014) — Kirby voice sample",
+    "timestamp": "",
+    "notes": "HEAD verified HTTP 200 audio/mpeg (12 KB)."
+   },
+   {
+    "url": "https://wikirby.com/wiki/Kirby%27s_voice",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "WiKirby 'Kirby's voice' page (≈60 embedded audio files)",
+    "timestamp": "",
+    "notes": "Verified HTTP 200. Also links anime sample https://cdn.wikirby.com/1/16/KRBaY_Kirby_voice_sample.mp3 (53 KB) and SSBB sample https://cdn.wikirby.com/8/8c/SSBB_Kirby_voice_sample.mp3 (5.5 KB), both HEAD-verified."
+   }
+  ],
+  "notes": "Mostly non-verbal by design (the anime deliberately keeps Kirby nearly wordless); 大本眞基子 voices Kirby in every region. Copy-ability voice profile should be 'creature/cartoon cute grunts' rather than dialogue. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-07-20260907",
+  "character": "ヒソカ＝モロウ",
+  "official_voice_actor": "浪川大輔",
+  "version": "TVアニメ『HUNTER×HUNTER』(2011–2014) および『JUMP FORCE』；1999年版は高橋広樹",
+  "source_url_1": "https://www.pashplus.jp/other_content/266689/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/浪川大輔",
+  "voice_characteristics": "粘りつくように甘い中音の男声。語尾を「♦」「♠」で遊ぶような妖しい抑揚と、興奮すると裏返る恍惚の吐息。",
+  "recommended_emotion": "「ゾクゾクするねぇ…♥」の恍惚／「バンジーガム」の技名を囁く",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://sounds.spriters-resource.com/pc_computer/jumpforce/asset/444541/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "JUMP FORCE (PC) — Hisoka Morow voice rip (JP 浪川大輔)",
+    "timestamp": "",
+    "notes": "Search-indexed; Cloudflare challenge (403) on fetch, contents unverified. Zip download."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=trel5T03ajY",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『HUNTER×HUNTER』ヒソカ × クロロ PV（cv:浪川大輔、宮野真守）— ジャンプチャンネル (official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Newly recorded lines for 冨樫義博展; Hisoka and Chrollo alternate — cut a Hisoka-only span."
+   }
+  ],
+  "notes": "1999 anime: 高橋広樹. GGD's Hisoka (Bungee Gum / texture surprise) matches the 2011 series. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-08-20260907",
+  "character": "ミカサ・アッカーマン",
+  "official_voice_actor": "石川由依",
+  "version": "TVアニメ『進撃の巨人』(2013–2023) 全シリーズ／劇場版／ゲーム『進撃の巨人2』",
+  "source_url_1": "https://shingeki.tv/final/staff/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/石川由依",
+  "voice_characteristics": "感情を抑えた落ち着いた低めの女性声。平坦でぶっきらぼうな短文が基調で、エレンが絡むと一気に切迫した叫びに変わる。",
+  "recommended_emotion": "「エレン…」の押し殺した呼びかけ／「行ってらっしゃい、エレン」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=4UucabcNSys",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "劇場版「進撃の巨人」完結編 THE LAST ATTACK 復活上映 本予告 (ぽにきゃん-Anime PONY CANYON, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Trailer with BGM; Mikasa has a few solo lines."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=pcoSzf44V2c",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "ゲーム『進撃の巨人２』OP映像 (コーエーテクモChannel, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Low value for clean speech (music-heavy); listed because A.O.T.2 is the JP-voiced game (石川由依) and its rip would be the ideal source — no sounds-resource page could be verified (Cloudflare 403)."
+   }
+  ],
+  "notes": "No wiki hosting Mikasa's game voice files was found; 進撃の巨人2 (Koei Tecmo) official site https://www.gamecity.ne.jp/shingeki2/ has character pages but no audio samples. Web-search budget exhausted before locating a character PV. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-09-20260907",
+  "character": "ホロ",
+  "official_voice_actor": "小清水亜美",
+  "version": "TVアニメ『狼と香辛料 MERCHANT MEETS THE WISE WOLF』(2024)（2008年版TVアニメから続投）",
+  "source_url_1": "https://www.famitsu.com/news/202306/29307954.html",
+  "source_url_2": "https://www.animatetimes.com/news/details.php?id=1688026053",
+  "voice_characteristics": "気品と余裕のある柔らかな中音の女性声。「わっち」「〜ぬし」の古風な花魁言葉で、からかうような甘えと賢狼の威厳を行き来する。",
+  "recommended_emotion": "「わっちは賢狼ホロじゃ」の誇り高い名乗り／ロレンスをからかう含み笑い",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=68Vh_6uhoj4",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "【狼と香辛料】「賢狼ホロのわっちチャンネル」#19 (TOHO animation チャンネル, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. In-character talk series: Holo (小清水亜美) speaks alone for long stretches — best chance of BGM-light solo speech."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=LJegbXV0xB8",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "「ホロの機嫌が続くといいな」／#狼と香辛料 名シーン切り抜き：第1幕より (TOHO animation, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Official scene cut from episode 1."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=oeSNWz65mi0",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "『狼と香辛料 MERCHANT MEETS THE WISE WOLF』第1幕 予告映像 (TOHO animation, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Episode preview narrated in character."
+   }
+  ],
+  "notes": "No mainstream game with Holo voice files (VR titles only). Same VA as 不知火舞 (小清水亜美) — keep the two profiles distinct: Holo is softer, archaic diction. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-10-20260907",
+  "character": "ルルーシュ・ランペルージ（ルルーシュ・ヴィ・ブリタニア／ゼロ）",
+  "official_voice_actor": "福山潤",
+  "version": "TVアニメ『コードギアス 反逆のルルーシュ』(2006–2008)／劇場版『復活のルルーシュ』(2019)",
+  "source_url_1": "https://geass.jp/R-geass/staff_cast.php",
+  "source_url_2": "https://ja.wikipedia.org/wiki/ルルーシュ・ランペルージ",
+  "voice_characteristics": "よく通る張りのある中音の若い男声。理知的で芝居がかった演説口調、ゼロとしては朗々と命令し、追い詰められると高笑いに転じる。",
+  "recommended_emotion": "「ルルーシュ・ヴィ・ブリタニアが命じる——撃て！」のギアス命令",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=U4-klNK2gCw",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "『コードギアス 復活のルルーシュ』TVCM第1弾 ルルーシュ編（15秒）(バンダイナムコフィルムワークス チャンネル, official)",
+    "timestamp": "00:00-00:15",
+    "notes": "Verified via oEmbed. 15-second Lelouch-focused spot; short solo lines over BGM."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=PU3ZgEwUnHs",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "『コードギアス 復活のルルーシュ』劇場予告編 第1弾 (official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed."
+   },
+   {
+    "url": "https://sounds.spriters-resource.com/ds_dsi/codegeasslelouchoftherebellion/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "コードギアス 反逆のルルーシュ (DS, 2007) — Character Voices section",
+    "timestamp": "",
+    "notes": "Search-indexed 'Character Voices' assets; Cloudflare challenge (403) on fetch, contents unverified."
+   }
+  ],
+  "notes": "幼少期 is 大原さやか. Lost Stories (mobile) and Super Robot Wars also carry 福山潤 lines but no verified audio host was found. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-11-20260907",
+  "character": "リムル＝テンペスト",
+  "official_voice_actor": "岡咲美保",
+  "version": "TVアニメ『転生したらスライムだった件』(2018–2026 第4期) および劇場版",
+  "source_url_1": "https://www.ten-sura.com/anime/tensura/staffcast",
+  "source_url_2": "https://anime.eiga.com/person/100902/",
+  "voice_characteristics": "少年とも少女ともつかない中性的で明るい中音。気さくなツッコミ口調と、魔王として低く凄む声を切り替える。",
+  "recommended_emotion": "「大賢者、解析！」の指示／魔王覚醒時の静かな凄み",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=9QXwiSvxF2g",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "TVアニメ『転生したらスライムだった件』PV第2弾 (isekai channel @バンダイナムコフィルムワークス, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Season-1 PV with Rimuru narration over BGM."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=1ZzdmhrSZzQ",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "TVアニメ『転生したらスライムだった件』PV第4弾 (official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=IW3KS1iqlp8",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "【公式】『転生したらスライムだった件』第1話「暴風竜ヴェルドラ」 (バンダイナムコフィルムワークス チャンネル, official full episode)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Full episode; Rimuru's inner monologue has long solo spans."
+   }
+  ],
+  "notes": "Game (まおりゅう) official site could not be resolved (DNS) and no voice-file wiki was found; only official anime clips are listed. Version note: GGD uses the 大賢者/捕食者/擬態 era (season 1). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-12-20260907",
+  "character": "衛宮士郎",
+  "official_voice_actor": "杉山紀彰",
+  "version": "TVアニメ『Fate/stay night [Unlimited Blade Works]』(2014–2015)；幼少期は野田順子",
+  "source_url_1": "https://ja.wikipedia.org/wiki/衛宮士郎",
+  "source_url_2": "https://anime.eiga.com/program/103940/",
+  "voice_characteristics": "素朴で少し掠れた中音の若い男声。愚直な真面目さと、詠唱では淡々と抑えた語りから絞り出す気迫。",
+  "recommended_emotion": "「投影、開始（トレース・オン）」の詠唱／「I am the bone of my sword」の宝具詠唱",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://static.atlasacademy.io/JP/Audio/NoblePhantasm_104900/0_B050.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order — 千子村正 (Saber, No.302) 宝具1 line, CV 杉山紀彰",
+    "timestamp": "",
+    "notes": "HEAD verified HTTP 200 audio/mpeg (28 KB). Muramasa is a pseudo-servant inhabiting 衛宮士郎's body and uses the same VA/register; clean in-game line, no BGM. Same character, not Shirou himself — see notes."
+   },
+   {
+    "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_S010.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order — 千子村正 召喚 line (longer solo speech)",
+    "timestamp": "",
+    "notes": "HEAD verified HTTP 200 audio/mpeg (54 KB). Full line list (121 files) from https://api.atlasacademy.io/nice/JP/servant/302?lore=true (cv field = 杉山紀彰)."
+   },
+   {
+    "url": "https://fategrandorder.fandom.com/wiki/Sub:Senji_Muramasa/Dialogue",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Fate/Grand Order Wiki — Senji Muramasa dialogue page (embedded .ogg)",
+    "timestamp": "",
+    "notes": "Search-indexed; fetch blocked (402/403), so embedded audio unverified. Atlas Academy URLs above are the verified alternative."
+   }
+  ],
+  "notes": "Shirou himself is not in FGO; FGO's 千子村正 is a pseudo-servant in Shirou's body voiced by 杉山紀彰 with the same timbre (brasher delivery). Direct UBW-Shirou audio (Fate/unlimited codes, Realta Nua) could not be verified before the search budget ran out. Archer/EMIYA is 諏訪部順一 — do not use. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-13-20260907",
+  "character": "シノン（朝田詩乃）",
+  "official_voice_actor": "沢城みゆき",
+  "version": "TVアニメ『ソードアート・オンラインII』(2014) 以降／ゲーム『ソードアート・オンライン フェイタル・バレット』(2018) 等",
+  "source_url_1": "https://ja.wikipedia.org/wiki/沢城みゆき",
+  "source_url_2": "https://fb.sao-game.jp/character/",
+  "voice_characteristics": "クールで冷静な低めの女性声。感情を抑えた淡々とした狙撃手の口調に、ときおり照れや脆さがにじむ。",
+  "recommended_emotion": "「ヘカートII」構え時の静かな集中／照れ隠しの「別に、あんたのためじゃない」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://sounds.spriters-resource.com/pc_computer/swordartonlinefatalbullet/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Sword Art Online: Fatal Bullet (PC) — The Sounds Resource game page",
+    "timestamp": "",
+    "notes": "Search-indexed; Cloudflare challenge (403) on fetch — Sinon asset presence unverified. Fatal Bullet is the GGO-setting game with JP voice (沢城みゆき)."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=ye670t34h4E",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "「ソードアート・オンライン アリシゼーション War of Underworld」最終章PV (アニプレックス チャンネル, official)",
+    "timestamp": "unverified",
+    "notes": "Verified via oEmbed. Sinon appears among many characters; only short solo lines expected."
+   }
+  ],
+  "notes": "Official game site https://fb.sao-game.jp/character/ confirms 「CV：沢城みゆき」 for シノン but hosts no voice sample. Web-search budget ran out before a Sinon-solo PV or verified voice-file wiki was found; the anime official portal (swordart-online.net) character page lists no CV. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-14-20260907",
+  "character": "殺せんせー",
+  "official_voice_actor": "福山潤",
+  "version": "TVアニメ『暗殺教室』(2015, 第2期 2016) ／ 劇場版『暗殺教室 みんなの時間』(2026) 同キャスト",
+  "source_url_1": "https://ja.wikipedia.org/wiki/殺せんせー",
+  "source_url_2": "https://animeanime.jp/article/2014/09/29/20319.html",
+  "voice_characteristics": "明るく軽妙な中音域の男声。鼻にかかった「ヌルフフフ」の含み笑いとコミカルな早口が基調で、生徒を諭す場面では一転して穏やかで落ち着いた教師の声に切り替わる。",
+  "recommended_emotion": "「ヌルフフフ」の含み笑い／マッハ20で逃げる時の慌てた高い声と、諭す時の穏やかな教師声",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=dqmTB3RnTPE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ『暗殺教室』10周年のお祝いコメント／福山潤（殺せんせー役）・殺せんせー（【フジテレビ】アニメ公式チャンネル）",
+    "timestamp": "unverified (needs manual scrub; character speaks in-voice to camera, likely little BGM)",
+    "notes": "Official Fuji TV anime channel; verified via YouTube oEmbed (title/channel). Koro-sensei speaks in character for a comment video, so long solo speech is expected."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=8d7Xh4p7Ca4",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "アニメ「暗殺教室」殺せんせー3つの特徴PV (MANTAN TV)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Character-feature PV; BGM present. Verified resolving via oEmbed."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=Fcj-p9onaF0",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "【公式】暗殺教室PV (フジテレビ公式)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official PV; BGM present. Verified resolving via oEmbed."
+   }
+  ],
+  "notes": "⚠ Game rips are NOT usable as a 福山潤 reference: ja.wikipedia 暗殺教室 lists 関智一 for Jump Super Anime Tour 2013 and 小野坂昌也 for the VOMIC; J-Stars Victory VS Korosensei is reported (search-index summary of BTVA; BTVA page returned 403, unverified) as 関智一 as well — so skip sounds-resource J-Stars asset 399625 / YouTube jBHYixmuadg. Live-action film voice is 二宮和也. 3DS『暗殺教室 アサシン育成計画!!』has voice but its cast could not be confirmed (unverified). Official site cast page https://www.ansatsu-anime.com/castStaff/ also lists 福山潤. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-15-20260907",
+  "character": "ビリー・ヘリントン (Billy Herrington)",
+  "official_voice_actor": "none",
+  "version": "n/a — real person (1969–2018), internet meme (ガチムチパンツレスリング / ニコニコ動画, 2007–)",
+  "source_url_1": "https://ja.wikipedia.org/wiki/ビリー・ヘリントン",
+  "source_url_2": "https://en.wikipedia.org/wiki/Billy_Herrington",
+  "voice_characteristics": "実在のアメリカ人男性の低めで太いバリトン英語音声。meme では『Workout: Muscle Fantasies 3』等の英語台詞が空耳（「歪みねぇな」「新日暮里」等）として使われる、豪快で芝居がかった掛け声。",
+  "recommended_emotion": "豪快な掛け声・挑発（空耳の元になった英語の叫び）",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "No Japanese VA and no anime adaptation — he was an American adult-film actor/bodybuilder who became the ニコニコ動画 'ビリー兄貴' meme; the meme source footage is adult-video content and the person is deceased (2018), so lifting a reference clip from the original video is inappropriate on rights/likeness grounds. GGD kit names are GGD originals per the hint. Recommend a GGD original casting (male_low_gruff, English-flavoured shouts) or synthesized voice; no candidate clip listed deliberately. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-16-20260907",
+  "character": "イリヤスフィール・フォン・アインツベルン",
+  "official_voice_actor": "門脇舞以",
+  "version": "TVアニメ『Fate/kaleid liner プリズマ☆イリヤ』(2013–, 全シリーズ共通) ／ Fate/Grand Order (イリヤスフィール〔キャスター〕, CV 門脇舞以＆高野直子＝ルビー)",
+  "source_url_1": "https://ja.wikipedia.org/wiki/イリヤスフィール・フォン・アインツベルン",
+  "source_url_2": "https://www.b-ch.com/titles/7117/",
+  "voice_characteristics": "高く幼い少女の声。無邪気で明るく、感情がそのまま乗る素直な発声。魔法少女として戦う時は張った可愛らしい叫びになる。",
+  "recommended_emotion": "変身・必殺技名を張り上げる元気な叫び／泣きそうな声からの決意",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_502800/0_S010.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order (JP) — イリヤスフィール〔キャスター〕召喚ボイス「えっと、イリヤって言います。小学五年生です。」 (Atlas Academy mirror)",
+    "timestamp": "",
+    "notes": "HEAD-verified: HTTP 200, audio/mpeg, 38 KB. Servant collectionNo 136, svtId 502800; API cv field = 門脇舞以＆高野直子 (Ruby's lines are 高野直子 — pick Illya-only lines). Full list: https://api.atlasacademy.io/nice/JP/servant/136?lore=true (profile.voices[].voiceLines[].audioAssets)."
+   },
+   {
+    "url": "https://static.atlasacademy.io/JP/Audio/NoblePhantasm_502800/0_B050.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order (JP) — 宝具「昼夜双星・獄門開放」発動ボイス",
+    "timestamp": "",
+    "notes": "HEAD-verified HTTP 200 audio/mpeg. Battle lines: https://static.atlasacademy.io/JP/Audio/Servants_502800/0_B010.mp3 (アタック1) … 0_B210 (宝具カード)."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=XnzRyMNq__0",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "劇場版「Fate/kaleid liner プリズマ☆イリヤ Licht 名前の無い少女」本予告映像 (KADOKAWAanime)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official trailer, BGM present. Found on YouTube results page (official channel)."
+   }
+  ],
+  "notes": "Display name is the series title; the character is イリヤスフィール・フォン・アインツベルン (Prisma Illya version). Same VA 門脇舞以 across Fate/stay night (2006), プリズマ☆イリヤ (2013–2027), and FGO. FGO Caster-Illya voice bank mixes Illya and Ruby (高野直子) — choose lines by text. en.wikipedia Prisma Illya page also confirms Mai Kadowaki. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-17-20260907",
+  "character": "アインズ・ウール・ゴウン（モモンガ）",
+  "official_voice_actor": "日野聡",
+  "version": "TVアニメ『オーバーロード』(2015, II/III 2018, IV 2022) ／ 劇場版 聖王国編 (2024) ／ ゲーム『MASS FOR THE DEAD』同キャスト",
+  "source_url_1": "https://ja.wikipedia.org/wiki/オーバーロード_(小説)",
+  "source_url_2": "https://overlord-anime.com/_season1/staff_cast.html",
+  "voice_characteristics": "低く重厚で威圧感のある男声。支配者としてゆっくり朗々と言い放つ口調が基調で、内心のモノローグでは砕けた普通の青年声に落ちる二面性がある。",
+  "recommended_emotion": "支配者としての威圧的な宣告／超位魔法名の朗唱、慌てる内心モノローグとの落差",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://static.wikia.nocookie.net/overlord_mass_for_the_dead/images/1/12/Voice_type_ingame_sortie_0001_01.ogg/revision/latest?cb=20211230013449",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "OVERLORD: MASS FOR THE DEAD — モモンガ (Overlord / 死の支配者) 出撃ボイス (overlord-mass-for-the-dead.fandom.com)",
+    "timestamp": "",
+    "notes": "Page https://overlord-mass-for-the-dead.fandom.com/wiki/Momonga_(Overlord)/Voice hosts 35 .ogg lines (summon, skills, attacks, victory). Sibling ogg HEAD-verified HTTP 200 application/ogg; fandom HTML blocks bots (403) but api.php?action=parse and static.wikia.nocookie.net files fetch fine."
+   },
+   {
+    "url": "https://static.wikia.nocookie.net/overlord_mass_for_the_dead/images/1/17/Voice_type_ingame_attack_01_0001_05.ogg/revision/latest?cb=20211230041209",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "OVERLORD: MASS FOR THE DEAD — モモンガ (Warrior Phase) 攻撃ボイス",
+    "timestamp": "",
+    "notes": "HEAD-verified HTTP 200 application/ogg 9.8 KB. Page: https://overlord-mass-for-the-dead.fandom.com/wiki/Momonga_(Warrior_Phase)/Voice (35 files)."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=4yWf2IvkW6A",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "『劇場版「オーバーロード」聖王国編』特別映像「30秒でわかる至高なるアインズ様」(KADOKAWAanime)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official KADOKAWA channel, 0:30. BGM present."
+   }
+  ],
+  "notes": "In-game the unit is named モモンガ (Ainz's original guild name) — same character, same VA 日野聡. Hint says '社群 ID 不覆蓋飛鼠' (do not collide with the existing 飛鼠/Momonga hero id). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-18-20260907",
+  "character": "ギルガメッシュ（アーチャー／英雄王）",
+  "official_voice_actor": "関智一",
+  "version": "Fate/stay night (2006) ／ [Unlimited Blade Works] (2014–15) ／ Fate/Zero ／ Fate/Grand Order (アーチャー, 絶対魔獣戦線バビロニア 2019–20) ／ Fate/strange Fake",
+  "source_url_1": "https://ja.wikipedia.org/wiki/関智一",
+  "source_url_2": "https://www.animatetimes.com/news/details.php?id=1600048061",
+  "voice_characteristics": "張りのある高慢な中高音の男声。傲岸不遜に見下す王の口調で、朗々とした宣言と高笑いが特徴。怒りに転じると低く鋭い威圧になる。",
+  "recommended_emotion": "「雑種！」の嘲笑・高笑いと、宝具「エヌマ・エリシュ」発動の咆哮",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_200200/0_S010.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order (JP) — ギルガメッシュ召喚ボイス「ふはははは！ この我を呼ぶとは、運を使い果たしたな雑種！」 (Atlas Academy mirror)",
+    "timestamp": "",
+    "notes": "HEAD-verified HTTP 200 audio/mpeg 75 KB. Servant collectionNo 12, svtId 200200; API cv field = 関智一. Full list: https://api.atlasacademy.io/nice/JP/servant/12?lore=true."
+   },
+   {
+    "url": "https://static.atlasacademy.io/JP/Audio/Servants_200200/0_B210.mp3",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order (JP) — 宝具カード選択ボイス",
+    "timestamp": "",
+    "notes": "HEAD-verified HTTP 200 audio/mpeg. Other battle lines: 0_B100/0_B110 (開始), 0_B080/0_B090 (スキル), 0_B010–0_B030 (アタック) under Servants_200200/."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=WMBnWt7iy2M",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "『Fate/strange Fake -Whispers of Dawn-』キャラクターPV第6弾：アーチャー編 (アニプレックス チャンネル)",
+    "timestamp": "unverified (0:20 character PV; needs manual scrub)",
+    "notes": "Official Aniplex channel; Archer = Gilgamesh voiced by 関智一. BGM present."
+   }
+  ],
+  "notes": "Hint specifies the Archer 英雄王 (adult Gilgamesh), not Caster or child Gilgamesh (also 関智一). ja.wikipedia direct article title for the character returned 404; VA confirmed via 関智一's filmography page and animatetimes. Atlas Academy API is the FGO data mirror (fategrandorder.fandom.com returned 402/403 to automated fetch). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-19-20260907",
+  "character": "キリト（桐ヶ谷和人）",
+  "official_voice_actor": "松岡禎丞",
+  "version": "TVアニメ『ソードアート・オンライン』(2012–, 全シリーズ・劇場版・ゲーム共通)",
+  "source_url_1": "https://ja.wikipedia.org/wiki/桐ヶ谷和人",
+  "source_url_2": "https://en.wikipedia.org/wiki/Kirito_(Sword_Art_Online)",
+  "voice_characteristics": "やや低めで落ち着いた少年〜青年声。普段は抑えた淡々とした口調だが、戦闘では一気に熱を帯び、掠れるほど張り上げて叫ぶ。",
+  "recommended_emotion": "二刀流発動時の張り詰めた叫び（「スターバースト・ストリーム！」）",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/pc_computer/swordartonlinefatalbullet/sound/14365/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Sword Art Online: Fatal Bullet (PC) — Kirito voice rip (The Sounds Resource)",
+    "timestamp": "",
+    "notes": "UNVERIFIED: URL from search index; sounds-resource returns HTTP 403 to every automated fetch (curl/Googlebot UA too) — open in a normal browser. Japanese VA in the game is 松岡禎丞."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=h24YbwWGiF0",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "「劇場版 ソードアート・オンライン -プログレッシブ- 星なき夜のアリア」公開中PV (アニプレックス チャンネル)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official Aniplex channel, 1:43, BGM present. Found on YouTube results page."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=4BSv-7L0ezY",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "アニメ「ソードアート・オンライン」振り返りロングPV (アニプレックス チャンネル, 16:08)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Long official recap PV; many Kirito lines but BGM throughout."
+   }
+  ],
+  "notes": "Hint specifies SAO 二刀流 (Aincrad-era dual-wield Kirito). ja.wikipedia 'キリト' is a rock musician — use 桐ヶ谷和人. No wiki-hosted direct audio found for SAO games (swordartonline.fandom has no voice pages). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-20-20260907",
+  "character": "御坂美琴",
+  "official_voice_actor": "佐藤利奈",
+  "version": "TVアニメ『とある魔術の禁書目録』(2008–) ／『とある科学の超電磁砲』(2009, S 2013, T 2020) ／ ドラマCD・ゲーム共通（電撃文庫 FIGHTING CLIMAX 等）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/御坂美琴",
+  "source_url_2": "https://en.wikipedia.org/wiki/Mikoto_Misaka",
+  "voice_characteristics": "明るくハリのある中高音の少女声。勝ち気でツンとした口調が基調で、照れると声が裏返り、怒ると勢いよく張り上げる。",
+  "recommended_emotion": "超電磁砲を撃つ時の気合の一喝／「ビリビリ」と呼ばれた時の怒声",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/playstation_3/dengekibunkofightingclimaxignition/sound/11375/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "電撃文庫 FIGHTING CLIMAX IGNITION (PS3) — Mikoto Misaka's Voice (The Sounds Resource)",
+    "timestamp": "",
+    "notes": "UNVERIFIED: URL from search index; sounds-resource returns HTTP 403 to automated fetch — open in a normal browser. VA in the game is 佐藤利奈."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=eVudpKEJcYo",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "TVアニメ『とある科学の超電磁砲T』本PV (とあるプロジェクト公式 toaru.project)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official project channel, 1:44, BGM present."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=nxLNpqym4jw",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "3分でわかる超電磁砲 (とあるプロジェクト公式)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official recap; Misaka narration likely; BGM present."
+   }
+  ],
+  "notes": "ja.wikipedia: 「担当する声優は佐藤利奈（アニメ版、ドラマCD版、ゲーム版共通）」. Official toaru-project.com character page URL guessed wrong (404) — not used as a source. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-21-20260907",
+  "character": "鹿目まどか",
+  "official_voice_actor": "悠木碧",
+  "version": "TVアニメ『魔法少女まどか☆マギカ』(2011) ／ 劇場版 ／ 『マギアレコード』(ゲーム 2017–, アニメ 2020) 全作品共通",
+  "source_url_1": "https://ja.wikipedia.org/wiki/鹿目まどか",
+  "source_url_2": "https://www.madoka-magica.com/tv/character/",
+  "voice_characteristics": "柔らかく高めの少女声。控えめで優しい、息の混じった話し方が基調。決意の場面では震えながらも芯の通った声になり、泣き声との振れ幅が大きい。",
+  "recommended_emotion": "静かな決意の告白（涙声からの芯のある一言）／弓を引く時の小さな気合",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://static.wikia.nocookie.net/magiarecord-en/images/0/0b/Vo_char_2001_00_01.ogg/revision/latest?cb=20171021174818",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "マギアレコード 魔法少女まどか☆マギカ外伝 — 鹿目まどか 自己紹介①「まだ分からないことだらけだけど、マミさんに色々な事を教わりながら…」 (magireco.fandom.com)",
+    "timestamp": "",
+    "notes": "HEAD-verified HTTP 200 application/ogg 427 KB (long solo monologue, no BGM — game voice bank). Page https://magireco.fandom.com/wiki/Kaname_Madoka/Quotes hosts 111 .ogg lines with JP text; fandom HTML blocks bots (403) but api.php?action=parse and the static files fetch fine."
+   },
+   {
+    "url": "https://static.wikia.nocookie.net/magiarecord-en/images/0/04/Vo_char_2001_00_06.ogg/revision/latest?cb=20171021174800",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "マギアレコード — 鹿目まどか ボイス (Vo_char_2001_00_06)",
+    "timestamp": "",
+    "notes": "Same file store as above (sibling verified); line text on the Quotes page."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=HD6vwmNvcXo",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "『劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉』本予告 (アニプレックス チャンネル)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official trailer, 1:52, BGM present."
+   }
+  ],
+  "notes": "Hint: magical-girl Madoka primary, EX borrows 円環の理 imagery — the goddess form is the same VA with a calmer, more distant delivery. sounds-resource also lists 魔法少女まどか☆マギカ ポータブル (PSP) voices (403 to bots, unverified). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-22-20260907",
+  "character": "ナツキ・スバル",
+  "official_voice_actor": "小林裕介",
+  "version": "TVアニメ『Re:ゼロから始める異世界生活』(2016, 2nd 2020–21, 3rd 2024–25, 4th) ／ 『異世界かるてっと』／ ゲーム『Lost in Memories』同キャスト",
+  "source_url_1": "https://ja.wikipedia.org/wiki/ナツキ・スバル",
+  "source_url_2": "https://en.wikipedia.org/wiki/Subaru_Natsuki",
+  "voice_characteristics": "軽くよく通る中音の青年声。テンション高めの早口ツッコミ・ボケが基調だが、絶望時は掠れた絶叫や嗚咽まで振れ幅が非常に大きい。",
+  "recommended_emotion": "「死に戻り」後の絶望の絶叫・慟哭と、立ち直った時の掠れた決意",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=hQYbycqPOfg",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "【リゼロ】アフレコ映像│ナツキ・スバル役 小林裕介ver (「Re:ゼロから始める異世界生活」チャンネル【公式】)",
+    "timestamp": "unverified (needs manual scrub; booth recording — largely dry voice)",
+    "notes": "Official Re:Zero channel, verified via YouTube oEmbed. Recording-booth footage of the VA performing Subaru's lines — best chance of BGM-free solo speech."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=inXFMhJUzVg",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "スバル「俺が覚えてる、全部覚えてる」 リゼロ 4th season 77話 (fan upload)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Fan-uploaded clip found in search results; not fetched — treat as unverified."
+   }
+  ],
+  "notes": "No wiki-hosted direct audio found: rezelos.fandom (Lost in Memories wiki) unit pages have no voice files; rezero.fandom has none. Hint forbids faking 死に戻り with teleport+heal. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-23-20260907",
+  "character": "坂田銀時",
+  "official_voice_actor": "杉田智和",
+  "version": "TVアニメ『銀魂』(2006–2018 各期, 劇場版, 『銀魂 THE FINAL』2021) ／ ゲーム（J-Stars Victory VS, 銀魂乱舞 等）同キャスト",
+  "source_url_1": "https://ja.wikipedia.org/wiki/坂田銀時",
+  "source_url_2": "https://en.wikipedia.org/wiki/Gintoki_Sakata",
+  "voice_characteristics": "気だるく低めの男声。やる気のないダラけた語り口とツッコミの絶叫を行き来し、決め台詞では低く据わった真剣な声に切り替わる。",
+  "recommended_emotion": "気だるいボヤキ→ツッコミの絶叫→締めの低い決め台詞という三段の落差",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=NW6iMhE9Zz0",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "坂田銀時（CV：杉田智和）が読み上げる『銀魂』サブタイトル100選 (ジャンプチャンネル, 11:43)",
+    "timestamp": "unverified (needs manual scrub; Gintoki reads titles alone for ~12 min)",
+    "notes": "Official Shueisha Jump channel (from YouTube results page). Solo character narration — good odds of low/no BGM segments."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=d4SSctRbrns",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "【公式】『銀魂』坂田銀時PV【10/10】 (ジャンプチャンネル, 1:57)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official character PV; BGM present."
+   }
+  ],
+  "notes": "ja.wikipedia: 杉田智和（テレビアニメ版）; young Gintoki = 矢口アサミ, female form = 戸松遥. sounds-resource J-Stars Victory VS has only 5 character voice sets (Gintoki not confirmed among them); no Gintama Rumble rip found. Hint: comedic tsukkomi text must not parse as mechanics. ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-24-20260907",
+  "character": "キルア＝ゾルディック",
+  "official_voice_actor": "伊瀬茉莉也",
+  "version": "TVアニメ『HUNTER×HUNTER』(2011–2014 版) ／ JUMP FORCE (2019) 同キャスト。※1999年版は三橋加奈子",
+  "source_url_1": "https://ja.wikipedia.org/wiki/キルア=ゾルディック",
+  "source_url_2": "https://en.wikipedia.org/wiki/Killua_Zoldyck",
+  "voice_characteristics": "少年役の女性声優によるややハスキーな中高音のボーイッシュ声。生意気で軽い口調が基調で、殺気を帯びると低く冷たく平坦になる。",
+  "recommended_emotion": "「神速」発動時の低く冷たい呟き／ゴンを呼ぶ切迫した叫び",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/pc_computer/jumpforce/sound/51028/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "JUMP FORCE (PC) — Killua Zoldyck voice rip (The Sounds Resource)",
+    "timestamp": "",
+    "notes": "UNVERIFIED: URL from search index; sounds-resource returns HTTP 403 to automated fetch — open in a normal browser. ja.wikipedia JUMP FORCE credits キルア = 伊瀬茉莉也."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=MM075oJpjiE",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "『HUNTER×HUNTER』ゴン×キルアPV（CV:潘めぐみ、伊瀬茉莉也）【冨樫義博展 -PUZZLE- 開催記念】 (ジャンプチャンネル, 1:15)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official Jump channel PV with new-recorded Killua lines; BGM present."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=T8O60_bSdDs",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "Jump Force - Kilua Zoldyck Voice (Japanese) (fan upload of game voice bank)",
+    "timestamp": "unverified",
+    "notes": "From search index, not fetched — unverified."
+   }
+  ],
+  "notes": "Two VAs across versions: 三橋加奈子 (1999 anime) vs 伊瀬茉莉也 (2011 anime, Jump Force, later PVs). Recommend 伊瀬茉莉也 as canonical (current-era and all game voice banks). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-25-20260907",
+  "character": "サイタマ",
+  "official_voice_actor": "古川慎",
+  "version": "TVアニメ『ワンパンマン』(2015, 第2期 2019, 第3期 2025) ／ ゲーム『ONE PUNCH MAN A HERO NOBODY KNOWS』(2020) 同キャスト",
+  "source_url_1": "https://ja.wikipedia.org/wiki/サイタマ_(ワンパンマン)",
+  "source_url_2": "https://en.wikipedia.org/wiki/Saitama_(One-Punch_Man)",
+  "voice_characteristics": "平坦で気の抜けた中低音の男声。感情の起伏が乏しい棒読み気味の脱力トーンが基調で、ごく稀に低く真剣な声を出す。",
+  "recommended_emotion": "脱力した「マジ殴り」宣言の低い一言／無感情なツッコミ「あ、そう」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/pc_computer/onepunchmanaheronobodyknows/sound/45938/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "One-Punch Man: A Hero Nobody Knows (PC) — Saitama voice rip (The Sounds Resource)",
+    "timestamp": "",
+    "notes": "UNVERIFIED: URL from search index; sounds-resource returns HTTP 403 to automated fetch — open in a normal browser. Game JP VA is 古川慎 (ja.wikipedia)."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=j1hqIrLqOso",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "アニメ『ワンパンマン』第3期PV第1弾 (バンダイナムコフィルムワークス チャンネル, 0:43)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Official channel; BGM present."
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=s-kFAR2rG-w",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "One Punch Man A Hero Nobody Knows Voice Lines - Saitama (fan upload)",
+    "timestamp": "unverified",
+    "notes": "From search index, not fetched — unverified."
+   }
+  ],
+  "notes": "Display name 一拳超人 is the series title; the entity is 埼玉 (サイタマ). onepunchman.fandom has no hosted voice files (a forum thread asks for a JP voice-line archive). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-26-20260907",
+  "character": "江戸川コナン",
+  "official_voice_actor": "高山みなみ",
+  "version": "TVアニメ『名探偵コナン』(1996–, 劇場版・ゲーム共通)",
+  "source_url_1": "https://ja.wikipedia.org/wiki/江戸川コナン",
+  "source_url_2": "https://en.wikipedia.org/wiki/Conan_Edogawa",
+  "voice_characteristics": "女性声優による少年声。明るく高めで子供らしい甘さがあるが、推理時は低く鋭い「探偵」の声に切り替わり、緊迫場面では叫びに張りが出る。",
+  "recommended_emotion": "「真実はいつもひとつ！」の決め台詞／犯人を指す時の低く鋭い一言",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=TdepHuwLcBY",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "Detective Conan - Edogawa Conan Voice Lines (kyuutonatsu, fan compilation)",
+    "timestamp": "unverified (needs manual scrub)",
+    "notes": "Verified resolving via YouTube oEmbed (title/channel). Fan compilation — BGM/SFX status unknown."
+   }
+  ],
+  "notes": "Display name 名偵探柯南 is the series title; entity is 江戸川コナン (also voices young 工藤新一). No wiki-hosted game voice files found; official ytv.co.jp character page could not be fetched from this environment. No official sample-voice page located without search budget — flag for manual sourcing (e.g. official 名探偵コナン YouTube channel trailers). ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-27-20260907",
+  "character": "木之本桜",
+  "official_voice_actor": "丹下桜",
+  "version": "TVアニメ『カードキャプターさくら クリアカード編』2018（1998年の初代TVアニメ・劇場版・ゲーム『ハピネスメモリーズ』も同じ丹下桜）",
+  "source_url_1": "https://ccsakura-official.com/news/index01700000.html",
+  "source_url_2": "https://ja.wikipedia.org/wiki/木之本桜",
+  "voice_characteristics": "高めで柔らかく、透明感のある少女の声。語尾が上がる明るい話し方で、驚くと「はにゃーん」「ほえ〜」と抜けた声になり、魔法発動時は凛と張った詠唱になる。",
+  "recommended_emotion": "「封印解除（レリーズ）！」の詠唱と、決意の「絶対大丈夫だよ」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=NCucmzSNUi4",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ カードキャプターさくら クリアカード編 公式PV",
+    "timestamp": "unverified",
+    "notes": "公式PV。さくらの台詞は複数キャラ・BGMと混在、単独区間のタイムスタンプは未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=9H6HWD8oA38",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "カードキャプターさくら クリアカード編 第３弾公式PV",
+    "timestamp": "unverified",
+    "notes": "第3弾公式PV。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://ccsakura.fandom.com/wiki/Cardcaptor_Sakura:_Clear_Card-Hen_-_Happiness_Memories",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "カードキャプターさくら クリアカード編 ハピネスメモリーズ（iOS, 2019–2020 サービス終了）",
+    "timestamp": "",
+    "notes": "丹下桜がゲームでも担当。wikiに音声ファイルの直リンクは確認できず（hapimemo.fandom.com は 402 で取得不可）。sounds-resource.com は 403 で検索不可。"
+   }
+  ],
+  "notes": "表示名「庫洛魔法使」は作品名で、実体は主人公・木之本桜。丹下桜は1998年初代から2018年クリアカード編まで一貫して担当。直接音声ファイル（.ogg/.mp3）は未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-28-20260907",
+  "character": "エリス・ボレアス・グレイラット",
+  "official_voice_actor": "加隈亜衣",
+  "version": "TVアニメ『無職転生 ～異世界行ったら本気だす～』2021（第2期 2023–24、第3期 2026、ゲーム『クロニクル・オブ・エコーズ』も同）",
+  "source_url_1": "https://www.animatetimes.com/news/details.php?id=1616116927",
+  "source_url_2": "https://animeanime.jp/article/2021/02/03/59270.html",
+  "voice_characteristics": "張りのある中音域の少女声で、声量が大きく攻撃的。怒鳴り・啖呵が基調だが、剣の聖地以降は低く抑えた凛々しさが加わる。加隈本人曰く「声も態度もデカくて激しい」。",
+  "recommended_emotion": "剣を振るう気合いと怒声、「ルーデウスは凄いんだから」の啖呵",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=avIDuh94PLk",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "無職転生 クロニクル・オブ・エコーズ（ゲーム）キャラクターPV：エリス",
+    "timestamp": "unverified",
+    "notes": "ゲーム公式のエリス単独キャラクターPV（CV:加隈亜衣）。BGMあり。単独台詞区間のタイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=_ZGNSaYlOUc",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "無職転生 第3期【エリス】振り返りPV",
+    "timestamp": "unverified",
+    "notes": "TVアニメ公式のエリス振り返りPV。BGMあり。"
+   }
+  ],
+  "notes": "公式サイト mushokutensei.jp/staff-cast/ は 403 で取得不可のため animatetimes／アニメ！アニメ！で確認。ゲーム版の音声ファイル直リンクは未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-29-20260907",
+  "character": "フリーレン",
+  "official_voice_actor": "種﨑敦美",
+  "version": "TVアニメ『葬送のフリーレン』2023（第2期 2026）",
+  "source_url_1": "https://thetv.jp/program/0001029147/cast/",
+  "source_url_2": "https://realsound.jp/movie/2023/03/post-1275621.html",
+  "voice_characteristics": "低めで平坦、感情の起伏を抑えた淡々とした少女声。ゆっくりした間と乾いた語尾で千年生きたエルフの達観を表し、詠唱時も声を張らず静かに放つ。",
+  "recommended_emotion": "淡々とした「ゾルトラーク」の詠唱と、ぽつりと漏らす独白",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=tR8YH0G67Rk",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "葬送のフリーレン 本PV",
+    "timestamp": "unverified",
+    "notes": "公式本PV。フリーレンの独白が多いがOP曲と重なる。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=f5ZEiJyqDKU",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ 葬送のフリーレン PV（第1弾）",
+    "timestamp": "unverified",
+    "notes": "第1弾PV。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "公式サイト frieren-anime.jp は 403 で取得不可。フリーレン単独のキャラクターPVは検索で見つからず（他キャラの新キャラPVはあり）。ゲーム音声の直リンクは未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-30-20260907",
+  "character": "ヤニねこ（佐藤ヤニ子）",
+  "official_voice_actor": "夏吉ゆうこ",
+  "version": "TVアニメ『ヤニねこ』2026年7月（TOKYO MX・BS11・AT-X）",
+  "source_url_1": "https://yanineko-anime.com/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=27571",
+  "voice_characteristics": "気怠く脱力した中音域の女性声。だらしなく間延びした語尾（「〜にゃ」）で、タバコを吸って満足する時だけ幸福そうに緩む。",
+  "recommended_emotion": "一服後の脱力した「うめぇにゃ」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=ydK2WdTAOgU",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ ヤニねこ メインPV",
+    "timestamp": "unverified",
+    "notes": "公式サイト MOVIE 欄のメインPV。ティザーPVでは末尾に「うめぇにゃ」の一言（電撃オンライン記事より）。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=EfeTyQvnkpQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ ヤニねこ 夏吉ゆうこ＆稲田徹コメント動画",
+    "timestamp": "unverified",
+    "notes": "声優本人のコメント動画（キャラ演技ではない）。参考用。"
+   }
+  ],
+  "notes": "表示名「尼古貓貓」＝ヤニねこ、本名・佐藤ヤニ子（21歳・獣人・ヘビースモーカー）。oricon のキャストページは文字化けで読めず、公式サイトと animatetimes で確認。放送開始 2026-07-02。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-31-20260907",
+  "character": "サンラク／陽務楽郎",
+  "official_voice_actor": "内田雄馬",
+  "version": "TVアニメ『シャングリラ・フロンティア』2023（2nd season 2024–25）",
+  "source_url_1": "https://anime.shangrilafrontier.com/topics/35/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=16199",
+  "voice_characteristics": "軽快で張りのある青年の中高音。早口のツッコミと独り言が多く、戦闘中はテンションが跳ね上がって叫びと笑いが混じる。",
+  "recommended_emotion": "格上に挑む時の高揚した叫びと、クソゲーへの早口ツッコミ",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=1b3T94fYnBU",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "シャングリラ・フロンティア キャラクターPV「サンラク／陽務楽郎」cv.内田雄馬",
+    "timestamp": "unverified",
+    "notes": "サンラク単独のキャラクターPV。BGMあり。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=-7FnBi0a8i4",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "シャングリラ・フロンティア 最新PV（cv.内田雄馬＆和氣あず未）",
+    "timestamp": "unverified",
+    "notes": "サンラクとサイガ-0の2人が話すPV。"
+   }
+  ],
+  "notes": "表示名「SUN樂」＝サンラク（本名・陽務楽郎）。ゲーム『シャングリラ・フロンティア ～七つの最強種～』にもキャラクターPVがあるがURL未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-32-20260907",
+  "character": "アザゼル篤史",
+  "official_voice_actor": "小野坂昌也",
+  "version": "TVアニメ『よんでますよ、アザゼルさん。』2011（OVA 2010、『Z』2013 も同）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/よんでますよ、アザゼルさん。",
+  "source_url_2": "https://animestore.docomo.ne.jp/animestore/ci_pc?workId=10939",
+  "voice_characteristics": "ざらついた中音域のおっさん声で、下品かつハイテンション。調子に乗った大声と、殴られた後の情けない泣き言・命乞いの落差が持ち味。",
+  "recommended_emotion": "調子に乗った下品な高笑いから、一転して情けない命乞い",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=Cfg_25tWbtM",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ よんでますよ、アザゼルさん。 PV",
+    "timestamp": "unverified",
+    "notes": "アニメPV。アザゼル以外の台詞・BGMも混在。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "表示名「阿薩謝爾」＝下級悪魔アザゼル篤史。小野坂昌也は舞台版（2023 人形劇）でも同役。ゲーム音声なし。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-33-20260907",
+  "character": "近衛刀太",
+  "official_voice_actor": "高倉有加",
+  "version": "TVアニメ『UQ HOLDER! ～魔法先生ネギま！2～』2017（2016年 OAD も同じ高倉有加）",
+  "source_url_1": "https://www.animatetimes.com/news/details.php?id=1504263455",
+  "source_url_2": "https://ja.wikipedia.org/wiki/UQ_HOLDER!",
+  "voice_characteristics": "女性声優による少年声。やや低めでハスキー寄り、粗野で威勢のいい言い回し。戦闘では歯を食いしばるような気合いと不敵な笑いが出る。",
+  "recommended_emotion": "不死身を誇る不敵な笑いと、重力剣を振り抜く気合い",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=XtPWh1KeAmA",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ UQ HOLDER! 新PV",
+    "timestamp": "unverified",
+    "notes": "公式新PV。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=s0qgEvsyeq0",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ UQ HOLDER! ティザーPV",
+    "timestamp": "unverified",
+    "notes": "ティザーPV。"
+   }
+  ],
+  "notes": "当初の想定（松岡禎丞）は誤り。公式サイト uqholder.jp は証明書期限切れで取得不可、animatetimes と Wikipedia で「近衛刀太：高倉有加」を確認。ゲーム音声なし。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-34-20260907",
+  "character": "ターボババア",
+  "official_voice_actor": "田中真弓",
+  "version": "TVアニメ『ダンダダン』2024（第2期 2025）",
+  "source_url_1": "https://anime-dandadan.com/character/",
+  "source_url_2": "https://www.animatetimes.com/news/details.php?id=1726724382",
+  "voice_characteristics": "しゃがれた低音の老婆声。ドスの利いた威圧と、ふてぶてしい早口の悪態が基調で、笑うと甲高く裏返る。",
+  "recommended_emotion": "「駆けっこで負けたら呪われる」の威圧と、「くそだらあ」の悪態",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=p9ndk_ZPjzw",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "ダンダダン（Netflix Japan 公式クリップ）「ターボババア - 駆けっこで負けたら呪われる」",
+    "timestamp": "unverified",
+    "notes": "Netflix Japan 公式チャンネルのターボババア中心クリップ。効果音・他キャラ混在の可能性。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=0LI_sR-2NkY",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ ダンダダン 第2弾PV",
+    "timestamp": "unverified",
+    "notes": "公式第2弾PV。"
+   }
+  ],
+  "notes": "表示名「高速婆婆」＝ターボババア（妖怪本体）。招き猫化した姿も同じ田中真弓。モンスト等コラボゲームにも収録されているが音声直リンクは未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-35-20260907",
+  "character": "竈門炭治郎",
+  "official_voice_actor": "花江夏樹",
+  "version": "TVアニメ『鬼滅の刃』2019（劇場版・各編・ゲーム『ヒノカミ血風譚』『JUMP FORCE』も同）",
+  "source_url_1": "https://kimetsu.com/anime/risshihen/",
+  "source_url_2": "https://thetv.jp/program/0000942206/cast/",
+  "voice_characteristics": "誠実で真っ直ぐな少年の中高音。普段は柔らかく丁寧だが、戦闘では喉を絞るような必死の気迫と技名の絶叫になる。",
+  "recommended_emotion": "「ヒノカミ神楽！」技名の絶叫と、絞り出すような「頑張れ炭治郎」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=GvQi-EyW0MQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "鬼滅の刃 ヒノカミ血風譚（ゲーム）炭治郎 日本語ボイス集",
+    "timestamp": "unverified",
+    "notes": "ゲームの炭治郎ボイスのみを集めた動画（BGMなしのゲーム音声が期待できる）。公式ではない。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.vg-resource.com/thread-40448.html",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "鬼滅の刃 ヒノカミ血風譚 ボイスライン抽出スレッド",
+    "timestamp": "",
+    "notes": "vg-resource のリップ依頼スレッド。取得時 403 で内容未確認。"
+   }
+  ],
+  "notes": "sounds-resource.com は 403 で検索不可（ヒノカミ血風譚のボイスリップの有無は未確認）。JUMP FORCE 等の wiki に音声直リンクは見つからず。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-36-20260907",
+  "character": "ランス",
+  "official_voice_actor": "由嘉鈍（OVA『ランス01』2014–16・ゲーム『ランス03』2015）／矢尾一樹（OVA『ランス 砂漠のガーディアン』1993）",
+  "version": "OVA『ランス01 光をもとめて THE ANIMATION』2014–2016 ＋ ゲーム『ランス03 リーザス陥落』2015（由嘉鈍）；OVA『ランス 砂漠のガーディアン』1993（矢尾一樹）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/Rance_-光をもとめて-",
+  "source_url_2": "https://myanimelist.net/anime/5259",
+  "voice_characteristics": "野太く豪快な青年の中低音。「俺様」口調で傲慢・下品、笑いは大きく歯切れがよい。怒鳴りと高笑いの振れ幅が大きい。",
+  "recommended_emotion": "「俺様が最強だ！」の豪快な高笑いと、突撃の怒声",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "表示名「鬼畜王蘭斯」は『鬼畜王ランス』（1996）由来の名だが、原作ゲーム本編は長年ボイスなし（Rance X 等も主人公無声）。ランス03（2015）でシリーズ初ボイス化、担当は「由嘉鈍」（ペンネーム、本名非公開）— 同名義が『ランス01 THE ANIMATION』（MAL 表記 Yukadon）も担当。1993年OVAは矢尾一樹（allcinema でも確認）。作品は成人向けのため公式サンプルボイス（アリスソフト）や R-18 動画は取得・記載せず、クリーンな候補クリップは未確認（unverified）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "community-review-37-20260907",
+  "character": "ちいかわ",
+  "official_voice_actor": "青木遥",
+  "version": "TVアニメ『ちいかわ』2022（フジテレビ『めざましテレビ』内）＋『映画ちいかわ 人魚の島のひみつ』",
+  "source_url_1": "https://www.production-ace.co.jp/ace_talent/haruka-aoki/",
+  "source_url_2": "https://anime.eiga.com/person/101615/",
+  "voice_characteristics": "幼い子役の小さく高い声。台詞はほぼなく「ワァ」「ヤダ」「ウラ」等の一音節の鳴き声と泣き声で、怯えと喜びを表す。",
+  "recommended_emotion": "怯えた「ワァ…」と、討伐で勇気を振り絞る「ウラー！」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.production-ace.co.jp/wp/wp-content/uploads/2023/07/3ce0cad548d85afeb04c096534639417-1.mp3",
+    "kind": "official-sample",
+    "direct_media": true,
+    "work": "プロダクション・エース 青木遥 ボイスサンプル（フルバージョン）",
+    "timestamp": "",
+    "notes": "HEAD で 200 / audio/mpeg / 828,565 bytes を確認。ただし声優本人のデモ音源であり、ちいかわ役の演技ではない（音色の参考）。"
+   },
+   {
+    "url": "https://www.youtube.com/channel/UCrrsHarrLoiLTqu1LHxDJpw",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "めざましテレビ公式YouTube（アニメ本編 1週間限定見逃し配信）",
+    "timestamp": "unverified",
+    "notes": "公式サイト anime-chiikawa.jp が案内する配信先。各話は1週間限定で入れ替わるため固定URL不可。"
+   }
+  ],
+  "notes": "ほぼ非言語キャラクター（鳴き声中心、まれに単語）。青木遥は起用時10歳（2011-12-03生）。natalie の記事は 403 で取得不可。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-aladdin",
+  "character": "アラジン",
+  "official_voice_actor": "石原夏織",
+  "version": "TVアニメ『マギ The labyrinth of magic』2012（『The kingdom of magic』2013、ゲーム『マギ はじまりの迷宮』も同）",
+  "source_url_1": "https://www.aniplex.co.jp/news/detail/?id=15050",
+  "source_url_2": "https://www.project-magi.com/staff/",
+  "voice_characteristics": "女性声優による無邪気な少年声。高めで明るく、丁寧語（「〜だよ」「〜ですか」）で人懐っこい。ウーゴくんを呼ぶ時や仲間を思う時に声が真っ直ぐ強くなる。",
+  "recommended_emotion": "「ウーゴくん！」の呼びかけと、無邪気な笑い声",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.project-magi.com/movie/index.html",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "マギ 公式サイト MOVIE（PV／SPOT 一覧 2012–2014）",
+    "timestamp": "unverified",
+    "notes": "公式PV一覧ページ（動画URLはJS埋め込みで直リンク未取得）。アラジン単独区間のタイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.b-ch.com/titles/3465/",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "バンダイチャンネル マギ（見放題・有料）",
+    "timestamp": "",
+    "notes": "キャスト「アラジン：石原夏織」を確認。有料配信のためクリップ用途には不向き。"
+   }
+  ],
+  "notes": "表示名「阿拉丁」＝『マギ』のアラジン（ディズニー版ではない）。3DS『マギ はじまりの迷宮』でも石原夏織だが音声直リンクは未発見。YouTube のキャラソン「magic」は歌唱のため除外。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-albus",
+  "character": "アルバス（『廻天のアルバス』）",
+  "official_voice_actor": "none",
+  "version": "none（漫画のみ・アニメ化未発表）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/廻天のアルバス",
+  "source_url_2": "https://comic-research.com/kaiten-no-albus-anime/",
+  "voice_characteristics": "（提案）感情を削ぎ落とした早口の青年声。36周目の勇者としてNPC台詞をスキップする効率厨の淡々さと、時折漏れる焦燥。",
+  "recommended_emotion": "（提案）「スキップ」の即断と、間に合わない焦りの一言",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "『勇者再次啟程』＝『廻天のアルバス』（原作：牧彰久／漫画：箭坪幹、週刊少年サンデー 2024年25号〜、英題 Karmic Bonds）。2026-09 時点でアニメ化・ボイスコミック・ドラマCDの公式発表なし。単行本PVのナレーションは日笠陽子だが、アルバス役ではない（記事も「PVのキャストがそのままアニメの配役になるとは限らない」と明記）。voice_characteristics／profile は当方の提案。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-bojji",
+  "character": "ボッジ",
+  "official_voice_actor": "日向未南",
+  "version": "TVアニメ『王様ランキング』2021-2022（第1期）／『王様ランキング 勇気の宝箱』2023（第2期）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/王様ランキング",
+  "source_url_2": "https://osama-ranking.com/staff/",
+  "voice_characteristics": "ボッジは耳が聞こえず言葉も話せない設定のため、台詞はほぼ「あう」「うー」などの母音・息だけの発声。高くて細く、幼く柔らかい少年声で、笑い声・泣き声・驚きの息遣いだけで感情を伝える。",
+  "recommended_emotion": "泣きじゃくりながらも立ち上がる健気さ／嬉しくて飛び跳ねる「あうっ！」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=HtnGqgW_Hig",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『王様ランキング』第1弾本PV",
+    "timestamp": "unverified",
+    "notes": "公式第1弾本PV。ボッジの発声（あう／うー）が含まれるが、BGM が乗るため無音区間の切り出しは手作業が必要。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=Avo6G-9HjHE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『王様ランキング』WEB予告 第一話「王子とカゲ」",
+    "timestamp": "unverified",
+    "notes": "第1話 WEB 予告。短尺で本編音声が使われている。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "ボッジは聴覚障害で発話できないキャラなので、参照クリップは「言葉」ではなく発声パターン（笑い・泣き・驚き）を集めることになる。第2期も同じ日向未南。ゲーム音声・公式サンプルボイスは見つからず（王様ランキングのボイス付きゲームは未確認）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-boxxo",
+  "character": "ラッミス（＋ハッコン）",
+  "official_voice_actor": "本渡楓（ラッミス）／福山潤（ハッコン）",
+  "version": "TVアニメ『自動販売機に生まれ変わった俺は迷宮を彷徨う』2023（1st）／2025（2nd）／2026（3rd season）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/自動販売機に生まれ変わった俺は迷宮を彷徨う",
+  "source_url_2": "https://jihanki-anime.com/",
+  "voice_characteristics": "本渡楓のラッミスは中高音の明るく元気な少女声で、素直でまっすぐ、気合いの入った掛け声が映える。ハッコン（福山潤）は自販機の定型音声のみ（「いらっしゃいませ」「ざんねん」など）で、平板な機械アナウンス調。",
+  "recommended_emotion": "ハッコンを背負って元気いっぱいに突っ走る気合い／「ハッコン、行くよ！」の明るさ",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=3VZEVawzgik",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ『自動販売機に生まれ変わった俺は迷宮を彷徨う』ティザーPV（2023）",
+    "timestamp": "unverified",
+    "notes": "公式ティザーPV。ラッミス／ハッコンの台詞入り。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/@jihankianime",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ公式 YouTube チャンネル（3rd season PV 等）",
+    "timestamp": "unverified",
+    "notes": "公式サイトが案内する公式チャンネル。各期の PV・キャラ PV がまとまっている。"
+   }
+  ],
+  "notes": "阿箱＝ハッコン（自販機本体、CV 福山潤）、拉蜜絲＝ラッミス（CV 本渡楓）のペア。人間として喋るのはラッミスなので参照はラッミスを主に、ハッコン用に自販機定型文（機械音声）を別途用意する想定。公式サイトにサンプルボイスは無し。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-elma",
+  "character": "エルマ・エドヴァン",
+  "official_voice_actor": "大塚剛央（幼少期：村上まなつ）",
+  "version": "TVアニメ『追放された転生重騎士はゲーム知識で無双する』2026年7月〜（連続2クール）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/追放された転生重騎士はゲーム知識で無双する",
+  "source_url_2": "https://sh-anime.shochiku.co.jp/jukishi-anime/",
+  "voice_characteristics": "大塚剛央の落ち着いた中低音。取り乱さず淡々と状況を分析する青年の声で、抑えた語り口の中に静かな自信がある。",
+  "recommended_emotion": "「ゲーム知識」で冷静に戦況を読み切る静かな確信",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=g8rvdawGAfc",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『追放された転生重騎士はゲーム知識で無双する』メインPV（2026-03）",
+    "timestamp": "unverified",
+    "notes": "松竹公式メインPV第1弾。エルマ（大塚剛央）の台詞入り。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=uC13b3_8riU",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『追放された転生重騎士はゲーム知識で無双する』メインPV第2弾（2026-06）",
+    "timestamp": "unverified",
+    "notes": "メインPV第2弾。OP/ED 主題歌が乗る箇所は避ける。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "作品名は『轉生重騎士無雙』＝『遭到流放的轉生重騎士憑藉遊戲知識大開無雙』。放送中の新作（2026年7月開始）のため、ゲーム音声・公式サンプルボイスは未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-fushi",
+  "character": "フシ",
+  "official_voice_actor": "川島零士",
+  "version": "TVアニメ『不滅のあなたへ』2021（Season1）／2022-23（Season2）／2025（Season3）",
+  "source_url_1": "https://www.anime-fumetsunoanatae.com/1st/staff_cast/?l=ja",
+  "source_url_2": "https://mantan-web.jp/article/20200713dog00m200012000c.html",
+  "voice_characteristics": "川島零士の柔らかい中高音の少年声。序盤は覚えたての言葉をぎこちなく区切って話し、成長に伴い滑らかで芯のある声に変わる。感情は抑え気味だが喪失の場面では剥き出しの慟哭になる。",
+  "recommended_emotion": "覚えたての言葉をたどたどしく呼ぶ「マーチ…」／仲間を失った時の慟哭",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=0S0ty44JPao",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ『不滅のあなたへ』番組PV第2弾（Season1・NHK）",
+    "timestamp": "unverified",
+    "notes": "NHK 公式番組PV。宇多田ヒカルの主題歌が乗る区間を避けて切り出す。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/shorts/vEBgF1GXemo",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "1分で分かるフシの特徴（アニメ公式ショート）",
+    "timestamp": "unverified",
+    "notes": "公式ショート。ナレーションがフシ役かどうかは未確認。"
+   }
+  ],
+  "notes": "川島零士の初主演作。ゲーム音声・公式サンプルボイスは未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-goblin",
+  "character": "ゴブリンスレイヤー",
+  "official_voice_actor": "梅原裕一郎",
+  "version": "TVアニメ『ゴブリンスレイヤー』2018／『ゴブリンスレイヤーII』2023／劇場版 GOBLIN'S CROWN 2020／ゲーム『ゴブリンスレイヤー -ANOTHER ADVENTURER- NIGHTMARE FEAST』2024（Switch/Steam）",
+  "source_url_1": "https://www.animatetimes.com/tag/details.php?id=7094",
+  "source_url_2": "https://goblinslayer.bushiroad.com/message/",
+  "voice_characteristics": "梅原裕一郎の極めて低く、抑揚を殺した平板な声。「そうか」「ゴブリンだ」のような短い言い切りが中心で、感情をほとんど乗せない無機質な淡々さが特徴。",
+  "recommended_emotion": "感情を殺して淡々と「ゴブリンは殺す」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=g-l4PyCSZQQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『ゴブリンスレイヤー』放送開始カウントダウンコメント（ゴブリンスレイヤー C.V.梅原裕一郎）",
+    "timestamp": "unverified",
+    "notes": "キャラクター名義のカウントダウンコメント動画。単独発話でBGMが薄い可能性が高く、参照クリップ候補として最有力。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=lTwxu2g8eho",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『ゴブリンスレイヤーⅡ』放送開始カウントダウンボイス（梅原裕一郎）",
+    "timestamp": "unverified",
+    "notes": "第2期のカウントダウンボイス。同上。"
+   },
+   {
+    "url": "https://goblinslayer.bushiroad.com/message/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "ゲーム『ゴブリンスレイヤー -ANOTHER ADVENTURER- NIGHTMARE FEAST』公式サイト",
+    "timestamp": "",
+    "notes": "ゲームは梅原裕一郎のフルボイス。公式サイトにサンプル音声ファイルは無し。sounds-resource.com は自動取得が 403 で未確認。"
+   }
+  ],
+  "notes": "ゲーム版（2024）もアニメと同キャスト。sounds-resource 等のボイスリップは確認できず。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-guts",
+  "character": "ガッツ",
+  "official_voice_actor": "岩永洋昭",
+  "version": "TVアニメ『ベルセルク』2016-2017（＋劇場版 黄金時代篇 2012-13／ゲーム『ベルセルク無双』2016）。旧TVアニメ『剣風伝奇ベルセルク』1997 は神奈延年",
+  "source_url_1": "https://anime.eiga.com/news/102283/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/ベルセルク無双",
+  "voice_characteristics": "岩永洋昭の深く重い低音。ざらついた荒々しい声質で、言葉少なに吐き捨てる台詞と、戦闘時の獣のような咆哮・唸り声が特徴。",
+  "recommended_emotion": "怒りに任せてドラゴンころしを振り抜く咆哮",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=Ih2-9HwHlpw",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ『ベルセルク』（2016）公式ティザーPV",
+    "timestamp": "unverified",
+    "notes": "2016 年版公式ティザー。ガッツ（岩永洋昭）の台詞・咆哮入り。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://ja.wikipedia.org/wiki/ベルセルク無双",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "ゲーム『ベルセルク無双』（PS4/PS3/Vita 2016、Steam 2022）",
+    "timestamp": "",
+    "notes": "日本語フルボイス（ガッツ＝岩永洋昭）。ボイスリップの直接 URL は未確認（sounds-resource.com は自動取得 403）。"
+   }
+  ],
+  "notes": "版が複数：1997 年版 神奈延年、2012 年以降（劇場版・2016 TV・ベルセルク無双）岩永洋昭。GGD の「凱茲」は現行の岩永版を採用。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-haga",
+  "character": "ハガ",
+  "official_voice_actor": "石川界人",
+  "version": "TVアニメ『この世界は不完全すぎる』2024年7月-9月",
+  "source_url_1": "https://ja.wikipedia.org/wiki/この世界は不完全すぎる",
+  "source_url_2": "https://konofuka.com/",
+  "voice_characteristics": "石川界人の落ち着いた中音域。デバッガーらしく感情を抑えた乾いた事務的な語り口で、淡々とした中に皮肉っぽいユーモアが混じる。",
+  "recommended_emotion": "バグを見つけて淡々と「これは仕様じゃない、バグだ」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=RH5g9eapxsI",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『この世界は不完全すぎる』本PV第1弾",
+    "timestamp": "unverified",
+    "notes": "公式サイト konofuka.com/movie/ が掲載する本PV第1弾。ハガの台詞入り。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=_tHPDQvvrQU",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『この世界は不完全すぎる』本PV第2弾",
+    "timestamp": "unverified",
+    "notes": "本PV第2弾。OP/ED 主題歌の乗る区間は避ける。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "『這個世界漏洞百出』＝『この世界は不完全すぎる』。ハガは石川界人（千葉翔也ではない）。ゲーム音声・サンプルボイスは無し。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-kaede",
+  "character": "涼宮楓（カエデ）",
+  "official_voice_actor": "none",
+  "version": "none（原作 Web 小説 2014〜／GC ノベルズ 2015-17／漫画 マンガUP! 2020〜。アニメ・ドラマ CD 等の音声化なし）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/異世界転移したのでチートを生かして魔法剣士やることにする",
+  "source_url_2": "https://ncode.syosetu.com/n0447ca/",
+  "voice_characteristics": "公式音声なし。原作設定は 21 歳の大学生ゲーマーで、冷静・合理的な語り口のチート魔法剣士。キャスティング時は落ち着いた青年声を想定。",
+  "recommended_emotion": "淡々とチート性能を確認しながら「まあ、こんなものか」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "『異世界轉移魔法劍士』＝進行諸島『異世界転移したのでチートを生かして魔法剣士やることにする』。2026-09 時点でアニメ化・ボイス化の情報なし（Wikipedia・なろう原作ページとも音声化の記載なし）。voice_profile は提案値。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-kaiji",
+  "character": "伊藤開司（カイジ）",
+  "official_voice_actor": "萩原聖人",
+  "version": "TVアニメ『逆境無頼カイジ Ultimate Survivor』2007-08／『逆境無頼カイジ 破戒録篇』2011（＋スマホゲーム『カイジ -闇の黙示録-』2022、パチンコ・パチスロ各種も同氏）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/賭博黙示録カイジ",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=12037",
+  "voice_characteristics": "萩原聖人のかすれた中低音。普段は情けなく弱気な泣き言、追い詰められると歯を食いしばった絶叫や震える独白に振れ、感情の振れ幅が極端に大きい。",
+  "recommended_emotion": "土壇場で歯を食いしばる絶叫「クズは…俺だ…！」／逆転した瞬間の震える歓喜",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=NeXAoK_fbCU",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "スマホゲーム『カイジ -闇の黙示録-』プレイ動画（iOS）",
+    "timestamp": "unverified",
+    "notes": "ゲーム内の萩原聖人ボイス（名言）が流れる可能性があるプレイ動画。公式ではなく BGM 混在の可能性あり。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://gamewith.jp/gamedb/article/game/show/7334/12755",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "『カイジ -闇の黙示録-』（NOA.TEC、iOS 2022-01-20 / Android 2022-01-27）",
+    "timestamp": "",
+    "notes": "萩原聖人がカイジ・アカギを担当しゲーム内に名言ボイス収録、との報道。ゲーム公式サイト kaiji-yami-no-mokushiroku.com は 2026-09 時点で名前解決不可。直接音声 URL 未確認。"
+   }
+  ],
+  "notes": "アニメ公式サイト（ntv.co.jp/kaiji）は自動取得不可のため未確認。パチスロ系公式 PV も萩原聖人ボイスだが URL 未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-keyaru",
+  "character": "ケヤル／ケヤルガ",
+  "official_voice_actor": "保住有哉",
+  "version": "TVアニメ『回復術士のやり直し』2021年1月-3月",
+  "source_url_1": "https://kaiyari.com/character.html",
+  "source_url_2": "https://www.animatetimes.com/news/details.php?id=1592212858",
+  "voice_characteristics": "保住有哉の中高音の青年声。やり直し前（ケヤル）は気弱で震えた声、やり直し後（ケヤルガ）は低めに抑えた冷たく滑らかな声で、嘲るような余裕と憎悪を滲ませる。",
+  "recommended_emotion": "冷たく嘲笑しながら「やり直しだ」",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=yfXlXJp8ALQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『回復術士のやり直し』PV第1弾（2020-10-30、ケヤルガの声初お披露目）",
+    "timestamp": "unverified",
+    "notes": "公式PV第1弾。ケヤルガ（保住有哉）の台詞入り。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "GGD 側は回復能力のみ拾った改編。公式サイトのキャラページにサンプルボイス無し。ゲーム音声未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-kisaragi",
+  "character": "如月電車（GGD オリジナル）",
+  "official_voice_actor": "none",
+  "version": "none（GGD オリジナル。都市伝説「きさらぎ駅」モチーフの電車キャラで、原作アニメ・声優は存在しない）",
+  "source_url_1": "none",
+  "source_url_2": "none",
+  "voice_characteristics": "公式音声なし。キャラは擬人化されていない電車のため、台詞ではなく警笛・走行音・車内アナウンス風の合成音声で表現する想定。",
+  "recommended_emotion": "誤点して突っ込んでくる警笛と、無機質な「次は…きさらぎ…」アナウンス",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "GGD 原創（如月車站・GGD原創）。声優は無し。voice_profile は提案値（機械音／効果音ベース）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-klaus",
+  "character": "クラウス（クラウス・ノルドール）",
+  "official_voice_actor": "none",
+  "version": "none（原作 なろう Web 小説／講談社マガポケ漫画 10 巻〜。2026-09 時点でアニメ化・ボイス化の情報なし）",
+  "source_url_1": "https://www.animatetimes.com/tag/details.php?id=19435",
+  "source_url_2": "https://www.kodansha.co.jp/r/title?code=1000040012",
+  "voice_characteristics": "公式音声なし。原作設定は 15 歳の駆け出し冒険者で、腐らずに努力する素直で明るい少年。キャスティング時は澄んだ少年〜青年声を想定。",
+  "recommended_emotion": "「自動機能」が覚醒した瞬間の驚きと歓喜",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "『覺醒了自動機能』＝LA軍『ダメスキル【自動機能】が覚醒しました〜あれ、ギルドのスカウトの皆さん、俺を「いらない」って言ってませんでした？〜』。アニメイトタイムズ・講談社の作品ページともアニメ化の記載なし。voice_profile は提案値。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-kumoko",
+  "character": "「私」（蜘蛛子）",
+  "official_voice_actor": "悠木碧",
+  "version": "TVアニメ『蜘蛛ですが、なにか？』2021年1月-7月（連続2クール）／ブラウザゲーム『蜘蛛ですが、なにか? 迷宮の支配者』（G123、2025-02-20 ボイス実装）",
+  "source_url_1": "https://kumo-anime.com/staffcast.html",
+  "source_url_2": "https://mantan-web.jp/article/20180808dog00m200041000c.html",
+  "voice_characteristics": "悠木碧の高めで軽い声による超早口の独り言モノローグ。テンポの速いツッコミ・悲鳴・ノリの良い自己完結が特徴で、並列意思 4 体もすべて同氏が演じ分ける。",
+  "recommended_emotion": "早口でまくし立てるセルフツッコミ「マジかー！？」／毒に悶える悲鳴",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=oASFrYwnx9E",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "『蜘蛛ですが、なにか? 迷宮の支配者』公式PV「私」CV 悠木碧ボイス付きバージョン（G123、2025-02）",
+    "timestamp": "unverified",
+    "notes": "ゲーム用録り下ろしボイスを使った公式PV。ゲーム音声そのものだが動画形式のため BGM 混在の可能性あり。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=loXF5AgSmUE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『蜘蛛ですが、なにか？』1〜8話振り返りPV（ナレーション「私」CV 悠木碧）",
+    "timestamp": "unverified",
+    "notes": "蜘蛛子役によるナレーション動画で、キャラ単独発話が長く続く。参照クリップ候補として有力。タイムスタンプ未確認。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=xpPJIKUsbls",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『蜘蛛ですが、なにか？』PV第1弾",
+    "timestamp": "unverified",
+    "notes": "公式PV第1弾。タイムスタンプ未確認。"
+   }
+  ],
+  "notes": "ゲーム『迷宮の支配者』のボイスは G123 のブラウザゲーム内で再生され、音声ファイルの直接 URL は未確認（G123 ニュース https://g123.jp/news/article/173773 で実装確認）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-luckyman",
+  "character": "追手内洋一／ラッキーマン",
+  "official_voice_actor": "田中真弓",
+  "version": "TVアニメ『とっても！ラッキーマン』1994-04-06〜1995-03-23（テレビ東京系、全50話）",
+  "source_url_1": "https://ja.wikipedia.org/wiki/%E3%81%A8%E3%81%A3%E3%81%A6%E3%82%82!%E3%83%A9%E3%83%83%E3%82%AD%E3%83%BC%E3%83%9E%E3%83%B3",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=23817",
+  "voice_characteristics": "田中真弓による少年声。鼻にかかったハスキーで元気な中高音域、間の抜けた脱力した台詞回しと突然の絶叫が同居するギャグ芝居。",
+  "recommended_emotion": "運だけで勝ってしまい「ラッキー！」と調子に乗るハイテンションと、ピンチで情けなく泣きつく落差。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.b-ch.com/titles/8778/",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "とっても！ラッキーマン（TVアニメ 1994）",
+    "timestamp": "",
+    "notes": "バンダイチャンネルの作品ページ（開いて確認、CV 田中真弓と記載）。見放題＝有料会員向けで無料話の明示なし。BGM/SFX入りの本編のみ。"
+   },
+   {
+    "url": "https://animestore.docomo.ne.jp/animestore/ci_pc?workId=27270",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "とっても！ラッキーマン（TVアニメ 1994）",
+    "timestamp": "",
+    "notes": "dアニメストア作品ページ（HTTP 200 で到達確認、内容は未精読）。有料配信。"
+   }
+  ],
+  "notes": "プロンプトの候補『松本梨香』は誤り：主役ラッキーマン（追手内洋一）の声優は 田中真弓（Wikipedia・アニメイトタイムズ・バンダイチャンネルの3箇所で一致）。ゲーム化・公式サンプルボイスは見つからず（Web検索枠が尽きたため YouTube 公式クリップは未特定）。台詞単独のクリーン音源候補なし。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-makoto",
+  "character": "深澄 真（みすみ まこと）",
+  "official_voice_actor": "花江夏樹",
+  "version": "TVアニメ『月が導く異世界道中』2021-07-07〜09-22（第二幕 2024 も続投）",
+  "source_url_1": "https://tsukimichi.com/character/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=11289",
+  "voice_characteristics": "花江夏樹の柔らかい中高音。朴訥で少し脱力した常識人のモノローグ調、驚きや呆れで声が裏返る温度感、戦闘時はやや低く据わる。",
+  "recommended_emotion": "自分の規格外の力に周囲がドン引きして「え、俺そんな変なこと言った？」と困惑する脱力ツッコミ。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=JLQ6C-G9YMc",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "月が導く異世界道中 第一夜「勇者…失格」本編映像",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認（第1話本編の公式公開）。真のモノローグが多い回だがBGM入り。単独発話区間のタイムスタンプは未検証。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=O7m7Rc6PwfE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "月が導く異世界道中 第1弾PV",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。PVのためBGM重畳。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=SbJsvN3qlT0",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "月が導く異世界道中 1話ノンクレジットED「ああ人生に涙あり」深澄真（CV:花江夏樹）",
+    "timestamp": "",
+    "notes": "HTTP 200 で到達確認。歌唱音源（台詞ではない）なので声質参考のみ。"
+   }
+  ],
+  "notes": "公式キャラページにサンプルボイスなし。ゲーム音源は見つからず。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-maomao",
+  "character": "猫猫（マオマオ）",
+  "official_voice_actor": "悠木碧",
+  "version": "TVアニメ『薬屋のひとりごと』第1期 2023-10〜2024-03（第2期 2025 続投）",
+  "source_url_1": "https://thetv.jp/program/0001028374/cast/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/%E8%96%AC%E5%B1%8B%E3%81%AE%E3%81%B2%E3%81%A8%E3%82%8A%E3%81%94%E3%81%A8_(%E3%82%A2%E3%83%8B%E3%83%A1)",
+  "voice_characteristics": "悠木碧の落ち着いた中低音。感情を抑えた乾いた平坦なモノローグ、毒や薬の話題になると一気に早口で熱を帯びる。ジト目の低い相槌「はぁ」が特徴。",
+  "recommended_emotion": "「毒でございますか」と目を輝かせる薬オタクの熱と、壬氏に向ける冷めた低い「はぁ」の落差。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=P36pbCsivC4",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "薬屋のひとりごと Web特別PV -猫猫＆壬氏編-",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。猫猫と壬氏の掛け合い中心、BGM入り。単独区間のタイムスタンプは未検証。"
+   },
+   {
+    "url": "https://natalie.mu/comic/news/618163",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "薬屋のひとりごと ゲーム風ボイス入りPV（転入生・猫猫が学園で謎解き）",
+    "timestamp": "unverified",
+    "notes": "unverified：記事ページがbot認証で開けず（HTTP 405/Human Verification）。検索結果の見出しのみ。ボイス入りゲーム風PVで猫猫の台詞があるとされる。"
+   }
+  ],
+  "notes": "公式サイト kusuriyanohitorigoto.jp は 403 で開けず（VAは WEBザテレビジョン＋Wikipedia で確認）。ゲーム化：『薬屋のひとりごと 後宮異聞録』（G123、2026-06 開始予定）と『薬屋のひとりごと 〜偽りの皇弟〜』（コーエーテクモ／ガスト、2027 初頭予定、アニメキャスト）—いずれも今日時点で音声ファイル公開ページは未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-maple",
+  "character": "メイプル（本条楓）",
+  "official_voice_actor": "本渡楓",
+  "version": "TVアニメ『痛いのは嫌なので防御力に極振りしたいと思います。』第1期 2020-01〜03（第2期 2023 続投）",
+  "source_url_1": "https://bofuri.jp/character/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/%E7%97%9B%E3%81%84%E3%81%AE%E3%81%AF%E5%AB%8C%E3%81%AA%E3%81%AE%E3%81%A7%E9%98%B2%E5%BE%A1%E5%8A%9B%E3%81%AB%E6%A5%B5%E6%8C%AF%E3%82%8A%E3%81%97%E3%81%9F%E3%81%84%E3%81%A8%E6%80%9D%E3%81%84%E3%81%BE%E3%81%99%E3%80%82",
+  "voice_characteristics": "本渡楓の明るく丸い高音。素直でのんびりしたテンポ、語尾が柔らかく上がる天然系。戦闘中も緊張感が薄く楽しそうに驚く。",
+  "recommended_emotion": "「痛いのは嫌だから防御力に極振り！」と無邪気に宣言し、新スキル獲得で「わぁ！」と喜ぶほのぼの。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=pEp9WzD-WyQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『痛いのは嫌なので防御力に極振りしたいと思います。外伝１』発売記念CM（カドカワBOOKS）",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。短尺CMでメイプル役のナレーションが入る可能性が高いが話者は未検証。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=VM5-lfiEJdI",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ第2期決定！『防振り』TVCM 03【カドカワBOOKS】",
+    "timestamp": "unverified",
+    "notes": "タイトル・チャンネル（KADOKAWA BOOKS）を開いて確認。BGM入り短尺CM。"
+   }
+  ],
+  "notes": "公式キャラページにサンプルボイスなし。ゲーム『〜らいんうぉーず！〜』（2020-01〜2021-09）はサービス終了済みで音声ページ未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-matthias",
+  "character": "マティアス＝ヒルデスハイマー",
+  "official_voice_actor": "玉城仁菜",
+  "version": "TVアニメ『失格紋の最強賢者』2022-01〜（スマホゲーム『失格紋の最強賢者 〜導刻の冒険譚〜』2022 も同キャスト）",
+  "source_url_1": "https://shikkakumon.com/chara/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/%E5%A4%B1%E6%A0%BC%E7%B4%8B%E3%81%AE%E6%9C%80%E5%BC%B7%E8%B3%A2%E8%80%85",
+  "voice_characteristics": "女性声優による少年声。澄んだ中高音で淡々と落ち着いた口調、感情の起伏が小さく理知的。驚く周囲に対して当然のように解説するクールさ。",
+  "recommended_emotion": "「この程度、失格紋なら当然だ」と涼しい顔で常識を覆す淡々とした自信。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=o34GOPt0-78",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『失格紋の最強賢者』第1弾PV",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。BGM入りPV。"
+   },
+   {
+    "url": "https://abema.tv/video/episode/174-24_s1_p1",
+    "kind": "anime-clip",
+    "direct_media": false,
+    "work": "失格紋の最強賢者 第1話（ABEMA）",
+    "timestamp": "unverified",
+    "notes": "HTTP 200 で到達確認のみ（無料配信かは未確認）。本編は BGM/SFX 入り。"
+   }
+  ],
+  "notes": "ゲーム版は 2022-03-17 開始〜2022-07-29 終了で音声ファイル公開ページは未発見。公式キャラページにサンプルボイスなし。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-misery",
+  "character": "ミザリィ",
+  "official_voice_actor": "none",
+  "version": "原作漫画『アウターゾーン』（光原伸、週刊少年ジャンプ 1991–1994）— アニメ化・ゲーム化なし。声が付いたのは 2018-11-10 の朗読劇（ことだま屋本舗、ESPエンタテインメント東京校）のみ",
+  "source_url_1": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%82%A6%E3%82%BF%E3%83%BC%E3%82%BE%E3%83%BC%E3%83%B3",
+  "source_url_2": "https://animeanime.jp/article/2018/10/12/40736.html",
+  "voice_characteristics": "（公式音源なし・想定）妖艶で落ち着いた女性の低め中音域。感情を見せない静かな語り部口調で、皮肉を含んだ微笑を声に乗せる。",
+  "recommended_emotion": "「ようこそ、アウターゾーンへ」— 静かな微笑で代償を告げる冷ややかな語り。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "『來自魔界』＝光原伸『アウターゾーン』、米瑟利＝ミザリィ。映像・ゲーム作品が存在しないため公式声優は none。Wikipedia（アウターゾーン）は 2018–2019 の朗読劇でミザリィ役＝園崎未恵と記載するが、アニメ！アニメ！の記事は園崎未恵の出演のみ記し役名を明示せず、園崎未恵本人の Wikipedia にも当該項目なし（単一出典、要注意）。参考音源として使える収録物は未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-naofumi",
+  "character": "岩谷尚文",
+  "official_voice_actor": "石川界人",
+  "version": "TVアニメ『盾の勇者の成り上がり』Season 1 2019-01〜06（S2 2022／S3 2023／S4 2025 続投、S5 2027 予定）",
+  "source_url_1": "https://shieldhero-anime.jp/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=6230",
+  "voice_characteristics": "石川界人の低めの青年声。不信と苛立ちを押し殺した低い唸り、皮肉っぽい吐き捨て。仲間を守る場面では張りのある怒号に転じる。",
+  "recommended_emotion": "「俺は盾の勇者だ。守るものは絶対に守る」— 裏切られた怨嗟から腹の底からの怒りと決意へ。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=GTCuhgOj1BE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "MFブックス『盾の勇者の成り上がり』CM（NA/岩谷尚文CV：石川界人）",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認：尚文役の石川界人によるナレーションCM。単独発話が期待できるがBGMの有無・区間は未検証。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=759cgq6Hz04",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『盾の勇者の成り上がり』キャラクタームービー／岩谷尚文",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。キャラ単独のムービーだがBGM重畳、区間未検証。"
+   },
+   {
+    "url": "https://grandsummoners.fandom.com/wiki/Naofumi_Iwatani",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "グランドサマナーズ × 盾の勇者 コラボ（2020／2021）",
+    "timestamp": "",
+    "notes": "unverified：fandom が bot に 402/403 を返し内容未確認。コラボは原作キャストのフルボイスと告知されているが、ページ内に音声ファイルがあるかは不明。"
+   }
+  ],
+  "notes": "公式サイト /character/ は 404（トップページに CV 石川界人の記載あり）。oricon 特集は 429 で未取得。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-ned",
+  "character": "ネッド（カエルの剣士。本体は宇宙飛行士ロイドのアバター）",
+  "official_voice_actor": "none",
+  "version": "原作漫画『アヴァルト』（光永康則、月刊少年シリウス 2015-12〜2017-09、全6巻）— アニメ・ゲーム化なし",
+  "source_url_1": "https://booklive.jp/product/index/title_id/60003938/vol_no/001",
+  "source_url_2": "https://en.wikipedia.org/wiki/Avarth",
+  "voice_characteristics": "（公式音源なし・想定）がっしりした中低音の戦士声。寡黙で朴訥、時折カエルらしい濁った響きを混ぜる。",
+  "recommended_emotion": "神を前にしても淡々と剣を構える静かな覚悟。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [],
+  "notes": "AVARTH＝光永康則『アヴァルト』（怪物王女の作者）。BookLive の各巻紹介に「カエルの剣士ネッド（宇宙飛行士のアバター、本体はロイド）」と記載。英語版 Wikipedia・電子書店ページのいずれにもアニメ／ゲーム／ドラマCD化の記載なし → 日本語 VA は存在しない。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-noor",
+  "character": "ノール",
+  "official_voice_actor": "濱野大輝",
+  "version": "TVアニメ『俺は全てを【パリイ】する〜逆勘違いの世界最強は冒険者になりたい〜』2024-07〜09（第2期 2025 続投）",
+  "source_url_1": "https://parry-anime.com/character/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=22993",
+  "voice_characteristics": "濱野大輝のやや低く太い青年声。真面目で素朴、自己評価の低い謙虚な語り口。戦闘中も「パリイ！」と淡々と力強く言い切る。",
+  "recommended_emotion": "「俺はパリイしかできない男です」と本気で謙遜しながら千の剣を弾く、天然の逆勘違い。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=XRofZNRBoDQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『俺は全てを【パリイ】する』第1話本編【公式無料配信】",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認（公式の第1話無料配信）。ノールのモノローグ多め、BGM入り。区間未検証。"
+   },
+   {
+    "url": "https://natalie.mu/comic/news/576746",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "俺は全てを【パリイ】する OPテーマ入り本PV（ボイス解禁）",
+    "timestamp": "unverified",
+    "notes": "unverified：記事が bot 認証（HTTP 405）で開けず、検索結果の見出しのみ。"
+   }
+  ],
+  "notes": "プロンプトの候補『川島零士』は誤り。TVアニメのノール役は 濱野大輝（公式キャラページ＋アニメイトタイムズで一致）。ラジオ版『俺はラジオを【パリイ】する』も濱野大輝。公式キャラページにサンプルボイスなし。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-nube",
+  "character": "鵺野鳴介（ぬ〜べ〜）",
+  "official_voice_actor": "置鮎龍太郎",
+  "version": "TVアニメ『地獄先生ぬ〜べ〜』2025-07〜09 ＋ 2026-01〜03（テレビ朝日系）— 1996年版TVアニメ・PS版ゲームから続投",
+  "source_url_1": "https://nube-anime.com/character/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%8D%84%E5%85%88%E7%94%9F%E3%81%AC%E3%80%9C%E3%81%B9%E3%80%9C",
+  "voice_characteristics": "置鮎龍太郎の艶のある低音バリトン。普段は間の抜けた明るいおどけ声、霊と対峙すると一転して重く張った気迫の声。「鬼の手」解放時の絶叫。",
+  "recommended_emotion": "「俺の生徒に手を出すな〜〜！！」— 生徒を守るための怒りの咆哮。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=dycWAjs-tp0",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『地獄先生ぬ〜べ〜』本PV第1弾（2025）",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。BGM入りPV、区間未検証。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=73k_eoL1iek",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『地獄先生ぬ〜べ〜』本PV第2弾（2025）",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。BGM入りPV、区間未検証。"
+   }
+  ],
+  "notes": "oricon（2024-12）・アニメイトタイムズの続投報道でも置鮎龍太郎を確認。2025年版公式キャラページにサンプルボイスなし。PS版ゲーム（1997）にも置鮎ボイスありだが音声ファイル公開ページは未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-orphen",
+  "character": "オーフェン（本名 キリランシェロ）",
+  "official_voice_actor": "森久保祥太郎",
+  "version": "TVアニメ『魔術士オーフェンはぐれ旅』2020-01〜（1998年版TVアニメから続投；キムラック編 2021、アーバンラマ編・聖域編 2023）",
+  "source_url_1": "https://www.deen.co.jp/news/20191210",
+  "source_url_2": "https://thetv.jp/program/0000952158/cast/",
+  "voice_characteristics": "森久保祥太郎の荒っぽい中音域。ぶっきらぼうで喧嘩腰の早口ツッコミ、呪文詠唱では低く凛と張った声に切り替わる。",
+  "recommended_emotion": "「我は放つ光の白刃！」— 悪態から一転、詠唱で凛と張る決め台詞。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=v247G6JdEO4",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『魔術士オーフェンはぐれ旅 アーバンラマ編』本PV",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。BGM入りPV、区間未検証。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=7Kae-fIvUHs",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『魔術士オーフェンはぐれ旅 キムラック編』アニメ PV第1弾",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。BGM入りPV、区間未検証。"
+   }
+  ],
+  "notes": "公式サイト ssorphen-anime.com/chara/index.html でも CV 森久保祥太郎を確認、サンプルボイスなし。OP主題歌も森久保本人が歌唱（台詞参考には不向き）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-popp",
+  "character": "ポップ",
+  "official_voice_actor": "豊永利行",
+  "version": "TVアニメ『ドラゴンクエスト ダイの大冒険』2020-10〜2022-10（ゲーム『インフィニティ ストラッシュ』2023 も同キャスト）",
+  "source_url_1": "https://www.dqdai-official.com/articles/3741",
+  "source_url_2": "https://www.animatetimes.com/news/details.php?id=1590580751",
+  "voice_characteristics": "豊永利行の軽妙な中高音。お調子者の早口、情けなく震える弱音から、覚悟を決めた時の張り詰めた叫びまで振れ幅が大きい。",
+  "recommended_emotion": "逃げ腰の弱音を振り切り仲間の前に立つ覚悟の叫び（第30話「ポップの覚悟」）。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.dragonquest.jp/dqdai-is/asset/movie/popp.mp4",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "インフィニティ ストラッシュ ドラゴンクエスト ダイの大冒険（公式サイト ポップ紹介ムービー）",
+    "timestamp": "unverified",
+    "notes": "HEAD で HTTP 200 / video/mp4 / 4.27MB を確認。公式サイトのキャラ紹介ゲームプレイ動画で戦闘ボイスが入るが、BGM/SFX 重畳の可能性大。動画ファイル（音声単体ではない）のため direct_media は false。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=Up8z3CIny-w",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ『ダイの大冒険』第30話予告「ポップの覚悟」",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。予告編はナレーション＋BGM入り、区間未検証。"
+   },
+   {
+    "url": "https://www.dragonquest.jp/dqdai-is/",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "インフィニティ ストラッシュ 公式サイト",
+    "timestamp": "",
+    "notes": "開いて確認。サンプルボイス専用ページはなく、キャラ紹介の mp4（上記）のみ。"
+   }
+  ],
+  "notes": "1991年版アニメは難波圭一、2020年版は豊永利行（本件は2020年版）。sounds-resource にインフィニティストラッシュの音声リップは検索で未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-rem",
+  "character": "レム",
+  "official_voice_actor": "水瀬いのり",
+  "version": "TVアニメ『Re:ゼロから始める異世界生活』第1期 2016-04〜09（2nd 2020／3rd 2024／4th 2026 続投）",
+  "source_url_1": "https://re-zero-anime.jp/tv/character/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=5708",
+  "voice_characteristics": "水瀬いのりの澄んだ高めの声。丁寧語の落ち着いた抑揚で、感情を抑えた冷たい淡々さと、スバルへ向ける甘く震える献身の熱の二面性。",
+  "recommended_emotion": "「レムは、スバルくんを愛しています」— 静かな丁寧語のまま溢れる献身。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.sounds-resource.com/mobile/rezerolostinmemories/",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Re:ゼロから始める異世界生活 Lost in Memories（リゼロス、モバイル）",
+    "timestamp": "",
+    "notes": "unverified：sounds-resource が bot に 403 を返し内容未確認。検索インデックスには同ゲームのキャラ別ボイス（例：Felix Argyle /sound/37846）が載っており、レムのボイスパックも存在する可能性が高いがページ未閲覧。ブラウザで手動確認推奨。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=Zzv42rrtUbM",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『Re:ゼロから始める異世界生活』2nd season PV レムver.（KADOKAWAanime）",
+    "timestamp": "unverified",
+    "notes": "タイトルを開いて確認。レム単独のキャラPV（アニメイトタイムズ記事で CV 水瀬いのりのレム版 2020-07-06 公開と裏取り）。BGM入り、区間未検証。"
+   }
+  ],
+  "notes": "公式キャラページにサンプルボイスなし。リゼロスは 2023-05-12 サービス終了。Epic Seven コラボ（レム実装）にも原作ボイスありだが音声ファイル公開ページは未確認。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-rin",
+  "character": "遠坂凛（とおさか りん）",
+  "official_voice_actor": "植田佳奈",
+  "version": "TVアニメ『Fate/stay night』(2006) ／『Fate/stay night [Unlimited Blade Works]』(2014-15)、ゲーム『Fate/stay night [Réalta Nua]』、『Fate/Grand Order』(イシュタル＝凛の疑似サーヴァント) まで共通",
+  "source_url_1": "https://www.animatetimes.com/tag/details.php?id=32",
+  "source_url_2": "https://ja.wikipedia.org/wiki/遠坂凛",
+  "voice_characteristics": "張りのある中音域の少女声。優等生然としたキリッとした滑舌で、ツンとした早口の説教口調から油断した瞬間の素の砕けた声まで振れ幅が大きい。",
+  "recommended_emotion": "ツンデレ的な取り繕い：自信満々に啖呵を切った直後に失敗して「……ま、まあ、悪くないじゃない」と強がる照れ隠し。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://static.wikia.nocookie.net/fategrandorder/images/e/e9/S142_Summon1.ogg/revision/latest?cb=20210813073738",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order（イシュタル S142 召喚ボイス、CV:植田佳奈）",
+    "timestamp": "",
+    "notes": "HEAD 200 application/ogg 478KB。凛の体を借りたイシュタルの召喚台詞「女神イシュタル、召喚に応じ参上したわ…」。同ページ（https://fategrandorder.fandom.com/wiki/Sub:Ishtar/Dialogue）に S142_*.ogg が61本、Fandom API 経由で取得可（直接ページはCloudflareで弾かれることあり）。ゲーム音声のためBGMなし。"
+   },
+   {
+    "url": "https://media.fgo.wiki/1/11/%E4%BC%8A%E4%BB%80%E5%A1%94%E5%B0%94-%E5%8F%AC%E5%94%A41.ogg",
+    "kind": "game-voice",
+    "direct_media": true,
+    "work": "Fate/Grand Order（Mooncell 中文wiki 伊什塔尔 召唤1）",
+    "timestamp": "",
+    "notes": "HEAD 200 audio/ogg 201KB。ページ https://fgo.wiki/w/伊什塔尔 に対話・戦闘ボイス多数（日本語音声）。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=wtIxifAjm-c",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ「Fate/stay night [Unlimited Blade Works]」キャラクター別番宣CM第1弾 遠坂凛ver.（ufotable公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbedで存在確認済み。凛単独の番宣CMだがBGM混在の可能性あり。"
+   }
+  ],
+  "notes": "凛本人名義のゲーム音声（Fate/EXTRA CCC 等）は sounds-resource.com にシートがあるが Cloudflare でフェッチ不可（https://www.sounds-resource.com/psp/fateextraccc/sound/15952/ unverified）。FGO のイシュタル／エレシュキガルは凛を依代とする疑似サーヴァントで声も植田佳奈。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-shadow",
+  "character": "シド・カゲノー／シャドウ",
+  "official_voice_actor": "山下誠一郎",
+  "version": "TVアニメ『陰の実力者になりたくて！』1st season (2022-23)・2nd season (2023)、アプリゲーム『マスターオブガーデン』も同キャスト",
+  "source_url_1": "https://shadow-garden.jp/staffcast/",
+  "source_url_2": "https://ja.wikipedia.org/wiki/陰の実力者になりたくて!",
+  "voice_characteristics": "シド時は軽い青年のモブ声だが、シャドウ時は喉を絞った低音で芝居がかった重厚なナレーション調に切り替わる。意図的な中二病の大仰さと、内心の軽薄なツッコミの二層構造。",
+  "recommended_emotion": "決め台詞「アイ・アム・アトミック」——静かに溜めてから世界を焼き払う陶酔の低音。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=dIgooexWDk0",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『陰の実力者になりたくて！』PV第2弾（KADOKAWAanime公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbedで存在確認済み。シャドウのモノローグ多め、BGM混在。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=bgPnQdfVinI",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "『陰の実力者になりたくて！マスターオブガーデン』シャドウ＆アルファ「アイ・アム・アトミック」(CV:山下誠一郎)",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み（アップロード主 Taki's Game Room、非公式録画）。ゲーム内ボイス、SE混在の可能性。"
+   },
+   {
+    "url": "https://www.youtube.com/shorts/ejlwauILKP8",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『陰の実力者になりたくて！』「アイ・アム・アトミック」日本語版＆英語版 比較動画（KADOKAWAanime公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。第5話の該当シーン、前半が日本語版。"
+   }
+  ],
+  "notes": "公式サイトのキャラクターページにサンプルボイスは無し。カゲマスのボイス直リンクは見つからず（音声ファイル直リンクなし）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-shinchan",
+  "character": "野原しんのすけ",
+  "official_voice_actor": "小林由美子（2代目、2018年7月6日〜）",
+  "version": "TVアニメ『クレヨンしんちゃん』(テレビ朝日) 2018年7月6日放送回以降＋以降の映画・ゲーム。初代は矢島晶子（1992-2018年6月29日）",
+  "source_url_1": "https://animeanime.jp/article/2018/07/06/38573.html",
+  "source_url_2": "https://ja.wikipedia.org/wiki/野原しんのすけ",
+  "voice_characteristics": "鼻にかかったハスキーで低めの5歳児声。間延びした「オラ〜」の語尾と、大人びた言い回しをのんびり平坦に言う脱力感。",
+  "recommended_emotion": "能天気なマイペース：「オラ、しんのすけ！」の自己紹介やお尻を出しての「ぶりぶり〜」のふざけた上機嫌。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=juLdCua_d6Y",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "【クレヨンしんちゃん】小林由美子、ならはしみき、森川智之、こおろぎさとみ、チョーがキャラボイス披露！（シネマトゥデイ）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。舞台挨拶で生アテレコ、BGMなしの可能性が高いが会場音あり。"
+   },
+   {
+    "url": "https://game.neoscorp.jp/shinchan/cast.html",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "Switch/PS4/PC『クレヨンしんちゃん「オラと博士の夏休み」』公式キャスト紹介",
+    "timestamp": "",
+    "notes": "野原しんのすけ：小林由美子 と明記。音声ファイルは無し（ゲーム本編はフルボイス）。"
+   },
+   {
+    "url": "https://www.youtube.com/@kureshin_official",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "【アニメ】クレヨンしんちゃん公式チャンネル",
+    "timestamp": "unverified",
+    "notes": "公式本編クリップ多数だが個別動画IDは取得できず（YouTubeのHTMLがcurlでは展開されない）。"
+   }
+  ],
+  "notes": "sounds-resource.com はCloudflareで検索不可。ゲーム音声の直リンクは未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-sinbad",
+  "character": "シンドバッド",
+  "official_voice_actor": "小野大輔",
+  "version": "TVアニメ『マギ シンドバッドの冒険』(2016年4-7月)、OVA(2014-15)、『マギ』本編TVアニメ(2012-14)も同キャスト",
+  "source_url_1": "https://www.project-magi.com/sinbad/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=5801",
+  "voice_characteristics": "艶のある低音のバリトン。王者らしい余裕と包容力のある語り、酔っぱらいや軽口ではくだけた愛嬌ある調子に崩れる。",
+  "recommended_emotion": "宴会で人を懐柔する豪快な笑いと、王として決断を下す時の静かな威圧。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=8hA3IVLHMU0",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "シンドバッドの冒険／PV（アニプレックス チャンネル公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。BGM混在。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=6TloFMOTLms",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "「マギ シンドバッドの冒険」TVアニメ新シリーズ告知PV（アニプレックス チャンネル公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。"
+   }
+  ],
+  "notes": "公式サイトのキャラクターページ (https://www.project-magi.com/sinbad/character/) にはCV表記のみでサンプルボイス無し。ゲーム音声の直リンクは未発見。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-takopi",
+  "character": "タコピー",
+  "official_voice_actor": "間宮くるみ",
+  "version": "Webアニメ『タコピーの原罪』(2025年6-8月配信、全6話)、2022年ボイスコミック版から続投",
+  "source_url_1": "https://www.animatetimes.com/tag/details.php?id=25338",
+  "source_url_2": "https://anime.eiga.com/news/122872/",
+  "voice_characteristics": "極端に高い甲高いマスコット声。語尾の「〜っピ」で無邪気にはしゃぐ一方、事態を理解できず戸惑う時の震える幼い声。",
+  "recommended_emotion": "「ハッピーにするっピ！」の純真な張り切りと、取り返しのつかない結果を前にした泣き声混じりの困惑。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=SUhYB0W7gM0",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "アニメ『タコピーの原罪』本PV（TBSアニメ公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。タコピーの台詞あり、BGM混在。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=FCcAH6NoU8o",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "『タコピーの原罪』特報PV（TBSアニメ公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。"
+   },
+   {
+    "url": "https://www.tbs.co.jp/anime/takopi_project/",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "アニメ『タコピーの原罪』公式サイト",
+    "timestamp": "",
+    "notes": "PV埋め込みのみ、音声ファイル直リンク無し。"
+   }
+  ],
+  "notes": "ゲーム化なし。地球外生命体だが人語を話す（クリーチャーではなくマスコット声）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-touka",
+  "character": "トウカ・スコット",
+  "official_voice_actor": "加藤渉 ／ 土岐隼一（W主演）",
+  "version": "TVアニメ『勇者が死んだ！』(2023年4-6月)",
+  "source_url_1": "https://www.animatetimes.com/tag/details.php?id=15198",
+  "source_url_2": "https://ja.wikipedia.org/wiki/勇者が死んだ!",
+  "voice_characteristics": "加藤渉：軽薄で調子のいい農夫の少年声、スケベな欲望を隠さないハイテンションな喚き。土岐隼一：勇者シオンの体に入った後の、爽やかな勇者声で中身の下品さを喋る落差。",
+  "recommended_emotion": "落とし穴に勇者を落として慌てふためく絶叫と、ニーソックスへの執着を熱弁する開き直り。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=mWl1PRtiTb8",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ「勇者が死んだ！」PV第１弾（ぽにきゃん公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。BGM混在。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=nQmCf8JE0G8",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ「勇者が死んだ！」PV第2弾（ぽにきゃん公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。"
+   }
+  ],
+  "notes": "アニメハックの表記は「トウカ・スコット：加藤渉」「トウカ・スコット、シオン・ブレイダン：土岐隼一」——精神がシオンの死体に移される設定のため、村人の体（＋幼少期は橘杏咲）を加藤、勇者の体に入ったトウカを土岐が担当と推定（配分の公式説明は unverified）。Wikipedia には鷲見昂大も併記。公式サイト heroisdead.com はJS描画でCV文言を取得できず。ゲーム化なし。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-uncle",
+  "character": "おじさん（本名：敷島 洋介）",
+  "official_voice_actor": "子安武人",
+  "version": "TVアニメ『異世界おじさん』(2022年7月〜2023年3月、全13話)、2022年コミックスCMから続投",
+  "source_url_1": "https://isekaiojisan.com/chara/",
+  "source_url_2": "https://animatetimes.com/tag/details.php?id=12470",
+  "voice_characteristics": "子安武人の艶のある中低音を、覇気のない鼻声気味のボソボソした喋りに崩した中年声。セガ愛を語る時だけ早口で熱がこもる。",
+  "recommended_emotion": "エルフの好意にまったく気づかず淡々と客対応するズレた鈍感さと、セガサターンを語る時の唐突な熱弁。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=2djDsTQLyjE",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『異世界おじさん』PV第２弾（KADOKAWAanime公式）",
+    "timestamp": "00:00-unverified",
+    "notes": "oEmbed確認済み。ファミ通記事によれば冒頭がおじさん（子安武人）とたかふみのセガトークから始まる。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=DHoA3fQDKz4",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "【異世界おじさん】新規録り下ろしボイスコミック（CV.子安武人ほか、KADOKAWAanime公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。ボイスコミック形式で台詞が長い。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=7ZGuf4jqltQ",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ『異世界おじさん』PV第１弾（KADOKAWAanime公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。"
+   }
+  ],
+  "notes": "公式サイトキャラクターページにサンプルボイス無し。ゲーム化なし（セガ公式コラボ動画は存在）。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-yogiri",
+  "character": "高遠夜霧（たかとう よぎり）",
+  "official_voice_actor": "内山昂輝",
+  "version": "TVアニメ『即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。』(2024年1-3月、全12話)",
+  "source_url_1": "https://sokushicheat-pr.com/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=19826",
+  "voice_characteristics": "気怠げで抑揚の少ない低めの青年声。眠そうな脱力した独り言調で、感情を乗せずに「死ね」と言い切る冷たさ。",
+  "recommended_emotion": "欠伸混じりの無関心のまま、脅威に対して淡々と「死ね」と告げる瞬間。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=izwiek6ZT7Q",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "TVアニメ「即死チート」第2弾PV（公式チャンネル）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み（公式サイト埋め込み）。ナタリー記事によれば夜霧の「死ね」で場面転換、以降はOP曲が乗る。"
+   },
+   {
+    "url": "https://sokushicheat-pr.com/character",
+    "kind": "official-sample",
+    "direct_media": false,
+    "work": "公式サイト CHARACTER",
+    "timestamp": "",
+    "notes": "CV表記とキャストコメントのみ、音声ファイル無し。"
+   }
+  ],
+  "notes": "ゲーム化なし。壇ノ浦知千佳役は富田美憂。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ },
+ {
+  "id": "b2-zenitsu",
+  "character": "我妻善逸（あがつま ぜんいつ）",
+  "official_voice_actor": "下野紘",
+  "version": "TVアニメ『鬼滅の刃』竈門炭治郎 立志編 (2019) 以降全シリーズ・劇場版、ゲーム『鬼滅の刃 ヒノカミ血風譚』(2021)・『ヒノカミ血風譚2』(2025) も同キャスト",
+  "source_url_1": "https://kimetsu.com/anime/risshihen/character/",
+  "source_url_2": "https://www.animatetimes.com/tag/details.php?id=7290",
+  "voice_characteristics": "喉を裂くような甲高い泣き喚きと早口の弱音が基本。眠って戦う時は一転して低く静かな呼吸音混じりの落ち着いた声。",
+  "recommended_emotion": "「死にたくない！」の情けない絶叫から、気絶後の「雷の呼吸 壱ノ型 霹靂一閃」の静かな集中への急転。",
+  "license_status": "unknown",
+  "license_evidence_url": "",
+  "candidate_sources": [
+   {
+    "url": "https://www.youtube.com/watch?v=QU8I0V-8DCk",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "Demon Slayer: The Hinokami Chronicles - Zenitsu Agatsuma Voice (Japanese)（ResourceMuseum）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。ゲームボイス抽出のためBGMなしの可能性が高い。プレイリスト https://www.youtube.com/playlist?list=PLd-47l6EiARmphO2D_OH9eK5C54a4gE1N に他形態（遊郭編 ZLGxO7hz3V8、キメツ学園 yzaddaiKh4k）あり。"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=LxMaia85m5Y",
+    "kind": "youtube",
+    "direct_media": false,
+    "work": "「鬼滅の刃 ヒノカミ血風譚2」「我妻善逸（無限城編）」キャラクターパック紹介映像（アニプレックス公式）",
+    "timestamp": "unverified",
+    "notes": "oEmbed確認済み。BGM混在。"
+   },
+   {
+    "url": "https://www.vg-resource.com/thread-40448.html",
+    "kind": "game-voice",
+    "direct_media": false,
+    "work": "VG-Resource スレッド：Hinokami Chronicles Voice Lines",
+    "timestamp": "",
+    "notes": "未フェッチ（403）。sounds-resource.com はCloudflareで検索不可のため直リンク unverified。"
+   }
+  ],
+  "notes": "公式ゲームサイト (game.kimetsu.com/hinokami, hinokami2) のキャラクターページには音声ファイル直リンク無し。 ｜ 2026-09-10 由查證 lane 上網查得；owner 裁決：優先遊戲原始乾淨語音。"
+ }
+]

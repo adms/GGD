@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-shinchan",
+  "source_name": "youtube: 【クレヨンしんちゃん】小林由美子、ならはしみき、森川智之、こおろぎさとみ、チョーがキャラボイス披露！（シネマトゥデイ）",
+  "source_url": "https://www.youtube.com/watch?v=juLdCua_d6Y",
+  "direct_url": "https://www.youtube.com/watch?v=juLdCua_d6Y",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "小林由美子（2代目、2018年7月6日〜）",
+  "source_sha256": "4ad5ef3d74954b97b403823b1f88bd96d9015962ed9fae3eb7db13c15afe8f9c",
+  "downloaded_at": "2026-09-10T11:04:20.507582Z",
+  "notes": "oEmbed確認済み。舞台挨拶で生アテレコ、BGMなしの可能性が高いが会場音あり。",
+  "precut": {
+    "window_start_s": 4.0,
+    "window_s": 10.0,
+    "score": 0.487,
+    "metrics": {
+      "multiple_speaker_probability": 0.084,
+      "music_probability": 0.795,
+      "speech_or_vocal_ratio": 0.892,
+      "silence_ratio": 0.108,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 18.8
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-shinchan.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-noor",
+  "source_name": "youtube: TVアニメ『俺は全てを【パリイ】する』第1話本編【公式無料配信】",
+  "source_url": "https://www.youtube.com/watch?v=XRofZNRBoDQ",
+  "direct_url": "https://www.youtube.com/watch?v=XRofZNRBoDQ",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "濱野大輝",
+  "source_sha256": "e08a83de6437db3f17151895e3a851ff85bdbdad6582ab3ab33224d18c5ecbaf",
+  "downloaded_at": "2026-09-10T11:01:46.139488Z",
+  "notes": "タイトルを開いて確認（公式の第1話無料配信）。ノールのモノローグ多め、BGM入り。区間未検証。",
+  "precut": {
+    "window_start_s": 84.0,
+    "window_s": 10.0,
+    "score": 0.557,
+    "metrics": {
+      "multiple_speaker_probability": 0.401,
+      "music_probability": 0.656,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 6.0
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-noor.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

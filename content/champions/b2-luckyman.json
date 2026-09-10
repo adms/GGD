@@ -356,7 +356,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-luckyman",
-  "modelKey": "ou99.457594",
+  "modelKey": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
   "name": "幸運超人",
   "origin": "坦克",
   "passiveAbility": "b2-luckyman.passive",
@@ -369,5 +369,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-luckyman.webp"
+  "icon": "assets/icons/champions/b2-luckyman.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:28:34.894Z",
+      "source": {
+        "kind": "previous",
+        "character": "幸運超人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
+      "label": "ou99 「雷欧·凹凸曼无披风版」（相似造型）",
+      "sourceModelKey": "ou99.457594",
+      "modelSha256": "7d1b86c75f172fbf91495623f0039ef283171ede221d47839860fa8ed6821be2",
+      "binarySha256": "301cd3ea20249839f3ca0a21059a9683262e8d1ee219be8e3c61c17fe6a34ac8",
+      "registeredAt": "2026-09-10T11:28:34.897Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "幸運超人",
+        "work": "雷欧·凹凸曼无披风版",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457594-1-1.html"
+      }
+    }
+  ]
 }

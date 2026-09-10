@@ -9,6 +9,28 @@ import { readCatalogGeneratorSources, type CatalogSourceArchive } from "./catalo
 
 export const HERO_CATALOG_WORK_ID = "ggd-existing-hero-catalog";
 
+/**
+ * 完整目錄快照的**位元組上限**。
+ *
+ * > owner 2026-09-10（逐字）：「**如果這是我本機端的話 2x 就好**」
+ *
+ * ⇒ 256 → **512 MiB**。⚠️ 這支只在 dev（`buildServer` 在 `NODE_ENV=production`
+ * 下拒絕啟動），所以它保護的是 owner 這台機器的記憶體，⛔ 不是線上。
+ *
+ * ⚠️ 量到的代價（2026-09-10）：`capture()` 掛在**每一次英雄寫入**上
+ * （`writeTextAtomic` → `catalogHistory.capture()`），實測目錄 237 MiB 時
+ * 單獨一次快照 = **9.1 秒**，一次模型版本註冊總共 20.9 秒。
+ * ⇒ 上限翻倍不會讓現在變慢（它是**上限**不是工作量），
+ *   ⛔ 但目錄真的長到 512 MiB 時，每一次後台存檔都會付約 18 秒。
+ *
+ * ⭐ 真正的根因**不是這個數字**：`freeze()` 用的是來源 GLB 的原始位元組，
+ * 所以凍結出來的 `versions/<sha>.glb` 與它的來源檔**逐位元組相同**，
+ * 而 `add()` 是按**路徑**擋重複、⛔ 不是按內容 ⇒ 同一份位元組被算兩次。
+ * 2026-09-10 量到已經有 13.1 MiB 這種重複，41 顆模型全部版本化會變成約 66 MiB。
+ * ⇒ 下一步應該是**讀取時按 sha256 去重**，那會讓這個上限退回成單純的安全閥。
+ */
+const CATALOG_BYTE_CAP = 512 * 1024 * 1024;
+
 /** An initial archive covers both shipping and non-shipping heroes. It does
  * not publish a hero or change ACTIVE. Full-catalog bytes are stored once, and
  * individual heroes refer to the same immutable baseline rather than copying
@@ -35,12 +57,39 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
   const missing: string[] = [], staleAssets: string[] = [];
   const heroes: { id: string; name: string; path: string; catalog: "shipping" | "legacy" | "overlay" }[] = [];
   let bytes = 0;
-  const add = (path: string, data: Uint8Array) => {
+  /**
+   * ⭐ 同一份**位元組**只算一次、只存一份 —— 判準是**內容雜湊**，⛔ 不是路徑。
+   *
+   * > owner 2026-09-10（逐字）：「⭐ 更好的一刀：內容去重（根因在這裡）⋯**do it**」
+   *
+   * ⚠️ 為什麼這裡一定會有重複：模型版本化（`ModelVersions.freeze()`）保存的是
+   * **來源 GLB 的原始位元組**，所以凍結出來的 `versions/<binarySha256>.glb`
+   * 與它的來源檔**逐位元組相同** —— 兩個路徑、一份內容。
+   * ⛔ 而原本的 `add()` 只按 `files.has(path)` 擋重複，於是同一份位元組被
+   * **算兩次、也存兩份**。2026-09-10 量到：那時已經有 **13.1 MiB** 這種重複，
+   * 41 顆模型全部版本化會長成約 **66 MiB** —— ⭐ 那正好就是撞上限的量。
+   *
+   * ⭐ 去重之後 `files` 裡多個路徑**共用同一個 Uint8Array 實例**：
+   * 下游（`retainHeroTemplates` / 物件庫寫入）全部是唯讀的，⛔ 沒有人改它。
+   * ⚠️ 份數上限（20,000）仍然按**路徑**算 —— 那一格擋的是檔案數，⛔ 不是位元組。
+   */
+  const unique = new Map<string, Uint8Array>();
+  // ⚠️ `digest` 是**已經算過**的內容雜湊 —— ⛔ 不傳就在這裡再算一次。
+  //    這一格重要:`read()`(記進 `observed`)、素材清單對帳、以及最後那一輪
+  //    防競態重讀,本來就各自雜湊一次;⛔ 去重再算第四次會讓整次快照多一倍時間
+  //    (實測 9.1s → 18.5s)。⇒ 大宗的兩條路(文件與素材)一律把算好的帶下來。
+  const add = (path: string, data: Uint8Array, digest?: string) => {
     if (!/^[a-zA-Z0-9._/-]+$/.test(path) || path.split("/").some((part) => !part || part === "." || part === "..")) throw new Error("完整版本含不安全路徑。");
     if (files.has(path)) throw new Error(`完整版本檔案重複：${path}`);
+    if (files.size >= 20000) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+    digest ??= sha256Bytes(data);
+    const shared = unique.get(digest);
+    if (shared) { files.set(path, shared); return; }
     bytes += data.byteLength;
-    if (files.size >= 20000 || bytes > 256 * 1024 * 1024) throw new Error("完整初始版本超過 256 MiB 或 20,000 份檔案，未保存不完整版本。");
-    files.set(path, data.slice());
+    if (bytes > CATALOG_BYTE_CAP) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+    const copy = data.slice();
+    unique.set(digest, copy);
+    files.set(path, copy);
   };
   const read = (path: string): Uint8Array => {
     const file = resolve(root, path);
@@ -50,13 +99,13 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     observed.set(path, sha256Bytes(data));
     return data;
   };
-  const collect = (data: Uint8Array, path: string, catalog: "shipping" | "legacy" | "overlay") => {
+  const collect = (data: Uint8Array, path: string, catalog: "shipping" | "legacy" | "overlay", digest?: string) => {
     const document = JSON.parse(new TextDecoder().decode(data)) as Record<string, unknown>;
     referencedAssetPaths(document, assets);
     if (path.includes("/champions/") && typeof document.id === "string") {
       heroes.push({ id: document.id, name: typeof document.name === "string" ? document.name : document.id, path, catalog });
     }
-    add(path, data);
+    add(path, data, digest);
   };
   // Original bytes include uncompiled owner text, embedded mirrors, templates,
   // settings and archived heroes. No conversion to a HeroProject is attempted.
@@ -69,7 +118,7 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     for (const file of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name, "en"))) {
       if (!file.name.endsWith(".json")) continue;
       const sourcePath = `${prefix}${collection}/${file.name}`;
-      collect(read(sourcePath), `catalog/${sourcePath}`, prefix ? "legacy" : "shipping");
+      collect(read(sourcePath), `catalog/${sourcePath}`, prefix ? "legacy" : "shipping", observed.get(sourcePath));
     }
   }
   for (const path of ["manifest.json", "assets-manifest.json"]) {
@@ -93,11 +142,12 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     const archived = !existsSync(resolve(root, path)) ? input.readArchivedAsset?.(path) : null;
     if (input.allowIncomplete && !archived && !existsSync(resolve(root, path))) { missing.push(path); continue; }
     const data = archived ?? read(path), fact = assetFacts.get(path);
-    if (fact && (data.byteLength !== fact.bytes || sha256Bytes(data) !== fact.sha256)) {
+    const digest = observed.get(path) ?? sha256Bytes(data);
+    if (fact && (data.byteLength !== fact.bytes || digest !== fact.sha256)) {
       if (!input.allowIncomplete) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
       staleAssets.push(path);
     }
-    add(path, data);
+    add(path, data, digest);
   }
   const sources = input.repoRoot && ["sync-io.json", "normalizers.json"].every((name) => existsSync(resolve(input.repoRoot!, "tools/parallel-gates", name)))
     ? readCatalogGeneratorSources(input.repoRoot, [...files.keys()]) : undefined;

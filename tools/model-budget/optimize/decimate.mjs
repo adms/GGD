@@ -21,6 +21,7 @@
  * Prints one JSON line: { ok, before:{tris}, after:{tris}, ratio, error }.
  */
 import { NodeIO } from "@gltf-transform/core";
+import { ALL_EXTENSIONS } from "@gltf-transform/extensions";
 import { weld, simplify } from "@gltf-transform/functions";
 import { MeshoptSimplifier } from "meshoptimizer";
 
@@ -32,7 +33,11 @@ if (!inFile || !outFile || !targetStr) {
 const targetTris = Number(targetStr);
 const errorBound = errStr !== undefined ? Number(errStr) : 0.02;
 
-const io = new NodeIO();
+// ⭐ 註冊全部擴充。⛔ 不註冊時,`extensionsRequired` 帶 EXT_texture_webp 的檔在
+//    `io.read()` 就擲 "Missing required extension" ——⚠️ 而那**不是**「這顆減不下去」,
+//    是**根本沒讀進來**。2026-09-10 量到 menu/dragon2{,-mid}.glb 兩顆因此整批中止。
+//    註冊只讓讀寫**原樣搬運**那些擴充的位元組;減面動的仍然只有 index/vertex buffer。
+const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
 const doc = await io.read(inFile);
 
 const countTris = () =>

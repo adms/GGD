@@ -1,0 +1,15 @@
+{
+  "hero_id": "community-review-04-20260907",
+  "source_name": "game-voice: JoJo's Bizarre Adventure: All Star Battle (PS3, 2013) — Jotaro win quote (JP, 小野大輔)",
+  "source_url": "https://archive.org/download/jjbaasb-ps3-audio-rips/JJBAASB_In-Game%20Dialogue_%28Part%203%29%20Jotaro%20Kujo.zip/v_btl_3jtr01%2FV_btl_win_3jtr01_01.wav",
+  "direct_url": "https://archive.org/download/jjbaasb-ps3-audio-rips/JJBAASB_In-Game%20Dialogue_%28Part%203%29%20Jotaro%20Kujo.zip/v_btl_3jtr01%2FV_btl_win_3jtr01_01.wav",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "小野大輔",
+  "source_sha256": "44cbc5ccb0afedc48144f0d744a145228ecaac99882f84e89b20b707f2e26ff6",
+  "downloaded_at": "2026-09-10T10:55:44.532991Z",
+  "notes": "HEAD verified HTTP 200 (served from inside the zip; content-type application/octet-stream but the URL is a .wav). The zip index lists 208 files: V_btl_win_3jtr01_01–17 (win quotes), V_btl_st_3jtr01_01–22 (battle start), S_PL_special_01–04, SPL_vo_01–02 (super move). Battle-start variant: https://archive.org/download/jjbaasb-ps3-audio-rips/JJBAASB_In-Game%20Dialogue_%28Part%203%29%20Jotaro%20Kujo.zip/v_btl_3jtr01%2FV_btl_st_3jtr01_01.wav"
+}

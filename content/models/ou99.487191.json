@@ -1,15 +1,17 @@
 {
- "id": "ou99.487191",
- "schema": "model@1",
- "glbPath": "assets/models/ou99/ou99_487191.glb",
- "scale": 1.0,
- "collisionRadius": 0.55,
- "clipMap": {
-  "idle": "Stand",
-  "run": "Walk",
-  "attack": "Attack",
-  "death": "Death",
-  "hurt": "Stand Ready",
-  "cast": "spell slam"
- }
+  "id": "ou99.487191",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/ou99_487191.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "death": "Death",
+    "hurt": "Stand Ready",
+    "cast": "spell slam"
+  },
+  "heroBody": false,
+  "heroBodyNote": "⛔ **視覺不合格**:2026-09-10 實拍只畫得出紫色霧狀特效,看不到身體(10 個 geoset 一個都沒被剔除,所以不是剔除造成的)。⚠️ 未查明前不可作為英雄身體。"
 }

@@ -1,0 +1,50 @@
+{
+  "hero_id": "community-review-35-20260907",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:267)",
+  "source_url": "voice-index:300heroes:267",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0026-267_voice_joke_1.ogg",
+      "sha256": "4c3d521f254dac222ad8973589c6c7e7f3cd6db6ba3e0465e8bc75a1674d1a07",
+      "seconds": 1.67
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0053-267_voice_joke_2.ogg",
+      "sha256": "86aa8176ee68d2a903c11646f09cea57f002e8eb63efa4a57f42931bb92dd412",
+      "seconds": 0.85
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0003-267_voice_joke_3.ogg",
+      "sha256": "a70db75116a516d51f11958f8110c471e7ea562ae2f2f4eaed91c1edd5d578d2",
+      "seconds": 2.7
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0009-267_voice_joke_4.ogg",
+      "sha256": "2a22e4ad4a3acc7c6ab6d7254f3920ce22ca4004275b4594849e9dbf9055aed1",
+      "seconds": 0.63
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0055-267_voice_move_1.ogg",
+      "sha256": "4aad8b9465c672c1417027481de789bc8dc1fbafae9bf974aa8b52f69a19988d",
+      "seconds": 1.21
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0006-267_voice_move_2.ogg",
+      "sha256": "06e56cb70b01048f897653843ecfb27fd7f511b624be0d89faff59219e40a289",
+      "seconds": 2.88
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0046-267_voice_move_3.ogg",
+      "sha256": "a49339d3fd2ade5e79392a7ecb7f44886bdfe9086eb6e810d00f0b87bf6e4b2d",
+      "seconds": 1.3
+    }
+  ],
+  "source_sha256": "e2f3cc7394983b1ee79f2702827d8db60463623ee95afd43f9e73e54988ce827",
+  "downloaded_at": "2026-09-10T11:11:02.252163+00:00"
+}

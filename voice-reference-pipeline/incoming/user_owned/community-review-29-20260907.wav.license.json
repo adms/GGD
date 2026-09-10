@@ -1,0 +1,25 @@
+{
+  "hero_id": "community-review-29-20260907",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:333)",
+  "source_url": "voice-index:300heroes:333",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0010-333_voice_joke_3.ogg",
+      "sha256": "db59efd4ffeef642120eab809f9f8834be8fbe3ce2a9e09006ad759de5379dfe",
+      "seconds": 5.73
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/333/00-0041-333_voice_joke_6.ogg",
+      "sha256": "6acf2c8334c3ba01a30201930c12159356a610c4f57a7bbb8de5a2353cb8cbef",
+      "seconds": 5.91
+    }
+  ],
+  "source_sha256": "7c7d76ad7a37c384e063427520e8692201ee0c1023f50107648b531a46ce70cf",
+  "downloaded_at": "2026-09-10T11:11:02.172789+00:00"
+}

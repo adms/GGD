@@ -1,0 +1,472 @@
+{
+ "championId": "b2-elma",
+ "reference": {
+  "sha256": "e36d23bd772e3691eb6a70a45f46635187c30d56a350b26266aae3a93e416179",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/b2-elma.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753599,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-elma.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789037073054,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.16,
+     "at": 1789040358380,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789042383554,
+     "error": null
+    }
+   ],
+   "text": "攻略說先扣自己血！",
+   "lang": "ja",
+   "kana": "コウリャク コウ ジコ チ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-elma.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "a74ac1fcb1c7cc9fbe6711cb946861d1e00aa94da30a23571b98acd0ef55c55c",
+    "maxDb": -1.9,
+    "at": 1789042383554
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.52,
+     "at": 1789037073174,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.76,
+     "at": 1789040358488,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789042383658,
+     "error": null
+    }
+   ],
+   "text": "半血以下保固升級！",
+   "lang": "ja",
+   "kana": "ハン チ イカ ホ コ マス キュウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-elma.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 40168,
+    "seconds": 2.44,
+    "lufs": null,
+    "hash": "1c053c9052dd0940e63127a535933483d8c3a4dd4f36c99e1fab09fb065e7d08",
+    "maxDb": -2,
+    "at": 1789042383659
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789037073296,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.96,
+     "at": 1789040358603,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.48,
+     "at": 1789042383769,
+     "error": null
+    }
+   ],
+   "text": "重劍攻略追加七十點！",
+   "lang": "ja",
+   "kana": "ジュウ ツルギ コウリャク ツイカ シチジュウ テン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-elma.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 40586,
+    "seconds": 2.48,
+    "lufs": null,
+    "hash": "2d5b48f01bb68484a9db072b06c4c3ac24da1965ca8f8e8c9e237f42d3b8d40f",
+    "maxDb": -2.4,
+    "at": 1789042383769
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1789037073419,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789040358715,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789042383873,
+     "error": null
+    }
+   ],
+   "text": "照攻略抄的重擊！",
+   "lang": "ja",
+   "kana": "ショウ コウリャク ショウ テキ ジュウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-elma.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "cc5063db58c19cdc52d09aed94cc5d2452d54911068ddc4af277c1a82fc29ffb",
+    "maxDb": -1.9,
+    "at": 1789042383873
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789037073541,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789040358832,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.4,
+     "at": 1789042383981,
+     "error": null
+    }
+   ],
+   "text": "攻略漏寫帶補包！",
+   "lang": "ja",
+   "kana": "コウリャク ロウ シャ オビ ホ ツツミ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-elma.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 39332,
+    "seconds": 2.4,
+    "lufs": null,
+    "hash": "70e83880e20c37368c46a735093d525741a1c59f01d153932d659969f3cc4eb1",
+    "maxDb": -2.3,
+    "at": 1789042383981
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.2,
+     "at": 1789042992641,
+     "error": null
+    }
+   ],
+   "text": "見せてやる これがクラス重騎士の真の力だ！",
+   "lang": "ja",
+   "kana": "ミセテヤル コレガ クラス ジュウキシノ シンノ チカラダ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 52288,
+    "seconds": 3.2,
+    "lufs": null,
+    "hash": "c0941d70f51623319e25dc4267e9b677d8f0b7740ad68c8af072f40a319fb8b9",
+    "maxDb": -1.9,
+    "at": 1789042992641
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037073662,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040358940,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "ab91b63aebbf2496da7b92f31cc0de9ef71850f3730989db512429d937d99bec",
+    "maxDb": -1.9,
+    "at": 1789040358940
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789037073782,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040359046,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "abb61310eeabbb5f405de2de867fc5ec3d2bc615dbdcf1b81f33c41dbb3d6327",
+    "maxDb": -1.9,
+    "at": 1789040359046
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789037073906,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789040359154,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "d4af2135321369ba9e0703bdd0f53291dce446ad51afab6a2ddcfc4634a1a105",
+    "maxDb": -2.7,
+    "at": 1789040359154
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789042992763,
+     "error": null
+    }
+   ],
+   "text": "お前が必要なんだ",
+   "lang": "ja",
+   "kana": "オマエガ ヒツヨウナンダ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "d1070fd102bc1c79b08c5b790567d63a904cf108c0df8bd49659b8f8ff1279a0",
+    "maxDb": -2,
+    "at": 1789042992763
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789037074028,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789040359258,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "99eb30ed868679fa881c72a07d401e539bea980c3b41ed2db0c331a5dc1fddb4",
+    "maxDb": -1.9,
+    "at": 1789040359258
+   },
+   "lastError": null
+  }
+ }
+}

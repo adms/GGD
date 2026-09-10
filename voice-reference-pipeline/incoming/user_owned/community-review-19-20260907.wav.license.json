@@ -1,0 +1,45 @@
+{
+  "hero_id": "community-review-19-20260907",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:102)",
+  "source_url": "voice-index:300heroes:102",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0024-102_voice_joke_1.ogg",
+      "sha256": "5076ca464fba123b0db2270cb182ef9e58b0718b0ecd8792b7628d9f5f46d449",
+      "seconds": 2.72
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0037-102_voice_joke_2.ogg",
+      "sha256": "82bbd65141157ab2f7c61f26506223e0e00c5aa146fda046ac2652aedc0c2a46",
+      "seconds": 2.14
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0059-102_voice_move_1.ogg",
+      "sha256": "5f4499c284812242489a82920f9307192b0a06160af9a722e6c3903fbbeb16b1",
+      "seconds": 0.91
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0016-102_voice_move_2.ogg",
+      "sha256": "6c4e881568f11f6a9d0fd49a4c76685a069e53dba03035a3bb5189a9c61127ed",
+      "seconds": 2.25
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0045-102_voice_attack_1.ogg",
+      "sha256": "760948fd945f1f7addf4917399156e5c22f6f3d659b46b4977763b0af358d534",
+      "seconds": 2.58
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/102/01-0001-102_voice_attack_2.ogg",
+      "sha256": "bdf645f0cac2cb487acf0bc020c9a94bcf028e29f7c254112c2fbf1b94c85f82",
+      "seconds": 2.14
+    }
+  ],
+  "source_sha256": "ae907b398878bfab9892f422d83dca5470250a49d1c7b04e03d4bb9831fe2df9",
+  "downloaded_at": "2026-09-10T11:11:01.596271+00:00"
+}

@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-14-20260907",
+  "source_name": "youtube: アニメ『暗殺教室』10周年のお祝いコメント／福山潤（殺せんせー役）・殺せんせー（【フジテレビ】アニメ公式チャンネル）",
+  "source_url": "https://www.youtube.com/watch?v=dqmTB3RnTPE",
+  "direct_url": "https://www.youtube.com/watch?v=dqmTB3RnTPE",
+  "license_url": "",
+  "timestamp": "unverified (needs manual scrub; character speaks in-voice to camera, likely little BGM)",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "福山潤",
+  "source_sha256": "c5596eaccc6c365f8fac5a9cf37179f9f29a945505d6736d380d2153751c7e07",
+  "downloaded_at": "2026-09-10T10:52:18.168466Z",
+  "notes": "Official Fuji TV anime channel; verified via YouTube oEmbed (title/channel). Koro-sensei speaks in character for a comment video, so long solo speech is expected.",
+  "precut": {
+    "window_start_s": 22.0,
+    "window_s": 10.0,
+    "score": 0.351,
+    "metrics": {
+      "multiple_speaker_probability": 0.256,
+      "music_probability": 0.585,
+      "speech_or_vocal_ratio": 0.99,
+      "silence_ratio": 0.01,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 13.4
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-14-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

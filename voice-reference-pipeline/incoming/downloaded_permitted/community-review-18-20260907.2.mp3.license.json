@@ -1,0 +1,15 @@
+{
+  "hero_id": "community-review-18-20260907",
+  "source_name": "game-voice: Fate/Grand Order (JP) — ギルガメッシュ召喚ボイス「ふはははは！ この我を呼ぶとは、運を使い果たしたな雑種！」 (Atlas Academy mirror)",
+  "source_url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_200200/0_S010.mp3",
+  "direct_url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_200200/0_S010.mp3",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "関智一",
+  "source_sha256": "a05749a86b1893cb9612a2e8d8bfad04bd2e65982ec9f826345282a30aeba6f7",
+  "downloaded_at": "2026-09-10T10:52:22.550855Z",
+  "notes": "HEAD-verified HTTP 200 audio/mpeg 75 KB. Servant collectionNo 12, svtId 200200; API cv field = 関智一. Full list: https://api.atlasacademy.io/nice/JP/servant/12?lore=true."
+}

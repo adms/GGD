@@ -1,0 +1,15 @@
+{
+  "hero_id": "community-review-17-20260907",
+  "source_name": "game-voice: OVERLORD: MASS FOR THE DEAD — モモンガ (Overlord / 死の支配者) 出撃ボイス (overlord-mass-for-the-dead.fandom.com)",
+  "source_url": "https://static.wikia.nocookie.net/overlord_mass_for_the_dead/images/1/12/Voice_type_ingame_sortie_0001_01.ogg/revision/latest?cb=20211230013449",
+  "direct_url": "https://static.wikia.nocookie.net/overlord_mass_for_the_dead/images/1/12/Voice_type_ingame_sortie_0001_01.ogg/revision/latest?cb=20211230013449",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "日野聡",
+  "source_sha256": "519de65206d9decb041980cd75ebf294840424a1d5af3de0acf4d3827f4641c4",
+  "downloaded_at": "2026-09-10T10:52:20.403793Z",
+  "notes": "Page https://overlord-mass-for-the-dead.fandom.com/wiki/Momonga_(Overlord)/Voice hosts 35 .ogg lines (summon, skills, attacks, victory). Sibling ogg HEAD-verified HTTP 200 application/ogg; fandom HTML blocks bots (403) but api.php?action=parse and static.wikia.nocookie.net files fetch fine."
+}

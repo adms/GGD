@@ -1,0 +1,472 @@
+{
+ "championId": "b2-luckyman",
+ "reference": {
+  "sha256": "75597d7cfea956ddf2941d804bed89d2b1942e6dc640286b17dda34c9654996e",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/b2-luckyman.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753625,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-luckyman.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789037086264,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.8,
+     "at": 1789040363410,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.52,
+     "at": 1789042389477,
+     "error": null
+    }
+   ],
+   "text": "剛好香蕉皮滑了一下！",
+   "lang": "ja",
+   "kana": "ツヨシ コウ カオリ ショウ カワ カツ リョウイチ シタ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-luckyman.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.52,
+    "lufs": null,
+    "hash": "2d1ef8961d41b1833aa91c6e38af681817a800ff32eec1285b231dd4eeb45d6c",
+    "maxDb": -1.9,
+    "at": 1789042389477
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1789037086386,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.84,
+     "at": 1789040363516,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1789042389591,
+     "error": null
+    }
+   ],
+   "text": "剛好拳頭在這裡！",
+   "lang": "ja",
+   "kana": "ツヨシ コウ コブシ アタマ ザイ シャリ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-luckyman.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.04,
+    "lufs": null,
+    "hash": "5d942a9ba6cd3c87ecd96f35332fd8b56090c09f6dcfbcea26c201ed0980d8fd",
+    "maxDb": -2.2,
+    "at": 1789042389591
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789037086503,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789040363621,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1789042389696,
+     "error": null
+    }
+   ],
+   "text": "剛好有張技能保單！",
+   "lang": "ja",
+   "kana": "ツヨシ コウ アリ チョウ ギノウ ホ タン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-luckyman.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 36406,
+    "seconds": 2.2,
+    "lufs": null,
+    "hash": "32113a3429ee59b0c68b2ade97faad12c973c027404ac9147f435b9a0741aec2",
+    "maxDb": -2,
+    "at": 1789042389696
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789037086625,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789040363729,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789042389804,
+     "error": null
+    }
+   ],
+   "text": "剛好天上掉贈品！",
+   "lang": "ja",
+   "kana": "ツヨシ コウテン ウエ トウ ゾウ ヒン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-luckyman.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.36,
+    "lufs": null,
+    "hash": "bfd8b0549e298155a302ce39f36505e5f69472c36846940a8a2f1437d60267b8",
+    "maxDb": -3.4,
+    "at": 1789042389804
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789037086744,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.48,
+     "at": 1789040363845,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1789042389907,
+     "error": null
+    }
+   ],
+   "text": "沒那麼幸運先搭便車！",
+   "lang": "ja",
+   "kana": "ボツ ナ マ コウウン サキ トウ ビン クルマ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-luckyman.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 35570,
+    "seconds": 2.16,
+    "lufs": null,
+    "hash": "bf573a3fbddd26ed9e375c5607fe51f56cde76c792056a622a37690a11afd121",
+    "maxDb": -2.8,
+    "at": 1789042389907
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789042995945,
+     "error": null
+    }
+   ],
+   "text": "ラッキー、クッキー、ラッキーマン！",
+   "lang": "ja",
+   "kana": "ラッキー クッキー ラッキーマン",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24703,
+    "seconds": 1.48,
+    "lufs": null,
+    "hash": "b8a4c89373ab47fc06311864fce0f16cf261d53d027719b2bb5a40d5e3297da0",
+    "maxDb": -2,
+    "at": 1789042995946
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037086863,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789040363953,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "4b28824d4c109c8c02001e8bdb7a177773d5e1a95ed03d2c9d95bd610b3837ea",
+    "maxDb": -1.9,
+    "at": 1789040363953
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037086979,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040364062,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "8fd0bc41506b973c6a21ce6b7429ada627082be42ae20c01acb3955c30fb3864",
+    "maxDb": -1.9,
+    "at": 1789040364062
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789037087096,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789040364166,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "73821a54b21c71fbe6c3951edbe089f4c42aad33f39c77ce7d3560793a000ab1",
+    "maxDb": -4,
+    "at": 1789040364166
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1789042996061,
+     "error": null
+    }
+   ],
+   "text": "ラッキー、クッキー、ラッキーマン！",
+   "lang": "ja",
+   "kana": "ラッキー クッキー ラッキーマン",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.44,
+    "lufs": null,
+    "hash": "a68701f5bd9bbb4ae57225d0d4ebcad3adda1be006aa258be3984a7dbb9e7bf7",
+    "maxDb": -2,
+    "at": 1789042996061
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.24,
+     "at": 1789037087215,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.24,
+     "at": 1789040364273,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5059,
+    "seconds": 0.24,
+    "lufs": null,
+    "hash": "8b5d2c65eeb88dc1979d795bb8b0a7d7ea7d33c54955bb0cca3ba7a047bc0b65",
+    "maxDb": -2,
+    "at": 1789040364273
+   },
+   "lastError": null
+  }
+ }
+}

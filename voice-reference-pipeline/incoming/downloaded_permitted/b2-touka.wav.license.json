@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-touka",
+  "source_name": "youtube: TVアニメ「勇者が死んだ！」PV第１弾（ぽにきゃん公式）",
+  "source_url": "https://www.youtube.com/watch?v=mWl1PRtiTb8",
+  "direct_url": "https://www.youtube.com/watch?v=mWl1PRtiTb8",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "加藤渉 ／ 土岐隼一（W主演）",
+  "source_sha256": "6f9a31f2e703493d4a80e3dc217ae336517af8c295336d3f97ac64a190ffeeed",
+  "downloaded_at": "2026-09-10T11:05:01.027673Z",
+  "notes": "oEmbed確認済み。BGM混在。",
+  "precut": {
+    "window_start_s": 44.0,
+    "window_s": 10.0,
+    "score": 0.679,
+    "metrics": {
+      "multiple_speaker_probability": 0.543,
+      "music_probability": 0.636,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 9.4
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-touka.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

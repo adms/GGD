@@ -1,0 +1,422 @@
+{
+ "championId": "community-review-06-20260907",
+ "reference": {
+  "sha256": "91b2a6d49c1791a52174cb74a4eb9f6811200e4fbfda12f521f421fcc634b0e2",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-hblm.wav",
+  "sourceKind": "donor",
+  "donor": "godie-hblm",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=child-boy) — drop community-review-06-20260907.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549617,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-hblm.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.84,
+     "at": 1789037115869,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby2a.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2a.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 37660,
+    "seconds": 2.288277,
+    "lufs": null,
+    "hash": "f219003fab45d23ff7c721099fed0ec5ae87960e7d39bb0a40568235faf1c4b1",
+    "at": 1789041880799
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1789037116006,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby00.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby00.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 35570,
+    "seconds": 2.16263,
+    "lufs": null,
+    "hash": "51062f038d791d2e60b2b3c5040b970aa14d35be70830b3eae7b23546a07c87a",
+    "at": 1789041880849
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789037116144,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby2f.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2f.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 34734,
+    "seconds": 2.112766,
+    "lufs": null,
+    "hash": "d65899a7a187b0778ef8647ecc27dd029a802ba3ae98eb66165d243b160fd309",
+    "at": 1789041880899
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789037116288,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby22.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby22.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 29301,
+    "seconds": 1.751565,
+    "lufs": null,
+    "hash": "d1d5268340e2870ef8dbfc18503512f77241fcc7bc8f6e255d1989dd9609960c",
+    "at": 1789041880949
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789037116430,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby14.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby14.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 21777,
+    "seconds": 1.282789,
+    "lufs": null,
+    "hash": "0e1cdf24db541c8df371536d45b26f24f9887f2801815a8fda6a96870d260b43",
+    "at": 1789041880998
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789043004519,
+     "error": null
+    }
+   ],
+   "text": "ぽよっ！",
+   "lang": "ja",
+   "kana": "ポヨッ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "9fa10592025e0e5198841de635a52c05ccb6cd0aac2417462f06a621a19e2b30",
+    "maxDb": -3.9,
+    "at": 1789043004519
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037116571,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby2c.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2c.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 0.999909,
+    "lufs": null,
+    "hash": "879311ab7c717f71d5f8ee5dc9937e0354d292f1fee64c1b4c9275be243b43a8",
+    "at": 1789041881051
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037116710,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby1b.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby1b.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1.009955,
+    "lufs": null,
+    "hash": "620b42d4a80180e684cd769ab941a7213173fdeb8655ac6e92ba6cfafc7a99c9",
+    "at": 1789041881103
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789037116855,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby1c.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby1c.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1.008254,
+    "lufs": null,
+    "hash": "7363a886f93a25bf8683c1a157c88d95a56bb18bc441594378880e82cca346dd",
+    "at": 1789041881154
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789043004628,
+     "error": null
+    }
+   ],
+   "text": "ぽよ！",
+   "lang": "ja",
+   "kana": "ポヨ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "8ac57f7615d8f90ae5b0d4b0ebfc1e1ec0d1738d58ed231447d056f54fc527c7",
+    "maxDb": -4,
+    "at": 1789043004628
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）voice/kirby2d.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby2d.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 16344,
+    "seconds": 0.959955,
+    "lufs": null,
+    "hash": "62b678e809e86590a998302fde15dc1495576ad881bdf6706fb284b1b722019a",
+    "at": 1789041881255
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）voice/kirby13.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby13.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 16344,
+    "seconds": 0.954195,
+    "lufs": null,
+    "hash": "257e20e33d8289c1fe20fa89598b92873b1ef1cffe85929bc2062db66d8d805a",
+    "at": 1789041881306
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）voice/kirby20.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby20.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 14254,
+    "seconds": 0.828481,
+    "lufs": null,
+    "hash": "faf326a53776fe5b2fe840378049f1a219e81c1d3e5ea536f2069d43f4badb9e",
+    "at": 1789041881356
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "takes": [],
+   "text": "（原檔）voice/kirby0a.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby0a.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 16762,
+    "seconds": 0.968254,
+    "lufs": null,
+    "hash": "09e8df51cc8a811094e2674d2e1a26449b9678ce8912e6b22239036fadf0f355",
+    "at": 1789041881407
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037116991,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice/kirby25.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-kirby/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/kirby25.dsp.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-kirby",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16161,
+    "lufs": null,
+    "hash": "75e07b9c5eeab9af7f5cd94782c3984d4559ba1814d9df9cea2ea14844650d6b",
+    "at": 1789041881457
+   },
+   "lastError": null
+  }
+ }
+}

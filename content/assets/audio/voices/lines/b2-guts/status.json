@@ -1,0 +1,503 @@
+{
+ "championId": "b2-guts",
+ "reference": {
+  "sha256": "4d7827250086b84e0f4cfc4706a2821a7a67cec28641dc749f3f8dab7395364b",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/b2-guts.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753606,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-guts.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789042993513,
+     "error": null
+    }
+   ],
+   "text": "神に会えたら言っとけ！放っとけってな！",
+   "lang": "ja",
+   "kana": "カミニ アエタラ イットケ ホットケッテナ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 38078,
+    "seconds": 2.32,
+    "lufs": null,
+    "hash": "7d813564a2e455947f35282f607ab16e2e0e30e42679201f1e12cb641938d390",
+    "maxDb": -1.9,
+    "at": 1789042993513
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789037076352,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.2,
+     "at": 1789040360330,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.92,
+     "at": 1789042385173,
+     "error": null
+    }
+   ],
+   "text": "這把劍不進垃圾車！",
+   "lang": "ja",
+   "kana": "シャ ハ ツルギ フ ススム クルマ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-guts.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 31808,
+    "seconds": 1.92,
+    "lufs": null,
+    "hash": "a5aa12324bb2ccafb09d6f49da26dface841cd39a3bf3a3abb7710aed97fabcc",
+    "maxDb": -1.9,
+    "at": 1789042385173
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789037076477,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1789040360439,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789042385282,
+     "error": null
+    }
+   ],
+   "text": "自願加班同意書！",
+   "lang": "ja",
+   "kana": "ジ ガン カ ハン ドウイショ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-guts.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "2dbbe28cdb2fb76db61b706bfe040dbc97b30cb4ca7183003f077a3bc88faa4a",
+    "maxDb": -2,
+    "at": 1789042385282
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1789037076600,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.72,
+     "at": 1789040360548,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1789042385393,
+     "error": null
+    }
+   ],
+   "text": "工傷才能領補助！",
+   "lang": "ja",
+   "kana": "コウ キズ サイノウ リョウ ホジョ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-guts.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "bf02e71ad60c76ba936345813dd6c42a78c5cf95308ea9929f5649f78c687ee7",
+    "maxDb": -2,
+    "at": 1789042385393
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.2,
+     "at": 1789037076721,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.48,
+     "at": 1789040360663,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789042385500,
+     "error": null
+    }
+   ],
+   "text": "大型垃圾整排清運！",
+   "lang": "ja",
+   "kana": "オオガタ セイ ハイ キヨシ ウン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-guts.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "75522bda0d6c2557239a852073c0e50907a1840e432bf53224abca7b71ef8474",
+    "maxDb": -2,
+    "at": 1789042385500
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.72,
+     "at": 1789037076847,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.96,
+     "at": 1789040360780,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1789042385606,
+     "error": null
+    }
+   ],
+   "text": "安全帽只保護額頭！",
+   "lang": "ja",
+   "kana": "アンゼン ボウ タダ ホゴ ヒタイ アタマ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-guts.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 34316,
+    "seconds": 2.08,
+    "lufs": null,
+    "hash": "80fe6fa8935cda7b2d06f8662044d56f5240766d88dafba59edf0938991f9729",
+    "maxDb": -1.9,
+    "at": 1789042385606
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.68,
+     "at": 1789042993634,
+     "error": null
+    }
+   ],
+   "text": "逃げ出した先に楽園なんてありゃしねえのさ",
+   "lang": "ja",
+   "kana": "ニゲダシタ サキニ ラクエンナンテ アリャシネエノサ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43929,
+    "seconds": 2.68,
+    "lufs": null,
+    "hash": "db231991f2c6b68963070a88b0f93926bc2203afdca784152594be285e9a496b",
+    "maxDb": -1.9,
+    "at": 1789042993634
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037076970,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789040360892,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "8bd0da4983c0521a58e8b7d2e0efbc25194f819eb0817a37a6c257d3147fb89c",
+    "maxDb": -1.9,
+    "at": 1789040360892
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037077093,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040361003,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "6605d51dcafa634663b3530fc6cc4b2c76eb7766475b2604d2fae8754ed244cb",
+    "maxDb": -1.9,
+    "at": 1789040361003
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789037077213,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789040361114,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "8ca6f2620b2ba55abb5e20748501bf463779b8201b8b72a0e46cc603072d5226",
+    "maxDb": -5.2,
+    "at": 1789040361114
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789042993756,
+     "error": null
+    }
+   ],
+   "text": "祈るな！祈れば手が塞がる！",
+   "lang": "ja",
+   "kana": "イノルナ イノレバ テガ フサガル",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 42675,
+    "seconds": 2.6,
+    "lufs": null,
+    "hash": "44fd9b242d2583c887cbdeae8daaf573967d26fc985f9541caa8419586e8db8f",
+    "maxDb": -1.9,
+    "at": 1789042993756
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789037077333,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040361225,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "90021f5622b74e27fff4ea8afeeb7bbad728c9e6e15e357421e45bfb8aeeb698",
+    "maxDb": -1.9,
+    "at": 1789040361225
+   },
+   "lastError": null
+  }
+ }
+}

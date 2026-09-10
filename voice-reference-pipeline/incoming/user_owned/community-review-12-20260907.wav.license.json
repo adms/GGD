@@ -1,0 +1,26 @@
+{
+  "hero_id": "community-review-12-20260907",
+  "source_name": "game-voice: Fate/Grand Order 千子村正 (CV 杉山紀彰 ＝ 衛宮士郎的聲優) 台詞數段拼接",
+  "source_url": "https://api.atlasacademy.io/nice/JP/servant/302?lore=true",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research",
+  "human_review": "pending",
+  "identity_basis": "FGO servant 302 CV=杉山紀彰 (same VA as 衛宮士郎 UBW); ⚠️ 300heroes:156 卫宫 was Archer (諏訪部) — retired 2026-09-10",
+  "source_files": [
+    {
+      "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_H090.mp3",
+      "seconds": 3.21
+    },
+    {
+      "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_H092.mp3",
+      "seconds": 5.97
+    },
+    {
+      "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_H093.mp3",
+      "seconds": 5.64
+    }
+  ],
+  "source_sha256": "25b5d2330e40433ae66e752b7714935aaf0220add555e873f1fc81e7155c2f87",
+  "downloaded_at": "2026-09-10T12:25:54.669635+00:00"
+}

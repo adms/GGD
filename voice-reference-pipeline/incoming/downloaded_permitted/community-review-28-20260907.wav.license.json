@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-28-20260907",
+  "source_name": "youtube: 無職転生 クロニクル・オブ・エコーズ（ゲーム）キャラクターPV：エリス",
+  "source_url": "https://www.youtube.com/watch?v=avIDuh94PLk",
+  "direct_url": "https://www.youtube.com/watch?v=avIDuh94PLk",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "加隈亜衣",
+  "source_sha256": "f2dc607affce08d0c63c4e490c7c6a063912b03db7d968534e0ad40f9de827b7",
+  "downloaded_at": "2026-09-10T10:53:40.891213Z",
+  "notes": "ゲーム公式のエリス単独キャラクターPV（CV:加隈亜衣）。BGMあり。単独台詞区間のタイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 6.0,
+    "window_s": 10.0,
+    "score": 0.672,
+    "metrics": {
+      "multiple_speaker_probability": 0.505,
+      "music_probability": 0.667,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 2e-05,
+      "estimated_snr": 5.2
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-28-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

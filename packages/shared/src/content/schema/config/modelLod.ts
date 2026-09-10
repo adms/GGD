@@ -93,10 +93,10 @@ const zPlatformPolicy = z
       .string()
       .min(1)
       .max(80)
-      .default("iPad mini (A17 Pro)")
+      .default("iPad (M1)")
       .describe(
         "@zh 🧾 最低配備標準（顯示給玩家看的字）\n" +
-        "@note owner 2026-09-06 逐字：「以 **ipad mini 的 A17 Pro** 為最低配備標準來設計」。⭐ 這一格是那句話在整個 repo 的**唯一**住處：手機告知畫面上那一行字直接讀它，⛔ 不是在客戶端、README、商店頁各打一次。換機型只要改這一格，⛔ 不必動任何程式。",
+        "@note owner 2026-09-10 逐字：「那**提升到至少 M1 等級**」（在此之前是 2026-09-06 的「以 **ipad mini 的 A17 Pro** 為最低配備標準來設計」）。⚠️ 抬高這一格**不只是換一行字**：`tools/model-budget/limits.ts` 的 `DERATE` 跟著從 3 變 2.4，而每支英雄的 draw call 上限（`HERO_MODEL_BUDGET.meshes`）是從那條線推出來的 ⇒ 5 → 6。⭐ 這一格是那句話在整個 repo 的**唯一**住處：手機告知畫面上那一行字直接讀它，⛔ 不是在客戶端、README、商店頁各打一次。換機型只要改這一格，⛔ 不必動任何程式。",
       ),
   })
   .strict();

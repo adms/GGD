@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-luckyman",
+  "source_name": "anime-clip: とっても！ラッキーマン Intro & Opening（字幕版）",
+  "source_url": "https://www.youtube.com/watch?v=Nhqu7JLEMA0",
+  "direct_url": "https://www.youtube.com/watch?v=Nhqu7JLEMA0",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "田中真弓",
+  "source_sha256": "ec48ae5d6b97a91483538478aab04c41b8731ed7d0e250989db675a2aa66487a",
+  "downloaded_at": "2026-09-10T11:03:01.257522Z",
+  "notes": "開頭主角獨白（CV 田中真弓）＋ OP；非官方上傳",
+  "precut": {
+    "window_start_s": 12.0,
+    "window_s": 10.0,
+    "score": 0.49,
+    "metrics": {
+      "multiple_speaker_probability": 0.209,
+      "music_probability": 0.513,
+      "speech_or_vocal_ratio": 0.73,
+      "silence_ratio": 0.267,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 50.6
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-luckyman.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

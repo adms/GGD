@@ -1,15 +1,17 @@
 {
- "id": "ou99.487487-sbhhkedr",
- "schema": "model@1",
- "glbPath": "assets/models/ou99/ou99_487487-sbhhkedr.glb",
- "scale": 1.0,
- "collisionRadius": 0.55,
- "clipMap": {
-  "idle": "Stand",
-  "run": "Walk",
-  "attack": "Attack 1",
-  "cast": "Spell",
-  "death": "Death",
-  "hurt": "Stand"
- }
+  "id": "ou99.487487-sbhhkedr",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/ou99_487487-sbhhkedr.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell",
+    "death": "Death",
+    "hurt": "Stand"
+  },
+  "heroBody": false,
+  "heroBodyNote": "⛔ 這是**半身像/立繪**模型,⛔ 不是可以走路的身體 —— 會被誤選成英雄身體。"
 }

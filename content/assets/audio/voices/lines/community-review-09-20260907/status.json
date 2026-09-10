@@ -1,0 +1,431 @@
+{
+ "championId": "community-review-09-20260907",
+ "reference": {
+  "sha256": "30583c749d306e8171aa2c46a27ffed9d0680a77f47bc077d7acd6634f1a762f",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-n003.wav",
+  "sourceKind": "donor",
+  "donor": "godie-n003",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop community-review-09-20260907.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549628,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-n003.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789043005423,
+     "error": null
+    }
+   ],
+   "text": "ぬしと旅がしたい",
+   "lang": "ja",
+   "kana": "ヌシト タビガ シタイ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "fe04d2e6e28ca22b2b098a5895bf5f67580f3fcda62d8f64b96dab490756601d",
+    "maxDb": -4.6,
+    "at": 1789043005423
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789037119660,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1789042402183,
+     "error": null
+    }
+   ],
+   "text": "狼牙警告！",
+   "lang": "ja",
+   "kana": "ロウガ ケイコク",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-09-20260907.q",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "91c16da861015dc3562994ebeec13c6f20ec96675e5c761522b8b2cd7a546591",
+    "maxDb": -4.2,
+    "at": 1789042402183
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789037119781,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789042402293,
+     "error": null
+    }
+   ],
+   "text": "行商議價！",
+   "lang": "ja",
+   "kana": "ギョウショウ ギ アタイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-09-20260907.w",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "f8a477c91793e269f06adeec903a9fcafecf00edee5cc20cac9a9d3e15bb1d61",
+    "maxDb": -2.7,
+    "at": 1789042402293
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789037119902,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789042402398,
+     "error": null
+    }
+   ],
+   "text": "麥穗庇護！",
+   "lang": "ja",
+   "kana": "ムギ ホ ヒゴ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-09-20260907.e",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.12,
+    "lufs": null,
+    "hash": "cf3a24ba655ef7b6f1b003f8a9926fb11546b6b01a23cf161b1329c798130ef3",
+    "maxDb": -2.6,
+    "at": 1789042402398
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789037120022,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1789042402502,
+     "error": null
+    }
+   ],
+   "text": "賢狼真身！",
+   "lang": "ja",
+   "kana": "ケンロウ シンジン",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-09-20260907.r",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23031,
+    "seconds": 1.36,
+    "lufs": null,
+    "hash": "cd998f38340dbd822ee23a85e4fd55bb1a6c74e98a231e53e26d2c22f06edb35",
+    "maxDb": -4.4,
+    "at": 1789042402502
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.84,
+     "at": 1789037120142,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1789042402605,
+     "error": null
+    }
+   ],
+   "text": "豐收的約定！",
+   "lang": "ja",
+   "kana": "ユタカ シュウ テキ ヤクジョウ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-09-20260907.ex",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41839,
+    "seconds": 2.56,
+    "lufs": null,
+    "hash": "3b4f1fc5ca25769a923e7c0dd38a9e0af9b4aea0c6837785291af8d9439c00f1",
+    "maxDb": -2,
+    "at": 1789042402605
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789043005533,
+     "error": null
+    }
+   ],
+   "text": "わっちのじゃ",
+   "lang": "ja",
+   "kana": "ワッチノジャ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "a0f2cf86ee487397a859a029d78c1dfa3efc07eec282a65c3aca6756985943a0",
+    "maxDb": -3.9,
+    "at": 1789043005533
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037120261,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "61874dcee75fc723f3b728264c7d731d80f4bb2811c8b1c4f462783ebda3a360",
+    "maxDb": -1.9,
+    "at": 1789037120261
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037120385,
+     "error": null
+    }
+   ],
+   "text": "きゃっ！",
+   "lang": "ja",
+   "kana": "キャッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "2680d1e175a655d8f14757021987955265960f209c40d3c23b3374c6c3b33c5d",
+    "maxDb": -2,
+    "at": 1789037120385
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037120507,
+     "error": null
+    }
+   ],
+   "text": "ああっ……！",
+   "lang": "ja",
+   "kana": "アアッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "c2bc0e100146c3d0f270d049b3a74457b90c443fafd92b420675f632e7391273",
+    "maxDb": -2,
+    "at": 1789037120507
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789043005644,
+     "error": null
+    }
+   ],
+   "text": "わっちは賢狼ホロじゃ",
+   "lang": "ja",
+   "kana": "ワッチワ ケンロウ ホロジャ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "c1a6131699b9a767f16be54b8709892aaff295ef8b4690d776d070dbb8363366",
+    "maxDb": -2.3,
+    "at": 1789043005644
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037120632,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "c687c59f3c25107813392960e6c786fa92532638dcdc27922c11341e9436b55b",
+    "maxDb": -1.9,
+    "at": 1789037120632
+   },
+   "lastError": null
+  }
+ }
+}

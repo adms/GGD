@@ -1,0 +1,400 @@
+{
+ "championId": "community-review-11-20260907",
+ "reference": {
+  "sha256": "3d7dd5a2a1f3dc76efb36a1a883c308789b749b16435e5b12968ff274f9b0c49",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-o00k.wav",
+  "sourceKind": "donor",
+  "donor": "godie-o00k",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop community-review-11-20260907.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549635,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-o00k.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789037121926,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789042402710,
+     "error": null
+    }
+   ],
+   "text": "水刃！",
+   "lang": "ja",
+   "kana": "ミズ ハ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-11-20260907.q",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "4b4f6330a164517b1b38d73461ef27d428a65929b13d6884f4afa2aff7bf0aff",
+    "maxDb": -4.2,
+    "at": 1789042402710
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789037122054,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789042402813,
+     "error": null
+    }
+   ],
+   "text": "捕食者！",
+   "lang": "ja",
+   "kana": "ホショク モノ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-11-20260907.w",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "44e2aaa4e90f10061a133db6849548c3c553150514fd7567317fc4c23942c744",
+    "maxDb": -5.2,
+    "at": 1789042402813
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789037122181,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789042402915,
+     "error": null
+    }
+   ],
+   "text": "擬態！",
+   "lang": "ja",
+   "kana": "ギタイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-11-20260907.e",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "6ef3ee0323c1228ea97dc5a7eb40eb71820e6e1225a4f24bcaaa246bbb64e28f",
+    "maxDb": -1.9,
+    "at": 1789042402915
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.96,
+     "at": 1789037122303,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789042403017,
+     "error": null
+    }
+   ],
+   "text": "黑炎！",
+   "lang": "ja",
+   "kana": "クロ ホノオ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-11-20260907.r",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "1412dffc17071a4d1af329899f2cdaee28fd47b3b12bcac2a8d26290b60ed703",
+    "maxDb": -4.7,
+    "at": 1789042403017
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.12,
+     "at": 1789037122427,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.72,
+     "at": 1789042403119,
+     "error": null
+    }
+   ],
+   "text": "解析完成・能力再現！",
+   "lang": "ja",
+   "kana": "カイセキ カンセイ ノウリョク サイゲン",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-11-20260907.ex",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 44765,
+    "seconds": 2.72,
+    "lufs": null,
+    "hash": "fee73eb25d5fd9410ef1650db72c7514b4429d672bbdae720d750fbd3521c4f3",
+    "maxDb": -2,
+    "at": 1789042403119
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1789043006095,
+     "error": null
+    }
+   ],
+   "text": "はじめまして、俺はスライムのリムル",
+   "lang": "ja",
+   "kana": "ハジメマシテ オレワ スライムノ リムル",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.04,
+    "lufs": null,
+    "hash": "bc773aa8022af0b1ee87a7e7c2518a1ecef7eb7eb147b5bc47e58c44c4cbbc3a",
+    "maxDb": -2.7,
+    "at": 1789043006095
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037122552,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "9728daa72e760cfa34a09cb8b93ab767a7d692a1c7e6bc7134c985931d736f03",
+    "maxDb": -2,
+    "at": 1789037122552
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037122677,
+     "error": null
+    }
+   ],
+   "text": "きゃっ！",
+   "lang": "ja",
+   "kana": "キャッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "b320fa12d8c2d971232d907315dddf42e999df38147a013d62b276e9d718b11a",
+    "maxDb": -2,
+    "at": 1789037122677
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789037122797,
+     "error": null
+    }
+   ],
+   "text": "ああっ……！",
+   "lang": "ja",
+   "kana": "アアッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "1c7ce3b0aef3d328b73efb0ea1085b456410f5d7659b139cb64cd313fa92a0c0",
+    "maxDb": -2,
+    "at": 1789037122797
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1789043006210,
+     "error": null
+    }
+   ],
+   "text": "悪いスライムじゃないよ！",
+   "lang": "ja",
+   "kana": "ワルイ スライムジャ ナイヨ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.44,
+    "lufs": null,
+    "hash": "d7c9beba9ab949c3db0832384820112256bd4a8393df1b29d656e4aff71894c2",
+    "maxDb": -3.2,
+    "at": 1789043006210
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037122917,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "8103c2ed89e86982c8d520ba78cedb589cce7d9c54946deae5708f248e95e7e3",
+    "maxDb": -2.1,
+    "at": 1789037122917
+   },
+   "lastError": null
+  }
+ }
+}

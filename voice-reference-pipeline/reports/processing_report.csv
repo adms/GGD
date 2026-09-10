@@ -306,3 +306,357 @@
 2026-07-25T07:48:17+00:00,normalize,godie-ubal,1,godie-ubal.wav,godie-ubal.wav,loudnorm2pass,ok,
 2026-07-25T07:48:18+00:00,normalize,godie-udea,1,godie-udea.wav,godie-udea.wav,loudnorm2pass,ok,
 2026-07-25T07:48:18+00:00,normalize,godie-zombiex,1,godie-zombiex.wav,godie-zombiex.wav,loudnorm2pass,ok,
+2026-09-10T11:13:18+00:00,inspect,b2-maple,1,b2-maple.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:18+00:00,inspect,b2-rem,1,b2-rem.wav,,inspect,accepted,
+2026-09-10T11:13:18+00:00,inspect,b2-rin,1,b2-rin.wav,,inspect,accepted,
+2026-09-10T11:13:18+00:00,inspect,b2-zenitsu,1,b2-zenitsu.wav,,inspect,accepted,
+2026-09-10T11:13:18+00:00,inspect,community-review-04-20260907,1,community-review-04-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:19+00:00,inspect,community-review-10-20260907,1,community-review-10-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:19+00:00,inspect,community-review-11-20260907,1,community-review-11-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:19+00:00,inspect,community-review-12-20260907,1,community-review-12-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:19+00:00,inspect,community-review-13-20260907,1,community-review-13-20260907.wav,,inspect,rejected,clipping
+2026-09-10T11:13:19+00:00,inspect,community-review-16-20260907,1,community-review-16-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:20+00:00,inspect,community-review-17-20260907,1,community-review-17-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:20+00:00,inspect,community-review-18-20260907,1,community-review-18-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:20+00:00,inspect,community-review-19-20260907,1,community-review-19-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:20+00:00,inspect,community-review-20-20260907,1,community-review-20-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:20+00:00,inspect,community-review-21-20260907,1,community-review-21-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:20+00:00,inspect,community-review-23-20260907,1,community-review-23-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:21+00:00,inspect,community-review-24-20260907,1,community-review-24-20260907.wav,,inspect,rejected,clipping
+2026-09-10T11:13:21+00:00,inspect,community-review-25-20260907,1,community-review-25-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:21+00:00,inspect,community-review-26-20260907,1,community-review-26-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:21+00:00,inspect,community-review-27-20260907,1,community-review-27-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:21+00:00,inspect,community-review-29-20260907,1,community-review-29-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:22+00:00,inspect,community-review-35-20260907,1,community-review-35-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:22+00:00,inspect,community-review-37-20260907,1,community-review-37-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:23+00:00,inspect,b2-aladdin,1,b2-aladdin.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:23+00:00,inspect,b2-bojji,1,b2-bojji.wav,,inspect,accepted,
+2026-09-10T11:13:24+00:00,inspect,b2-boxxo,1,b2-boxxo.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:24+00:00,inspect,b2-elma,1,b2-elma.wav,,inspect,needs_review,low_snr
+2026-09-10T11:13:25+00:00,inspect,b2-fushi,1,b2-fushi.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:25+00:00,inspect,b2-goblin,1,b2-goblin.wav,,inspect,rejected,silence>60%
+2026-09-10T11:13:26+00:00,inspect,b2-guts,1,b2-guts.wav,,inspect,rejected,clipping;multi_speaker(heuristic);low_snr
+2026-09-10T11:13:27+00:00,inspect,b2-haga,1,b2-haga.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:28+00:00,inspect,b2-kaiji,1,b2-kaiji.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:29+00:00,inspect,b2-keyaru,1,b2-keyaru.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:29+00:00,inspect,b2-kumoko,1,b2-kumoko.wav,,inspect,needs_review,low_snr
+2026-09-10T11:13:30+00:00,inspect,b2-luckyman,1,b2-luckyman.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:32+00:00,inspect,b2-makoto,1,b2-makoto.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:32+00:00,inspect,b2-maomao,1,b2-maomao.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:33+00:00,inspect,b2-maple,2,b2-maple.2.wav,,inspect,accepted,
+2026-09-10T11:13:33+00:00,inspect,b2-matthias,1,b2-matthias.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:34+00:00,inspect,b2-naofumi,1,b2-naofumi.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:35+00:00,inspect,b2-noor,1,b2-noor.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:36+00:00,inspect,b2-nube,1,b2-nube.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:36+00:00,inspect,b2-orphen,1,b2-orphen.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:37+00:00,inspect,b2-popp,1,b2-popp.wav,,inspect,accepted,
+2026-09-10T11:13:37+00:00,inspect,b2-rem,2,b2-rem.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:37+00:00,inspect,b2-rin,2,b2-rin.2.ogg,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:38+00:00,inspect,b2-shadow,1,b2-shadow.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:40+00:00,inspect,b2-shinchan,1,b2-shinchan.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:40+00:00,inspect,b2-sinbad,1,b2-sinbad.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:41+00:00,inspect,b2-takopi,1,b2-takopi.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:42+00:00,inspect,b2-touka,1,b2-touka.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:42+00:00,inspect,b2-uncle,1,b2-uncle.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:43+00:00,inspect,b2-yogiri,1,b2-yogiri.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:44+00:00,inspect,b2-zenitsu,2,b2-zenitsu.2.wav,,inspect,rejected,clipping
+2026-09-10T11:13:45+00:00,inspect,community-review-01-20260907,1,community-review-01-20260907.wav,,inspect,rejected,multi_speaker(heuristic);low_snr
+2026-09-10T11:13:45+00:00,inspect,community-review-02-20260907,1,community-review-02-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:46+00:00,inspect,community-review-03-20260907,1,community-review-03-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:46+00:00,inspect,community-review-04-20260907,2,community-review-04-20260907.2.wav,,inspect,accepted,
+2026-09-10T11:13:47+00:00,inspect,community-review-05-20260907,1,community-review-05-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:47+00:00,inspect,community-review-06-20260907,1,community-review-06-20260907.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
+2026-09-10T11:13:48+00:00,inspect,community-review-07-20260907,1,community-review-07-20260907.wav,,inspect,rejected,clipping;background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:13:48+00:00,inspect,community-review-08-20260907,1,community-review-08-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:50+00:00,inspect,community-review-09-20260907,1,community-review-09-20260907.wav,,inspect,rejected,clipping;background_music(heuristic)
+2026-09-10T11:13:50+00:00,inspect,community-review-10-20260907,2,community-review-10-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:51+00:00,inspect,community-review-11-20260907,2,community-review-11-20260907.2.wav,,inspect,rejected,clipping;multi_speaker(heuristic)
+2026-09-10T11:13:51+00:00,inspect,community-review-12-20260907,2,community-review-12-20260907.2.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
+2026-09-10T11:13:51+00:00,inspect,community-review-13-20260907,2,community-review-13-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:53+00:00,inspect,community-review-14-20260907,1,community-review-14-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:54+00:00,inspect,community-review-15-20260907,1,community-review-15-20260907.wav,,inspect,accepted,
+2026-09-10T11:13:54+00:00,inspect,community-review-16-20260907,2,community-review-16-20260907.2.mp3,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:54+00:00,inspect,community-review-17-20260907,2,community-review-17-20260907.2.ogg,,inspect,accepted,
+2026-09-10T11:13:54+00:00,inspect,community-review-18-20260907,2,community-review-18-20260907.2.mp3,,inspect,accepted,
+2026-09-10T11:13:55+00:00,inspect,community-review-19-20260907,2,community-review-19-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:56+00:00,inspect,community-review-20-20260907,2,community-review-20-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:56+00:00,inspect,community-review-21-20260907,2,community-review-21-20260907.2.ogg,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:13:57+00:00,inspect,community-review-22-20260907,1,community-review-22-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:13:59+00:00,inspect,community-review-23-20260907,2,community-review-23-20260907.2.wav,,inspect,accepted,
+2026-09-10T11:13:59+00:00,inspect,community-review-24-20260907,2,community-review-24-20260907.2.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:14:00+00:00,inspect,community-review-25-20260907,2,community-review-25-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:14:01+00:00,inspect,community-review-26-20260907,2,community-review-26-20260907.2.wav,,inspect,rejected,silence>60%;multi_speaker(heuristic)
+2026-09-10T11:14:01+00:00,inspect,community-review-27-20260907,2,community-review-27-20260907.2.wav,,inspect,accepted,
+2026-09-10T11:14:02+00:00,inspect,community-review-28-20260907,1,community-review-28-20260907.wav,,inspect,rejected,multi_speaker(heuristic);low_snr
+2026-09-10T11:14:03+00:00,inspect,community-review-29-20260907,2,community-review-29-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:14:03+00:00,inspect,community-review-30-20260907,1,community-review-30-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:14:03+00:00,inspect,community-review-31-20260907,1,community-review-31-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:14:04+00:00,inspect,community-review-32-20260907,1,community-review-32-20260907.wav,,inspect,accepted,
+2026-09-10T11:14:04+00:00,inspect,community-review-33-20260907,1,community-review-33-20260907.wav,,inspect,accepted,
+2026-09-10T11:14:05+00:00,inspect,community-review-34-20260907,1,community-review-34-20260907.wav,,inspect,accepted,
+2026-09-10T11:14:06+00:00,inspect,community-review-35-20260907,2,community-review-35-20260907.2.wav,,inspect,rejected,clipping;multi_speaker(heuristic)
+2026-09-10T11:14:07+00:00,inspect,community-review-36-20260907,1,community-review-36-20260907.wav,,inspect,rejected,clipping;background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:14:07+00:00,inspect,community-review-37-20260907,2,community-review-37-20260907.2.mp3,,inspect,accepted,
+2026-09-10T11:14:07+00:00,extract,b2-rem,1,b2-rem.wav,b2-rem.wav,copy_whole,ok,0.00-13.73s score=1.000
+2026-09-10T11:14:07+00:00,extract,b2-rin,1,b2-rin.wav,b2-rin.wav,copy_whole,ok,0.00-12.32s score=1.000
+2026-09-10T11:14:08+00:00,extract,b2-zenitsu,1,b2-zenitsu.wav,b2-zenitsu.wav,copy_whole,ok,0.00-14.20s score=1.000
+2026-09-10T11:14:08+00:00,extract,community-review-04-20260907,1,community-review-04-20260907.wav,community-review-04-20260907.wav,copy_whole,ok,0.00-14.89s score=1.000
+2026-09-10T11:14:08+00:00,extract,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,copy_whole,ok,0.00-12.66s score=1.000
+2026-09-10T11:14:08+00:00,extract,community-review-16-20260907,1,community-review-16-20260907.wav,community-review-16-20260907.wav,copy_whole,ok,0.00-12.63s score=1.000
+2026-09-10T11:14:08+00:00,extract,community-review-17-20260907,1,community-review-17-20260907.wav,community-review-17-20260907.wav,trim,ok,1.03-12.66s score=1.288
+2026-09-10T11:14:08+00:00,extract,community-review-18-20260907,1,community-review-18-20260907.wav,community-review-18-20260907.wav,copy_whole,ok,0.00-14.20s score=1.000
+2026-09-10T11:14:09+00:00,extract,community-review-19-20260907,1,community-review-19-20260907.wav,community-review-19-20260907.wav,copy_whole,ok,0.00-14.29s score=1.000
+2026-09-10T11:14:09+00:00,extract,community-review-20-20260907,1,community-review-20-20260907.wav,community-review-20-20260907.wav,copy_whole,ok,0.00-12.40s score=1.000
+2026-09-10T11:14:09+00:00,extract,community-review-23-20260907,1,community-review-23-20260907.wav,community-review-23-20260907.wav,copy_whole,ok,0.00-12.44s score=1.000
+2026-09-10T11:14:09+00:00,extract,community-review-25-20260907,1,community-review-25-20260907.wav,community-review-25-20260907.wav,copy_whole,ok,0.00-10.34s score=1.000
+2026-09-10T11:14:09+00:00,extract,b2-bojji,1,b2-bojji.wav,b2-bojji.wav,trim,ok,4.96-16.96s score=0.862
+2026-09-10T11:14:10+00:00,extract,b2-elma,1,b2-elma.wav,b2-elma.wav,trim,ok,98.21-110.09s score=0.887
+2026-09-10T11:14:10+00:00,extract,b2-kumoko,1,b2-kumoko.wav,b2-kumoko.wav,trim,ok,0.00-12.00s score=0.979
+2026-09-10T11:14:10+00:00,extract,b2-maple,2,b2-maple.2.wav,b2-maple.2.wav,copy_whole,ok,0.00-15.00s score=1.000
+2026-09-10T11:14:11+00:00,extract,b2-popp,1,b2-popp.wav,b2-popp.wav,trim,ok,17.86-29.95s score=0.742
+2026-09-10T11:14:11+00:00,extract,community-review-02-20260907,1,community-review-02-20260907.wav,community-review-02-20260907.wav,trim,ok,1.90-13.98s score=1.290
+2026-09-10T11:14:11+00:00,extract,community-review-03-20260907,1,community-review-03-20260907.wav,community-review-03-20260907.wav,trim,ok,2.06-13.98s score=1.232
+2026-09-10T11:14:12+00:00,extract,community-review-04-20260907,2,community-review-04-20260907.2.wav,community-review-04-20260907.2.wav,copy_whole,ok,0.00-7.94s score=1.000
+2026-09-10T11:14:12+00:00,extract,community-review-15-20260907,1,community-review-15-20260907.wav,community-review-15-20260907.wav,trim,ok,1.98-12.94s score=1.122
+2026-09-10T11:14:12+00:00,extract,community-review-17-20260907,2,community-review-17-20260907.2.ogg,community-review-17-20260907.2.wav,copy_whole,ok,0.00-4.10s score=1.000
+2026-09-10T11:14:12+00:00,extract,community-review-18-20260907,2,community-review-18-20260907.2.mp3,community-review-18-20260907.2.wav,copy_whole,ok,0.00-6.67s score=1.000
+2026-09-10T11:14:13+00:00,extract,community-review-23-20260907,2,community-review-23-20260907.2.wav,community-review-23-20260907.2.wav,trim,ok,125.98-137.83s score=1.241
+2026-09-10T11:14:13+00:00,extract,community-review-27-20260907,2,community-review-27-20260907.2.wav,community-review-27-20260907.2.wav,trim,ok,17.86-29.95s score=1.290
+2026-09-10T11:14:14+00:00,extract,community-review-32-20260907,1,community-review-32-20260907.wav,community-review-32-20260907.wav,trim,ok,17.86-29.95s score=0.901
+2026-09-10T11:14:14+00:00,extract,community-review-33-20260907,1,community-review-33-20260907.wav,community-review-33-20260907.wav,trim,ok,22.82-34.82s score=1.317
+2026-09-10T11:14:14+00:00,extract,community-review-34-20260907,1,community-review-34-20260907.wav,community-review-34-20260907.wav,trim,ok,39.68-51.68s score=1.275
+2026-09-10T11:14:15+00:00,extract,community-review-37-20260907,2,community-review-37-20260907.2.mp3,community-review-37-20260907.2.wav,trim,ok,18.65-31.84s score=1.167
+2026-09-10T11:14:16+00:00,normalize,b2-bojji,1,b2-bojji.wav,b2-bojji.wav,loudnorm2pass,ok,
+2026-09-10T11:14:16+00:00,normalize,b2-elma,1,b2-elma.wav,b2-elma.wav,loudnorm2pass,ok,
+2026-09-10T11:14:17+00:00,normalize,b2-kumoko,1,b2-kumoko.wav,b2-kumoko.wav,loudnorm2pass,ok,
+2026-09-10T11:14:18+00:00,normalize,b2-maple,2,b2-maple.2.wav,b2-maple.2.wav,loudnorm2pass,ok,
+2026-09-10T11:14:19+00:00,normalize,b2-popp,1,b2-popp.wav,b2-popp.wav,loudnorm2pass,ok,
+2026-09-10T11:14:20+00:00,normalize,b2-rem,1,b2-rem.wav,b2-rem.wav,loudnorm2pass,ok,
+2026-09-10T11:14:20+00:00,normalize,b2-rin,1,b2-rin.wav,b2-rin.wav,loudnorm2pass,ok,
+2026-09-10T11:14:20+00:00,normalize,b2-zenitsu,1,b2-zenitsu.wav,b2-zenitsu.wav,loudnorm2pass,ok,
+2026-09-10T11:14:21+00:00,normalize,community-review-02-20260907,1,community-review-02-20260907.wav,community-review-02-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:22+00:00,normalize,community-review-03-20260907,1,community-review-03-20260907.wav,community-review-03-20260907.wav,loudnorm2pass,verify_warn,true peak -0.2 dBTP above target
+2026-09-10T11:14:22+00:00,normalize,community-review-04-20260907,2,community-review-04-20260907.2.wav,community-review-04-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:14:23+00:00,normalize,community-review-04-20260907,1,community-review-04-20260907.wav,community-review-04-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:23+00:00,normalize,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:24+00:00,normalize,community-review-15-20260907,1,community-review-15-20260907.wav,community-review-15-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:24+00:00,normalize,community-review-16-20260907,1,community-review-16-20260907.wav,community-review-16-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:24+00:00,normalize,community-review-17-20260907,2,community-review-17-20260907.2.wav,community-review-17-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:14:25+00:00,normalize,community-review-17-20260907,1,community-review-17-20260907.wav,community-review-17-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:25+00:00,normalize,community-review-18-20260907,2,community-review-18-20260907.2.wav,community-review-18-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:14:25+00:00,normalize,community-review-18-20260907,1,community-review-18-20260907.wav,community-review-18-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:26+00:00,normalize,community-review-19-20260907,1,community-review-19-20260907.wav,community-review-19-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:26+00:00,normalize,community-review-20-20260907,1,community-review-20-20260907.wav,community-review-20-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:27+00:00,normalize,community-review-23-20260907,2,community-review-23-20260907.2.wav,community-review-23-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:14:27+00:00,normalize,community-review-23-20260907,1,community-review-23-20260907.wav,community-review-23-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:28+00:00,normalize,community-review-25-20260907,1,community-review-25-20260907.wav,community-review-25-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:29+00:00,normalize,community-review-27-20260907,2,community-review-27-20260907.2.wav,community-review-27-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:14:29+00:00,normalize,community-review-32-20260907,1,community-review-32-20260907.wav,community-review-32-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:30+00:00,normalize,community-review-33-20260907,1,community-review-33-20260907.wav,community-review-33-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:32+00:00,normalize,community-review-34-20260907,1,community-review-34-20260907.wav,community-review-34-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:14:33+00:00,normalize,community-review-37-20260907,2,community-review-37-20260907.2.wav,community-review-37-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:25:45+00:00,inspect,community-review-01-20260907,1,community-review-01-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:25:46+00:00,extract,community-review-01-20260907,1,community-review-01-20260907.wav,community-review-01-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:46+00:00,normalize,community-review-01-20260907,1,community-review-01-20260907.wav,community-review-01-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:46+00:00,inspect,community-review-02-20260907,1,community-review-02-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:25:46+00:00,extract,community-review-02-20260907,1,community-review-02-20260907.wav,community-review-02-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:47+00:00,normalize,community-review-02-20260907,1,community-review-02-20260907.wav,community-review-02-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:47+00:00,inspect,community-review-03-20260907,1,community-review-03-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:25:47+00:00,extract,community-review-03-20260907,1,community-review-03-20260907.wav,community-review-03-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:48+00:00,normalize,community-review-03-20260907,1,community-review-03-20260907.wav,community-review-03-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:48+00:00,inspect,community-review-04-20260907,1,community-review-04-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:48+00:00,inspect,community-review-04-20260907,2,community-review-04-20260907.2.wav,,inspect,accepted,
+2026-09-10T11:25:48+00:00,extract,community-review-04-20260907,1,community-review-04-20260907.wav,community-review-04-20260907.wav,copy_whole,ok,0.00-14.89s score=1.000
+2026-09-10T11:25:48+00:00,extract,community-review-04-20260907,2,community-review-04-20260907.2.wav,community-review-04-20260907.2.wav,copy_whole,ok,0.00-7.94s score=1.000
+2026-09-10T11:25:49+00:00,normalize,community-review-04-20260907,2,community-review-04-20260907.2.wav,community-review-04-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:25:49+00:00,normalize,community-review-04-20260907,1,community-review-04-20260907.wav,community-review-04-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:50+00:00,inspect,community-review-05-20260907,1,community-review-05-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:50+00:00,extract,community-review-05-20260907,1,community-review-05-20260907.wav,community-review-05-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:50+00:00,normalize,community-review-05-20260907,1,community-review-05-20260907.wav,community-review-05-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:50+00:00,inspect,community-review-06-20260907,1,community-review-06-20260907.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
+2026-09-10T11:25:51+00:00,inspect,community-review-07-20260907,1,community-review-07-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:25:51+00:00,inspect,community-review-08-20260907,1,community-review-08-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:25:51+00:00,extract,community-review-08-20260907,1,community-review-08-20260907.wav,community-review-08-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:52+00:00,normalize,community-review-08-20260907,1,community-review-08-20260907.wav,community-review-08-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:52+00:00,inspect,community-review-09-20260907,1,community-review-09-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:25:52+00:00,inspect,community-review-10-20260907,1,community-review-10-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:25:53+00:00,inspect,community-review-10-20260907,2,community-review-10-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:25:53+00:00,inspect,community-review-11-20260907,1,community-review-11-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:25:54+00:00,inspect,community-review-11-20260907,2,community-review-11-20260907.2.wav,,inspect,rejected,clipping;multi_speaker(heuristic)
+2026-09-10T11:25:54+00:00,inspect,community-review-12-20260907,1,community-review-12-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:54+00:00,inspect,community-review-12-20260907,2,community-review-12-20260907.2.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
+2026-09-10T11:25:54+00:00,extract,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,copy_whole,ok,0.00-12.66s score=1.000
+2026-09-10T11:25:55+00:00,normalize,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:55+00:00,inspect,community-review-13-20260907,1,community-review-13-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:55+00:00,inspect,community-review-13-20260907,2,community-review-13-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:25:56+00:00,extract,community-review-13-20260907,1,community-review-13-20260907.wav,community-review-13-20260907.wav,copy_whole,ok,0.00-12.23s score=1.000
+2026-09-10T11:25:56+00:00,normalize,community-review-13-20260907,1,community-review-13-20260907.wav,community-review-13-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:56+00:00,inspect,community-review-14-20260907,1,community-review-14-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:57+00:00,extract,community-review-14-20260907,1,community-review-14-20260907.wav,community-review-14-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:57+00:00,normalize,community-review-14-20260907,1,community-review-14-20260907.wav,community-review-14-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:57+00:00,inspect,community-review-15-20260907,1,community-review-15-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:57+00:00,extract,community-review-15-20260907,1,community-review-15-20260907.wav,community-review-15-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:25:58+00:00,normalize,community-review-15-20260907,1,community-review-15-20260907.wav,community-review-15-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:58+00:00,inspect,community-review-16-20260907,1,community-review-16-20260907.wav,,inspect,accepted,
+2026-09-10T11:25:58+00:00,inspect,community-review-16-20260907,2,community-review-16-20260907.2.mp3,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:25:59+00:00,extract,community-review-16-20260907,1,community-review-16-20260907.wav,community-review-16-20260907.wav,copy_whole,ok,0.00-12.63s score=1.000
+2026-09-10T11:25:59+00:00,normalize,community-review-16-20260907,1,community-review-16-20260907.wav,community-review-16-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:25:59+00:00,inspect,community-review-17-20260907,1,community-review-17-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:00+00:00,inspect,community-review-17-20260907,2,community-review-17-20260907.2.ogg,,inspect,accepted,
+2026-09-10T11:26:00+00:00,extract,community-review-17-20260907,1,community-review-17-20260907.wav,community-review-17-20260907.wav,trim,ok,1.03-12.66s score=1.288
+2026-09-10T11:26:00+00:00,extract,community-review-17-20260907,2,community-review-17-20260907.2.ogg,community-review-17-20260907.2.wav,copy_whole,ok,0.00-4.10s score=1.000
+2026-09-10T11:26:00+00:00,normalize,community-review-17-20260907,2,community-review-17-20260907.2.wav,community-review-17-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:26:01+00:00,normalize,community-review-17-20260907,1,community-review-17-20260907.wav,community-review-17-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:01+00:00,inspect,community-review-18-20260907,1,community-review-18-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:01+00:00,inspect,community-review-18-20260907,2,community-review-18-20260907.2.mp3,,inspect,accepted,
+2026-09-10T11:26:02+00:00,extract,community-review-18-20260907,1,community-review-18-20260907.wav,community-review-18-20260907.wav,copy_whole,ok,0.00-14.20s score=1.000
+2026-09-10T11:26:02+00:00,extract,community-review-18-20260907,2,community-review-18-20260907.2.mp3,community-review-18-20260907.2.wav,copy_whole,ok,0.00-6.67s score=1.000
+2026-09-10T11:26:02+00:00,normalize,community-review-18-20260907,2,community-review-18-20260907.2.wav,community-review-18-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:26:02+00:00,normalize,community-review-18-20260907,1,community-review-18-20260907.wav,community-review-18-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:03+00:00,inspect,community-review-19-20260907,1,community-review-19-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:04+00:00,inspect,community-review-19-20260907,2,community-review-19-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:04+00:00,extract,community-review-19-20260907,1,community-review-19-20260907.wav,community-review-19-20260907.wav,copy_whole,ok,0.00-14.29s score=1.000
+2026-09-10T11:26:04+00:00,normalize,community-review-19-20260907,1,community-review-19-20260907.wav,community-review-19-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:05+00:00,inspect,community-review-20-20260907,1,community-review-20-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:05+00:00,inspect,community-review-20-20260907,2,community-review-20-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:06+00:00,extract,community-review-20-20260907,1,community-review-20-20260907.wav,community-review-20-20260907.wav,copy_whole,ok,0.00-12.40s score=1.000
+2026-09-10T11:26:06+00:00,normalize,community-review-20-20260907,1,community-review-20-20260907.wav,community-review-20-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:06+00:00,inspect,community-review-21-20260907,1,community-review-21-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:07+00:00,inspect,community-review-21-20260907,2,community-review-21-20260907.2.ogg,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:07+00:00,inspect,community-review-22-20260907,1,community-review-22-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:07+00:00,extract,community-review-22-20260907,1,community-review-22-20260907.wav,community-review-22-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:08+00:00,normalize,community-review-22-20260907,1,community-review-22-20260907.wav,community-review-22-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:08+00:00,inspect,community-review-23-20260907,1,community-review-23-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:09+00:00,inspect,community-review-23-20260907,2,community-review-23-20260907.2.wav,,inspect,accepted,
+2026-09-10T11:26:10+00:00,extract,community-review-23-20260907,1,community-review-23-20260907.wav,community-review-23-20260907.wav,copy_whole,ok,0.00-12.44s score=1.000
+2026-09-10T11:26:10+00:00,extract,community-review-23-20260907,2,community-review-23-20260907.2.wav,community-review-23-20260907.2.wav,trim,ok,125.98-137.83s score=1.241
+2026-09-10T11:26:11+00:00,normalize,community-review-23-20260907,2,community-review-23-20260907.2.wav,community-review-23-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:26:12+00:00,normalize,community-review-23-20260907,1,community-review-23-20260907.wav,community-review-23-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:12+00:00,inspect,community-review-24-20260907,1,community-review-24-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:13+00:00,inspect,community-review-24-20260907,2,community-review-24-20260907.2.wav,,inspect,rejected,background_music(heuristic);multi_speaker(heuristic)
+2026-09-10T11:26:13+00:00,extract,community-review-24-20260907,1,community-review-24-20260907.wav,community-review-24-20260907.wav,trim,ok,1.98-14.45s score=1.063
+2026-09-10T11:26:13+00:00,normalize,community-review-24-20260907,1,community-review-24-20260907.wav,community-review-24-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:14+00:00,inspect,community-review-25-20260907,1,community-review-25-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:14+00:00,inspect,community-review-25-20260907,2,community-review-25-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:14+00:00,extract,community-review-25-20260907,1,community-review-25-20260907.wav,community-review-25-20260907.wav,copy_whole,ok,0.00-10.34s score=1.000
+2026-09-10T11:26:15+00:00,normalize,community-review-25-20260907,1,community-review-25-20260907.wav,community-review-25-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:15+00:00,inspect,community-review-26-20260907,1,community-review-26-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:16+00:00,inspect,community-review-26-20260907,2,community-review-26-20260907.2.wav,,inspect,rejected,silence>60%;multi_speaker(heuristic)
+2026-09-10T11:26:16+00:00,inspect,community-review-27-20260907,1,community-review-27-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:17+00:00,inspect,community-review-27-20260907,2,community-review-27-20260907.2.wav,,inspect,accepted,
+2026-09-10T11:26:17+00:00,extract,community-review-27-20260907,2,community-review-27-20260907.2.wav,community-review-27-20260907.2.wav,trim,ok,17.86-29.95s score=1.290
+2026-09-10T11:26:18+00:00,normalize,community-review-27-20260907,2,community-review-27-20260907.2.wav,community-review-27-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:26:18+00:00,inspect,community-review-28-20260907,1,community-review-28-20260907.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:19+00:00,inspect,community-review-29-20260907,1,community-review-29-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:19+00:00,inspect,community-review-29-20260907,2,community-review-29-20260907.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:20+00:00,inspect,community-review-30-20260907,1,community-review-30-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:20+00:00,extract,community-review-30-20260907,1,community-review-30-20260907.wav,community-review-30-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:20+00:00,normalize,community-review-30-20260907,1,community-review-30-20260907.wav,community-review-30-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:21+00:00,inspect,community-review-31-20260907,1,community-review-31-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:21+00:00,inspect,community-review-32-20260907,1,community-review-32-20260907.wav,,inspect,accepted,
+2026-09-10T11:26:21+00:00,extract,community-review-32-20260907,1,community-review-32-20260907.wav,community-review-32-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:22+00:00,normalize,community-review-32-20260907,1,community-review-32-20260907.wav,community-review-32-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:22+00:00,inspect,community-review-33-20260907,1,community-review-33-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:22+00:00,extract,community-review-33-20260907,1,community-review-33-20260907.wav,community-review-33-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:23+00:00,normalize,community-review-33-20260907,1,community-review-33-20260907.wav,community-review-33-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:23+00:00,inspect,community-review-34-20260907,1,community-review-34-20260907.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:23+00:00,extract,community-review-34-20260907,1,community-review-34-20260907.wav,community-review-34-20260907.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:24+00:00,normalize,community-review-34-20260907,1,community-review-34-20260907.wav,community-review-34-20260907.wav,loudnorm2pass,ok,
+2026-09-10T11:26:24+00:00,inspect,community-review-35-20260907,1,community-review-35-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:25+00:00,inspect,community-review-35-20260907,2,community-review-35-20260907.2.wav,,inspect,rejected,clipping;multi_speaker(heuristic)
+2026-09-10T11:26:26+00:00,inspect,community-review-36-20260907,1,community-review-36-20260907.wav,,inspect,rejected,multi_speaker(heuristic);low_snr
+2026-09-10T11:26:26+00:00,inspect,community-review-37-20260907,1,community-review-37-20260907.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:27+00:00,inspect,community-review-37-20260907,2,community-review-37-20260907.2.mp3,,inspect,accepted,
+2026-09-10T11:26:27+00:00,extract,community-review-37-20260907,2,community-review-37-20260907.2.mp3,community-review-37-20260907.2.wav,trim,ok,18.65-31.84s score=1.167
+2026-09-10T11:26:28+00:00,normalize,community-review-37-20260907,2,community-review-37-20260907.2.wav,community-review-37-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T11:26:29+00:00,inspect,b2-aladdin,1,b2-aladdin.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:29+00:00,inspect,b2-bojji,1,b2-bojji.wav,,inspect,accepted,
+2026-09-10T11:26:30+00:00,extract,b2-bojji,1,b2-bojji.wav,b2-bojji.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:30+00:00,normalize,b2-bojji,1,b2-bojji.wav,b2-bojji.wav,loudnorm2pass,ok,
+2026-09-10T11:26:30+00:00,inspect,b2-boxxo,1,b2-boxxo.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:31+00:00,extract,b2-boxxo,1,b2-boxxo.wav,b2-boxxo.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:31+00:00,normalize,b2-boxxo,1,b2-boxxo.wav,b2-boxxo.wav,loudnorm2pass,ok,
+2026-09-10T11:26:31+00:00,inspect,b2-elma,1,b2-elma.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:31+00:00,extract,b2-elma,1,b2-elma.wav,b2-elma.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:32+00:00,normalize,b2-elma,1,b2-elma.wav,b2-elma.wav,loudnorm2pass,ok,
+2026-09-10T11:26:32+00:00,inspect,b2-fushi,1,b2-fushi.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:33+00:00,inspect,b2-goblin,1,b2-goblin.wav,,inspect,accepted,
+2026-09-10T11:26:33+00:00,extract,b2-goblin,1,b2-goblin.wav,b2-goblin.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:33+00:00,normalize,b2-goblin,1,b2-goblin.wav,b2-goblin.wav,loudnorm2pass,ok,
+2026-09-10T11:26:34+00:00,inspect,b2-guts,1,b2-guts.wav,,inspect,accepted,
+2026-09-10T11:26:34+00:00,extract,b2-guts,1,b2-guts.wav,b2-guts.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:34+00:00,normalize,b2-guts,1,b2-guts.wav,b2-guts.wav,loudnorm2pass,ok,
+2026-09-10T11:26:35+00:00,inspect,b2-haga,1,b2-haga.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:35+00:00,extract,b2-haga,1,b2-haga.wav,b2-haga.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:35+00:00,normalize,b2-haga,1,b2-haga.wav,b2-haga.wav,loudnorm2pass,ok,
+2026-09-10T11:26:36+00:00,inspect,b2-kaiji,1,b2-kaiji.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:36+00:00,inspect,b2-keyaru,1,b2-keyaru.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:37+00:00,inspect,b2-kumoko,1,b2-kumoko.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:37+00:00,extract,b2-kumoko,1,b2-kumoko.wav,b2-kumoko.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:37+00:00,normalize,b2-kumoko,1,b2-kumoko.wav,b2-kumoko.wav,loudnorm2pass,ok,
+2026-09-10T11:26:38+00:00,inspect,b2-luckyman,1,b2-luckyman.wav,,inspect,accepted,
+2026-09-10T11:26:38+00:00,extract,b2-luckyman,1,b2-luckyman.wav,b2-luckyman.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:38+00:00,normalize,b2-luckyman,1,b2-luckyman.wav,b2-luckyman.wav,loudnorm2pass,ok,
+2026-09-10T11:26:39+00:00,inspect,b2-makoto,1,b2-makoto.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:39+00:00,inspect,b2-maomao,1,b2-maomao.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:39+00:00,inspect,b2-maple,1,b2-maple.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:40+00:00,inspect,b2-maple,2,b2-maple.2.wav,,inspect,accepted,
+2026-09-10T11:26:40+00:00,extract,b2-maple,2,b2-maple.2.wav,b2-maple.2.wav,copy_whole,ok,0.00-15.00s score=1.000
+2026-09-10T11:26:41+00:00,normalize,b2-maple,2,b2-maple.2.wav,b2-maple.2.wav,loudnorm2pass,ok,
+2026-09-10T11:26:41+00:00,inspect,b2-matthias,1,b2-matthias.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:41+00:00,extract,b2-matthias,1,b2-matthias.wav,b2-matthias.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:42+00:00,normalize,b2-matthias,1,b2-matthias.wav,b2-matthias.wav,loudnorm2pass,ok,
+2026-09-10T11:26:42+00:00,inspect,b2-naofumi,1,b2-naofumi.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:43+00:00,inspect,b2-noor,1,b2-noor.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:43+00:00,inspect,b2-nube,1,b2-nube.wav,,inspect,accepted,
+2026-09-10T11:26:43+00:00,extract,b2-nube,1,b2-nube.wav,b2-nube.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:44+00:00,normalize,b2-nube,1,b2-nube.wav,b2-nube.wav,loudnorm2pass,ok,
+2026-09-10T11:26:44+00:00,inspect,b2-orphen,1,b2-orphen.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:44+00:00,extract,b2-orphen,1,b2-orphen.wav,b2-orphen.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:45+00:00,normalize,b2-orphen,1,b2-orphen.wav,b2-orphen.wav,loudnorm2pass,ok,
+2026-09-10T11:26:45+00:00,inspect,b2-popp,1,b2-popp.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:45+00:00,extract,b2-popp,1,b2-popp.wav,b2-popp.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:45+00:00,normalize,b2-popp,1,b2-popp.wav,b2-popp.wav,loudnorm2pass,ok,
+2026-09-10T11:26:46+00:00,inspect,b2-rem,1,b2-rem.wav,,inspect,accepted,
+2026-09-10T11:26:46+00:00,inspect,b2-rem,2,b2-rem.2.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-09-10T11:26:46+00:00,extract,b2-rem,1,b2-rem.wav,b2-rem.wav,copy_whole,ok,0.00-13.73s score=1.000
+2026-09-10T11:26:47+00:00,normalize,b2-rem,1,b2-rem.wav,b2-rem.wav,loudnorm2pass,ok,
+2026-09-10T11:26:47+00:00,inspect,b2-rin,1,b2-rin.wav,,inspect,accepted,
+2026-09-10T11:26:47+00:00,inspect,b2-rin,2,b2-rin.2.ogg,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:48+00:00,extract,b2-rin,1,b2-rin.wav,b2-rin.wav,copy_whole,ok,0.00-12.32s score=1.000
+2026-09-10T11:26:48+00:00,normalize,b2-rin,1,b2-rin.wav,b2-rin.wav,loudnorm2pass,ok,
+2026-09-10T11:26:48+00:00,inspect,b2-shadow,1,b2-shadow.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:49+00:00,inspect,b2-shinchan,1,b2-shinchan.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T11:26:49+00:00,inspect,b2-sinbad,1,b2-sinbad.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:49+00:00,extract,b2-sinbad,1,b2-sinbad.wav,b2-sinbad.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:50+00:00,normalize,b2-sinbad,1,b2-sinbad.wav,b2-sinbad.wav,loudnorm2pass,ok,
+2026-09-10T11:26:50+00:00,inspect,b2-takopi,1,b2-takopi.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:50+00:00,extract,b2-takopi,1,b2-takopi.wav,b2-takopi.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:50+00:00,normalize,b2-takopi,1,b2-takopi.wav,b2-takopi.wav,loudnorm2pass,ok,
+2026-09-10T11:26:51+00:00,inspect,b2-touka,1,b2-touka.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:51+00:00,extract,b2-touka,1,b2-touka.wav,b2-touka.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:51+00:00,normalize,b2-touka,1,b2-touka.wav,b2-touka.wav,loudnorm2pass,ok,
+2026-09-10T11:26:52+00:00,inspect,b2-uncle,1,b2-uncle.wav,,inspect,needs_review,low_snr
+2026-09-10T11:26:52+00:00,extract,b2-uncle,1,b2-uncle.wav,b2-uncle.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T11:26:53+00:00,normalize,b2-uncle,1,b2-uncle.wav,b2-uncle.wav,loudnorm2pass,verify_warn,true peak -0.5 dBTP above target
+2026-09-10T11:26:53+00:00,inspect,b2-yogiri,1,b2-yogiri.wav,,inspect,rejected,background_music(heuristic);low_snr
+2026-09-10T11:26:53+00:00,inspect,b2-zenitsu,1,b2-zenitsu.wav,,inspect,accepted,
+2026-09-10T11:26:54+00:00,inspect,b2-zenitsu,2,b2-zenitsu.2.wav,,inspect,rejected,clipping
+2026-09-10T11:26:54+00:00,extract,b2-zenitsu,1,b2-zenitsu.wav,b2-zenitsu.wav,copy_whole,ok,0.00-14.20s score=1.000
+2026-09-10T11:26:55+00:00,normalize,b2-zenitsu,1,b2-zenitsu.wav,b2-zenitsu.wav,loudnorm2pass,ok,
+2026-09-10T12:25:55+00:00,inspect,community-review-01-20260907,1,community-review-01-20260907.wav,,inspect,accepted,
+2026-09-10T12:25:55+00:00,inspect,community-review-01-20260907,2,community-review-01-20260907.2.wav,,inspect,needs_review,low_snr
+2026-09-10T12:25:55+00:00,extract,community-review-01-20260907,1,community-review-01-20260907.wav,community-review-01-20260907.wav,copy_whole,ok,0.00-13.29s score=1.000
+2026-09-10T12:25:55+00:00,extract,community-review-01-20260907,2,community-review-01-20260907.2.wav,community-review-01-20260907.2.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T12:25:55+00:00,normalize,community-review-01-20260907,2,community-review-01-20260907.2.wav,community-review-01-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T12:25:56+00:00,normalize,community-review-01-20260907,1,community-review-01-20260907.wav,community-review-01-20260907.wav,loudnorm2pass,ok,
+2026-09-10T12:25:56+00:00,inspect,community-review-08-20260907,1,community-review-08-20260907.wav,,inspect,accepted,
+2026-09-10T12:25:56+00:00,inspect,community-review-08-20260907,2,community-review-08-20260907.2.wav,,inspect,needs_review,low_snr
+2026-09-10T12:25:56+00:00,extract,community-review-08-20260907,1,community-review-08-20260907.wav,community-review-08-20260907.wav,copy_whole,ok,0.00-13.06s score=1.000
+2026-09-10T12:25:57+00:00,extract,community-review-08-20260907,2,community-review-08-20260907.2.wav,community-review-08-20260907.2.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T12:25:57+00:00,normalize,community-review-08-20260907,2,community-review-08-20260907.2.wav,community-review-08-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T12:25:57+00:00,normalize,community-review-08-20260907,1,community-review-08-20260907.wav,community-review-08-20260907.wav,loudnorm2pass,ok,
+2026-09-10T12:25:57+00:00,inspect,community-review-12-20260907,1,community-review-12-20260907.wav,,inspect,accepted,
+2026-09-10T12:25:58+00:00,inspect,community-review-12-20260907,2,community-review-12-20260907.2.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
+2026-09-10T12:25:58+00:00,extract,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,trim,ok,2.82-15.30s score=0.911
+2026-09-10T12:25:58+00:00,normalize,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,loudnorm2pass,ok,

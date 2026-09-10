@@ -9,6 +9,8 @@ import {
 } from "@ggd/shared/content/schema/championModelVersions";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
+import { normalizeUploadedModel } from "@ggd/shared/content/modelUpload/normalize";
+import { resizeImageWithFfmpeg } from "./resizeImage.node";
 import { effectiveYawOffsetDeg } from "@ggd/shared/content/glbYaw";
 import { MODEL_UPLOAD_LIMITS, parseUploadGlb } from "@ggd/shared/content/modelUpload/glb";
 import { inspectModelUpload } from "@ggd/shared/content/modelUpload/inspect";
@@ -86,6 +88,29 @@ export class ModelVersions {
     return { doc, bytes };
   }
 
+  /**
+   * 合併畫法相同的網格 ＋ 丟掉零長度片段 ＋ **把貼圖縮到上限**。
+   *
+   * ⚠️ fail-open（正規化壞了不擋上架）是刻意的，⛔ **但不可以靜默** ——
+   * 2026-09-10 我第一版寫了 `catch { return source; }`，於是「縮圖沒跑」與
+   * 「不需要縮圖」在日誌上長得**一模一樣**，而下一格預算閘才用一句
+   * 「貼圖邊長 512 超過上限 256」把它擋下來 —— ⭐ 而那句話指著錯的方向
+   * （看起來像內容有問題，其實是修正器沒跑）。
+   */
+  private async normalize(source: { doc: ModelDoc; bytes: Uint8Array }): Promise<{ doc: ModelDoc; bytes: Uint8Array }> {
+    try {
+      const { bytes, report } = await normalizeUploadedModel(source.bytes, { resizeImage: resizeImageWithFfmpeg });
+      if (report.texturesOverCap.length) {
+        console.warn(`[modelVersions] ${source.doc.id}：${report.texturesOverCap.length} 張貼圖縮不動`
+          + `（最長邊 ${report.texturesOverCap.join("/")}）—— 縮圖器回了 null，檢查 ffmpeg。`);
+      }
+      return report.changed ? { doc: source.doc, bytes } : source;
+    } catch (error) {
+      console.error(`[modelVersions] ${source.doc.id}：正規化擲例外，改用原始位元組。`, error);
+      return source;
+    }
+  }
+
   private freeze(source: { doc: ModelDoc; bytes: Uint8Array }, label: string, provenance: ChampionModelVersion["source"], legacy: boolean): FrozenBody {
     // Keep the asset family prefix: legacy overlay detection depends on it.
     // Drop the live generator knob, since this GLB is already baked and immutable.
@@ -116,7 +141,12 @@ export class ModelVersions {
       return { champion: zChampionDoc.parse({ ...champion, modelKey: version.modelKey }), artifacts: [] };
     }
     if (command.source.kind === "previous") throw new ModelVersionError("舊版紀錄由系統自動保存。", 422);
-    const candidate = this.source(command.sourceModelKey);
+    // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
+    // ⇒ 後台下拉選單這條路與編輯器上傳走**同一支正規化**：合併畫法相同的網格、
+    //   丟掉長度為零的署名片段、**把貼圖縮到 256**。⛔ 不做減面/圖集（那些會改變輪廓）。
+    // ⚠️ 正規化在 `freeze()` **之前** ⇒ 凍結下來的就是正規化後的位元組，
+    //   而 `verify()` 比對的也是那一份 ⇒ 不可變性不受影響。
+    const candidate = await this.normalize(this.source(command.sourceModelKey));
     if (candidate.doc.heroBody === false) throw new ModelVersionError("此模型已停用作為英雄身體。", 422);
     const inspected = await inspectModelUpload(candidate.bytes).catch((error: unknown) => { throw new ModelVersionError(error instanceof Error ? error.message : "模型驗證失敗。", 422); });
     const budget = heroModelBudgetIssues(inspected);

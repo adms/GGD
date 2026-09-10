@@ -1,0 +1,188 @@
+{
+ "schema": "ggd-needs-reregister@1",
+ "generatedAt": "2026-09-10",
+ "⭐最重要的一句": "這 13 隻英雄**渲染的不是**我減面的那些來源檔,而是 content/assets/models/*/versions/<sha>.glb 的**凍結副本**。⇒ 只把來源減面,玩家端**一個位元組都不會變**。",
+ "怎麼查出來的": "champion.modelKey → content/models/<key>.json → glbPath;13/13 落在 /versions/ 底下。",
+ "⛔我沒有動的": [
+  "content/champions/*.json",
+  "content/assets/models/*/versions/*.glb"
+ ],
+ "要做什麼": "對每一隻跑模型版本的 register(expectedHash + sourceModelKey + label + source) 再 activate —— 那會把**現在已減面的來源**凍成一份新的 version.body.*,並把 champion.modelKey 指過去。⭐ 舊的凍結版留著(不可變),所以隨時退得回去。",
+ "champions": [
+  {
+   "champion": "b2-boxxo",
+   "name": "阿箱＋拉蜜絲",
+   "activeModelKey": "version.body.115a4c5a7e643388bd988c1caab582482f6d1175616a0437",
+   "activeGlbPath": "assets/models/ou99/versions/606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.491448",
+   "decimatedSources": [
+    "ou99.491448"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "b2-elma",
+   "name": "艾爾瑪",
+   "activeModelKey": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
+   "activeGlbPath": "assets/models/ou99/versions/1437cbed6b585225333a57196de1001a85943ae0f5dd51b2d87d230032a66718.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.472038",
+   "decimatedSources": [
+    "ou99.472038"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "b2-fushi",
+   "name": "不死",
+   "activeModelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
+   "activeGlbPath": "assets/models/ou99/versions/e6e88168e26db99e0ab4276ee55b86808f1a2998e7f64ba415086159a6dc4db0.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.467227",
+   "decimatedSources": [
+    "ou99.467227"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "b2-noor",
+   "name": "諾爾",
+   "activeModelKey": "version.body.64d007d7082b6fb9e2ac7f3f0a77a91134edb89657b5fc81",
+   "activeGlbPath": "assets/models/ou99/versions/09444fb17e1b1a8437c0bcb3e7ccecc3d61c1d86d2b33f039b5e0817ae4d9279.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.453949",
+   "decimatedSources": [
+    "ou99.453949"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "b2-orphen",
+   "name": "歐菲",
+   "activeModelKey": "version.body.22bdbf148e368f65a812201d250e439c5d431676c638bf9e",
+   "activeGlbPath": "assets/models/ou99/versions/22fc172a82450ed4845e7e65264cf571130da40f680113531a70098299f99904.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.496452",
+   "decimatedSources": [
+    "ou99.496452"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "b2-shadow",
+   "name": "闇影",
+   "activeModelKey": "version.body.fefbd90d0746bfe2b0ec1eaa34346fd20f90fe551bb57f07",
+   "activeGlbPath": "assets/models/ou99/versions/ef252f3a94524b1db2b7ffb6dfd972c4d32e70c7b4abd5f54bf25d57ab74da1b.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.481732",
+   "decimatedSources": [
+    "ou99.481732"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "b2-sinbad",
+   "name": "辛巴達",
+   "activeModelKey": "version.body.50475cd0a71c5c569d77fe67d9450a189662424ade9a6933",
+   "activeGlbPath": "assets/models/ou99/versions/88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.491497",
+   "decimatedSources": [
+    "ou99.491497"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "community-review-07-20260907",
+   "name": "西索",
+   "activeModelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
+   "activeGlbPath": "assets/models/ou99/versions/7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.497211",
+   "decimatedSources": [
+    "ou99.497211"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "community-review-30-20260907",
+   "name": "尼古貓貓",
+   "activeModelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
+   "activeGlbPath": "assets/models/ou99/versions/5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.498214",
+   "decimatedSources": [
+    "ou99.498214"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "community-review-37-20260907",
+   "name": "吉伊卡哇",
+   "activeModelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
+   "activeGlbPath": "assets/models/ou99/versions/4382e2d43746df99fc68fb36b6b466e2bac8b4abd5c94a679b3153946c6cdcc5.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.459617",
+   "decimatedSources": [
+    "ou99.459617"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "godie-n00b",
+   "name": "小叮噹 - 哆拉A夢",
+   "activeModelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
+   "activeGlbPath": "assets/models/ou99/versions/845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.496905",
+   "decimatedSources": [
+    "imported.doraemon-cat"
+   ],
+   "needsReregister": false,
+   "reason": "⛔ 這一隻**不需要**重新註冊,但原因不是「已經生效」:它現用的來源是 ou99.496905,而**那顆沒有通過 A/B**(亮像素 -10.29%,紅披風塌成細片)⇒ 我沒有減它。⭐ 我減到 7,864 面(-0.28%)的是它的**上一版** imported.doraemon-cat(同一個角色的 22-primitive 匯出)。⇒ 出路是內容側的決定:把 godie-n00b 切回 doraemon-cat 那一脈就能拿到 8k 且視覺無損 —— ⛔ 那不是我的柵欄。"
+  },
+  {
+   "champion": "godie-o030",
+   "name": "電車癡漢 - 臭作",
+   "activeModelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
+   "activeGlbPath": "assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.456546",
+   "decimatedSources": [
+    "ou99.456546"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  },
+  {
+   "champion": "godie-orkn",
+   "name": "電車癡漢 - 臭作",
+   "activeModelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
+   "activeGlbPath": "assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb",
+   "activeIsFrozenCopy": true,
+   "activeSourceModelKey": "ou99.456546",
+   "decimatedSources": [
+    "ou99.456546"
+   ],
+   "needsReregister": true,
+   "reason": "⭐ 這隻**現在算的是凍結副本**(version.body.*),⛔ 它不會因為來源被減面而變 —— 要讓玩家拿到 8k 版,必須用模型版本流程 register+activate 一份新的凍結版"
+  }
+ ],
+ "notAdoptedSources": {
+  "ou99.496905": {
+   "tris": 19681,
+   "why": "亮像素 -10.29% ⛔ 超過 5% 門檻,且**肉眼確認**：角色本體完好,但**紅色披風**從一整片塌成一條細片。⭐ 而它與預算無關 —— errorBo…"
+  }
+ }
+}

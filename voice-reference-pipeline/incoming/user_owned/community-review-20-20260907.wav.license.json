@@ -1,0 +1,40 @@
+{
+  "hero_id": "community-review-20-20260907",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:96)",
+  "source_url": "voice-index:300heroes:96",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0005-96_voice_joke_1.ogg",
+      "sha256": "bd92ada36aceb99f0a0046fb58ede97d86798d0a8a2b9931118e40cb99dcc1ab",
+      "seconds": 1.39
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0010-96_voice_joke_2.ogg",
+      "sha256": "9fe7fb313db0fc2399790b2c2fc0be80bdb165a0569232706a6b9c60ad682e8f",
+      "seconds": 4.46
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0000-96_voice_move_1.ogg",
+      "sha256": "9058c09c42e8592ecb7ea2c9d5edb184a5045ebceebf6397d8fa120cd8885705",
+      "seconds": 2.07
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0011-96_voice_move_2.ogg",
+      "sha256": "e0ab5b46e108860bbf7fa6ec72884f94960685533d1e5c1fa3c529ab72dfe490",
+      "seconds": 1.46
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/96/01-0001-96_voice_move_3.ogg",
+      "sha256": "ac714613af1fcf82e0b8f5eb7ec84153722d5d3ad5c00233516d19ba1b236463",
+      "seconds": 1.7
+    }
+  ],
+  "source_sha256": "dc53c0778ad5ee4855cb752e496c47d775fb21cb72b758ef4f94d61ae6d92173",
+  "downloaded_at": "2026-09-10T11:11:01.663942+00:00"
+}

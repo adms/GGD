@@ -1,0 +1,35 @@
+{
+  "hero_id": "community-review-18-20260907",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:104)",
+  "source_url": "voice-index:300heroes:104",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0001-104_voice_move_1.ogg",
+      "sha256": "6700f6c0970a5b0830518d6b59ac0fd52edf716dc3c94cd5b8f8d342603d1f9f",
+      "seconds": 3.76
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0011-104_voice_move_2.ogg",
+      "sha256": "c93722b6156080cc52283f440c3d49b2eb237cc939e40cbb546155732ad3becb",
+      "seconds": 2.53
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0010-104_voice_move_3.ogg",
+      "sha256": "b0199199b53331c044533c92ee3113a2b936a82ac5250e3d2ab8fb00bcd9b1c9",
+      "seconds": 4.18
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/104/01-0009-104_voice_attack_1.ogg",
+      "sha256": "06ec2b93aab5ce93e5dc7329a0d48333f51719213b663cf142e60c95fef73d64",
+      "seconds": 2.67
+    }
+  ],
+  "source_sha256": "22b3de501e0a46a1ba80fd4ee37dbb698f8775d1af1a494d331581f918701908",
+  "downloaded_at": "2026-09-10T11:11:01.499609+00:00"
+}

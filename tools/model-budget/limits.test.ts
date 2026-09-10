@@ -6,6 +6,7 @@
 import { describe, expect, it } from "vitest";
 import { HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 import {
+  SCREEN_TEXEL_EDGE,
   C_CHAN_MS,
   C_MESH_MS,
   ANIMATION_FRAME_MS,
@@ -92,8 +93,12 @@ describe("per-import gates are the scene budget divided by simultaneous count", 
       expect(champ[key]).toEqual(HERO_MODEL_BUDGET[key]);
     }
     expect(champ.simultaneous).toBe(12);
-    // texture edge is a hard 1024 ceiling, never higher
-    expect(champ.texEdge.limit).toBe(1024);
+    // ⭐ 貼圖邊長驗的是**關係**：每一個 role 共用 `SCREEN_TEXEL_EDGE` 那一條線。
+    // ⛔ 這裡原本寫 `toBe(1024)` —— 那是抄了一份出貨值當第四個住處（第〇·四守則），
+    //    而 owner 2026-09-10 把它從螢幕解析度反推成 256 時，它就用**錯誤的訊息**紅了
+    //    （看起來像「英雄閘壞了」，其實只是這一行過期）。
+    expect(champ.texEdge.limit).toBe(SCREEN_TEXEL_EDGE);
+    for (const gate of GATES) expect(gate.texEdge.limit).toBe(SCREEN_TEXEL_EDGE);
   });
   it("arena decor gates' simultaneous counts are ENFORCED, not asserted here", () => {
     // ⛔ 這裡刻意不再寫 `toBe(50)`：出貨的擺放數是**量出來的**，而抄一份到測試裡
