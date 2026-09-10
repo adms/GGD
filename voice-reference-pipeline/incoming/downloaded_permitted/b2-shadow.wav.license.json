@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-shadow",
+  "source_name": "youtube: TVアニメ『陰の実力者になりたくて！』PV第2弾（KADOKAWAanime公式）",
+  "source_url": "https://www.youtube.com/watch?v=dIgooexWDk0",
+  "direct_url": "https://www.youtube.com/watch?v=dIgooexWDk0",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "山下誠一郎",
+  "source_sha256": "73218e0195de9f82cd2b49ec6a375e42420772b3be4d875a353858fa566e8970",
+  "downloaded_at": "2026-09-10T11:02:02.360615Z",
+  "notes": "oEmbedで存在確認済み。シャドウのモノローグ多め、BGM混在。",
+  "precut": {
+    "window_start_s": 14.0,
+    "window_s": 10.0,
+    "score": 0.657,
+    "metrics": {
+      "multiple_speaker_probability": 0.396,
+      "music_probability": 0.711,
+      "speech_or_vocal_ratio": 0.947,
+      "silence_ratio": 0.047,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 15.7
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-shadow.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

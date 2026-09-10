@@ -387,6 +387,36 @@
   "icon": "assets/icons/champions/b2-makoto.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T11:28:56.421Z",
+      "source": {
+        "kind": "previous",
+        "character": "深澄真",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.ff6d8255b711b5b0e69f13845edc2413aa1f3e40575fadd3",
+      "label": "ou99 「女刺客双见凛」（相似造型）",
+      "sourceModelKey": "ou99.478642",
+      "modelSha256": "49a3c6d7245afd483262a54cb42c96df838db076ce5c4f630032c4b874555d06",
+      "binarySha256": "1f135518b70aa26b008e59ec135e06140cfe445eadce2fe51ca8a1a5294372bb",
+      "registeredAt": "2026-09-10T11:28:56.430Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "月光下的異世界之旅 深澄真",
+        "work": "女刺客双见凛",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-478642-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.2a48a5721683702b023cb8e50666a3bf1cd1980d5d4d6380",
       "label": "原上線模型",
       "sourceModelKey": "ou99.478642",

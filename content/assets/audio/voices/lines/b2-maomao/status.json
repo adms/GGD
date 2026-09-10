@@ -1,0 +1,431 @@
+{
+ "championId": "b2-maomao",
+ "reference": {
+  "sha256": "d1b7995b578bdbd9809b81f1e8a5472c2a95e6da75162adcf8ee31369ac8d58a",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-e008.wav",
+  "sourceKind": "donor",
+  "donor": "godie-e008",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop b2-maomao.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549543,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-e008.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.88,
+     "at": 1789042996400,
+     "error": null
+    }
+   ],
+   "text": "好んで毒を食らうのは私ぐらいか",
+   "lang": "ja",
+   "kana": "コノンデ ドクオ クラウノワ ワタシ グライカ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 47273,
+    "seconds": 2.88,
+    "lufs": null,
+    "hash": "94dadf2c1fa1931ec2fe9a30d76eeb1cd475a6c20bdef4ee839330f20c2c7714",
+    "maxDb": -3.8,
+    "at": 1789042996400
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1789037088393,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789042390542,
+     "error": null
+    }
+   ],
+   "text": "試藥員本人先簽到！",
+   "lang": "ja",
+   "kana": "シヤク イン ホンニン サキ セン トウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-maomao.q",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "286dc43f85600920bab9891fd153dca741dbf9dca6708f6d7314266c4f331996",
+    "maxDb": -3.7,
+    "at": 1789042390542
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.8,
+     "at": 1789037088510,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.52,
+     "at": 1789042390682,
+     "error": null
+    }
+   ],
+   "text": "先解毒再喝急救包！",
+   "lang": "ja",
+   "kana": "サキ ゲドク サイ カツ キュウ キュウ ツツミ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-maomao.w",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 57304,
+    "seconds": 3.52,
+    "lufs": null,
+    "hash": "ed84d64be5e49654efd5c57bb1e6285002eb50e34b28e697955e3cfd5a8f64c9",
+    "maxDb": -2,
+    "at": 1789042390683
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.04,
+     "at": 1789037088629,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.68,
+     "at": 1789042390794,
+     "error": null
+    }
+   ],
+   "text": "樣本採好了別打翻！",
+   "lang": "ja",
+   "kana": "サマ ホン サイ コウ リョウ ベツ ダ ホン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-maomao.e",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28047,
+    "seconds": 1.68,
+    "lufs": null,
+    "hash": "098e3e399e38fa353b0cd4c7577f9ab15c5e3046e25b9d41fbca33327eb1eee5",
+    "maxDb": -3.6,
+    "at": 1789042390794
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789037088748,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789042390903,
+     "error": null
+    }
+   ],
+   "text": "憑樣本換一張處方！",
+   "lang": "ja",
+   "kana": "ヒョウ サマ ホン カン イッチョウ ショホウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-maomao.r",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33062,
+    "seconds": 2,
+    "lufs": null,
+    "hash": "12399a33c0b748f09a85f3bfe723a8d3ae578804af0c44ca4164508454c7a576",
+    "maxDb": -2.5,
+    "at": 1789042390903
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.52,
+     "at": 1789037088869,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789042391013,
+     "error": null
+    }
+   ],
+   "text": "受療打五折警示！",
+   "lang": "ja",
+   "kana": "ジュリョウ ダ ゴ オリ ケイ ジ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-maomao.ex",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "fb9f92364f60ba01dac7207e3ea6f7b03c04552ca7fd991a83f35e45cc04ceed",
+    "maxDb": -4.2,
+    "at": 1789042391013
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789042996513,
+     "error": null
+    }
+   ],
+   "text": "毒だっつってんだろが！",
+   "lang": "ja",
+   "kana": "ドクダッツッテンダロガ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24703,
+    "seconds": 1.48,
+    "lufs": null,
+    "hash": "2aa4b16b1786e7e8d7d60a233812247fd2282c7aed170384cd4ce4e6dff8fb89",
+    "maxDb": -2,
+    "at": 1789042996513
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037088985,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "36e3500a1dc98c2299c0e115ac671357852cbc6ef1775a902e7ccdcb9b8d0465",
+    "maxDb": -2,
+    "at": 1789037088985
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037089119,
+     "error": null
+    }
+   ],
+   "text": "きゃっ！",
+   "lang": "ja",
+   "kana": "キャッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "a4e62294625d6fe46c8ce1020ddb2ad90050abf221c0488bda3d12495d8fa6e9",
+    "maxDb": -2,
+    "at": 1789037089119
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789037089252,
+     "error": null
+    }
+   ],
+   "text": "ああっ……！",
+   "lang": "ja",
+   "kana": "アアッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "50dee5ecfd8d7156f29b58c5db46913dceb4fd35a1110073bf8c32d84401cf0e",
+    "maxDb": -4.6,
+    "at": 1789037089252
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789042996625,
+     "error": null
+    }
+   ],
+   "text": "これ、毒です",
+   "lang": "ja",
+   "kana": "コレ ドクデス",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "b6fbeade49962ac337ecfb0b656093ddbb954099bc1e9ca30204485108068dfe",
+    "maxDb": -2.2,
+    "at": 1789042996625
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037089383,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "20f7c8de15b4764bc325a4129c367fa20182063d50111c9aaec2d7e4fad693cb",
+    "maxDb": -2,
+    "at": 1789037089383
+   },
+   "lastError": null
+  }
+ }
+}

@@ -1,4 +1,4 @@
-import { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { C_CHAN_MS, C_MESH_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT };
 
 /**
@@ -37,7 +37,7 @@ export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHA
  */
 
 export const TARGET = {
-  device: "iPad mini (A17 Pro)",
+  device: "iPad (M1)",
   fps: 30,
   phonesSupported: false,
   performanceBasis: "estimated",
@@ -45,16 +45,23 @@ export const TARGET = {
 } as const;
 export const FRAME_MS = 1000 / TARGET.fps;
 
-/** ms per resident mesh, measured (task #80 A/B). */
-export const C_MESH_MS = (9.2 - 5.6) / (713 - 279);
+/** ms per resident mesh, measured (task #80 A/B) —— ⭐ 住 budget.ts,⛔ 這裡只是 re-export。 */
+export { C_MESH_MS };
 
 /** ms per per-frame animation channel, measured (task #99 runtime probe). */
 // C_CHAN_MS is shared with the community model importer.
 
 /**
- * Planning slowdown versus the machine used for the cost constants. Retain the
- * existing 3× allowance while expanding the frame to 33.33 ms. This is a rough
- * conservative estimate, not a measured chip-to-chip performance ratio.
+ * Planning slowdown versus the machine used for the cost constants.
+ *
+ * > owner 2026-09-10（逐字）：「那**提升到至少 M1 等級**」
+ *
+ * ⭐ 2026-09-10：最低配備從 iPad mini (A17 Pro) 抬到 **iPad (M1)** ⇒ 3 → **2.4**。
+ * 依據：M1 是 8 核 GPU / ~2.6 TFLOPS / 68.25 GB/s，A17 Pro 是 6 核 / ~2.15 TFLOPS
+ * / 51.2 GB/s ⇒ 約 **1.25×** ⇒ 3 ÷ 1.25 = 2.4。
+ * ⚠️ ⛔ 這仍然**不是實機量測**（原本那句話「a rough conservative estimate, not a
+ * measured chip-to-chip performance ratio」照樣成立）—— 它只是把同一個估計值
+ * 依裝置代差重新標定。⭐ 真的要精確就得在 M1 上跑一次 task #80 的 A/B。
  */
 // DERATE is shared with the community model importer.
 
@@ -206,6 +213,81 @@ export interface Gate {
   why: string;
 }
 
+/**
+ * ⭐ 貼圖邊長的**全域上限** —— 從螢幕解析度反推，⛔ 不是各 role 各挑一個數字。
+ *
+ * > owner 2026-09-10（逐字）：「因為**我們不是在做4k遊戲 頂多HD1080**」
+ * > owner 2026-09-10（逐字）：「**場景也是阿 不應該有貼圖超過256**」
+ *
+ * 量到的（出貨鏡頭 ＋ 1080p）：`camera.json` 的 `minDolly 10`（滾到最近＝最嚴苛）、
+ * Babylon fov 0.8 rad、英雄身高固定 1.7 世界單位
+ * ⇒ 一具英雄在畫面上 **217 像素高**（最近）／121（預設鏡頭），螢幕佔用約 37,500 像素。
+ *
+ * | 貼圖 | texel | 相對螢幕像素 |
+ * |---|---:|---:|
+ * | 1024² | 1,048,576 | 過取樣 **28.0×** |
+ * | 512² | 262,144 | 過取樣 **7.0×** |
+ * | **256²** | 65,536 | 過取樣 **1.7×** ⭐ |
+ * | 128² | 16,384 | **0.4×**（不足） |
+ *
+ * ⭐ 視覺證明：西索（5 張貼圖）512²／256²／192² 三版實拍逐像素比對 ——
+ * **256² 與 512² 平均每通道差 0.10 / 255**，而那是在實拍台的 ~300 像素
+ * （比遊戲裡最近的 217 像素**更嚴苛**）。
+ *
+ * ⭐ **競技場有一條硬上限,所以「地標會很大」這個顧慮不成立**：
+ * `ArenaScene.SIGHTLINE_HEIGHT_CAP = 2.4` —— 任何擋到「鏡頭→英雄」視線的擺設
+ * 都被壓到世界高 2.4（⛔ 不是移走,是等比縮小),而 2.4 單位 = **307 像素**
+ * ⇒ 256² 對它是 **1.16× 過取樣**。⭐ 逐項量過：
+ *   · 英雄 1.7 單位 = 217 px ⇒ 1.70×
+ *   · 被壓過的擺設 2.4 單位 = 307 px ⇒ 1.16×
+ *   · 商店預覽面板 `minHeight 260` px ⇒ 1.62×
+ *
+ * ⚠️⚠️ **兩個真的例外 —— 它們不吃這條上限,所以留 512²**（⛔ 不是「感覺重要」）：
+ *   ① `hex/tower_red|blue.glb` —— 它們在 `FADE_MODELS` 裡：擋到視線時**變鬼影**,
+ *      ⛔ 不被壓矮 ⇒ 3.98 bbox × 1.4 擺放縮放 = 5.57 單位 = **712 px** ⇒ 256² 只有 0.22×
+ *   ② `menu/dragon2.glb` —— 登入場景**自己的鏡頭**(radius 40 / fov 0.95),
+ *      13.73 單位 ⇒ **360 px** ⇒ 256² 是 0.84×、512² 是 3.36×
+ *      ⭐ 而它隨 LoginScene 一起釋放,⛔ 不與戰鬥的 VRAM 疊加
+ *
+ * ⛔ 我第一版在這裡寫過「地標可能佔半高、256 會偏軟」—— **那句話是錯的**,
+ *    我當時沒有去讀 `SIGHTLINE_HEIGHT_CAP`。⭐ 判準要從**出貨程式**量,⛔ 不是從直覺。
+ *
+ * ⛔⛔ 而「壓縮」對這一格**沒有用**：`vramOf` 逐字是「RGBA8（Babylon 把每一種
+ * 壓縮來源都解成 RGBA8）× 4/3 給 mip」⇒ PNG/JPEG 只縮下載量。
+ * ⭐ 要再省只有 KTX2/ASTC（GPU 壓縮格式在 VRAM 裡保持壓縮，4–8×）。
+ */
+export const SCREEN_TEXEL_EDGE = 256;
+/** 每一個 role 共用同一條線 —— ⛔ 沒有「這一族可以大一點」的例外。 */
+const TEX_EDGE = { warn: SCREEN_TEXEL_EDGE, limit: SCREEN_TEXEL_EDGE } as const;
+
+/**
+ * ⭐ 兩個**量得出來**的例外 —— 它們不吃 `SIGHTLINE_HEIGHT_CAP`，所以在畫面上真的更大。
+ *
+ * ⛔ 這不是一張「重要模型」的白名單：每一列都要寫得出**螢幕像素高**與**過取樣倍數**，
+ * 而那兩個數字都是從出貨的鏡頭參數與 GLB bbox 算出來的。⇒ 鏡頭或擺放縮放改了，
+ * `limits.test.ts` 會重算並且對不上就紅。
+ */
+//: ⛔ `menu/dragon2` **曾經在這張表上**（360 px、512²）—— 2026-09-10 拿掉。
+//:    > owner 逐字：「menu/dragon2.glb **根本只有剪影 貼圖根本沒差**」
+//:    ⭐ 算術上它是 360 px（256² 只有 0.84× 取樣），⛔ 而那個算術假設「貼圖看得見」。
+//:    登入場景有 `fogDensity 0.011` 的濃霧與近黑配色 ⇒ 畫面上它是剪影。
+//:    ⚠️ 教訓：**過取樣算的是「如果看得見，夠不夠清楚」**，
+//:    ⛔ 它答不出「這張貼圖在畫面上到底有沒有被看到」—— 那要人去看。
+export const TEX_EDGE_EXEMPT: { match: string; edge: number; screenPx: number; why: string }[] = [
+  {
+    match: "assets/models/hex/tower_",
+    edge: 512,
+    screenPx: 712,
+    why: "`ArenaScene.FADE_MODELS` 成員：擋到視線時變鬼影，⛔ 不被壓到 2.4 " +
+      "⇒ bbox 3.98 × 擺放縮放 1.4 = 5.57 單位 = 712 px（最近鏡頭）。256² 只有 0.22× 取樣。",
+  },
+];
+
+/** 這個路徑允許的貼圖邊長 —— ⭐ 例外要指名，⛔ 其餘一律 `SCREEN_TEXEL_EDGE`。 */
+export function texEdgeCapFor(path: string): number {
+  return TEX_EDGE_EXEMPT.find((e) => path.includes(e.match))?.edge ?? SCREEN_TEXEL_EDGE;
+}
+
 export const GATES: Gate[] = [
   {
     role: "champion",
@@ -230,7 +312,7 @@ export const GATES: Gate[] = [
       "現在它由 `placement.test.ts` 逐張 arena 數出來守著，⛔ 不再是一句沒有人驗的散文。",
     tris: { warn: 4_000, limit: 8_000 },
     meshes: { warn: 1, limit: 2 },
-    texEdge: { warn: 512, limit: 1024 },
+    texEdge: TEX_EDGE,
     channels: { warn: 0, limit: 0 },
     why:
       "閘門看的是「單一模型 × 它的擺放數」的總和，不是模型本身：擺設可用 120 個 mesh 與 120k 面，" +
@@ -262,7 +344,7 @@ export const GATES: Gate[] = [
       "10 留一點餘裕，而且它**被強制**—— `placement.test.ts` 逐張 arena 數過每一件的擺放數，超過就紅。",
     tris: { warn: 4_000, limit: 8_000 },
     meshes: { warn: 3, limit: 6 },
-    texEdge: { warn: 512, limit: 1024 },
+    texEdge: TEX_EDGE,
     channels: { warn: 0, limit: 0 },
     why:
       "跟 `arena-decor` **同一條算術**，只換擺放數：擺設可用 120 個 mesh，單一模型不得吃掉超過 1/4（30 mesh）" +
@@ -278,7 +360,7 @@ export const GATES: Gate[] = [
     simultaneousWhy: "grassRing() 產生 78 個 hex_grass；paving 是 49 個 floor_tile_large。",
     tris: { warn: 300, limit: 600 },
     meshes: { warn: 1, limit: 1 },
-    texEdge: { warn: 256, limit: 512 },
+    texEdge: TEX_EDGE,
     channels: { warn: 0, limit: 0 },
     why: "78 × 600 = 46.8k 面、78 個 mesh —— 已經是中場一半的 mesh 額度。大量鋪設的道具必須是單 mesh、單材質、可 instance。",
   },
@@ -289,7 +371,7 @@ export const GATES: Gate[] = [
     simultaneousWhy: "登入畫面 2 條龍共用同一個 container；店員/攤位各 1 件。",
     tris: { warn: 20_000, limit: 40_000 },
     meshes: { warn: 12, limit: 20 },
-    texEdge: { warn: 1024, limit: 1024 },
+    texEdge: TEX_EDGE,
     channels: { warn: 120, limit: 200 },
     why: "只有 1–2 份，所以可以吃掉整個場景額度的一大塊；但 1024² 是硬上限 —— 沒有任何一張貼圖在這個鏡頭距離下需要更高。",
   },
@@ -300,7 +382,7 @@ export const GATES: Gate[] = [
     simultaneousWhy: "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
     tris: { warn: 1_000, limit: 2_000 },
     meshes: { warn: 2, limit: 3 },
-    texEdge: { warn: 256, limit: 512 },
+    texEdge: TEX_EDGE,
     channels: { warn: 20, limit: 40 },
     why: "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。",
   },

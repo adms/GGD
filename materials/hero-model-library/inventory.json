@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T23:43:38+08:00",
-  "inputsSha256": "766115dcec51bf20777645d2d95bb73440723cb69fc09e755695bc7457ee6e7f",
+  "generatedAt": "2026-09-11T00:17:07+08:00",
+  "inputsSha256": "d63f6efd3a94dd94ff73c750416943774cba5555fe7e74505ecf8a7fa9fb6ca7",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -2627,7 +2627,7 @@
           "asset": {
             "modelKey": "ou99.487191",
             "glbPath": "assets/models/ou99/ou99_487191.glb",
-            "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615",
+            "sha256": "a76a7631f2d1e99b3f6f20c449dc443291cd853d366636efff4c96caf36946a3",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_487191.glb",
             "limitations": [
@@ -23838,7 +23838,7 @@
           "asset": {
             "modelKey": "ou99.465205",
             "glbPath": "assets/models/ou99/ou99_465205.glb",
-            "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4",
+            "sha256": "b105f0727db3af9fb32c774db1ce8f260da853c950931856610ffe39b8d180d5",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_465205.glb",
             "limitations": [
@@ -24251,6 +24251,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -24268,6 +24269,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -24303,7 +24305,7 @@
           "asset": {
             "modelKey": "ou99.470426",
             "glbPath": "assets/models/ou99/ou99_470426.glb",
-            "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
+            "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_470426.glb",
             "limitations": [
@@ -24320,6 +24322,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "w3x",
           "asset": {
@@ -24331,7 +24334,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "imported.long",
+        "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
         "mode": "auto"
       },
       "downloadSources": [
@@ -24358,6 +24361,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -24375,6 +24379,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -24410,7 +24415,7 @@
           "asset": {
             "modelKey": "ou99.496905",
             "glbPath": "assets/models/ou99/ou99_496905.glb",
-            "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
+            "sha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_496905.glb",
             "limitations": [
@@ -24427,6 +24432,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "w3x",
           "asset": {
@@ -24438,7 +24444,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "imported.doraemon-cat",
+        "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
         "mode": "auto"
       },
       "downloadSources": [
@@ -24728,7 +24734,7 @@
           "asset": {
             "modelKey": "ou99.470426",
             "glbPath": "assets/models/ou99/ou99_470426.glb",
-            "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
+            "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_470426.glb",
             "limitations": [
@@ -25163,7 +25169,7 @@
           "asset": {
             "modelKey": "ou99.497131",
             "glbPath": "assets/models/ou99/ou99_497131.glb",
-            "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
+            "sha256": "6d573c4018c6f554b0ba7727ad495f4d7b9adf2bdc6f148782fb2c423eccae39",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_497131.glb",
             "limitations": [
@@ -25525,7 +25531,7 @@
           "asset": {
             "modelKey": "ou99.456546",
             "glbPath": "assets/models/ou99/ou99_456546.glb",
-            "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
+            "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_456546.glb",
             "limitations": [
@@ -25536,7 +25542,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "ou99.456546",
+        "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
         "mode": "auto"
       },
       "downloadSources": [
@@ -26010,7 +26016,7 @@
           "asset": {
             "modelKey": "ou99.497131",
             "glbPath": "assets/models/ou99/ou99_497131.glb",
-            "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
+            "sha256": "6d573c4018c6f554b0ba7727ad495f4d7b9adf2bdc6f148782fb2c423eccae39",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_497131.glb",
             "limitations": [
@@ -26160,7 +26166,7 @@
           "asset": {
             "modelKey": "ou99.456546",
             "glbPath": "assets/models/ou99/ou99_456546.glb",
-            "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
+            "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_456546.glb",
             "limitations": [
@@ -26171,7 +26177,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "ou99.456546",
+        "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
         "mode": "auto"
       },
       "downloadSources": [
@@ -27397,8 +27403,42 @@
       "work": "神龍之謎",
       "section": "既有角色／形態",
       "status": "正式機白名單可選",
-      "default": null,
-      "automaticDefault": null,
+      "default": {
+        "key": "champ.skin.barbarian",
+        "id": "champ.skin.barbarian",
+        "name": "方塊野蠻人",
+        "work": "GGD 模型預設",
+        "tier": "original",
+        "kind": "previous",
+        "ready": true,
+        "old": true,
+        "library": "GGD",
+        "defaultEligible": true,
+        "selectionClass": "original",
+        "asset": {
+          "modelKey": "champ.skin.barbarian",
+          "location": "existing-project-model",
+          "s3Uri": null
+        }
+      },
+      "automaticDefault": {
+        "key": "champ.skin.barbarian",
+        "id": "champ.skin.barbarian",
+        "name": "方塊野蠻人",
+        "work": "GGD 模型預設",
+        "tier": "original",
+        "kind": "previous",
+        "ready": true,
+        "old": true,
+        "library": "GGD",
+        "defaultEligible": true,
+        "selectionClass": "original",
+        "asset": {
+          "modelKey": "champ.skin.barbarian",
+          "location": "existing-project-model",
+          "s3Uri": null
+        }
+      },
       "defaultSelectionMode": "automatic",
       "current": {
         "key": "ou99.457883",
@@ -27426,7 +27466,7 @@
           "asset": {
             "modelKey": "ou99.457883",
             "glbPath": "assets/models/ou99/ou99_457883.glb",
-            "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65",
+            "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_457883.glb",
             "limitations": [
@@ -27449,18 +27489,36 @@
           "asset": {
             "modelKey": "ou99.472035",
             "glbPath": "assets/models/ou99/ou99_472035.glb",
-            "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171",
+            "sha256": "7724a3039a62b00df4754f0fb67fb932b419cd2f750ca7101d5bd0a9ce40ce84",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_472035.glb",
             "limitations": [
               "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
             ]
           }
+        },
+        {
+          "key": "champ.skin.barbarian",
+          "id": "champ.skin.barbarian",
+          "name": "方塊野蠻人",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "original",
+          "asset": {
+            "modelKey": "champ.skin.barbarian",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
         }
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "ou99.457883",
+        "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
         "mode": "auto"
       },
       "downloadSources": [
@@ -28767,24 +28825,6 @@
           }
         },
         {
-          "key": "ou99.313646",
-          "id": "ou99:313646:original",
-          "name": "八神庵（原交付版本）",
-          "work": "THE KING OF FIGHTERS",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.313646",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -28793,10 +28833,29 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.313646",
+          "id": "ou99:313646:original",
+          "name": "八神庵",
+          "work": "THE KING OF FIGHTERS",
+          "tier": "w3x",
+          "kind": "exact",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.313646",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -30272,24 +30331,6 @@
           }
         },
         {
-          "key": "ou99.287871",
-          "id": "ou99:287871:original",
-          "name": "洛克人（原交付版本）",
-          "work": "Mega Man",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.287871",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -30298,10 +30339,29 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.287871",
+          "id": "ou99:287871:original",
+          "name": "洛克人 X",
+          "work": "Mega Man",
+          "tier": "w3x",
+          "kind": "exact",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.287871",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -30750,24 +30810,6 @@
           }
         },
         {
-          "key": "ou99.497211",
-          "id": "ou99:497211:original",
-          "name": "西索（原交付版本）",
-          "work": "HUNTER×HUNTER",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.497211",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -30776,10 +30818,29 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.497211",
+          "id": "ou99:497211:original",
+          "name": "西索",
+          "work": "HUNTER×HUNTER",
+          "tier": "w3x",
+          "kind": "exact",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.497211",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -31074,24 +31135,6 @@
           }
         },
         {
-          "key": "ou99.468771",
-          "id": "ou99:468771:original",
-          "name": "赫蘿（原交付版本）",
-          "work": "狼與辛香料",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.468771",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -31104,6 +31147,24 @@
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.sela",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.468771",
+          "id": "ou99:468771:original",
+          "name": "赫蘿（原交付版本）",
+          "work": "狼與辛香料",
+          "tier": "w3x",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.468771",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -31518,24 +31579,6 @@
           }
         },
         {
-          "key": "ou99.457280",
-          "id": "ou99:457280:original",
-          "name": "利姆路（原交付版本）",
-          "work": "關於我轉生變成史萊姆這檔事",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.457280",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -31548,6 +31591,24 @@
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.sela",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.457280",
+          "id": "ou99:457280:original",
+          "name": "利姆路（原交付版本）",
+          "work": "關於我轉生變成史萊姆這檔事",
+          "tier": "w3x",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.457280",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -32367,24 +32428,6 @@
           }
         },
         {
-          "key": "ou99.472112",
-          "id": "ou99:472112:original",
-          "name": "殺老師（原交付版本）",
-          "work": "暗殺教室",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.472112",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -32397,6 +32440,24 @@
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.472112",
+          "id": "ou99:472112:original",
+          "name": "殺老師（原交付版本）",
+          "work": "暗殺教室",
+          "tier": "w3x",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.472112",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -32575,24 +32636,6 @@
           }
         },
         {
-          "key": "ou99.457123",
-          "id": "ou99:457123:original",
-          "name": "比利海靈頓（原交付版本）",
-          "work": "摔角與網路迷因形象。",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.457123",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -32605,6 +32648,24 @@
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.457123",
+          "id": "ou99:457123:original",
+          "name": "比利海靈頓（原交付版本）",
+          "work": "摔角與網路迷因形象。",
+          "tier": "w3x",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.457123",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -33491,15 +33552,15 @@
         {
           "key": "ou99.311294",
           "id": "ou99:311294:original",
-          "name": "菜月昴（原交付版本）",
+          "name": "菜月昴",
           "work": "Re:從零開始的異世界生活",
-          "tier": "original",
-          "kind": "previous",
+          "tier": "w3x",
+          "kind": "style-proxy",
           "ready": true,
           "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
           "asset": {
             "modelKey": "ou99.311294",
             "location": "existing-project-model",
@@ -33515,6 +33576,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -34537,24 +34599,6 @@
           }
         },
         {
-          "key": "ou99.498214",
-          "id": "ou99:498214:original",
-          "name": "可爱娃娃（原交付版本）",
-          "work": "來源作品待核；論壇標題：可爱娃娃",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.498214",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -34567,6 +34611,24 @@
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.sela",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.498214",
+          "id": "ou99:498214:original",
+          "name": "可爱娃娃（原交付版本）",
+          "work": "來源作品待核；論壇標題：可爱娃娃",
+          "tier": "w3x",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.498214",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -34983,24 +35045,6 @@
           }
         },
         {
-          "key": "ou99.470087",
-          "id": "ou99:470087:original",
-          "name": "蓝瞳靓仔版远野志贵（原交付版本）",
-          "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
-          "tier": "original",
-          "kind": "previous",
-          "ready": true,
-          "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
-          "asset": {
-            "modelKey": "ou99.470087",
-            "location": "existing-project-model",
-            "s3Uri": null
-          }
-        },
-        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -35013,6 +35057,24 @@
           "selectionClass": "original",
           "asset": {
             "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "ou99.470087",
+          "id": "ou99:470087:original",
+          "name": "蓝瞳靓仔版远野志贵（原交付版本）",
+          "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+          "tier": "w3x",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "w3x",
+          "asset": {
+            "modelKey": "ou99.470087",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -35183,15 +35245,15 @@
         {
           "key": "ou99.458013",
           "id": "ou99:458013:original",
-          "name": "人妖喜乐（原交付版本）",
+          "name": "膽大黨 高速婆婆",
           "work": "來源作品待核；論壇標題：人妖喜乐",
-          "tier": "original",
-          "kind": "previous",
+          "tier": "w3x",
+          "kind": "style-proxy",
           "ready": true,
           "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
           "asset": {
             "modelKey": "ou99.458013",
             "location": "existing-project-model",
@@ -35207,6 +35269,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -35573,15 +35636,15 @@
         {
           "key": "ou99.493578",
           "id": "ou99:493578:original",
-          "name": "篮球小男孩（原交付版本）",
+          "name": "鬼畜王蘭斯",
           "work": "來源作品待核；論壇標題：篮球小男孩",
-          "tier": "original",
-          "kind": "previous",
+          "tier": "w3x",
+          "kind": "style-proxy",
           "ready": true,
           "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
           "asset": {
             "modelKey": "ou99.493578",
             "location": "existing-project-model",
@@ -35597,6 +35660,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -35733,15 +35797,15 @@
         {
           "key": "ou99.459617",
           "id": "ou99:459617:original",
-          "name": "可爱小宠物chii吉伊（原交付版本）",
+          "name": "吉伊卡哇",
           "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
-          "tier": "original",
-          "kind": "previous",
+          "tier": "w3x",
+          "kind": "style-proxy",
           "ready": true,
           "old": true,
-          "library": "GGD",
-          "defaultEligible": true,
-          "selectionClass": "original",
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
           "asset": {
             "modelKey": "ou99.459617",
             "location": "existing-project-model",
@@ -35757,6 +35821,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -37336,8 +37401,26 @@
         {
           "key": "ou99.454482",
           "id": "ou99:454482:original",
-          "name": "光刀女剑二次元（原交付版本）",
+          "name": "異世界舅舅",
           "work": "來源作品待核；論壇標題：光刀女剑二次元",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.454482",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.sela",
+          "id": "champ.sela",
+          "name": "Sela／方塊法師",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -37346,7 +37429,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.454482",
+            "modelKey": "champ.sela",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -37483,13 +37566,13 @@
           "id": "ou99:491448:original",
           "name": "逃亡的盗墓女孩（原交付版本）",
           "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
-          "tier": "original",
+          "tier": "w3x",
           "kind": "previous",
           "ready": true,
           "old": true,
           "library": "GGD",
           "defaultEligible": true,
-          "selectionClass": "original",
+          "selectionClass": "w3x",
           "asset": {
             "modelKey": "ou99.491448",
             "location": "existing-project-model",
@@ -37634,8 +37717,26 @@
         {
           "key": "ou99.481732",
           "id": "ou99:481732:original",
-          "name": "202511z13（原交付版本）",
+          "name": "我想成為影之強者",
           "work": "來源作品待核；論壇標題：202511z13",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.481732",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -37644,7 +37745,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.481732",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -38171,8 +38272,26 @@
         {
           "key": "ou99.472038",
           "id": "ou99:472038:original",
-          "name": "圣洁化身戚小姐（原交付版本）",
+          "name": "重騎士以遊戲知識開無雙 艾爾瑪",
           "work": "來源作品待核；論壇標題：圣洁化身戚小姐",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.472038",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -38181,7 +38300,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.472038",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -39008,8 +39127,26 @@
         {
           "key": "ou99.478642",
           "id": "ou99:478642:original",
-          "name": "女刺客双见凛（原交付版本）",
+          "name": "月光下的異世界之旅 深澄真",
           "work": "來源作品待核；論壇標題：女刺客双见凛",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.478642",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.sela",
+          "id": "champ.sela",
+          "name": "Sela／方塊法師",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -39018,7 +39155,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.478642",
+            "modelKey": "champ.sela",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -39175,8 +39312,26 @@
         {
           "key": "ou99.453949",
           "id": "ou99:453949:original",
-          "name": "狂刀风衣男（原交付版本）",
+          "name": "我要招架一切 諾爾",
           "work": "來源作品待核；論壇標題：狂刀风衣男",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.453949",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -39185,7 +39340,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.453949",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -39318,8 +39473,26 @@
         {
           "key": "ou99.459257",
           "id": "ou99:459257:original",
-          "name": "白西装七夜志贵（原交付版本）",
+          "name": "勇者死了 托卡・史考特",
           "work": "來源作品待核；論壇標題：白西装七夜志贵",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.459257",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -39328,7 +39501,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.459257",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -39487,8 +39660,26 @@
         {
           "key": "ou99.495015",
           "id": "ou99:495015:original",
-          "name": "海星动画人（原交付版本）",
+          "name": "這個世界漏洞百出 羽賀",
           "work": "來源作品待核；論壇標題：海星动画人",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.495015",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -39497,7 +39688,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.495015",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -40002,8 +40193,26 @@
         {
           "key": "ou99.474258",
           "id": "ou99:474258:original",
-          "name": "绯红女剑校服女（原交付版本）",
+          "name": "異世界転移魔法剣士 楓",
           "work": "來源作品待核；論壇標題：绯红女剑校服女",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.474258",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.sela",
+          "id": "champ.sela",
+          "name": "Sela／方塊法師",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -40012,7 +40221,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.474258",
+            "modelKey": "champ.sela",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -40145,8 +40354,26 @@
         {
           "key": "ou99.465884",
           "id": "ou99:465884:original",
-          "name": "休闲西装版七夜智贵（原交付版本）",
+          "name": "失格紋的最強賢者 馬提亞斯",
           "work": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.465884",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.sela",
+          "id": "champ.sela",
+          "name": "Sela／方塊法師",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -40155,7 +40382,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.465884",
+            "modelKey": "champ.sela",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -40317,8 +40544,26 @@
         {
           "key": "ou99.491497",
           "id": "ou99:491497:original",
-          "name": "遥远救世主拳皇（原交付版本）",
+          "name": "魔笛 MAGI 辛巴達",
           "work": "來源作品待核；論壇標題：遥远救世主拳皇",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.491497",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -40327,7 +40572,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.491497",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -40922,8 +41167,26 @@
         {
           "key": "ou99.467227",
           "id": "ou99:467227:original",
-          "name": "天使可爱小女孩派蒙（原交付版本）",
+          "name": "致不滅的你 不死",
           "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.467227",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -40932,7 +41195,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.467227",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -41065,8 +41328,26 @@
         {
           "key": "ou99.496452",
           "id": "ou99:496452:original",
-          "name": "甲贺忍蛙（原交付版本）",
+          "name": "魔術士歐菲",
           "work": "來源作品待核；論壇標題：甲贺忍蛙",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.496452",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.sela",
+          "id": "champ.sela",
+          "name": "Sela／方塊法師",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -41075,7 +41356,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.496452",
+            "modelKey": "champ.sela",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -41231,8 +41512,26 @@
         {
           "key": "ou99.487487-7yzc0mtk",
           "id": "ou99:487487-7yzc0mtk:original",
-          "name": "银发动漫正装男（原交付版本）",
+          "name": "覺醒了自動機能的十五年無成冒險者 克勞斯",
           "work": "來源作品待核；論壇標題：银发动漫正装男",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.487487-7yzc0mtk",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -41241,7 +41540,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.487487-7yzc0mtk",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -41480,8 +41779,26 @@
         {
           "key": "ou99.457594",
           "id": "ou99:457594:original",
-          "name": "雷欧·凹凸曼无披风版（原交付版本）",
+          "name": "幸運超人",
           "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.457594",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -41490,7 +41807,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.457594",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -41749,8 +42066,26 @@
         {
           "key": "ou99.487484",
           "id": "ou99:487484:original",
-          "name": "中洲队潇洒哥（原交付版本）",
+          "name": "靈異教師神眉 鵺野鳴介",
           "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.487484",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -41759,7 +42094,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.487484",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }
@@ -42315,8 +42650,26 @@
         {
           "key": "ou99.456917",
           "id": "ou99:456917:original",
-          "name": "蛤蟆蘸酱柯松剑客（原交付版本）",
+          "name": "AVARTH 青蛙劍士 Ned",
           "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+          "tier": "w3x",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.456917",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
+          "key": "champ.thorne",
+          "id": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "work": "GGD 模型預設",
           "tier": "original",
           "kind": "previous",
           "ready": true,
@@ -42325,7 +42678,7 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "ou99.456917",
+            "modelKey": "champ.thorne",
             "location": "existing-project-model",
             "s3Uri": null
           }

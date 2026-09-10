@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-02-20260907",
+  "source_name": "youtube: KOF XV｜IORI YAGAMI｜Trailer #4 (SNK OFFICIAL)",
+  "source_url": "https://www.youtube.com/watch?v=XeAg8B2Vyeg",
+  "direct_url": "https://www.youtube.com/watch?v=XeAg8B2Vyeg",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "星野貴紀",
+  "source_sha256": "27a33d3d6f96de78cd6740c7666fa3cf11cfe996aceafb100305fa0c27597c30",
+  "downloaded_at": "2026-09-10T10:55:26.918271Z",
+  "notes": "Verified via oEmbed (channel SNK OFFICIAL). Trailer has BGM/SFX; intro/win quotes are the cleanest spots.",
+  "precut": {
+    "window_start_s": 36.0,
+    "window_s": 10.0,
+    "score": 0.473,
+    "metrics": {
+      "multiple_speaker_probability": 0.352,
+      "music_probability": 0.621,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 9.5
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-02-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

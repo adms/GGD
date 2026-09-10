@@ -327,6 +327,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.1d22559edc8a7be9b96c3a1bc452fff1f678b1ec80eabc46",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457280",
+      "modelSha256": "829ccb5c50fc98008e021f4737441d06787390a8b81ec7a6aecd526daaf2b2e4",
+      "binarySha256": "31f65ed0a6b557b931511b2a61aa011f97937f49040fabc9697d77fa3d52be9a",
+      "registeredAt": "2026-09-10T11:23:23.296Z",
+      "source": {
+        "kind": "previous",
+        "character": "利姆路",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457280.json"
+      }
+    },
+    {
+      "modelKey": "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473",
+      "label": "ou99 利姆路（史萊姆形態）（本尊）",
+      "sourceModelKey": "ou99.457280",
+      "modelSha256": "d5ee0c47f2d148f21aec30f24b6b9b3b80ddcc8e8e88cdd7cf536391c3e53246",
+      "binarySha256": "31f65ed0a6b557b931511b2a61aa011f97937f49040fabc9697d77fa3d52be9a",
+      "registeredAt": "2026-09-10T11:23:23.309Z",
+      "source": {
+        "kind": "exact",
+        "character": "利姆路（史萊姆形態）",
+        "work": "關於我轉生變成史萊姆這檔事",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457280-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.9dc018e902d47bae413635f604c326742a8dcfba4fe52a56",
       "label": "原上線模型",
       "sourceModelKey": "ou99.457280",

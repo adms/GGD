@@ -56,46 +56,46 @@
     }
   },
   "population": {
-    "glbFiles": 769,
-    "animatedModels": 612,
+    "glbFiles": 808,
+    "animatedModels": 651,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 514,
-      "pct": 84
+      "models": 552,
+      "pct": 84.8
     },
     "cast": {
-      "models": 338,
-      "pct": 55.2
+      "models": 376,
+      "pct": 57.8
     },
     "celebrate": {
-      "models": 25,
+      "models": 27,
       "pct": 4.1
     },
     "death": {
-      "models": 396,
-      "pct": 64.7
+      "models": 433,
+      "pct": 66.5
     },
     "dodge": {
-      "models": 333,
-      "pct": 54.4
+      "models": 370,
+      "pct": 56.8
     },
     "guard": {
       "models": 7,
       "pct": 1.1
     },
     "hurt": {
-      "models": 57,
-      "pct": 9.3
+      "models": 63,
+      "pct": 9.7
     },
     "idle": {
-      "models": 581,
-      "pct": 94.9
+      "models": 620,
+      "pct": 95.2
     },
     "run": {
-      "models": 529,
-      "pct": 86.4
+      "models": 568,
+      "pct": 87.3
     }
   },
   "degradesTo": "idle",
@@ -117,6 +117,14 @@
       "guard"
     ],
     "content/assets/models/champions/blocky-undead.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/versions/2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb": [
       "dodge",
       "guard"
     ],
@@ -3528,6 +3536,11 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/imported/versions/1c2440c732bffbef6fbed399d7727497d6887a9b211a78b0f3040d09cbb7466e.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/imported/versions/1d499008481edd3d4520219970e18cb4a05bc03a52094af5129bf7cc9c06ac31.glb": [
       "cast",
       "celebrate",
@@ -3541,6 +3554,11 @@
     ],
     "content/assets/models/imported/versions/52454f8d34e1c6c367de9d1cc82e73b91871c9d47a0970d0076ac466965d14d6.glb": [
       "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/versions/5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -3878,9 +3896,29 @@
       "celebrate",
       "guard"
     ],
+    "content/assets/models/ou99/versions/09444fb17e1b1a8437c0bcb3e7ccecc3d61c1d86d2b33f039b5e0817ae4d9279.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/0e7b88a4f1e55e5244a6c1f027d2053a095be970844c47314a80c0ce170632ce.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/0eda0dfbeea623f4ddde82588d804dcb18acad3df71b6b61ef34100199c011d5.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612.glb": [
       "celebrate",
       "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/1437cbed6b585225333a57196de1001a85943ae0f5dd51b2d87d230032a66718.glb": [
+      "celebrate",
       "guard",
       "hurt"
     ],
@@ -3888,6 +3926,11 @@
       "attack",
       "celebrate",
       "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/175251f6dadd320f762fcae4a0f2f84026f876a86f269cd16a7305fed1831cd3.glb": [
+      "celebrate",
       "guard",
       "hurt"
     ],
@@ -3901,12 +3944,41 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/1f135518b70aa26b008e59ec135e06140cfe445eadce2fe51ca8a1a5294372bb.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/22fc172a82450ed4845e7e65264cf571130da40f680113531a70098299f99904.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/2449b2d8464537bded968198bbd77611af9678f20113af1604428924c26b5d74.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99.glb": [
       "celebrate",
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/301cd3ea20249839f3ca0a21059a9683262e8d1ee219be8e3c61c17fe6a34ac8.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/31f65ed0a6b557b931511b2a61aa011f97937f49040fabc9697d77fa3d52be9a.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -3925,11 +3997,42 @@
       "celebrate",
       "guard"
     ],
+    "content/assets/models/ou99/versions/40f5e40a243762d240f87d1979db0ec81ad150a470d6bbd69a6352617f7dd1ec.glb": [
+      "celebrate",
+      "guard"
+    ],
     "content/assets/models/ou99/versions/42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a.glb": [
       "celebrate",
       "guard"
     ],
+    "content/assets/models/ou99/versions/4366a2eb1889e23caaadf474158a967c256fbbc706c9487cee9c01d58005de3f.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/4382e2d43746df99fc68fb36b6b466e2bac8b4abd5c94a679b3153946c6cdcc5.glb": [
+      "attack",
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/4bdc23a090527b2ac7e2bc6ebb779a0241b7a2c4764d39fd33268899d2cf3954.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -3939,7 +4042,28 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/5f0ad53029f8788a437fe2410f322f35738fb5a8aba54d3c77f04c0f8d28b7ca.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/6ade7e35bef12b074f323bd743b68419baba4142ad760518e4c010d51870ff76.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912.glb": [
+      "cast",
       "celebrate",
       "guard",
       "hurt"
@@ -3953,7 +4077,32 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/7a5f9e627a13c041459d9b94d75bd2533b83226b12498915528b2ffb0e977bae.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/7bc4754a96f82e43ab84931f7d4e8ddf4f70be90cecc62bdfdfde79800bdbe28.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/7ea2f636ff9d180424d801226fba1cf960171ad603f8ed484362560cb97839de.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -3998,6 +4147,24 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/bbaa448e0ffe310540583bec08b33c83f79ff4353847b4ced259dea51b6d4cf9.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/c83555308791d241e3c9fd47ef0d658316041769c7854307e182ebadf7688197.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/ou99/versions/cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c.glb": [
+      "celebrate",
+      "guard"
+    ],
     "content/assets/models/ou99/versions/d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119.glb": [
       "celebrate",
       "guard",
@@ -4018,6 +4185,12 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/e6e88168e26db99e0ab4276ee55b86808f1a2998e7f64ba415086159a6dc4db0.glb": [
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039.glb": [
       "celebrate",
       "guard",
@@ -4029,6 +4202,26 @@
       "hurt"
     ],
     "content/assets/models/ou99/versions/ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/edc48a694535b72bbec64c92f4e3c05a5fd8b882044ace0c6dcbcc4c96365f31.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/ef252f3a94524b1db2b7ffb6dfd972c4d32e70c7b4abd5f54bf25d57ab74da1b.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/f70116b571774a32bc2c92fc5d9e273228de6ec2277b31ff8554b5201d64ac8d.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/fba8d82b18a88930248d5d593191d685f23f919d1b59e7760826685feb844310.glb": [
       "celebrate",
       "guard",
       "hurt"

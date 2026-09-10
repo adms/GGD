@@ -337,6 +337,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:22:42.001Z",
+      "source": {
+        "kind": "previous",
+        "character": "洛克人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.29236b04b74aab09f6a72a3b70e82d3a49f4b308fddae01a",
+      "label": "ou99 洛克人 X（本尊）",
+      "sourceModelKey": "ou99.287871",
+      "modelSha256": "788fada3ffb7873319e3f36a761f47ba15dcd565aad50cd4cdc73f481e4f2a3b",
+      "binarySha256": "0eda0dfbeea623f4ddde82588d804dcb18acad3df71b6b61ef34100199c011d5",
+      "registeredAt": "2026-09-10T11:22:42.004Z",
+      "source": {
+        "kind": "exact",
+        "character": "洛克人 X",
+        "work": "洛克人 X 系列",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-287871-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.ca49559d6f92e4001caa12f9f4b9a84d02aa7b155d4476f7",
       "label": "原上線模型",
       "sourceModelKey": "ou99.287871",

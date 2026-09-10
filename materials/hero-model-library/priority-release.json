@@ -1,13 +1,13 @@
 {
   "schema": "ggd-priority-model-release@1",
-  "state": "registered-in-feature-branch-pending-review-and-deployment",
-  "baseMainCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "state": "git-handoff-awaiting-main-review-and-deployment",
+  "baseMainCommit": "b6686109a",
   "branch": "codex/hero-model-library-options",
   "pullRequest": "https://github.com/adms/GGD/pull/1152",
   "productionDeployed": false,
   "inventoryRoleCount": 157,
   "newHeroCount": 81,
-  "versionReferences": 222,
+  "versionReferences": 282,
   "registrationFailures": 0,
   "priority15": [
     {
@@ -33,7 +33,7 @@
         "ou99:481732"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -195,7 +195,7 @@
         "ou99:313646"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -224,7 +224,7 @@
         "ou99:287871"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -253,7 +253,7 @@
         "ou99:497211"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。",
         "可用副本已減面；完整原生高面數模型與動作仍保留。"
@@ -283,7 +283,7 @@
         "ou99:468771"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -312,7 +312,7 @@
         "ou99:457280"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -341,7 +341,7 @@
         "ou99:472112"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。",
         "可用副本貼圖已縮至模型预算；完整原圖仍保留。"
@@ -371,7 +371,7 @@
         "ou99:457123"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -400,7 +400,7 @@
         "ou99:311294"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -429,7 +429,7 @@
         "runtime:turbo-granny-community-procedural-ready-20260910"
       ],
       "retainedOptionCount": 2,
-      "versionCount": 4,
+      "versionCount": 6,
       "modelMotionLimitations": [
         "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
         "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
@@ -463,7 +463,7 @@
         "ou99:459617"
       ],
       "retainedOptionCount": 1,
-      "versionCount": 3,
+      "versionCount": 5,
       "modelMotionLimitations": [
         "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
       ],
@@ -474,10 +474,15 @@
     "auditedNamedHeroes": 21,
     "suppliedHeroes": 20,
     "ofOriginal18Missing": 17,
-    "stillNoDeliveredNewModel": [
+    "stillNoDeliveredNewModel": [],
+    "identity": "Other workflow supplied proxies retain similar-proxy class; source acquisition does not prove canonical identity.",
+    "newLocalBodyPendingConversion": [
       "b2-kaiji"
     ],
-    "identity": "Other workflow supplied proxies retain similar-proxy class; source acquisition does not prove canonical identity."
+    "newBodyReceipt": "../../../GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/delivery-receipt.json",
+    "stillUsingPriorPlaceholder": [
+      "b2-kaiji"
+    ]
   },
   "preservedManualDefaults": 15,
   "preservedApprovedDerivatives": 11,
@@ -500,7 +505,13 @@
     "decodedJapaneseLanguagePackWav": 4927,
     "immediatelyReadableLocally": true,
     "index": "lol-project-seven/seven-voice-index.json",
-    "notAllConfirmedDialogue": true
+    "notAllConfirmedDialogue": true,
+    "mainCommittedCombatHeroes": 74,
+    "mainCommittedCombatClips": 1016,
+    "sourceReusedCombatClips": 308,
+    "syntheticCombatClips": 708,
+    "projectSevenRuntimeCombatBinding": "pending",
+    "priorityAudit": "priority-evidence/main-81-handoff/audio/per-hero.json"
   },
   "limitations": [
     "Seven runtime derivatives use six GGD procedural animation states, not acquired native actions. Original source meshes, rigs and textures remain preserved.",
@@ -515,7 +526,8 @@
     "current-options-admission.json",
     "priority-evidence/unpublished-v2-withdrawal.json",
     "parallel-deliveries-20260910/integration-receipt.json",
-    "priority-evidence/haga-native-visibility/final-integrity.json"
+    "priority-evidence/haga-native-visibility/final-integrity.json",
+    "priority-evidence/main-81-handoff/final-integrity.json"
   ],
   "postRegistrationReview": "post-registration-review.json",
   "fullReleaseChecksPassed": false,
@@ -546,6 +558,7 @@
     "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
     "productionDeployed": false
   },
-  "contentBuildVersion": "cv_3069a9581124",
-  "latestValidation": "priority-evidence/haga-native-visibility/release-gates/validation.json"
+  "contentBuildVersion": "cv_8fd827bdb947",
+  "latestValidation": "priority-evidence/main-81-handoff/validation.json",
+  "priority81Handoff": "priority-81-handoff.json"
 }

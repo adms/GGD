@@ -387,6 +387,36 @@
   "icon": "assets/icons/champions/b2-elma.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:25:54.097Z",
+      "source": {
+        "kind": "previous",
+        "character": "艾爾瑪",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
+      "label": "ou99 「圣洁化身戚小姐」（相似造型）",
+      "sourceModelKey": "ou99.472038",
+      "modelSha256": "fe630ba66638552287f570a460a32c2f9ecd1d54fb388c3d4515cb0f2d376873",
+      "binarySha256": "1437cbed6b585225333a57196de1001a85943ae0f5dd51b2d87d230032a66718",
+      "registeredAt": "2026-09-10T11:25:54.118Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "重騎士以遊戲知識開無雙 艾爾瑪",
+        "work": "圣洁化身戚小姐",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-472038-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
       "label": "原上線模型",
       "sourceModelKey": "ou99.472038",

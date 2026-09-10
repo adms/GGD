@@ -317,6 +317,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:36:44.946Z",
+      "source": {
+        "kind": "previous",
+        "character": "高速婆婆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.1c6835b90c39d1d3b1c6457a89d8fe0599cc6b5d09be22a1",
+      "label": "ou99 「人妖喜乐」（相似造型）",
+      "sourceModelKey": "ou99.458013",
+      "modelSha256": "b1c300254abadbef906fb18b66bf47967653d1ecca3d5903eb03a0dcd3b429d5",
+      "binarySha256": "175251f6dadd320f762fcae4a0f2f84026f876a86f269cd16a7305fed1831cd3",
+      "registeredAt": "2026-09-10T11:36:44.990Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "膽大黨 高速婆婆",
+        "work": "人妖喜乐",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-458013-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.1d73432509e2559827f926fb9990eb87166ce602e260127e",
       "label": "原上線模型",
       "sourceModelKey": "ou99.458013",

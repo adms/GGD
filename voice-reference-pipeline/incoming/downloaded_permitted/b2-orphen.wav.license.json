@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-orphen",
+  "source_name": "youtube: TVアニメ『魔術士オーフェンはぐれ旅 アーバンラマ編』本PV",
+  "source_url": "https://www.youtube.com/watch?v=v247G6JdEO4",
+  "direct_url": "https://www.youtube.com/watch?v=v247G6JdEO4",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "森久保祥太郎",
+  "source_sha256": "ba6ef0f54023960d4fff0c3384adb9ac5f9959a1efe268870ffae3991f9283f2",
+  "downloaded_at": "2026-09-10T11:01:51.694473Z",
+  "notes": "タイトルを開いて確認。BGM入りPV、区間未検証。",
+  "precut": {
+    "window_start_s": 84.0,
+    "window_s": 10.0,
+    "score": 0.427,
+    "metrics": {
+      "multiple_speaker_probability": 0.368,
+      "music_probability": 0.559,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 7.5
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-orphen.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "hero_id": "b2-rin",
+  "source_name": "game-voice: Fate/Grand Order（イシュタル S142 召喚ボイス、CV:植田佳奈）",
+  "source_url": "https://static.wikia.nocookie.net/fategrandorder/images/e/e9/S142_Summon1.ogg/revision/latest?cb=20210813073738",
+  "direct_url": "https://static.wikia.nocookie.net/fategrandorder/images/e/e9/S142_Summon1.ogg/revision/latest?cb=20210813073738",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "植田佳奈",
+  "source_sha256": "dafb0e3fad6ab793eab4cd9d0d79a266abad72b738af0a23b8c6dcd2a7660bca",
+  "downloaded_at": "2026-09-10T11:01:58.856062Z",
+  "notes": "HEAD 200 application/ogg 478KB。凛の体を借りたイシュタルの召喚台詞「女神イシュタル、召喚に応じ参上したわ…」。同ページ（https://fategrandorder.fandom.com/wiki/Sub:Ishtar/Dialogue）に S142_*.ogg が61本、Fandom API 経由で取得可（直接ページはCloudflareで弾かれることあり）。ゲーム音声のためBGMなし。"
+}

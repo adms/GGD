@@ -334,6 +334,36 @@
   "icon": "assets/icons/champions/b2-matthias.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T11:29:18.304Z",
+      "source": {
+        "kind": "previous",
+        "character": "馬提亞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
+      "label": "ou99 「休闲西装版七夜智贵」（相似造型）",
+      "sourceModelKey": "ou99.465884",
+      "modelSha256": "88f75746516d1e9f30d081614acb22359827b44244b04175201428bd2ff7e4c0",
+      "binarySha256": "d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c",
+      "registeredAt": "2026-09-10T11:29:18.317Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "失格紋的最強賢者 馬提亞斯",
+        "work": "休闲西装版七夜智贵",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-465884-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.eb4aebd7df2667ce6fb86153e5104ca3c06cf94902932195",
       "label": "原上線模型",
       "sourceModelKey": "ou99.465884",

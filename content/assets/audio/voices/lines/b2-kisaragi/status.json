@@ -1,0 +1,338 @@
+{
+ "championId": "b2-kisaragi",
+ "reference": {
+  "sha256": "2b1db6510ed304797778d88ab60ae649a816833850b57dc8ae90298a1bb26d3a",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-e00r.wav",
+  "sourceKind": "donor",
+  "donor": "godie-e00r",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=mechanical) — drop b2-kisaragi.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549528,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-e00r.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789037083048,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789042387861,
+     "error": null
+    }
+   ],
+   "text": "逃票乘客請先集合！",
+   "lang": "ja",
+   "kana": "トウ ヒョウ ジョウキャク セイ サキ シュウゴウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-kisaragi.q",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 40168,
+    "seconds": 2.44,
+    "lufs": null,
+    "hash": "f07a52592ea878d75efe6d9690edef989b0735f435773e6e9abf421625cec1a2",
+    "maxDb": -1.9,
+    "at": 1789042387861
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.96,
+     "at": 1789037083167,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789042387973,
+     "error": null
+    }
+   ],
+   "text": "緊急煞車先拉手閘！",
+   "lang": "ja",
+   "kana": "キンキュウ サキ ラツ テ コウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-kisaragi.w",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33062,
+    "seconds": 2,
+    "lufs": null,
+    "hash": "26fcac74f920cbcee250f2f7d09ee3dd013978be4818d774035e1a3934ddc6b6",
+    "maxDb": -3.8,
+    "at": 1789042387973
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.44,
+     "at": 1789037083289,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789042388083,
+     "error": null
+    }
+   ],
+   "text": "解除手閘本車才出發！",
+   "lang": "ja",
+   "kana": "カイジョ テ コウ ホン クルマ サイ シュッパツ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-kisaragi.e",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "277a636f8c19944ec8b4898b1de532c5905d4e9f2ef47a60e3665b44d9e27b33",
+    "maxDb": -2,
+    "at": 1789042388083
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.64,
+     "at": 1789037083411,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.04,
+     "at": 1789042388195,
+     "error": null
+    }
+   ],
+   "text": "如月末班車・乘客全數迷途！",
+   "lang": "ja",
+   "kana": "キサラギ マツ ハン クルマ ジョウキャク ゼンスウ メイズ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-kisaragi.r",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 49781,
+    "seconds": 3.04,
+    "lufs": null,
+    "hash": "18cefb1e8575838f0e9a55b9bbfa71cfef327616b7a6a72999a1d6b3bee34eb8",
+    "maxDb": -2.8,
+    "at": 1789042388195
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.68,
+     "at": 1789037083535,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.4,
+     "at": 1789042388309,
+     "error": null
+    }
+   ],
+   "text": "車門即將關閉請勿探頭！",
+   "lang": "ja",
+   "kana": "クルマ モン ソク ショウ カン ヘイ セイ モチロン タン アタマ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-kisaragi.ex",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 55632,
+    "seconds": 3.4,
+    "lufs": null,
+    "hash": "f8067181fdbedabae471f35e3d857ec3685e87f1633bcdf50b83d33f2d22dabb",
+    "maxDb": -2.4,
+    "at": 1789042388310
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037083653,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "155f52c78b50e94a4ecac5a0be0b453d2d03992cb0893c9ea1ae3a1a88b650c0",
+    "maxDb": -2,
+    "at": 1789037083653
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037083769,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "ff104a6545d3121d69a439b5f5838b6ff77cf1774911c8794412f09d8da71010",
+    "maxDb": -1.9,
+    "at": 1789037083770
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789037083889,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "9cecd0bd8c9f381aa1767ed3e13855fdce2193daa8af4a48ba67d8210563f51b",
+    "maxDb": -3.7,
+    "at": 1789037083889
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037084010,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "8040e35717d47b9a443b7030d1eb1334e1f5b81e8884d87d182e710bec2a0c8b",
+    "maxDb": -2,
+    "at": 1789037084010
+   },
+   "lastError": null
+  }
+ }
+}

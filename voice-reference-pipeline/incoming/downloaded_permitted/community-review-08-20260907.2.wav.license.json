@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-08-20260907",
+  "source_name": "anime-clip: 劇場版「進撃の巨人」完結編 THE LAST ATTACK 復活上映 本予告 (ぽにきゃん-Anime PONY CANYON, official)",
+  "source_url": "https://www.youtube.com/watch?v=4UucabcNSys",
+  "direct_url": "https://www.youtube.com/watch?v=4UucabcNSys",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "石川由依",
+  "source_sha256": "ce2ed49da0ce287952b6dfbdcc64e25ba2e3c0c97796dff1fd8d69ad15af0a10",
+  "downloaded_at": "2026-09-10T10:55:58.078176Z",
+  "notes": "Verified via oEmbed. Trailer with BGM; Mikasa has a few solo lines.",
+  "precut": {
+    "window_start_s": 18.0,
+    "window_s": 10.0,
+    "score": 0.463,
+    "metrics": {
+      "multiple_speaker_probability": 0.364,
+      "music_probability": 0.599,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 8.1
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-08-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

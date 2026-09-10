@@ -1,0 +1,503 @@
+{
+ "championId": "b2-boxxo",
+ "reference": {
+  "sha256": "8627780a53e80a80b692008cbad6f2ad40b059e19d6301984c94f8d95aedafc8",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/b2-boxxo.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753597,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-boxxo.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789042992260,
+     "error": null
+    }
+   ],
+   "text": "ざんねん",
+   "lang": "ja",
+   "kana": "ザンネン",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "64dd5539b5d715ef509efb4b9bbe159c324f231adb6d097ad981048c80778b1d",
+    "maxDb": -3.5,
+    "at": 1789042992261
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1789037071986,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789040357369,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.96,
+     "at": 1789042383008,
+     "error": null
+    }
+   ],
+   "text": "歡迎光臨飲料附憑證！",
+   "lang": "ja",
+   "kana": "カンゲイ コウリン インリョウ フ ヒョウ ショウ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-boxxo.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 48527,
+    "seconds": 2.96,
+    "lufs": null,
+    "hash": "88f2e671ddee66fa944f4d42cfdcbd74b929b256a1645d270a290929fd280214",
+    "maxDb": -2,
+    "at": 1789042383009
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.12,
+     "at": 1789037072104,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.28,
+     "at": 1789040357480,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789042383120,
+     "error": null
+    }
+   ],
+   "text": "憑證兌換防撞贈品！",
+   "lang": "ja",
+   "kana": "ヒョウ ショウ ダカン ボウ ドウ ゾウ ヒン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-boxxo.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33062,
+    "seconds": 2,
+    "lufs": null,
+    "hash": "caa499e66334a2d6b70664e5582ecd2866938bf6e9356ff79c88c079a5f6e1b9",
+    "maxDb": -2.5,
+    "at": 1789042383120
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.16,
+     "at": 1789037072222,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.08,
+     "at": 1789040357590,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.52,
+     "at": 1789042383234,
+     "error": null
+    }
+   ],
+   "text": "拉蜜絲搬店不加價！",
+   "lang": "ja",
+   "kana": "ラツ ミツ イト ハン ミセ フ カ アタイ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-boxxo.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.52,
+    "lufs": null,
+    "hash": "18807effdc40f4e02ea9feea0e4b669980453971f2e90531496b8973f6e2b6c6",
+    "maxDb": -1.9,
+    "at": 1789042383234
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.88,
+     "at": 1789037072340,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1789040357704,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1789042383342,
+     "error": null
+    }
+   ],
+   "text": "搬家限定快閃補給站！",
+   "lang": "ja",
+   "kana": "ハン イエ ゲンテイ カイ セン ホキュウ タン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-boxxo.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.04,
+    "lufs": null,
+    "hash": "9fcfcfdc08b12203c92766f7c6a23fca50f50c209f7bf69e40fb910f8745702c",
+    "maxDb": -2,
+    "at": 1789042383342
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789037072461,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.16,
+     "at": 1789040357818,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1789042383447,
+     "error": null
+    }
+   ],
+   "text": "退貨順便消毒！",
+   "lang": "ja",
+   "kana": "タイ カ ジュン ビン ショウドク",
+   "textSource": "derived",
+   "origin": "ability-name:b2-boxxo.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "28caaecd10afeb0ad2b151c4ec2da7b57f0256e47c77f1b43efef8d51d14ae46",
+    "maxDb": -2,
+    "at": 1789042383447
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789042992383,
+     "error": null
+    }
+   ],
+   "text": "ありがとうございました",
+   "lang": "ja",
+   "kana": "アリガトウ ゴザイマシタ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.12,
+    "lufs": null,
+    "hash": "6614b3e98230c479f1146961f2b8babbd1633344884a3801b74e89807f9db796",
+    "maxDb": -3.1,
+    "at": 1789042992383
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789037072578,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040357930,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "991ef9dd429809c30ea1406b210041ab01eb8b2c3b6a4d5e7e45af2c5636f9fe",
+    "maxDb": -1.9,
+    "at": 1789040357930
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037072693,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040358040,
+     "error": null
+    }
+   ],
+   "text": "きゃっ！",
+   "lang": "ja",
+   "kana": "キャッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "b56e9bdaebadac4861f08ec8c0b17a597d64659249645dfa15422d870154fd8f",
+    "maxDb": -1.9,
+    "at": 1789040358040
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1789037072810,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789040358155,
+     "error": null
+    }
+   ],
+   "text": "ああっ……！",
+   "lang": "ja",
+   "kana": "アアッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "1079a754e8735e25db375fcdaceef35744221531751eea3efc8dccc6aab5cc4b",
+    "maxDb": -3.7,
+    "at": 1789040358155
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1789042992512,
+     "error": null
+    }
+   ],
+   "text": "いらっしゃいませ",
+   "lang": "ja",
+   "kana": "イラッシャイマセ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "c7832f9ec09f06627aa71faf245dbe71b29960996e21bef3e8ba8dae36844ec1",
+    "maxDb": -1.9,
+    "at": 1789042992512
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789037072930,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789040358267,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "63e785ade9a158b3e4a7d194da692ffa49b8c9c774adcdaab989e1e56a4ff1fd",
+    "maxDb": -3.1,
+    "at": 1789040358267
+   },
+   "lastError": null
+  }
+ }
+}

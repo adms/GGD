@@ -1,15 +1,17 @@
 {
- "id": "ou99.458777",
- "schema": "model@1",
- "glbPath": "assets/models/ou99/ou99_458777.glb",
- "scale": 1.0,
- "collisionRadius": 0.55,
- "clipMap": {
-  "idle": "Stand",
-  "run": "Walk",
-  "attack": "Attack 1",
-  "cast": "Spell One",
-  "death": "Death",
-  "hurt": "Stand"
- }
+  "id": "ou99.458777",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/ou99_458777.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell One",
+    "death": "Death",
+    "hurt": "Stand"
+  },
+  "heroBody": false,
+  "heroBodyNote": "⛔ 7 個 draw call(上限 6)。7 張不同貼圖 ⇒ 同上。"
 }

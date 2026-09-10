@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-kaiji",
+  "source_name": "youtube: スマホゲーム『カイジ -闇の黙示録-』プレイ動画（iOS）",
+  "source_url": "https://www.youtube.com/watch?v=NeXAoK_fbCU",
+  "direct_url": "https://www.youtube.com/watch?v=NeXAoK_fbCU",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "萩原聖人",
+  "source_sha256": "7a5a34644af44cf095925676c002c95208be4f959148f4f504caa2a9c95d288d",
+  "downloaded_at": "2026-09-10T10:56:52.404619Z",
+  "notes": "ゲーム内の萩原聖人ボイス（名言）が流れる可能性があるプレイ動画。公式ではなく BGM 混在の可能性あり。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 62.0,
+    "window_s": 10.0,
+    "score": 0.579,
+    "metrics": {
+      "multiple_speaker_probability": 0.11,
+      "music_probability": 0.715,
+      "speech_or_vocal_ratio": 0.746,
+      "silence_ratio": 0.254,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 61.2
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-kaiji.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

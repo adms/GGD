@@ -339,6 +339,36 @@
   "icon": "assets/icons/champions/b2-orphen.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T11:31:10.500Z",
+      "source": {
+        "kind": "previous",
+        "character": "歐菲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.22bdbf148e368f65a812201d250e439c5d431676c638bf9e",
+      "label": "ou99 「甲贺忍蛙」（相似造型）",
+      "sourceModelKey": "ou99.496452",
+      "modelSha256": "cf34d862a6d5fb16589f851d24f5ed34a1059695678364725d005c2327b227d7",
+      "binarySha256": "22fc172a82450ed4845e7e65264cf571130da40f680113531a70098299f99904",
+      "registeredAt": "2026-09-10T11:31:10.525Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "魔術士歐菲",
+        "work": "甲贺忍蛙",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-496452-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
       "label": "原上線模型",
       "sourceModelKey": "ou99.496452",

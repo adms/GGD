@@ -1,0 +1,143 @@
+{
+  "checkedAt": "2026-09-10T16:11:38.756Z",
+  "scope": "in-memory authored fixtures; no content/index writes",
+  "tests": {
+    "jpegResizeMime": {
+      "before": {
+        "ok": true,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Motion",
+            "duration": 1,
+            "channels": 1
+          },
+          {
+            "index": 1,
+            "name": "Cast",
+            "duration": 1,
+            "channels": 1
+          }
+        ],
+        "textureCount": 1
+      },
+      "report": {
+        "drawCalls": {
+          "before": 1,
+          "after": 1
+        },
+        "droppedZeroClips": [],
+        "clipIndexMap": [
+          0,
+          1
+        ],
+        "resizedTextures": [
+          [
+            512,
+            256
+          ]
+        ],
+        "texturesOverCap": [],
+        "changed": true
+      },
+      "after": {
+        "ok": true,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Motion",
+            "duration": 1,
+            "channels": 1
+          },
+          {
+            "index": 1,
+            "name": "Cast",
+            "duration": 1,
+            "channels": 1
+          }
+        ],
+        "textureCount": 1
+      },
+      "declaredMime": "image/png",
+      "actualHeaderHex": "89504e470d0a1a0a",
+      "expectedPngHeader": "89504e470d0a1a0a"
+    },
+    "zeroClipInspectorAndIndex": {
+      "originalNames": [
+        "ZeroAuthoredPose",
+        "Motion",
+        "Cast"
+      ],
+      "selectedOriginalIndex": 1,
+      "selectedOriginalName": "Motion",
+      "before": {
+        "ok": false,
+        "error": "Error: 動作長度必須大於零且不超過 300 秒。"
+      },
+      "normalizationReport": {
+        "drawCalls": {
+          "before": 1,
+          "after": 1
+        },
+        "droppedZeroClips": [
+          "ZeroAuthoredPose"
+        ],
+        "clipIndexMap": [
+          null,
+          0,
+          1
+        ],
+        "resizedTextures": [],
+        "texturesOverCap": [],
+        "changed": true
+      },
+      "after": {
+        "ok": true,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Motion",
+            "duration": 1,
+            "channels": 1
+          },
+          {
+            "index": 1,
+            "name": "Cast",
+            "duration": 1,
+            "channels": 1
+          }
+        ],
+        "textureCount": 0
+      },
+      "prepared": {
+        "ok": true,
+        "clipMap": {
+          "idle": "Motion",
+          "run": "Motion",
+          "attack": "Motion",
+          "cast": "Motion",
+          "hurt": "Motion",
+          "death": "Motion"
+        }
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "6fecf94e6fd034afd6ae95d69fb2f55f87ce8b422121f4101896116026d12141"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "99a05abcb803576e41f5896f9275c436cc40e32a96ebfdd4ddba6d3163696111"
+    },
+    {
+      "path": "apps/editor/src/hero/modelUpload.worker.ts",
+      "sha256": "a9c36f864fbe6289ca3c373fde65d37993d7945077e09dd44cc85b6413eddb51"
+    },
+    {
+      "path": "apps/content-api/src/resizeImage.node.ts",
+      "sha256": "86b0c83272b377ba2a70618e88b0c618a84fa4e2d2c70bf30e9ef9bf14ae28b7"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "schema": "ggd-workflow-model-options@1",
-  "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "sourceCommit": "b6686109a",
+  "originalSourceCommit": "1b1bd17f2",
   "aliases": {
     "example:karthus": "lol-karthus",
     "example:leesin": "lol-leesin",
@@ -36,13 +37,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.453949",
         "glbPath": "assets/models/ou99/ou99_453949.glb",
         "sha256": "e05aa7a67d3e4ac91484584bf40a66a10b27c06c0ce8d784b9b4eb7198d225be",
-        "gitPath": "content/assets/models/ou99/ou99_453949.glb"
+        "gitPath": "content/assets/models/ou99/ou99_453949.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -77,13 +79,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.454482",
         "glbPath": "assets/models/ou99/ou99_454482.glb",
         "sha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1",
-        "gitPath": "content/assets/models/ou99/ou99_454482.glb"
+        "gitPath": "content/assets/models/ou99/ou99_454482.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -97,8 +100,8 @@
       "id": "ou99:456546",
       "modelKey": "ou99.456546",
       "glbPath": "assets/models/ou99/ou99_456546.glb",
-      "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
-      "bytes": 6136544,
+      "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee",
+      "bytes": 1662596,
       "documentSha256": "75be5241b63f8badd09f8b1b175da04ddf48f2203ec12fef0fcc5e43c9ea7f36",
       "sourceCharacter": "动漫卡尔斯",
       "sourceWork": "來源作品待核；論壇標題：动漫卡尔斯",
@@ -118,13 +121,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_456546.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.456546",
         "glbPath": "assets/models/ou99/ou99_456546.glb",
         "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
-        "gitPath": "content/assets/models/ou99/ou99_456546.glb"
+        "gitPath": "content/assets/models/ou99/ou99_456546.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -153,13 +157,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.456917",
         "glbPath": "assets/models/ou99/ou99_456917.glb",
         "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
-        "gitPath": "content/assets/models/ou99/ou99_456917.glb"
+        "gitPath": "content/assets/models/ou99/ou99_456917.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -194,13 +199,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.457594",
         "glbPath": "assets/models/ou99/ou99_457594.glb",
         "sha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
-        "gitPath": "content/assets/models/ou99/ou99_457594.glb"
+        "gitPath": "content/assets/models/ou99/ou99_457594.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -214,8 +220,8 @@
       "id": "ou99:457883",
       "modelKey": "ou99.457883",
       "glbPath": "assets/models/ou99/ou99_457883.glb",
-      "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65",
-      "bytes": 1270272,
+      "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
+      "bytes": 1265860,
       "documentSha256": "c3d9ae90d465828d8db26b26d15665072ca86d355e1a43fc120517e2d29ef1f5",
       "sourceCharacter": "牛魔角仙人男",
       "sourceWork": "來源作品待核；論壇標題：牛魔角仙人男",
@@ -235,13 +241,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_457883.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.457883",
         "glbPath": "assets/models/ou99/ou99_457883.glb",
         "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65",
-        "gitPath": "content/assets/models/ou99/ou99_457883.glb"
+        "gitPath": "content/assets/models/ou99/ou99_457883.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -270,13 +277,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.458013",
         "glbPath": "assets/models/ou99/ou99_458013.glb",
         "sha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039",
-        "gitPath": "content/assets/models/ou99/ou99_458013.glb"
+        "gitPath": "content/assets/models/ou99/ou99_458013.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -306,13 +314,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.458777",
         "glbPath": "assets/models/ou99/ou99_458777.glb",
         "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
-        "gitPath": "content/assets/models/ou99/ou99_458777.glb"
+        "gitPath": "content/assets/models/ou99/ou99_458777.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -353,13 +362,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.459257",
         "glbPath": "assets/models/ou99/ou99_459257.glb",
         "sha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
-        "gitPath": "content/assets/models/ou99/ou99_459257.glb"
+        "gitPath": "content/assets/models/ou99/ou99_459257.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -394,13 +404,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.459617",
         "glbPath": "assets/models/ou99/ou99_459617.glb",
         "sha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
-        "gitPath": "content/assets/models/ou99/ou99_459617.glb"
+        "gitPath": "content/assets/models/ou99/ou99_459617.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -409,8 +420,8 @@
       "id": "ou99:465205",
       "modelKey": "ou99.465205",
       "glbPath": "assets/models/ou99/ou99_465205.glb",
-      "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4",
-      "bytes": 1924208,
+      "sha256": "b105f0727db3af9fb32c774db1ce8f260da853c950931856610ffe39b8d180d5",
+      "bytes": 1915168,
       "documentSha256": "df826ad707935dabbb0b531a6ccd846d5b87913effc2c87c3d3187c98f9bb596",
       "sourceCharacter": "韩当武侠猛男",
       "sourceWork": "來源作品待核；論壇標題：韩当武侠猛男",
@@ -430,13 +441,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_465205.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.465205",
         "glbPath": "assets/models/ou99/ou99_465205.glb",
         "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4",
-        "gitPath": "content/assets/models/ou99/ou99_465205.glb"
+        "gitPath": "content/assets/models/ou99/ou99_465205.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -465,13 +477,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.465884",
         "glbPath": "assets/models/ou99/ou99_465884.glb",
         "sha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a",
-        "gitPath": "content/assets/models/ou99/ou99_465884.glb"
+        "gitPath": "content/assets/models/ou99/ou99_465884.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -501,13 +514,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.467227",
         "glbPath": "assets/models/ou99/ou99_467227.glb",
         "sha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612",
-        "gitPath": "content/assets/models/ou99/ou99_467227.glb"
+        "gitPath": "content/assets/models/ou99/ou99_467227.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -537,13 +551,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.470087",
         "glbPath": "assets/models/ou99/ou99_470087.glb",
         "sha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494",
-        "gitPath": "content/assets/models/ou99/ou99_470087.glb"
+        "gitPath": "content/assets/models/ou99/ou99_470087.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -557,8 +572,8 @@
       "id": "ou99:470426",
       "modelKey": "ou99.470426",
       "glbPath": "assets/models/ou99/ou99_470426.glb",
-      "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
-      "bytes": 2839116,
+      "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29",
+      "bytes": 2384220,
       "documentSha256": "a6f00258f0d28d20ffbc4b1ef250bbfa2cf15386b6eeac0e0906d58160958ae3",
       "sourceCharacter": "二次元巫女",
       "sourceWork": "來源作品待核；論壇標題：二次元巫女",
@@ -578,13 +593,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_470426.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.470426",
         "glbPath": "assets/models/ou99/ou99_470426.glb",
         "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
-        "gitPath": "content/assets/models/ou99/ou99_470426.glb"
+        "gitPath": "content/assets/models/ou99/ou99_470426.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -592,8 +608,8 @@
       "id": "ou99:472035",
       "modelKey": "ou99.472035",
       "glbPath": "assets/models/ou99/ou99_472035.glb",
-      "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171",
-      "bytes": 4363676,
+      "sha256": "7724a3039a62b00df4754f0fb67fb932b419cd2f750ca7101d5bd0a9ce40ce84",
+      "bytes": 2096040,
       "documentSha256": "7b6d47e13a893281477b5ac731d1dfb9088822ad954ef4f342f3bbb8df95a26a",
       "sourceCharacter": "WOW兽人祭祀法师",
       "sourceWork": "來源作品待核；論壇標題：WOW兽人祭祀法师",
@@ -613,13 +629,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_472035.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.472035",
         "glbPath": "assets/models/ou99/ou99_472035.glb",
         "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171",
-        "gitPath": "content/assets/models/ou99/ou99_472035.glb"
+        "gitPath": "content/assets/models/ou99/ou99_472035.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -648,13 +665,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.472038",
         "glbPath": "assets/models/ou99/ou99_472038.glb",
         "sha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
-        "gitPath": "content/assets/models/ou99/ou99_472038.glb"
+        "gitPath": "content/assets/models/ou99/ou99_472038.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -689,13 +707,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.473324",
         "glbPath": "assets/models/ou99/ou99_473324.glb",
         "sha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
-        "gitPath": "content/assets/models/ou99/ou99_473324.glb"
+        "gitPath": "content/assets/models/ou99/ou99_473324.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -736,13 +755,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.474258",
         "glbPath": "assets/models/ou99/ou99_474258.glb",
         "sha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06",
-        "gitPath": "content/assets/models/ou99/ou99_474258.glb"
+        "gitPath": "content/assets/models/ou99/ou99_474258.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -772,13 +792,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.478642",
         "glbPath": "assets/models/ou99/ou99_478642.glb",
         "sha256": "a23e59b9443a980aa767f91e19fb83249542816760a7c3d0962b03b5a7cc7b34",
-        "gitPath": "content/assets/models/ou99/ou99_478642.glb"
+        "gitPath": "content/assets/models/ou99/ou99_478642.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -808,13 +829,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.481732",
         "glbPath": "assets/models/ou99/ou99_481732.glb",
         "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
-        "gitPath": "content/assets/models/ou99/ou99_481732.glb"
+        "gitPath": "content/assets/models/ou99/ou99_481732.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -828,9 +850,9 @@
       "id": "ou99:487191",
       "modelKey": "ou99.487191",
       "glbPath": "assets/models/ou99/ou99_487191.glb",
-      "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615",
-      "bytes": 2028668,
-      "documentSha256": "500b729e54d5713dec75de62c881bbf3f640b4e013723b25ca5cfa6517dfe7ac",
+      "sha256": "a76a7631f2d1e99b3f6f20c449dc443291cd853d366636efff4c96caf36946a3",
+      "bytes": 2124200,
+      "documentSha256": "0cab86faa2d36a6b9e9f4bba57c102fd75e93b889ed4f9f091e1f5775fd580cd",
       "sourceCharacter": "SSR鬼神吕布鬼脸将军",
       "sourceWork": "來源作品待核；論壇標題：SSR鬼神吕布鬼脸将军",
       "sourceAssetId": "https://www.ou99.com/thread-487191-1-1.html",
@@ -849,13 +871,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_487191.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487191",
         "glbPath": "assets/models/ou99/ou99_487191.glb",
         "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615",
-        "gitPath": "content/assets/models/ou99/ou99_487191.glb"
+        "gitPath": "content/assets/models/ou99/ou99_487191.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -884,13 +907,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487484",
         "glbPath": "assets/models/ou99/ou99_487484.glb",
         "sha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b",
-        "gitPath": "content/assets/models/ou99/ou99_487484.glb"
+        "gitPath": "content/assets/models/ou99/ou99_487484.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -920,13 +944,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487487-7yzc0mtk",
         "glbPath": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
         "sha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
-        "gitPath": "content/assets/models/ou99/ou99_487487-7yzc0mtk.glb"
+        "gitPath": "content/assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -961,13 +986,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487487-sbhhkedr",
         "glbPath": "assets/models/ou99/ou99_487487-sbhhkedr.glb",
         "sha256": "0a5041838fe595b877abd29cfceb353f475e8f9abc93135b1d0160f8a1d4059b",
-        "gitPath": "content/assets/models/ou99/ou99_487487-sbhhkedr.glb"
+        "gitPath": "content/assets/models/ou99/ou99_487487-sbhhkedr.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -997,13 +1023,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.491448",
         "glbPath": "assets/models/ou99/ou99_491448.glb",
         "sha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
-        "gitPath": "content/assets/models/ou99/ou99_491448.glb"
+        "gitPath": "content/assets/models/ou99/ou99_491448.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1044,13 +1071,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.491497",
         "glbPath": "assets/models/ou99/ou99_491497.glb",
         "sha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99",
-        "gitPath": "content/assets/models/ou99/ou99_491497.glb"
+        "gitPath": "content/assets/models/ou99/ou99_491497.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -1080,13 +1108,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.493578",
         "glbPath": "assets/models/ou99/ou99_493578.glb",
         "sha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51",
-        "gitPath": "content/assets/models/ou99/ou99_493578.glb"
+        "gitPath": "content/assets/models/ou99/ou99_493578.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1121,13 +1150,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.495015",
         "glbPath": "assets/models/ou99/ou99_495015.glb",
         "sha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3",
-        "gitPath": "content/assets/models/ou99/ou99_495015.glb"
+        "gitPath": "content/assets/models/ou99/ou99_495015.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -1157,13 +1187,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.496452",
         "glbPath": "assets/models/ou99/ou99_496452.glb",
         "sha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
-        "gitPath": "content/assets/models/ou99/ou99_496452.glb"
+        "gitPath": "content/assets/models/ou99/ou99_496452.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1177,8 +1208,8 @@
       "id": "ou99:496905",
       "modelKey": "ou99.496905",
       "glbPath": "assets/models/ou99/ou99_496905.glb",
-      "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
-      "bytes": 4368388,
+      "sha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
+      "bytes": 4406260,
       "documentSha256": "8fd88ddc9c9eb2373f759a569123d95d2b2aa9b470b8808efcb28134ea443b2d",
       "sourceCharacter": "搞怪哆啦A梦猫",
       "sourceWork": "來源作品待核；論壇標題：搞怪哆啦A梦猫",
@@ -1198,13 +1229,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_496905.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.496905",
         "glbPath": "assets/models/ou99/ou99_496905.glb",
         "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
-        "gitPath": "content/assets/models/ou99/ou99_496905.glb"
+        "gitPath": "content/assets/models/ou99/ou99_496905.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1212,8 +1244,8 @@
       "id": "ou99:497131",
       "modelKey": "ou99.497131",
       "glbPath": "assets/models/ou99/ou99_497131.glb",
-      "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
-      "bytes": 753372,
+      "sha256": "6d573c4018c6f554b0ba7727ad495f4d7b9adf2bdc6f148782fb2c423eccae39",
+      "bytes": 746212,
       "documentSha256": "d5af0e15461e61923efd96eb6525cfd095a2d07e0ad740a52a2bb74fb6632bad",
       "sourceCharacter": "龙珠超孙悟空",
       "sourceWork": "來源作品待核；論壇標題：龙珠超孙悟空",
@@ -1233,13 +1265,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_497131.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.497131",
         "glbPath": "assets/models/ou99/ou99_497131.glb",
         "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
-        "gitPath": "content/assets/models/ou99/ou99_497131.glb"
+        "gitPath": "content/assets/models/ou99/ou99_497131.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1268,13 +1301,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.498214",
         "glbPath": "assets/models/ou99/ou99_498214.glb",
         "sha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480",
-        "gitPath": "content/assets/models/ou99/ou99_498214.glb"
+        "gitPath": "content/assets/models/ou99/ou99_498214.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1309,13 +1343,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.313646",
         "glbPath": "assets/models/ou99/ou99_313646.glb",
         "sha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722",
-        "gitPath": "content/assets/models/ou99/ou99_313646.glb"
+        "gitPath": "content/assets/models/ou99/ou99_313646.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1350,13 +1385,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.287871",
         "glbPath": "assets/models/ou99/ou99_287871.glb",
         "sha256": "7a5f9e627a13c041459d9b94d75bd2533b83226b12498915528b2ffb0e977bae",
-        "gitPath": "content/assets/models/ou99/ou99_287871.glb"
+        "gitPath": "content/assets/models/ou99/ou99_287871.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {}
@@ -1387,13 +1423,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.497211",
         "glbPath": "assets/models/ou99/ou99_497211.glb",
         "sha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
-        "gitPath": "content/assets/models/ou99/ou99_497211.glb"
+        "gitPath": "content/assets/models/ou99/ou99_497211.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1429,13 +1466,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.472112",
         "glbPath": "assets/models/ou99/ou99_472112.glb",
         "sha256": "3d5c9fb99d0a3be253d3c413ba18b875136307183cc0eb75008375ab793ac35c",
-        "gitPath": "content/assets/models/ou99/ou99_472112.glb"
+        "gitPath": "content/assets/models/ou99/ou99_472112.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1470,13 +1508,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.457123",
         "glbPath": "assets/models/ou99/ou99_457123.glb",
         "sha256": "d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119",
-        "gitPath": "content/assets/models/ou99/ou99_457123.glb"
+        "gitPath": "content/assets/models/ou99/ou99_457123.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1511,13 +1550,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.311294",
         "glbPath": "assets/models/ou99/ou99_311294.glb",
         "sha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
-        "gitPath": "content/assets/models/ou99/ou99_311294.glb"
+        "gitPath": "content/assets/models/ou99/ou99_311294.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1552,13 +1592,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.468771",
         "glbPath": "assets/models/ou99/ou99_468771.glb",
         "sha256": "307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447",
-        "gitPath": "content/assets/models/ou99/ou99_468771.glb"
+        "gitPath": "content/assets/models/ou99/ou99_468771.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1593,13 +1634,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.457280",
         "glbPath": "assets/models/ou99/ou99_457280.glb",
         "sha256": "9cc19189b317670be5438a49bf6b0f529a4d7dc2e7e1730707d98736118b3748",
-        "gitPath": "content/assets/models/ou99/ou99_457280.glb"
+        "gitPath": "content/assets/models/ou99/ou99_457280.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
       "standardization": {
@@ -1634,13 +1676,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
         "glbPath": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
         "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
-        "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb"
+        "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1669,13 +1712,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
         "glbPath": "assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
         "sha256": "17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e",
-        "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb"
+        "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1704,13 +1748,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
         "glbPath": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
         "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
-        "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb"
+        "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1739,13 +1784,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
         "glbPath": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
         "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
-        "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb"
+        "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1774,13 +1820,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
         "glbPath": "assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
         "sha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
-        "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb"
+        "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1809,13 +1856,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
         "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
         "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
-        "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb"
+        "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     },
@@ -1844,13 +1892,14 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
-      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "sourceCommit": "b6686109a",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
         "glbPath": "assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
         "sha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
-        "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb"
+        "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+        "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
     }
@@ -2992,7 +3041,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-456546-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_456546.glb",
-      "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6"
+      "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee"
     },
     {
       "candidateId": "ou99:456546",
@@ -3002,7 +3051,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-456546-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_456546.glb",
-      "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6"
+      "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee"
     },
     {
       "candidateId": "ou99:456917",
@@ -3032,7 +3081,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-457883-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_457883.glb",
-      "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65"
+      "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912"
     },
     {
       "candidateId": "ou99:458013",
@@ -3082,7 +3131,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-465205-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_465205.glb",
-      "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4"
+      "sha256": "b105f0727db3af9fb32c774db1ce8f260da853c950931856610ffe39b8d180d5"
     },
     {
       "candidateId": "ou99:465884",
@@ -3122,7 +3171,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-470426-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_470426.glb",
-      "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4"
+      "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29"
     },
     {
       "candidateId": "ou99:470426",
@@ -3132,7 +3181,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-470426-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_470426.glb",
-      "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4"
+      "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29"
     },
     {
       "candidateId": "ou99:472035",
@@ -3142,7 +3191,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-472035-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_472035.glb",
-      "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171"
+      "sha256": "7724a3039a62b00df4754f0fb67fb932b419cd2f750ca7101d5bd0a9ce40ce84"
     },
     {
       "candidateId": "ou99:472038",
@@ -3202,7 +3251,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-487191-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_487191.glb",
-      "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615"
+      "sha256": "a76a7631f2d1e99b3f6f20c449dc443291cd853d366636efff4c96caf36946a3"
     },
     {
       "candidateId": "ou99:487484",
@@ -3292,7 +3341,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-496905-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_496905.glb",
-      "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16"
+      "sha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2"
     },
     {
       "candidateId": "ou99:497131",
@@ -3302,7 +3351,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-497131-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_497131.glb",
-      "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521"
+      "sha256": "6d573c4018c6f554b0ba7727ad495f4d7b9adf2bdc6f148782fb2c423eccae39"
     },
     {
       "candidateId": "ou99:497131",
@@ -3312,7 +3361,7 @@
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-497131-1-1.html",
       "gitPath": "content/assets/models/ou99/ou99_497131.glb",
-      "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521"
+      "sha256": "6d573c4018c6f554b0ba7727ad495f4d7b9adf2bdc6f148782fb2c423eccae39"
     },
     {
       "candidateId": "ou99:498214",

@@ -306,6 +306,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:48:42.528Z",
+      "source": {
+        "kind": "previous",
+        "character": "西索",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
+      "label": "ou99 西索（本尊·減面版）",
+      "sourceModelKey": "ou99.497211",
+      "modelSha256": "c671fb3ba1d83f9bf97c7f10292d5311c43ba949ba49beda8f0e006eaac8287a",
+      "binarySha256": "7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b",
+      "registeredAt": "2026-09-10T11:48:42.545Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "獵人 HUNTER×HUNTER",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.6fb9f6d8bbe5c0bbc7bd7f373a3b8591e3e27b7111d68b3b",
       "label": "原上線模型",
       "sourceModelKey": "ou99.497211",

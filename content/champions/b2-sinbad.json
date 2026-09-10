@@ -315,6 +315,36 @@
   "icon": "assets/icons/champions/b2-sinbad.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:32:36.721Z",
+      "source": {
+        "kind": "previous",
+        "character": "辛巴達",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.50475cd0a71c5c569d77fe67d9450a189662424ade9a6933",
+      "label": "ou99 「遥远救世主拳皇」（相似造型）",
+      "sourceModelKey": "ou99.491497",
+      "modelSha256": "ea955b4c803ac4f4bdc3c20c10a929a410061afac8f3df68b302d335cf902fce",
+      "binarySha256": "88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492",
+      "registeredAt": "2026-09-10T11:32:36.802Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "魔笛 MAGI 辛巴達",
+        "work": "遥远救世主拳皇",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-491497-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.2edcd3ab07695536fe0c8086ebe02a9a1a3d67a464a0c31d",
       "label": "原上線模型",
       "sourceModelKey": "ou99.491497",

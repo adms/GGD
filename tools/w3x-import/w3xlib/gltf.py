@@ -683,6 +683,63 @@ class _Buf:
 NEUTRAL_TEAM = [0.55, 0.55, 0.60, 1.0]  # untinted team-color base
 
 
+#: ⭐ 英雄模型預算的**貼圖那一格**（`HERO_MODEL_BUDGET.texEdge`,出貨上限 1024）——
+#: ⛔ 這裡刻意**不 import** 那份 TS 常數(跨語言),而是留一個參數化的預設。
+#: ⚠️ 上限改了要一起改這裡,⛔ 否則轉出來的模型會被 register 端點擋下。
+#: ⭐ 出貨用 **512** —— 那是 `HERO_MODEL_BUDGET.texEdge` 的**警戒值**,
+#: 也就是英雄模型的**設計意圖**(1024 只是硬上限)。⛔ 這不是為了遷就限制而降規:
+#: 最低配備是 iPad mini (A17 Pro) 30fps × 12 具英雄同框。
+#:
+#: ⚠️ 而它同時解掉一個**量到的**結構限制:`captureHeroCatalogVersion` 每一次
+#: 英雄寫入都要重讀整份目錄,上限 **256 MiB**;實測目錄已經 237 MiB,而
+#: 「註冊一個模型版本」會**再複製一份完整 GLB** ⇒ 41 顆全註冊要 +95 MiB
+#: ⇒ 中途必然撞牆(2026-09-10 真的撞了,b2-makoto 收到 503)。
+#: ⭐ 貼圖佔 ou99 這批的 **47%**(36.1 MiB) ⇒ 降到 512 約省 23 MiB。
+HERO_TEXTURE_MAX_EDGE = 256
+
+
+def _fit_texture_budget(textures_png: dict[int, bytes],
+                        max_edge: int = HERO_TEXTURE_MAX_EDGE,
+                        res_log=None) -> dict[int, bytes]:
+    """把超過 `max_edge` 的貼圖等比縮到上限內。
+
+    ⭐ 為什麼在**入口**做一次,⛔ 不在四個 `gltf["images"].append(...)` 各做一次:
+    那四條路(disp / team-color / glow / alpha-keyed)全部從 `textures_png`
+    取同一顆 PNG ⇒ 在源頭縮一次,四條路自動一致;分四處縮則是四個會各自漂的住處
+    (第〇·四守則:同一個值不可以有第二個住處)。
+
+    ⚠️ WC3 貼圖常常是 2048 的角色圖,而 `HERO_MODEL_BUDGET.texEdge` 的上限是
+    1024 ⇒ ⛔ 不縮就整顆模型註冊不進去(量到:3/41 顆撞這一格)。
+    """
+    try:
+        from PIL import Image
+    except Exception:                                    # pragma: no cover
+        return textures_png                              # ⛔ 沒有 PIL 就原樣放行
+    import io
+    out: dict[int, bytes] = {}
+    for tid, png in textures_png.items():
+        if not png:
+            out[tid] = png
+            continue
+        try:
+            im = Image.open(io.BytesIO(png))
+            w, h = im.size
+            if max(w, h) <= max_edge:
+                out[tid] = png
+                continue
+            k = max_edge / float(max(w, h))
+            im = im.convert("RGBA").resize(
+                (max(1, round(w * k)), max(1, round(h * k))), Image.LANCZOS)
+            b = io.BytesIO()
+            im.save(b, format="PNG", optimize=True)
+            out[tid] = b.getvalue()
+            if res_log is not None:
+                res_log.append({"texture": tid, "from": [w, h], "to": list(im.size)})
+        except Exception:
+            out[tid] = png                               # ⛔ 縮不動就用原圖,不要弄丟它
+    return out
+
+
 def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
             model_name: str, tex_alpha: dict[int, str] | None = None,
             team_glow: str = "drop") -> ConvertResult:
@@ -695,6 +752,7 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
     ⛔ 這條路一個位元都沒有動到。"""
     team_glow = resolve_team_glow(team_glow)
     tex_alpha = tex_alpha or {}
+    textures_png = _fit_texture_budget(textures_png, res_log=None)
     used_ext: set[str] = set()
     res = ConvertResult(glb=b"")
     buf = _Buf()
@@ -1121,6 +1179,21 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
     # not a single max-vertex geoset. See classify_geosets().
     geo_info, (body_min, body_max) = classify_geosets(model, scale, team_glow)
     prims = []
+    # ⭐ GH#1164 追加 —— **依材質合併**成一個 primitive,⛔ 不是一個 geoset(×每層)一個。
+    #
+    # ⚠️ 在此之前這一段是「每個 geoset 的每一層各發一個 primitive」,而
+    # `inspectModelUpload` 的 `meshes` 量的正是 **(node,primitive) 對數 = draw call**
+    # ⇒ 出貨上限 5(`HERO_MODEL_BUDGET.meshes`)。量到的實況:41 顆 ou99 模型裡
+    # **20 顆超標**,最嚴重的 `ou99.472112` 有 **21 個 draw 而材質只有 1 種**
+    # —— ⭐ 也就是說那 21 個 draw 畫的是同一份材質,合併之後是 1 個。
+    #
+    # ⛔ 這不是「調鬆預算去遷就內容」(那一格是效能契約,⛔ 不是我的旋鈕),
+    #    是把**同材質的幾何真的接起來**,draw call 才是真的變少。
+    #
+    # ⚠️ 合併會讓「一個 geoset 掛多層」的頂點被複製進每一層的群組 —— 那是
+    #    glTF 表達多層材質的唯一形狀(同一份幾何畫 N 次),⛔ 合併前後的
+    #    三角面總數與畫面完全一樣,差別只在 accessor 不再共用。
+    groups: dict[int, dict] = {}
     for gi, g in enumerate(model.geosets):
         if geo_info[gi]["drop"]:
             res.dropped_effect_geosets.append({
@@ -1136,34 +1209,31 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         maxs = [-1e30] * 3
         for i in range(n):
             p = _v(g.vertices[i], scale)
+            # ⭐ 邊界要用**實際存進 buffer 的 float32 值**算,⛔ 不是 float64 的原值 ——
+            #    glTF 規範要求 accessor.min/max 是逐分量的精確界,而 float64→float32
+            #    的捨入會讓「算出來的界」與「存進去的值」對不上
+            #    ⇒ ACCESSOR_MIN_MISMATCH / ACCESSOR_ELEMENT_OUT_OF_MIN_BOUND。
+            packed = struct.pack("<3f", *p)
+            p32 = struct.unpack("<3f", packed)
             for k in range(3):
-                mins[k] = min(mins[k], p[k])
-                maxs[k] = max(maxs[k], p[k])
-            pos += struct.pack("<3f", *p)
+                mins[k] = min(mins[k], p32[k])
+                maxs[k] = max(maxs[k], p32[k])
+            pos += packed
             nv = _v(g.normals[i], 1.0) if i < len(g.normals) else (0, 1, 0)
-            ln = math.sqrt(sum(c * c for c in nv)) or 1.0
-            nrm += struct.pack("<3f", nv[0] / ln, nv[1] / ln, nv[2] / ln)
+            ln = math.sqrt(sum(c * c for c in nv))
+            # ⛔ 退化法線(長度 0)除以 1.0 之後仍然是 (0,0,0) ⇒ ACCESSOR_VECTOR3_NON_UNIT。
+            nv = (nv[0] / ln, nv[1] / ln, nv[2] / ln) if ln > 1e-12 else (0.0, 1.0, 0.0)
+            nrm += struct.pack("<3f", *nv)
             u, vv = g.uvs[i] if i < len(g.uvs) else (0.0, 0.0)
             uv += struct.pack("<2f", u, vv)
-        attrs = {}
-        attrs["POSITION"] = buf.add(bytes(pos), 34962, {
-            "componentType": 5126, "count": n, "type": "VEC3",
-            "min": [round(v, 6) for v in mins], "max": [round(v, 6) for v in maxs],
-        })
-        attrs["NORMAL"] = buf.add(bytes(nrm), 34962, {
-            "componentType": 5126, "count": n, "type": "VEC3",
-        })
-        attrs["TEXCOORD_0"] = buf.add(bytes(uv), 34962, {
-            "componentType": 5126, "count": n, "type": "VEC2",
-        })
+        joints = bytearray()
+        weights = bytearray()
         if skin_index is not None:
-            joints = bytearray()
-            weights = bytearray()
             for i in range(n):
-                gi = g.vertex_groups[i] if i < len(g.vertex_groups) else 0
+                vg = g.vertex_groups[i] if i < len(g.vertex_groups) else 0
                 grp = (
-                    g.matrix_groups[gi]
-                    if 0 <= gi < len(g.matrix_groups)
+                    g.matrix_groups[vg]
+                    if 0 <= vg < len(g.matrix_groups)
                     else []
                 )
                 js = [obj_ids.index(b) for b in grp[:4] if b in node_index] or [0]
@@ -1172,25 +1242,109 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                 ws = [w] * len(js) + [0.0] * (4 - len(js))
                 joints += struct.pack("<4H", *jw)
                 weights += struct.pack("<4f", *ws)
-            attrs["JOINTS_0"] = buf.add(bytes(joints), 34962, {
+        # ⭐ MDX 的層是**依序疊上去**的;glTF 沒有多層材質,唯一表達得出來的
+        #    形狀就是同一份幾何畫 N 次(GH#841)。⇒ 一個 geoset 會進 N 個群組。
+        for mi in gltf_materials(g.material_id):
+            grp_buf = groups.setdefault(mi, {
+                "pos": bytearray(), "nrm": bytearray(), "uv": bytearray(),
+                "joints": bytearray(), "weights": bytearray(),
+                "faces": [], "n": 0, "mins": [1e30] * 3, "maxs": [-1e30] * 3,
+            })
+            base = grp_buf["n"]
+            grp_buf["pos"] += pos
+            grp_buf["nrm"] += nrm
+            grp_buf["uv"] += uv
+            grp_buf["joints"] += joints
+            grp_buf["weights"] += weights
+            grp_buf["faces"].extend(f + base for f in g.faces)
+            grp_buf["n"] = base + n
+            for k in range(3):
+                grp_buf["mins"][k] = min(grp_buf["mins"][k], mins[k])
+                grp_buf["maxs"][k] = max(grp_buf["maxs"][k], maxs[k])
+    # ⭐ GH#1164 —— **渲染狀態去重**:兩份材質如果畫出來逐像素一樣,它們就是同一份。
+    #
+    # ⚠️ 這一步一定要在 geoset 迴圈**之後** —— `gltf_materials()` 是 memoized
+    # 的**用到才建**(1095 行),迴圈跑完之前 `gltf["materials"]` 還是空的。
+    # ⛔ 我第一版把它放在 `classify_geosets()` 後面,於是 canon 表全空、
+    #    一個材質都沒併到,而**轉檔照樣成功** —— 又一次「壞掉跟正常長得一樣」。
+    #
+    # ⚠️ 量到的實況(`ou99.456917`):**10 份材質、同一張貼圖、同 alphaMode、
+    # 同 doubleSided、同 PBR 係數** —— 唯一的差別是 `name`(mat0…mat9)與
+    # `extras.w3x.material`(MDX 的來源材質編號)。⭐ 那兩格是**溯源資料**,
+    # ⛔ 不是渲染狀態 ⇒ 拿它們當「不同材質」等於白白多 9 個 draw call。
+    #
+    # ⛔ 刻意**不壓縮 materials 陣列**:`res.team_color_materials` 那一族存的是
+    # **名字**,壓縮會讓那些名字指不到東西。用不到的材質在 glTF 只是 UNUSED_OBJECT
+    # 警告,⛔ 不是錯誤,而 `inspectModelUpload` 數的是 draw call。
+    _canon: dict[int, int] = {}
+    _seen_mat: dict[str, int] = {}
+    for _i, _m in enumerate(gltf["materials"]):
+        _key = json.dumps({k: v for k, v in _m.items() if k not in ("name", "extras")},
+                          sort_keys=True)
+        _canon[_i] = _seen_mat.setdefault(_key, _i)
+    merged_groups: dict[int, dict] = {}
+    for _mi in sorted(groups):
+        _c = _canon.get(_mi, _mi)
+        src = groups[_mi]
+        dst = merged_groups.get(_c)
+        if dst is None:
+            merged_groups[_c] = src
+            continue
+        base = dst["n"]
+        for _k in ("pos", "nrm", "uv", "joints", "weights"):
+            dst[_k] += src[_k]
+        dst["faces"].extend(f + base for f in src["faces"])
+        dst["n"] = base + src["n"]
+        for _k3 in range(3):
+            dst["mins"][_k3] = min(dst["mins"][_k3], src["mins"][_k3])
+            dst["maxs"][_k3] = max(dst["maxs"][_k3], src["maxs"][_k3])
+    if len(merged_groups) < len(groups):
+        res.notes.append(
+            f"merged {len(groups) - len(merged_groups)} render-identical materials "
+            f"({len(groups)} → {len(merged_groups)} draw calls)")
+    groups = merged_groups
+    for mi in sorted(groups):
+        grp_buf = groups[mi]
+        n = grp_buf["n"]
+        if not n or not grp_buf["faces"]:
+            continue
+        attrs = {
+            "POSITION": buf.add(bytes(grp_buf["pos"]), 34962, {
+                "componentType": 5126, "count": n, "type": "VEC3",
+                # ⛔ 不可 round —— 四捨五入會把 min 推高、max 壓低,真實資料就「超界」了。
+                "min": list(grp_buf["mins"]), "max": list(grp_buf["maxs"]),
+            }),
+            "NORMAL": buf.add(bytes(grp_buf["nrm"]), 34962, {
+                "componentType": 5126, "count": n, "type": "VEC3",
+            }),
+            "TEXCOORD_0": buf.add(bytes(grp_buf["uv"]), 34962, {
+                "componentType": 5126, "count": n, "type": "VEC2",
+            }),
+        }
+        if skin_index is not None:
+            attrs["JOINTS_0"] = buf.add(bytes(grp_buf["joints"]), 34962, {
                 "componentType": 5123, "count": n, "type": "VEC4",
             })
-            attrs["WEIGHTS_0"] = buf.add(bytes(weights), 34962, {
+            attrs["WEIGHTS_0"] = buf.add(bytes(grp_buf["weights"]), 34962, {
                 "componentType": 5126, "count": n, "type": "VEC4",
             })
-        idx = struct.pack("<%dH" % len(g.faces), *g.faces)
+        # ⚠️ 合併之後頂點數會超過 65535 ⇒ uint16 索引**存不下**(靜默溢位成
+        #    畫面破碎)。⭐ 依實際頂點數選 componentType,⛔ 不要固定 uint16。
+        faces = grp_buf["faces"]
+        if n > 0xFFFF:
+            idx = struct.pack("<%dI" % len(faces), *faces)
+            ctype = 5125
+        else:
+            idx = struct.pack("<%dH" % len(faces), *faces)
+            ctype = 5123
         indices = buf.add(idx, 34963, {
-            "componentType": 5123, "count": len(g.faces), "type": "SCALAR",
+            "componentType": ctype, "count": len(faces), "type": "SCALAR",
         })
-        # ⭐ GH#841 —— 一層一個 primitive（共用同一批 accessor，⛔ 不複製頂點）。
-        # MDX 的層是**依序疊上去**的；glTF 沒有多層材質，唯一表達得出來的形狀
-        # 就是同一份幾何畫 N 次。⛔ 在此之前只畫 `disp` 那一層。
-        for mi in gltf_materials(g.material_id):
-            prims.append({
-                "attributes": attrs,
-                "indices": indices,
-                "material": mi,
-            })
+        prims.append({
+            "attributes": attrs,
+            "indices": indices,
+            "material": mi,
+        })
     if prims:
         gltf["meshes"].append({"name": model.name or model_name, "primitives": prims})
         mesh_node = {"name": "mesh", "mesh": 0}
@@ -1237,6 +1391,15 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                     keys = [(seq.start, hv)]
                     interp = 0  # STEP
                 qkeys = _quantize_times(keys, seq.start)
+                # ⭐ GH#1164 —— 只有**一顆 key 落在 t=0** 的取樣器,片段長度會是 0,
+                # 而 `inspectModelUpload` 逐字要求「動作長度必須大於零」⇒ 整顆模型
+                # 註冊不進去。⚠️ 這種取樣器多半是上面那個 **hold**(這一段沒有自己
+                # 的關鍵影格,拿最近的一顆把骨頭釘住,⛔ 免得沿用上一段的姿勢而抽動)
+                # ⇒ ⭐ 正解是**把它撐滿這一段的長度**(頭尾同值的 STEP),
+                #   ⛔ 不是把片段丟掉 —— 丟掉就等於把那條 hold 的作用一起丟了。
+                span_s = (seq.end - seq.start) / 1000.0
+                if len(qkeys) == 1 and qkeys[0][0] <= 0.0 and span_s > 0.0:
+                    qkeys = [qkeys[0], (round(span_s, 6), qkeys[0][1])]
                 times = b""
                 vals = b""
                 out_type = "VEC4" if is_quat else "VEC3"
@@ -1291,6 +1454,31 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                 {"name": name, "channels": channels, "samplers": samplers}
             )
             res.anim_names.append(name)
+    # ⭐ GH#1164 —— 丟掉**長度為零**的片段。
+    #
+    # ⚠️ 它們多半**不是動作**,是 WC3 modeler 把署名塞進 sequence 清單:
+    #   「本模型由王者航海作者GodBoy(QQ:724526101)制作」·「未经允许禁止分享与使用」
+    #   ·「动作：金皮蛋」·「QQ:5548671」(⚠️ 上面那幾個名字在 GLB 裡是 GBK 亂碼)。
+    # ⛔ 而 `inspectModelUpload` 逐字要求「動作長度必須大於零且不超過 300 秒」
+    #   ⇒ 一顆模型只要有**一段**這種署名,整顆就註冊不進去(量到:6/41 顆)。
+    #
+    # ⭐ 判準是**長度**,⛔ 不是名字 —— 用名字比對署名等於維護一張會過期的黑名單,
+    #   而一段長度為零的片段本來就**播不出任何東西**,丟掉不損失任何畫面。
+    dropped_zero: list[str] = []
+    kept_anims = []
+    for anim in gltf["animations"]:
+        span = 0.0
+        for s in anim["samplers"]:
+            acc = buf.accessors[s["input"]]   # ⛔ gltf["accessors"] 要到下面才指派
+            span = max(span, (acc.get("max") or [0.0])[0])
+        if span > 0.0:
+            kept_anims.append(anim)
+        else:
+            dropped_zero.append(anim["name"])
+    if dropped_zero:
+        gltf["animations"] = kept_anims
+        res.anim_names = [n for n in res.anim_names if n not in set(dropped_zero)]
+        res.notes.append("dropped zero-length sequences: " + ", ".join(dropped_zero[:8]))
     if not gltf["animations"]:
         del gltf["animations"]
 

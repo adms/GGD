@@ -424,6 +424,36 @@
   "icon": "assets/icons/champions/b2-boxxo.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.06d16d67ecdfa30538206289955afffc2d1f525a57292fd7",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.491448",
+      "modelSha256": "c0ec050b947093881dec3dd08ac9f383b4f3513ec868b47ccf837a45985a0297",
+      "binarySha256": "606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba",
+      "registeredAt": "2026-09-10T11:44:41.531Z",
+      "source": {
+        "kind": "previous",
+        "character": "阿箱＋拉蜜絲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.491448.json"
+      }
+    },
+    {
+      "modelKey": "version.body.115a4c5a7e643388bd988c1caab582482f6d1175616a0437",
+      "label": "ou99 「逃亡的盗墓女孩」（相似造型）",
+      "sourceModelKey": "ou99.491448",
+      "modelSha256": "a5cbadee403f7b25be54f3ffe71d9af21688668212366919d1251c75b599c8e7",
+      "binarySha256": "606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba",
+      "registeredAt": "2026-09-10T11:44:41.538Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "轉生成自動販賣機 阿箱＋拉蜜絲",
+        "work": "逃亡的盗墓女孩",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-491448-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
       "label": "原上線模型",
       "sourceModelKey": "ou99.491448",

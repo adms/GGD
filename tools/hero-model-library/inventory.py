@@ -169,6 +169,7 @@ f'「尚未通過轉換」的 {len(pending_rows)} 筆只統計既有轉換失敗
 if quality_review.get('affectedSources'):
  progress+=['**全庫發布檢查仍未通過。** 幾何普查標出 '+ '、'.join(next((r['name'] for r in rows if r['id']==x['heroId']),x['heroId']) for x in quality_review['affectedSources'])+' 的原件／副本部件，保留全部原件並待確認；不以登記成功代替完整視覺驗收。精確來源與狀態見 `post-registration-review.json`，其他未解發布檢查見 `priority-release.md`。','']
 lines=['# 全角色模型盤點', '',f'更新時間：{now}（Asia/Taipei）。按角色／形態 ID 計數，不將同名變身態合併成一筆。','',
+'**Main 優先合併 81 名新英雄：** [81英雄優先合併清單.md](81英雄優先合併清單.md) 對應逐角色模型、動作、音訊成品與缺口；程序讀 `priority-81-handoff.json`。全表其餘角色與未轉換來源繼續保留。','',
 *progress,
 *render_sources(download_plan,policy),
 '## 盤點基準','',

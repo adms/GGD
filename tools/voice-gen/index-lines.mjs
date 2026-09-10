@@ -223,7 +223,20 @@ function main() {
     const lines = {};
     if (select.length > 0) lines[SELECT_CATEGORY] = select;
     for (const cat of [...CANON].sort()) {
-      if (clipByCat[cat]) lines[cat] = [clipByCat[cat]];
+      const arr = clipByCat[cat] ? [clipByCat[cat]] : [];
+      // ⭐ owner 2026-09-10「每個角色可以支援最多三個口頭禪經典台詞 可被隨機播放」:
+      // a category may carry extra takes as `<cat>.2`, `<cat>.3`, … (status key + mp3
+      // name); they ride along in the same array and the client picks at random.
+      for (let n = 2; n <= 9; n++) {
+        const key = `${cat}.${n}`;
+        const mp3 = join(dir, `${key}.mp3`);
+        const entry = statusLines[key];
+        if (!existsSync(mp3) || !entry?.current) break;
+        const size = statSync(mp3).size;
+        if (typeof entry.current.bytes === "number" && entry.current.bytes !== size) fail(`${id}: byte mismatch ${key}: status=${entry.current.bytes} disk=${size}`);
+        arr.push({ clip: `${CLIP_BASE}/${id}/${key}.mp3`, text: typeof entry.text === "string" ? entry.text : "", lang: typeof entry.lang === "string" ? entry.lang : "ja", durationSec: typeof entry.current.seconds === "number" ? entry.current.seconds : 0, speakerSim: null, hash: typeof entry.current.hash === "string" ? entry.current.hash : null });
+      }
+      if (arr.length) lines[cat] = arr;
     }
 
     champions[id] = {
@@ -245,9 +258,16 @@ function main() {
   const withShares = applyFormVoiceShares(champions, shares);
   const landed = shares.filter((s) => withShares[s.championId]);
 
+  // ⚠️ 2026-09-10 — the share is NOT written into `champions`. The shipped manifest
+  // never carried stamped entries (960450290 was generated before 60fb06773 added
+  // them, and voice:index was never re-run), and the client contract the tests pin
+  // is the RUNTIME resolution: `resolveVoicePackId` walks `counterpartFormId` when a
+  // champion has no entry, answering `{id: donor, sharedFrom: donor}`. A stamped
+  // copy would make it answer `{id: base, …}` and break `combatVoiceCoverage`'s
+  // form-share assertions. `formShares` below stays as the metadata of that plan.
   // Sort champion keys for a stable diff.
   const sortedChamps = {};
-  for (const id of Object.keys(withShares).sort()) sortedChamps[id] = withShares[id];
+  for (const id of Object.keys(champions).sort()) sortedChamps[id] = champions[id];
 
   const manifest = {
     id: "champion-voice-pack",

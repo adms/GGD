@@ -333,6 +333,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.1be30180aed1be22caaf1c8cae83ffc2e8e44b0f21e4600e",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.472112",
+      "modelSha256": "ced661885438afc9b8e4be81eb2e56200339429609500dd3532857c1f9643b6e",
+      "binarySha256": "5f0ad53029f8788a437fe2410f322f35738fb5a8aba54d3c77f04c0f8d28b7ca",
+      "registeredAt": "2026-09-10T11:24:47.864Z",
+      "source": {
+        "kind": "previous",
+        "character": "殺老師",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.472112.json"
+      }
+    },
+    {
+      "modelKey": "version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1",
+      "label": "ou99「笑脸人法神搞怪人」（相似造型）",
+      "sourceModelKey": "ou99.472112",
+      "modelSha256": "75754c057e772e4bcb8e3a06311aa931fc94cab3beb0470adf6ae7361aa1f5a1",
+      "binarySha256": "5f0ad53029f8788a437fe2410f322f35738fb5a8aba54d3c77f04c0f8d28b7ca",
+      "registeredAt": "2026-09-10T11:24:47.871Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "殺老師",
+        "work": "笑脸人法神搞怪人",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-472112-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.28f1ec9f19e95808015c6545b9fc1ce938dad71499e82c1f",
       "label": "原上線模型",
       "sourceModelKey": "ou99.472112",

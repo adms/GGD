@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-kumoko",
+  "source_name": "game-voice: 『蜘蛛ですが、なにか? 迷宮の支配者』公式PV「私」CV 悠木碧ボイス付きバージョン（G123、2025-02）",
+  "source_url": "https://www.youtube.com/watch?v=oASFrYwnx9E",
+  "direct_url": "https://www.youtube.com/watch?v=oASFrYwnx9E",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "悠木碧",
+  "source_sha256": "a07e0abe36791fe704c84c94693d412e660c2c159c11ca64741541032e710308",
+  "downloaded_at": "2026-09-10T10:57:00.239896Z",
+  "notes": "ゲーム用録り下ろしボイスを使った公式PV。ゲーム音声そのものだが動画形式のため BGM 混在の可能性あり。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 50.0,
+    "window_s": 10.0,
+    "score": 0.32,
+    "metrics": {
+      "multiple_speaker_probability": 0.243,
+      "music_probability": 0.577,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 7.3
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-kumoko.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

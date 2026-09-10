@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-matthias",
+  "source_name": "youtube: TVアニメ『失格紋の最強賢者』第1弾PV",
+  "source_url": "https://www.youtube.com/watch?v=o34GOPt0-78",
+  "direct_url": "https://www.youtube.com/watch?v=o34GOPt0-78",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "玉城仁菜",
+  "source_sha256": "b302b892dc6c06bbec2aab2bda84bb42568b0d12def52cdb4afc35681e150e4c",
+  "downloaded_at": "2026-09-10T10:59:32.402667Z",
+  "notes": "タイトルを開いて確認。BGM入りPV。",
+  "precut": {
+    "window_start_s": 22.0,
+    "window_s": 10.0,
+    "score": 0.595,
+    "metrics": {
+      "multiple_speaker_probability": 0.465,
+      "music_probability": 0.63,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 8.5
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-matthias.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

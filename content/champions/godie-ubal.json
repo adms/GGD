@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法師",
-  "modelKey": "ou99.457883",
+  "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -259,5 +259,37 @@
     "陣地",
     "變身"
   ],
-  "pitch": "不斷用法術改變戰場形狀，限制敵人走位，再透過變身提高壓制能力。"
+  "pitch": "不斷用法術改變戰場形狀，限制敵人走位，再透過變身提高壓制能力。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.2dfc74bfb0fa87e079c718d960d26744ec5812a875836399",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.skin.barbarian",
+      "modelSha256": "183a35a03e6bb764532677115145d21788d0f85f7639cdfda6f7c6999dfa690f",
+      "binarySha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+      "registeredAt": "2026-09-10T11:40:33.559Z",
+      "source": {
+        "kind": "previous",
+        "character": "魔界霸主 - 巴恩大魔王",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.skin.barbarian.json"
+      }
+    },
+    {
+      "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
+      "label": "ou99 「牛魔角仙人男」（相似造型）",
+      "sourceModelKey": "ou99.457883",
+      "modelSha256": "3dbc7251c499f35125e4a96d215fddd1e7caf7696fa5153a978d71e0aac65d4c",
+      "binarySha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
+      "registeredAt": "2026-09-10T11:40:33.565Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "神龍之謎 巴恩大魔王(變身後)",
+        "work": "牛魔角仙人男",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457883-1-1.html"
+      }
+    }
+  ]
 }

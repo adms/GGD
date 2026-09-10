@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-30-20260907",
+  "source_name": "youtube: TVアニメ ヤニねこ メインPV",
+  "source_url": "https://www.youtube.com/watch?v=ydK2WdTAOgU",
+  "direct_url": "https://www.youtube.com/watch?v=ydK2WdTAOgU",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "夏吉ゆうこ",
+  "source_sha256": "8bdee88aa7bf5d60eb6784fd2c7a3adc066d542130b49a06ba9c4a923b615dee",
+  "downloaded_at": "2026-09-10T10:53:53.020727Z",
+  "notes": "公式サイト MOVIE 欄のメインPV。ティザーPVでは末尾に「うめぇにゃ」の一言（電撃オンライン記事より）。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 64.0,
+    "window_s": 10.0,
+    "score": 0.411,
+    "metrics": {
+      "multiple_speaker_probability": 0.316,
+      "music_probability": 0.595,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 7.5
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-30-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

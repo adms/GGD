@@ -316,6 +316,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.1014b88114b4a3aad2dcab3a7554583dac7499d569b63ead",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457123",
+      "modelSha256": "167cc0ac727ff3adc93973edf168185284ca749ff92901fa5b11472c44f7f57e",
+      "binarySha256": "440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7",
+      "registeredAt": "2026-09-10T11:25:10.235Z",
+      "source": {
+        "kind": "previous",
+        "character": "比利海靈頓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457123.json"
+      }
+    },
+    {
+      "modelKey": "version.body.c574cdb9cfe55750d8acef037f8463288a5078a121e5db71",
+      "label": "ou99 比利·海靈頓（本尊）",
+      "sourceModelKey": "ou99.457123",
+      "modelSha256": "8e9b11e3143bcf11b294a91379c1cb2a1f62045cbcda1e445e3cd37f76bd0bdd",
+      "binarySha256": "440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7",
+      "registeredAt": "2026-09-10T11:25:10.241Z",
+      "source": {
+        "kind": "exact",
+        "character": "比利·海靈頓",
+        "work": "Gachimuchi 二次創作",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457123-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.b4ff5a804c418807cf914810d3a45d9989f1c847069f7aec",
       "label": "原上線模型",
       "sourceModelKey": "ou99.457123",

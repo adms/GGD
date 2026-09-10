@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-32-20260907",
+  "source_name": "youtube: アニメ よんでますよ、アザゼルさん。 PV",
+  "source_url": "https://www.youtube.com/watch?v=Cfg_25tWbtM",
+  "direct_url": "https://www.youtube.com/watch?v=Cfg_25tWbtM",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "小野坂昌也",
+  "source_sha256": "67e54a2443062b305655c951d8717f27618d353d2f57311cb50f85089597796c",
+  "downloaded_at": "2026-09-10T10:53:58.463038Z",
+  "notes": "アニメPV。アザゼル以外の台詞・BGMも混在。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 20.0,
+    "window_s": 10.0,
+    "score": 0.519,
+    "metrics": {
+      "multiple_speaker_probability": 0.35,
+      "music_probability": 0.584,
+      "speech_or_vocal_ratio": 0.915,
+      "silence_ratio": 0.085,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 62.9
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-32-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

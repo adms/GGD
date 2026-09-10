@@ -305,6 +305,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:25:32.159Z",
+      "source": {
+        "kind": "previous",
+        "character": "菜月昴",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
+      "label": "ou99 貼文 #311294（相似造型）",
+      "sourceModelKey": "ou99.311294",
+      "modelSha256": "7ee5a5282234dd3ba048321d84e10333603a387ffa32927a95797cb408582e6e",
+      "binarySha256": "bbaa448e0ffe310540583bec08b33c83f79ff4353847b4ced259dea51b6d4cf9",
+      "registeredAt": "2026-09-10T11:25:32.174Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "菜月昴",
+        "work": "ou99 貼文 #311294",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.cc688f0c9acfeab9c68254e817d2ed85a6447f9b093bd3db",
       "label": "原上線模型",
       "sourceModelKey": "ou99.311294",

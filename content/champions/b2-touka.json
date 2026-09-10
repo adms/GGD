@@ -385,6 +385,36 @@
   "icon": "assets/icons/champions/b2-touka.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:33:24.843Z",
+      "source": {
+        "kind": "previous",
+        "character": "托卡・史考特",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
+      "label": "ou99 「白西装七夜志贵」（相似造型）",
+      "sourceModelKey": "ou99.459257",
+      "modelSha256": "16e858afd2ce2548d90a97a2fb79ad9aeca1ab9e2bc4e3dcf1be26260fb44a35",
+      "binarySha256": "c83555308791d241e3c9fd47ef0d658316041769c7854307e182ebadf7688197",
+      "registeredAt": "2026-09-10T11:33:24.879Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "勇者死了 托卡・史考特",
+        "work": "白西装七夜志贵",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-459257-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
       "label": "原上線模型",
       "sourceModelKey": "ou99.459257",

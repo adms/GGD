@@ -1,39 +1,17 @@
 # 本次模型整合交付
 
-81 名新角色的本機後台版本登記已完成，共 **222 個版本引用**；全角色盤點包含 **157 個角色／形態 ID**。**全庫發布檢查尚未通過**：幾何普查的四組模型、技能形狀分類、技能驗收清單、協調重複判定及缺少 combat 產生器仍待處理；精確日誌見 [`release-gates`](priority-evidence/release-gates/)。分支尚待 Main 合併部署，正式站狀態仍以實際快照為準。
+**Main 優先合併 81 名（37＋37＋7）**：逐角色成品與缺口請讀 [81英雄優先合併清單.md](81英雄優先合併清單.md)，程序讀 [priority-81-handoff.json](priority-81-handoff.json)。所有角色仍列於 [全角色模型盤點.md](全角色模型盤點.md)。
 
-固定取用入口：[`current-resources.json`](../asset-library/current-resources.json)。逐角色查 [`全角色模型盤點.md`](全角色模型盤點.md)／[`inventory.json`](inventory.json)，驗證紀錄查 [`priority-release.json`](priority-release.json)。
+已合入 main `b6686109a`。81 名的 **282 個版本引用／244 個不同凍結模型文件**均經實際 `ModelVersions.verify` 和 SHA 驗證；Main 的 60 個版本引用與本分支原 222 個版本引用完整保留。15 個既有手動預設、11 個指定加工副本未改，來源分類及候選均保留。完整性稽核 0 失敗、0 警告：[收據](priority-evidence/main-81-handoff/final-integrity.json)。
 
-| 優先角色 | 本批選中來源 | 身分類別 | 保留版本數 |
-|---|---|---|---:|
-| 闇影 | `ou99.481732-standard-v2`<br>ou99 | 相似代理 | 3 |
-| 貓貓 | `community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42`<br>Lethal Company MOD／GrogCompany | 本尊 | 3 |
-| 岩谷尚文 | `community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569`<br>GTA SA 社群 MOD | 本尊 | 4 |
-| 凱茲 | `community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d`<br>Lethal Company MOD／RRoD | 本尊 | 4 |
-| 野原新之助 | `community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e`<br>GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL | 本尊 | 4 |
-| 八神庵 | `ou99.313646-standard-v2`<br>ou99 | 本尊 | 3 |
-| 洛克人 | `ou99.287871-standard`<br>ou99 | 本尊 | 3 |
-| 西索 | `ou99.497211-standard-v2`<br>ou99 | 本尊 | 3 |
-| 赫蘿 | `ou99.468771-standard-v2`<br>ou99 | 本尊 | 3 |
-| 利姆路 | `ou99.457280-standard-v2`<br>ou99 | 本尊 | 3 |
-| 殺老師 | `ou99.472112-standard-v2`<br>ou99 | 本尊 | 3 |
-| 比利海靈頓 | `ou99.457123-standard-v2`<br>ou99 | 本尊 | 3 |
-| 菜月昴 | `ou99.311294-standard-v2`<br>ou99 | 本尊 | 3 |
-| 高速婆婆 | `community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e`<br>Lethal Company MOD／inkiidonut | 本尊 | 4 |
-| 吉伊卡哇 | `ou99.459617-standard`<br>ou99 | 相似代理 | 3 |
+74 名已有 **1,016 個 Git 戰鬥音訊成品**：308 個來源重用、708 個合成。74 名核心 9 類齊備，73 名擴展 11 類齊備；不能把來源標籤當成已確認原角聲優。其餘 7 名 LOL 有 **4,927 個日本語 WAV 儲備**，本機可立即讀取，仍待戰鬥類別綁定。精確成品路徑、SHA、合成／原來源及缺口見 [81 名音訊稽核](priority-evidence/main-81-handoff/audio/per-hero.json)。
 
-貓貓、凱茲、岩谷尚文、野原新之助兩版、高速婆婆與辛巴達的七件新轉換成品，均使用明確標示的 GGD 程序化六態動作；未宣稱原生動作已齊。其餘來源依各自 clipMap 與保留證據。
+優先 5＋10 名模型已登記。貓貓、凱茲、岩谷尚文、野原新之助兩版、高速婆婆及辛巴達的七件成品採 GGD 程序化六態動作；其他來源按真實 GLB clips 與 clipMap 記錄，不將六格映射當六段原生動作。羽賀原生顯隱修復保留 13 段原動畫及原件，82 個實際 Babylon 取樣證據見 [原生顯隱驗證](priority-evidence/haga-native-visibility/render-proof.json)。
 
-先前 18 名缺口中已查到其他工作流交付 17 名；**伊藤開司仍未找到新模型交付**。尼古貓貓、近衛刀太、鬼畜王蘭斯的相似來源已整合；相似模型保持相似身分。辛巴達採巴力魔裝兼用，高速婆婆採已確認招財貓形態。
+開司已取得 holya 社群模型，尚待轉換，因此目前仍保留原預設。新取得的不知火舞 DOA6→GTA SA 162 段 IFP 亦待配骨架及轉換，不列為已完成後台動作。辛巴達巴力魔裝兼用、高速婆婆招財貓形態依既有確認保留。
 
-15 個既有手動預設與 11 組指定加工副本均保留。原固定本機 catalog 的 94 筆未刪改，本次新增 44 筆至 138；來源選项與同英雄不可變版本數是不同分母。
+合併另外修復 JPEG 縮圖後 MIME 不符，以及移除零長動畫後可能選错片段；36 項相關測試通過。固定來源索引同步 Main 已正規化模型，原取得 SHA 仍釘選至原 Git commit，沒有重寫原始收據或凍結版本。
 
-七名 LOL 共 4,927 個 WAV 可直接供本機其他工作流使用，入口 [`角色語音索引.md`](角色語音索引.md)。尚未逐段聽審，不將全數當成已確認台詞。
+發布完整檢查以 [最新驗證](priority-evidence/main-81-handoff/validation.json) 為準；歷史日誌保留於各批 evidence，不代表目前全部通過。這是 **分支交付**，尚待 Main 審查合併與部署。
 
-來源工作流繼續 KOF／Fate／Infinity Strash 等擷取。本工作流接收後分批轉換、驗收、追加選項及推送；不以整個遊戲尚未抓完阻擋這批交付。原始／半成品全部保留，S3 狀態另記，不能把 Git 推送當成原始備份已完成。
-
-KOF 新交付：不知火舞 XV 原作 FBX＋12 TGA、八神庵 XV 原作 FBX＋12 TGA，以及舞的 SFM 部件包，均已歸檔待材質重綁／標準化；未取得原生動作。Infinity Strash 何布 MOD 取得 1 sequence＋5 montage，缺骨架／本體，不算完整角色。
-
-定點 WebGL 與原 MDX 查核已確認：凱亞爾為手持螺旋燈器、楓為紅黑長刃，兩者應保留；羽賀的 Decay 血肉顯隱已完成獨立修正版登記：13 段原生動畫全部保留，82 個 Babylon 取樣的其餘身體頂點差異為 0，腐化開始 3.767 秒時依原始資料切換顯示。修復證據見 [`原生顯隱驗證`](priority-evidence/haga-native-visibility/render-proof.json)。原模型／不可變版本均未改動，完整 models:check 仍未通過。詳見 [`部件審查`](priority-evidence/residual-geometry/review.json)。
-
-八神庵 XV 新增 97 段 Float32 WAV／133.35 秒，已逐檔 SHA 重驗並收入語音索引；語系、台詞與聲音身分尚未逐段確認。本輪 Fate 與 Infinity Strash 的來源查核收據見 [`平行交付整合`](parallel-deliveries-20260910/integration-receipt.json)。
+本工作流負責轉換、驗收、版本及中央索引；來源工作流負責取得與初步分析，Main 負責審查合併及部署。成品、程式、設定、索引和文件進 Git；原始與半成品進 S3 `legacy/`，本機全保留。未做 S3 讀回的原包仍為待備份，不以本次 Git 推送宣稱完成。

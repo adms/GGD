@@ -5,7 +5,7 @@
   "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n|CFFFF0000推薦玩家 : |CFFFE890D牽制殺人\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
   "role": "marksman",
   "attackType": "ranged",
-  "modelKey": "ou99.456546",
+  "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -267,5 +267,37 @@
         "4": 60.0
       }
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.f356889499d29045c6c6b9d65662e920c7f06063e0a07816",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.456546",
+      "modelSha256": "4b1c92b50903e7e9789c948ef9ffb11d43e0c0b6bd7e138c64c81d04cc97962d",
+      "binarySha256": "248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016",
+      "registeredAt": "2026-09-10T11:39:46.281Z",
+      "source": {
+        "kind": "previous",
+        "character": "電車癡漢 - 臭作",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.456546.json"
+      }
+    },
+    {
+      "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
+      "label": "ou99 「动漫卡尔斯」（相似造型）",
+      "sourceModelKey": "ou99.456546",
+      "modelSha256": "0e42b51c499c8b14267130a846a247884a273cec89abb18a6a9fdd510266e35c",
+      "binarySha256": "248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016",
+      "registeredAt": "2026-09-10T11:39:46.291Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "臭作",
+        "work": "动漫卡尔斯",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-456546-1-1.html"
+      }
+    }
+  ]
 }

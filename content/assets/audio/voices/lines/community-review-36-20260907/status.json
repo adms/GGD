@@ -1,0 +1,431 @@
+{
+ "championId": "community-review-36-20260907",
+ "reference": {
+  "sha256": "5ddd064d28b935f5b7e2d39f73eb828bff13f682bf76dd00abbaabc250a1de2b",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-u010.wav",
+  "sourceKind": "donor",
+  "donor": "godie-u010",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=male) — drop community-review-36-20260907.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549703,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-u010.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.52,
+     "at": 1789043014387,
+     "error": null
+    }
+   ],
+   "text": "世の中には優先順位というものがあるのだ",
+   "lang": "ja",
+   "kana": "ヨノナカニワ ユウセン ジュンイト イウ モノガ アルノダ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 57304,
+    "seconds": 3.52,
+    "lufs": null,
+    "hash": "4a8733d9e8ba8b024f72d3ac388adce9b81b87de4de81de1c1b0bb40b823c045",
+    "maxDb": -2.2,
+    "at": 1789043014387
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1789037148519,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789042407975,
+     "error": null
+    }
+   ],
+   "text": "蠻力斬擊！",
+   "lang": "ja",
+   "kana": "バンリョク ザン",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-36-20260907.q",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "3aef051076f7b9da444423643444c682f904fa201801fcc6ea5956070e4a9e00",
+    "maxDb": -2,
+    "at": 1789042407975
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789037148641,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1789042408086,
+     "error": null
+    }
+   ],
+   "text": "本大爺還沒認真！",
+   "lang": "ja",
+   "kana": "ホン ダイ ジイ カンボツ ニン マコト",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-36-20260907.w",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41839,
+    "seconds": 2.56,
+    "lufs": null,
+    "hash": "d539fc33902760fd0fd7681c8a4979b9678fa179886e29d87c9a04edc04405c6",
+    "maxDb": -2,
+    "at": 1789042408087
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789037148759,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789042408197,
+     "error": null
+    }
+   ],
+   "text": "霸王突進！",
+   "lang": "ja",
+   "kana": "ハオウ トッシン",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-36-20260907.e",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "74d9b526d0c03186ce7970cbc2fd1ef05d0695f9146125cd0e42597ba3876b2a",
+    "maxDb": -2.7,
+    "at": 1789042408197
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789037148878,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789042408305,
+     "error": null
+    }
+   ],
+   "text": "Rance Attack／蘭斯攻擊！",
+   "lang": "ja",
+   "kana": "Rance Attack ／ ラン シ コウ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-36-20260907.r",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33062,
+    "seconds": 2,
+    "lufs": null,
+    "hash": "edf29cd1a4c2567c3558ed5b197783258c9f6c4890f5f0da95be202d5410351d",
+    "maxDb": -1.9,
+    "at": 1789042408305
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789037148992,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789042408412,
+     "error": null
+    }
+   ],
+   "text": "跟著本大爺衝！",
+   "lang": "ja",
+   "kana": "コン チョ ホン ダイ ジイ ショウ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-36-20260907.ex",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24703,
+    "seconds": 1.48,
+    "lufs": null,
+    "hash": "4c89c7f99588b42f5bc5cf6f96c61e791011f751a023552f83c7133969bbd874",
+    "maxDb": -2,
+    "at": 1789042408412
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.32,
+     "at": 1789043014510,
+     "error": null
+    }
+   ],
+   "text": "やはり俺様は冒険をしている時が一番格好いい",
+   "lang": "ja",
+   "kana": "ヤハリ オレサマワ ボウケンオ シテイル トキガ イチバン カッコイイ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 54378,
+    "seconds": 3.32,
+    "lufs": null,
+    "hash": "d896f4993730339c56da5952fdaef1d7c58c707d32004552354f80eeea673b23",
+    "maxDb": -1.9,
+    "at": 1789043014510
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789037149105,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "7345346d9425fc8f84f6f7a4d23f527da4a281151455cc338596894e300b269d",
+    "maxDb": -1.9,
+    "at": 1789037149105
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.24,
+     "at": 1789037149222,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5059,
+    "seconds": 0.24,
+    "lufs": null,
+    "hash": "f803df21221358c1c9ab5050c676a7c48e1422669b3bb4fae86c6ad58a0fc5ec",
+    "maxDb": -2,
+    "at": 1789037149222
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789037149336,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "786d217f58bb4e2c9bbf56ad3a89e7ad0cf9714acd9409b039d6c7cec122a57e",
+    "maxDb": -4.1,
+    "at": 1789037149336
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789043014626,
+     "error": null
+    }
+   ],
+   "text": "がははははは！",
+   "lang": "ja",
+   "kana": "ガハハハハハ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "b11ece0bd11d74906d6d5b89c9159f43bd692dde1920bfcd43cc89ebdfba899c",
+    "maxDb": -2,
+    "at": 1789043014626
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789037149455,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "a5274757b0dd7f7482b5db1f703e9571bd9a55e341579e69a121c8810d923818",
+    "maxDb": -1.9,
+    "at": 1789037149455
+   },
+   "lastError": null
+  }
+ }
+}

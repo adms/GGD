@@ -374,6 +374,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:22:16.192Z",
+      "source": {
+        "kind": "previous",
+        "character": "八神庵",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.a89b32319ef8148b84d78d6db012d6dad16c406291505f5e",
+      "label": "ou99 八神庵（本尊）",
+      "sourceModelKey": "ou99.313646",
+      "modelSha256": "7a2a1a8b24dc9a874be5afe6edb752dd106f539fd8c3e3991bd5ecd344d688f4",
+      "binarySha256": "40f5e40a243762d240f87d1979db0ec81ad150a470d6bbd69a6352617f7dd1ec",
+      "registeredAt": "2026-09-10T11:22:16.279Z",
+      "source": {
+        "kind": "exact",
+        "character": "八神庵",
+        "work": "拳皇 THE KING OF FIGHTERS",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-313646-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.cc18457fd9e72014081ff16a6a34789f34e394d45844a8e5",
       "label": "原上線模型",
       "sourceModelKey": "ou99.313646",

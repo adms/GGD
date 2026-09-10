@@ -335,6 +335,36 @@
   "icon": "assets/icons/champions/b2-klaus.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:28:01.012Z",
+      "source": {
+        "kind": "previous",
+        "character": "克勞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556",
+      "label": "ou99 「银发动漫正装男」（相似造型）",
+      "sourceModelKey": "ou99.487487-7yzc0mtk",
+      "modelSha256": "c3989d0ee034dda9b4d979da5f16f61d9d2579700d27410b528f10bcc5e11de7",
+      "binarySha256": "4366a2eb1889e23caaadf474158a967c256fbbc706c9487cee9c01d58005de3f",
+      "registeredAt": "2026-09-10T11:28:01.018Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+        "work": "银发动漫正装男",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.06f84bffd4849686b5a832e8e458fc52bc01c585cf25c062",
       "label": "原上線模型",
       "sourceModelKey": "ou99.487487-7yzc0mtk",

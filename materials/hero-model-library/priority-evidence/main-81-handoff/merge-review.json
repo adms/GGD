@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-10T16:13:35.505607+00:00",
+  "scope": "Bounded 81-model merge review; two confirmed normalization fixes authorized by root. Not a runtime or full 81-model content acceptance.",
+  "repoRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "head": "1b1bd17f2d0982a24a0fa36c41fc4deb64a6f1f5",
+  "main": "b6686109a2946664827e8e59529de670b844d7c6",
+  "mergeState": "Root resolved modelVersions.ts conflict in working tree; merge commit not created by this agent.",
+  "changedByThisAgent": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/normalize.ts",
+      "bytes": 15995,
+      "sha256": "6fecf94e6fd034afd6ae95d69fb2f55f87ce8b422121f4101896116026d12141"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/normalize.test.ts",
+      "bytes": 7696,
+      "sha256": "ad4df79488cbb45961df967d1ba859d8314c797cd2ed009544c127050cd3df9e"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/heroModel.ts",
+      "bytes": 5361,
+      "sha256": "99a05abcb803576e41f5896f9275c436cc40e32a96ebfdd4ddba6d3163696111"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/heroModel.test.ts",
+      "bytes": 5630,
+      "sha256": "6147776ea03e336eef5c145800595de2cae8acaa930af4aecc74dfc796dd7351"
+    }
+  ],
+  "fixedFindings": [
+    {
+      "id": "jpeg-resize-mime",
+      "severity": "P1",
+      "before": "Actual ffmpeg host resized valid 512x256 JPEG to PNG256, but GLB kept image/jpeg. Khronos rejected IMAGE_MIME_TYPE_INVALID.",
+      "after": "Read actual replacement header with existing sniffImageHeader, accept PNG/JPEG and synchronize image.mimeType. Actual ffmpeg repro now passes inspector/Khronos at256.",
+      "location": {
+        "path": "packages/shared/src/content/modelUpload/normalize.ts",
+        "line": 143,
+        "sha256": "6fecf94e6fd034afd6ae95d69fb2f55f87ce8b422121f4101896116026d12141"
+      },
+      "regression": "normalize.test.ts: keeps the resized image MIME consistent with PNG bytes returned for a JPEG source"
+    },
+    {
+      "id": "zero-clip-index-drift",
+      "severity": "P1",
+      "before": "Original animations [ZeroAuthoredPose,Motion,Cast], selection1 intendedMotion. Normalizer removed index0; prepare applied stale1 and silently returnedCast.",
+      "after": "NormalizeReport.clipIndexMap records original→retained index or null. prepare maps original selections before pruning. Selecting removed zero clip is rejected explicitly. Source bytes remain unchanged.",
+      "location": {
+        "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+        "line": 42,
+        "sha256": "99a05abcb803576e41f5896f9275c436cc40e32a96ebfdd4ddba6d3163696111"
+      },
+      "regressions": [
+        "heroModel.test.ts: preserves original selected clip identities when normalization removes an earlier zero-length clip",
+        "heroModel.test.ts: rejects a selected zero-length clip instead of substituting the next animation"
+      ]
+    }
+  ],
+  "remainingFindings": [
+    {
+      "id": "editor-inspect-before-normalization",
+      "severity": "P2",
+      "status": "confirmed-not-changed-outside-assigned-files",
+      "evidence": [
+        {
+          "path": "apps/editor/src/hero/modelUpload.worker.ts",
+          "line": 11,
+          "sha256": "a9c36f864fbe6289ca3c373fde65d37993d7945077e09dd44cc85b6413eddb51"
+        },
+        {
+          "path": "apps/editor/src/hero/HeroModelUploadPanel.tsx",
+          "line": 38,
+          "sha256": "19e99d6607ea7399c83438340222cc0a2fde0d5a028789c904cb7a20663db4eb"
+        },
+        {
+          "path": "packages/shared/src/content/modelUpload/inspect.ts",
+          "line": 28,
+          "sha256": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1"
+        }
+      ],
+      "effect": "Upload panel inspects raw bytes before setting working draft; zero-length clips are rejected before prepare can normalize them. This is an import UX gap, not publication of a bad frozen version.",
+      "nextAction": "If addressed in this release, normalize a preserved working copy before first inspection, return/store that exact working binary, and derive selections from the same inspected clip list. Keep original uploaded bytes and rebuild/reset selections when working bytes change; do not merely normalize the summary while keeping old bytes/indices."
+    }
+  ],
+  "mergeCompatibility": [
+    {
+      "area": "automatic eligibility and source retention",
+      "status": "resolved-current-working-tree-and-existing-tests-pass",
+      "evidence": [
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 115,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 123,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 170,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 176,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        }
+      ],
+      "conclusion": "Keep normalized candidate creation from Main and branch selectionMode/preferredModelVersion/automaticEligible/provenance hashing together. Identical binaries with separate paid/source labels retain separate selectable records, and unapproved similar proxies are manual-only."
+    },
+    {
+      "area": "clipMap referencing a removed zero-length clip",
+      "status": "fails-closed-by-code",
+      "evidence": [
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 151,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 157,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        }
+      ],
+      "conclusion": "ModelVersions retains source doc clipMap but validates names after normalization. A mapped zero-length name is missing and triggers422 before artifact construction; it is not silently frozen. Unreferenced zero-length clips can be dropped. Recommend a backend regression verifying rejected mapped-zero candidate leaves history/files unchanged."
+    },
+    {
+      "area": "frozen model immutability",
+      "status": "retained-code-and-existing-regressions-pass",
+      "evidence": [
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 139,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 142,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 165,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 187,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        }
+      ],
+      "conclusion": "Normalization occurs only for new add candidates. Activation/automatic selection verifies existing hashes and returns no artifacts; previous initial version is frozen without normalization. writeArtifacts preflights content collisions and publishes via hardlink without replacing names. No bulk retrofit of frozen files is authorized or performed."
+    },
+    {
+      "area": "256px budget rollout",
+      "status": "retained",
+      "evidence": [
+        {
+          "path": "packages/shared/src/content/modelUpload/budget.ts",
+          "line": 99,
+          "sha256": "9601a77659df93610d8c047f811b0cf065f5ebf935aab399e7d7eccf8635e25f"
+        },
+        {
+          "path": "apps/content-api/src/modelVersions.ts",
+          "line": 154,
+          "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+        }
+      ],
+      "conclusion": "New prepared bodies remain under Main256 cap; failed/no host resize remains over-budget and is rejected. Existing frozen activation path does not run budget normalization, preserving hash-compatible historical rollback. Full81 payload cap scan is owned by root; not performed by this review."
+    }
+  ],
+  "validation": [
+    {
+      "command": "pnpm exec vitest run packages/shared/src/content/modelUpload/normalize.test.ts packages/shared/src/content/modelUpload/heroModel.test.ts packages/shared/src/content/modelUpload/modelUpload.test.ts --pool=forks --maxWorkers=1 --minWorkers=1 --no-cache",
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "filesPassed": 3,
+      "testsPassed": 20,
+      "durationSeconds": 7.2
+    },
+    {
+      "command": "pnpm exec vitest run apps/content-api/src/modelVersions.test.ts apps/content-api/src/catalogVersions.test.ts --pool=forks --maxWorkers=1 --minWorkers=1 --no-cache",
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "filesPassed": 2,
+      "testsPassed": 16,
+      "durationSeconds": 25.59
+    },
+    {
+      "command": "node --import tsx /private/tmp/ggd-model-merge-review-repro.mts",
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "evidenceBefore": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/merge-review-evidence/normalization-repros.json",
+        "bytes": 2940,
+        "sha256": "4e704b96c914529db4b6fad58666e0b62e470801ed37f5925b71c7cb2ae53edd"
+      },
+      "evidenceAfter": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/merge-review-evidence/normalization-repros.after.json",
+        "bytes": 3329,
+        "sha256": "4cedf85e74de4e632126928e23d94e54b32db99b6e465464f62c296e994eb6ab"
+      },
+      "note": "Actual ffmpeg JPEG512→PNG256 plus original-index selection repro; only authored fixture/output files written."
+    },
+    {
+      "command": "git diff --check -- packages/shared/src/content/modelUpload/normalize.ts packages/shared/src/content/modelUpload/normalize.test.ts packages/shared/src/content/modelUpload/heroModel.ts packages/shared/src/content/modelUpload/heroModel.test.ts",
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0
+    }
+  ],
+  "notPerformed": [
+    "No frontend source changes; editor initial zero-clip inspection still needs coordination.",
+    "No content/champion/model/source indexes or default modifications by this agent.",
+    "No commit, push, S3 or model conversion.",
+    "No full repository typecheck/CI or 81-model visual/runtime acceptance claimed."
+  ],
+  "evidenceFiles": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/merge-review-evidence/authored-512.jpg",
+      "bytes": 2677,
+      "sha256": "aee90f5cb116f1b52daff727d5b4d5c20468a7ed667ff426f8a63c08ec3ce60e"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/merge-review-evidence/normalization-repro.mts",
+      "bytes": 3826,
+      "sha256": "5579360c65e915d3978e0a16faa421b453cebfbd2ec00de86b8ec8b26c88d2c1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/merge-review-evidence/normalization-repros.after.json",
+      "bytes": 3329,
+      "sha256": "4cedf85e74de4e632126928e23d94e54b32db99b6e465464f62c296e994eb6ab"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/merge-review-evidence/normalization-repros.json",
+      "bytes": 2940,
+      "sha256": "4e704b96c914529db4b6fad58666e0b62e470801ed37f5925b71c7cb2ae53edd"
+    }
+  ]
+}

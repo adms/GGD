@@ -41,6 +41,18 @@ export const zModelDoc = z
      * It does not grant asset distribution rights or bypass package checks.
      */
     heroBody: z.boolean().optional(),
+    /**
+     * ⭐ `heroBody: false` 的**理由**，住在旗標旁邊。
+     *
+     * ⚠️ 為什麼要有這一格：一個沒有理由的停用旗標，下一輪讀到時分不出它是
+     * 「量到的缺陷」還是「當時沒空處理」——⛔ 而那正是本專案記過的
+     * 「一句被散文守著的宣稱活過了它的保存期限」。⭐ 理由要能被反駁：
+     * 寫得出數字（三角面 58,410 / 上限 28,000）或寫得出證據（實拍畫不出身體），
+     * ⛔ 不是「之後再看」。
+     *
+     * ⛔ `heroBody` 不是 false 時這一格沒有意義。
+     */
+    heroBodyNote: z.string().trim().min(1).max(600).optional(),
     /** Frozen body revision. Legacy snapshots retain the former stand-in/overlay behavior. */
     bodyVersion: z.object({ sourceModelKey: zId, legacyAppearance: z.boolean() }).strict().optional(),
     /** named local-space offsets for vfx/projectile muzzles, overhead UI, … */

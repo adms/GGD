@@ -341,6 +341,36 @@
   "schema": "champion@1",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:45:25.544Z",
+      "source": {
+        "kind": "previous",
+        "character": "鬼畜王蘭斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.3139ca177291a0bdad27850cbc7aaa17b65f07f2f6775272",
+      "label": "ou99 「篮球小男孩」（相似造型）",
+      "sourceModelKey": "ou99.493578",
+      "modelSha256": "d2136011a00bbaf235dca674ba054176d7892e6e8fd5a6ef57100b456ad640ca",
+      "binarySha256": "f70116b571774a32bc2c92fc5d9e273228de6ec2277b31ff8554b5201d64ac8d",
+      "registeredAt": "2026-09-10T11:45:25.579Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "鬼畜王蘭斯",
+        "work": "篮球小男孩",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.d52431a966e687856f7333a254356b015ab2dd88e61fe768",
       "label": "原上線模型",
       "sourceModelKey": "ou99.493578",

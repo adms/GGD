@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-22-20260907",
+  "source_name": "official-sample: 【リゼロ】アフレコ映像│ナツキ・スバル役 小林裕介ver (「Re:ゼロから始める異世界生活」チャンネル【公式】)",
+  "source_url": "https://www.youtube.com/watch?v=hQYbycqPOfg",
+  "direct_url": "https://www.youtube.com/watch?v=hQYbycqPOfg",
+  "license_url": "",
+  "timestamp": "unverified (needs manual scrub; booth recording — largely dry voice)",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "小林裕介",
+  "source_sha256": "586c0e62f78481f090e57b660afad8dbc949ea30c3cb1cb6b2dc619a556c7144",
+  "downloaded_at": "2026-09-10T10:52:59.181977Z",
+  "notes": "Official Re:Zero channel, verified via YouTube oEmbed. Recording-booth footage of the VA performing Subaru's lines — best chance of BGM-free solo speech.",
+  "precut": {
+    "window_start_s": 146.0,
+    "window_s": 10.0,
+    "score": 0.618,
+    "metrics": {
+      "multiple_speaker_probability": 0.206,
+      "music_probability": 0.581,
+      "speech_or_vocal_ratio": 0.667,
+      "silence_ratio": 0.33,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 28.1
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-22-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

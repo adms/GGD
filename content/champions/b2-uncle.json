@@ -402,6 +402,36 @@
   "icon": "assets/icons/champions/b2-uncle.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T11:34:06.219Z",
+      "source": {
+        "kind": "previous",
+        "character": "異世界舅舅",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.7135f29cae6eb26851a90d407801e0b7dc27671ca3b08909",
+      "label": "ou99 「光刀女剑二次元」（相似造型）",
+      "sourceModelKey": "ou99.454482",
+      "modelSha256": "97d0b41905a5f7450da7d129a9e93a82fbacdee9396e4d44e5ea536def213370",
+      "binarySha256": "edc48a694535b72bbec64c92f4e3c05a5fd8b882044ace0c6dcbcc4c96365f31",
+      "registeredAt": "2026-09-10T11:34:06.260Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "異世界舅舅",
+        "work": "光刀女剑二次元",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-454482-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.287ebb2bdd01052cd0faf8a27dafd0e9fe63623172b35bb9",
       "label": "原上線模型",
       "sourceModelKey": "ou99.454482",

@@ -351,6 +351,36 @@
   "icon": "assets/icons/champions/b2-shadow.webp",
   "modelVersions": [
     {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T11:31:45.936Z",
+      "source": {
+        "kind": "previous",
+        "character": "闇影",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.fefbd90d0746bfe2b0ec1eaa34346fd20f90fe551bb57f07",
+      "label": "ou99 「202511z13」（相似造型）",
+      "sourceModelKey": "ou99.481732",
+      "modelSha256": "2d4e74a09c300aec89621355d80a9608e4b51ce198a2f53d722bdf66512839b3",
+      "binarySha256": "ef252f3a94524b1db2b7ffb6dfd972c4d32e70c7b4abd5f54bf25d57ab74da1b",
+      "registeredAt": "2026-09-10T11:31:45.944Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "我想成為影之強者",
+        "work": "202511z13",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-481732-1-1.html"
+      }
+    },
+    {
       "modelKey": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
       "label": "原上線模型",
       "sourceModelKey": "ou99.481732",
