@@ -1,0 +1,318 @@
+{
+  "method": "Actual GLB Babylon WebGL rendering with all source embedded materials and skin; two samples per procedural clip; orthographic front plus idle side/back views",
+  "babylonVersion": "7.54.3",
+  "shots": [
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-front-start.png",
+      "bounds": {
+        "min": [
+          -0.5002504792064428,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5001266095787287,
+          1.8000104986131191,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.5023262109607458,
+          0.021691789850592613,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.49782575108110905,
+          1.8226010166108608,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "side",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-side-middle.png",
+      "bounds": {
+        "min": [
+          -0.5023262109607458,
+          0.021691789850592613,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.49782575108110905,
+          1.8226010166108608,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "back",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-back-middle.png",
+      "bounds": {
+        "min": [
+          -0.5023262109607458,
+          0.021691789850592613,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.49782575108110905,
+          1.8226010166108608,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_run",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 48.00000071525574,
+      "file": "ggd-procedural-run-front-start.png",
+      "bounds": {
+        "min": [
+          -0.6170268561691046,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.6180511210113764,
+          1.8015940748155117,
+          0.3341839984059334
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_run",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 48.00000071525574,
+      "file": "ggd-procedural-run-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.6487468983978033,
+          0.005528196692466736,
+          -0.2955692633986473
+        ],
+        "max": [
+          0.5920808408409357,
+          1.826600607484579,
+          0.6762591972947121
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_attack",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 60,
+      "file": "ggd-procedural-attack-front-start.png",
+      "bounds": {
+        "min": [
+          -0.5002504792064428,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5001266095787287,
+          1.8000104986131191,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_attack",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 60,
+      "file": "ggd-procedural-attack-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.8097929265350103,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5946629140526056,
+          1.8038676343858242,
+          0.47278327494859695
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_cast",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 96.00000143051147,
+      "file": "ggd-procedural-cast-front-start.png",
+      "bounds": {
+        "min": [
+          -0.5002504792064428,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5001266095787287,
+          1.8000104986131191,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_cast",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 96.00000143051147,
+      "file": "ggd-procedural-cast-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.9213328864425421,
+          0.02258794568479061,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.908247658982873,
+          1.8175919614732265,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_hurt",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 33.00000071525574,
+      "file": "ggd-procedural-hurt-front-start.png",
+      "bounds": {
+        "min": [
+          -0.5002504792064428,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5001266095787287,
+          1.8000104986131191,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_hurt",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 33.00000071525574,
+      "file": "ggd-procedural-hurt-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.5413404610008001,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5791911575943232,
+          1.7984945140779018,
+          0.3275322988629341
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_death",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 75,
+      "file": "ggd-procedural-death-front-start.png",
+      "bounds": {
+        "min": [
+          -0.5002504792064428,
+          -1.1175870895385742e-08,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.5001266095787287,
+          1.8000104986131191,
+          0.28482193499803543
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_death",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 75,
+      "file": "ggd-procedural-death-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.8611084129661322,
+          -0.00018237531185150146,
+          -0.28431742638349533
+        ],
+        "max": [
+          0.9298346731811762,
+          1.3573674522340298,
+          0.32370830327272415
+        ]
+      }
+    }
+  ],
+  "meshCount": 4,
+  "bones": [
+    57
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true
+    },
+    {
+      "name": "",
+      "ready": true
+    },
+    {
+      "name": "guts_skin (Base Color)",
+      "ready": true
+    },
+    {
+      "name": "guts_cape (Base Color)",
+      "ready": true
+    },
+    {
+      "name": "guts_body (Base Color)",
+      "ready": true
+    },
+    {
+      "name": "guts_eyelash (Base Color)",
+      "ready": true
+    }
+  ],
+  "nativeMotion": false,
+  "gameplayAcceptance": "pending"
+}

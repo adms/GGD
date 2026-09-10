@@ -1,12 +1,24 @@
 {
   "collection": "skins",
-  "hash": "3d1095f3da83",
+  "hash": "5ea08c605fea",
   "entries": [
+    {
+      "id": "skin.b2-klaus.487487sbhhkedr",
+      "path": "skins/skin.b2-klaus.487487sbhhkedr.json",
+      "hash": "2e336f91c147",
+      "size": 318
+    },
     {
       "id": "skin.godie-e008.heroshanawingsmall",
       "path": "skins/skin.godie-e008.heroshanawingsmall.json",
       "hash": "36b7075e966a",
       "size": 244
+    },
+    {
+      "id": "skin.godie-h01u.487191",
+      "path": "skins/skin.godie-h01u.487191.json",
+      "hash": "07dde269c50e",
+      "size": 296
     },
     {
       "id": "skin.godie-h02v.horsehead",
@@ -15,10 +27,52 @@
       "size": 217
     },
     {
+      "id": "skin.godie-hpb1.465205",
+      "path": "skins/skin.godie-hpb1.465205.json",
+      "hash": "df4a376875dd",
+      "size": 299
+    },
+    {
+      "id": "skin.godie-n003.470426",
+      "path": "skins/skin.godie-n003.470426.json",
+      "hash": "0cb389354767",
+      "size": 284
+    },
+    {
+      "id": "skin.godie-n00b.496905",
+      "path": "skins/skin.godie-n00b.496905.json",
+      "hash": "d71d4a2319c8",
+      "size": 296
+    },
+    {
+      "id": "skin.godie-n01g.470426",
+      "path": "skins/skin.godie-n01g.470426.json",
+      "hash": "4810f7c90b0f",
+      "size": 284
+    },
+    {
+      "id": "skin.godie-o00x.497131",
+      "path": "skins/skin.godie-o00x.497131.json",
+      "hash": "8fc1c48bad99",
+      "size": 287
+    },
+    {
+      "id": "skin.godie-ogrh.497131",
+      "path": "skins/skin.godie-ogrh.497131.json",
+      "hash": "5751b4db915d",
+      "size": 287
+    },
+    {
       "id": "skin.godie-u00l.heropika",
       "path": "skins/skin.godie-u00l.heropika.json",
       "hash": "2cac941d5a53",
       "size": 214
+    },
+    {
+      "id": "skin.godie-ubal.472035",
+      "path": "skins/skin.godie-ubal.472035.json",
+      "hash": "865b399c1279",
+      "size": 288
     },
     {
       "id": "skin.sela.rogue",

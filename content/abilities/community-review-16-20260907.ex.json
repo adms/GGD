@@ -1,0 +1,56 @@
+{
+  "id": "community-review-16-20260907.ex",
+  "schema": "ability@1",
+  "name": "限定展開・Excalibur",
+  "provenance": "w3x-import",
+  "description": "展開寶具進行一次有起手的直線光束攻擊。",
+  "slot": "EX",
+  "castType": "skillshot",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "castTimeSec": 1.233,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3.0,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "vfxKey": "fx.prim.holy.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-16-20260907.ex.webp",
+  "rangeTier": "大"
+}

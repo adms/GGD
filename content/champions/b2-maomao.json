@@ -1,0 +1,516 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.067,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「樣本採好了別打翻！」\n採樣表完成：得到 moon-combo 樣本 4 秒和 80 護盾 2 秒；不是新資源系統。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "duration": 4,
+          "kind": "applyStatus",
+          "statusId": "moon-combo"
+        },
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 80,
+            "perRank": [
+              0,
+              40,
+              80,
+              120
+            ]
+          },
+          "duration": 2,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        }
+      ],
+      "id": "b2-maomao.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "樣本採好了別打翻",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "self",
+          "effects": [
+            {
+              "applyTo": "self",
+              "duration": 4,
+              "kind": "applyStatus",
+              "statusId": "moon-combo"
+            },
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 80,
+                "perRank": [
+                  0,
+                  40,
+                  80,
+                  120
+                ]
+              },
+              "duration": 2,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 1.233,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「試藥員本人先簽到！」\n試吃：自身 poison 降低受療為 50% 持續 3 秒，另有每秒極小真傷共 3 秒。這是虛構藥劑，沒有現實配方。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "duration": 3,
+          "healingTakenMult": 0.5,
+          "kind": "applyStatus",
+          "statusId": "poison"
+        },
+        {
+          "amountPerTick": {
+            "damageTier": "極小"
+          },
+          "applyTo": "self",
+          "damageType": "true",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "kind": "dot",
+          "onCasterDeath": "stop",
+          "stacking": "refresh"
+        }
+      ],
+      "id": "b2-maomao.q",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "試藥員本人先簽到",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.233,
+          "castType": "self",
+          "effects": [
+            {
+              "applyTo": "self",
+              "duration": 3,
+              "healingTakenMult": 0.5,
+              "kind": "applyStatus",
+              "statusId": "poison"
+            },
+            {
+              "amountPerTick": {
+                "damageTier": "極小"
+              },
+              "applyTo": "self",
+              "damageType": "true",
+              "durationSec": 3,
+              "intervalSec": 1,
+              "kind": "dot",
+              "onCasterDeath": "stop",
+              "stacking": "refresh"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 1.033,
+      "castType": "targeted",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「憑樣本換一張處方！」\n有樣本才開處方：消耗自身 moon-combo，為友軍驅散負面並回復 240；缺樣本不假裝開藥成功。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "count": 3,
+              "kind": "dispel",
+              "order": "newest",
+              "polarity": "debuff",
+              "pools": {
+                "buffs": true,
+                "dot": true,
+                "status": true
+              },
+              "shape": "single"
+            },
+            {
+              "amount": {
+                "flat": 240,
+                "perRank": [
+                  0,
+                  180,
+                  360
+                ]
+              },
+              "applyTo": "target",
+              "kind": "heal"
+            }
+          ],
+          "shape": "single",
+          "statusId": "moon-combo",
+          "subject": "self"
+        }
+      ],
+      "id": "b2-maomao.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "憑樣本換一張處方",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.033,
+          "castType": "targeted",
+          "effects": [
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "count": 3,
+                  "kind": "dispel",
+                  "order": "newest",
+                  "polarity": "debuff",
+                  "pools": {
+                    "buffs": true,
+                    "dot": true,
+                    "status": true
+                  },
+                  "shape": "single"
+                },
+                {
+                  "amount": {
+                    "flat": 240,
+                    "perRank": [
+                      0,
+                      180,
+                      360
+                    ]
+                  },
+                  "applyTo": "target",
+                  "kind": "heal"
+                }
+              ],
+              "shape": "single",
+              "statusId": "moon-combo",
+              "subject": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.067,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「先解毒再喝急救包！」\n先移除自己最多 3 項可驅散負面／DOT，再回復 120；解毒与回血是兩段獨立效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": 3,
+          "kind": "dispel",
+          "order": "newest",
+          "polarity": "debuff",
+          "pools": {
+            "buffs": true,
+            "dot": true,
+            "status": true
+          },
+          "shape": "single"
+        },
+        {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "kind": "heal"
+        }
+      ],
+      "id": "b2-maomao.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "先解毒再喝急救包",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "cards": [
+          {
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+            "params": {
+              "castTimeSec": 0.1,
+              "castType": "self",
+              "effects": [
+                {
+                  "count": 3,
+                  "kind": "dispel",
+                  "order": "newest",
+                  "polarity": "debuff",
+                  "pools": {
+                    "buffs": true,
+                    "dot": true,
+                    "status": true
+                  },
+                  "shape": "single"
+                }
+              ],
+              "radius": 3,
+              "side": "enemies"
+            },
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+          },
+          {
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+            "params": {
+              "amount": {
+                "flat": 120,
+                "perRank": [
+                  0,
+                  60,
+                  120,
+                  180
+                ]
+              },
+              "castTimeSec": 0.1,
+              "target": "self"
+            },
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 20,
+    "agiGrowth": 1.89,
+    "int": 19,
+    "intGrowth": 1.83,
+    "primary": "STR",
+    "source": "authored",
+    "str": 21,
+    "strGrowth": 1.99
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "藥師少女的獨語｜把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-maomao.ex",
+  "growth": {
+    "ad": 2.220326530612245,
+    "ap": 0,
+    "armor": 0.4212959183673469,
+    "as": 0,
+    "healthRegen": 0.1168285714285714,
+    "manaRegen": 0,
+    "maxHealth": 10.305102040816323,
+    "maxMana": 6.564285714285716,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-maomao",
+  "modelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
+  "name": "貓貓",
+  "origin": "軟輔",
+  "passiveAbility": "b2-maomao.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-maomao.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.1863c1d40670f1de5f1f7950c47abef23db94881c8a57016",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "a06858ba9ca08d4d9d688472bc5bc5f8286f7b9739f49065d7fe2f162e30f5b6",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T14:45:36.194Z",
+      "source": {
+        "kind": "previous",
+        "character": "貓貓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.59a39cbb294ed94feb309c7467c12af6b4cb5bada2b4272d",
+      "label": "少司命",
+      "sourceModelKey": "community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5",
+      "modelSha256": "4b0315f33c1975a2e0ac784425aea41ee2d4eac8f9599f981490fc9bdda84eb1",
+      "binarySha256": "edf36fb1ada4a685349ffe5d78fe3a6d2afce96f6536f329ed6cc1d1087897d0",
+      "registeredAt": "2026-09-10T14:45:36.206Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "少司命",
+        "work": "秦時明月",
+        "library": "300heroes",
+        "reference": "300heroes:bb25f176065469beefe7dd86",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
+      "label": "貓貓｜中性表情／小步幅（GGD 程序化動作）",
+      "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+      "modelSha256": "afa2c08d5d767313e82acf0330475a62f7974ea136f00c96d97896c1bff78a2b",
+      "binarySha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67",
+      "registeredAt": "2026-09-10T14:45:36.342Z",
+      "source": {
+        "kind": "exact",
+        "character": "貓貓｜中性表情／小步幅",
+        "work": "藥師少女的獨語",
+        "library": "Lethal Company MOD／GrogCompany",
+        "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

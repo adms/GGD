@@ -199,12 +199,30 @@ function probe(t: TemplateDoc): Row {
   return { id: t.id, ...out };
 }
 
+/**
+ * ⭐ **前置條件未滿足 ≠ no-op** —— 各自帶一個能被反駁的理由。
+ * ⛔ 一列都不准是「它就是不會動」。
+ */
+const PRECONDITION_BY_DESIGN: Record<string, string> = {
+  "tpl-spend-resource":
+    "⭐ GH#1132 AC④ —— 這一族的**定義**就是「要有 N 層資源才放得出來」。" +
+    "預設展開時施法者身上**是 0 層** ⇒ `consumeStatus` 扣不到 ⇒ 走 `onMissing` " +
+    "（冒一行「資源不足」）⇒ ⭐ **sim 狀態本來就不該變** —— 那正是票文要的「**合法消耗**」。" +
+    "⚠️ ⭐ 而它**不是**靜默的：`onMissing` 的 `floatingText` 會告訴玩家為什麼放不出來" +
+    "（exemplar 逐字：「缺少黑魔導時**顯示使用條件**」）—— ⛔ 只是那條閘量的是 sim 狀態，" +
+    "⛔ 量不到客戶端事件。" +
+    "⭐ **反駁它的樣子**：把 `onMissing` 拿掉 ⇒ 這一族就真的變成「按下去什麼都沒發生」，" +
+    "而 `resourceCharge.test.ts` 會紅（它斷言 `onMissing` 非空）。",
+};
+
 describe("每一份 enabled 模板的預設展開，在真的 SimWorld 裡施放要有東西動（GH#1078）", () => {
   it("★ 全部 enabled：主動 PASS／被動掛上來源／純演出生得出模型 —— ⛔ 沒有一份是 no-op", () => {
     const rows = enabled.map(probe);
     // 報告用：`GGD_1078_ROWS=1 npx vitest run …` 印出每一份量到的頻道（⛔ 平時不吵）。
     if (process.env["GGD_1078_ROWS"]) console.log(rows.map((r) => `${r.id}\t${r.verdict}\t${r.channel ?? ""}\t${r.reason ?? ""}`).join("\n"));
-    const bad = rows.filter((r) => !["PASS", "PASSIVE", "MODEL_FX"].includes(r.verdict));
+    const bad = rows.filter(
+      (r) => !["PASS", "PASSIVE", "MODEL_FX"].includes(r.verdict) && !PRECONDITION_BY_DESIGN[r.id],
+    );
     expect(bad.map((r) => `${r.id}: ${r.verdict}（${r.reason ?? ""}）`), "預設展開在 sim 裡什麼都不做的模板").toEqual([]);
     // sentinel：分母要是全部 enabled 模板，而且三種形狀各自至少量到一個 —— 迴圈沒跑到也是全綠。
     expect(rows.length, "分母回空的 —— 偵測壞了").toBeGreaterThanOrEqual(30);

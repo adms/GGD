@@ -1,0 +1,65 @@
+{
+  "id": "community-review-26-20260907.w",
+  "name": "手錶型麻醉槍",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.7,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】單發針造成短暫睡眠；目標受到後續傷害時提前醒來。\n【待補機制】0.7 秒暈眩只是底稿；需受傷可喚醒的睡眠及針彈碰撞。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "stun",
+      "duration": 0.7,
+      "applyTo": "target",
+      "stun": true
+    }
+  ],
+  "castTimeSec": 0.567,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-26-20260907.w.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.567
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.slash"
+    }
+  ]
+}

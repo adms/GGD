@@ -60,6 +60,7 @@ import {
 import { TerrainCache, terrainKey } from "./minimapTerrain";
 import { portraitCache } from "./minimapIcons";
 import { bossMarkerSpecFor, drawBossMarker } from "./minimapBossMarker";
+import { round11BombardSecondsLeft } from "./round11Model";
 
 /**
  * Redraw interval (20 Hz). DELIBERATELY NOT tied to the snapshot rate: this is
@@ -91,6 +92,9 @@ const REFERENCE_SIZE = 196;
 const CAMERA_BOX = "rgba(255, 255, 255, 0.85)";
 const CAMERA_BOX_FILL = "rgba(255, 255, 255, 0.06)";
 const DANGER_RIM = "#ff6a3d";
+/** ⭐ 第十一回合大轟炸的落點圈（GH#1151 H）—— 刻意比火圈更紅、且**有填色**。 */
+const BOMBARD_RIM = "#ff2b2b";
+const BOMBARD_FILL = "rgba(255, 43, 43, 0.16)";
 /** revive circle held by an enemy standing in it (matches the world VFX tint) */
 const CONTEST_RING = "#ff9e29";
 
@@ -183,6 +187,50 @@ function drawDangerRim(
     }
     ctx.stroke();
   });
+  ctx.restore();
+}
+
+/**
+ * ⭐⭐ 第十一回合的**大轟炸落點**（GH#1151 H）。
+ *
+ * ⛔⛔ **為什麼小地圖非畫不可。** 轟炸打的是「最大生命的**五成真傷**」
+ * （`round11.bombardment.damagePctOfMaxHp` 出貨 0.5，⛔ 不吃護甲魔抗），
+ * 而 HUD 上那一行預警只說得出「**幾秒後**」——⛔ 說不出「**在哪裡**」。
+ * ⇒ ⭐ 少了這一圈，`Round11Overlay` 的「離開紅圈」四個字就是
+ *   **一句說了但不會發生的話**（第一·五守則）：畫面上根本沒有紅圈。
+ *
+ * ⚠️ ⭐ 半徑用**世界座標 → 小地圖**的同一個比例 `s`（與火圈那一段逐字相同），
+ * ⛔ 不是一個固定的像素數：`round11.bombardment.radius` 是一格後台設定，
+ * 一個寫死的像素圈會在 owner 調它的那一刻開始說謊。
+ *
+ * ⚠️ ⛔ 這一圈**不吃 `onlyZone` 分區過濾**：第十一回合是**單一大場地**
+ * （`round11.arenaId`，出貨 `arena.royale`），⛔ 沒有兩個對戰分區。
+ */
+function drawBombardCircle(
+  ctx: CanvasRenderingContext2D,
+  bounds: MapBounds,
+  sizePx: number,
+  yaw: number,
+  nowMs: number,
+): void {
+  const bomb = hudStore.getState().round11Bombard;
+  const left = round11BombardSecondsLeft(bomb, nowMs);
+  // ⭐ 落下之後就不畫（`round11BombardSecondsLeft` 回 null）——
+  // ⛔ 一個永遠掛在地圖上的紅圈等於沒有警告。
+  if (!bomb || left === null) return;
+  const s = sizePx / Math.max(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ);
+  const c = worldToMap(bomb.x, bomb.z, bounds, sizePx, yaw);
+  // 越接近落下越急（與火圈同一個脈動公式，⛔ 不另發明一個）。
+  const urgency = Math.max(0, Math.min(1, 1 - left / Math.max(0.001, bomb.telegraphSec)));
+  ctx.save();
+  ctx.strokeStyle = BOMBARD_RIM;
+  ctx.fillStyle = BOMBARD_FILL;
+  ctx.globalAlpha = 0.35 + 0.5 * urgency * (0.6 + 0.4 * Math.sin(nowMs / 180));
+  ctx.lineWidth = 2 + 2 * urgency;
+  ctx.beginPath();
+  ctx.arc(c.x, c.y, bomb.radius * s, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
   ctx.restore();
 }
 
@@ -369,6 +417,9 @@ export function drawFrame(
   if (image) ctx.drawImage(image, 0, 0, sizePx, sizePx);
 
   drawDangerRim(ctx, bounds, sizePx, yaw, nowMs, localZone);
+  // ⭐ GH#1151 H —— 大轟炸落點。畫在火圈**之後**、實體**之前**：它是地面上的
+  //   危險區，⛔ 不可以蓋住站在裡面的那些人（與復活圈同一條順序理由）。
+  drawBombardCircle(ctx, bounds, sizePx, yaw, nowMs);
 
   // --- 2) entities ---------------------------------------------------------
   const localEntityId = hudStore.getState().localEntityId;

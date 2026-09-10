@@ -3,6 +3,7 @@ package submissions
 import (
 	"context"
 	"encoding/json"
+	"log/slog"
 	"sort"
 	"strings"
 
@@ -64,17 +65,59 @@ func (s *HeroService) ResolveRoster(ctx context.Context) ([]community.HeroPin, e
 		return nil, httpx.Err(503, "hero_target_unavailable", "已發布英雄的目標版本資料不完整。")
 	}
 	target := heroListTarget{profile.GameVersion, profile.Base.ContentVersion, profile.MigrationFingerprint, profile.AuthoringProcessor.Fingerprint}
+	// ⭐⭐ GH#1157 —— 比對哪幾欄由**一格後台開關**決定,出貨 `migration`。
+	// ⛔ 讀不到政策**不擋名單**（fail-open）:那會讓一個設定問題變成「社群英雄全消失」,
+	//    ⭐ 而那正是這一票要修的病。⇒ 退回出貨值,並在下面的空清單那一段說出來。
+	matchMode := HeroTargetMatchMigration
+	policyErr := error(nil)
+	if policy, err := s.IntakePolicy(); err == nil {
+		if policy.HeroTargetMatch != "" {
+			matchMode = policy.HeroTargetMatch
+		}
+	} else {
+		policyErr = err
+	}
 	selected := []string{}
+	// ⭐ 被擋下來的逐欄計數 —— ⛔ 「一個都沒配上」在此之前說不出**為什麼**。
+	dropped := map[string]int{}
 	for _, view := range active {
 		row := heroListRow(view)
 		if row.Target == nil {
 			return nil, httpx.Err(503, "hero_publication_corrupt", "已發布英雄缺少版本相容性資料。")
 		}
-		if *row.Target == target {
+		if ok, field := matchMode.Matches(*row.Target, target); ok {
 			selected = append(selected, row.WorkID)
+		} else {
+			dropped[field]++
 		}
 	}
 	if len(selected) == 0 {
+		// ⛔⛔ **靜默是這裡最大的缺陷。**
+		//
+		// ⭐ `active` 非空而一個都沒配上 ⇒ 玩家看到「一個社群英雄都沒有」，
+		//   而 `/healthz` 一切正常 —— ⛔ 它與「本來就沒有人發布過」長得一模一樣。
+		//
+		// ⚠️ ⭐ 而最常見的原因**不是**內容不相容：`heroListTarget` 的
+		//   `GameRevision` 來自 `GGD_BUILD_STAMP` ⇒ **每一次部署都換一個新指紋**
+		//   ⇒ 已發布的英雄會在下一次部署後靜靜地全部掉出名單。
+		//   （證據：`hero_target_drift_test.go` —— 只有 stamp 變了，內容沒變。）
+		//
+		// ⇒ ⭐ 這裡**不改行為**（回空清單還是 503 是產品決定，見 GH#1147／#1150 的甲乙丙）——
+		//   ⛔ 但它不可以再閉嘴。⚠️ 而一行 log 只是**最低限度**：
+		//   真正的修法是把 gameVersion 從 build stamp 換成內容相容性版本。
+		if len(active) > 0 {
+			slog.Warn("hero published roster empty: every published hero mismatched the serving target",
+				"published", len(active),
+				"target.gameRevision", target.GameRevision,
+				"target.contentVersion", target.ContentVersion,
+				"target.migrationFingerprint", target.MigrationFingerprint,
+				"target.processorFingerprint", target.ProcessorFingerprint,
+				// ⭐ GH#1157 —— 現在說得出**哪一欄**擋下它們,⛔ 不再只是「都沒配上」。
+				"matchMode", string(matchMode),
+				"droppedBy", dropped,
+				"policyReadErr", policyErr,
+				"hint", "⭐ matchMode=migration 時只有 migrationFingerprint 會擋；被 gameRevision／contentVersion 擋住代表這一格被設成 strict（GH#1157）")
+		}
 		return []community.HeroPin{}, nil
 	}
 	return s.ResolvePublished(selected)

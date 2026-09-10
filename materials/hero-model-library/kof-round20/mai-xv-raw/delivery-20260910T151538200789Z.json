@@ -1,0 +1,160 @@
+{
+  "schema": "ggd.immutable-local-source-delivery@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw",
+  "sourceId": "kof-xv-mai-whitemagesunny-raw",
+  "createdAt": "20260910T151538200789Z",
+  "sourceManifest": "source-manifest.json",
+  "files": [
+    {
+      "path": "download-final.json",
+      "bytes": 1031,
+      "sha256": "4aabec93263e244704bc027daf7fd277e672b71bbfaf75fb0ab1058faba8585f"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_AO_FACE.tga",
+      "bytes": 10020848,
+      "sha256": "466bfe8a0477874a8d2d5fcb538ceeb754aa6f08cdbbbba882aa334d2fe55874"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_AO_HAIR.tga",
+      "bytes": 14947494,
+      "sha256": "f5d455136a00d0bc6ed31baeca9454446018b59d91e0fd3fd7186dc89d947bae"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_AO_OTR.tga",
+      "bytes": 812521,
+      "sha256": "2a8a48f0b04a96b2c3ab59c9f95b5492d0c2a32bfbc8a58889c617a44b8e4c80"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_FACE.tga",
+      "bytes": 20766107,
+      "sha256": "f125ba2c6ee32703b93fa65a9ffab62c9a8f83d0e394c2cb36e625c3a5f71607"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_HAIR.tga",
+      "bytes": 32261457,
+      "sha256": "85fff69811481ebe8bbced65a8212480b917ea9771602b7ca5dac9e0b4d45c48"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_MARK.tga",
+      "bytes": 613317,
+      "sha256": "414d1abab3db7a35071f243e80674ff2251f56a56cc7af2c7379fe12a97d1aa5"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_OTR_P1.tga",
+      "bytes": 18036487,
+      "sha256": "fd2afd8b207c2ce3983903d55ebaff7ad8e7ee1e995207f6be705b2c0fc2693d"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_NOR_FACE.tga",
+      "bytes": 7044042,
+      "sha256": "28bab8bc8417e7dfa8a4d794f30b199c73e2afa6b733b10fa125d7a77abc134b"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_NOR_HAIR.tga",
+      "bytes": 35859167,
+      "sha256": "ed4aa3cd5b7f81821e199dece31e61bad37363c3562c684c2742b830464feb5a"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_NOR_OTR.tga",
+      "bytes": 13394217,
+      "sha256": "ac0b837054cad1fddeef192cd8817401d6f9837cf16c3351ea9eedbc462744af"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_SSS_FACE.tga",
+      "bytes": 40297902,
+      "sha256": "29fe9b2a3172b68463e9650af433a802455cd1fd2d196246203415515ea9f853"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_SSS_OTR.tga",
+      "bytes": 38266510,
+      "sha256": "17289fe158050c84bda92b065e8566bca201b7c090630410a62f4a3f4efa991e"
+    },
+    {
+      "path": "extracted-v1/Raw Files/Mai Shiranui.fbx",
+      "bytes": 10074400,
+      "sha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe"
+    },
+    {
+      "path": "extraction-validation.json",
+      "bytes": 3177,
+      "sha256": "3a17f482fa0bf769b388b796d836c798d76e11e9913be17712a93fe47e280d3e"
+    },
+    {
+      "path": "fbx-analysis.json",
+      "bytes": 38800,
+      "sha256": "1affe9233afcd5c627867c89dba7d1c88fd361b467ac3c58d9c094f380f5ac42"
+    },
+    {
+      "path": "full-download.headers.txt",
+      "bytes": 5613,
+      "sha256": "9a10099d140612438f123108304fc634295ac546cba475dd3f93f4ca2210e78f"
+    },
+    {
+      "path": "public-download-confirmation.html",
+      "bytes": 2454,
+      "sha256": "1d178ee5102318719b2d18f6f81f28bc789b2ee5472e814c4b03a4f6ed055020"
+    },
+    {
+      "path": "raw/King of Fighters XV - Mai Shiranui.rar",
+      "bytes": 79735587,
+      "sha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67"
+    },
+    {
+      "path": "source-author.html",
+      "bytes": 1120846,
+      "sha256": "36d7dfb7bb0277bfd394783e41d9c81f81cb92156400d67b24ee4d8aa6251d66"
+    },
+    {
+      "path": "source-gdrive.html",
+      "bytes": 81208,
+      "sha256": "16645e43e95634e6323d1bc9fe857069fc1be4c4369ac1fd469a0071e5d41762"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 5093,
+      "sha256": "57da1b063ccf6e546eaf83cd2081cd82913522c45373b68fe1d41f8cd69a0cc7"
+    },
+    {
+      "path": "texture-validation.json",
+      "bytes": 5483,
+      "sha256": "ffa1cf5f6504f0bca53aa21a22d9024aebbc5afefdd42aa240961ed44c4eb57b"
+    },
+    {
+      "path": "tools/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66"
+    },
+    {
+      "path": "tools/ggd-kof-drive-download.py",
+      "bytes": 3038,
+      "sha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0"
+    },
+    {
+      "path": "tools/ggd-kof-fbx-inspect.py",
+      "bytes": 3203,
+      "sha256": "90789cfa00e491411fc5d65787395adfbf4bd584eefb8a7d79352cea3195b6e7"
+    },
+    {
+      "path": "tools/ggd-kof-round20-extract.py",
+      "bytes": 2178,
+      "sha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69"
+    },
+    {
+      "path": "tools/ggd-kof-round20-freeze-raw.py",
+      "bytes": 8320,
+      "sha256": "efa24a3d797cedeab3cd527d037cbd230d911ce9b45c6e8474aed557df5fc14b"
+    },
+    {
+      "path": "tools/ggd-kof-round20-textures.py",
+      "bytes": 857,
+      "sha256": "9d093c49371f7d887c231fc14c07d30890ceac21120f7c70de8a6a622e215023"
+    }
+  ],
+  "fileCount": 29,
+  "totalBytes": 323428297,
+  "freeze": "complete immutable referenced file set",
+  "runtimeSelectable": false,
+  "nativeGameAnimations": 0,
+  "audioFileIndex": null
+}

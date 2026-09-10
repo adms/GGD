@@ -1,0 +1,391 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「電池型魔法裝甲！」\n建立 3 秒魔力屏障：每 1 魔力吸收 2 物理或魔法傷害，保留 10 魔力；真傷不在屏障清單。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "damageTypes": [
+            "physical",
+            "magic"
+          ],
+          "durationSec": 3,
+          "kind": "manaBarrier",
+          "minManaReserve": 10,
+          "perMana": 2,
+          "shape": "single",
+          "who": "self"
+        }
+      ],
+      "id": "b2-kaede.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "電池型魔法裝甲",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "damageTypes": [
+                "physical",
+                "magic"
+              ],
+              "durationSec": 3,
+              "kind": "manaBarrier",
+              "minManaReserve": 10,
+              "perMana": 2,
+              "shape": "single",
+              "who": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.067,
+      "castType": "self",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「安裝魔劍套件！」\n取得 three-sword-style 暫態與 45 點攻擊力，維持 4 秒；原作的魔法劍士特徵改編為有期限附魔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "duration": 4,
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 45
+            }
+          ]
+        },
+        {
+          "duration": 4,
+          "kind": "applyStatus",
+          "statusId": "three-sword-style"
+        }
+      ],
+      "id": "b2-kaede.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "安裝魔劍套件",
+      "range": 0.0,
+      "slot": "Q",
+      "template": {
+        "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
+        "params": {
+          "castTimeSec": 0.067,
+          "duration": 4,
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 45
+            }
+          ],
+          "status": {
+            "duration": 4,
+            "statusId": "three-sword-style"
+          }
+        },
+        "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 1.433,
+      "castType": "ground",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「技能欄批次執行！」\n以起手命中中心固定 3 秒魔法傷害場（無目標時採施法點），之後每秒重新選取圈內敵人；不是保證以游標點為中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": 3,
+          "delaySec": 1,
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "中",
+                "mult": 0.3333333333333333
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "intervalSec": 1,
+          "kind": "delayed",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "shape": "circle",
+          "side": "enemies",
+          "targetMode": "reresolve"
+        }
+      ],
+      "id": "b2-kaede.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "技能欄批次執行",
+      "radius": 4.5,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189",
+        "params": {
+          "anchor": "point",
+          "applyTo": "enemies",
+          "castTimeSec": 1.433,
+          "damageTier": "中",
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "radius": 4.5,
+          "radiusTier": "小"
+        },
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ],
+      "radiusTier": "小"
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「更新視窗全部穿透！」\n發出直線魔法劍氣，打擊沿線敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "aim": "target",
+          "amount": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "kind": "damageLine",
+          "length": 9,
+          "width": 1.5
+        }
+      ],
+      "id": "b2-kaede.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "更新視窗全部穿透",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "template": {
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+        "params": {
+          "aim": "target",
+          "castTimeSec": 0.467,
+          "damage": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "length": 9,
+          "width": 1.5
+        },
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    }
+  },
+  "archetype": "mage",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 13,
+    "agiGrowth": 1.25,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "異世界轉移魔法劍士｜附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-kaede.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.5280102040816326,
+    "as": 0,
+    "healthRegen": 0.08789387755102042,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-kaede",
+  "modelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
+  "name": "楓",
+  "origin": "法鬥",
+  "passiveAbility": "b2-kaede.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-kaede.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.dcb2b25b905cfeca7bcf4acd0184171db8a4948ee58c0af1",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.474258",
+      "modelSha256": "ff7e98f7e0a5d63cf04f1bd057010ad5d7160e2525363da576de7cacee611f70",
+      "binarySha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06",
+      "registeredAt": "2026-09-10T14:45:39.502Z",
+      "source": {
+        "kind": "previous",
+        "character": "楓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.474258.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
+      "label": "绯红女剑校服女（論壇相似模型）",
+      "sourceModelKey": "ou99.474258-standard",
+      "modelSha256": "f4f567bba0de527d65fdba4753826cdda1b1a88bbe27f871a70dccb1f846930c",
+      "binarySha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "registeredAt": "2026-09-10T14:45:39.516Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯红女剑校服女",
+        "work": "來源作品待核；論壇標題：绯红女剑校服女",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-474258-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a5b79ca7632788eb9e9c32f54b5c3c8fa3b6e06d2e865f1a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4823275304f57f71ffdb0a7cfdd26c821e2849b62f85fe8aeac4a7d0a2806f3d",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-10T14:45:39.591Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

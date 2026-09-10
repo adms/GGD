@@ -115,8 +115,19 @@ const collect = (src: string, res: readonly RegExp[]): NumClaim[] => {
 export const cooldownClaims = (t: string): NumClaim[] =>
   collect(t, [
     new RegExp(`(${RANKS})\\s*秒冷卻`, "g"),
-    new RegExp(`冷卻(?:時間)?\\s*[:：]?\\s*(${RANKS})\\s*秒`, "g"),
-  ]);
+    // ⭐ 往前多吃兩個字，⛔ 只為了**認出來要丟掉哪一種**（見下面的 filter）。
+    new RegExp(`[^。，、\\n]{0,14}?冷卻(?:時間)?\\s*[:：]?\\s*(${RANKS})\\s*秒`, "g"),
+  ]).filter(
+    // ⛔⛔ 兩種**不是「這一支技能的冷卻」**的寫法，量到會誤報
+    //    （與 `damageClaims` 的 `減少/降低` 濾網同一個形狀）：
+    //
+    // ① **縮短別人的冷卻** —— `b2-orphen.w` 逐字「縮短 Q 尚未結束的冷卻 2 秒」。
+    //    ⭐ 那個 2 是**扣掉的秒數**，⛔ 而 W 自己的冷卻是 45
+    //    ⇒ 閘報「一個都對不上」，⛔ 而卡面完全正確。
+    // ② **別人的／還沒跑完的**冷卻 —— `b2-albus.w` 逐字「己 Q **剩餘**冷卻 1.5 秒」。
+    //    ⭐ 判準是「這句話在講**誰的**冷卻」，⛔ 不是「有沒有出現冷卻兩個字」。
+    (c) => !/(縮短|減少|降低|減短|回復|返還|剩餘|尚未結束|未結束)/.test(c.text),
+  );
 
 /** 卡面上的耗魔宣稱：`消耗[MP] 250/350/450/550`、`消耗MP150`、`耗[MP] 50/100`。 */
 export const manaClaims = (t: string): NumClaim[] =>
@@ -278,9 +289,13 @@ export function abilityNumbers(def: AbilityDef): Numbers {
   const faces = new Set<string>();
   let hasMaxHpPct = false;
   let hasManaGain = false;
+  const internalCooldowns: number[] = [];
   const roots: unknown[] = [def.effects, def.passive, def.marks];
   for (const root of roots) {
     for (const node of walk(root)) {
+      // ⭐ 見下面 `cooldown:` 那一格的說明 —— 被動的「內置冷卻」住在這裡。
+      const ic = (node as { internalCooldown?: unknown }).internalCooldown;
+      if (typeof ic === "number") internalCooldowns.push(ic);
       if (typeof node.kind === "string") kinds.add(node.kind);
       if ((MANA_GAIN_KINDS as readonly string[]).includes(String(node.kind))) hasManaGain = true;
       // 掛在 `maxHealth` 上的 modifier 也是一種最大生命百分比的表達面。
@@ -304,7 +319,20 @@ export function abilityNumbers(def: AbilityDef): Numbers {
     }
   }
   return {
-    cooldown: def.cooldown ?? [],
+    // ⭐⭐ `internalCooldown` 也是「卡面那個 N 秒冷卻」——⛔ 漏掉它必然誤報。
+    //
+    // ⛔⛔ 2026-09-10 抓到（GH#1165）：7 張**被動**卡逐字寫「內置冷卻 4 秒」，
+    // 而 `def.cooldown` 是 `[0]`（⭐ 被動沒有**施放**冷卻）
+    // ⇒ 閘報「說明↔JSON 不一致」，⛔ **而卡面是對的**：
+    // `passive.ranks[0].hooks[0].internalCooldown === 4`。
+    //
+    // ⚠️ ⭐ 同一份檔案的 augment 那條路**早就這樣做了**
+    // （`descriptionClaims.test.ts::asAbility` 逐字：「⭐ `internalCooldown`
+    // 就是卡面那個「N 秒冷卻」，餵進 `cooldown` 才不會誤報」）——
+    // ⇒ ⛔ 漏的是**技能**這條路，⛔ 不是那七張卡。
+    //
+    // ⭐ 而「一條給錯修法的閘比一條不響的閘更危險」：它會把人推去改**正確的內容**。
+    cooldown: [...(def.cooldown ?? []), ...internalCooldowns],
     mana: def.manaCost ?? [],
     duration,
     damage,

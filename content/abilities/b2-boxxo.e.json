@@ -1,0 +1,57 @@
+{
+  "castTimeSec": 0.667,
+  "castType": "ground",
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「拉蜜絲搬店不加價！」\n拉蜜絲搬運到施法點，0.35 秒後落地；不扔敵人，也不讓阿箱自行走下機台。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "apexHeight": 0,
+      "applyTo": "self",
+      "durationSec": 0.35,
+      "kind": "leap",
+      "landRadius": 2.75,
+      "mode": "toPoint"
+    }
+  ],
+  "id": "b2-boxxo.e",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "拉蜜絲搬店不加價",
+  "radius": 2.75,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
+    "params": {
+      "arriveRadius": 150,
+      "castTimeSec": 0.667,
+      "destination": "castPoint",
+      "travelSec": 0.35
+    },
+    "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-boxxo.e.webp"
+}

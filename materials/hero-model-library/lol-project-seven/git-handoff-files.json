@@ -1,0 +1,96 @@
+{
+  "schema": "ggd.seven-voice-git-handoff@1",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
+  "sourceLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+  "allowedContent": "scripts, settings, immutable index manifests, SHA-256 and docs only",
+  "files": [
+    {
+      "path": "project-seven-config.json",
+      "bytes": 1110,
+      "sha256": "41d2d88d36b8362735b41002b9de3d3b4436cc3810cc99816bf9f508fa5f6dfc"
+    },
+    {
+      "path": "control/allowlist.json",
+      "bytes": 1772,
+      "sha256": "457e2ac08f4130e4fc043d28900f91458957d97e06ca066ebaa5c6b167859ba0"
+    },
+    {
+      "path": "guard-validation.json",
+      "bytes": 396,
+      "sha256": "9cd0c5a425d1158998961c2f64b28c0124c6423ad78d6cfe18a400b3a82d7597"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2360,
+      "sha256": "cb259a49ea189bb3003dd83f80499bd2dd3c18131ed1974f20b84ec44179364b"
+    },
+    {
+      "path": "seven-voice-index.json",
+      "bytes": 12562,
+      "sha256": "5765ddb9cb6bd9f385bb1325649eb7dc388991ee8d7610eed534f1c67de49fad"
+    },
+    {
+      "path": "latest-seven-delivery-receipt.json",
+      "bytes": 862,
+      "sha256": "6735ade96148c515d456bf99bb560863e80da96109b697a9fe0480410c2e4807"
+    },
+    {
+      "path": "tools/acquire_project_ja.py",
+      "bytes": 6009,
+      "sha256": "42599afa9f640bac92aeb0c08c3d5f3cef56c3aad6ce4ff741465bdcb3908db0"
+    },
+    {
+      "path": "tools/decode_project_ja.py",
+      "bytes": 3354,
+      "sha256": "be6440d4f84dccc97f2ffafe6f389aea60ec98959ff8d014705e510e59e48262"
+    },
+    {
+      "path": "tools/decode_wwise_intake.py",
+      "bytes": 9839,
+      "sha256": "589285a0a614bf89457bbf89c10754739076603b82166609b25fcebfc4702b20"
+    },
+    {
+      "path": "tools/embedded_resources.py",
+      "bytes": 3949,
+      "sha256": "65106da52e2677c95e0e60e337da7533466eab58ffe4694b88a9ae65a5c54fe6"
+    },
+    {
+      "path": "tools/extract_project_ja.py",
+      "bytes": 9471,
+      "sha256": "cfa1b1d299c334cb3c1099f190ceeaa3e5ad338fcdaa9de597843cfc8fa510eb"
+    },
+    {
+      "path": "tools/freeze_project_ja.py",
+      "bytes": 9703,
+      "sha256": "e8362f56fc5befad3a04235a469f29fbac095e1c694ef304c0dd1bf3c2de07c0"
+    },
+    {
+      "path": "tools/make_seven_handoff.py",
+      "bytes": 4318,
+      "sha256": "a84c950f3eb9a12b202d62b068631823097e7234a58577904a88b3e33ced5fff"
+    },
+    {
+      "path": "tools/recover_project_ja.py",
+      "bytes": 5933,
+      "sha256": "8cc32953b1d637ab6b81646d36b7262fb6f3ac3ec3dbaedb2d53b92b6879956c"
+    },
+    {
+      "path": "tools/run_project_ja.py",
+      "bytes": 1764,
+      "sha256": "dca40d9d73d34488deb051d8bb2dacf6120098b35816136fed6beb5beb351d4b"
+    },
+    {
+      "path": "tools/scope_guard.py",
+      "bytes": 882,
+      "sha256": "6d71f7e1d0d5d03409f08b57b238ff1f7e3f54426fcc75253fadca15ee55ac0c"
+    }
+  ],
+  "audioBinaryCount": 0,
+  "nativeBinaryCount": 0,
+  "largeNativeDeliveryIndex": {
+    "path": "deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "bytes": 7853255,
+    "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
+    "storage": "keep local; root may archive separately; compact Git index references this receipt"
+  }
+}

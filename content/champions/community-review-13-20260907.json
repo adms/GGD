@@ -1,0 +1,362 @@
+{
+  "id": "community-review-13-20260907",
+  "name": "朝田詩乃",
+  "description": "朝田詩乃 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：GGO 的詩乃，使用 Hecate II。  \n定位：瞄準、視線、狙擊與撤離。\n\n視覺方向：青色狙擊線、金色槍口火、灰色翻滾塵；採 GGO 槍械版本。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "marksman",
+  "attackType": "ranged",
+  "archetype": "marksman",
+  "origin": "射手",
+  "modelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 10,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 29.202653061224485,
+    "healthRegen": 0.07234693877551021,
+    "maxMana": 19.291836734693877,
+    "manaRegen": 0,
+    "ad": 4.477551020408164,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.27402040816326523,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 13,
+    "agi": 29,
+    "int": 18,
+    "strGrowth": 1.25,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.67,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-13-20260907.q",
+      "name": "〔Hecate II・精準射擊〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】短蓄力直線射擊，依瞄準層數提高傷害。\n【待補機制】固定起手分段線；需蓄力、射線掩體與瞄準層增傷。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-13-20260907.q.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-13-20260907.w",
+      "name": "〔觀測射界〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：as +20%。\n【目標設計】顯示有效射線與遮蔽物，短暫標記一名已可見敵人。\n【待補機制】目前攻速增益；需射界 UI、合法可見敵人的觀測標記。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-13-20260907.w.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            }
+          ],
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-13-20260907.e",
+      "name": "〔戰術翻滾〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離翻滾，打斷自己的瞄準並重新定位。\n【待補機制】翻滾應為貼地移動且清空瞄準，目前是低弧跳躍。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 2.75,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.28,
+          "durationSec": 0.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-13-20260907.e.webp",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 70,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-13-20260907.r",
+      "name": "〔Hecate II・決定性一槍〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】較長瞄準後射出高傷害子彈，敵人可見射線預警。\n【待補機制】需單發高傷害射線、較長瞄準與移動取消。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.833,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-13-20260907.r.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.833
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-13-20260907.ex",
+  "passiveAbility": "community-review-13-20260907.passive",
+  "icon": "assets/icons/champions/community-review-13-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.8881cba87b158af82872f23d747301edc770b825adabe9bc",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "modelSha256": "eb9ef0862c96c7b14c62ca5fa77a783912c2c5e7c4f02e3a09247a1b16e8e634",
+      "binarySha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "registeredAt": "2026-09-10T14:45:30.416Z",
+      "source": {
+        "kind": "previous",
+        "character": "朝田詩乃",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
+      "label": "冰之狙击手",
+      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "modelSha256": "92434bd0ec543d55098a4c40d6f80a88435cfebe14a0be5b408aaf33ede4c878",
+      "binarySha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "registeredAt": "2026-09-10T14:45:30.422Z",
+      "source": {
+        "kind": "exact",
+        "character": "冰之狙击手",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:d4ce2cfc061185921d1cb222",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

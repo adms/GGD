@@ -1,0 +1,100 @@
+{
+  "schema": "ggd.acquired-model-source@1",
+  "sourceId": "kof-xv-mai-whitemagesunny-raw",
+  "character": "Mai Shiranui",
+  "sourceGame": "The King of Fighters XV",
+  "sourceGamePlatform": "unknown-original-platform",
+  "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
+  "downloadPage": "https://drive.google.com/file/d/1caTkddaLZIXrtypXlGGgAWd67K7bOUIX/view",
+  "uploader": "WhiteMageSunny",
+  "acquisitionChannel": "original author public raw export via Google Drive",
+  "publisherStatedContents": [
+    "FBX model",
+    "TGA textures",
+    "original game rig"
+  ],
+  "classification": "original-game extracted model exported to FBX; original game claim belongs to author, FBX/rig/texture structure verified locally",
+  "status": "complete-acquired-extracted",
+  "sourcePackage": {
+    "path": "raw/King of Fighters XV - Mai Shiranui.rar",
+    "bytes": 79735587,
+    "sha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67"
+  },
+  "modelCandidates": [
+    {
+      "candidateId": "kof-xv-mai-whitemagesunny-raw",
+      "sourceId": "kof-xv-mai-whitemagesunny-raw",
+      "character": "Mai Shiranui",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceGame": "The King of Fighters XV",
+      "sourcePlatform": "unknown-original-platform",
+      "platformEvidence": "Publisher names KOF XV; the game installation platform and patch are not specified. Publication date is not treated as game release or asset version.",
+      "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
+      "author": "WhiteMageSunny",
+      "sourceClass": "canonical-game-raw-export",
+      "nativeModel": "extracted-v1/Raw Files/Mai Shiranui.fbx",
+      "nativeModelBytes": 10074400,
+      "nativeModelSha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe",
+      "nativeFormat": "FBX 7700",
+      "meshCount": 21,
+      "vertices": 178947,
+      "triangles": 116939,
+      "boneCounts": [
+        319
+      ],
+      "maxVertexInfluences": 4,
+      "sourceSkeleton": "Original game rig according to author; bone counts and all-vertex skinning verified by readonly FBX import.",
+      "textureCount": 12,
+      "animationCount": 0,
+      "vfxCount": 0,
+      "audioCount": 0,
+      "readyStage": "pending-standardization",
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultChanged": false,
+      "candidateMustBeRetained": true,
+      "originalBytesPreserved": true,
+      "limitations": [
+        "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+        "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+        "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+        "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+        "Existing manually approved Mai proxy default is preserved; this is an additional candidate only.",
+        "Blender import reported Materials mapping type NoMappingInformation; per-material assignments require inspection during conversion."
+      ]
+    }
+  ],
+  "nativeAnimations": {
+    "count": 0,
+    "evidence": "FBX imported with use_anim=True; no Actions. Archive contains only model/texture and optional desktop.ini."
+  },
+  "vfx": {
+    "count": 0
+  },
+  "voice": {
+    "count": 0
+  },
+  "sfx": {
+    "count": 0
+  },
+  "audioFileIndex": null,
+  "textureValidation": "texture-validation.json",
+  "modelAnalysis": "fbx-analysis.json",
+  "extractionValidation": "extraction-validation.json",
+  "rights": {
+    "originalOwner": "SNK",
+    "authorStatement": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
+    "clearance": "not inferred"
+  },
+  "limitations": [
+    "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+    "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+    "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+    "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+    "Existing manually approved Mai proxy default is preserved; this is an additional candidate only.",
+    "Blender import reported Materials mapping type NoMappingInformation; per-material assignments require inspection during conversion."
+  ],
+  "blenderInvocation": "Use python -P with the existing isolated bpy runtime; autoexec and online access disabled. Initial no-P attempt was affected by an unrelated /private/tmp/inspect.py; no source files changed."
+}

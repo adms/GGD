@@ -1,0 +1,181 @@
+{
+ "schema": "ggd-asset-manifest@1",
+ "usage": "⭐ ou99 付費模型的 glb 清冊。owner 2026-09-10 逐字:「我們上傳 git 的規則是 **成品一律上傳至 git**, 剩下半成品、來源、準備材料等都進 S3」⇒ ⭐ glb 是**成品** ⇒ 進 git;⛔ 原始 zip 與解出的 mdx/blp 是**來源/準備材料** ⇒ 進 S3。",
+ "s3Target": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/ou99-sources/",
+ "localStagingDir": "content/assets/models/ou99",
+ "uploadStatus": "pending-sources-only",
+ "producedAt": "2026-09-10T14:12:32+08:00",
+ "count": 33,
+ "totalBytes": 75910608,
+ "files": [
+  {
+   "path": "assets/models/ou99/ou99_453949.glb",
+   "bytes": 3634812,
+   "sha256": "e05aa7a67d3e4ac91484584bf40a66a10b27c06c0ce8d784b9b4eb7198d225be"
+  },
+  {
+   "path": "assets/models/ou99/ou99_454482.glb",
+   "bytes": 2851116,
+   "sha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1"
+  },
+  {
+   "path": "assets/models/ou99/ou99_456546.glb",
+   "bytes": 6136544,
+   "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6"
+  },
+  {
+   "path": "assets/models/ou99/ou99_456917.glb",
+   "bytes": 897596,
+   "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6"
+  },
+  {
+   "path": "assets/models/ou99/ou99_457594.glb",
+   "bytes": 736904,
+   "sha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b"
+  },
+  {
+   "path": "assets/models/ou99/ou99_457883.glb",
+   "bytes": 1270272,
+   "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65"
+  },
+  {
+   "path": "assets/models/ou99/ou99_458013.glb",
+   "bytes": 1336304,
+   "sha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039"
+  },
+  {
+   "path": "assets/models/ou99/ou99_458777.glb",
+   "bytes": 2272724,
+   "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f"
+  },
+  {
+   "path": "assets/models/ou99/ou99_459257.glb",
+   "bytes": 5408996,
+   "sha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32"
+  },
+  {
+   "path": "assets/models/ou99/ou99_459617.glb",
+   "bytes": 1346076,
+   "sha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0"
+  },
+  {
+   "path": "assets/models/ou99/ou99_465205.glb",
+   "bytes": 1924208,
+   "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4"
+  },
+  {
+   "path": "assets/models/ou99/ou99_465884.glb",
+   "bytes": 2720944,
+   "sha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a"
+  },
+  {
+   "path": "assets/models/ou99/ou99_467227.glb",
+   "bytes": 2623940,
+   "sha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612"
+  },
+  {
+   "path": "assets/models/ou99/ou99_470087.glb",
+   "bytes": 2140508,
+   "sha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494"
+  },
+  {
+   "path": "assets/models/ou99/ou99_470426.glb",
+   "bytes": 2839116,
+   "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4"
+  },
+  {
+   "path": "assets/models/ou99/ou99_472035.glb",
+   "bytes": 4363676,
+   "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171"
+  },
+  {
+   "path": "assets/models/ou99/ou99_472038.glb",
+   "bytes": 4182160,
+   "sha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5"
+  },
+  {
+   "path": "assets/models/ou99/ou99_473324.glb",
+   "bytes": 1650264,
+   "sha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c"
+  },
+  {
+   "path": "assets/models/ou99/ou99_474258.glb",
+   "bytes": 1387184,
+   "sha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06"
+  },
+  {
+   "path": "assets/models/ou99/ou99_478642.glb",
+   "bytes": 2468404,
+   "sha256": "a23e59b9443a980aa767f91e19fb83249542816760a7c3d0962b03b5a7cc7b34"
+  },
+  {
+   "path": "assets/models/ou99/ou99_481732.glb",
+   "bytes": 1766568,
+   "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33"
+  },
+  {
+   "path": "assets/models/ou99/ou99_487191.glb",
+   "bytes": 2028668,
+   "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615"
+  },
+  {
+   "path": "assets/models/ou99/ou99_487484.glb",
+   "bytes": 1458232,
+   "sha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b"
+  },
+  {
+   "path": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+   "bytes": 706356,
+   "sha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18"
+  },
+  {
+   "path": "assets/models/ou99/ou99_487487-sbhhkedr.glb",
+   "bytes": 1000240,
+   "sha256": "0a5041838fe595b877abd29cfceb353f475e8f9abc93135b1d0160f8a1d4059b"
+  },
+  {
+   "path": "assets/models/ou99/ou99_491448.glb",
+   "bytes": 1354252,
+   "sha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51"
+  },
+  {
+   "path": "assets/models/ou99/ou99_491497.glb",
+   "bytes": 5429960,
+   "sha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99"
+  },
+  {
+   "path": "assets/models/ou99/ou99_493578.glb",
+   "bytes": 1241276,
+   "sha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51"
+  },
+  {
+   "path": "assets/models/ou99/ou99_495015.glb",
+   "bytes": 649672,
+   "sha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3"
+  },
+  {
+   "path": "assets/models/ou99/ou99_496452.glb",
+   "bytes": 1155340,
+   "sha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c"
+  },
+  {
+   "path": "assets/models/ou99/ou99_496905.glb",
+   "bytes": 4368388,
+   "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16"
+  },
+  {
+   "path": "assets/models/ou99/ou99_497131.glb",
+   "bytes": 753372,
+   "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521"
+  },
+  {
+   "path": "assets/models/ou99/ou99_498214.glb",
+   "bytes": 1806536,
+   "sha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480"
+  }
+ ],
+ "gitStatus": "committed",
+ "s3Scope": "⛔ 只放原始 zip 與 extracted/ 的 mdx+blp（來源與準備材料），⭐ 不放 glb",
+ "correctedAt": "2026-09-10T17:48:17+08:00",
+ "correctionNote": "⚠️ 我先前把 glb 排除出 git 是**讀錯規則** —— 我引用 CLAUDE.md 第一·四之一的「素材本體不進 git」,而那條講的是**來源素材庫**;成品不在其列。owner 當場更正。"
+}

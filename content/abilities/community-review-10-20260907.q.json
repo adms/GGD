@@ -1,0 +1,58 @@
+{
+  "id": "community-review-10-20260907.q",
+  "name": "〔戰術射擊〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】中距離單發射擊，對帶標記目標造成額外傷害。\n【待補機制】缺戰術標記額外傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 0.567,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-10-20260907.q.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.567
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.void.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.slash"
+    }
+  ]
+}

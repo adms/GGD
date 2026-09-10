@@ -23,6 +23,117 @@
 import { z } from "zod";
 
 /** ⭐ BR 大轟炸（GH#923）—— 極大範圍 · 紅圈倒數 · 真傷佔比。 */
+/**
+ * ⭐ 換邊操作殭屍王的三格（GH#922）—— 票文逐字點名「**三個住處**：
+ * 10 秒逃跑窗 · 預警圈半徑 · 繼承哪些增幅」。
+ * ⚠️ ⭐ 這三格與 `deadPlayersControlBoss` **刻意分開**：那一格是「開不開」，
+ * 這三格是「開著的時候長什麼樣」——⛔ 混成一格就沒辦法只調手感。
+ */
+const zPossession = z
+  .object({
+    /** ⭐ 原地生成後，活人可以跑的秒數（票文：**倒數 10 秒**）。 */
+    escapeWindowSec: z
+      .number()
+      .min(0)
+      .max(60)
+      .describe(
+        "@zh 第十一回合 · 換邊 · 原地生成後的逃跑窗（秒）\n" +
+          "@note 三支王**原地生成**，這幾秒內牠們⛔ 不能攻擊，活著的人可以跑（出貨 {{出貨值}}）。調 0＝隊友在你屍體旁邊當場被咬，那是無法反應的懲罰；調長＝所有人早就走遠了，於是換邊只是換一個鏡頭。",
+      ),
+    /** ⚠️ 腐爛預警圈的半徑（格）—— 票文寫「腐爛生成的動畫圈圈」，⭐ 而那需要一個數字。 */
+    telegraphRadius: z
+      .number()
+      .min(1)
+      .max(30)
+      .describe(
+        "@zh 第十一回合 · 換邊 · 腐爛預警圈的半徑（格）\n" +
+          "@note 票文寫的是「腐爛生成的動畫圈圈」，而那需要一個數字（出貨 {{出貨值}}）。它畫的是**這裡即將生出一支王**，所以要大到跑開之前就看得見；調太小＝看到的時候已經在圈裡了。",
+      ),
+    /**
+     * ⭐ 票文：「所有能力寶具都繼承以外，**額外增加殭屍王所有增幅及機制**」。
+     * ⛔ 關掉 ＝ 只繼承英雄自己那一套（一具很脆的王）。
+     */
+    inheritBossAugments: z
+      .boolean()
+      .describe(
+        "@zh 第十一回合 · 換邊 · 額外繼承殭屍王的增幅與機制\n" +
+          "@note 開著＝那具王除了保有英雄自己的能力與寶具，**再加上**殭屍王的全套增幅與機制（票文原話）。⛔ 關掉＝只帶英雄那一套，於是換邊之後是一具打不動人的空殼 —— 這一格是「換邊好不好玩」的主要旋鈕。",
+      ),
+  })
+  .strict();
+
+/**
+ * ⭐ 取捨迴圈的三格（GH#920）—— owner 2026-09-01 的四條規則裡，
+ * ①②③ 各一格開關（④ 重抽三選一另案）。
+ */
+const zSurvivalLoop = z
+  .object({
+    /** ⭐ owner 2026-09-02 逐字：「[普通 → 特殊：一隻普通殭屍存活滿 **45 秒** 就轉化] ok」 */
+    normalToSpecialSec: z
+      .number()
+      .min(0)
+      .max(600)
+      .describe(
+        "@zh 第十一回合 · 普通殭屍存活幾秒後轉成特殊殭屍\n" +
+          "@note owner 逐字「一隻普通殭屍存活滿 45 秒就轉化」（出貨 {{出貨值}}）。⭐ 這一格是整個取捨迴圈的心臟：清乾淨＝場面安全但復活權變少，放著養＝復活權多但場面失控。⛔ 調 0 ＝ **不轉化**（機制關著），⛔ 不是「一出生就轉」。",
+      ),
+    /** ⭐ owner：「**特殊殭屍打死才能復活隊友一次**（出現復活圈）而不是無限復活」 */
+    specialDropsReviveCircle: z
+      .boolean()
+      .describe(
+        "@zh 第十一回合 · 特殊殭屍被打死時掉一個復活圈\n" +
+          "@note 開著＝打死特殊殭屍的那一隊拿到**一次**復活權（owner 逐字「⛔ 而不是無限復活」）。⛔ 關掉＝第十一回合完全沒有復活途徑，死了就是死了。",
+      ),
+    /** ⭐ owner：「噴寶具是**你死就一定會噴 被誰殺死都會隨機噴一件**⋯**就是損壞了 不能撿回**」 */
+    breakItemOnDeath: z
+      .boolean()
+      .describe(
+        "@zh 第十一回合 · 英雄死亡時永久損壞一件隨機寶具\n" +
+          "@note 開著＝死一次就少一件寶具，⛔ **撿不回來也退不了錢**（owner 逐字「就是損壞了 不能撿回」）。⭐ 它是這一回合「死亡有代價」的唯一來源；⛔ 關掉之後死亡只剩下換邊，取捨迴圈就斷了一半。",
+      ),
+    /**
+     * ⭐⭐ ④ 打死殭屍王 ⇒ 重抽三選一（GH#920 ④）——**這一格就是開關**。
+     *
+     * > owner 2026-09-01 23:52（逐字）：「打死殭屍王後的**重抽三選一 不暫停時間**喔 我回答過了」
+     * > owner 2026-09-01（逐字，較早）：「寶具死掉會隨機噴 **有機會**隨機三選一再拿到新的」
+     *
+     * ⚠️ ⭐ **兩則對「機率」的說法不一樣**，⛔ 而它們不是矛盾：
+     * 較早那則的「有機會」修飾的是**整個取捨**（你要先打得死王），
+     * ⭐ 而較晚、較 specific 的那一則把「打死 ⇒ 重抽」講成無條件。
+     * ⇒ 照第〇·六守則（同一層新的贏 · 內文 > 標籤）出貨值取 **100**，
+     * ⛔ 而「有機會」那個讀法**沒有被丟掉** —— 它就是這一格調到 100 以下的樣子。
+     *
+     * ⛔ **刻意沒有第二格 `enabled` 布林**：`0` 就是關著（同這個物件裡
+     * `normalToSpecialSec` 的家族慣例）。⭐ 兩格說同一件事會漂（第〇·四守則）。
+     */
+    bossRerollChancePct: z
+      .number()
+      .min(0)
+      .max(100)
+      .describe(
+        "@zh 第十一回合 · 打死殭屍王後拿到重抽三選一的機率（%）\n" +
+          "@note owner 2026-09-01 逐字：「打死殭屍王後的**重抽三選一 不暫停時間**喔」（出貨 {{出貨值}}）。⭐ 這張卡是**戰鬥中**發的，⛔ 不會暫停任何人 —— 玩家可以邊打邊選，回合結束前沒選的會自動幫他選一張（⛔ 不是丟掉）。⛔ **調 0 ＝ 這個機制關著**（一鍵 rollback），⭐ 而不是「每次都不中」。調低＝王的獎勵變成賭博，而死亡損壞寶具那一半仍然是必定的 ⇒ 取捨迴圈會單向失血。",
+      ),
+    /**
+     * ⭐ 重抽從**哪一張獎池**抽。
+     *
+     * ⚠️ ⭐ 這一格刻意**不走** `weaponTiers`（[EX解放]／[EX∅ 根源] 那條升階路）：
+     * 那一族是按**回合**排程的（`minRound`／`maxRound`，而 `ex-origin` 是 10..10
+     * ＝「最終回合大戰**前**」）—— ⭐ 第十一回合在那張排程表**之外**，
+     * ⛔ 把它硬餵進去會得到「根源永遠抽不到、解放永遠在窗內」這個沒有人設計過的形狀。
+     * ⇒ ⭐ 一格池子 id 就把選擇權完整交出去了（要 EX 解放就填 `ex-release-weapons`）。
+     */
+    bossRerollTable: z
+      .string()
+      .min(1)
+      .max(64)
+      .describe(
+        "@zh 第十一回合 · 王死重抽三選一從哪一張獎池抽\n" +
+          "@note 獎池 id（`content/loot-tables/<id>.json`，出貨 `legendary-weapons` ＝ 一般寶具那張）。⭐ 它刻意與回合排程的 [EX解放]／[EX∅ 根源] 升階分開：那兩階是按回合開窗的，而第十一回合在那張表之外。⚠️ 打錯 id 的後果**不是靜默**：伺服器會 warn 並且不發卡（⛔ 而不是發一張空卡）。",
+      ),
+  })
+  .strict();
+
 const zBombardment = z
   .object({
     enabled: z
@@ -105,6 +216,20 @@ const zWaveTable = z
           .strict(),
       )
       .max(32),
+    /**
+     * ⭐ 一個「殭屍組合」事件生幾隻（⭐ 再乘 `difficultyBase` 的第 N 次方）。
+     * ⚠️ ⭐ 這一格是**我挑的**（owner 只說「難度指數增加」與「⛔ 不要複雜化」）——
+     * ⇒ 照常設指令做成一格可以一鍵轉回去的旋鈕，⛔ 不是寫死在程式裡。
+     */
+    baseSpawnCount: z
+      .number()
+      .int()
+      .min(0)
+      .max(200)
+      .describe(
+        "@zh 第十一回合 · 一個波次事件生幾隻（成長前的基數）\n" +
+          "@note 抽到「殭屍」或「特殊殭屍」時一次生幾隻，⭐ 再乘上難度成長（出貨 {{出貨值}}）。⚠️ 實際生成量仍然被**場上存活上限**夾著，所以調大它是讓「補位變快」，⛔ 不是讓場上變多。調 0 ＝ 波次事件不再生怪（只剩場景效果）。",
+      ),
   })
   .strict();
 
@@ -262,6 +387,10 @@ export const zRound11Config = z
         "@zh 第十一回合 · 陣亡的玩家換邊操作殭屍王\n" +
           "@note 開著＝死掉的人不離場，改成操作王去追活著的隊友（GH#922）。⛔ 關掉＝死了就是旁觀，回到今天的行為。⚠️ 這是一個**體驗決策**不是數值：開著時最後一名玩家會發現自己在被前隊友追殺，那是刻意的。",
       ),
+    /** ⭐ 取捨迴圈的三格（GH#920）。 */
+    survivalLoop: zSurvivalLoop,
+    /** ⭐ 換邊的三格（GH#922）—— ⛔ 與上面那一格分開：那是「開不開」,這是「長什麼樣」。 */
+    possession: zPossession,
     /** ⭐ BR 大轟炸（GH#923）。 */
     bombardment: zBombardment,
     /** ⭐ 波次組合表（GH#924）。 */
@@ -280,7 +409,22 @@ export type Round11Config = z.infer<typeof zRound11Config>;
  * ⛔ 打開它今天不會發生任何事，⭐ 而那正是它關著的理由。
  */
 export const SHIPPED_ROUND11: Round11Config = {
-  enabled: false,
+  /**
+   * ⭐⭐ 2026-09-10 **打開**（owner 2026-09-09 23:53 逐字：「**round11快上線**」，票 #1151
+   * 標題就是「第十一回合生存模式**上線**」）。
+   *
+   * ⛔ 它在此之前是 `false`，理由逐字是「**sim 那一半還沒做**」——
+   * ⭐ 而那個理由今天不成立了：A/B/C/D/E/F/G 七段全部有出貨消費端，
+   * `round11.*` 30 個葉節點沒有一格是裝飾（`enabledSwitchesHaveConsumers` 在守），
+   * 663/663 綠。
+   *
+   * ⭐ **rollback ＝ 這一格**：後台轉回 `false`，整個區塊逐位元 no-op
+   * （`content/` 是 live bind-mount ⇒ ⛔ 不必重新部署）。
+   *
+   * ⚠️⚠️ ⭐ 而它**尚未經過真人畫面驗收**（五道界線的第④道）：
+   * ⭐ 機制驗得完，⛔ 「像不像一回合生存模式」驗不了 —— 那只有真人看得出來。
+   */
+  enabled: true,
   arenaId: "arena.royale",
   durationSec: 600,
   triggerBossKills: 3,
@@ -290,7 +434,24 @@ export const SHIPPED_ROUND11: Round11Config = {
   bossStrengthMult: 2,
   bossScaleFloor: 1,
   bossScaleCeil: 8,
+  survivalLoop: {
+    normalToSpecialSec: 45,
+    specialDropsReviveCircle: true,
+    breakItemOnDeath: true,
+    // ⭐ owner 2026-09-01 23:52 逐字：「打死殭屍王後的**重抽三選一** 不暫停時間喔」——
+    //   ⭐ 那一則把「打死 ⇒ 重抽」講成無條件（⛔ 而較早那則的「有機會」在這一格
+    //   調到 100 以下時就回來了）。⛔ 調 0 ＝ 機制關著（一鍵 rollback）。
+    bossRerollChancePct: 100,
+    // ⭐ 一般寶具那張表（`rounds[2]` / `rounds[5]` 用的同一張）——
+    //   ⭐ ③ 損壞的就是這一族，⇒ ④ 補回來的也是它（⛔ 不是另一個階級）。
+    bossRerollTable: "legendary-weapons",
+  },
   deadPlayersControlBoss: true,
+  possession: {
+    escapeWindowSec: 10,
+    telegraphRadius: 6,
+    inheritBossAugments: true,
+  },
   bombardment: {
     enabled: true,
     telegraphSec: 10,
@@ -301,6 +462,7 @@ export const SHIPPED_ROUND11: Round11Config = {
   waveTable: {
     eventIntervalSec: 20,
     difficultyBase: 1.15,
+    baseSpawnCount: 8,
     events: [
       { kind: "normal", weight: 60 },
       { kind: "special", weight: 25 },

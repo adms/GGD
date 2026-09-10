@@ -1,0 +1,55 @@
+{
+  "castTimeSec": 0.567,
+  "castType": "targeted",
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「玄關地墊有點黏！」\n指定敵人被 root 定身 3 秒；這是主動蛛網控制，不是隱形陷阱物件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "duration": 3,
+      "kind": "applyStatus",
+      "root": true,
+      "statusId": "root"
+    }
+  ],
+  "id": "b2-kumoko.q",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 4,
+  "name": "玄關地墊有點黏",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
+    "params": {
+      "castTimeSec": 0.567,
+      "status": {
+        "duration": 3,
+        "root": true,
+        "statusId": "root"
+      }
+    },
+    "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-kumoko.q.webp"
+}

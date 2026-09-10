@@ -828,22 +828,49 @@ def render_md(plan: dict) -> str:
     A("### ⭐ LV99 的結構落差 —— 為什麼它需要**乘法**那一層")
     A("")
     a30, a99 = plan["anchors"][0], plan["anchors"][-1]
-    auto_growth = a99["medianAutoDps"] / a30["medianAutoDps"]
-    skill_growth = a99["medianSkillDps"] / a30["medianSkillDps"]
+
+    # ⛔⛔ 2026-09-10（GH#1165）：這兩行原本是**裸的除法**，而 2026-09-10 名單長到
+    # 146 名之後 `medianSkillDps` 變成 **0.0** ⇒ `ZeroDivisionError` ⇒ 整支產生器
+    # 死掉 ⇒ `skills:sync` 卡住。
+    #
+    # ⭐ 而 0 **不是壞資料** —— 這支分析量的是「**隨屬性成長**的那一份傷害」
+    # （`resolve()` 只加 `ratios` 的係數，⛔ 不加級距的固定底）。
+    # ⇒ 74 名新英雄的傷害節點是 `{"damageTier": "大", "ratios": []}`：
+    #   ⭐ 有級距底、⛔ **零個屬性係數** ⇒ 這支量到 0 是**對的**。
+    #   而他們一過半（74/146）⇒ ⭐ **中位數就是 0**。
+    #
+    # ⚠️ ⭐ 這是形態⑨：**一條在正確的資料上永遠不會綠的閘**。
+    # ⇒ 除數是 0 就**說出來**，⛔ 不是崩掉，也⛔ 不是印一個假的倍率。
+    def growth(hi: float, lo: float) -> str:
+        return f"{hi / lo:.2f}×" if lo else "⛔ 分母是 0（見下）"
+
+    auto_growth_s = growth(a99["medianAutoDps"], a30["medianAutoDps"])
+    skill_growth_s = growth(a99["medianSkillDps"], a30["medianSkillDps"])
     A("| 從 LV30 到 LV99 | 成長 | 為什麼 |")
     A("|---|---:|---|")
-    A(f"| 普攻 DPS | **{auto_growth:.2f}×** | AD **與**攻速**兩條**都在長，而且是**相乘**的 |")
-    A(f"| 技能 DPS | **{skill_growth:.2f}×** | 傷害主體是 `flat`／`perRank`（**與等級無關的常數**），"
+    A(f"| 普攻 DPS | **{auto_growth_s}** | AD **與**攻速**兩條**都在長，而且是**相乘**的 |")
+    A(f"| 技能 DPS | **{skill_growth_s}** | 傷害主體是 `flat`／`perRank`（**與等級無關的常數**），"
       "只有係數那一小塊會長 |")
-    A(f"| 中位法強 | {a99['medianAp'] / a30['medianAp']:.2f}× | "
+    A(f"| 中位法強 | {growth(a99['medianAp'], a30['medianAp'])} | "
       "`intToAbilityPower × 智慧` 是**常數項**（智慧成長已歸 0），只有 `growth.ap` 在長 |")
+    if not a30["medianSkillDps"]:
+        A("")
+        A("> ⛔ **技能 DPS 的分母是 0** —— ⭐ 而這**不是壞資料**：這張表量的是"
+          "「**隨屬性成長**的那一份傷害」（只加 `ratios` 的係數，⛔ 不加級距的固定底）。"
+          f"⇒ 出貨名單裡有一半以上的英雄，傷害節點是 `{{\"damageTier\": …, \"ratios\": []}}`"
+          "：⭐ 有級距底、⛔ **零個屬性係數** ⇒ 這一格量到 0 是**對的**，"
+          "⭐ 而它同時是一個真的訊號：那些技能的傷害**完全不隨法強／攻擊力成長**。")
     A("")
     w = plan["whatIfIntToAp"]
     q0 = next(x for x in w if x["corpus"] == "換算前" and x["intToAbilityPower"] == min(
         y["intToAbilityPower"] for y in w))
     q1 = next(x for x in w if x["corpus"] == "換算後" and x["intToAbilityPower"] == max(
         y["intToAbilityPower"] for y in w))
-    A(f"⚠️ 普攻與技能的成長差是 **{auto_growth / skill_growth:.1f} 倍**，"
+    # ⭐ 兩個成長率都可能是 0（見上面的 growth()）⇒ 這個比值也要有守。
+    ag = a99["medianAutoDps"] / a30["medianAutoDps"] if a30["medianAutoDps"] else 0.0
+    sg = a99["medianSkillDps"] / a30["medianSkillDps"] if a30["medianSkillDps"] else 0.0
+    ratio_s = f"**{ag / sg:.1f} 倍**" if sg else "⛔ **算不出來**（技能成長的分母是 0，見上）"
+    A(f"⚠️ 普攻與技能的成長差是 {ratio_s}，"
       "而 AP 百分比換算與 `intToAbilityPower` **都是加法項** ——"
       f"兩個一起上，LV99 只從 **{q0['byLevel'][99]['medianRatio']}×** 動到 "
       f"**{q1['byLevel'][99]['medianRatio']}×**。")

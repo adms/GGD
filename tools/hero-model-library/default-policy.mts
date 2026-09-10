@@ -18,5 +18,5 @@ export function compareSelection(heroId: string, a: {sourceId: string; sourceMod
 }
 export function defaultEligible(heroId: string, option: {sourceId: string; sourceModelKey: string; source: {kind: string}}): boolean {
   if (option.source.kind !== 'style-proxy') return true;
-  return defaultPolicy.approvedDerivatives.some((a: any) => a.heroId === heroId && a.sourceId === option.sourceId && a.modelKey === option.sourceModelKey);
+  return [...defaultPolicy.approvedDerivatives, ...(defaultPolicy.approvedWorkflowDefaults ?? [])].some((a: any) => a.heroId === heroId && a.sourceId === option.sourceId && a.modelKey === option.sourceModelKey);
 }

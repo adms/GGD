@@ -1,0 +1,92 @@
+{
+  "id": "community-review-05-20260907.w",
+  "name": "Metal Blade",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出金屬刀刃，可選擇射擊方向，消耗武器能源。\n【待補機制】Metal Blade 的方向與刀刃模型待補。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3.0,
+      "side": "enemies",
+      "delaySec": 0.12,
+      "count": 4,
+      "intervalSec": 0.12,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ],
+      "finalEffects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "radius": 8.0,
+          "radiusTier": "大"
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.267,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-05-20260907.w.webp",
+  "template": {
+    "ref": "tpl-traveling-wave",
+    "params": {
+      "stepSize": 100,
+      "stepCount": 4,
+      "stepIntervalSec": 0.12,
+      "aoePerStep": 100,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.267
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.lightning.bolt",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.bolt"
+    }
+  ]
+}

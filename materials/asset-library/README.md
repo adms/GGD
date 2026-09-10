@@ -8,9 +8,16 @@
 
 同級合格候選按來源遊戲發售日由新到舊，未知日期排後；保留日期依據，不以網站上傳日或入庫日替代。手動選用仍優先，舊版全部留在下拉選單。
 
-**第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 成品固定入口：[git-release.json](git-release.json)，包含模型／動作與 VFX 元件及其依賴。原始與半成品仍在 S3 `legacy/`，不供程序自動取用。
+**第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 固定入口：[current-resources.json](current-resources.json)，合併本次模型與舊成品來源；[git-release.json](git-release.json) 保留既有不可變模型／動作與 VFX 元件。原始與半成品仍在 S3 `legacy/`，不供程序自動取用。
 
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
+
+**分工固定：來源工作流找檔、下載與交付；本工作流負責轉換驗收、版本合併、中央索引與 Git 分支推送；Main 審查合併及部署。** 已交付素材分批發布，不等待 KOF／其他遊戲整庫搜尋完成。
+
+本次交付狀態：先讀 [模型整合交付](../hero-model-library/priority-release.md)。
+
+本次優先交付：先讀 [全角色模型盤點](../hero-model-library/全角色模型盤點.md)、[後台版本登記](../hero-model-library/priority-registration.json)、[其他工作流模型](../hero-model-library/workflow-model-options.json) 與 [新轉換成品](../hero-model-library/priority-runtime-options.json)。成品實檔在 `content/assets/models/`，舊不可變 release 保留；不要只讀舊 release 而漏掉本次選項。七名 LOL 日文音訊直接讀 [七名索引](../hero-model-library/lol-project-seven/seven-voice-index.json)，不再擴抓全人物。
+
 
 **本機已驗證音訊可立即讀取，不等待 S3。** `query_voice.py <角色或來源群組> --files --json` 回傳逐檔 `absolutePath` 及 SHA-256；`voice-index.json.localWorkspace` 是本機工作區根目錄。S3 備份進度獨立追蹤，未上傳或未讀回不阻擋其他工作流聽審、轉錄及準備素材。
 
@@ -76,7 +83,7 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 | 第二批 37 名與舊英雄的新模型配對 | [pairing-inputs.json](../hero-model-library/pairing-inputs.json) | `assemble.py` 與盤點讀同一份來源；新增成品仍須經轉換、入庫、發布 |
 | 11 個獨立副本的來源、改色與手持配件要求 | [derivatives.json](../hero-model-library/derivatives.json) | 轉換工作流重建副本、驗證、再發布；改 JSON 不等於模型已改好 |
 | 第一批 37 名角色的原稿設定 | [recipes](../community-hero-forge/recipes/) 與 [模型配對](../../tools/community-hero-forge/library-bodies/community37.bindings.json) | 同步原稿與模型產生流程 |
-| 正式機實際觀測結果 | [inventory-context.json](../hero-model-library/inventory-context.json) | 取得真實新快照才更新，不把文件生成時間當作部署時間 |
+| 正式機實際觀測結果 | [inventory-context.json](../hero-model-library/inventory-context.json) | `current-production.json` 為本次觀測；舊檔保留，不把文件生成時間當作部署時間 |
 
 `manifest.json`、`release.json`、`inventory.json`、`全角色模型盤點.md` 是發布或盤點產物。不要只改產物掩蓋來源差異；模型成品用既有 `assemble.py → register.mts → 成品驗證／入庫 → Git 成品發布` 流程。轉換流程仍需要原始素材與本機轉換收據，並不宣稱 clone 即可重新製作所有模型。
 

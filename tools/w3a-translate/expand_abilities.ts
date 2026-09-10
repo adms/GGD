@@ -49,7 +49,9 @@ const CONTENT = join(ROOT, "content");
 
 const templates = new Map<string, TemplateDoc>(
   readdirSync(join(CONTENT, "ability-templates"))
-    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    // ⛔ 用**檔名前綴**當「這是不是模板」——⭐ 2026-09-10（GH#1165）第二批的模板叫
+    //   `hero-template.<hash>.json` ⇒ ⛔ 一份都載不進來。⭐ 判準改成「它在不在這個目錄裡」。
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => {
       const t = zTemplateDoc.parse(
         JSON.parse(readFileSync(join(CONTENT, "ability-templates", f), "utf8")),

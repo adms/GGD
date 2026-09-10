@@ -1,0 +1,534 @@
+{
+  "schema": "ggd-ship81-report@1",
+  "heroes": 38,
+  "withRealModel": 13,
+  "skeletonByDesign": 0,
+  "pending": 24,
+  "inventoryStale": [],
+  "staleBlockers": [
+    {
+      "row": "阿箱＋拉蜜絲 `b2-boxxo`",
+      "value": 237,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 237 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "李星 `example:leesin`",
+      "value": 196,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 196 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "沃維克 `example:warwick`",
+      "value": 188,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 188 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "犽宿 `example:yasuo`",
+      "value": 170,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 170 **今天過得了** —— 這一列該重新評估"
+    }
+  ],
+  "vfxAnchorUnexpressible": 0,
+  "withPlaceholders": 25,
+  "rows": [
+    {
+      "id": "b2-aladdin",
+      "name": "阿拉丁",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-aladdin.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-albus",
+      "name": "阿爾巴斯",
+      "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "icon": "assets/icons/champions/b2-albus.webp",
+      "modelState": "real",
+      "why": "盤點表指定「阿爾巴斯（獨立副本／尤吉欧）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-bojji",
+      "name": "波吉",
+      "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "icon": "assets/icons/champions/b2-bojji.webp",
+      "modelState": "real",
+      "why": "盤點表指定「波吉（獨立副本／小桐人寵物）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-boxxo.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-elma",
+      "name": "艾爾瑪",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-elma.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-fushi",
+      "name": "不死",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-fushi.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-goblin",
+      "name": "哥布林殺手",
+      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "icon": "assets/icons/champions/b2-goblin.webp",
+      "modelState": "real",
+      "why": "盤點表指定「哥布林殺手（獨立副本／尤吉欧）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-guts",
+      "name": "凱茲",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-guts.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-haga",
+      "name": "羽賀",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-haga.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-kaede",
+      "name": "楓",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-kaede.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-kaiji.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-keyaru",
+      "name": "凱亞爾",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-keyaru.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "如月電車",
+      "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+      "icon": "assets/icons/champions/b2-kisaragi.webp",
+      "modelState": "real",
+      "why": "盤點表指定「GGD 原創如月電車」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-klaus",
+      "name": "克勞斯",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-klaus.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-kumoko",
+      "name": "蜘蛛子",
+      "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+      "icon": "assets/icons/champions/b2-kumoko.webp",
+      "modelState": "real",
+      "why": "盤點表指定「蜘蛛子（300英雄寵物版）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-luckyman",
+      "name": "幸運超人",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-luckyman.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-makoto",
+      "name": "深澄真",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-makoto.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-maomao.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-maple-alt-9769eb88b85b",
+      "name": "梅普露（變身）",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-maple-alt-9769eb88b85b.webp",
+      "modelState": "not-in-inventory",
+      "why": "⛔ 盤點表裡找不到這一名",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "not-in-inventory",
+          "why": "⛔ 盤點表裡找不到這一名"
+        }
+      ]
+    },
+    {
+      "id": "b2-maple",
+      "name": "梅普露",
+      "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "icon": "assets/icons/champions/b2-maple.webp",
+      "modelState": "real",
+      "why": "盤點表指定「梅普露」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-matthias",
+      "name": "馬提亞斯",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-matthias.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-misery",
+      "name": "米瑟利",
+      "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "icon": "assets/icons/champions/b2-misery.webp",
+      "modelState": "real",
+      "why": "盤點表指定「米瑟利（獨立副本／优克莉伍德）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-naofumi.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-ned.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-noor",
+      "name": "諾爾",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-noor.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-nube",
+      "name": "鵺野鳴介",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-nube.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-orphen",
+      "name": "歐菲",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-orphen.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-popp",
+      "name": "何布",
+      "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "icon": "assets/icons/champions/b2-popp.webp",
+      "modelState": "real",
+      "why": "盤點表指定「何布（獨立副本／李小狼）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-rem",
+      "name": "蕾姆",
+      "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+      "icon": "assets/icons/champions/b2-rem.webp",
+      "modelState": "real",
+      "why": "盤點表指定「蕾姆」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-rin",
+      "name": "遠坂凜",
+      "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+      "icon": "assets/icons/champions/b2-rin.webp",
+      "modelState": "real",
+      "why": "盤點表指定「远坂凛」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-shadow",
+      "name": "闇影",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-shadow.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-shinchan.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-sinbad.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-takopi",
+      "name": "章魚嗶",
+      "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "icon": "assets/icons/champions/b2-takopi.webp",
+      "modelState": "real",
+      "why": "盤點表指定「章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-touka",
+      "name": "托卡・史考特",
+      "modelKey": "champ.thorne",
+      "icon": "assets/icons/champions/b2-touka.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-uncle",
+      "name": "異世界舅舅",
+      "modelKey": "champ.sela",
+      "icon": "assets/icons/champions/b2-uncle.webp",
+      "modelState": "pending-approval",
+      "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定",
+      "placeholders": [
+        {
+          "field": "modelKey",
+          "state": "pending-approval",
+          "why": "⛔ 盤點表：待取得核准模型 —— 暫用骨架，⛔ 不是設計決定"
+        }
+      ]
+    },
+    {
+      "id": "b2-yogiri",
+      "name": "高遠夜霧",
+      "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "icon": "assets/icons/champions/b2-yogiri.webp",
+      "modelState": "real",
+      "why": "盤點表指定「高遠夜霧（獨立副本／富樫勇太）」，素材庫對得到",
+      "placeholders": []
+    },
+    {
+      "id": "b2-zenitsu",
+      "name": "我妻善逸",
+      "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+      "icon": "assets/icons/champions/b2-zenitsu.webp",
+      "modelState": "real",
+      "why": "盤點表指定「我妻善逸」，素材庫對得到",
+      "placeholders": []
+    }
+  ]
+}

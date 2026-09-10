@@ -1,0 +1,389 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「巡迴剪綵走捷徑！」\n自身瞬移至指定合法地點；移動事件可觸發被動回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "id": "b2-sinbad.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "巡迴剪綵走捷徑",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+        "params": {
+          "castTimeSec": 0.467
+        },
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「合夥人早鳥紅利！」\n指定友軍增加 70 攻擊力，持續 4 秒；可明確驅散，不改友敵陣營。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "target",
+          "dispellable": true,
+          "duration": 4,
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 70
+            }
+          ]
+        }
+      ],
+      "id": "b2-sinbad.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "合夥人早鳥紅利",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "applyTo": "target",
+              "dispellable": true,
+              "duration": 4,
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "op": "flat",
+                  "stat": "ad",
+                  "value": 70
+                }
+              ]
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.833,
+      "castType": "ground",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「七海規格產品示範！」\n向前打出大範圍直線魔法展示；不宣稱七種魔裝皆已完整實作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "aim": "target",
+          "amount": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "kind": "damageLine",
+          "length": 11,
+          "width": 2.1
+        }
+      ],
+      "id": "b2-sinbad.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "七海規格產品示範",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "template": {
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+        "params": {
+          "aim": "target",
+          "castTimeSec": 0.833,
+          "damage": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "length": 11,
+          "width": 2.1
+        },
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「商會代表自備保險！」\n自身取得 3 秒魔力屏障，每 1 魔力抵擋 2 物理／魔法傷害，保留 10 魔力。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "damageTypes": [
+            "physical",
+            "magic"
+          ],
+          "durationSec": 3,
+          "kind": "manaBarrier",
+          "minManaReserve": 10,
+          "perMana": 2,
+          "shape": "single",
+          "who": "self"
+        }
+      ],
+      "id": "b2-sinbad.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "商會代表自備保險",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "damageTypes": [
+                "physical",
+                "magic"
+              ],
+              "durationSec": 3,
+              "kind": "manaBarrier",
+              "minManaReserve": 10,
+              "perMana": 2,
+              "shape": "single",
+              "who": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 29,
+    "agiGrowth": 2.78,
+    "int": 13,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "辛巴達的冒險｜用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-sinbad.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.4578979591836735,
+    "as": 0,
+    "healthRegen": 0.13085306122448978,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 26.357142857142858,
+    "mr": 2.639795918367347
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-sinbad",
+  "modelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
+  "name": "辛巴達",
+  "origin": "鬥士",
+  "passiveAbility": "b2-sinbad.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-sinbad.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.2edcd3ab07695536fe0c8086ebe02a9a1a3d67a464a0c31d",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.491497",
+      "modelSha256": "474641230a6bfb0c5fd6564c996688028d2428ade0b135ac79eecf4d54f97a8f",
+      "binarySha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99",
+      "registeredAt": "2026-09-10T14:45:40.456Z",
+      "source": {
+        "kind": "previous",
+        "character": "辛巴達",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.491497.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.897c9bef5847f35d96263ab5674047aacf0dc68d669d4ee9",
+      "label": "遥远救世主拳皇（論壇相似模型）",
+      "sourceModelKey": "ou99.491497-standard",
+      "modelSha256": "0547b8b59b804f0819b9f104973c52638f8a595bdc10efa2da97a0b28cbae4ed",
+      "binarySha256": "9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378",
+      "registeredAt": "2026-09-10T14:45:40.503Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "遥远救世主拳皇",
+        "work": "來源作品待核；論壇標題：遥远救世主拳皇",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-491497-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7da832c5037fe5f5815ef5c781fbfe19479b057a834252e0",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "9d44e111a8af68107355d492d814248ec1d834cf3316f6f675203b05957caf02",
+      "binarySha256": "9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74",
+      "registeredAt": "2026-09-10T14:45:40.572Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
+      "label": "辛巴達｜巴力魔裝兼用一般形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+      "modelSha256": "8e31ada65e72aa26ba53a6442cc634aa83954b993fadfa9b9225c4b01103b273",
+      "binarySha256": "535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5",
+      "registeredAt": "2026-09-10T14:45:40.674Z",
+      "source": {
+        "kind": "alternate",
+        "character": "辛巴達（巴力魔裝）",
+        "work": "魔奇少年 Magi",
+        "library": "3DS Magi／The Models Resource",
+        "reference": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

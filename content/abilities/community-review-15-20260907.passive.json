@@ -1,0 +1,53 @@
+{
+  "id": "community-review-15-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔兄貴的氣勢〕",
+  "provenance": "w3x-import",
+  "description": "成功抓取或保護友軍累積氣勢，上限三層。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔兄貴的氣勢〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.physical.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-15-20260907.passive.webp"
+}

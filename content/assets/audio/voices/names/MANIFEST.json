@@ -5,7 +5,7 @@
   "generatedBy": "node tools/tts-gen/src/build-champ-names.mjs — DO NOT HAND-EDIT. The casting table in that script is the source of truth; this file and the tts-gen manifest are both written from it so display text and spoken text cannot drift.",
   "generator": "node tools/tts-gen/src/generate.mjs content/audio-manifests/champ-names.ja-JP.json",
   "direction": "惡搞, and the joke is the LINE, not the VOICE. The user's correction, verbatim: 「惡搞語音不應該是機械音 而是類似 google 語音那樣字正腔圓講話清楚但不帶感情所以嘲諷」. Every voice here is a real, full-band system voice reading correct text in a language it actually speaks. The comedy is that a composed broadcast voice treats 「外掛開很大的死神」 as a job title.",
-  "structure": "EVERY call-out is 稱號, a beat, then 全名 — a two-beat announcement read flat, in anime-intro cadence. The 稱號 is NEVER dropped: if a line runs long the RATE goes up instead. The 4 champions authored without a 稱號 (godie-h02s 死亡騎士, godie-h02z 不良少年, sela, thorne) speak the name alone.",
+  "structure": "EVERY call-out is 稱號, a beat, then 全名 — a two-beat announcement read flat, in anime-intro cadence. The 稱號 is NEVER dropped: if a line runs long the RATE goes up instead. The 84 champions whose authored name carries NO 稱號 (no \" - \" separator) speak the name alone — that count is DERIVED from the shipping champion docs at build time, never a hand-written list, because the roster grows.",
   "whyTitlesMatter": "The 稱號 ARE THE BEST 惡搞 MATERIAL IN THE GAME — they are jokes, not labels (「美白大法師」 is a Taiwanese toothpaste gag, 「至尊學長」, 「鬼畜紅王」, 「外掛開很大的死神」). A name-only pack threw all of it away AND made champions indistinguishable: 6 pairs differ ONLY in their 稱號, so under name-only they collapsed to identical audio (h01n/h01o, e001/e00n, e007/ewar, o00x/ogrh, u00b/udea, o02l/ofar). Under 稱號+全名 they are genuinely distinct clips, consistent with task #55's champion-identity rule.",
   "voice": {
     "engine": "macOS say (Apple TTS)",
@@ -397,6 +397,1885 @@
     }
   ],
   "champions": {
+    "b2-aladdin": {
+      "zhName": "阿拉丁",
+      "zhTitle": null,
+      "zhFullName": "阿拉丁",
+      "spokenTitle": null,
+      "spokenName": "アラジン",
+      "jaTitle": null,
+      "jaName": "アラジン",
+      "reading": "Aladdin",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-aladdin.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "阿拉丁",
+          "clip": "assets/audio/voices/names/b2-aladdin.name.mp3"
+        }
+      ],
+      "spokenLine": "アラジン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-albus": {
+      "zhName": "阿爾巴斯",
+      "zhTitle": null,
+      "zhFullName": "阿爾巴斯",
+      "spokenTitle": null,
+      "spokenName": "アルバス",
+      "jaTitle": null,
+      "jaName": "アルバス",
+      "reading": "Albus",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-albus.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "阿爾巴斯",
+          "clip": "assets/audio/voices/names/b2-albus.name.mp3"
+        }
+      ],
+      "spokenLine": "アルバス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-bojji": {
+      "zhName": "波吉",
+      "zhTitle": null,
+      "zhFullName": "波吉",
+      "spokenTitle": null,
+      "spokenName": "ボッジ",
+      "jaTitle": null,
+      "jaName": "ボッジ",
+      "reading": "Bojji",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-bojji.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "波吉",
+          "clip": "assets/audio/voices/names/b2-bojji.name.mp3"
+        }
+      ],
+      "spokenLine": "ボッジ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-boxxo": {
+      "zhName": "阿箱＋拉蜜絲",
+      "zhTitle": null,
+      "zhFullName": "阿箱＋拉蜜絲",
+      "spokenTitle": null,
+      "spokenName": "ハッコントラッミス",
+      "jaTitle": null,
+      "jaName": "ハッコントラッミス",
+      "reading": "Hakkon to Rammis",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-boxxo.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "阿箱＋拉蜜絲",
+          "clip": "assets/audio/voices/names/b2-boxxo.name.mp3"
+        }
+      ],
+      "spokenLine": "ハッコントラッミス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-elma": {
+      "zhName": "艾爾瑪",
+      "zhTitle": null,
+      "zhFullName": "艾爾瑪",
+      "spokenTitle": null,
+      "spokenName": "エルマ",
+      "jaTitle": null,
+      "jaName": "エルマ",
+      "reading": "Elma",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-elma.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "艾爾瑪",
+          "clip": "assets/audio/voices/names/b2-elma.name.mp3"
+        }
+      ],
+      "spokenLine": "エルマ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-fushi": {
+      "zhName": "不死",
+      "zhTitle": null,
+      "zhFullName": "不死",
+      "spokenTitle": null,
+      "spokenName": "フシ",
+      "jaTitle": null,
+      "jaName": "フシ",
+      "reading": "Fushi",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-fushi.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "不死",
+          "clip": "assets/audio/voices/names/b2-fushi.name.mp3"
+        }
+      ],
+      "spokenLine": "フシ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-goblin": {
+      "zhName": "哥布林殺手",
+      "zhTitle": null,
+      "zhFullName": "哥布林殺手",
+      "spokenTitle": null,
+      "spokenName": "ゴブリンスレイヤー",
+      "jaTitle": null,
+      "jaName": "ゴブリンスレイヤー",
+      "reading": "Goblin Slayer",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-goblin.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "哥布林殺手",
+          "clip": "assets/audio/voices/names/b2-goblin.name.mp3"
+        }
+      ],
+      "spokenLine": "ゴブリンスレイヤー。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-guts": {
+      "zhName": "凱茲",
+      "zhTitle": null,
+      "zhFullName": "凱茲",
+      "spokenTitle": null,
+      "spokenName": "ガッツ",
+      "jaTitle": null,
+      "jaName": "ガッツ",
+      "reading": "Guts",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-guts.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "凱茲",
+          "clip": "assets/audio/voices/names/b2-guts.name.mp3"
+        }
+      ],
+      "spokenLine": "ガッツ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-haga": {
+      "zhName": "羽賀",
+      "zhTitle": null,
+      "zhFullName": "羽賀",
+      "spokenTitle": null,
+      "spokenName": "ハガ",
+      "jaTitle": null,
+      "jaName": "ハガ",
+      "reading": "Haga",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-haga.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "羽賀",
+          "clip": "assets/audio/voices/names/b2-haga.name.mp3"
+        }
+      ],
+      "spokenLine": "ハガ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-kaede": {
+      "zhName": "楓",
+      "zhTitle": null,
+      "zhFullName": "楓",
+      "spokenTitle": null,
+      "spokenName": "カエデ",
+      "jaTitle": null,
+      "jaName": "カエデ",
+      "reading": "Kaede",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-kaede.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "楓",
+          "clip": "assets/audio/voices/names/b2-kaede.name.mp3"
+        }
+      ],
+      "spokenLine": "カエデ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-kaiji": {
+      "zhName": "伊藤開司",
+      "zhTitle": null,
+      "zhFullName": "伊藤開司",
+      "spokenTitle": null,
+      "spokenName": "イトウカイジ",
+      "jaTitle": null,
+      "jaName": "イトウカイジ",
+      "reading": "Itou Kaiji",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-kaiji.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "伊藤開司",
+          "clip": "assets/audio/voices/names/b2-kaiji.name.mp3"
+        }
+      ],
+      "spokenLine": "イトウカイジ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-keyaru": {
+      "zhName": "凱亞爾",
+      "zhTitle": null,
+      "zhFullName": "凱亞爾",
+      "spokenTitle": null,
+      "spokenName": "ケヤル",
+      "jaTitle": null,
+      "jaName": "ケヤル",
+      "reading": "Keyaru",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-keyaru.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "凱亞爾",
+          "clip": "assets/audio/voices/names/b2-keyaru.name.mp3"
+        }
+      ],
+      "spokenLine": "ケヤル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-kisaragi": {
+      "zhName": "如月電車",
+      "zhTitle": null,
+      "zhFullName": "如月電車",
+      "spokenTitle": null,
+      "spokenName": "キサラギデンシャ",
+      "jaTitle": null,
+      "jaName": "キサラギデンシャ",
+      "reading": "Kisaragi Densha",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-kisaragi.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "如月電車",
+          "clip": "assets/audio/voices/names/b2-kisaragi.name.mp3"
+        }
+      ],
+      "spokenLine": "キサラギデンシャ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-klaus": {
+      "zhName": "克勞斯",
+      "zhTitle": null,
+      "zhFullName": "克勞斯",
+      "spokenTitle": null,
+      "spokenName": "クラウス",
+      "jaTitle": null,
+      "jaName": "クラウス",
+      "reading": "Klaus",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-klaus.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "克勞斯",
+          "clip": "assets/audio/voices/names/b2-klaus.name.mp3"
+        }
+      ],
+      "spokenLine": "クラウス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-kumoko": {
+      "zhName": "蜘蛛子",
+      "zhTitle": null,
+      "zhFullName": "蜘蛛子",
+      "spokenTitle": null,
+      "spokenName": "クモコ",
+      "jaTitle": null,
+      "jaName": "クモコ",
+      "reading": "Kumoko",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-kumoko.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "蜘蛛子",
+          "clip": "assets/audio/voices/names/b2-kumoko.name.mp3"
+        }
+      ],
+      "spokenLine": "クモコ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-luckyman": {
+      "zhName": "幸運超人",
+      "zhTitle": null,
+      "zhFullName": "幸運超人",
+      "spokenTitle": null,
+      "spokenName": "ラッキーマン",
+      "jaTitle": null,
+      "jaName": "ラッキーマン",
+      "reading": "Lucky Man",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-luckyman.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "幸運超人",
+          "clip": "assets/audio/voices/names/b2-luckyman.name.mp3"
+        }
+      ],
+      "spokenLine": "ラッキーマン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-makoto": {
+      "zhName": "深澄真",
+      "zhTitle": null,
+      "zhFullName": "深澄真",
+      "spokenTitle": null,
+      "spokenName": "ミスミマコト",
+      "jaTitle": null,
+      "jaName": "ミスミマコト",
+      "reading": "Misumi Makoto",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-makoto.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "深澄真",
+          "clip": "assets/audio/voices/names/b2-makoto.name.mp3"
+        }
+      ],
+      "spokenLine": "ミスミマコト。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-maomao": {
+      "zhName": "貓貓",
+      "zhTitle": null,
+      "zhFullName": "貓貓",
+      "spokenTitle": null,
+      "spokenName": "マオマオ",
+      "jaTitle": null,
+      "jaName": "マオマオ",
+      "reading": "Maomao",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-maomao.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "猫猫",
+          "clip": "assets/audio/voices/names/b2-maomao.name.mp3",
+          "readingOverride": {
+            "from": "貓貓",
+            "why": "`say -v Kyoko` renders 貓貓 as 0.030 s of silence (measured 2026-09-10) — 貓 is a Traditional-only glyph; the Japanese original writes 猫猫, which Kyoko reads as マオマオ."
+          }
+        }
+      ],
+      "spokenLine": "マオマオ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-maple-alt-9769eb88b85b": {
+      "zhName": "梅普露（變身）",
+      "zhTitle": null,
+      "zhFullName": "梅普露（變身）",
+      "spokenTitle": null,
+      "spokenName": "メイプル",
+      "jaTitle": null,
+      "jaName": "メイプル",
+      "reading": "Maple",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-maple-alt-9769eb88b85b.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "梅普露（變身）",
+          "clip": "assets/audio/voices/names/b2-maple-alt-9769eb88b85b.name.mp3"
+        }
+      ],
+      "spokenLine": "メイプル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-maple": {
+      "zhName": "梅普露",
+      "zhTitle": null,
+      "zhFullName": "梅普露",
+      "spokenTitle": null,
+      "spokenName": "メイプル",
+      "jaTitle": null,
+      "jaName": "メイプル",
+      "reading": "Maple",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-maple.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "梅普露",
+          "clip": "assets/audio/voices/names/b2-maple.name.mp3"
+        }
+      ],
+      "spokenLine": "メイプル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-matthias": {
+      "zhName": "馬提亞斯",
+      "zhTitle": null,
+      "zhFullName": "馬提亞斯",
+      "spokenTitle": null,
+      "spokenName": "マティアス",
+      "jaTitle": null,
+      "jaName": "マティアス",
+      "reading": "Mathias",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-matthias.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "馬提亞斯",
+          "clip": "assets/audio/voices/names/b2-matthias.name.mp3"
+        }
+      ],
+      "spokenLine": "マティアス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-misery": {
+      "zhName": "米瑟利",
+      "zhTitle": null,
+      "zhFullName": "米瑟利",
+      "spokenTitle": null,
+      "spokenName": "ミザリィ",
+      "jaTitle": null,
+      "jaName": "ミザリィ",
+      "reading": "Misery",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-misery.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "米瑟利",
+          "clip": "assets/audio/voices/names/b2-misery.name.mp3"
+        }
+      ],
+      "spokenLine": "ミザリィ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-naofumi": {
+      "zhName": "岩谷尚文",
+      "zhTitle": null,
+      "zhFullName": "岩谷尚文",
+      "spokenTitle": null,
+      "spokenName": "イワタニナオフミ",
+      "jaTitle": null,
+      "jaName": "イワタニナオフミ",
+      "reading": "Iwatani Naofumi",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-naofumi.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "岩谷尚文",
+          "clip": "assets/audio/voices/names/b2-naofumi.name.mp3"
+        }
+      ],
+      "spokenLine": "イワタニナオフミ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-ned": {
+      "zhName": "青蛙劍士 Ned",
+      "zhTitle": null,
+      "zhFullName": "青蛙劍士 Ned",
+      "spokenTitle": null,
+      "spokenName": "カエルケンシネッド",
+      "jaTitle": null,
+      "jaName": "カエルケンシネッド",
+      "reading": "Kaeru Kenshi Ned",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-ned.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "青蛙劍士 Ned",
+          "clip": "assets/audio/voices/names/b2-ned.name.mp3"
+        }
+      ],
+      "spokenLine": "カエルケンシネッド。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-noor": {
+      "zhName": "諾爾",
+      "zhTitle": null,
+      "zhFullName": "諾爾",
+      "spokenTitle": null,
+      "spokenName": "ノール",
+      "jaTitle": null,
+      "jaName": "ノール",
+      "reading": "Noor",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-noor.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "諾爾",
+          "clip": "assets/audio/voices/names/b2-noor.name.mp3"
+        }
+      ],
+      "spokenLine": "ノール。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-nube": {
+      "zhName": "鵺野鳴介",
+      "zhTitle": null,
+      "zhFullName": "鵺野鳴介",
+      "spokenTitle": null,
+      "spokenName": "ヌエノメイスケ",
+      "jaTitle": null,
+      "jaName": "ヌエノメイスケ",
+      "reading": "Nueno Meisuke",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-nube.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "鵺野鳴介",
+          "clip": "assets/audio/voices/names/b2-nube.name.mp3"
+        }
+      ],
+      "spokenLine": "ヌエノメイスケ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-orphen": {
+      "zhName": "歐菲",
+      "zhTitle": null,
+      "zhFullName": "歐菲",
+      "spokenTitle": null,
+      "spokenName": "オーフェン",
+      "jaTitle": null,
+      "jaName": "オーフェン",
+      "reading": "Orphen",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-orphen.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "歐菲",
+          "clip": "assets/audio/voices/names/b2-orphen.name.mp3"
+        }
+      ],
+      "spokenLine": "オーフェン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-popp": {
+      "zhName": "何布",
+      "zhTitle": null,
+      "zhFullName": "何布",
+      "spokenTitle": null,
+      "spokenName": "ポップ",
+      "jaTitle": null,
+      "jaName": "ポップ",
+      "reading": "Popp",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-popp.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "何布",
+          "clip": "assets/audio/voices/names/b2-popp.name.mp3"
+        }
+      ],
+      "spokenLine": "ポップ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-rem": {
+      "zhName": "蕾姆",
+      "zhTitle": null,
+      "zhFullName": "蕾姆",
+      "spokenTitle": null,
+      "spokenName": "レム",
+      "jaTitle": null,
+      "jaName": "レム",
+      "reading": "Rem",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-rem.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "蕾姆",
+          "clip": "assets/audio/voices/names/b2-rem.name.mp3"
+        }
+      ],
+      "spokenLine": "レム。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-rin": {
+      "zhName": "遠坂凜",
+      "zhTitle": null,
+      "zhFullName": "遠坂凜",
+      "spokenTitle": null,
+      "spokenName": "トオサカリン",
+      "jaTitle": null,
+      "jaName": "トオサカリン",
+      "reading": "Toosaka Rin",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-rin.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "遠坂凜",
+          "clip": "assets/audio/voices/names/b2-rin.name.mp3"
+        }
+      ],
+      "spokenLine": "トオサカリン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-shadow": {
+      "zhName": "闇影",
+      "zhTitle": null,
+      "zhFullName": "闇影",
+      "spokenTitle": null,
+      "spokenName": "シャドウ",
+      "jaTitle": null,
+      "jaName": "シャドウ",
+      "reading": "Shadow",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-shadow.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "闇影",
+          "clip": "assets/audio/voices/names/b2-shadow.name.mp3"
+        }
+      ],
+      "spokenLine": "シャドウ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-shinchan": {
+      "zhName": "野原新之助",
+      "zhTitle": null,
+      "zhFullName": "野原新之助",
+      "spokenTitle": null,
+      "spokenName": "ノハラシンノスケ",
+      "jaTitle": null,
+      "jaName": "ノハラシンノスケ",
+      "reading": "Nohara Shinnosuke",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-shinchan.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "野原新之助",
+          "clip": "assets/audio/voices/names/b2-shinchan.name.mp3"
+        }
+      ],
+      "spokenLine": "ノハラシンノスケ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-sinbad": {
+      "zhName": "辛巴達",
+      "zhTitle": null,
+      "zhFullName": "辛巴達",
+      "spokenTitle": null,
+      "spokenName": "シンドバッド",
+      "jaTitle": null,
+      "jaName": "シンドバッド",
+      "reading": "Sinbad",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-sinbad.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "辛巴達",
+          "clip": "assets/audio/voices/names/b2-sinbad.name.mp3"
+        }
+      ],
+      "spokenLine": "シンドバッド。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-takopi": {
+      "zhName": "章魚嗶",
+      "zhTitle": null,
+      "zhFullName": "章魚嗶",
+      "spokenTitle": null,
+      "spokenName": "タコピー",
+      "jaTitle": null,
+      "jaName": "タコピー",
+      "reading": "Takopi",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-takopi.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "章魚嗶",
+          "clip": "assets/audio/voices/names/b2-takopi.name.mp3"
+        }
+      ],
+      "spokenLine": "タコピー。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-touka": {
+      "zhName": "托卡・史考特",
+      "zhTitle": null,
+      "zhFullName": "托卡・史考特",
+      "spokenTitle": null,
+      "spokenName": "トウカスコット",
+      "jaTitle": null,
+      "jaName": "トウカスコット",
+      "reading": "Touka Scott",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-touka.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "托卡・史考特",
+          "clip": "assets/audio/voices/names/b2-touka.name.mp3"
+        }
+      ],
+      "spokenLine": "トウカスコット。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-uncle": {
+      "zhName": "異世界舅舅",
+      "zhTitle": null,
+      "zhFullName": "異世界舅舅",
+      "spokenTitle": null,
+      "spokenName": "イセカイオジサン",
+      "jaTitle": null,
+      "jaName": "イセカイオジサン",
+      "reading": "Isekai Ojisan",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-uncle.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "異世界舅舅",
+          "clip": "assets/audio/voices/names/b2-uncle.name.mp3"
+        }
+      ],
+      "spokenLine": "イセカイオジサン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-yogiri": {
+      "zhName": "高遠夜霧",
+      "zhTitle": null,
+      "zhFullName": "高遠夜霧",
+      "spokenTitle": null,
+      "spokenName": "タカトオヨギリ",
+      "jaTitle": null,
+      "jaName": "タカトオヨギリ",
+      "reading": "Takatoo Yogiri",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-yogiri.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "高遠夜霧",
+          "clip": "assets/audio/voices/names/b2-yogiri.name.mp3"
+        }
+      ],
+      "spokenLine": "タカトオヨギリ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "b2-zenitsu": {
+      "zhName": "我妻善逸",
+      "zhTitle": null,
+      "zhFullName": "我妻善逸",
+      "spokenTitle": null,
+      "spokenName": "アガツマゼンイツ",
+      "jaTitle": null,
+      "jaName": "アガツマゼンイツ",
+      "reading": "Agatsuma Zen'itsu",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/b2-zenitsu.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "我妻善逸",
+          "clip": "assets/audio/voices/names/b2-zenitsu.name.mp3"
+        }
+      ],
+      "spokenLine": "アガツマゼンイツ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-01-20260907": {
+      "zhName": "武藤遊戲",
+      "zhTitle": null,
+      "zhFullName": "武藤遊戲",
+      "spokenTitle": null,
+      "spokenName": "ムトウユウギ",
+      "jaTitle": null,
+      "jaName": "ムトウユウギ",
+      "reading": "Mutou Yuugi",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-01-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "武藤遊戲",
+          "clip": "assets/audio/voices/names/community-review-01-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ムトウユウギ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-02-20260907": {
+      "zhName": "八神庵",
+      "zhTitle": null,
+      "zhFullName": "八神庵",
+      "spokenTitle": null,
+      "spokenName": "ヤガミイオリ",
+      "jaTitle": null,
+      "jaName": "ヤガミイオリ",
+      "reading": "Yagami Iori",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-02-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "八神庵",
+          "clip": "assets/audio/voices/names/community-review-02-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ヤガミイオリ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-03-20260907": {
+      "zhName": "不知火舞",
+      "zhTitle": null,
+      "zhFullName": "不知火舞",
+      "spokenTitle": null,
+      "spokenName": "シラヌイマイ",
+      "jaTitle": null,
+      "jaName": "シラヌイマイ",
+      "reading": "Shiranui Mai",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-03-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "不知火舞",
+          "clip": "assets/audio/voices/names/community-review-03-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "シラヌイマイ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-04-20260907": {
+      "zhName": "空條承太郎",
+      "zhTitle": null,
+      "zhFullName": "空條承太郎",
+      "spokenTitle": null,
+      "spokenName": "クウジョウジョウタロウ",
+      "jaTitle": null,
+      "jaName": "クウジョウジョウタロウ",
+      "reading": "Kuujou Joutarou",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-04-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "空條承太郎",
+          "clip": "assets/audio/voices/names/community-review-04-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "クウジョウジョウタロウ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-05-20260907": {
+      "zhName": "洛克人",
+      "zhTitle": null,
+      "zhFullName": "洛克人",
+      "spokenTitle": null,
+      "spokenName": "ロックマン",
+      "jaTitle": null,
+      "jaName": "ロックマン",
+      "reading": "Rockman",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-05-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "洛克人",
+          "clip": "assets/audio/voices/names/community-review-05-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ロックマン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-06-20260907": {
+      "zhName": "卡比",
+      "zhTitle": null,
+      "zhFullName": "卡比",
+      "spokenTitle": null,
+      "spokenName": "カービィ",
+      "jaTitle": null,
+      "jaName": "カービィ",
+      "reading": "Kirby",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-06-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "卡比",
+          "clip": "assets/audio/voices/names/community-review-06-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "カービィ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-07-20260907": {
+      "zhName": "西索",
+      "zhTitle": null,
+      "zhFullName": "西索",
+      "spokenTitle": null,
+      "spokenName": "ヒソカ",
+      "jaTitle": null,
+      "jaName": "ヒソカ",
+      "reading": "Hisoka",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-07-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "西索",
+          "clip": "assets/audio/voices/names/community-review-07-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ヒソカ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-08-20260907": {
+      "zhName": "米卡莎",
+      "zhTitle": null,
+      "zhFullName": "米卡莎",
+      "spokenTitle": null,
+      "spokenName": "ミカサ",
+      "jaTitle": null,
+      "jaName": "ミカサ",
+      "reading": "Mikasa",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-08-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "米卡莎",
+          "clip": "assets/audio/voices/names/community-review-08-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ミカサ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-09-20260907": {
+      "zhName": "赫蘿",
+      "zhTitle": null,
+      "zhFullName": "赫蘿",
+      "spokenTitle": null,
+      "spokenName": "ホロ",
+      "jaTitle": null,
+      "jaName": "ホロ",
+      "reading": "Holo",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-09-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "赫蘿",
+          "clip": "assets/audio/voices/names/community-review-09-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ホロ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-10-20260907": {
+      "zhName": "魯路修",
+      "zhTitle": null,
+      "zhFullName": "魯路修",
+      "spokenTitle": null,
+      "spokenName": "ルルーシュ",
+      "jaTitle": null,
+      "jaName": "ルルーシュ",
+      "reading": "Lelouch",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-10-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "魯路修",
+          "clip": "assets/audio/voices/names/community-review-10-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ルルーシュ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-11-20260907": {
+      "zhName": "利姆路",
+      "zhTitle": null,
+      "zhFullName": "利姆路",
+      "spokenTitle": null,
+      "spokenName": "リムル",
+      "jaTitle": null,
+      "jaName": "リムル",
+      "reading": "Rimuru",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-11-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "利姆路",
+          "clip": "assets/audio/voices/names/community-review-11-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "リムル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-12-20260907": {
+      "zhName": "衛宮士郎",
+      "zhTitle": null,
+      "zhFullName": "衛宮士郎",
+      "spokenTitle": null,
+      "spokenName": "エミヤシロウ",
+      "jaTitle": null,
+      "jaName": "エミヤシロウ",
+      "reading": "Emiya Shirou",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-12-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "衛宮士郎",
+          "clip": "assets/audio/voices/names/community-review-12-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "エミヤシロウ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-13-20260907": {
+      "zhName": "朝田詩乃",
+      "zhTitle": null,
+      "zhFullName": "朝田詩乃",
+      "spokenTitle": null,
+      "spokenName": "アサダシノ",
+      "jaTitle": null,
+      "jaName": "アサダシノ",
+      "reading": "Asada Shino",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-13-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "朝田詩乃",
+          "clip": "assets/audio/voices/names/community-review-13-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "アサダシノ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-14-20260907": {
+      "zhName": "殺老師",
+      "zhTitle": null,
+      "zhFullName": "殺老師",
+      "spokenTitle": null,
+      "spokenName": "コロセンセー",
+      "jaTitle": null,
+      "jaName": "コロセンセー",
+      "reading": "Koro-sensei",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-14-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "殺老師",
+          "clip": "assets/audio/voices/names/community-review-14-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "コロセンセー。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-15-20260907": {
+      "zhName": "比利海靈頓",
+      "zhTitle": null,
+      "zhFullName": "比利海靈頓",
+      "spokenTitle": null,
+      "spokenName": "Billy Herrington",
+      "jaTitle": null,
+      "jaName": null,
+      "reading": "Billy Herrington",
+      "confidence": "high",
+      "evidence": "RULE 5 — a non-w3x champion whose native language IS English. Forcing it into katakana would throw away the only entries where English is native.",
+      "clip": "assets/audio/voices/names/community-review-15-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "比利海靈頓",
+          "clip": "assets/audio/voices/names/community-review-15-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "Billy Herrington.",
+      "lang": "en-AU",
+      "voice": "Karen"
+    },
+    "community-review-16-20260907": {
+      "zhName": "魔法少女☆伊莉雅",
+      "zhTitle": null,
+      "zhFullName": "魔法少女☆伊莉雅",
+      "spokenTitle": null,
+      "spokenName": "マホウショウジョイリヤ",
+      "jaTitle": null,
+      "jaName": "マホウショウジョイリヤ",
+      "reading": "Mahou Shoujo Illya",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-16-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "魔法少女☆伊莉雅",
+          "clip": "assets/audio/voices/names/community-review-16-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "マホウショウジョイリヤ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-17-20260907": {
+      "zhName": "安茲·烏爾·恭",
+      "zhTitle": null,
+      "zhFullName": "安茲·烏爾·恭",
+      "spokenTitle": null,
+      "spokenName": "アインズウールゴウン",
+      "jaTitle": null,
+      "jaName": "アインズウールゴウン",
+      "reading": "Ainz Ooal Gown",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-17-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "安茲·烏爾·恭",
+          "clip": "assets/audio/voices/names/community-review-17-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "アインズウールゴウン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-18-20260907": {
+      "zhName": "吉爾伽美什",
+      "zhTitle": null,
+      "zhFullName": "吉爾伽美什",
+      "spokenTitle": null,
+      "spokenName": "ギルガメッシュ",
+      "jaTitle": null,
+      "jaName": "ギルガメッシュ",
+      "reading": "Gilgamesh",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-18-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "吉爾伽美什",
+          "clip": "assets/audio/voices/names/community-review-18-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ギルガメッシュ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-19-20260907": {
+      "zhName": "桐谷和人",
+      "zhTitle": null,
+      "zhFullName": "桐谷和人",
+      "spokenTitle": null,
+      "spokenName": "キリガヤカズト",
+      "jaTitle": null,
+      "jaName": "キリガヤカズト",
+      "reading": "Kirigaya Kazuto",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-19-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "桐谷和人",
+          "clip": "assets/audio/voices/names/community-review-19-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "キリガヤカズト。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-20-20260907": {
+      "zhName": "御坂美琴",
+      "zhTitle": null,
+      "zhFullName": "御坂美琴",
+      "spokenTitle": null,
+      "spokenName": "ミサカミコト",
+      "jaTitle": null,
+      "jaName": "ミサカミコト",
+      "reading": "Misaka Mikoto",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-20-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "御坂美琴",
+          "clip": "assets/audio/voices/names/community-review-20-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ミサカミコト。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-21-20260907": {
+      "zhName": "鹿目圓",
+      "zhTitle": null,
+      "zhFullName": "鹿目圓",
+      "spokenTitle": null,
+      "spokenName": "カナメマドカ",
+      "jaTitle": null,
+      "jaName": "カナメマドカ",
+      "reading": "Kaname Madoka",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-21-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "鹿目圓",
+          "clip": "assets/audio/voices/names/community-review-21-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "カナメマドカ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-22-20260907": {
+      "zhName": "菜月昴",
+      "zhTitle": null,
+      "zhFullName": "菜月昴",
+      "spokenTitle": null,
+      "spokenName": "ナツキスバル",
+      "jaTitle": null,
+      "jaName": "ナツキスバル",
+      "reading": "Natsuki Subaru",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-22-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "菜月昴",
+          "clip": "assets/audio/voices/names/community-review-22-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ナツキスバル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-23-20260907": {
+      "zhName": "坂田銀時",
+      "zhTitle": null,
+      "zhFullName": "坂田銀時",
+      "spokenTitle": null,
+      "spokenName": "サカタギントキ",
+      "jaTitle": null,
+      "jaName": "サカタギントキ",
+      "reading": "Sakata Gintoki",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-23-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "坂田銀時",
+          "clip": "assets/audio/voices/names/community-review-23-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "サカタギントキ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-24-20260907": {
+      "zhName": "奇犽",
+      "zhTitle": null,
+      "zhFullName": "奇犽",
+      "spokenTitle": null,
+      "spokenName": "キルア",
+      "jaTitle": null,
+      "jaName": "キルア",
+      "reading": "Killua",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-24-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "奇犽",
+          "clip": "assets/audio/voices/names/community-review-24-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "キルア。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-25-20260907": {
+      "zhName": "一拳超人",
+      "zhTitle": null,
+      "zhFullName": "一拳超人",
+      "spokenTitle": null,
+      "spokenName": "ワンパンマン",
+      "jaTitle": null,
+      "jaName": "ワンパンマン",
+      "reading": "One Punch Man",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-25-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "一拳超人",
+          "clip": "assets/audio/voices/names/community-review-25-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ワンパンマン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-26-20260907": {
+      "zhName": "名偵探柯南",
+      "zhTitle": null,
+      "zhFullName": "名偵探柯南",
+      "spokenTitle": null,
+      "spokenName": "メイタンテイコナン",
+      "jaTitle": null,
+      "jaName": "メイタンテイコナン",
+      "reading": "Meitantei Conan",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-26-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "名偵探柯南",
+          "clip": "assets/audio/voices/names/community-review-26-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "メイタンテイコナン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-27-20260907": {
+      "zhName": "庫洛魔法使",
+      "zhTitle": null,
+      "zhFullName": "庫洛魔法使",
+      "spokenTitle": null,
+      "spokenName": "カードキャプターサクラ",
+      "jaTitle": null,
+      "jaName": "カードキャプターサクラ",
+      "reading": "Cardcaptor Sakura",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-27-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "庫洛魔法使",
+          "clip": "assets/audio/voices/names/community-review-27-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "カードキャプターサクラ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-28-20260907": {
+      "zhName": "艾莉絲·伯雷亞斯·格雷拉特",
+      "zhTitle": null,
+      "zhFullName": "艾莉絲·伯雷亞斯·格雷拉特",
+      "spokenTitle": null,
+      "spokenName": "エリスボレアスグレイラット",
+      "jaTitle": null,
+      "jaName": "エリスボレアスグレイラット",
+      "reading": "Eris Boreas Greyrat",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-28-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "艾莉絲·伯雷亞斯·格雷拉特",
+          "clip": "assets/audio/voices/names/community-review-28-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "エリスボレアスグレイラット。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-29-20260907": {
+      "zhName": "芙莉蓮",
+      "zhTitle": null,
+      "zhFullName": "芙莉蓮",
+      "spokenTitle": null,
+      "spokenName": "フリーレン",
+      "jaTitle": null,
+      "jaName": "フリーレン",
+      "reading": "Frieren",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-29-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "芙莉蓮",
+          "clip": "assets/audio/voices/names/community-review-29-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "フリーレン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-30-20260907": {
+      "zhName": "尼古貓貓",
+      "zhTitle": null,
+      "zhFullName": "尼古貓貓",
+      "spokenTitle": null,
+      "spokenName": "ヤニネコ",
+      "jaTitle": null,
+      "jaName": "ヤニネコ",
+      "reading": "Yani Neko",
+      "confidence": "medium",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-30-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "尼古貓貓",
+          "clip": "assets/audio/voices/names/community-review-30-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ヤニネコ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-31-20260907": {
+      "zhName": "SUN樂",
+      "zhTitle": null,
+      "zhFullName": "SUN樂",
+      "spokenTitle": null,
+      "spokenName": "サンラク",
+      "jaTitle": null,
+      "jaName": "サンラク",
+      "reading": "Sunraku",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-31-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "SUN樂",
+          "clip": "assets/audio/voices/names/community-review-31-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "サンラク。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-32-20260907": {
+      "zhName": "阿薩謝爾",
+      "zhTitle": null,
+      "zhFullName": "阿薩謝爾",
+      "spokenTitle": null,
+      "spokenName": "アザゼル",
+      "jaTitle": null,
+      "jaName": "アザゼル",
+      "reading": "Azazel",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-32-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "阿薩謝爾",
+          "clip": "assets/audio/voices/names/community-review-32-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "アザゼル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-33-20260907": {
+      "zhName": "近衛刀太",
+      "zhTitle": null,
+      "zhFullName": "近衛刀太",
+      "spokenTitle": null,
+      "spokenName": "コノエトウタ",
+      "jaTitle": null,
+      "jaName": "コノエトウタ",
+      "reading": "Konoe Touta",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-33-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "近衛刀太",
+          "clip": "assets/audio/voices/names/community-review-33-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "コノエトウタ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-34-20260907": {
+      "zhName": "高速婆婆",
+      "zhTitle": null,
+      "zhFullName": "高速婆婆",
+      "spokenTitle": null,
+      "spokenName": "ターボババア",
+      "jaTitle": null,
+      "jaName": "ターボババア",
+      "reading": "Turbo Baba",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-34-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "高速婆婆",
+          "clip": "assets/audio/voices/names/community-review-34-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "ターボババア。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-35-20260907": {
+      "zhName": "炭治郎",
+      "zhTitle": null,
+      "zhFullName": "炭治郎",
+      "spokenTitle": null,
+      "spokenName": "タンジロウ",
+      "jaTitle": null,
+      "jaName": "タンジロウ",
+      "reading": "Tanjirou",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-35-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "炭治郎",
+          "clip": "assets/audio/voices/names/community-review-35-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "タンジロウ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-36-20260907": {
+      "zhName": "鬼畜王蘭斯",
+      "zhTitle": null,
+      "zhFullName": "鬼畜王蘭斯",
+      "spokenTitle": null,
+      "spokenName": "キチクオウランス",
+      "jaTitle": null,
+      "jaName": "キチクオウランス",
+      "reading": "Kichiku Ou Rance",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-36-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "鬼畜王蘭斯",
+          "clip": "assets/audio/voices/names/community-review-36-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "キチクオウランス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "community-review-37-20260907": {
+      "zhName": "吉伊卡哇",
+      "zhTitle": null,
+      "zhFullName": "吉伊卡哇",
+      "spokenTitle": null,
+      "spokenName": "チイカワ",
+      "jaTitle": null,
+      "jaName": "チイカワ",
+      "reading": "Chiikawa",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/community-review-37-20260907.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "吉伊卡哇",
+          "clip": "assets/audio/voices/names/community-review-37-20260907.name.mp3"
+        }
+      ],
+      "spokenLine": "チイカワ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
     "godie-e001": {
       "zhName": "蟬在叫人壞掉 - 龍宮禮奈",
       "zhTitle": "蟬在叫人壞掉",
@@ -2722,6 +4601,181 @@
         }
       ],
       "spokenLine": "セイハイコクデイチャン・ソウヒョウマイケル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-karthus": {
+      "zhName": "卡爾瑟斯",
+      "zhTitle": null,
+      "zhFullName": "卡爾瑟斯",
+      "spokenTitle": null,
+      "spokenName": "カーサス",
+      "jaTitle": null,
+      "jaName": "カーサス",
+      "reading": "Karthus",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-karthus.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "卡爾瑟斯",
+          "clip": "assets/audio/voices/names/lol-karthus.name.mp3"
+        }
+      ],
+      "spokenLine": "カーサス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-leesin": {
+      "zhName": "李星",
+      "zhTitle": null,
+      "zhFullName": "李星",
+      "spokenTitle": null,
+      "spokenName": "リーシン",
+      "jaTitle": null,
+      "jaName": "リーシン",
+      "reading": "Lee Sin",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-leesin.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "李星",
+          "clip": "assets/audio/voices/names/lol-leesin.name.mp3"
+        }
+      ],
+      "spokenLine": "リーシン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-lux": {
+      "zhName": "拉克絲",
+      "zhTitle": null,
+      "zhFullName": "拉克絲",
+      "spokenTitle": null,
+      "spokenName": "ラックス",
+      "jaTitle": null,
+      "jaName": "ラックス",
+      "reading": "Lux",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-lux.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "拉克絲",
+          "clip": "assets/audio/voices/names/lol-lux.name.mp3"
+        }
+      ],
+      "spokenLine": "ラックス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-missfortune": {
+      "zhName": "好運姐",
+      "zhTitle": null,
+      "zhFullName": "好運姐",
+      "spokenTitle": null,
+      "spokenName": "ミスフォーチュン",
+      "jaTitle": null,
+      "jaName": "ミスフォーチュン",
+      "reading": "Miss Fortune",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-missfortune.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "好運姐",
+          "clip": "assets/audio/voices/names/lol-missfortune.name.mp3"
+        }
+      ],
+      "spokenLine": "ミスフォーチュン。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-warwick": {
+      "zhName": "沃維克",
+      "zhTitle": null,
+      "zhFullName": "沃維克",
+      "spokenTitle": null,
+      "spokenName": "ワーウィック",
+      "jaTitle": null,
+      "jaName": "ワーウィック",
+      "reading": "Warwick",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-warwick.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "沃維克",
+          "clip": "assets/audio/voices/names/lol-warwick.name.mp3"
+        }
+      ],
+      "spokenLine": "ワーウィック。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-xerath": {
+      "zhName": "齊勒斯",
+      "zhTitle": null,
+      "zhFullName": "齊勒斯",
+      "spokenTitle": null,
+      "spokenName": "ゼラス",
+      "jaTitle": null,
+      "jaName": "ゼラス",
+      "reading": "Xerath",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-xerath.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "齊勒斯",
+          "clip": "assets/audio/voices/names/lol-xerath.name.mp3"
+        }
+      ],
+      "spokenLine": "ゼラス。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "lol-yasuo": {
+      "zhName": "犽宿",
+      "zhTitle": null,
+      "zhFullName": "犽宿",
+      "spokenTitle": null,
+      "spokenName": "ヤスオ",
+      "jaTitle": null,
+      "jaName": "ヤスオ",
+      "reading": "Yasuo",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/lol-yasuo.mp3",
+      "voSegments": [
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "犽宿",
+          "clip": "assets/audio/voices/names/lol-yasuo.name.mp3"
+        }
+      ],
+      "spokenLine": "ヤスオ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },

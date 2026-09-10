@@ -1,0 +1,45 @@
+{
+  "id": "community-review-37-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔一起加油〕",
+  "provenance": "w3x-import",
+  "description": "為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 0.067,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-37-20260907.ex.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "vfxKey": "fx.prim.holy.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-37-20260907.ex.webp"
+}

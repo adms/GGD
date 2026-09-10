@@ -1,0 +1,73 @@
+{
+  "id": "lol-leesin.w",
+  "name": "定心護體",
+  "provenance": "w3x-import",
+  "description": "獲得 3 秒護盾與 20% 攻速加成。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": [],
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "concept-leesin-guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 3,
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-leesin.w.webp"
+}

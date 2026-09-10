@@ -1,0 +1,48 @@
+{
+  "castTimeSec": 0.067,
+  "castType": "targeted",
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "provenance": "w3x-import",
+  "description": "「地下勞動急救包！」\n指定友軍回復 120 生命；此處是有限治療，不償還原作賭債。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "flat": 120
+      },
+      "kind": "heal"
+    }
+  ],
+  "id": "b2-kaiji.ex",
+  "manaCost": [
+    0.0
+  ],
+  "maxRank": 1,
+  "name": "地下勞動急救包",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "targetsEnemies": false,
+  "template": {
+    "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+    "params": {
+      "amount": {
+        "flat": 120
+      },
+      "castTimeSec": 0.067,
+      "target": "ally"
+    },
+    "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+  },
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.wind.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-kaiji.ex.webp"
+}

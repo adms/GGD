@@ -14,7 +14,7 @@ def eligible(policy, hero_id, source_id, model_key, kind):
     if kind != 'style-proxy':
         return True
     return any(a['heroId'] == hero_id and a['sourceId'] == source_id and a['modelKey'] == model_key
-               for a in policy['approvedDerivatives'])
+               for a in policy['approvedDerivatives'] + policy.get('approvedWorkflowDefaults', []))
 
 
 def selection_class(policy, hero_id, source_id, model_key, source):

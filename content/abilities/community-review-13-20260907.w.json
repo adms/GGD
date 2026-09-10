@@ -1,0 +1,62 @@
+{
+  "id": "community-review-13-20260907.w",
+  "name": "〔觀測射界〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 3 秒增益：as +20%。\n【目標設計】顯示有效射線與遮蔽物，短暫標記一名已可見敵人。\n【待補機制】目前攻速增益；需射界 UI、合法可見敵人的觀測標記。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "castTimeSec": 0.267,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-13-20260907.w.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "castTimeSec": 0.267
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ]
+}

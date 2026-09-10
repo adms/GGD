@@ -83,10 +83,86 @@ export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRu
     // 複製一份：`world.legendaryShelf` 是整塊指派的，共用同一個陣列會讓一場比賽
     // 有辦法動到 DEFAULT_ARENA_RULES（模組層常數，每一場都在讀它）。
     randomOnlyTables: [...(cfg.randomOnlyTables ?? [])],
+    // ⭐ GH#1110 B —— 背包滿時可不可以換掉一件。⛔ 出貨 `false`（玩家看得到的行為改變）。
+    // ⚠️ ⭐ 2026-09-10 抓到:這一行**漏了好幾輪** —— `LegendaryShelfRules` 多了這一格
+    //   而建它的這支函式沒補 ⇒ ⛔ **`pnpm typecheck` 一直是紅的**,而部署照樣成功
+    //   （game-server 的映像不跑 tsc）⇒ ⭐ 「部署綠」與「typecheck 綠」是兩件事。
+    swapWhenFull: cfg.swapWhenFull ?? false,
   };
 }
 
 export interface ArenaRules {
+  /**
+   * ⭐ 第十一回合的**進場判定**那兩格（GH#1151）——
+   * 消費端 `sim/round11Gate.ts::shouldEnterRound11`。
+   * ⚠️ 出貨 `enabled` 是 `false`；⛔ 它是 owner 的一鍵 rollback，不要在程式裡覆寫。
+   */
+  round11: {
+    readonly enabled: boolean;
+    readonly triggerBossKills: number;
+    /** ⭐ 進場之後要用的那三格（#1151 A 第 2 條）——消費端 `sim/round11Gate.round11SetupFrom`。 */
+    readonly arenaId: string;
+    readonly durationSec: number;
+    readonly bannerText: string;
+    /** ⭐ 生怪時序那三格（#1151 B）——消費端 `sim/round11Waves`。 */
+    readonly maxAliveZombies: number;
+    readonly spawnRampSec: number;
+    readonly waveTable: {
+      readonly eventIntervalSec: number;
+      readonly difficultyBase: number;
+      /** ⭐ 一個波次事件生幾隻（成長前的基數）—— 消費端 `MatchController.runRound11Event`。 */
+      readonly baseSpawnCount: number;
+      readonly events: readonly { readonly kind: string; readonly weight: number }[];
+    };
+    /** ⭐ 王強度那三格（#1151 D）——消費端 `sim/round11Waves.round11BossScale`。 */
+    readonly bossStrengthMult: number;
+    readonly bossScaleFloor: number;
+    readonly bossScaleCeil: number;
+    /**
+     * ⭐ 大轟炸（#1151 F）——消費端 `sim/round11Bombardment`。
+     * ⚠️⭐ **只有一個 `radius`**：票逐字「⛔ 不能有一份視覺半徑與另一份判定半徑」
+     * ⇒ ⛔ 這裡不開第二格（第〇·四守則：沒有那個欄位，就造不出那個缺陷）。
+     */
+    readonly bombardment: {
+      readonly enabled: boolean;
+      readonly telegraphSec: number;
+      readonly damagePctOfMaxHp: number;
+      readonly radius: number;
+      readonly crowdBias: number;
+    };
+    /** ⭐ 取捨迴圈（#1151 C / GH#920）——消費端 `sim/round11SurvivalLoop` ＋ `MatchController`。 */
+    readonly survivalLoop: {
+      readonly normalToSpecialSec: number;
+      readonly specialDropsReviveCircle: boolean;
+      readonly breakItemOnDeath: boolean;
+      /** ⭐ ④ 打死王 ⇒ 重抽三選一的機率（%）。⛔ `0` ＝ 機制關著。 */
+      readonly bossRerollChancePct: number;
+      /** ⭐ ④ 重抽從哪一張獎池抽（`content/loot-tables/<id>.json`）。 */
+      readonly bossRerollTable: string;
+    };
+    /** ⭐ 陣亡玩家改控自己的殭屍王（#1151 E）。 */
+    readonly deadPlayersControlBoss: boolean;
+    /**
+     * ⭐ 換邊的三格（#1151 E / GH#922）——消費端 `sim/round11Possession`。
+     * ⚠️ ⭐ 與上面那一格分開：那是「開不開」,這三格是「開著的時候長什麼樣」。
+     */
+    readonly possession: {
+      readonly escapeWindowSec: number;
+      readonly telegraphRadius: number;
+      readonly inheritBossAugments: boolean;
+    };
+    /**
+     * ⭐ 計分（#1151 G）——消費端 `sim/round11Scoring.round11Score`。
+     * ⚠️⭐ `scoreMultiplier` 在 `round11Score()` **裡面**就乘完了 ——
+     * ⛔ 呼叫端只要「加進總分」，⭐ 於是票警告的「總分與本回合分數混用而
+     * **重複乘算**」在型別上就寫不出來（那支函式不吃總分）。
+     */
+    readonly scoring: {
+      readonly survivalWeight: number;
+      readonly scoreMultiplier: number;
+      readonly minContributionForFullSurvival: number;
+    };
+  };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
   /** round from which champions with an exAbility unlock EX; null = never */
@@ -257,6 +333,37 @@ export interface ArenaRules {
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
 export const DEFAULT_ARENA_RULES: ArenaRules = {
+  // ⭐ 沒有內容文件時的第十一回合：**關著**，而且門檻是 0（＝不設門檻 ⇒ 仍然不開）。
+  // ⛔ 兩個都不可以「保險起見」設成開 —— 一個 fallback 開著的模式，
+  //   在內容載入失敗那一刻就會變成「玩家進到一個沒有人測過的回合」。
+  round11: {
+    enabled: false,
+    triggerBossKills: 0,
+    arenaId: "",
+    durationSec: 0,
+    bannerText: "",
+    maxAliveZombies: 0,
+    spawnRampSec: 0,
+    waveTable: { eventIntervalSec: 0, difficultyBase: 1, baseSpawnCount: 0, events: [] },
+    bossStrengthMult: 1,
+    bossScaleFloor: 1,
+    bossScaleCeil: 1,
+    bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
+    // ⭐ 全部惰性:⛔ 沒有一格開關被預設打開。
+    // ⭐ `bossRerollChancePct: 0` ＝ ④ 也關著（⛔ 「機率 0」在這裡就是「不發生」,
+    //   而且呼叫端在 0 的時候**連 rng 都不動** ⇒ 逐位元 no-op）。
+    survivalLoop: {
+      normalToSpecialSec: 0,
+      specialDropsReviveCircle: false,
+      breakItemOnDeath: false,
+      bossRerollChancePct: 0,
+      bossRerollTable: "",
+    },
+    deadPlayersControlBoss: false,
+    // ⭐ 逃跑窗 0 ＋ 不繼承增幅 ＝ 逐位元惰性(⛔ 沒有開關被預設打開)。
+    possession: { escapeWindowSec: 0, telegraphRadius: 1, inheritBossAugments: false },
+    scoring: { survivalWeight: 0, scoreMultiplier: 1, minContributionForFullSurvival: 0 },
+  },
   ultUnlockRound: null,
   exUnlockRound: null,
   offerCount: 3,
@@ -412,6 +519,67 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // 同上：不是 `arena-rules@1` 的欄位。出貨預設在 `config.match@1`，房主的值
     // 在 `MatchRoom.onCreate` 合併進來。這裡放「不設限」＝今天的行為。
     maxRounds: MAX_ROUNDS_UNLIMITED,
+    // ⭐⭐ GH#1151 / GH#1165 —— 第十一回合的**進場判定**那兩格。
+    //
+    // ⛔⛔ 在此之前 `round11.*` **13 欄裡 10 欄零消費端**，而字串 `round11`
+    // 在 sim ／ game-server ／ client 三個執行環境裡都是 **0** ⇒ ⭐ 整組是裝飾。
+    // ⇒ 這一行是它的第一條真接線；判定住 `sim/round11Gate.ts`（純函式）。
+    //
+    // ⚠️ ⭐ 出貨 `enabled` 是 **false**，而這裡刻意**照抄**它 ——
+    // ⛔ 不在這一層改預設：一鍵 rollback 的那一格是後台的 `round11.enabled`，
+    //   ⛔ 不是這裡的一個 `?? true`。
+    round11: {
+      enabled: doc.round11?.enabled ?? false,
+      triggerBossKills: doc.round11?.triggerBossKills ?? 0,
+      // ⭐ 三個 fallback 刻意都是「**不會動**」的值：空場地 id、0 秒、空橫幅。
+      // ⛔ 不給一個「看起來合理」的預設（例如 600 秒）—— 那會讓一份缺欄的設定
+      //   靜靜地跑出一個沒有人授權過的回合長度。
+      arenaId: doc.round11?.arenaId ?? "",
+      durationSec: doc.round11?.durationSec ?? 0,
+      bannerText: doc.round11?.bannerText ?? "",
+      // ⭐ 生怪那三格 —— fallback 一樣是「**不會動**」的值：
+      //   0 隻上限 ＝ 這個機制關著、空事件表 ＝ 這一波不發（見 `pickRound11Event`）。
+      maxAliveZombies: doc.round11?.maxAliveZombies ?? 0,
+      spawnRampSec: doc.round11?.spawnRampSec ?? 0,
+      waveTable: {
+        eventIntervalSec: doc.round11?.waveTable?.eventIntervalSec ?? 0,
+        difficultyBase: doc.round11?.waveTable?.difficultyBase ?? 1,
+        baseSpawnCount: doc.round11?.waveTable?.baseSpawnCount ?? 0,
+        events: doc.round11?.waveTable?.events ?? [],
+      },
+      // ⭐ 王強度 —— fallback 是「⛔ 不成長」：`mult 1` ＋ `floor/ceil 1`。
+      bossStrengthMult: doc.round11?.bossStrengthMult ?? 1,
+      bossScaleFloor: doc.round11?.bossScaleFloor ?? 1,
+      bossScaleCeil: doc.round11?.bossScaleCeil ?? 1,
+      // ⭐ 轟炸 —— fallback 是「⛔ 關著」：`enabled false` ＋ 半徑 0（打不到任何人）。
+      bombardment: {
+        enabled: doc.round11?.bombardment?.enabled ?? false,
+        telegraphSec: doc.round11?.bombardment?.telegraphSec ?? 0,
+        damagePctOfMaxHp: doc.round11?.bombardment?.damagePctOfMaxHp ?? 0,
+        radius: doc.round11?.bombardment?.radius ?? 0,
+        crowdBias: doc.round11?.bombardment?.crowdBias ?? 0,
+      },
+      survivalLoop: {
+        normalToSpecialSec: doc.round11?.survivalLoop?.normalToSpecialSec ?? 0,
+        specialDropsReviveCircle: doc.round11?.survivalLoop?.specialDropsReviveCircle ?? false,
+        breakItemOnDeath: doc.round11?.survivalLoop?.breakItemOnDeath ?? false,
+        // ⭐ ④ fallback 是「⛔ 關著」：機率 0 ＋ 空池 —— 缺文件時一張卡都不發。
+        bossRerollChancePct: doc.round11?.survivalLoop?.bossRerollChancePct ?? 0,
+        bossRerollTable: doc.round11?.survivalLoop?.bossRerollTable ?? "",
+      },
+      deadPlayersControlBoss: doc.round11?.deadPlayersControlBoss ?? false,
+      possession: {
+        escapeWindowSec: doc.round11?.possession?.escapeWindowSec ?? 0,
+        telegraphRadius: doc.round11?.possession?.telegraphRadius ?? 1,
+        inheritBossAugments: doc.round11?.possession?.inheritBossAugments ?? false,
+      },
+      // ⭐ 計分 —— fallback 是「⛔ 不影響勝負」：倍率 1、全看戰鬥貢獻、不折扣。
+      scoring: {
+        survivalWeight: doc.round11?.scoring?.survivalWeight ?? 0,
+        scoreMultiplier: doc.round11?.scoring?.scoreMultiplier ?? 1,
+        minContributionForFullSurvival: doc.round11?.scoring?.minContributionForFullSurvival ?? 0,
+      },
+    },
   };
 }
 

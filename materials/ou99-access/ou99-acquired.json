@@ -1,0 +1,1287 @@
+{
+ "schema": "ggd-candidate-sources@1",
+ "usage": "⭐ ou99 付費取得的模型候選。依全角色模型盤點.md「候選群包含該角色已記錄的全部可用選項與未通過轉換項目」全部登記，⛔ 這些尚未接到英雄、也未視覺驗收；登記目的是讓每一支都能成為後台下拉選單的選項。",
+ "producedBy": "main-session",
+ "producedAt": "2026-09-10T14:03:47+08:00",
+ "purchaseLedger": {
+  "count": 31,
+  "yuanbaoSpent": 29269,
+  "balanceBefore": 64711,
+  "balanceAfter": 35442,
+  "authorizedBy": "owner 2026-09-10「買33」"
+ },
+ "pipeline": [
+  "瀏覽器取 aid（需登入）",
+  "curl 無 cookie 取 302 Location",
+  "curl 從 attach.ou99.com 直取",
+  "unzip → w3xlib.models.convert_all → glb",
+  "讀 glTF JSON 驗 animations/skins"
+ ],
+ "sources": [
+  {
+   "id": "ou99-453949",
+   "provider": "ou99",
+   "threadId": "453949",
+   "threadUrl": "https://www.ou99.com/thread-453949-1-1.html",
+   "ou99Title": "狂刀风衣男",
+   "targetCharacter": "我要招架一切 諾爾",
+   "heroIds": [
+    "b2-noor"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 1199,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/453949/yxmx20.glb",
+   "bytes": 3634812,
+   "sha256": "e05aa7a67d3e4ac91484584bf40a66a10b27c06c0ce8d784b9b4eb7198d225be",
+   "rig": {
+    "animationCount": 9,
+    "joints": 61,
+    "meshes": 1,
+    "textures": 5,
+    "clipNames": [
+     "Stand",
+     "Attack 1",
+     "Attack 2",
+     "Spell Eight"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-454482",
+   "provider": "ou99",
+   "threadId": "454482",
+   "threadUrl": "https://www.ou99.com/thread-454482-1-1.html",
+   "ou99Title": "光刀女剑二次元",
+   "targetCharacter": "異世界舅舅",
+   "heroIds": [
+    "b2-uncle"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 1199,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/454482/dwmx0011.glb",
+   "bytes": 2851116,
+   "sha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1",
+   "rig": {
+    "animationCount": 9,
+    "joints": 103,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Death",
+     "Attack 1"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-456546",
+   "provider": "ou99",
+   "threadId": "456546",
+   "threadUrl": "https://www.ou99.com/thread-456546-1-1.html",
+   "ou99Title": "动漫卡尔斯",
+   "targetCharacter": "臭作",
+   "heroIds": [
+    "godie-o030",
+    "godie-orkn"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/456546/kars.glb",
+   "bytes": 6136544,
+   "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
+   "rig": {
+    "animationCount": 18,
+    "joints": 36,
+    "meshes": 1,
+    "textures": 3,
+    "clipNames": [
+     "Walk",
+     "Walk fast",
+     "Stand",
+     "Spell Ten"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-456917",
+   "provider": "ou99",
+   "threadId": "456917",
+   "threadUrl": "https://www.ou99.com/thread-456917-1-1.html",
+   "ou99Title": "蛤蟆蘸酱柯松剑客",
+   "targetCharacter": "AVARTH 青蛙劍士 Ned",
+   "heroIds": [
+    "b2-ned"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/456917/file.glb",
+   "bytes": 897596,
+   "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+   "rig": {
+    "animationCount": 8,
+    "joints": 34,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Attack -1",
+     "Attack -2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-457594",
+   "provider": "ou99",
+   "threadId": "457594",
+   "threadUrl": "https://www.ou99.com/thread-457594-1-1.html",
+   "ou99Title": "雷欧·凹凸曼无披风版",
+   "targetCharacter": "幸運超人",
+   "heroIds": [
+    "b2-luckyman"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/457594/leo-m.glb",
+   "bytes": 736904,
+   "sha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
+   "rig": {
+    "animationCount": 25,
+    "joints": 34,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "stand",
+     "stand 2",
+     "walk",
+     "stand ready"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-457883",
+   "provider": "ou99",
+   "threadId": "457883",
+   "threadUrl": "https://www.ou99.com/thread-457883-1-1.html",
+   "ou99Title": "牛魔角仙人男",
+   "targetCharacter": "神龍之謎 巴恩大魔王(變身後)",
+   "heroIds": [
+    "godie-ubal"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/457883/npc.glb",
+   "bytes": 1270272,
+   "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65",
+   "rig": {
+    "animationCount": 8,
+    "joints": 61,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Stand",
+     "Stand Ready",
+     "Attack - 1",
+     "Death"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-458013",
+   "provider": "ou99",
+   "threadId": "458013",
+   "threadUrl": "https://www.ou99.com/thread-458013-1-1.html",
+   "ou99Title": "人妖喜乐",
+   "targetCharacter": "膽大黨 高速婆婆",
+   "heroIds": [
+    "community-review-34-20260907"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/458013/file.glb",
+   "bytes": 1336304,
+   "sha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039",
+   "rig": {
+    "animationCount": 6,
+    "joints": 47,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Spell",
+     "Stand",
+     "Attack",
+     "Death"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-458777",
+   "provider": "ou99",
+   "threadId": "458777",
+   "threadUrl": "https://www.ou99.com/thread-458777-1-1.html",
+   "ou99Title": "假面绅士",
+   "targetCharacter": "回復術士的重來人生 凱亞爾",
+   "heroIds": [
+    "b2-keyaru"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/458777/file.glb",
+   "bytes": 2272724,
+   "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+   "rig": {
+    "animationCount": 12,
+    "joints": 67,
+    "meshes": 1,
+    "textures": 7,
+    "clipNames": [
+     "Stand",
+     "Attack 1",
+     "Attack 2",
+     "Attack Slam"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-459257",
+   "provider": "ou99",
+   "threadId": "459257",
+   "threadUrl": "https://www.ou99.com/thread-459257-1-1.html",
+   "ou99Title": "白西装七夜志贵",
+   "targetCharacter": "勇者死了 托卡・史考特",
+   "heroIds": [
+    "b2-touka"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/459257/qiye.glb",
+   "bytes": 5408996,
+   "sha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+   "rig": {
+    "animationCount": 43,
+    "joints": 101,
+    "meshes": 1,
+    "textures": 4,
+    "clipNames": [
+     "dongzuo 1",
+     "dongzuo 2",
+     "dongzuo 3",
+     "dongzuo 4"
+    ]
+   },
+   "clipMapStatus": "needs-manual-mapping",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": [
+    "動作名是拼音（dongzuo N）⇒ ⛔ 不能自動對到 clipMap，要人工指定"
+   ]
+  },
+  {
+   "id": "ou99-459617",
+   "provider": "ou99",
+   "threadId": "459617",
+   "threadUrl": "https://www.ou99.com/thread-459617-1-1.html",
+   "ou99Title": "可爱小宠物chii吉伊",
+   "targetCharacter": "吉伊卡哇",
+   "heroIds": [
+    "community-review-37-20260907"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 999,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/459617/chii.glb",
+   "bytes": 1346076,
+   "sha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
+   "rig": {
+    "animationCount": 4,
+    "joints": 28,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Stand 2",
+     "Spell"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": [
+    "⛔ 原始模型無 death 動作 ⇒ clipMap.death 退回 stand"
+   ]
+  },
+  {
+   "id": "ou99-465205",
+   "provider": "ou99",
+   "threadId": "465205",
+   "threadUrl": "https://www.ou99.com/thread-465205-1-1.html",
+   "ou99Title": "韩当武侠猛男",
+   "targetCharacter": "魔力小馬 蒼月潮",
+   "heroIds": [
+    "godie-hpb1"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/465205/file.glb",
+   "bytes": 1924208,
+   "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4",
+   "rig": {
+    "animationCount": 14,
+    "joints": 59,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand",
+     "Stand Ready",
+     "Attack - 1",
+     "Attack - 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-465884",
+   "provider": "ou99",
+   "threadId": "465884",
+   "threadUrl": "https://www.ou99.com/thread-465884-1-1.html",
+   "ou99Title": "休闲西装版七夜智贵",
+   "targetCharacter": "失格紋的最強賢者 馬提亞斯",
+   "heroIds": [
+    "b2-matthias"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/465884/qiye345.glb",
+   "bytes": 2720944,
+   "sha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a",
+   "rig": {
+    "animationCount": 30,
+    "joints": 67,
+    "meshes": 1,
+    "textures": 3,
+    "clipNames": [
+     "dongzuo 1",
+     "dongzuo 2",
+     "dongzuo 3",
+     "dongzuo 4"
+    ]
+   },
+   "clipMapStatus": "needs-manual-mapping",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": [
+    "動作名是拼音（dongzuo N）⇒ ⛔ 不能自動對到 clipMap，要人工指定"
+   ]
+  },
+  {
+   "id": "ou99-467227",
+   "provider": "ou99",
+   "threadId": "467227",
+   "threadUrl": "https://www.ou99.com/thread-467227-1-1.html",
+   "ou99Title": "天使可爱小女孩派蒙",
+   "targetCharacter": "致不滅的你 不死",
+   "heroIds": [
+    "b2-fushi"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/467227/file.glb",
+   "bytes": 2623940,
+   "sha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612",
+   "rig": {
+    "animationCount": 4,
+    "joints": 61,
+    "meshes": 1,
+    "textures": 4,
+    "clipNames": [
+     "stand",
+     "walk",
+     "attack 1",
+     "spell"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": [
+    "⛔ 原始模型無 death 動作 ⇒ clipMap.death 退回 stand"
+   ]
+  },
+  {
+   "id": "ou99-470087",
+   "provider": "ou99",
+   "threadId": "470087",
+   "threadUrl": "https://www.ou99.com/thread-470087-1-1.html",
+   "ou99Title": "蓝瞳靓仔版远野志贵",
+   "targetCharacter": "UQHOLDER 近衛刀太",
+   "heroIds": [
+    "community-review-33-20260907"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/470087/file.glb",
+   "bytes": 2140508,
+   "sha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494",
+   "rig": {
+    "animationCount": 31,
+    "joints": 68,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "stand",
+     "attack",
+     "attack 1",
+     "walk"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-470426",
+   "provider": "ou99",
+   "threadId": "470426",
+   "threadUrl": "https://www.ou99.com/thread-470426-1-1.html",
+   "ou99Title": "二次元巫女",
+   "targetCharacter": "魔法老師 依文潔琳",
+   "heroIds": [
+    "godie-n003",
+    "godie-n01g"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/470426/file.glb",
+   "bytes": 2839116,
+   "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
+   "rig": {
+    "animationCount": 6,
+    "joints": 122,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Death",
+     "Attack 1"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-472035",
+   "provider": "ou99",
+   "threadId": "472035",
+   "threadUrl": "https://www.ou99.com/thread-472035-1-1.html",
+   "ou99Title": "WOW兽人祭祀法师",
+   "targetCharacter": "神龍之謎 巴恩大魔王(變身前)",
+   "heroIds": [
+    "godie-ubal"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/472035/zpvk1h20250503.glb",
+   "bytes": 4363676,
+   "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171",
+   "rig": {
+    "animationCount": 8,
+    "joints": 39,
+    "meshes": 1,
+    "textures": 4,
+    "clipNames": [
+     "Stand",
+     "Stand Ready",
+     "Attack Spell",
+     "Spell Slam"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-472038",
+   "provider": "ou99",
+   "threadId": "472038",
+   "threadUrl": "https://www.ou99.com/thread-472038-1-1.html",
+   "ou99Title": "圣洁化身戚小姐",
+   "targetCharacter": "重騎士以遊戲知識開無雙 艾爾瑪",
+   "heroIds": [
+    "b2-elma"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/472038/aqhdba20250503.glb",
+   "bytes": 4182160,
+   "sha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
+   "rig": {
+    "animationCount": 7,
+    "joints": 114,
+    "meshes": 1,
+    "textures": 5,
+    "clipNames": [
+     "Attack 1",
+     "Attack 4",
+     "Death",
+     "Spell 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-473324",
+   "provider": "ou99",
+   "threadId": "473324",
+   "threadUrl": "https://www.ou99.com/thread-473324-1-1.html",
+   "ou99Title": "龙族亚瑟王",
+   "targetCharacter": "魔笛 MAGI 阿拉丁",
+   "heroIds": [
+    "b2-aladdin"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/473324/fyiqz720250503.glb",
+   "bytes": 1650264,
+   "sha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
+   "rig": {
+    "animationCount": 7,
+    "joints": 59,
+    "meshes": 1,
+    "textures": 7,
+    "clipNames": [
+     "Attack 1",
+     "Attack 2",
+     "Stand",
+     "Walk"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-474258",
+   "provider": "ou99",
+   "threadId": "474258",
+   "threadUrl": "https://www.ou99.com/thread-474258-1-1.html",
+   "ou99Title": "绯红女剑校服女",
+   "targetCharacter": "異世界転移魔法剣士 楓",
+   "heroIds": [
+    "b2-kaede"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/474258/file00012699.glb",
+   "bytes": 1387184,
+   "sha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06",
+   "rig": {
+    "animationCount": 10,
+    "joints": 75,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand Ready",
+     "attack 1",
+     "attack 2",
+     "spell one"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-478642",
+   "provider": "ou99",
+   "threadId": "478642",
+   "threadUrl": "https://www.ou99.com/thread-478642-1-1.html",
+   "ou99Title": "女刺客双见凛",
+   "targetCharacter": "月光下的異世界之旅 深澄真",
+   "heroIds": [
+    "b2-makoto"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/478642/yx-l-lys.glb",
+   "bytes": 2468404,
+   "sha256": "a23e59b9443a980aa767f91e19fb83249542816760a7c3d0962b03b5a7cc7b34",
+   "rig": {
+    "animationCount": 13,
+    "joints": 75,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Stand",
+     "Spell Four",
+     "Spell Eight",
+     "Spell Nine"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-481732",
+   "provider": "ou99",
+   "threadId": "481732",
+   "threadUrl": "https://www.ou99.com/thread-481732-1-1.html",
+   "ou99Title": "202511z13",
+   "targetCharacter": "我想成為影之強者",
+   "heroIds": [
+    "b2-shadow"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/481732/file.glb",
+   "bytes": 1766568,
+   "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+   "rig": {
+    "animationCount": 16,
+    "joints": 76,
+    "meshes": 1,
+    "textures": 4,
+    "clipNames": [
+     "Animation EarthxSa",
+     "Stand",
+     "Attack 1",
+     "Attack 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-487191",
+   "provider": "ou99",
+   "threadId": "487191",
+   "threadUrl": "https://www.ou99.com/thread-487191-1-1.html",
+   "ou99Title": "SSR鬼神吕布鬼脸将军",
+   "targetCharacter": "呂布",
+   "heroIds": [
+    "godie-h01u"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/487191/hhn5qpibf.glb",
+   "bytes": 2028668,
+   "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615",
+   "rig": {
+    "animationCount": 8,
+    "joints": 66,
+    "meshes": 1,
+    "textures": 6,
+    "clipNames": [
+     "Attack",
+     "Attack 2",
+     "spell slam",
+     "Stand"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-487484",
+   "provider": "ou99",
+   "threadId": "487484",
+   "threadUrl": "https://www.ou99.com/thread-487484-1-1.html",
+   "ou99Title": "中洲队潇洒哥",
+   "targetCharacter": "靈異教師神眉 鵺野鳴介",
+   "heroIds": [
+    "b2-nube"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/487484/bsxwtej17g2v.glb",
+   "bytes": 1458232,
+   "sha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b",
+   "rig": {
+    "animationCount": 10,
+    "joints": 55,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Stand ready",
+     "Attack 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-487487-7yzc0mtk",
+   "provider": "ou99",
+   "threadId": "487487",
+   "threadUrl": "https://www.ou99.com/thread-487487-1-1.html",
+   "ou99Title": "银发动漫正装男",
+   "targetCharacter": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+   "heroIds": [
+    "b2-klaus"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/487487/7yzc0mtk.glb",
+   "bytes": 706356,
+   "sha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
+   "rig": {
+    "animationCount": 5,
+    "joints": 102,
+    "meshes": 1,
+    "textures": 3,
+    "clipNames": [
+     "stand",
+     "walk",
+     "attack 1",
+     "spell channel"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-487487-sbhhkedr",
+   "provider": "ou99",
+   "threadId": "487487",
+   "threadUrl": "https://www.ou99.com/thread-487487-1-1.html",
+   "ou99Title": "银发动漫正装男",
+   "targetCharacter": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+   "heroIds": [
+    "b2-klaus"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/487487/sbhhkedr.glb",
+   "bytes": 1000240,
+   "sha256": "0a5041838fe595b877abd29cfceb353f475e8f9abc93135b1d0160f8a1d4059b",
+   "rig": {
+    "animationCount": 6,
+    "joints": 73,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Walk",
+     "Stand",
+     "Attack 1",
+     "Attack 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-491448",
+   "provider": "ou99",
+   "threadId": "491448",
+   "threadUrl": "https://www.ou99.com/thread-491448-1-1.html",
+   "ou99Title": "逃亡的盗墓女孩",
+   "targetCharacter": "轉生成自動販賣機 阿箱＋拉蜜絲",
+   "heroIds": [
+    "b2-boxxo"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/491448/mwwltarndo4f.glb",
+   "bytes": 1354252,
+   "sha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+   "rig": {
+    "animationCount": 14,
+    "joints": 62,
+    "meshes": 1,
+    "textures": 6,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Walk Fast",
+     "Stand Ready"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-491497",
+   "provider": "ou99",
+   "threadId": "491497",
+   "threadUrl": "https://www.ou99.com/thread-491497-1-1.html",
+   "ou99Title": "遥远救世主拳皇",
+   "targetCharacter": "魔笛 MAGI 辛巴達",
+   "heroIds": [
+    "b2-sinbad"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/491497/xebcjfhiyx.glb",
+   "bytes": 5429960,
+   "sha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99",
+   "rig": {
+    "animationCount": 13,
+    "joints": 140,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "stand",
+     "walk",
+     "attack 1",
+     "spell Back"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-493578",
+   "provider": "ou99",
+   "threadId": "493578",
+   "threadUrl": "https://www.ou99.com/thread-493578-1-1.html",
+   "ou99Title": "篮球小男孩",
+   "targetCharacter": "鬼畜王蘭斯",
+   "heroIds": [
+    "community-review-36-20260907"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/493578/cdboss9.glb",
+   "bytes": 1241276,
+   "sha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51",
+   "rig": {
+    "animationCount": 7,
+    "joints": 46,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Spell Eight",
+     "Stand",
+     "Spell Four",
+     "Spell Nine"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-495015",
+   "provider": "ou99",
+   "threadId": "495015",
+   "threadUrl": "https://www.ou99.com/thread-495015-1-1.html",
+   "ou99Title": "海星动画人",
+   "targetCharacter": "這個世界漏洞百出 羽賀",
+   "heroIds": [
+    "b2-haga"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/495015/patrick2.glb",
+   "bytes": 649672,
+   "sha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3",
+   "rig": {
+    "animationCount": 13,
+    "joints": 55,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand",
+     "Stand 2",
+     "Stand 3",
+     "Spell"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-496452",
+   "provider": "ou99",
+   "threadId": "496452",
+   "threadUrl": "https://www.ou99.com/thread-496452-1-1.html",
+   "ou99Title": "甲贺忍蛙",
+   "targetCharacter": "魔術士歐菲",
+   "heroIds": [
+    "b2-orphen"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/496452/file-000758.glb",
+   "bytes": 1155340,
+   "sha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
+   "rig": {
+    "animationCount": 8,
+    "joints": 44,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "stand",
+     "walk",
+     "stand ready",
+     "attack 1"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-496905",
+   "provider": "ou99",
+   "threadId": "496905",
+   "threadUrl": "https://www.ou99.com/thread-496905-1-1.html",
+   "ou99Title": "搞怪哆啦A梦猫",
+   "targetCharacter": "哆啦A夢",
+   "heroIds": [
+    "godie-n00b"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/496905_搞怪哆啦A梦猫/file-000744.glb",
+   "bytes": 4368388,
+   "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
+   "rig": {
+    "animationCount": 36,
+    "joints": 93,
+    "meshes": 1,
+    "textures": 3,
+    "clipNames": [
+     "Stand",
+     "Attack",
+     "Walk",
+     "Walk Fast"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-497131",
+   "provider": "ou99",
+   "threadId": "497131",
+   "threadUrl": "https://www.ou99.com/thread-497131-1-1.html",
+   "ou99Title": "龙珠超孙悟空",
+   "targetCharacter": "七龍珠 孫悟空",
+   "heroIds": [
+    "godie-o00x",
+    "godie-ogrh"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/497131/file-000564.glb",
+   "bytes": 753372,
+   "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
+   "rig": {
+    "animationCount": 14,
+    "joints": 31,
+    "meshes": 1,
+    "textures": 2,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Attack 1",
+     "Attack 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  },
+  {
+   "id": "ou99-498214",
+   "provider": "ou99",
+   "threadId": "498214",
+   "threadUrl": "https://www.ou99.com/thread-498214-1-1.html",
+   "ou99Title": "可爱娃娃",
+   "targetCharacter": "尼古貓貓",
+   "heroIds": [
+    "community-review-30-20260907"
+   ],
+   "identityStatus": "intentional-similar-proxy",
+   "identityNote": "⭐ owner 2026-09-10 逐字：「我故意把相似的放上清單 這不是錯誤」⇒ ou99 標題與目標角色不同是**刻意**的相似代理，⛔ 不是配對錯誤。",
+   "acquisition": {
+    "method": "paid",
+    "priceYuanbao": 899,
+    "purchasedAt": "2026-09-10T14:03:47+08:00",
+    "note": "aid token 自帶簽章 ⇒ 302 → attach.ou99.com，⛔ 下載不需 cookie"
+   },
+   "localGlb": "GGD-assets/glb/498214/file-001600.glb",
+   "bytes": 1806536,
+   "sha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480",
+   "rig": {
+    "animationCount": 9,
+    "joints": 31,
+    "meshes": 1,
+    "textures": 1,
+    "clipNames": [
+     "Stand",
+     "Walk",
+     "Attack 1",
+     "Attack 2"
+    ]
+   },
+   "clipMapStatus": "wc3-standard",
+   "conversionStatus": "converted-unverified-visually",
+   "wiredToChampion": false,
+   "blockers": []
+  }
+ ]
+}

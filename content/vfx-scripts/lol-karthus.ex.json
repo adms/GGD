@@ -1,0 +1,24 @@
+{
+  "id": "lol-karthus.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-karthus.ex",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "靜默幕衣",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

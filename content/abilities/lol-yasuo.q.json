@@ -1,0 +1,74 @@
+{
+  "id": "lol-yasuo.q",
+  "name": "斬風",
+  "provenance": "w3x-import",
+  "description": "朝前方斬出四段窄風刃，以本遊戲線段判定命中。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3.0,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.267,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+    "params": {
+      "segmentCount": 4,
+      "stepSize": 100,
+      "segmentAoe": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.267
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-yasuo.q.webp"
+}

@@ -1,0 +1,2606 @@
+[
+  {
+    "sourceId": "ou99:453949",
+    "heroId": "b2-noor",
+    "runtimeHeroId": "b2-noor",
+    "originalModelKey": "ou99.453949",
+    "sourceGlbPath": "assets/models/ou99/ou99_453949.glb",
+    "sourceSha256": "e05aa7a67d3e4ac91484584bf40a66a10b27c06c0ce8d784b9b4eb7198d225be",
+    "boundsControlSha256": "c7ec1cba1f0312c4956a13b29fc62bb61230f8f12385f703a268a93c4ca31c7c",
+    "modelKey": "ou99.453949-standard-v2",
+    "sha256": "14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b",
+    "bytes": 3328636,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/runtime/model.json",
+    "modelDocumentSha256": "1a58d54d804ed78312a804d57461805eb6222ed31ba7e5285e62ad4b595d2172",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.600000023841858,
+        "channels": 61
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 1,
+        "channels": 61
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.600000023841858,
+        "channels": 61
+      },
+      {
+        "index": 3,
+        "name": "Spell One",
+        "duration": 1.899999976158142,
+        "channels": 61
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 2.8340001106262207,
+        "channels": 61
+      }
+    ],
+    "metrics": {
+      "triangles": 13968,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 465411,
+          "sha256": "71e36f18edb07adbe346bc3f5296fd2a4879b08a4e03ba28512b774d518f1de6"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 487881,
+          "sha256": "84cac4f6c70865bacade883a668fd35ad3205295dbe57efb82aaec4788af68a6"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 162123,
+          "sha256": "44ea1684e7cbbb61d8b93814afb9c14689c21d95b9ce4a3ffb0f8518ac71cafd"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 302897,
+          "sha256": "6f43793880bb7a026a7cd5adb866ddf7ec08b97b7c914ac27f1e3deec5e23554"
+        },
+        {
+          "width": 1024,
+          "height": 512,
+          "bytes": 115108,
+          "sha256": "594dbe8183e010142fabe75592630e2a7ec5cf0fbf381f920d2918b5d7222d42"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.453949/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:454482",
+    "heroId": "b2-uncle",
+    "runtimeHeroId": "b2-uncle",
+    "originalModelKey": "ou99.454482",
+    "sourceGlbPath": "assets/models/ou99/ou99_454482.glb",
+    "sourceSha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1",
+    "boundsControlSha256": "1c65977d77f22403bf4eef5110d00493a7960eadfd10c48a351b63861b8b5bf8",
+    "modelKey": "ou99.454482-standard-v2",
+    "sha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016",
+    "bytes": 2518536,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/runtime/model.json",
+    "modelDocumentSha256": "30e1c795f14f95216358d5d94bf82d6a3dca907e4474b1f71666c8a7e3c25565",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell 1",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1,
+        "channels": 164
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.800000011920929,
+        "channels": 164
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1,
+        "channels": 164
+      },
+      {
+        "index": 3,
+        "name": "Spell 1",
+        "duration": 0.800000011920929,
+        "channels": 164
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 1.7999999523162842,
+        "channels": 164
+      }
+    ],
+    "metrics": {
+      "triangles": 8862,
+      "drawPrimitives": 2,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 320083,
+          "sha256": "bfd26ac19c249154e4854cf1490b5da1c27a31b047c8e7e345ce16391c3d760e"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1242509,
+          "sha256": "bd262a46a796927a7ab85122030c2c95deca2e86fb60e4ed4465bed413df1d6f"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.454482/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:456917",
+    "heroId": "b2-ned",
+    "runtimeHeroId": "b2-ned",
+    "originalModelKey": "ou99.456917",
+    "sourceGlbPath": "assets/models/ou99/ou99_456917.glb",
+    "sourceSha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+    "boundsControlSha256": "c8bf87de040fb9d30a691f7731b2f7b0673a8f1483da39d421c8f41aa952452a",
+    "modelKey": "ou99.456917-standard-v2",
+    "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+    "bytes": 886408,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/runtime/model.json",
+    "modelDocumentSha256": "af8bd7f3700f1997bd19b7f6d001ab330263322c39fa0a4b85dd58872772ecad",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack -1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2,
+        "channels": 31
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.800000011920929,
+        "channels": 31
+      },
+      {
+        "index": 2,
+        "name": "Attack -1",
+        "duration": 1,
+        "channels": 31
+      },
+      {
+        "index": 3,
+        "name": "Spell One",
+        "duration": 1,
+        "channels": 31
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 1,
+        "channels": 31
+      }
+    ],
+    "metrics": {
+      "triangles": 7081,
+      "drawPrimitives": 1,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 416056,
+          "sha256": "51dccc539697b623c006cc4ef779700c1295f3e25be49b834352d13837dcda51"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 9,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:457594",
+    "heroId": "b2-luckyman",
+    "runtimeHeroId": "b2-luckyman",
+    "originalModelKey": "ou99.457594",
+    "sourceGlbPath": "assets/models/ou99/ou99_457594.glb",
+    "sourceSha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
+    "boundsControlSha256": "1c448ef46155bf258634fb21089e42ace774897e4bda76297560ccd977c1de33",
+    "modelKey": "ou99.457594-standard-v2",
+    "sha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+    "bytes": 502336,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/runtime/model.json",
+    "modelDocumentSha256": "d5695d4811493e432cef273434288bed51f6dd5dfd5cbaaa540c7bb433ee2a14",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 2",
+      "cast": "spell one",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 1.7300000190734863,
+        "channels": 27
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.6100000143051147,
+        "channels": 27
+      },
+      {
+        "index": 2,
+        "name": "attack 2",
+        "duration": 1.2100000381469727,
+        "channels": 27
+      },
+      {
+        "index": 3,
+        "name": "spell one",
+        "duration": 1.2100000381469727,
+        "channels": 27
+      },
+      {
+        "index": 4,
+        "name": "stand ready",
+        "duration": 1.909999966621399,
+        "channels": 27
+      },
+      {
+        "index": 5,
+        "name": "death",
+        "duration": 1.7200000286102295,
+        "channels": 27
+      }
+    ],
+    "metrics": {
+      "triangles": 3912,
+      "drawPrimitives": 2,
+      "textures": [
+        {
+          "width": 128,
+          "height": 64,
+          "bytes": 5563,
+          "sha256": "5f7f9f7f762c081a18bb7768621b7d2da50b0bb7e12b6cda943a627b30bbfe77"
+        },
+        {
+          "width": 256,
+          "height": 512,
+          "bytes": 193157,
+          "sha256": "acd02ef375241436b335447c5fac735aab13c6ee2dacfe55cb70a9afbbcaf773"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:458777",
+    "heroId": "b2-keyaru",
+    "runtimeHeroId": "b2-keyaru",
+    "originalModelKey": "ou99.458777",
+    "sourceGlbPath": "assets/models/ou99/ou99_458777.glb",
+    "sourceSha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+    "boundsControlSha256": "03b975bd5c45df1207ca918b2360ee8db4af203dcce34ae3d70f5d6586d3a203",
+    "modelKey": "ou99.458777-standard-v2",
+    "sha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+    "bytes": 1614000,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/runtime/model.json",
+    "modelDocumentSha256": "82d35c3ce48f06a587830513dfd3dec9c742338a3df298b2a475bf2bbe00474b",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.600000023841858,
+        "channels": 76
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.5669999718666077,
+        "channels": 76
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.034000039100647,
+        "channels": 76
+      },
+      {
+        "index": 3,
+        "name": "Spell One",
+        "duration": 1.1660000085830688,
+        "channels": 76
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 2,
+        "channels": 76
+      }
+    ],
+    "metrics": {
+      "triangles": 7003,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 69394,
+          "sha256": "aba39729d9bd8de1a5287ce7a1d31172db008fc73fe9a57e2a87266899e6eca0"
+        },
+        {
+          "width": 128,
+          "height": 256,
+          "bytes": 29191,
+          "sha256": "a8de8786a123ac007a9a318801337c36dfb04ba377029d1baa1107eef1a019a6"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 15574,
+          "sha256": "94fc8def004ed7382977f6295ec08515c7a69fc3a2f60864ba89f5e19982d968"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 222547,
+          "sha256": "a21d19a6a7ba14f6dab2dc953df1d4a0a029d34feea0735e807ce50676eeda78"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 8065,
+          "sha256": "43fc8ac83472bdffc06a598bf927dbd4476d4fb9392f471bc3bef823f5a1fdc8"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 5641,
+          "sha256": "fa0be06bb3c830b7749f3782a17656ab0981b05e0dfd5e70059999e4481728cc"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 7956,
+          "sha256": "31eebf11e786277751adafe715763b7dc7d40da2fa5b8b5e68d633a674983767"
+        },
+        {
+          "width": 256,
+          "height": 512,
+          "bytes": 33899,
+          "sha256": "617836ba10cce9b85b8ba6fe92a56caf0c84606c51ac0de24db7e1336fc60912"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 3,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": {
+      "atlasResolution": [
+        256,
+        512
+      ],
+      "atlasPngSha256": "617836ba10cce9b85b8ba6fe92a56caf0c84606c51ac0de24db7e1336fc60912",
+      "groups": [
+        {
+          "material": 2,
+          "originalTexture": 2,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            16,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 4,
+          "originalTexture": 4,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            176,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 5,
+          "originalTexture": 5,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            336,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        }
+      ],
+      "maxVertexBilinearRgbaError": 2.7601438227498054e-06,
+      "newMaterial": 7,
+      "limitation": "Full-resolution pixels and base-level bilinear samples verified; distant mip blending/transparent ordering require rendered acceptance."
+    },
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:459257",
+    "heroId": "b2-touka",
+    "runtimeHeroId": "b2-touka",
+    "originalModelKey": "ou99.459257",
+    "sourceGlbPath": "assets/models/ou99/ou99_459257.glb",
+    "sourceSha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+    "boundsControlSha256": "2b08f947c3648099a642638f15736de55f2190f261da70c908617e5998de7b8f",
+    "modelKey": "ou99.459257-standard-v2",
+    "sha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+    "bytes": 2753524,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/runtime/model.json",
+    "modelDocumentSha256": "c1f76a60fdd0edc1cc71c1558181de40a68066d78a52421316ba22e4eca80e66",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell two",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 2,
+        "channels": 63
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.800000011920929,
+        "channels": 63
+      },
+      {
+        "index": 2,
+        "name": "attack 1",
+        "duration": 1.3329999446868896,
+        "channels": 63
+      },
+      {
+        "index": 3,
+        "name": "spell two",
+        "duration": 0.4000000059604645,
+        "channels": 63
+      },
+      {
+        "index": 4,
+        "name": "stand ready",
+        "duration": 2,
+        "channels": 63
+      },
+      {
+        "index": 5,
+        "name": "death",
+        "duration": 1.3339999914169312,
+        "channels": 63
+      }
+    ],
+    "metrics": {
+      "triangles": 4814,
+      "drawPrimitives": 4,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 558578,
+          "sha256": "886fb197631e5f1d0a0d31e8dac463e977f443497bfd7c7923ecd713756337aa"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 247501,
+          "sha256": "ec3365ba5fe9a42703f11535f370a1c56897e8e572d291e66f5f27ab7b2faf5f"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 644003,
+          "sha256": "c2ef9fc7316f11ee6d8068b8020d76578c7d29e7bf1425399642a9029e2b87a0"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 604571,
+          "sha256": "13c3490fcaf44d83cbe841cd98a3031460842dc83adc35bbf1d6c4ff43d553a4"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 2,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.459257/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:470087",
+    "heroId": "community-review-33-20260907",
+    "runtimeHeroId": "community-review-33-20260907",
+    "originalModelKey": "ou99.470087",
+    "sourceGlbPath": "assets/models/ou99/ou99_470087.glb",
+    "sourceSha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494",
+    "boundsControlSha256": "8a0b0980783d4219eba0dfad5a64635852c843507ccd92452ce14b9f30f40c31",
+    "modelKey": "ou99.470087-standard-v2",
+    "sha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0",
+    "bytes": 1148412,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/runtime/model.json",
+    "modelDocumentSha256": "14bfb0bec138936d13e97ae909855145a103e8f2777992a73edf98043f6ce2e4",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack",
+      "cast": "spell one",
+      "hurt": "stand",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 2,
+        "channels": 65
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.800000011920929,
+        "channels": 65
+      },
+      {
+        "index": 2,
+        "name": "attack",
+        "duration": 1.1670000553131104,
+        "channels": 65
+      },
+      {
+        "index": 3,
+        "name": "spell one",
+        "duration": 1.3339999914169312,
+        "channels": 65
+      },
+      {
+        "index": 4,
+        "name": "death",
+        "duration": 1.1330000162124634,
+        "channels": 65
+      }
+    ],
+    "metrics": {
+      "triangles": 5273,
+      "drawPrimitives": 2,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 317841,
+          "sha256": "8614be7c21082ca1ac230fd815bf75977a7b7c3d2b3e54fffd4744d6ea6ba60f"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 268570,
+          "sha256": "231689f366f03b15715f3775edf826998845a3144533e622482d1e0060bbdc23"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.470087/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:472038",
+    "heroId": "b2-elma",
+    "runtimeHeroId": "b2-elma",
+    "originalModelKey": "ou99.472038",
+    "sourceGlbPath": "assets/models/ou99/ou99_472038.glb",
+    "sourceSha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
+    "boundsControlSha256": "48a4534b711a3e509af8df93ce7d9e2c03ae4fabfcd7fada048ae017d08f5fe5",
+    "modelKey": "ou99.472038-standard-v2",
+    "sha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+    "bytes": 3840024,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/runtime/model.json",
+    "modelDocumentSha256": "69c83098bdd03d68a3f7da80e8a6e0d9a8d1ded1abdf9989062be91094721591",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk Fast",
+      "attack": "Attack 1",
+      "cast": "Spell 2",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.6670000553131104,
+        "channels": 333
+      },
+      {
+        "index": 1,
+        "name": "Walk Fast",
+        "duration": 0.9330000281333923,
+        "channels": 333
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 0.6669999957084656,
+        "channels": 333
+      },
+      {
+        "index": 3,
+        "name": "Spell 2",
+        "duration": 1.5329999923706055,
+        "channels": 333
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 1.5329999923706055,
+        "channels": 333
+      }
+    ],
+    "metrics": {
+      "triangles": 16328,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 393926,
+          "sha256": "18db3e2a5a9ecfc89f26439349ba37a5538d6057ae8d959146f32185beaa95c7"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 152007,
+          "sha256": "4166913db916d503cdcb568fca451b3c111d4fbb3fdad626644dbcf8cae3d289"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 345319,
+          "sha256": "91ec60d3d1a79deef826b424ac8812cb83b01ab666a0a3bcf079e5e2850cf058"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 11523,
+          "sha256": "d68e03aa64eb4186c377064fa9ef030fca1209453997650c86e50e69aed74475"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 483723,
+          "sha256": "4142a5b1dd2b80ab04d10fbaaac30cf6aa64e7092cfaba38ad77c464e63b188f"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 4,
+      "truncated": false
+    },
+    "warnings": [
+      "三角面 16328 高於警戒值 16000，送審時需檢查演出負載。",
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+      "單段動作通道 333 高於警戒值 300，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472038/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:473324",
+    "heroId": "b2-aladdin",
+    "runtimeHeroId": "b2-aladdin",
+    "originalModelKey": "ou99.473324",
+    "sourceGlbPath": "assets/models/ou99/ou99_473324.glb",
+    "sourceSha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
+    "boundsControlSha256": "737a994c612f757cfc15ec8ed41db2fcb71a8ed16fce65b5151d3a1f42f8eb5c",
+    "modelKey": "ou99.473324-standard-v2",
+    "sha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26",
+    "bytes": 1591956,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/runtime/model.json",
+    "modelDocumentSha256": "3a42f4b46e20da14f1b559a37e645f0b6a6db6fb0b5f3f360cf713d436c3814b",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2,
+        "channels": 76
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.734000027179718,
+        "channels": 76
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.3329999446868896,
+        "channels": 76
+      },
+      {
+        "index": 3,
+        "name": "Spell one",
+        "duration": 1.1660000085830688,
+        "channels": 76
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 2.4670000076293945,
+        "channels": 76
+      }
+    ],
+    "metrics": {
+      "triangles": 7970,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 217,
+          "sha256": "0cf81f39afb910b97f6d7b236bd99226d8b9a1cc16b854340b7d2a4be0c5a675"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 191810,
+          "sha256": "d28e083575d6061701c3d9905cc35a93cd85d867f8e62618c1375d565e24a456"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 6847,
+          "sha256": "0003947290226fe3b4b47aabbbcf65f3964414ffb559c54ddff5c1260aef7801"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 40987,
+          "sha256": "1cb73dbc331b3da91915085b4e01ddfa323a02693b18aec607f918e3a7630769"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 21978,
+          "sha256": "0295d43b3efab59f1e1eb114b79495abeba4c013f29b326ec1941294699d1f4e"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 7869,
+          "sha256": "7522e4fbd800cadb516897bccd3cc14bad484f18f91a25d9a99ff330c46c1723"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 1954,
+          "sha256": "e2e363599dd0f534c9b155ab11ed5574ff8d22e494f3e55bde602841b9335a20"
+        },
+        {
+          "width": 256,
+          "height": 512,
+          "bytes": 41143,
+          "sha256": "f9173da870c8959ec4f14e04fff00534c0934f3a5e7ebf16d842c4f4478cd059"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 5,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.473324/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": {
+      "atlasResolution": [
+        256,
+        512
+      ],
+      "atlasPngSha256": "f9173da870c8959ec4f14e04fff00534c0934f3a5e7ebf16d842c4f4478cd059",
+      "groups": [
+        {
+          "material": 0,
+          "originalTexture": 0,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            176,
+            176,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 8,
+          "originalTexture": 6,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            16,
+            336,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 4,
+          "originalTexture": 4,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            16,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 6,
+          "originalTexture": 5,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            176,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        }
+      ],
+      "maxVertexBilinearRgbaError": 6.752636502738163e-07,
+      "newMaterial": 9,
+      "limitation": "Full-resolution pixels and base-level bilinear samples verified; distant mip blending/transparent ordering require rendered acceptance."
+    },
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:481732",
+    "heroId": "b2-shadow",
+    "runtimeHeroId": "b2-shadow",
+    "originalModelKey": "ou99.481732",
+    "sourceGlbPath": "assets/models/ou99/ou99_481732.glb",
+    "sourceSha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+    "boundsControlSha256": "ba2813dd4ed45484ff9ac8d1de375984a85c701f98ce66141de08e04d80f31fd",
+    "modelKey": "ou99.481732-standard-v2",
+    "sha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+    "bytes": 1465744,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/runtime/model.json",
+    "modelDocumentSha256": "a81b36ff740299a2fcacd9e6b840447c1071a3d21041e1f073f89f25029d1b1d",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell 2",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.600000023841858,
+        "channels": 79
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.8999999761581421,
+        "channels": 79
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.149999976158142,
+        "channels": 79
+      },
+      {
+        "index": 3,
+        "name": "Spell 2",
+        "duration": 2,
+        "channels": 79
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 1.7999999523162842,
+        "channels": 79
+      }
+    ],
+    "metrics": {
+      "triangles": 12171,
+      "drawPrimitives": 4,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 323696,
+          "sha256": "7ab4a04181e416e6cda81d19e0718da47e85655a8037fe5868cf5e26c9a06e1d"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 239544,
+          "sha256": "024e98e32e40e0c0539169cbc4f4abedd8d4eaa2164d099851b0a3d96bf8d0f6"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 14010,
+          "sha256": "22365281123e9436b3e5dbdeb5766065d570fb08f2416b7bcc78ec4095502d1c"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 11316,
+          "sha256": "be25d42a7d73cf0267f6b0fbdc8cfca6813eadbb5f31a803a652378c4ef2af37"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.481732/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:487487-7yzc0mtk",
+    "heroId": "b2-klaus",
+    "runtimeHeroId": "b2-klaus",
+    "originalModelKey": "ou99.487487-7yzc0mtk",
+    "sourceGlbPath": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+    "sourceSha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
+    "boundsControlSha256": "a7406330e07505cb989ab53fc26938892c60bec36fc115b9ea09bc59690bc5a6",
+    "modelKey": "ou99.487487-7yzc0mtk-standard-v2",
+    "sha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+    "bytes": 971380,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/runtime/model.json",
+    "modelDocumentSha256": "09b609c6422d70869c51fccedaa78d13a3fff13dd37f7787c523c408394d8201",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell channel",
+      "hurt": "stand",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 1.909999966621399,
+        "channels": 66
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 1.1100000143051147,
+        "channels": 66
+      },
+      {
+        "index": 2,
+        "name": "attack 1",
+        "duration": 1.2100000381469727,
+        "channels": 66
+      },
+      {
+        "index": 3,
+        "name": "spell channel",
+        "duration": 0.968999981880188,
+        "channels": 66
+      },
+      {
+        "index": 4,
+        "name": "death",
+        "duration": 2.7100000381469727,
+        "channels": 66
+      }
+    ],
+    "metrics": {
+      "triangles": 9444,
+      "drawPrimitives": 4,
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 104882,
+          "sha256": "345336bd5211c1a9b56810228a1cabea399ca8abb67b1d56bb3cb95eb8cfac01"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 114559,
+          "sha256": "07a13a60d9e6687e6b3e55f3a05b686c372b72d486afa70c146611d8b9364aad"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 112706,
+          "sha256": "79a578ecc03c5cc6a5c6640f4fdbfdbcc3068de5781e524a4009c1431ef36209"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.487487-7yzc0mtk/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:491448",
+    "heroId": "b2-boxxo",
+    "runtimeHeroId": "b2-boxxo",
+    "originalModelKey": "ou99.491448",
+    "sourceGlbPath": "assets/models/ou99/ou99_491448.glb",
+    "sourceSha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+    "boundsControlSha256": "271ccb21960c7056f283017b6fa76c03729e2a54e59819d07a24371d90bed643",
+    "modelKey": "ou99.491448-standard-v2",
+    "sha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+    "bytes": 1226524,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/runtime/model.json",
+    "modelDocumentSha256": "53d602d6a5994e16b8c76e81a7f10a028078f1770546ec009fe9631d2e0722a4",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack",
+      "cast": "Spell",
+      "hurt": "Stand Ready",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2.6670000553131104,
+        "channels": 56
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 1,
+        "channels": 56
+      },
+      {
+        "index": 2,
+        "name": "Attack",
+        "duration": 1,
+        "channels": 56
+      },
+      {
+        "index": 3,
+        "name": "Spell",
+        "duration": 0.8999999761581421,
+        "channels": 56
+      },
+      {
+        "index": 4,
+        "name": "Stand Ready",
+        "duration": 1,
+        "channels": 56
+      },
+      {
+        "index": 5,
+        "name": "Death",
+        "duration": 2,
+        "channels": 56
+      }
+    ],
+    "metrics": {
+      "triangles": 16643,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 16135,
+          "sha256": "b413e86d1cfa01427a42cf2cc9f626eeaff59460a21b3510e2a8b3c134e6b79b"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 5281,
+          "sha256": "e30812c5cfde5e3cc6aa5c9a9b21d25625e5bdfd2c823f849c9ea573a4ecc777"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 43337,
+          "sha256": "4502ef0a69c441cda843b4fcb6e04543cf0b8d31900eeec765c0c087cd5589eb"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 3254,
+          "sha256": "9dcdd5b1aff659eaff0a05a59b361fa3b4d070375b317f922287fc7c1d5fd05f"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 22849,
+          "sha256": "9c6120a8f70fe1d92b713e142dbe5239cdff5699db4cfbcc68e396001be87259"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 5679,
+          "sha256": "421b372a05d84bc6c715cea99b3fec3ee88a43d2fec6d17ad2c2f2e99586c8c3"
+        },
+        {
+          "width": 128,
+          "height": 256,
+          "bytes": 11872,
+          "sha256": "b54ced82e8583e4787e2277f8aa5a96ed7d1dcdca125e7663e1665656e1284f6"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 2,
+      "truncated": false
+    },
+    "warnings": [
+      "三角面 16643 高於警戒值 16000，送審時需檢查演出負載。",
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.491448/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": {
+      "atlasResolution": [
+        128,
+        256
+      ],
+      "atlasPngSha256": "b54ced82e8583e4787e2277f8aa5a96ed7d1dcdca125e7663e1665656e1284f6",
+      "groups": [
+        {
+          "material": 1,
+          "originalTexture": 1,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            16,
+            16,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 3,
+          "originalTexture": 3,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            16,
+            112,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        }
+      ],
+      "maxVertexBilinearRgbaError": 6.522790770790987e-06,
+      "newMaterial": 6,
+      "limitation": "Full-resolution pixels and base-level bilinear samples verified; distant mip blending/transparent ordering require rendered acceptance."
+    },
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:493578",
+    "heroId": "community-review-36-20260907",
+    "runtimeHeroId": "community-review-36-20260907",
+    "originalModelKey": "ou99.493578",
+    "sourceGlbPath": "assets/models/ou99/ou99_493578.glb",
+    "sourceSha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51",
+    "boundsControlSha256": "842157fb09e4fda55e22e740f48785f1912018d88e7bfb9d1f5635ee07114f1a",
+    "modelKey": "ou99.493578-standard-v2",
+    "sha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894",
+    "bytes": 1036608,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/runtime/model.json",
+    "modelDocumentSha256": "1576386edbf2b8d8d42234137610a9b95c6c9209659fcf706a71e4ebca899f09",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell Four",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.3339999914169312,
+        "channels": 47
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.5339999794960022,
+        "channels": 47
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.434000015258789,
+        "channels": 47
+      },
+      {
+        "index": 3,
+        "name": "Spell Four",
+        "duration": 2.1670000553131104,
+        "channels": 47
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 0.8669999837875366,
+        "channels": 47
+      }
+    ],
+    "metrics": {
+      "triangles": 3799,
+      "drawPrimitives": 1,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 385195,
+          "sha256": "f630388ff0834a615b226de3148f63c1b30c39bda4532a723dfb67507401a641"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.493578/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:496452",
+    "heroId": "b2-orphen",
+    "runtimeHeroId": "b2-orphen",
+    "originalModelKey": "ou99.496452",
+    "sourceGlbPath": "assets/models/ou99/ou99_496452.glb",
+    "sourceSha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
+    "boundsControlSha256": "ea2527ca2d2b0f9a5ba0411a9d5621a238c232efc10891fc89e5d2dcf65e9fe6",
+    "modelKey": "ou99.496452-standard-v2",
+    "sha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+    "bytes": 1178620,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/runtime/model.json",
+    "modelDocumentSha256": "259c896e1b93c38f2a32a67fc86731b4f780bd0286fb3db100775ff1d756b672",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 2.0309998989105225,
+        "channels": 36
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.5080000162124634,
+        "channels": 36
+      },
+      {
+        "index": 2,
+        "name": "attack 1",
+        "duration": 1.2100000381469727,
+        "channels": 36
+      },
+      {
+        "index": 3,
+        "name": "spell",
+        "duration": 1.2100000381469727,
+        "channels": 36
+      },
+      {
+        "index": 4,
+        "name": "stand ready",
+        "duration": 1.0099999904632568,
+        "channels": 36
+      },
+      {
+        "index": 5,
+        "name": "death",
+        "duration": 2.009999990463257,
+        "channels": 36
+      }
+    ],
+    "metrics": {
+      "triangles": 10110,
+      "drawPrimitives": 2,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 278514,
+          "sha256": "1c032da17ee9058570bfc78d5319f9bcd9892ad5ae914d096459b6c5aad8a576"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 301072,
+          "sha256": "fe14bc6636d6205dd8aef44585d0b63d49e1e86cbdef4651f3abfc062316a4a8"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 2,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.496452/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:498214",
+    "heroId": "community-review-30-20260907",
+    "runtimeHeroId": "community-review-30-20260907",
+    "originalModelKey": "ou99.498214",
+    "sourceGlbPath": "assets/models/ou99/ou99_498214.glb",
+    "sourceSha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480",
+    "boundsControlSha256": "518587359cb7f08255c3954cf488a163c579b3f2c8cb80d180cb62215e9ff54f",
+    "modelKey": "ou99.498214-standard-v2",
+    "sha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d",
+    "bytes": 1759096,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/runtime/model.json",
+    "modelDocumentSha256": "2eb82a6dfe35c88defa2653b4ba6762ac5791e1f3d25f58b6e3500370a79f405",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell two",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2,
+        "channels": 23
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 1,
+        "channels": 23
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.3329999446868896,
+        "channels": 23
+      },
+      {
+        "index": 3,
+        "name": "Spell two",
+        "duration": 1.2330000400543213,
+        "channels": 23
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 1.6670000553131104,
+        "channels": 23
+      }
+    ],
+    "metrics": {
+      "triangles": 13132,
+      "drawPrimitives": 1,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 952110,
+          "sha256": "da9e942c6a9e72ec057581766be411c3e7102211a782a5799c98d891016e7faa"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.498214/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:313646",
+    "heroId": "community-review-02-20260907",
+    "runtimeHeroId": "community-review-02-20260907",
+    "originalModelKey": "ou99.313646",
+    "sourceGlbPath": "assets/models/ou99/ou99_313646.glb",
+    "sourceSha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722",
+    "boundsControlSha256": "ee0b7381c3bc064d5feefd294aebd4413215d8b033c8e3ce73093ed228801a00",
+    "modelKey": "ou99.313646-standard-v2",
+    "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+    "bytes": 1182776,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/runtime/model.json",
+    "modelDocumentSha256": "aefeb4de43328938d54d334fc5c49fe8f9dbfba5736beb1e5294a023ff980361",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "hurt": "Stand ready",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2,
+        "channels": 91
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.800000011920929,
+        "channels": 91
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.3339999914169312,
+        "channels": 91
+      },
+      {
+        "index": 3,
+        "name": "Spell one",
+        "duration": 0.16699999570846558,
+        "channels": 91
+      },
+      {
+        "index": 4,
+        "name": "Stand ready",
+        "duration": 1,
+        "channels": 91
+      },
+      {
+        "index": 5,
+        "name": "Death",
+        "duration": 3.2339999675750732,
+        "channels": 91
+      }
+    ],
+    "metrics": {
+      "triangles": 2267,
+      "drawPrimitives": 1,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 320329,
+          "sha256": "92578a71e208731d364cc8ee4331e2f472f82e918313f1cc1de631ff668d8c47"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:497211",
+    "heroId": "community-review-07-20260907",
+    "runtimeHeroId": "community-review-07-20260907",
+    "originalModelKey": "ou99.497211",
+    "sourceGlbPath": "assets/models/ou99/ou99_497211.glb",
+    "sourceSha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
+    "boundsControlSha256": "7b193e4119e30605d2d3923c34a87c5c5971fd28a469ef37ba35b31cb30121ab",
+    "modelKey": "ou99.497211-standard-v2",
+    "sha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+    "bytes": 6370760,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/runtime-budget-v3",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/runtime-budget-v3/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/runtime-budget-v3/model.json",
+    "modelDocumentSha256": "77c99a4a683d0af7c5a53971c56acbafec6724026386bf52dff4e06ae02e1868",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/runtime-budget-v3/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/runtime-budget-v3/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/runtime-budget-v3/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack",
+      "cast": "spell one",
+      "hurt": "stand",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 2.3329999446868896,
+        "channels": 82
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.800000011920929,
+        "channels": 82
+      },
+      {
+        "index": 2,
+        "name": "attack",
+        "duration": 1.3329999446868896,
+        "channels": 82
+      },
+      {
+        "index": 3,
+        "name": "spell one",
+        "duration": 2.3329999446868896,
+        "channels": 82
+      },
+      {
+        "index": 4,
+        "name": "death",
+        "duration": 1.6670000553131104,
+        "channels": 82
+      }
+    ],
+    "metrics": {
+      "triangles": 25995,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 692370,
+          "sha256": "aac0218292da637f223c1dedae5ea3eba338176ec1fe19196a62e8657448715f"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1184783,
+          "sha256": "d6b0a6c68a13c7e875c2a59d1b985782bd7320d2ac1c4d299281748e9e1484e4"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1077398,
+          "sha256": "58f32ee4f8469fff438ebe4e75b49feb6ee30b0785801b8351a7e28b7c4d2558"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 241602,
+          "sha256": "887d4213be2c14f9762ba2e80a23dd72373919e06869c2a919850203b9e2fa8c"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1443071,
+          "sha256": "ec4d03fb569d9eae5a0019733f6d43a32cc992405d7e95f338a75199add12a29"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "truncated": false
+    },
+    "warnings": [
+      "三角面 25995 高於警戒值 16000，送審時需檢查演出負載。",
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/original/source.zip",
+    "geometryLod": true,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-sampled-lod-bounds-matched",
+      "maximumError": 0.002506077289581299,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence except explicit LOD bounds comparison; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:472112",
+    "heroId": "community-review-14-20260907",
+    "runtimeHeroId": "community-review-14-20260907",
+    "originalModelKey": "ou99.472112",
+    "sourceGlbPath": "assets/models/ou99/ou99_472112.glb",
+    "sourceSha256": "3d5c9fb99d0a3be253d3c413ba18b875136307183cc0eb75008375ab793ac35c",
+    "boundsControlSha256": "a3019f56486e211dde3906a2076b084d3850d92a54555bfafc1b6ee2cb248ac6",
+    "modelKey": "ou99.472112-standard-v2",
+    "sha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e",
+    "bytes": 846580,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/runtime-budget-v3",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/runtime-budget-v3/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/runtime-budget-v3/model.json",
+    "modelDocumentSha256": "78c0a735f9e3be85227858e4c34e63c2e1120303df2cd941a390ddda24ac0873",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/runtime-budget-v3/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/runtime-budget-v3/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/runtime-budget-v3/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack - 1",
+      "cast": "Spell",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2,
+        "channels": 68
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 1,
+        "channels": 68
+      },
+      {
+        "index": 2,
+        "name": "Attack - 1",
+        "duration": 1,
+        "channels": 68
+      },
+      {
+        "index": 3,
+        "name": "Spell",
+        "duration": 1.6670000553131104,
+        "channels": 68
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 2,
+        "channels": 68
+      }
+    ],
+    "metrics": {
+      "triangles": 4454,
+      "drawPrimitives": 1,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 230937,
+          "sha256": "25ef5d5d5caf3301abdd619ca87ef923788dee0896af05f0306bbaaaf616c687"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.472112/original/source.zip",
+    "geometryLod": false,
+    "textureLod": true,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence except explicit LOD bounds comparison; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:457123",
+    "heroId": "community-review-15-20260907",
+    "runtimeHeroId": "community-review-15-20260907",
+    "originalModelKey": "ou99.457123",
+    "sourceGlbPath": "assets/models/ou99/ou99_457123.glb",
+    "sourceSha256": "d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119",
+    "boundsControlSha256": "8b213b372fb0acadb1b669be5058f51ef259c571f0b08294ee32edadff6e58be",
+    "modelKey": "ou99.457123-standard-v2",
+    "sha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+    "bytes": 727156,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/runtime/model.json",
+    "modelDocumentSha256": "4536eeb2d3d5c6a43d768c16eed5e156bfdfe72efe2deb94f2c3590ddf75a3ef",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand 1",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand 1",
+        "duration": 2.009999990463257,
+        "channels": 57
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.6000000238418579,
+        "channels": 57
+      },
+      {
+        "index": 2,
+        "name": "attack 1",
+        "duration": 1.2000000476837158,
+        "channels": 57
+      },
+      {
+        "index": 3,
+        "name": "spell",
+        "duration": 0.13699999451637268,
+        "channels": 57
+      },
+      {
+        "index": 4,
+        "name": "stand ready",
+        "duration": 0.6000000238418579,
+        "channels": 57
+      },
+      {
+        "index": 5,
+        "name": "death",
+        "duration": 2.0899999141693115,
+        "channels": 57
+      }
+    ],
+    "metrics": {
+      "triangles": 8628,
+      "drawPrimitives": 2,
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 58287,
+          "sha256": "d5d452349ce84707d66924e3a66400f560b3802fdc88ddf830428429b2cdd2bf"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 106411,
+          "sha256": "a213cd11430270e0787319f71137368e8f7db780e1b5b93e8e24808419e8571b"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457123/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:311294",
+    "heroId": "community-review-22-20260907",
+    "runtimeHeroId": "community-review-22-20260907",
+    "originalModelKey": "ou99.311294",
+    "sourceGlbPath": "assets/models/ou99/ou99_311294.glb",
+    "sourceSha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
+    "boundsControlSha256": "a21acd9fdd1e3e580a19645c380f1c83b8bf0e58662c1afa4d45df6efb09e0eb",
+    "modelKey": "ou99.311294-standard-v2",
+    "sha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+    "bytes": 1531624,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/runtime/model.json",
+    "modelDocumentSha256": "bc30b91f877a9f781cf81b646a0e1da54d02537d55168578ff3d727b73b60a7e",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack - 1",
+      "cast": "Spell One",
+      "hurt": "Stand Ready",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.6670000553131104,
+        "channels": 198
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.800000011920929,
+        "channels": 198
+      },
+      {
+        "index": 2,
+        "name": "Attack - 1",
+        "duration": 1.3339999914169312,
+        "channels": 198
+      },
+      {
+        "index": 3,
+        "name": "Spell One",
+        "duration": 0.5669999718666077,
+        "channels": 198
+      },
+      {
+        "index": 4,
+        "name": "Stand Ready",
+        "duration": 1.8329999446868896,
+        "channels": 198
+      },
+      {
+        "index": 5,
+        "name": "Death",
+        "duration": 1.3669999837875366,
+        "channels": 198
+      }
+    ],
+    "metrics": {
+      "triangles": 4542,
+      "drawPrimitives": 3,
+      "textures": [
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 239610,
+          "sha256": "d0e1aec2a05801687255c373638075eb7312c4fb0c8c7b57a4ed3efc995e4618"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 236403,
+          "sha256": "937d53a583dfe0fa6e8308e1739fbd8e1479c9cf660f341c3a3fbf870175a348"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.311294/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:468771",
+    "heroId": "community-review-09-20260907",
+    "runtimeHeroId": "community-review-09-20260907",
+    "originalModelKey": "ou99.468771",
+    "sourceGlbPath": "assets/models/ou99/ou99_468771.glb",
+    "sourceSha256": "307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447",
+    "boundsControlSha256": "0c5d814df1152aa99c0bb64e75e3ba66295537c49db5a43107506ba328c8c6c1",
+    "modelKey": "ou99.468771-standard-v2",
+    "sha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223",
+    "bytes": 4983240,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/runtime/model.json",
+    "modelDocumentSha256": "5ac7723605cab745d7b6a3023423f1a38de4b47c4a5bfe100f72fbd952d8aacd",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "hurt": "Stand",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.9919999837875366,
+        "channels": 97
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.8100000023841858,
+        "channels": 97
+      },
+      {
+        "index": 2,
+        "name": "attack 1",
+        "duration": 1.2100000381469727,
+        "channels": 97
+      },
+      {
+        "index": 3,
+        "name": "spell",
+        "duration": 1.6100000143051147,
+        "channels": 97
+      },
+      {
+        "index": 4,
+        "name": "death",
+        "duration": 2.2100000381469727,
+        "channels": 97
+      }
+    ],
+    "metrics": {
+      "triangles": 5628,
+      "drawPrimitives": 3,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1489936,
+          "sha256": "bff98a3aec4b5d1b7c2c234d23d13c471931e5d5e2d56b3553ee9a736ae5e4c9"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1502400,
+          "sha256": "c3aa3073273df892a7b4d53eeb075ed75d35c7534793ca4d849bad12173356a6"
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1492311,
+          "sha256": "502fdf0f0e059f9828866903de6dbea449a752d33934993c7eaa0d2653780fc6"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "truncated": false
+    },
+    "warnings": [
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  },
+  {
+    "sourceId": "ou99:457280",
+    "heroId": "community-review-11-20260907",
+    "runtimeHeroId": "community-review-11-20260907",
+    "originalModelKey": "ou99.457280",
+    "sourceGlbPath": "assets/models/ou99/ou99_457280.glb",
+    "sourceSha256": "9cc19189b317670be5438a49bf6b0f529a4d7dc2e7e1730707d98736118b3748",
+    "boundsControlSha256": "2be3c2347315e556164761c92b1a3cb344f1dc201e20d5b2b4dfcd5b547452cf",
+    "modelKey": "ou99.457280-standard-v2",
+    "sha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd",
+    "bytes": 2461344,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/runtime/model.json",
+    "modelDocumentSha256": "c789018df8c4bd74a2bae6c8c334b9ae0f74ed977e1fb0bdd42bde763fcfd82e",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/runtime/final-source-preservation.json",
+    "status": "backend-prepare-passed",
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack - 1",
+      "cast": "spell one",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "stand",
+        "duration": 1,
+        "channels": 154
+      },
+      {
+        "index": 1,
+        "name": "walk",
+        "duration": 0.800000011920929,
+        "channels": 154
+      },
+      {
+        "index": 2,
+        "name": "attack - 1",
+        "duration": 1.2000000476837158,
+        "channels": 154
+      },
+      {
+        "index": 3,
+        "name": "spell one",
+        "duration": 1.9329999685287476,
+        "channels": 154
+      },
+      {
+        "index": 4,
+        "name": "stand ready",
+        "duration": 1,
+        "channels": 154
+      },
+      {
+        "index": 5,
+        "name": "death",
+        "duration": 1.899999976158142,
+        "channels": 154
+      }
+    ],
+    "metrics": {
+      "triangles": 8458,
+      "drawPrimitives": 3,
+      "textures": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "bytes": 1147360,
+          "sha256": "84ea2d6f451a798c039145fb2699141a35d594496632353e23f9295612ef54b4"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 7,
+      "truncated": false
+    },
+    "warnings": [
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457280/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": null,
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately",
+    "centralWritesPerformed": false
+  }
+]

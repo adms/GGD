@@ -1,0 +1,67 @@
+{
+  "id": "community-review-08-20260907.r",
+  "name": "雷槍",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】發射兩支可辨識的雷槍，命中或落地後延遲爆炸。\n【待補機制】兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.4,
+      "durationSec": 0.4,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 0.4,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-08-20260907.r.webp",
+  "template": {
+    "ref": "tpl-random-barrage",
+    "params": {
+      "count": 2,
+      "intervalSec": 0.4,
+      "impactDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "impactRadius": 150,
+      "scatterRadius": 120,
+      "payout": "perImpact",
+      "castTimeSec": 0.4
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "小"
+}

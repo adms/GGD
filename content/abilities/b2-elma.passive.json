@@ -1,0 +1,62 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "provenance": "w3x-import",
+  "description": "「物理疼痛換攻略魔力！」\n受到物理傷害才回復最大魔力 4%，每 3 秒一次；真傷與魔法傷害不觸發。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-elma.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "物理疼痛換攻略魔力",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "damageType": "physical",
+            "effects": [
+              {
+                "applyTo": "self",
+                "kind": "restore",
+                "manaPct": 0.04
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onDamageTaken",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "damageType": "physical",
+          "effects": [
+            {
+              "applyTo": "self",
+              "kind": "restore",
+              "manaPct": 0.04
+            }
+          ],
+          "internalCooldown": 3,
+          "on": "onDamageTaken",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  },
+  "icon": "assets/icons/abilities/b2-elma.passive.webp"
+}

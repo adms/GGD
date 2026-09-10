@@ -1,0 +1,338 @@
+{
+  "id": "community-review-27-20260907",
+  "name": "庫洛魔法使",
+  "description": "庫洛魔法使 社群英雄功能驗收稿。作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n視覺方向：粉金牌框、綠風、葉枝束縛、羽翼與細劍；各牌圖示跟真實狀態同步。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "ranged",
+  "archetype": "fighter",
+  "origin": "軟輔",
+  "modelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 26.93612244897959,
+    "healthRegen": 0.07386938775510205,
+    "maxMana": 29.456938775510206,
+    "manaRegen": 0,
+    "ad": 2.220326530612245,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.6051734693877552,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 21,
+    "agi": 20,
+    "int": 19,
+    "strGrowth": 1.99,
+    "agiGrowth": 1.89,
+    "intGrowth": 1.83,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-27-20260907.q",
+      "name": "風牌",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】以風束攻擊並推動目標。\n【待補機制】風束推動缺 knockback；目前單體魔法。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-27-20260907.q.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-27-20260907.w",
+      "name": "盾牌",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-27-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為自己或指定友軍提供護盾。\n【待補機制】目前自身；需友軍選取。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-27-20260907.w.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-27-20260907.w.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-27-20260907.e",
+      "name": "翔牌",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短期飛行位移，具有合法落點與高度限制。\n【待補機制】有限落點飛躍可預覽；翔牌武器姿態待補。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 2.75,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.88,
+          "durationSec": 0.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-27-20260907.e.webp",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 220,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-27-20260907.r",
+      "name": "劍牌",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、as +20%。\n【目標設計】短期將法杖化為劍，替換普攻並強化近戰。\n【待補機制】AD／攻速强化不等於劍牌；需普攻替換、武器及還原。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.15
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            }
+          ],
+          "duration": 4
+        }
+      ],
+      "castTimeSec": 0.667,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-27-20260907.r.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 4,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.15
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            }
+          ],
+          "castTimeSec": 0.667
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-27-20260907.ex",
+  "passiveAbility": "community-review-27-20260907.passive",
+  "icon": "assets/icons/champions/community-review-27-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0a17d59aab16b776610a5c8c23fe0057bd84f022956951c4",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "modelSha256": "0541edd740663ef6b3514d3b23aa23816a13a74ea699fa4c5a809bf5a8e63446",
+      "binarySha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
+      "registeredAt": "2026-09-10T14:45:32.332Z",
+      "source": {
+        "kind": "previous",
+        "character": "庫洛魔法使",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
+      "label": "木之本櫻",
+      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "modelSha256": "a96f6977fa887530f42590e2b4e7f4972b146bfde924a7f2eeb38e6fe4fa4e01",
+      "binarySha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
+      "registeredAt": "2026-09-10T14:45:32.341Z",
+      "source": {
+        "kind": "exact",
+        "character": "木之本櫻",
+        "work": "庫洛魔法使",
+        "library": "mba",
+        "reference": "mba:ce884f239ba2fa1f0e05bceb",
+        "tier": "mba"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

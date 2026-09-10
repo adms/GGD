@@ -1,0 +1,45 @@
+{
+  "id": "community-review-29-20260907.ex",
+  "schema": "ability@1",
+  "name": "變出花田的魔法",
+  "provenance": "w3x-import",
+  "description": "生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 0.067,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-29-20260907.ex.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-29-20260907.ex.webp"
+}

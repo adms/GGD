@@ -35,7 +35,11 @@
     "open": true,
     "priceMultiplier": 3,
     "sellRefundPct": 0.4,
-    "randomOnlyTables": ["ex-release-weapons", "ex-origin-weapons"]
+    "randomOnlyTables": [
+      "ex-release-weapons",
+      "ex-origin-weapons"
+    ],
+    "swapWhenFull": false
   },
   "weaponShelfOpen": false,
   "vision": {
@@ -375,7 +379,7 @@
     }
   },
   "round11": {
-    "enabled": false,
+    "enabled": true,
     "arenaId": "arena.royale",
     "durationSec": 600,
     "triggerBossKills": 3,
@@ -385,7 +389,19 @@
     "bossStrengthMult": 2,
     "bossScaleFloor": 1,
     "bossScaleCeil": 8,
+    "survivalLoop": {
+      "normalToSpecialSec": 45,
+      "specialDropsReviveCircle": true,
+      "breakItemOnDeath": true,
+      "bossRerollChancePct": 100,
+      "bossRerollTable": "legendary-weapons"
+    },
     "deadPlayersControlBoss": true,
+    "possession": {
+      "escapeWindowSec": 10,
+      "telegraphRadius": 6,
+      "inheritBossAugments": true
+    },
     "bombardment": {
       "enabled": true,
       "telegraphSec": 10,
@@ -396,6 +412,7 @@
     "waveTable": {
       "eventIntervalSec": 20,
       "difficultyBase": 1.15,
+      "baseSpawnCount": 8,
       "events": [
         {
           "kind": "normal",

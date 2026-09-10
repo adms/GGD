@@ -1,0 +1,60 @@
+{
+  "id": "lol-lux.q",
+  "name": "稜光束縛",
+  "provenance": "w3x-import",
+  "description": "命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.8,
+      "applyTo": "target",
+      "root": true
+    }
+  ],
+  "castTimeSec": 0.567,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.567
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-lux.q.webp"
+}

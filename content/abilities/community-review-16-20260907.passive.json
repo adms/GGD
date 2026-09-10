@@ -1,0 +1,53 @@
+{
+  "id": "community-review-16-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔紅寶石的支援〕",
+  "provenance": "w3x-import",
+  "description": "不同魔法技能連續施放後，強化下一次防禦或攻擊，不能由同一次多段命中快速疊滿。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔紅寶石的支援〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.holy.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-16-20260907.passive.webp"
+}

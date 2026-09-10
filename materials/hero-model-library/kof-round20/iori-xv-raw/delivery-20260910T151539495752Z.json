@@ -1,0 +1,170 @@
+{
+  "schema": "ggd.immutable-local-source-delivery@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw",
+  "sourceId": "kof-xv-iori-whitemagesunny-raw",
+  "createdAt": "20260910T151539495752Z",
+  "sourceManifest": "source-manifest.json",
+  "files": [
+    {
+      "path": "download-attempt-1.json",
+      "bytes": 292,
+      "sha256": "a8d5b3e1d4cb8187e9354d1d5225ac9d5f3f4409e13076ef23a5164934d9f5c0"
+    },
+    {
+      "path": "download-final.json",
+      "bytes": 859,
+      "sha256": "38ffdd42261580abb766b0c64ce2ed979db004ed0f1949d92f5d60f25d8eb544"
+    },
+    {
+      "path": "download.headers.txt",
+      "bytes": 3285,
+      "sha256": "cca3e83c33a776ec4bdb976f3463cc10d1a203ef53595f7f64c0837a542a4a03"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_FACE.tga",
+      "bytes": 4194322,
+      "sha256": "d5bb0a6437a5067457cf6d2ae96d8393e3b6ac40a13a6089d1815d1e782792c9"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_HAIR.tga",
+      "bytes": 4194322,
+      "sha256": "c4b83541f0ed7c540a0e821d5d585faf3b4e3ae4042629186e849959247f1869"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_OTR.tga",
+      "bytes": 4194322,
+      "sha256": "346cd77ade628b5e503d3197e40f0df51f106dc812afad5112f0512f1f423761"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_FACE_P1.tga",
+      "bytes": 67108882,
+      "sha256": "6aac9c09c267d6449911df98d287610dc2243090c422002a37c3fa939de1f850"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_HAIR_P1.tga",
+      "bytes": 67108882,
+      "sha256": "d672c6244fb806dc19ee1f07445c11cdb03fa3e8bee4843624824cd201ddc43a"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_OTR_P1.tga",
+      "bytes": 67108882,
+      "sha256": "14d8cf41c3ece7fb7b010daa16562f67affb8070e2cefb8afa818635a3f7b171"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_FACE.tga",
+      "bytes": 67108882,
+      "sha256": "3f7f54fbe4b7ffc773bc1f96a386c2808f5375c146e263168a82fa77e71f0a13"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_HAIR.tga",
+      "bytes": 67108882,
+      "sha256": "fd2b3fc4dd2a37e261c206a3368b303f3bc863e7c878568ff60e429b1e35fab9"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_OTR.tga",
+      "bytes": 67108882,
+      "sha256": "c968e63b49d63fd88097e1f8f3b774e2bde163b2377daba3109c2e09688a6a60"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_FACE.tga",
+      "bytes": 67108882,
+      "sha256": "e06b1fbe4356e39db672f6c0eef6dda8638d0ff4db92a3bc7e6609c532087b98"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_HAIR.tga",
+      "bytes": 16777234,
+      "sha256": "ef9b3ed882dcde841fdc5d6247eb9fae2391760f8f0fa94f3e6a97792bcb461a"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_OTR.tga",
+      "bytes": 67108882,
+      "sha256": "f7cbb622e1fe4b0c55978e6392bf73c0a6aea62223640353d6e590ec76627b15"
+    },
+    {
+      "path": "extracted-v1/Raw Files/Iori Yagami.fbx",
+      "bytes": 6416000,
+      "sha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad"
+    },
+    {
+      "path": "extracted-v1/Raw Files/desktop.ini",
+      "bytes": 434,
+      "sha256": "3bd2eb1ada998f1678b9a534cb25ac736054391e09fd58b9dec22a8a0dbb18dc"
+    },
+    {
+      "path": "extraction-validation.json",
+      "bytes": 3395,
+      "sha256": "b8ddcf5d1dfdaec392654de61eca65c7d905f11750a5727f070cd30988c37c93"
+    },
+    {
+      "path": "fbx-analysis.json",
+      "bytes": 35019,
+      "sha256": "3b68479fec169b7b9391fbd1ff78f1de95de61131041767b1322b5d089204df5"
+    },
+    {
+      "path": "full-download.headers.txt",
+      "bytes": 5617,
+      "sha256": "b34c8efc0319b7c900951764f014cc950f93e76b79f0ce8e9a8478b3feb56829"
+    },
+    {
+      "path": "public-download-confirmation.html",
+      "bytes": 2457,
+      "sha256": "fa63a769a4820b0eeef8bd9cbc3b823b5f30c133759c850288c0b520f4a658f9"
+    },
+    {
+      "path": "raw/The King of Fighters XV - Iori Yagami.rar",
+      "bytes": 100817444,
+      "sha256": "40d327cd60a6a196541b993370549f8563e9578d7b1c00e7b49507c338f50329"
+    },
+    {
+      "path": "source-gdrive.html",
+      "bytes": 80658,
+      "sha256": "3e731098ba0269f433cb0bb9d934612b407b8ae2e11ca225607ee53d69cb043a"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 4813,
+      "sha256": "33d2615520b2a2804c0a1d04a3081364f2caa5ad91317f0c82174d42a9681f6f"
+    },
+    {
+      "path": "texture-validation.json",
+      "bytes": 5805,
+      "sha256": "d78ed83e9c019b6e44b711b11f1ee517fe32c77577aec440c127ab05d828b66c"
+    },
+    {
+      "path": "tools/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66"
+    },
+    {
+      "path": "tools/ggd-kof-drive-download.py",
+      "bytes": 3038,
+      "sha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0"
+    },
+    {
+      "path": "tools/ggd-kof-fbx-inspect.py",
+      "bytes": 3203,
+      "sha256": "90789cfa00e491411fc5d65787395adfbf4bd584eefb8a7d79352cea3195b6e7"
+    },
+    {
+      "path": "tools/ggd-kof-round20-extract.py",
+      "bytes": 2178,
+      "sha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69"
+    },
+    {
+      "path": "tools/ggd-kof-round20-freeze-raw.py",
+      "bytes": 8320,
+      "sha256": "efa24a3d797cedeab3cd527d037cbd230d911ce9b45c6e8474aed557df5fc14b"
+    },
+    {
+      "path": "tools/ggd-kof-round20-textures.py",
+      "bytes": 857,
+      "sha256": "9d093c49371f7d887c231fc14c07d30890ceac21120f7c70de8a6a622e215023"
+    }
+  ],
+  "fileCount": 31,
+  "totalBytes": 673641870,
+  "freeze": "complete immutable referenced file set",
+  "runtimeSelectable": false,
+  "nativeGameAnimations": 0,
+  "audioFileIndex": null
+}

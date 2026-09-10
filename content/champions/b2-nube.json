@@ -1,0 +1,420 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.267,
+      "castType": "targeted",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「符咒貼上禁止聊天！」\n指定敵人施加 magic-break 與 silenced 旗標 2.5 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "duration": 2.5,
+          "kind": "applyStatus",
+          "silenced": true,
+          "statusId": "magic-break"
+        }
+      ],
+      "id": "b2-nube.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "符咒貼上禁止聊天",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
+        "params": {
+          "castTimeSec": 0.267,
+          "status": {
+            "duration": 2.5,
+            "silenced": true,
+            "statusId": "magic-break"
+          }
+        },
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.833,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「鬼手抓回來點名！」\n對指定敵人造成極小傷害並向自己拉近 3 單位；這是既有 knockback 拉向模式，不是空中抓取。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小"
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "distance": 3,
+          "from": "pull",
+          "kind": "knockback",
+          "speed": 12,
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "id": "b2-nube.q",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "鬼手抓回來點名",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.833,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            },
+            {
+              "distance": 3,
+              "from": "pull",
+              "kind": "knockback",
+              "speed": 12,
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.833,
+      "castType": "self",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「全班留下來補課！」\n對自身周圍半徑{{radius}} 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "includeOrigin": true,
+          "kind": "damageArea",
+          "maxTargets": 6,
+          "onHitTargets": [
+            {
+              "applyTo": "target",
+              "duration": 1.5,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "onHitTargetsMode": "perTarget",
+          "radius": 3.0,
+          "radiusTier": "極小"
+        }
+      ],
+      "id": "b2-nube.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "全班留下來補課",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.833,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "小"
+              },
+              "damageType": "magic",
+              "includeOrigin": true,
+              "kind": "damageArea",
+              "maxTargets": 6,
+              "onHitTargets": [
+                {
+                  "applyTo": "target",
+                  "duration": 1.5,
+                  "kind": "applyStatus",
+                  "root": true,
+                  "statusId": "root"
+                }
+              ],
+              "onHitTargetsMode": "perTarget",
+              "radius": 2.5
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「老師先幫你擋著！」\n指定友軍取得 210 點全傷害護盾 3 秒；確實放在該友軍身上。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 210,
+            "perRank": [
+              0,
+              105,
+              210,
+              315
+            ]
+          },
+          "duration": 3,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        }
+      ],
+      "id": "b2-nube.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "老師先幫你擋著",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "targeted",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 210,
+                "perRank": [
+                  0,
+                  105,
+                  210,
+                  315
+                ]
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "tank",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 12,
+    "agiGrowth": 1.18,
+    "int": 23,
+    "intGrowth": 2.17,
+    "primary": "STR",
+    "source": "authored",
+    "str": 25,
+    "strGrowth": 2.36
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "靈異教師神眉｜抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-nube.ex",
+  "growth": {
+    "ad": 2.056,
+    "ap": 0,
+    "armor": 0.9537142857142857,
+    "as": 2.9226239784265093e-05,
+    "healthRegen": 0.023048979591836743,
+    "manaRegen": 0,
+    "maxHealth": 38.2761224489796,
+    "maxMana": 0.8520408163265306,
+    "mr": 3.299795918367347
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-nube",
+  "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
+  "name": "鵺野鳴介",
+  "origin": "硬輔",
+  "passiveAbility": "b2-nube.passive",
+  "role": "tank",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-nube.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.04ac799e4dec3187128088349514230154549edad278c191",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.487484",
+      "modelSha256": "53f1b2dcefa76fe5566886ea6de0da0ea534cf2575291b95a864c0ac1ba0e0da",
+      "binarySha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b",
+      "registeredAt": "2026-09-10T14:45:42.552Z",
+      "source": {
+        "kind": "previous",
+        "character": "鵺野鳴介",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.487484.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "30da6ecaa7ae9a17f1e845ca917eb0d5ce9f09b5db8b04e1b1433251786eb230",
+      "binarySha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a",
+      "registeredAt": "2026-09-10T14:45:42.565Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:42.708Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

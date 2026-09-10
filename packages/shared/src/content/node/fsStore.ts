@@ -154,6 +154,23 @@ const VOICE_LINES_PREFIX = "audio/voices/lines/";
  *   ⇒ 閘：`assetsInContentVersion.test.ts` 的「⑤ 雜湊的母體 == git 追蹤的母體」
  *     **兩個方向一起驗**（多算了 ⇒ 紅並指名檔；少算了 ⇒ 也紅並指名檔）。
  */
+/**
+ * ⚠️⚠️ ⭐ **這裡曾經有一張 `OFF_DISK_ASSET_PREFIXES`，而它是錯的。**
+ *
+ * 2026-09-10 我把 `models/ou99/` 加進來，理由是 owner 2026-09-08 的
+ * 「資源庫不要進 git，存 S3」——⭐ 而那一則講的是**原始模型**（來源）。
+ *
+ * ⭐ owner 2026-09-10 把判準講清楚了（逐字）：
+ * > 「我們上傳 git 的規則是 **成品一律上傳至 git**,
+ * >  剩下**半成品、來源、準備材料等都進 S3**（本機全保留）」
+ *
+ * ⇒ ⭐ `content/assets/models/ou99/*.glb` 是**轉好、修剪好、遊戲真的在載**的 GLB
+ *   ⇒ **成品** ⇒ 進 git。實測今天 **41/41 都被追蹤**。
+ *
+ * ⛔⛔ 而那張表留著會造成**反方向**的漂移：git 有、cv 沒雜湊
+ * ⇒ ⭐ 「改了模型而 cv 不動」⇒ **快取鎖住壞的那一版**（閘⑤逐字的「少算」）。
+ * ⇒ ⭐ 判準回到唯一那一條：**進得了 git 的位元組 ＝ cv 的母體**。
+ */
 export function isNonShippingAsset(rel: string): boolean {
   if (!rel.startsWith(VOICE_LINES_PREFIX)) return false;
   return rel.includes("/takes/") || rel.endsWith("/reference.wav") || rel.endsWith(".method");

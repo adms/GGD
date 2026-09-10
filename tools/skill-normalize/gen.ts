@@ -85,7 +85,22 @@ const CLAIMS_BASELINE = join(REPO, "packages/shared/src/content/descriptionClaim
 // ⭐ GH#1072：模板技的傷害要看**展開後**的 effects（heal 的 amount 不是傷害）—— 模板表從出貨目錄讀。
 const TEMPLATES = new Map<string, TemplateDoc>(
   readdirSync(join(CONTENT, "ability-templates"))
-    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    // ⛔⛔ **這裡原本是 `f.startsWith("tpl-")`** —— 用**檔名前綴**當「這是不是模板」。
+    //
+    // ⚠️ 2026-09-10（GH#1165）：第二批 37 名的模板叫 `hero-template.<hash>.json`
+    // ⇒ ⛔ 它們一份都沒被載進來 ⇒ `resolveTemplateExpansion` 失敗
+    // ⇒ ⭐ `damageLeaves` 退回走**沒展開的原始文件**，於是
+    //   `template.params.amount = {flat:120}` 被當成傷害葉
+    // ⇒ ⭐ 6 支 **heal-only** 技能被要求填 `damageTier` —— **一句假紅**。
+    //
+    // ⚠️ ⭐ 而 GH#1072 早就修過**同一句假紅**（見 `skillNormalize.ts:312` 的註解：
+    //   「`tpl-heal.amount` 展開後是 `heal`，被當成傷害要求 damageTier 就是一句假紅」）——
+    //   ⭐ 那次的修法是「有模板表就用出貨那一支展開器」，⛔ 而這一行讓那張表**是空的**。
+    //
+    // ⭐ 判準：**問它解不解析得成模板**，⛔ 不是問它叫什麼開頭。
+    //   （一個拿命名前綴當身分的判準，會在下一種命名出現時安靜地漏掉一整批 ——
+    //    ⚠️ 這是本 session 修掉的**第四個**同型缺陷。）
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => {
       const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(CONTENT, "ability-templates", f), "utf8")));
       return [t.id, t] as const;

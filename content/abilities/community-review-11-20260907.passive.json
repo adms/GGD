@@ -1,0 +1,51 @@
+{
+  "id": "community-review-11-20260907.passive",
+  "schema": "ability@1",
+  "name": "大賢者",
+  "provenance": "w3x-import",
+  "description": "分析最近承受的技能類型，提供該類型的短效有限減傷；同時只保存一種分析結果。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 4,
+            "chance": 1,
+            "target": "event"
+          }
+        ]
+      }
+    ],
+    "name": "大賢者"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.ice.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ice.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-11-20260907.passive.webp"
+}

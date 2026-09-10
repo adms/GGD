@@ -1,0 +1,67 @@
+{
+  "id": "community-review-05-20260907.r",
+  "name": "〔全武裝齊射〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】按固定次序發射砲彈、刀刃與葉片，整套共享總傷害預算。\n【待補機制】彈種固定時序及整套共享總預算需補。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "radius": 4.5,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.35,
+      "durationSec": 1.75,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 1.767,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-05-20260907.r.webp",
+  "template": {
+    "ref": "tpl-random-barrage",
+    "params": {
+      "count": 6,
+      "intervalSec": 0.35,
+      "impactDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "impactRadius": 150,
+      "scatterRadius": 120,
+      "payout": "perImpact",
+      "castTimeSec": 1.767
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.lightning.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "小"
+}

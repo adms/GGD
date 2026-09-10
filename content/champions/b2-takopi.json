@@ -1,0 +1,410 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「開心貼紙先貼對人！」\n在指定友軍身上施加 spell-shield 貼紙 4 秒；此處只作可消耗暫態，不自帶魔法免疫。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "target",
+          "duration": 4,
+          "kind": "applyStatus",
+          "statusId": "spell-shield"
+        }
+      ],
+      "id": "b2-takopi.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "開心貼紙先貼對人",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 4,
+              "kind": "applyStatus",
+              "statusId": "spell-shield"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「和好緞帶先接回來！」\n把指定友軍搬到自己腳邊，使用現有 rallyToCaster 低弧位移；落點遵守既有合法地形。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "apexHeight": 0,
+          "applyTo": "target",
+          "dragToCaster": true,
+          "durationSec": 0.1,
+          "kind": "leap",
+          "landRadius": 2.75,
+          "mode": "inPlace"
+        }
+      ],
+      "id": "b2-takopi.q",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "和好緞帶先接回來",
+      "radius": 2.75,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
+        "params": {
+          "castTimeSec": 0.467,
+          "destination": "rallyToCaster",
+          "travelSec": 0.1
+        },
+        "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「道具說明書暖心頁！」\n治療指定友軍 120 生命並清除最多 3 筆可驅散負面效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              90,
+              180
+            ]
+          },
+          "kind": "heal"
+        },
+        {
+          "count": 3,
+          "kind": "dispel",
+          "order": "newest",
+          "polarity": "debuff",
+          "pools": {
+            "buffs": true,
+            "dot": true,
+            "status": true
+          },
+          "shape": "single"
+        }
+      ],
+      "id": "b2-takopi.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "道具說明書暖心頁",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": false,
+      "template": {
+        "cards": [
+          {
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+            "params": {
+              "amount": {
+                "flat": 120,
+                "perRank": [
+                  0,
+                  90,
+                  180
+                ]
+              },
+              "castTimeSec": 0.1,
+              "target": "ally"
+            },
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+          },
+          {
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+            "params": {
+              "castTimeSec": 0.1,
+              "castType": "targeted",
+              "effects": [
+                {
+                  "count": 3,
+                  "kind": "dispel",
+                  "order": "newest",
+                  "polarity": "debuff",
+                  "pools": {
+                    "buffs": true,
+                    "dot": true,
+                    "status": true
+                  },
+                  "shape": "single"
+                }
+              ],
+              "radius": 3,
+              "side": "allies"
+            },
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「抱抱罩尺寸有限嗶！」\n友軍與自己距離在 2.5 以內時，給予 200 點護盾 3 秒；遠距離時抱抱罩套不到。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "condition": {
+            "kind": "distance",
+            "op": "<=",
+            "value": 2.5
+          },
+          "duration": 3,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        }
+      ],
+      "id": "b2-takopi.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "抱抱罩尺寸有限嗶",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "targeted",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "condition": {
+                "kind": "distance",
+                "op": "<=",
+                "value": 2.5
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 20,
+    "agiGrowth": 1.89,
+    "int": 19,
+    "intGrowth": 1.83,
+    "primary": "STR",
+    "source": "authored",
+    "str": 21,
+    "strGrowth": 1.99
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "章魚嗶的原罪｜開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-takopi.ex",
+  "growth": {
+    "ad": 2.220326530612245,
+    "ap": 0,
+    "armor": 0.4212959183673469,
+    "as": 0,
+    "healthRegen": 0.1168285714285714,
+    "manaRegen": 0,
+    "maxHealth": 10.305102040816323,
+    "maxMana": 6.564285714285716,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-takopi",
+  "modelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
+  "name": "章魚嗶",
+  "origin": "軟輔",
+  "passiveAbility": "b2-takopi.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-takopi.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.f5672186284c6c404a1269c660d077546e82ce7f49e4d882",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "modelSha256": "b51c43a373313067819a48399b45f3f8100422b6222b2b0f5434beb0f31e8e20",
+      "binarySha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "registeredAt": "2026-09-10T14:45:41.986Z",
+      "source": {
+        "kind": "previous",
+        "character": "章魚嗶",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
+      "label": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
+      "sourceModelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "modelSha256": "7d22fb81e6fc80130ed5e28aae27456d4d2c8e78dbb6a4781afce8368a2a6615",
+      "binarySha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "registeredAt": "2026-09-10T14:45:41.993Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
+        "work": "300英雄寵物；其他作品出處未確認",
+        "library": "300heroes",
+        "reference": "derivative:takopi",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

@@ -1,0 +1,435 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.267,
+      "castType": "targeted",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「麻醉單請勿填錯！」\n指定敵人被施加 magic-break，明確帶 silenced 旗標 2.5 秒；不造成麻醉傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "duration": 2.5,
+          "kind": "applyStatus",
+          "silenced": true,
+          "statusId": "magic-break"
+        }
+      ],
+      "id": "b2-keyaru.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "麻醉單請勿填錯",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
+        "params": {
+          "castTimeSec": 0.267,
+          "status": {
+            "duration": 2.5,
+            "silenced": true,
+            "statusId": "magic-break"
+          }
+        },
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.067,
+      "castType": "self",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「醫生先給自己掛號！」\n回復自身 120 生命；缺血時的真治療事件會建立病歷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "kind": "heal"
+        }
+      ],
+      "id": "b2-keyaru.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "醫生先給自己掛號",
+      "range": 0.0,
+      "slot": "Q",
+      "template": {
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+        "params": {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "castTimeSec": 0.067,
+          "target": "self"
+        },
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「門診加號先救人！」\n治療指定友軍 120 生命，並驅散最多 3 筆可驅散負面狀態、DOT 或增益来源。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              90,
+              180
+            ]
+          },
+          "kind": "heal"
+        },
+        {
+          "count": 3,
+          "kind": "dispel",
+          "order": "newest",
+          "polarity": "debuff",
+          "pools": {
+            "buffs": true,
+            "dot": true,
+            "status": true
+          },
+          "shape": "single"
+        }
+      ],
+      "id": "b2-keyaru.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "門診加號先救人",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": false,
+      "template": {
+        "cards": [
+          {
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+            "params": {
+              "amount": {
+                "flat": 120,
+                "perRank": [
+                  0,
+                  90,
+                  180
+                ]
+              },
+              "castTimeSec": 0.1,
+              "target": "ally"
+            },
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+          },
+          {
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+            "params": {
+              "castTimeSec": 0.1,
+              "castType": "targeted",
+              "effects": [
+                {
+                  "count": 3,
+                  "kind": "dispel",
+                  "order": "newest",
+                  "polarity": "debuff",
+                  "pools": {
+                    "buffs": true,
+                    "dot": true,
+                    "status": true
+                  },
+                  "shape": "single"
+                }
+              ],
+              "radius": 3,
+              "side": "allies"
+            },
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「病歷換職災保險！」\n消耗自己全部 rage 病歷，對指定友軍給予 190 點護盾 3 秒。未持有病歷則沒有護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 190,
+                "perRank": [
+                  0,
+                  95,
+                  190,
+                  285
+                ]
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "shape": "single",
+          "statusId": "rage",
+          "subject": "self"
+        }
+      ],
+      "id": "b2-keyaru.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "病歷換職災保險",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 190,
+                    "perRank": [
+                      0,
+                      95,
+                      190,
+                      285
+                    ]
+                  },
+                  "duration": 3,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "b2-protection"
+                }
+              ],
+              "shape": "single",
+              "statusId": "rage",
+              "subject": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "mage",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 13,
+    "agiGrowth": 1.25,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-keyaru.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.5280102040816326,
+    "as": 0,
+    "healthRegen": 0.08789387755102042,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-keyaru",
+  "modelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
+  "name": "凱亞爾",
+  "origin": "法鬥",
+  "passiveAbility": "b2-keyaru.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-keyaru.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.458777",
+      "modelSha256": "9203bc0f9174350323468ed7912665b72516fbfe0a838c163ce7d8ed7eb36c2a",
+      "binarySha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+      "registeredAt": "2026-09-10T14:45:39.342Z",
+      "source": {
+        "kind": "previous",
+        "character": "凱亞爾",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.458777.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.7eb6f6479c9dde50a9d28924edb2e19f27c896f91b4c44ff",
+      "label": "李小狼",
+      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+      "modelSha256": "0b6e5a2e13e111540ef07543ecfacc8857b7f429c3fcdbb97621368ea981285c",
+      "binarySha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+      "registeredAt": "2026-09-10T14:45:39.349Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "李小狼",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "300heroes:f1660efeba7e0630c361c814",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
+      "label": "假面绅士（論壇相似模型）",
+      "sourceModelKey": "ou99.458777-standard-v3",
+      "modelSha256": "b699fba95c852fadf85c977e59fd0fa542bf73a024d7d83089d1ca3490aeb395",
+      "binarySha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+      "registeredAt": "2026-09-10T15:02:45.029Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "假面绅士",
+        "work": "來源作品待核；論壇標題：假面绅士",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-458777-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

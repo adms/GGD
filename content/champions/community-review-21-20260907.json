@@ -1,0 +1,356 @@
+{
+  "id": "community-review-21-20260907",
+  "name": "鹿目圓",
+  "description": "鹿目圓 社群英雄功能驗收稿。作品：《魔法少女小圓》  \n採用：魔法少女圓為主，EX 借用圓環之理意象。  \n定位：弓箭、保護、有限救援。\n\n視覺方向：粉白弓光、玫瑰花瓣盾、圓環環帶；不使用時停。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "ranged",
+  "archetype": "fighter",
+  "origin": "軟輔",
+  "modelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 26.93612244897959,
+    "healthRegen": 0.07386938775510205,
+    "maxMana": 29.456938775510206,
+    "manaRegen": 0,
+    "ad": 2.220326530612245,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.6051734693877552,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 21,
+    "agi": 20,
+    "int": 19,
+    "strGrowth": 1.99,
+    "agiGrowth": 1.89,
+    "intGrowth": 1.83,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-21-20260907.q",
+      "name": "〔光之箭〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】發射直線魔法箭。\n【待補機制】需魔法箭投射物。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.12,
+          "count": 4,
+          "intervalSec": 0.12,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "finalEffects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "radius": 8.0,
+              "radiusTier": "大"
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-21-20260907.q.webp",
+      "template": {
+        "ref": "tpl-traveling-wave",
+        "params": {
+          "stepSize": 100,
+          "stepCount": 4,
+          "stepIntervalSec": 0.12,
+          "aoePerStep": 100,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-21-20260907.w",
+      "name": "〔希望之弓〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-21-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供護盾；消耗一層希望可加強。\n【待補機制】目前自身；需指定友軍及希望消耗。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-21-20260907.w.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-21-20260907.w.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-21-20260907.e",
+      "name": "〔淨化之願〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】解除一項可淨化的負面狀態，並提供短效移速。\n【待補機制】目前自身加速；需一項可淨化狀態移除。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-21-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-21-20260907.r",
+      "name": "〔願望箭雨〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "radius": 4.5,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.35,
+          "durationSec": 0.7,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 0.7,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-21-20260907.r.webp",
+      "template": {
+        "ref": "tpl-random-barrage",
+        "params": {
+          "count": 3,
+          "intervalSec": 0.35,
+          "impactDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "impactRadius": 150,
+          "scatterRadius": 120,
+          "payout": "perImpact",
+          "castTimeSec": 0.7
+        },
+        "inheritDefaults": true
+      },
+      "radiusTier": "小"
+    }
+  },
+  "exAbility": "community-review-21-20260907.ex",
+  "passiveAbility": "community-review-21-20260907.passive",
+  "icon": "assets/icons/champions/community-review-21-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.c3528a53b30e5a72d13d68c8c56229beec01dbac844a7d3e",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "modelSha256": "bf1de83ac33602a4db4b94eb6f73a42f31cf4487a89fc74a73f052ff540938c4",
+      "binarySha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "registeredAt": "2026-09-10T14:45:31.306Z",
+      "source": {
+        "kind": "previous",
+        "character": "鹿目圓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
+      "label": "鹿目圆香",
+      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "modelSha256": "13442775fa7751b0c079b99c9c2e866ae56b13d2bb2c407a247bcc238639ba84",
+      "binarySha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "registeredAt": "2026-09-10T14:45:31.314Z",
+      "source": {
+        "kind": "exact",
+        "character": "鹿目圆香",
+        "work": "魔法少女小圓",
+        "library": "300heroes",
+        "reference": "300heroes:36223c09f16c6648e9508448",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

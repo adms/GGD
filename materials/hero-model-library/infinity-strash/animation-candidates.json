@@ -1,0 +1,325 @@
+{
+  "heroIds": [
+    "b2-popp"
+  ],
+  "sourceCharacterId": "PN020",
+  "sourceCharacterIdentityEvidence": "Sorcerer Popp author description; package modifications under PN020",
+  "animationSequences": 1,
+  "animationMontages": 5,
+  "playableGlbClips": 0,
+  "candidates": [
+    {
+      "id": "AM_PN020_00_B_Spl011",
+      "resourceRole": "animation-montage-with-event-references",
+      "ueClass": "AnimMontage",
+      "uassetPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl011.uasset",
+      "uexpPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl011.uexp",
+      "uassetSha256": "753c8a484831f4ea2583b35ebfcec122e8d381ccf47e752e496fd5d40a7b378d",
+      "uexpSha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8",
+      "serializedPayloadBytes": 14260,
+      "properties": {
+        "SequenceLength": 1.1666666269302368,
+        "Skeleton": -33
+      },
+      "propertyEvidence": [
+        {
+          "property": "SequenceLength",
+          "exportRelativeByteOffset": 14174,
+          "value": 1.1666666269302368
+        },
+        {
+          "property": "Skeleton",
+          "exportRelativeByteOffset": 14203,
+          "value": -33
+        }
+      ],
+      "sourceType": "community-mod-of-original-game",
+      "nativeOriginalByteEquivalence": "not-comparable-no-base-game",
+      "verifiedPlayable": false,
+      "ggdReady": false,
+      "skeletonImport": {
+        "classPackage": "/Script/Engine",
+        "className": "Skeleton",
+        "outerIndex": -23,
+        "objectName": "SK_PN020_Skeleton"
+      },
+      "nativeSampleRate": "unknown",
+      "decodingStatus": "Unreal animation asset bytes retained; compressed bone tracks not decoded"
+    },
+    {
+      "id": "AM_PN020_00_B_Spl0111",
+      "resourceRole": "animation-montage-with-event-references",
+      "ueClass": "AnimMontage",
+      "uassetPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl0111.uasset",
+      "uexpPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl0111.uexp",
+      "uassetSha256": "82620719c3e265b2c281d07cc56d72647133d7a6fdcab65fe18bef3fdab044d0",
+      "uexpSha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8",
+      "serializedPayloadBytes": 14260,
+      "properties": {
+        "SequenceLength": 1.1666666269302368,
+        "Skeleton": -33
+      },
+      "propertyEvidence": [
+        {
+          "property": "SequenceLength",
+          "exportRelativeByteOffset": 14174,
+          "value": 1.1666666269302368
+        },
+        {
+          "property": "Skeleton",
+          "exportRelativeByteOffset": 14203,
+          "value": -33
+        }
+      ],
+      "sourceType": "community-mod-of-original-game",
+      "nativeOriginalByteEquivalence": "not-comparable-no-base-game",
+      "verifiedPlayable": false,
+      "ggdReady": false,
+      "skeletonImport": {
+        "classPackage": "/Script/Engine",
+        "className": "Skeleton",
+        "outerIndex": -23,
+        "objectName": "SK_PN020_Skeleton"
+      },
+      "nativeSampleRate": "unknown",
+      "decodingStatus": "Unreal animation asset bytes retained; compressed bone tracks not decoded"
+    },
+    {
+      "id": "AM_PN020_00_B_Spl01111",
+      "resourceRole": "animation-montage-with-event-references",
+      "ueClass": "AnimMontage",
+      "uassetPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01111.uasset",
+      "uexpPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01111.uexp",
+      "uassetSha256": "bdcd8e6426d914101c123d25fd367d4453986f3bce9d5a93bc5b9abadb502544",
+      "uexpSha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8",
+      "serializedPayloadBytes": 14260,
+      "properties": {
+        "SequenceLength": 1.1666666269302368,
+        "Skeleton": -33
+      },
+      "propertyEvidence": [
+        {
+          "property": "SequenceLength",
+          "exportRelativeByteOffset": 14174,
+          "value": 1.1666666269302368
+        },
+        {
+          "property": "Skeleton",
+          "exportRelativeByteOffset": 14203,
+          "value": -33
+        }
+      ],
+      "sourceType": "community-mod-of-original-game",
+      "nativeOriginalByteEquivalence": "not-comparable-no-base-game",
+      "verifiedPlayable": false,
+      "ggdReady": false,
+      "skeletonImport": {
+        "classPackage": "/Script/Engine",
+        "className": "Skeleton",
+        "outerIndex": -23,
+        "objectName": "SK_PN020_Skeleton"
+      },
+      "nativeSampleRate": "unknown",
+      "decodingStatus": "Unreal animation asset bytes retained; compressed bone tracks not decoded"
+    },
+    {
+      "id": "AM_PN020_00_B_Spl022",
+      "resourceRole": "animation-montage-with-event-references",
+      "ueClass": "AnimMontage",
+      "uassetPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl022.uasset",
+      "uexpPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl022.uexp",
+      "uassetSha256": "be91d689dad007952992284a959da16b1419b787f70ad712327fb06ca6a7b06c",
+      "uexpSha256": "2a9be1b5ac50de87e20eb08317a4e02480415cd66eb2991bb869311172f01e50",
+      "serializedPayloadBytes": 17527,
+      "properties": {
+        "SequenceLength": 1.100000023841858,
+        "Skeleton": -47
+      },
+      "propertyEvidence": [
+        {
+          "property": "SequenceLength",
+          "exportRelativeByteOffset": 17441,
+          "value": 1.100000023841858
+        },
+        {
+          "property": "Skeleton",
+          "exportRelativeByteOffset": 17470,
+          "value": -47
+        }
+      ],
+      "sourceType": "community-mod-of-original-game",
+      "nativeOriginalByteEquivalence": "not-comparable-no-base-game",
+      "verifiedPlayable": false,
+      "ggdReady": false,
+      "skeletonImport": {
+        "classPackage": "/Script/Engine",
+        "className": "Skeleton",
+        "outerIndex": -33,
+        "objectName": "SK_PN020_Skeleton"
+      },
+      "nativeSampleRate": "unknown",
+      "decodingStatus": "Unreal animation asset bytes retained; compressed bone tracks not decoded"
+    },
+    {
+      "id": "AM_PN020_00_B_Spl02222",
+      "resourceRole": "animation-montage-with-event-references",
+      "ueClass": "AnimMontage",
+      "uassetPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl02222.uasset",
+      "uexpPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl02222.uexp",
+      "uassetSha256": "f24f17e36814b4983bc65028bf17e524054a20034a32e51366243b98656e4a63",
+      "uexpSha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8",
+      "serializedPayloadBytes": 14260,
+      "properties": {
+        "SequenceLength": 1.1666666269302368,
+        "Skeleton": -33
+      },
+      "propertyEvidence": [
+        {
+          "property": "SequenceLength",
+          "exportRelativeByteOffset": 14174,
+          "value": 1.1666666269302368
+        },
+        {
+          "property": "Skeleton",
+          "exportRelativeByteOffset": 14203,
+          "value": -33
+        }
+      ],
+      "sourceType": "community-mod-of-original-game",
+      "nativeOriginalByteEquivalence": "not-comparable-no-base-game",
+      "verifiedPlayable": false,
+      "ggdReady": false,
+      "skeletonImport": {
+        "classPackage": "/Script/Engine",
+        "className": "Skeleton",
+        "outerIndex": -23,
+        "objectName": "SK_PN020_Skeleton"
+      },
+      "nativeSampleRate": "unknown",
+      "decodingStatus": "Unreal animation asset bytes retained; compressed bone tracks not decoded"
+    },
+    {
+      "id": "AS_PN020_00_B_Spl01",
+      "resourceRole": "skeletal-animation-sequence",
+      "ueClass": "AnimSequence",
+      "uassetPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl01.uasset",
+      "uexpPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl01.uexp",
+      "uassetSha256": "e1eaf3b7166355bc4e5fbc060e5034ef92186bfe482ff0c3690357fe4d6763fe",
+      "uexpSha256": "c9d33797116e0f3550c2f4925cb0f796899f0b967fcbb6d6053eeab6535b69e2",
+      "serializedPayloadBytes": 73031,
+      "properties": {
+        "SequenceLength": 1.1666666269302368,
+        "NumFrames": 36,
+        "Skeleton": -16
+      },
+      "propertyEvidence": [
+        {
+          "property": "SequenceLength",
+          "exportRelativeByteOffset": 14684,
+          "value": 1.1666666269302368
+        },
+        {
+          "property": "NumFrames",
+          "exportRelativeByteOffset": 0,
+          "value": 36
+        },
+        {
+          "property": "Skeleton",
+          "exportRelativeByteOffset": 14713,
+          "value": -16
+        }
+      ],
+      "sourceType": "community-mod-of-original-game",
+      "nativeOriginalByteEquivalence": "not-comparable-no-base-game",
+      "verifiedPlayable": false,
+      "ggdReady": false,
+      "skeletonImport": {
+        "classPackage": "/Script/Engine",
+        "className": "Skeleton",
+        "outerIndex": -11,
+        "objectName": "SK_PN020_Skeleton"
+      },
+      "nativeSampleRate": "unknown",
+      "decodingStatus": "Unreal animation asset bytes retained; compressed bone tracks not decoded"
+    }
+  ],
+  "missingPackageDependencies": [
+    "/Game/Developers/_old/P004/Animations/AM_P004_Sleep_Test",
+    "/Game/Developers/_old_Cinematics/Player/PN020/LS_PN020_00_B_Skl01/LS_PN020_00_B_Skl01_Master",
+    "/Game/Strash/Battle/Projectile/BP_StrashProjectile_ScriptRoot",
+    "/Game/Strash/Chara/Common/CameraShake/StrashCamShake_Common",
+    "/Game/Strash/Chara/Common/CameraShake/StrashCamShake_CommonNOPE",
+    "/Game/Strash/Chara/Common/Notify/AnimNotify_Footsteps",
+    "/Game/Strash/Chara/Common/Vibration/FF_Battle_Common_M_01",
+    "/Game/Strash/Chara/Common/Vibration/FF_Battle_Common_S_02",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk02",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk03",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge2",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_B",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_F",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Entry01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ExtraAtk01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01_Blink",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ItemUse",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Kugutsu",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Mistake01_Idle_01_Lp",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Paralyze",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Skl01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Begirama",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizz",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizzle",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Kafrizzle",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl10",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01_Idle_01_Lp",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_EX_ExitQuest01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_1003_01",
+    "/Game/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl02",
+    "/Game/Strash/Chara/Player/PN020/SK_PN020_Skeleton",
+    "/Game/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special01/LS_PN020_00_B_Special01_Master",
+    "/Game/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special02/LS_PN020_00_B_Special02_Master",
+    "/Game/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special03_01/LS_PN020_00_B_Special03_01Master",
+    "/Game/Strash/Sound/SE/200041_RengokuGiri_Cue",
+    "/Game/Strash/UI/Decal/MI_DamageDecalCircle002E",
+    "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+    "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+    "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+    "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+    "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+    "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+    "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+    "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+    "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+    "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+    "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+    "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+    "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+    "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+    "/Game/Strash/VFX/Post/Curve/CV_Black00",
+    "/Game/Strash/VFX/Post/Curve/CV_Black01",
+    "/Game/Strash/VFX/Post/MPC_VFXPost",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Hyad_02",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Hyad_02_Hit",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Imposition_01",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_01",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_01_hit",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_02",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Mera_02",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Mera_02_Hit",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_Magic_Imposition_fire_01",
+    "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_Magic_Imposition_fire_02",
+    "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge",
+    "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2",
+    "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Stop_SE_PN020_Charge",
+    "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+    "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk",
+    "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+    "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+    "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+    "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+  ]
+}

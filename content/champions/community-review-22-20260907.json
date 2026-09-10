@@ -1,0 +1,361 @@
+{
+  "id": "community-review-22-20260907",
+  "name": "菜月昴",
+  "description": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "硬輔",
+  "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 38.2761224489796,
+    "healthRegen": 0.05743673469387757,
+    "maxMana": 11.026530612244898,
+    "manaRegen": 0,
+    "ad": 2.9131428571428573,
+    "as": 2.9226239784265093e-05,
+    "mr": 2.639795918367347,
+    "armor": 0.9537142857142857,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 25,
+    "agi": 12,
+    "int": 23,
+    "strGrowth": 2.36,
+    "agiGrowth": 1.18,
+    "intGrowth": 2.17,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-22-20260907.q",
+      "name": "Shamac",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。\n【待補機制】固定緩速不代表黑霧感官／命中干擾。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 1.5,
+          "applyTo": "target",
+          "moveSpeedMult": 0.7
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-22-20260907.q.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-22-20260907.w",
+      "name": "〔鞭繩牽制〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "target",
+          "mode": "toPoint",
+          "apexHeight": 0.005,
+          "durationSec": 0.45,
+          "throwDistance": 1.83,
+          "dragToCaster": true,
+          "landRadius": 2,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.4082
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-22-20260907.w.webp",
+      "template": {
+        "ref": "tpl-pull-throw",
+        "params": {
+          "mode": "toPoint",
+          "grabMode": "dragToCaster",
+          "throwMode": "distance",
+          "apexHeight": 1.2,
+          "durationSec": 0.45,
+          "throwDistance": 100,
+          "landRadius": 2,
+          "landDamageTier": "小",
+          "landApRatio": 0,
+          "damageType": "physical",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-22-20260907.e",
+      "name": "〔重新振作〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-22-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n【待補機制】需自己及附近一名友軍。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-22-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-22-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-22-20260907.r",
+      "name": "死亡回歸",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n【待補機制】目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100,
+            "ratios": [],
+            "perRank": [
+              0,
+              75,
+              150
+            ]
+          },
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-22-20260907.r.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-22-20260907.ex",
+  "passiveAbility": "community-review-22-20260907.passive",
+  "icon": "assets/icons/champions/community-review-22-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.cc688f0c9acfeab9c68254e817d2ed85a6447f9b093bd3db",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.311294",
+      "modelSha256": "65a6524005796e3306e77f1e7e1667838c498f2473d9be3f3bda96485c9bc014",
+      "binarySha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
+      "registeredAt": "2026-09-10T14:45:31.415Z",
+      "source": {
+        "kind": "previous",
+        "character": "菜月昴",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.311294.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.3fb1524235ab7cd7eda871d312baf831c7885f6ddcb7a3cc",
+      "label": "夜斗",
+      "sourceModelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+      "modelSha256": "66e5be55728c19f8e6501da622b55d6768fc3f074a4c5411e7c158dbaa24356f",
+      "binarySha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "registeredAt": "2026-09-10T14:45:31.420Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "夜斗",
+        "work": "流浪神差／野良神",
+        "library": "300heroes",
+        "reference": "300heroes:64db6774e13416da32390b5b",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+      "label": "菜月昴（論壇模型）",
+      "sourceModelKey": "ou99.311294-standard-v2",
+      "modelSha256": "8e6e48b3155057f885634df3a9d3a7a288a451aa7a25537bec53ca52b1aee7fd",
+      "binarySha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+      "registeredAt": "2026-09-10T14:48:48.570Z",
+      "source": {
+        "kind": "exact",
+        "character": "菜月昴",
+        "work": "Re:從零開始的異世界生活",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

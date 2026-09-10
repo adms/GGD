@@ -1,0 +1,393 @@
+{
+  "id": "community-review-05-20260907",
+  "name": "洛克人",
+  "description": "洛克人 社群英雄功能驗收稿。作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n視覺方向：青藍砲口、白心彈體；刀刃用金屬灰、Leaf Shield 用綠色。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "marksman",
+  "attackType": "ranged",
+  "archetype": "marksman",
+  "origin": "射手",
+  "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 10,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 29.202653061224485,
+    "healthRegen": 0.07234693877551021,
+    "maxMana": 19.291836734693877,
+    "manaRegen": 0,
+    "ad": 4.477551020408164,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.27402040816326523,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 13,
+    "agi": 29,
+    "int": 18,
+    "strGrowth": 1.25,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.67,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-05-20260907.q",
+      "name": "洛克砲",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】按住蓄力、放開射擊；依蓄力階段決定彈體與傷害。\n【待補機制】目前固定起手；需按住／放開與分段蓄力。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-05-20260907.q.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-05-20260907.w",
+      "name": "Metal Blade",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出金屬刀刃，可選擇射擊方向，消耗武器能源。\n【待補機制】Metal Blade 的方向與刀刃模型待補。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.12,
+          "count": 4,
+          "intervalSec": 0.12,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "finalEffects": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "radius": 8.0,
+              "radiusTier": "大"
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-05-20260907.w.webp",
+      "template": {
+        "ref": "tpl-traveling-wave",
+        "params": {
+          "stepSize": 100,
+          "stepCount": 4,
+          "stepIntervalSec": 0.12,
+          "aoePerStep": 100,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-05-20260907.e",
+      "name": "Leaf Shield",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-05-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】形成有限耐久的葉片護盾；再次使用可將剩餘葉片射出。\n【待補機制】缺再次輸入射出剩餘葉片及護盾剩餘量換算。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-05-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-05-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-05-20260907.r",
+      "name": "〔全武裝齊射〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】按固定次序發射砲彈、刀刃與葉片，整套共享總傷害預算。\n【待補機制】彈種固定時序及整套共享總預算需補。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "radius": 4.5,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.35,
+          "durationSec": 1.75,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 1.767,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-05-20260907.r.webp",
+      "template": {
+        "ref": "tpl-random-barrage",
+        "params": {
+          "count": 6,
+          "intervalSec": 0.35,
+          "impactDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "impactRadius": 150,
+          "scatterRadius": 120,
+          "payout": "perImpact",
+          "castTimeSec": 1.767
+        },
+        "inheritDefaults": true
+      },
+      "radiusTier": "小"
+    }
+  },
+  "exAbility": "community-review-05-20260907.ex",
+  "passiveAbility": "community-review-05-20260907.passive",
+  "icon": "assets/icons/champions/community-review-05-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.ca49559d6f92e4001caa12f9f4b9a84d02aa7b155d4476f7",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.287871",
+      "modelSha256": "eb42b676464398dccbf02385ced686f6eab6c2bad5d1eadef9650fddc8848f73",
+      "binarySha256": "7a5f9e627a13c041459d9b94d75bd2533b83226b12498915528b2ffb0e977bae",
+      "registeredAt": "2026-09-10T14:45:28.347Z",
+      "source": {
+        "kind": "previous",
+        "character": "洛克人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.287871.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b6382b383fc533970b07ad38b8a5477108de7d2346db87c8",
+      "label": "刑天",
+      "sourceModelKey": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+      "modelSha256": "1a2720d34b1c707b3d3bf898e10e24b6c9fbb368182821b03522a8fdbb7bc1e2",
+      "binarySha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "registeredAt": "2026-09-10T14:45:28.375Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "刑天",
+        "work": "鎧甲勇士刑天",
+        "library": "300heroes",
+        "reference": "300heroes:ad8377d942a4909779a1b20c",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+      "label": "洛克人（論壇模型）",
+      "sourceModelKey": "ou99.287871-standard",
+      "modelSha256": "d70b5698be825c5626e6c152473484a4a9903a62cdad19e34d609984d9dcd558",
+      "binarySha256": "6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d",
+      "registeredAt": "2026-09-10T14:45:28.426Z",
+      "source": {
+        "kind": "exact",
+        "character": "洛克人",
+        "work": "Mega Man",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-287871-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

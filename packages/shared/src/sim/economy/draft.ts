@@ -8,6 +8,7 @@ import type { AugmentId, EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { AugmentDef, AugmentTier } from "../content/defs";
 import { Augments, LootTables } from "../content/registry";
+import { sellItem } from "./shop";
 import { attachSource } from "../stats/statPipeline";
 import { sourceGrants } from "../stats/sourceGrants";
 import { grantItemFree } from "./shop";
@@ -433,9 +434,41 @@ export function offerItems(
  */
 export type ItemPickResult = "ok" | "no-slot" | "invalid";
 
-export function applyItemPick(world: SimWorld, offer: ItemOffer, pick: ItemId): ItemPickResult {
+export function applyItemPick(
+  world: SimWorld,
+  offer: ItemOffer,
+  pick: ItemId,
+  /**
+   * ⭐ **背包滿時要換掉哪一格**（GH#1110 B）——⛔ 省略 ＝ 不換（既有行為）。
+   *
+   * ⚠️ ⭐ 它受 `legendaryShelf.swapWhenFull` 管（出貨 **false**）：
+   *   ⛔ 開關關著時**連給了格子也不換** —— 那一格是 owner 的設計決定
+   *   （「先想清楚再拿」vs「隨時可換」），⛔ 不是我能自己轉的（第一守則）。
+   */
+  swapSlot?: number,
+): ItemPickResult {
   if (offer.picked || !offer.choices.includes(pick)) return "invalid";
-  const slot = grantItemFree(world, offer.entity, pick);
+  let slot = grantItemFree(world, offer.entity, pick);
+  if (slot < 0 && swapSlot !== undefined && world.legendaryShelf?.swapWhenFull === true) {
+    // ⭐ 賣掉走**既有**的 `sellItem`（退款照 `sellRefundPct`）——
+    //   ⛔ 不另寫一條退款路徑（第〇·四守則：同一個值不可以有第二個住處）。
+    // ⚠️⚠️ ⭐ **這裡刻意不發第三個事件。**
+    //
+    // ⛔ 2026-09-10 抓到:我原本在這裡 `emit("itemSwapped", …)`,而 `eventFanout` 的
+    //   分類閘當場紅了（「emitted but in neither set」）—— ⭐ 而正確的修法**不是把它分類**:
+    //
+    //   · `sellItem()` 已經發 `itemSold`（`shop.ts` 裡那一行）
+    //   · 換成功之後 `slot >= 0` ⇒ 這支函式結尾的 `itemPicked` **照樣發**
+    //   ⇒ ⭐ 客戶端本來就收得到「舊的走了」＋「新的來了」兩則,
+    //     ⛔ 而 `itemSwapped` 是**第三個描述同一件事的事件** —— 第〇·四守則:
+    //     同一份知識不可以有第二個住處(這裡是第三個)。
+    //
+    // ⭐ 真的需要「這兩則是同一次換裝」這個關聯時,⛔ 不要再加一個事件 ——
+    //   在 `itemPicked` 上加一格 `swappedOutSlot`(⭐ 一個欄位,⛔ 不是一條新通道)。
+    if (sellItem(world, offer.entity, swapSlot)) {
+      slot = grantItemFree(world, offer.entity, pick);
+    }
+  }
   if (slot < 0) {
     // ⭐ 走**既有**的拒絕提示機制（`buyRejected` / `sellRejected` 那一族，
     //   它們在 `eventFanout.ts` 已經是送得到客戶端的）——

@@ -1,0 +1,53 @@
+{
+  "id": "community-review-29-20260907.passive",
+  "schema": "ability@1",
+  "name": "魔力抑制",
+  "provenance": "w3x-import",
+  "description": "降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "魔力抑制"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-29-20260907.passive.webp"
+}

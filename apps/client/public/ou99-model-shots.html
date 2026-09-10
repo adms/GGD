@@ -1,0 +1,77 @@
+<!--
+  ⭐ ou99／外部模型實拍台 —— 載入 glb、播指定動作、逐支截圖。
+  ⛔ 純驗收工具,不進出貨路徑;⛔ 不要刪除(GH: 模型驗收唯一的視覺證據來源)。
+
+  用法(給自動化):
+    await window.__load('/content/assets/models/ou99/ou99_313646.glb','stand')
+    window.__shot()            → dataURL(jpeg)
+  用法(給人):
+    ?model=ou99.313646&clip=stand      自動載入並顯示
+-->
+<title>模型實拍台</title>
+<style>
+ body{margin:0;background:#0d0d10;color:#eee;font:13px system-ui;display:flex;gap:14px}
+ canvas{display:block;width:512px;height:512px;background:#15151a;flex:0 0 512px}
+ #hud{font:12px ui-monospace;white-space:pre-wrap;padding:8px 0;max-width:420px}
+ .err{color:#e2755c}
+</style>
+<canvas id="c" width="512" height="512"></canvas>
+<div id="hud">loading…</div>
+<script type="importmap">
+{"imports":{
+ "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+ "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const hud=document.getElementById('hud'), cv=document.getElementById('c');
+try{
+  const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,preserveDrawingBuffer:true});
+  renderer.setSize(512,512,false);
+  const scene=new THREE.Scene(); scene.background=new THREE.Color(0x15151a);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x445566,2.4));
+  const l1=new THREE.DirectionalLight(0xffffff,2.2); l1.position.set(3,6,4); scene.add(l1);
+  const l2=new THREE.DirectionalLight(0xaaccff,1.0); l2.position.set(-4,2,-3); scene.add(l2);
+  const cam=new THREE.PerspectiveCamera(35,1,0.01,5000);
+  let mixer=null,current=null;
+  window.__load=(url,clip)=>new Promise(res=>{
+    if(current){scene.remove(current);current=null;}
+    if(mixer){mixer.stopAllAction();mixer=null;}
+    new GLTFLoader().load(url,g=>{
+      current=g.scene; scene.add(current);
+      const box=new THREE.Box3().setFromObject(current);
+      const size=box.getSize(new THREE.Vector3()), ctr=box.getCenter(new THREE.Vector3());
+      const maxd=Math.max(size.x,size.y,size.z)||1;
+      const dist=maxd/(2*Math.tan(Math.PI*35/360))*1.5;
+      cam.position.set(ctr.x+dist*0.5, ctr.y+maxd*0.14, ctr.z+dist*0.95);
+      cam.lookAt(ctr); cam.near=Math.max(dist/200,0.01); cam.far=dist*20; cam.updateProjectionMatrix();
+      let played='';
+      if(g.animations&&g.animations.length){
+        mixer=new THREE.AnimationMixer(current);
+        const p=g.animations.find(a=>new RegExp(clip||'stand','i').test(a.name))||g.animations[0];
+        mixer.clipAction(p).play(); mixer.update(0.4); played=p.name;
+      }
+      renderer.render(scene,cam);
+      let n=0; current.traverse(o=>{if(o.isMesh)n++});
+      const info={ok:1,anims:(g.animations||[]).length,played,meshes:n,
+                  size:[+size.x.toFixed(2),+size.y.toFixed(2),+size.z.toFixed(2)],
+                  clips:(g.animations||[]).map(a=>a.name)};
+      hud.textContent=JSON.stringify(info,null,1);
+      res(info);
+    },undefined,e=>{
+      const info={ok:0,err:String(e&&e.message||e).slice(0,160)};
+      hud.textContent='⛔ '+info.err; hud.className='err'; res(info);
+    });
+  });
+  window.__shot=()=>{renderer.render(scene,cam);return cv.toDataURL('image/jpeg',0.82);};
+  window.__ready=true; hud.textContent='ready';
+  const q=new URLSearchParams(location.search);
+  if(q.get('model')){
+    const f=q.get('model').replace('.','_')+'.glb';
+    const dir=q.get('dir')||'ou99';
+    window.__load(`/content/assets/models/${dir}/${f}`, q.get('clip')||'stand');
+  }
+}catch(e){ hud.textContent='INIT FAIL: '+e.message; hud.className='err'; window.__initErr=String(e.message); }
+</script>

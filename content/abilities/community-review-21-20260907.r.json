@@ -1,0 +1,67 @@
+{
+  "id": "community-review-21-20260907.r",
+  "name": "〔願望箭雨〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "radius": 4.5,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.35,
+      "durationSec": 0.7,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 0.7,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-21-20260907.r.webp",
+  "template": {
+    "ref": "tpl-random-barrage",
+    "params": {
+      "count": 3,
+      "intervalSec": 0.35,
+      "impactDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "impactRadius": 150,
+      "scatterRadius": 120,
+      "payout": "perImpact",
+      "castTimeSec": 0.7
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "小"
+}

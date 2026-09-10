@@ -1,0 +1,432 @@
+{
+  "id": "community-review-03-20260907",
+  "name": "不知火舞",
+  "description": "不知火舞 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n定位：飛行道具、近身範圍、突進。\n\n視覺方向：紅扇軌跡、橘焰弧、落點火星；殘像只作演出，不增加完整英雄。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "version.body.4460b40eae91d19d1895469c9eaf0d6bd1e4fb3766b1b350",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-03-20260907.q",
+      "name": "花蝶扇",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出扇子，對沿途合法目標造成傷害。\n【待補機制】扇子模型及逐彈碰撞需補，模板是分段傷害波。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.12,
+          "count": 4,
+          "intervalSec": 0.12,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "finalEffects": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "radius": 8.0,
+              "radiusTier": "大"
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-03-20260907.q.webp",
+      "template": {
+        "ref": "tpl-traveling-wave",
+        "params": {
+          "stepSize": 100,
+          "stepCount": 4,
+          "stepIntervalSec": 0.12,
+          "aoePerStep": 100,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-03-20260907.w",
+      "name": "龍炎舞",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】向前揮出近身火焰弧，適合迎擊貼身敵人。\n【待補機制】目前為窄直線，需前方近身弧形判定。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-03-20260907.w.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-03-20260907.e",
+      "name": "必殺忍蜂",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向指定方向突進 300 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線突進撞擊；遇牆或到達最大距離停止。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 5.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-03-20260907.e.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 300,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-03-20260907.r",
+      "name": "超必殺忍蜂",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】有明顯起手的強化突進連擊，末段小範圍爆發。\n【待補機制】缺突進命中後才接連擊條件。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 3,
+      "radius": 2.75,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.18,
+          "durationSec": 0.72
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.72,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-03-20260907.r.webp",
+      "template": {
+        "ref": "tpl-lock-combo",
+        "params": {
+          "hitCount": 4,
+          "hitIntervalSec": 0.18,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true
+      },
+      "castTimeSec": 0.733
+    }
+  },
+  "exAbility": "community-review-03-20260907.ex",
+  "passiveAbility": "community-review-03-20260907.passive",
+  "icon": "assets/icons/champions/community-review-03-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.fb11308ea2781d7b07e6d9da520863007e29d892d8b71293",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "modelSha256": "5526548daa1642246b2728b8c0408ff3e0dd50b32704a632d92ec39ac38a00ce",
+      "binarySha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "registeredAt": "2026-09-10T14:45:27.785Z",
+      "source": {
+        "kind": "previous",
+        "character": "不知火舞",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.4a6be6b27df87700ec6afb9da7e9e794384ff13086e2bd08",
+      "label": "真田幸村",
+      "sourceModelKey": "community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9",
+      "modelSha256": "696cafd5f47eacc0b70a9a6cc1a42148486ba61f75a9304d15e7832261e1c9f6",
+      "binarySha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "registeredAt": "2026-09-10T14:45:27.833Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "真田幸村",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "300heroes:1d306928d4f084b4b4a1a79a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.4460b40eae91d19d1895469c9eaf0d6bd1e4fb3766b1b350",
+      "label": "不知火舞（獨立副本／真田幸村）",
+      "sourceModelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "modelSha256": "c57f534ba47da27f8615375a12c8b519fcf0a5315ef437b7bc716e49d797998c",
+      "binarySha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "registeredAt": "2026-09-10T14:45:28.048Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "不知火舞（獨立副本／真田幸村）",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "derivative:mai",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

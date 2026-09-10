@@ -1,0 +1,24 @@
+{
+  "id": "lol-lux.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-lux.ex",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "引路星芒",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

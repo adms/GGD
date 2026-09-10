@@ -97,7 +97,9 @@ function walkRefs(doc, onRef, onTpl) {
       if (typeof v === "string") {
         const kind = REF_KEYS[k];
         if (kind) onRef(kind, v);
-        else if ((k === "preset" || k === "tpl" || k === "ref") && v.startsWith("tpl-")) onTpl(v);
+        // ⭐ 模板 id 有兩種前綴（GH#1165）：`tpl-*` 與 `hero-template.*`。
+        else if ((k === "preset" || k === "tpl" || k === "ref") &&
+                 (v.startsWith("tpl-") || v.startsWith("hero-template."))) onTpl(v);
       } else walk(v);
     }
   })(doc);

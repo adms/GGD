@@ -1,0 +1,357 @@
+{
+  "id": "community-review-31-20260907",
+  "name": "SUN樂",
+  "description": "SUN樂 社群英雄功能驗收稿。作品：《香格里拉・開拓異境》  \n角色實體：サンラク／陽務樂郎。  \n定位：精準回避、反擊、短期強化。  \n來源錨點：作者公開小說中的實際招式。\n\n視覺方向：鳥頭面具待製、青色滑步線、反擊橙色火花、螺旋短刃切線。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 10,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-31-20260907.q",
+      "name": "Spiral Edge",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。\n【待補機制】需螺旋刃動畫與反擊後目標追加條件。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-31-20260907.q.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-31-20260907.w",
+      "name": "Slide Move",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】滑步位移，提供很短的精準迴避窗口。\n【待補機制】模板低跳不是精準迴避；需傷害來臨時間窗口。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 2.75,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.16,
+          "durationSec": 0.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-31-20260907.w.webp",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 40,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-31-20260907.e",
+      "name": "Repel Counter",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-31-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。\n【待補機制】護盾不是 Repel Counter；需格擋成功、擊退與 Q 窗口。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-31-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-31-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-31-20260907.r",
+      "name": "Accel",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速、as +20%。\n【目標設計】短期提高移速與近戰輸出能力，保留原本技能冷卻。\n【待補機制】Accel 基礎移速／攻速增益；持續 3 秒且保留冷卻。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.667,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-31-20260907.r.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            }
+          ],
+          "castTimeSec": 0.667
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-31-20260907.ex",
+  "passiveAbility": "community-review-31-20260907.passive",
+  "icon": "assets/icons/champions/community-review-31-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.062da662b79749bb7e3c2426852190c23fe9368484710a47",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "modelSha256": "8f39b70f9c6556bf21a741acb2c1342be666965927bdb70d0e63db136e55a42d",
+      "binarySha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "registeredAt": "2026-09-10T14:45:33.154Z",
+      "source": {
+        "kind": "previous",
+        "character": "SUN樂",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.25ee23749a9a194aa43073ec918e86af9ba7eaa3207c0c34",
+      "label": "哈桑",
+      "sourceModelKey": "community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a",
+      "modelSha256": "92666758c510199e009f1c4409526b3f9010f275e198b7285aae07ebbcc807e5",
+      "binarySha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+      "registeredAt": "2026-09-10T14:45:33.161Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "哈桑",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:1b46757671158e661a0105d1",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
+      "label": "SUN樂（獨立副本／哈桑）",
+      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "modelSha256": "c334cbd15d168da4a39facdae89406547828849703e1fe9f739c33d59f20ac08",
+      "binarySha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "registeredAt": "2026-09-10T14:45:33.258Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "SUN樂（獨立副本／哈桑）",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "derivative:sunraku",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

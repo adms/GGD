@@ -1,0 +1,56 @@
+{
+  "id": "community-review-32-20260907.r",
+  "name": "THE END OF SON",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。\n【待補機制】需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 1.433,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-32-20260907.r.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.433
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.void.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.slash"
+    }
+  ]
+}

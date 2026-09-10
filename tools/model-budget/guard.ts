@@ -53,16 +53,30 @@ interface Args {
   warnOnly: boolean;
   json: boolean;
   quiet: boolean;
+  /**
+   * ⭐ GH#1164 —— 臨時覆寫每幀動畫通道上限（⛔ **只給守衛用**）。
+   *
+   * ⚠️ 為什麼需要它：owner 2026-09-10 把上限移到 500，⭐ 而**全 repo 426 顆模型裡
+   * 最重的只有 412** ⇒ ⛔ 「超標會被擋」那條路**失去了夾具**。
+   * ⇒ ⭐ 沒有這個旗標，那條測試就只能被刪掉，⛔ 而刪掉等於那條路以後壞了沒有人知道。
+   *
+   * ⛔ 它**不改變出貨行為**：不給就用 config 的值。
+   */
+  channelLimit: number | null;
 }
 
 function parseArgs(argv: string[]): Args {
-  const a: Args = { files: [], role: null, warnOnly: false, json: false, quiet: false };
+  const a: Args = { files: [], role: null, warnOnly: false, json: false, quiet: false, channelLimit: null };
   for (let i = 0; i < argv.length; i++) {
     const t = argv[i]!;
     if (t === "--role") {
       const r = argv[++i];
       if (!r || !ROLE_NAMES.includes(r as Role)) fail(`--role must be one of: ${ROLE_NAMES.join(", ")}`);
       a.role = r as Role;
+    } else if (t === "--channel-limit") {
+      const v = Number(argv[++i]);
+      if (!Number.isSafeInteger(v) || v < 1) fail("--channel-limit must be a positive integer");
+      a.channelLimit = v;
     } else if (t === "--warn-only") a.warnOnly = true;
     else if (t === "--json") a.json = true;
     else if (t === "--quiet") a.quiet = true;
@@ -83,7 +97,7 @@ function fail(msg: string): never {
 
 function printHelp(): void {
   process.stdout.write(
-    "usage: tsx tools/model-budget/guard.ts <glb-or-dir>... [--role R] [--warn-only] [--json] [--quiet]\n" +
+    "usage: tsx tools/model-budget/guard.ts <glb-or-dir>... [--role R] [--warn-only] [--json] [--quiet] [--channel-limit N]\n" +
       `roles: ${ROLE_NAMES.join(", ")}\n`,
   );
 }
@@ -137,7 +151,13 @@ function evaluate(file: string, args: Args): FileResult {
       roleSource = "report";
     }
   }
-  const gate = role ? gateFor(role) : undefined;
+  let gate = role ? gateFor(role) : undefined;
+  // ⭐ GH#1164 —— `--channel-limit` 只覆寫**通道**那一軸（⛔ 其餘照 config）。
+  //   ⚠️ 它存在的唯一理由是守衛:出貨語料裡今天**沒有人超過 500** ⇒
+  //   ⛔ 「擋」那條路沒有夾具可驗。⭐ 而一條沒有人驗過的擋，與不存在是同一件事。
+  if (gate && args.channelLimit !== null) {
+    gate = { ...gate, channels: { warn: Math.min(gate.channels.warn, args.channelLimit), limit: args.channelLimit } };
+  }
   return {
     file,
     role: role ?? "(unresolved)",

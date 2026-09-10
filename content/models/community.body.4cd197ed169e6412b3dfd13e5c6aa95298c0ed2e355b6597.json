@@ -1,0 +1,16 @@
+{
+  "id": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "GGD_procedural_idle",
+    "run": "GGD_procedural_run",
+    "attack": "GGD_procedural_attack",
+    "cast": "GGD_procedural_cast",
+    "hurt": "GGD_procedural_hurt",
+    "death": "GGD_procedural_death"
+  },
+  "yawOffsetDeg": 0
+}

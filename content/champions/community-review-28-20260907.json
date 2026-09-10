@@ -1,0 +1,390 @@
+{
+  "id": "community-review-28-20260907",
+  "name": "艾莉絲·伯雷亞斯·格雷拉特",
+  "description": "艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "version.body.1de4f7fe358ffb265236f5cbcd16e3b6cf4289ff48c9c429",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-28-20260907.q",
+      "name": "〔猛進斬〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向指定方向突進 180 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】向前踏步斬擊。\n【待補機制】短踏步可以預覽；需武器斬擊時點。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 3.3,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-28-20260907.q.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 180,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-28-20260907.w",
+      "name": "〔鬥氣護身〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-28-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短時間提高承傷能力，無法無限疊加。\n【待補機制】有限承傷對應基礎版。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-28-20260907.w.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-28-20260907.w.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-28-20260907.e",
+      "name": "〔逼近步〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近，保留可被攔截的路徑。\n【待補機制】此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 4.58,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-28-20260907.e.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 250,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-28-20260907.r",
+      "name": "光之太刀",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】有明確起手的高速直線斬擊，命中後停在合法位置。\n【待補機制】需較長起手、高速單段斬及命中停點。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 8.25,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.433,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-28-20260907.r.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 450,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 1.433
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-28-20260907.ex",
+  "passiveAbility": "community-review-28-20260907.passive",
+  "icon": "assets/icons/champions/community-review-28-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.5c1abdfe173459da8dcd36330d1d4126404326c032937b66",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "modelSha256": "8c1cacfce72f5e835dc0300f221415354f18af6f65042a3f841db0188f54e1f4",
+      "binarySha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "registeredAt": "2026-09-10T14:45:32.517Z",
+      "source": {
+        "kind": "previous",
+        "character": "艾莉絲·伯雷亞斯·格雷拉特",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.1de4f7fe358ffb265236f5cbcd16e3b6cf4289ff48c9c429",
+      "label": "艾莉丝",
+      "sourceModelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "modelSha256": "059d1ce23913d229cabdf5d3c741d180e9bf2e5fd9c8af808efd650487933c0b",
+      "binarySha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "registeredAt": "2026-09-10T14:45:32.537Z",
+      "source": {
+        "kind": "exact",
+        "character": "艾莉丝",
+        "work": "無職轉生～到了異世界就拿出真本事～",
+        "library": "300heroes",
+        "reference": "300heroes:cad6fc62e2fc00eae0234f38",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

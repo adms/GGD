@@ -4,6 +4,16 @@
 
 已驗證的本機音訊不等待 S3 即可查用。逐檔查詢提供 `absolutePath`；S3 備份與語音聽審狀態分開記錄，詳見 [角色語音索引.md](角色語音索引.md)。
 
+本次供 Main 合併的入口：
+
+- `priority-registration.json`：81 名的後台版本登記與原選項保留；使用實際 `ModelVersions.prepare`／`verify`。
+- `workflow-model-options.json`：其他工作流的論壇／七名 LOL 交付，原交付與標準化副本分列。
+- `priority-runtime-options.json`：本次新模型與程序化動作；成品 GLB 在 `content/assets/models/`，設定在 `content/models/`。
+- `current-production.json`：正式站唯讀快照；`inventory-context.json` 保留舊快照。
+- `lol-project-seven/seven-voice-index.json`：七名 LOL 日文 WAV 本機入口，4,927 檔，不等 S3。
+
+重建盤點：`python3 tools/hero-model-library/inventory.py`。已有交付檔時登記模型：`node --import tsx tools/hero-model-library/integrate-deliveries.mts`。英雄生成器保留模型版本與手動選擇。
+
 | 檔案 | 用途 |
 |---|---|
 | [角色語音索引.md](角色語音索引.md) | 全角色音訊儲備分組、S3 取檔索引、逐檔 SHA-256 與合成素材查詢 |
@@ -26,7 +36,7 @@
 | [turbo-granny-compaction-validation.json](turbo-granny-compaction-validation.json) | 招財貓合併版的 GGD 格式與網格／貼圖預算檢查；尚缺動作與後台切換驗收 |
 | [goku-audio-validation.json](goku-audio-validation.json) | 悟空 69 個浮點 WAV 母檔的解碼、取樣數、峰值與獨立 FFmpeg 驗證；尚缺事件／技能對應與聽審 |
 
-本版包含 97 筆來源選項、90 個不同模型，以及成品庫中既有的 60 個 GGD 作者化 VFX 元件。模型／動作元件與完整英雄包分開計算；不得宣稱 156 筆盤點 ID 已全部上架。
+既有不可變版本含 97 筆來源選項、90 個不同模型與 60 個 GGD 作者化 VFX 元件。本次其他工作流交付另見 `workflow-model-options.json`，新增轉換成品見 `priority-runtime-options.json`；全部在盤點合併查詢，未覆寫舊版本。正式站已觀測到 130 名白名單英雄；本分支新模型選項仍待 Main 合併與部署。
 
 預設依盤點第二守則；原著模型指原作遊戲直接擷取，300／MBA 維持第 6／7 位。成品一律進 Git，半成品／原始來源進 S3，本機全保留；既有版本先核對，避免重買。其他工作流經使用者授權付費取得的素材，一律與免費來源保留整合，預設順位不得刪減候選；尚未取得或轉換的來源不冒充已上架。銀時、蜘蛛子、海克力斯及各來源未完成步驟的細節統一放在盤點。
 
@@ -40,7 +50,7 @@
 
 悟空已解碼 69 份浮點 WAV（178.307 秒），另以 FFmpeg 全檔解碼驗證。25 檔浮點峰值超過 1，播放增益與整數格式匯出仍待確認；先前 69 份 PCM16 診斷版不作母檔。逐檔索引在 intake 的 `decoded-audio-float/audio-index.json`，與整個素材包一併存 S3 legacy。尚缺逐檔聽審、bank 事件／技能對應、模型動作整合及後台切換，這批音訊不會自動進入正式成品庫。
 
-`convert_unity_prefab.py <bundle> <intake輸出目錄> --root-name <精確 prefab 名稱>` 僅將已檢查的 Unity 蒙皮模型轉為自包含 GLB，保留骨節順序與綁定矩陣，驗證座標轉換前後頂點位置。遇到未支援的 morph、透明材質或 UV 變換會停止；動作尚未轉換，輸出屬於 intake 半成品。`compact_unity_skin.py <GLB> <新輸出目錄>` 進一步合併共骨節蒙皮與單色材質，在多組骨節姿勢下比對頂點位置，保留有圖案貼圖的原尺寸。高速婆婆已由 32 降至 5 繪製批次，全部 9,432 面及 29 骨節保留；`converted-prefab/`、`compacted-prefab/` 各自保存 GLB、格式驗證、三面截圖及瀏覽器收據。仍缺動作與後台切換驗收，不能據 GLB 可開啟就登記成品。
+`convert_unity_prefab.py <bundle> <intake輸出目錄> --root-name <精確 prefab 名稱>` 僅將已檢查的 Unity 蒙皮模型轉為自包含 GLB，保留骨節順序與綁定矩陣，驗證座標轉換前後頂點位置。遇到未支援的 morph、透明材質或 UV 變換會停止；動作尚未轉換，輸出屬於 intake 半成品。`compact_unity_skin.py <GLB> <新輸出目錄>` 進一步合併共骨節蒙皮與單色材質，在多組骨節姿勢下比對頂點位置，保留有圖案貼圖的原尺寸。高速婆婆已由 32 降至 5 繪製批次，全部 9,432 面及 29 骨節保留；`converted-prefab/`、`compacted-prefab/` 各自保存 GLB、格式驗證、三面截圖及瀏覽器收據。以上是原始 intake 階段。2026-09-10 已新增招財貓六段 GGD 程序化動作及獨立後台版本，見 `priority-runtime-options.json` 與 `priority-evidence/`；原生動作仍為 0。
 
 靜態預覽來源為 `tools/hero-model-library/preview-unity.html` 與 `preview-unity.mjs`：以工作區的 esbuild 將 JS 和 Babylon.js／glTF loader 打包成 `preview.js`，HTML 另存 `index.html`，與 `body.glb` 放同一個本機 HTTP 目錄即可檢查；三面預覽不等於後台實際切換驗證。
 

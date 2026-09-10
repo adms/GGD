@@ -1,0 +1,443 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.667,
+      "castType": "ground",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「本店定點營業範圍！」\n以起手命中中心（沒有命中則施法點）固定半徑{{radius}}，每 0.5 秒重選最多 4 名敵人，共三次 slow40 減速 40% 持續 2 秒；沒有全圖界域。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": 3,
+          "delaySec": 0.5,
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 2,
+              "kind": "applyStatus",
+              "moveSpeedMult": 0.6,
+              "statusId": "slow40"
+            }
+          ],
+          "intervalSec": 0.5,
+          "kind": "delayed",
+          "maxTargets": 4,
+          "radius": 3,
+          "shape": "circle",
+          "side": "enemies",
+          "stopOnCasterDeath": true,
+          "targetMode": "reresolve",
+          "radiusTier": "極小"
+        }
+      ],
+      "id": "b2-makoto.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "本店定點營業範圍",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.667,
+          "castType": "ground",
+          "effects": [
+            {
+              "count": 3,
+              "delaySec": 0.5,
+              "effects": [
+                {
+                  "applyTo": "target",
+                  "duration": 2,
+                  "kind": "applyStatus",
+                  "moveSpeedMult": 0.6,
+                  "statusId": "slow40"
+                }
+              ],
+              "intervalSec": 0.5,
+              "kind": "delayed",
+              "maxTargets": 4,
+              "radius": 3,
+              "shape": "circle",
+              "side": "enemies",
+              "stopOnCasterDeath": true,
+              "targetMode": "reresolve"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「試射前客人請後退！」\n產品展示先請客人後退：推離指定敵人 3 單位，不造成傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "distance": 3,
+          "from": "caster",
+          "kind": "knockback",
+          "speed": 12,
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "id": "b2-makoto.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "試射前客人請後退",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "distance": 3,
+              "from": "caster",
+              "kind": "knockback",
+              "speed": 12,
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 2.433,
+      "castType": "targeted",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「慢客人請停止抱怨！」\n中級集中魔法；消耗已在營業範圍沾到的 slow40，才追加沉默 1.2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "applyTo": "target",
+              "duration": 1.2,
+              "kind": "applyStatus",
+              "silenced": true,
+              "statusId": "magic-break"
+            }
+          ],
+          "shape": "single",
+          "statusId": "slow40",
+          "subject": "target"
+        }
+      ],
+      "id": "b2-makoto.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "慢客人請停止抱怨",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 2.433,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "中"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            },
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "applyTo": "target",
+                  "duration": 1.2,
+                  "kind": "applyStatus",
+                  "silenced": true,
+                  "statusId": "magic-break"
+                }
+              ],
+              "shape": "single",
+              "statusId": "slow40",
+              "subject": "target"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 1.233,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「站遠一點商品才夠痛！」\n弓術定點單射，小級物理傷害，{{range}}距離 到 8 由 0.5 倍線性提高到 1.5 倍，超過按上限；真實距離決定輸出。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "physical",
+          "distanceScale": {
+            "atRange": 8,
+            "far": 1.5,
+            "near": 0.5
+          },
+          "kind": "damage"
+        }
+      ],
+      "id": "b2-makoto.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "站遠一點商品才夠痛",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.233,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "小"
+              },
+              "damageType": "physical",
+              "distanceScale": {
+                "atRange": 8,
+                "far": 1.5,
+                "near": 0.5
+              },
+              "kind": "damage"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.physical.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.physical.bolt"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "mage",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 18,
+    "agiGrowth": 1.67,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 13,
+    "strGrowth": 1.25
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "月光下的異世界之旅｜商人試射新商品，順便把店面拆了。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-makoto.ex",
+  "growth": {
+    "ad": 2.5489795918367353,
+    "ap": 0,
+    "armor": 0.45735714285714285,
+    "as": 0,
+    "healthRegen": 0.10673469387755102,
+    "manaRegen": 0,
+    "maxHealth": 45.833673469387755,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-makoto",
+  "modelKey": "version.body.1658fe832754e7719e19011038369d9578f2143d59828350",
+  "name": "深澄真",
+  "origin": "法師",
+  "passiveAbility": "b2-makoto.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-makoto.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.2a48a5721683702b023cb8e50666a3bf1cd1980d5d4d6380",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.478642",
+      "modelSha256": "e97f427e7ba549f15a0541402cf3639ce158ddb78f1cc4cd7d3d4fd2309ae2b3",
+      "binarySha256": "a23e59b9443a980aa767f91e19fb83249542816760a7c3d0962b03b5a7cc7b34",
+      "registeredAt": "2026-09-10T14:45:37.627Z",
+      "source": {
+        "kind": "previous",
+        "character": "深澄真",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.478642.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.1658fe832754e7719e19011038369d9578f2143d59828350",
+      "label": "女刺客双见凛（論壇相似模型）",
+      "sourceModelKey": "ou99.478642-standard",
+      "modelSha256": "d4a4d4df009ae3b79825312aee2730b5b227eb34bb4ab802089cfb143d05e279",
+      "binarySha256": "63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f",
+      "registeredAt": "2026-09-10T14:45:37.646Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "女刺客双见凛",
+        "work": "來源作品待核；論壇標題：女刺客双见凛",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-478642-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.689f7ba0800ee63c56192ca9cd95163249ad898c3008a5b5",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "43f59f9de5e171a28e7066c9f3b89370000d66ae676a77424a79c6ace69eaf60",
+      "binarySha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+      "registeredAt": "2026-09-10T14:45:37.698Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "lol-xerath.r",
+  "name": "星牢轟擊",
+  "provenance": "w3x-import",
+  "description": "在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    120.0,
+    120.0,
+    120.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 12,
+  "radius": 6.0,
+  "rangeTier": "極大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "intervalSec": 0.5,
+      "durationSec": 1,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 1,
+  "castTimeTier": "極大",
+  "template": {
+    "ref": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+    "params": {
+      "count": 3,
+      "intervalSec": 0.5,
+      "impactDamage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "impactRadius": 200,
+      "scatterRadius": 100,
+      "payout": "perImpact",
+      "castTimeSec": 1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-xerath.r.webp",
+  "radiusTier": "中"
+}

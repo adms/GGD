@@ -16,5 +16,7 @@
     "phoneShortEdgePx": 600,
     "tabletFpsCap": 30,
     "minDevice": "iPad mini (A17 Pro)"
-  }
+  },
+  "championChannelWarn": 300,
+  "championChannelLimit": 500
 }

@@ -1,0 +1,54 @@
+{
+  "id": "lol-karthus.r",
+  "name": "暮鐘終曲",
+  "provenance": "w3x-import",
+  "description": "經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    120.0,
+    120.0,
+    120.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 12,
+  "radius": 6.0,
+  "rangeTier": "極大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 3.4,
+  "castTimeTier": "極大",
+  "template": {
+    "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "大",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 3.4
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-karthus.r.webp",
+  "radiusTier": "中"
+}

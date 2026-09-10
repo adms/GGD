@@ -1,0 +1,45 @@
+{
+  "id": "community-review-21-20260907.ex",
+  "schema": "ability@1",
+  "name": "圓環之理",
+  "provenance": "w3x-import",
+  "description": "對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 0.067,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 160,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-21-20260907.ex.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "vfxKey": "fx.prim.holy.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-21-20260907.ex.webp"
+}

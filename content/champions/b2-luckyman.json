@@ -1,0 +1,428 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「剛好有張技能保單！」\n增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "chance": 1,
+          "dodgesAbilities": true,
+          "durationSec": 3,
+          "kind": "evasion"
+        }
+      ],
+      "id": "b2-luckyman.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "剛好有張技能保單",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "applyTo": "self",
+              "chance": 1,
+              "dodgesAbilities": true,
+              "durationSec": 3,
+              "kind": "evasion"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「剛好香蕉皮滑了一下！」\n增加普攻迴避機會 3 秒；填入 1 仍受正式 evasion 上限約束，不是保證無敵，也不閃技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "chance": 1,
+          "dodgesAbilities": false,
+          "durationSec": 3,
+          "kind": "evasion"
+        }
+      ],
+      "id": "b2-luckyman.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "剛好香蕉皮滑了一下",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "applyTo": "self",
+              "chance": 1,
+              "dodgesAbilities": false,
+              "durationSec": 3,
+              "kind": "evasion"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.833,
+      "castType": "self",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「剛好天上掉贈品！」\n等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "branches": [
+            {
+              "effects": [
+                {
+                  "amount": {
+                    "flat": 150,
+                    "perRank": [
+                      0,
+                      112.5,
+                      225
+                    ]
+                  },
+                  "applyTo": "self",
+                  "kind": "heal"
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "effects": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 180,
+                    "perRank": [
+                      0,
+                      135,
+                      270
+                    ]
+                  },
+                  "duration": 3,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "b2-protection"
+                }
+              ],
+              "weight": 1
+            }
+          ],
+          "kind": "weightedBranch",
+          "shape": "single"
+        }
+      ],
+      "id": "b2-luckyman.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "剛好天上掉贈品",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.833,
+          "castType": "self",
+          "effects": [
+            {
+              "branches": [
+                {
+                  "effects": [
+                    {
+                      "amount": {
+                        "flat": 150,
+                        "perRank": [
+                          0,
+                          112.5,
+                          225
+                        ]
+                      },
+                      "applyTo": "self",
+                      "kind": "heal"
+                    }
+                  ],
+                  "weight": 1
+                },
+                {
+                  "effects": [
+                    {
+                      "absorbs": "all",
+                      "amount": {
+                        "flat": 180,
+                        "perRank": [
+                          0,
+                          135,
+                          270
+                        ]
+                      },
+                      "duration": 3,
+                      "kind": "shield",
+                      "onExisting": "keepLarger",
+                      "stackKey": "b2-protection"
+                    }
+                  ],
+                  "weight": 1
+                }
+              ],
+              "kind": "weightedBranch",
+              "shape": "single"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.567,
+      "castType": "targeted",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「剛好拳頭在這裡！」\n單體小級物理打擊；幸運不等於所有攻擊必中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        }
+      ],
+      "id": "b2-luckyman.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "剛好拳頭在這裡",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+        "params": {
+          "castTimeSec": 0.567,
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "physical"
+        },
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    }
+  },
+  "archetype": "tank",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 18,
+    "agiGrowth": 1.67,
+    "int": 13,
+    "intGrowth": 1.25,
+    "primary": "STR",
+    "source": "authored",
+    "str": 29,
+    "strGrowth": 2.78
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.4
+  },
+  "buildPriority": [],
+  "description": "幸運超人｜對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-luckyman.ex",
+  "growth": {
+    "ad": 1.8716734693877548,
+    "ap": 0,
+    "armor": 1.5605204081632653,
+    "as": 0,
+    "healthRegen": 0.08196326530612243,
+    "manaRegen": 0,
+    "maxHealth": 27.67734693877551,
+    "maxMana": 0.9209183673469388,
+    "mr": 5.279591836734694
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-luckyman",
+  "modelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
+  "name": "幸運超人",
+  "origin": "坦克",
+  "passiveAbility": "b2-luckyman.passive",
+  "role": "tank",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-luckyman.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.09c536c10feffc8537a2fad2d376fd18aef6885a0b7ef472",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457594",
+      "modelSha256": "823cb9466028cdbdc32a99163fd5554497915150de7587689a58e00a36921d90",
+      "binarySha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
+      "registeredAt": "2026-09-10T14:45:42.126Z",
+      "source": {
+        "kind": "previous",
+        "character": "幸運超人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457594.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.bd10ca5bb86915328b51bb601e4c8a82996e69678bda1255",
+      "label": "埼玉",
+      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "modelSha256": "a138dbe68ddb41ea1999e5ce4c410f9cd2b6a8572541e20b1f958f25faa3ed1a",
+      "binarySha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "registeredAt": "2026-09-10T14:45:42.134Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "埼玉",
+        "work": "一拳超人 ONE-PUNCH MAN",
+        "library": "300heroes",
+        "reference": "300heroes:8ab9713ac0d4058884378c3a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
+      "label": "雷欧·凹凸曼无披风版（論壇相似模型）",
+      "sourceModelKey": "ou99.457594-standard-v2",
+      "modelSha256": "e71274ef5fa4328df3892add83a9a7a2b7fec33487254796eb6ee0c40aedd952",
+      "binarySha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+      "registeredAt": "2026-09-10T14:48:57.391Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "雷欧·凹凸曼无披风版",
+        "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457594-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

@@ -2,11 +2,11 @@
   "schema": "ggd-declared-shape-census@1",
   "note": "⭐ 「宣告的欄位」對「實際的結構／卡面」（GH#948）—— ⛔ 產物，改 `tools/declared-shape/gen.ts`，⛔ 不要手改。⚠️ 卡面比對前**剝掉 `「…」`**（第〇·六守則細則②：那是角色對白，⛔ 不是效果）。",
   "counts": {
-    "abilities": 421,
+    "abilities": 907,
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
-    "cooldownArrayAlongsideTier": 334,
-    "basicAttackHookNotOnCard": 3
+    "cooldownArrayAlongsideTier": 739,
+    "basicAttackHookNotOnCard": 34
   },
   "passiveWithCastTime": [
     {
@@ -184,19 +184,143 @@
     }
   ],
   "cooldownArrayAlongsideTier": {
-    "count": 334,
+    "count": 739,
     "sample": [
-      "godie-e001.e",
-      "godie-e001.ex",
-      "godie-e001.passive",
-      "godie-e001.q",
-      "godie-e001.r",
-      "godie-e002.e",
-      "godie-e002.r",
-      "godie-e002.w"
+      "b2-aladdin.e",
+      "b2-aladdin.ex",
+      "b2-aladdin.q",
+      "b2-aladdin.r",
+      "b2-aladdin.w",
+      "b2-albus.e",
+      "b2-albus.ex",
+      "b2-albus.q"
     ]
   },
   "basicAttackHookNotOnCard": [
+    {
+      "id": "b2-guts.passive",
+      "name": "工傷先別打卡"
+    },
+    {
+      "id": "community-review-01-20260907.passive",
+      "name": "〔決鬥者的布局〕"
+    },
+    {
+      "id": "community-review-02-20260907.passive",
+      "name": "〔八神之炎〕"
+    },
+    {
+      "id": "community-review-04-20260907.passive",
+      "name": "〔白金之星・精密動作〕"
+    },
+    {
+      "id": "community-review-05-20260907.passive",
+      "name": "〔武器能源管理〕"
+    },
+    {
+      "id": "community-review-07-20260907.passive",
+      "name": "〔魔術師的節奏〕"
+    },
+    {
+      "id": "community-review-08-20260907.passive",
+      "name": "〔阿卡曼戰鬥直覺〕"
+    },
+    {
+      "id": "community-review-09-20260907.passive",
+      "name": "〔賢狼的眼光〕"
+    },
+    {
+      "id": "community-review-10-20260907.passive",
+      "name": "〔戰局推演〕"
+    },
+    {
+      "id": "community-review-12-20260907.passive",
+      "name": "〔武器解析〕"
+    },
+    {
+      "id": "community-review-13-20260907.passive",
+      "name": "〔狙擊專注〕"
+    },
+    {
+      "id": "community-review-15-20260907.passive",
+      "name": "〔兄貴的氣勢〕"
+    },
+    {
+      "id": "community-review-16-20260907.passive",
+      "name": "〔紅寶石的支援〕"
+    },
+    {
+      "id": "community-review-18-20260907.passive",
+      "name": "〔王的財庫〕"
+    },
+    {
+      "id": "community-review-19-20260907.passive",
+      "name": "二刀流"
+    },
+    {
+      "id": "community-review-20-20260907.passive",
+      "name": "〔電荷累積〕"
+    },
+    {
+      "id": "community-review-21-20260907.passive",
+      "name": "〔希望的連結〕"
+    },
+    {
+      "id": "community-review-23-20260907.passive",
+      "name": "〔糖分補給〕"
+    },
+    {
+      "id": "community-review-24-20260907.passive",
+      "name": "〔電力儲備〕"
+    },
+    {
+      "id": "community-review-25-20260907.passive",
+      "name": "〔興趣使然的英雄〕"
+    },
+    {
+      "id": "community-review-26-20260907.passive",
+      "name": "〔線索整理〕"
+    },
+    {
+      "id": "community-review-27-20260907.passive",
+      "name": "〔卡牌連結〕"
+    },
+    {
+      "id": "community-review-28-20260907.passive",
+      "name": "〔劍神流・先發制人〕"
+    },
+    {
+      "id": "community-review-29-20260907.passive",
+      "name": "魔力抑制"
+    },
+    {
+      "id": "community-review-30-20260907.passive",
+      "name": "〔拖延症〕"
+    },
+    {
+      "id": "community-review-31-20260907.passive",
+      "name": "〔糞作獵人的讀招〕"
+    },
+    {
+      "id": "community-review-32-20260907.passive",
+      "name": "淫奔"
+    },
+    {
+      "id": "community-review-34-20260907.passive",
+      "name": "〔追上你了〕"
+    },
+    {
+      "id": "community-review-35-20260907.passive",
+      "name": "〔嗅覺・破綻辨識〕"
+    },
+    {
+      "id": "community-review-36-20260907.passive",
+      "name": "〔自信過剩〕"
+    },
+    {
+      "id": "community-review-37-20260907.passive",
+      "name": "〔雖然害怕還是努力〕"
+    },
     {
       "id": "godie-e00w.ex",
       "name": "77-002 御雷劍"

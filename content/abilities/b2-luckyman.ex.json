@@ -1,0 +1,43 @@
+{
+  "castTimeSec": 1.233,
+  "castType": "ground",
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "provenance": "w3x-import",
+  "description": "「沒那麼幸運先搭便車！」\n瞬移至合法落點；提供主動撤退途徑，不能只靠機率。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "applyTo": "self",
+      "kind": "blink",
+      "shape": "single",
+      "to": "point"
+    }
+  ],
+  "id": "b2-luckyman.ex",
+  "manaCost": [
+    0.0
+  ],
+  "maxRank": 1,
+  "name": "沒那麼幸運先搭便車",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "template": {
+    "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+    "params": {
+      "castTimeSec": 1.233
+    },
+    "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-luckyman.ex.webp"
+}

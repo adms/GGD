@@ -1,0 +1,328 @@
+{
+  "id": "community-review-01-20260907",
+  "name": "武藤遊戲",
+  "description": "武藤遊戲 社群英雄功能驗收稿。作品：《遊戲王》  \n採用：武藤遊戲／闇遊戲的黑魔導牌組意象。  \n定位：召喚、陷阱、協同施法。\n\n視覺方向：卡片框光、紫色法陣；R 使用金色雷電，召喚代理保持可受擊輪廓。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 10,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 29.202653061224485,
+    "healthRegen": 0.07234693877551021,
+    "maxMana": 13.676326530612242,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 1.25,
+    "agiGrowth": 1.67,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-01-20260907.q",
+      "name": "黑魔導",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】召喚 1 名 sela 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的黑魔導；再次下令可更換攻擊目標，同種召喚物最多一名。\n【待補機制】黑魔導專屬造型與再次下令換目標未提供；代理採 sela。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "summon",
+          "championId": "sela",
+          "count": 1,
+          "durationSec": 6,
+          "formation": "ring",
+          "spread": 1.5,
+          "maxAlive": 1,
+          "onOwnerDeath": "despawn",
+          "hpMult": 0.3,
+          "damageMult": 0.25
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-01-20260907.q.webp",
+      "template": {
+        "ref": "tpl-summon-agent",
+        "params": {
+          "count": 1,
+          "body": "champion",
+          "championId": "sela",
+          "durationSec": 6,
+          "damageMult": 0.25,
+          "hpMult": 0.3,
+          "formation": "ring",
+          "spread": 1.5,
+          "maxAlive": 1,
+          "onOwnerDeath": "despawn",
+          "cleanse": "none",
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-01-20260907.w",
+      "name": "黑魔導女孩",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】召喚 1 名 sela 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的黑魔導女孩；與黑魔導共同攻擊同一目標時，觸發有內置冷卻的協同追加傷害。\n【待補機制】黑魔導女孩造型、與黑魔導協同事件未提供；目前同模板上限須驗證跨槽隔離。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "summon",
+          "championId": "sela",
+          "count": 1,
+          "durationSec": 6,
+          "formation": "ring",
+          "spread": 1.5,
+          "maxAlive": 1,
+          "onOwnerDeath": "despawn",
+          "hpMult": 0.3,
+          "damageMult": 0.25
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-01-20260907.w.webp",
+      "template": {
+        "ref": "tpl-summon-agent",
+        "params": {
+          "count": 1,
+          "body": "champion",
+          "championId": "sela",
+          "durationSec": 6,
+          "damageMult": 0.25,
+          "hpMult": 0.3,
+          "formation": "ring",
+          "spread": 1.5,
+          "maxAlive": 1,
+          "onOwnerDeath": "despawn",
+          "cleanse": "none",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-01-20260907.e",
+      "name": "神聖彗星・反射力量",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-01-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。\n【待補機制】目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-01-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-01-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-01-20260907.r",
+      "name": "歐西里斯的天空龍",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次大級範圍傷害。\n【目標設計】以天空龍投影演出有預警的區域雷擊；此招是一次性施法投影，不增加常駐召喚物。\n【待補機制】天空龍投影是待製資產；預覽以雷電區域脈衝表達。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "radius": 6.0,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 3.367,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-01-20260907.r.webp",
+      "template": {
+        "ref": "tpl-ground-nova",
+        "params": {
+          "radius": 300,
+          "damage": {
+            "damageTier": "大",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 3.367
+        },
+        "inheritDefaults": true
+      },
+      "radiusTier": "中"
+    }
+  },
+  "exAbility": "community-review-01-20260907.ex",
+  "passiveAbility": "community-review-01-20260907.passive",
+  "icon": "assets/icons/champions/community-review-01-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.92dda28e20450b2854bb3f4e66351f7490c050989536dee6",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "modelSha256": "0f3119460e5cec7f219c820214bb82ebf3dddf63e48d4159ae2de6c3fb971861",
+      "binarySha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "registeredAt": "2026-09-10T14:45:26.227Z",
+      "source": {
+        "kind": "previous",
+        "character": "武藤遊戲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
+      "label": "法老王",
+      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "modelSha256": "9feecbbfc51b23f2c2e892581b99d220a5a5ed56eafc37b84b9479ab14ced551",
+      "binarySha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "registeredAt": "2026-09-10T14:45:26.268Z",
+      "source": {
+        "kind": "exact",
+        "character": "法老王",
+        "work": "遊戲王／遊戲王 怪獸之決鬥",
+        "library": "300heroes",
+        "reference": "300heroes:70521f248a94658c5d1ed26c",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

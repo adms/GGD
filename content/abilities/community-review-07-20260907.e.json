@@ -1,0 +1,80 @@
+{
+  "id": "community-review-07-20260907.e",
+  "name": "〔收線〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "target",
+      "mode": "toPoint",
+      "apexHeight": 0.005,
+      "durationSec": 0.45,
+      "throwDistance": 2.2,
+      "dragToCaster": true,
+      "landRadius": 2,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.4082
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.567,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-07-20260907.e.webp",
+  "template": {
+    "ref": "tpl-pull-throw",
+    "params": {
+      "mode": "toPoint",
+      "grabMode": "dragToCaster",
+      "throwMode": "distance",
+      "apexHeight": 1.2,
+      "durationSec": 0.45,
+      "throwDistance": 120,
+      "landRadius": 2,
+      "landDamageTier": "小",
+      "landApRatio": 0,
+      "damageType": "physical",
+      "castTimeSec": 0.567
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.arcane.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.arc"
+    }
+  ]
+}

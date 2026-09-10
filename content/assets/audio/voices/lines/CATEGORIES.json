@@ -48,5 +48,10 @@
   "expansions": {
     "abilitySlots": ["q", "w", "e", "r", "ex"],
     "okNo": ["ok", "no"]
+  },
+  "shipGate": {
+    "mode": "combat-core",
+    "note": "index-lines.mjs 的出貨閘。`all`＝舊行為：46 格缺一就整個 build 紅（51 名 daemon 卡司仍照這條）。`combat-core`＝一位英雄只要 `required` 那幾格齊全就出貨（2026-09-10 起，給 74 名新英雄；其餘格子有就帶、沒有就缺）。⚠️ select 池（taunt/respond.ok/respond.no/love/thanks/puzzled）與 victory 是 owner 手填的台詞（OWNER_LINES.csv），刻意不在 required 裡 —— 缺它們 index 只警告，⭐ 真正擋的是 apps/client/src/audio/combatVoiceCoverage.test.ts。回頭：把 mode 改回 all。",
+    "required": ["skill-name.q", "skill-name.w", "skill-name.e", "skill-name.r", "skill-name.ex", "hurt", "hurt-heavy", "kill-1", "defeat"]
   }
 }

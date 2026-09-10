@@ -1,0 +1,35 @@
+{
+  "id": "lol-warwick.r",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-warwick.r",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "獵衛封喉",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    },
+    {
+      "call": {
+        "subtype": "sub.forward-twin-blast",
+        "params": {
+          "trigger": "castEffect",
+          "anchor": "target",
+          "offsetForwardU": 0,
+          "burstLifeSec": 0.8
+        }
+      }
+    }
+  ]
+}

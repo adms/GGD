@@ -1,0 +1,69 @@
+{
+  "id": "community-review-33-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔不死者再生〕",
+  "provenance": "w3x-import",
+  "description": "受到傷害後延遲恢復部分損失生命；再次受擊延後恢復，且有每段時間上限。\n\n【尚未實作】這個被動的效果還在調整中，目前**不會發生任何事**。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "marks": [
+    {
+      "markId": "community-review-33-20260907.last-chance",
+      "initial": 1,
+      "max": 1,
+      "durationSec": -1,
+      "resetOn": "match",
+      "perStackLost": [],
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.01,
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 1,
+        "selfEffects": [
+          {
+            "kind": "invulnerable",
+            "durationSec": 0.5,
+            "applyTo": "self",
+            "blocksControl": true
+          },
+          {
+            "kind": "restore",
+            "healthPct": 0.15
+          }
+        ],
+        "aoeEffects": [],
+        "aoeRadius": 0
+      }
+    }
+  ],
+  "effects": [],
+  "innateKind": "passive",
+  "passive": {
+    "name": "〔不死者再生〕",
+    "ranks": [
+      {
+        "modifiers": [],
+        "hooks": []
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.blood.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.blood.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-33-20260907.passive.webp"
+}

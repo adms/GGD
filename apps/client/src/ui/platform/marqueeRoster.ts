@@ -155,7 +155,9 @@ export const SHARED_PORTRAIT_GROUPS: readonly (readonly string[])[] = [
   // ⭐ GH#479（2026-08-20）—— 同一個形狀又發生一次：19 安云那一組
   //    `["godie-e00k","godie-e00z"]` 隨退場批次整對進了 `content/_legacy/`，
   //    磁碟上因此少一組。⛔ 不要改測試，刪掉那一列（這就是刪掉的樣子）。
-  ["godie-e00s", "godie-e010"],
+  // ⭐ 2026-09-10 刪掉 ["godie-e00s", "godie-e010"] —— GH#1129 B 重畫圖示之後
+  //   godie-e00s 有了**自己的**頭像 ⇒ 兩張不再逐位元組相同 ⇒ ⭐ 這一列是**過期的權宜**。
+  //   （這支測試的註解逐字說：「修好錯配的圖示會讓這張表**變短**」——⭐ 它變短了。）
   ["godie-e00w", "godie-e00x"],
   ["godie-h01n", "godie-h01o"],
   ["godie-h020", "godie-hjai"],

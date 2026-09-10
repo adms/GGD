@@ -1,0 +1,55 @@
+{
+  "id": "community-review-08-20260907.e",
+  "name": "〔補給與換刃〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫停留更換刀刃並補充部分氣體；受到控制會中斷。\n【待補機制】需換刃及氣體資源／控制中斷。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "restore",
+      "manaPct": 0.15,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-08-20260907.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ]
+}

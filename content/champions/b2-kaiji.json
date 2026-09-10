@@ -1,0 +1,480 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「不看牌先退桌！」\n消耗全部 nen-banked 存款標記，取得 210 點全傷害護盾 3 秒；提前退桌會失去後續讀取存款的機會。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 210,
+                "perRank": [
+                  0,
+                  105,
+                  210,
+                  315
+                ]
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "shape": "single",
+          "statusId": "nen-banked",
+          "subject": "self"
+        }
+      ],
+      "id": "b2-kaiji.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "不看牌先退桌",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 210,
+                    "perRank": [
+                      0,
+                      105,
+                      210,
+                      315
+                    ]
+                  },
+                  "duration": 3,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "b2-protection"
+                }
+              ],
+              "shape": "single",
+              "statusId": "nen-banked",
+              "subject": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「午餐錢全押這次！」\n額外支付自身當前魔力 35%，實付數由現有 nen-banked 存款標記保留 4 秒；不建立金幣或自訂籌碼。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 0
+          },
+          "applyTo": "self",
+          "bankAs": {
+            "durationSec": 4,
+            "statusId": "nen-banked"
+          },
+          "kind": "spendMana",
+          "pctCurrentMana": 0.35
+        }
+      ],
+      "id": "b2-kaiji.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "午餐錢全押這次",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": {
+                "flat": 0
+              },
+              "applyTo": "self",
+              "bankAs": {
+                "durationSec": 4,
+                "statusId": "nen-banked"
+              },
+              "kind": "spendMana",
+              "pctCurrentMana": 0.35
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.833,
+      "castType": "self",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「最後一把抽獎機！」\n等機率抽到兩種有限結果之一：150 點護盾 3 秒，或回復最大魔力 15%。種子決定結果，不保證中大獎。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "branches": [
+            {
+              "effects": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 150,
+                    "perRank": [
+                      0,
+                      112.5,
+                      225
+                    ]
+                  },
+                  "duration": 3,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "b2-protection"
+                }
+              ],
+              "weight": 1
+            },
+            {
+              "effects": [
+                {
+                  "applyTo": "self",
+                  "kind": "restore",
+                  "manaPct": 0.15
+                }
+              ],
+              "weight": 1
+            }
+          ],
+          "kind": "weightedBranch",
+          "shape": "single"
+        }
+      ],
+      "id": "b2-kaiji.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "最後一把抽獎機",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.833,
+          "castType": "self",
+          "effects": [
+            {
+              "branches": [
+                {
+                  "effects": [
+                    {
+                      "absorbs": "all",
+                      "amount": {
+                        "flat": 150,
+                        "perRank": [
+                          0,
+                          112.5,
+                          225
+                        ]
+                      },
+                      "duration": 3,
+                      "kind": "shield",
+                      "onExisting": "keepLarger",
+                      "stackKey": "b2-protection"
+                    }
+                  ],
+                  "weight": 1
+                },
+                {
+                  "effects": [
+                    {
+                      "applyTo": "self",
+                      "kind": "restore",
+                      "manaPct": 0.15
+                    }
+                  ],
+                  "weight": 1
+                }
+              ],
+              "kind": "weightedBranch",
+              "shape": "single"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.833,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「翻盤不是保證中獎！」\n造成極小魔法傷害，並讀取 nen-banked 實付存款追加有限傷害，上限 180；存款不足時不會憑空取得滿額。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小"
+          },
+          "bankedBonus": {
+            "coeff": 1,
+            "max": 180,
+            "statusId": "nen-banked"
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        }
+      ],
+      "id": "b2-kaiji.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "翻盤不是保證中獎",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.833,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小"
+              },
+              "bankedBonus": {
+                "coeff": 1,
+                "max": 180,
+                "statusId": "nen-banked"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 20,
+    "agiGrowth": 1.89,
+    "int": 19,
+    "intGrowth": 1.83,
+    "primary": "STR",
+    "source": "authored",
+    "str": 21,
+    "strGrowth": 1.99
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "賭博默示錄｜局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-kaiji.ex",
+  "growth": {
+    "ad": 2.220326530612245,
+    "ap": 0,
+    "armor": 0.4212959183673469,
+    "as": 0,
+    "healthRegen": 0.1168285714285714,
+    "manaRegen": 0,
+    "maxHealth": 10.305102040816323,
+    "maxMana": 6.564285714285716,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-kaiji",
+  "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+  "name": "伊藤開司",
+  "origin": "軟輔",
+  "passiveAbility": "b2-kaiji.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-kaiji.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "610dacead69977b19ac9af6a94725eea4cfcebc13753eb5cbe73359aafa7fadd",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T14:45:41.128Z",
+      "source": {
+        "kind": "previous",
+        "character": "伊藤開司",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:41.149Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
+      "label": "黑",
+      "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+      "modelSha256": "19a11cad685e66a964e94f48cbd425339c98bbd93ca741f6c91d0596ca081020",
+      "binarySha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+      "registeredAt": "2026-09-10T14:45:41.199Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑",
+        "work": "DARKER THAN BLACK－黑之契約者",
+        "library": "300heroes",
+        "reference": "300heroes:3d7222e80131dc1b4fa7c782",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

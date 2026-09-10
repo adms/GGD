@@ -1,0 +1,38 @@
+{
+  "id": "community-review-04-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔歐拉終結拳〕",
+  "provenance": "w3x-import",
+  "description": "有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 4.5,
+  "castTimeSec": 1.433,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.physical.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.slash"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-04-20260907.ex.webp",
+  "rangeTier": "小"
+}

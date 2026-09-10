@@ -25,17 +25,33 @@ import { zId } from "../common";
  * | 一份最大幾 byte | ⭐ **256 KiB** | ⭐ 量到的：出貨最大的一份 ability JSON 是 **57,748 byte**（champion 25,688）⇒ 4.5 倍餘裕 |
  * | 過了機器閘就上架嗎 | ⭐ **不** | 票文 Scope 1 逐字「上架一律過 HITL」 |
  *
- * ── ⛔⛔ 為什麼 `enabled` 出貨是 **false**（⚠️ 這是唯一一個要辯護的預設） ────
- * 第〇·六守則說「優先權大的更新後都是**預設啟動**」—— ⭐ 而那條講的是
- * **已經裁決過的取捨**（兩條路都能跑，開關是為了回頭）。
- * ⛔ 這一格不是那個形狀：UGC 流水線今天只有**第一段**（這份開關）落地，
- * 身分檢查、逐份機器閘、配額計數**一個都還沒有**。
- * ⇒ ⭐ 出貨開著＝**一條公開的、沒有任何守衛的寫入路**，
- * ⚠️ 而票文的 Known risks 自己逐字寫著「quota ＋ maxBytes ＋ 嚴格 Zod 是最低配，
- * **缺一個就不要打開**」。⇒ 這一格是那句話的機器版本。
+ * ── ⭐⭐ `enabled` 出貨是 **true**（2026-09-09 起）—— ⛔ 而它是被**條件**打開的 ────
  *
- * ⭐ 打開它的條件不是「時間到了」，是 `ugcGateIsArmed.test.ts` 從紅轉綠 ——
- * 也就是提交端點**真的**綁齊了身分與這一格。
+ * owner 2026-09-09 逐字：
+ *
+ * > 「ugc.enabled: false → true（UGC ＝ 玩家自製內容）=> **開**，
+ * >  我們總共新增兩批 **37+37=74** 個新英雄喔」
+ *
+ * ⚠️⚠️ ⭐ **這一段在 2026-09-09 之前逐字寫著「為什麼 `enabled` 出貨是 false」** ——
+ * ⛔ 而那句話在開關被翻開的那一刻就變成假話，⭐ 且**沒有任何東西會紅**
+ * （第三守則的形狀，發生在「大家先讀的那一格」上）。
+ * ⇒ ⭐ 這裡記下**當時那個 false 的理由**，因為它同時是**關回去的條件**：
+ *
+ * | 當年不開的理由 | 2026-09-09 的狀態 |
+ * |---|---|
+ * | 身分檢查沒有 | ✅ `requireAuth: true` |
+ * | 配額計數沒有 | ✅ `quotaPerPlayerPerDay: 20` · `maxPendingPerPlayer: 5` |
+ * | 大小上限沒有 | ✅ `maxBytes: 262144` |
+ * | 嚴格 Zod | ✅ 提交格式沿用 `ggd-ai-authoring-operation@1` |
+ * | ⭐ **前提閘從紅轉綠** | ✅ `internal/server/ugcgate_routes_test.go` 的 <br> `TestUgcEnabledGatesEveryRegisteredSubmissionWrite` **PASS** |
+ *
+ * ⚠️ ⭐ **那支閘的名字換過**（GH#1103）：在此之前這裡寫的是 `ugcGateIsArmed.test.ts`，
+ * ⛔ 而那條掃的是 `ugc/(proposals|submissions)` 這個**路徑形狀**、對真入口
+ * （`POST /api/v1/submissions`）**零命中就直接 return** ⇒ ⭐ 它永遠不會從紅轉綠，
+ * 那個條件寫著等於沒寫（失敗形態⑥＋⑨）。⇒ ⭐ **現在的前提是從 `chi.Walk` 推導真入口的那一支。**
+ *
+ * ⭐ 而「關回去」的語意仍然是**停收件**，⛔ 不是停發布 ——
+ * `promote` 是**所有**審核通過內容的出貨路徑（⛔ 不只 UGC），掛上這一格會連編輯器投稿一起擋死。
  */
 export const zConfigUgcDoc = z
   .object({
@@ -147,6 +163,25 @@ export const zConfigUgcDoc = z
      * 「按下通過之後，那隻英雄在**下一場**社群房裡選得到」，而 `next-match`
      * 在一台**沒有人開房**的 shard 上會讓那句話變成「永遠不會」。
      */
+    /**
+     * ⭐⭐ GH#1157 —— **已發布的社群英雄，收據要對哪幾欄。**
+     *
+     * ⛔ 在此之前是**四欄結構相等**（`hero_resolver.go`），而四欄裡有三欄每天轉幾十次。
+     * ⭐ 實測（2026-09-10）：只改這一份 JSON 的一個 `note` **字串**、跑一次
+     * `pnpm content:build` ⇒ `contentVersion` 與 `processorFingerprint` **兩欄同時轉**
+     * ⇒ ⛔ 已上架的英雄全部對不上 ⇒ **玩家那邊消失，而且沒有訊息**。
+     *
+     * > owner 2026-09-09：「74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿」
+     *
+     * ⭐ 逐欄問「它變的時候，那名英雄真的壞了嗎」——四欄裡**只有一欄**答得出「會」。
+     */
+    heroTargetMatch: z.enum(["migration", "game-and-migration", "strict"]).optional().describe(
+      "@zh 已發布英雄的相容性比對\n" +
+      "@note 出貨 **{{出貨值}}**。⭐ 這一格決定「一名已上架的社群英雄，什麼時候會被判定成**不能再用**」。⛔ 在此之前是四欄全等，而四欄裡有三欄**每天轉幾十次** —— 實測：只改一句**說明文字**再跑一次內容建置，就有兩欄同時變 ⇒ ⛔ **已上架的英雄當場從玩家眼前消失，而且沒有任何訊息**。⭐ `migration` ＝ 只在**資料真的需要轉換**時才擋（schema 遷移變了）。⚠️ `strict` 是**一鍵回到舊行為**的逃生口 —— ⛔ 選它等於接受「改一個錯字就下架」。\n" +
+      "@opt migration 只看資料遷移（預設・改內容不會讓英雄消失）\n" +
+      "@opt game-and-migration 再加上遊戲版本（每次部署重新驗一次）\n" +
+      "@opt strict 四欄全等（⛔ 舊行為，一鍵 rollback 用）",
+    ),
     publishMode: z.enum(["immediate", "next-match"]).describe(
       "@zh 發布之後多久到玩家眼前\n" +
       "@note 出貨 **{{出貨值}}**（GH#1025）。⭐ `immediate` ＝ 平台一公告，這一台 shard 就把**新增的**內容文件註冊進登錄表 ⇒ **幾秒後**開的房就選得到；`next-match` ＝ 延到**下一次開房**那一刻才套用。⚠️ ⭐ **兩條路都不會動到進行中的對局** —— 白名單與內容都在開房那一刻取快照，而熱套用**只加新文件**：已經註冊過的 id 一律原封退回開機時那一份。⛔ 所以一份「**改掉**既有技能／設定」的覆蓋**不會**被熱套用 —— 它會被指名列在 `/healthz` 上並且仍然需要重啟（⭐ 那是誠實：改掉一支正在被使用的技能就是「對局中途換版」）。⚠️ 在這一格出現之前，答案是「**到重啟為止都不會用**」，而畫面上沒有任何地方說得出來。\n" +
@@ -220,7 +255,11 @@ export const UGC_DOC_ID = "ugc";
 export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   id: UGC_DOC_ID,
   schema: "config.ugc@1",
-  enabled: false,
+  // ⭐⭐ owner 2026-09-09 逐字裁決：「**開**，我們總共新增兩批 37+37=74 個新英雄喔」
+  //   ⇒ 前置條件（檔頭那段）**已經滿足**：`ugcGateIsArmed.test.ts` 5/5 綠（含 calibrate）。
+  //   ⚠️ ⭐ 而 `communityRoomOnly` 也是 **false** —— owner 2026-09-09 逐字：
+  //     「⛔ **不會分什麼社群房複雜化**」⇒ 社群英雄與官方英雄**同一個池**。
+  enabled: true,
   requireAuth: true,
   maxPendingPerPlayer: 50,
   quotaPerPlayerPerDay: 100,
@@ -229,8 +268,16 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   autoPromote: false,
   // ⭐ GH#1025 —— 出貨 **immediate**（第〇·六守則：優先權大的更新後預設啟動）。
   publishMode: "immediate",
+  // ⭐⭐ GH#1157 —— owner 2026-09-09 逐字：「74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿」
+  //   ⇒ 出貨 `migration`：⭐ 四欄裡**只有 `migrationFingerprint`** 在回答
+  //     「這名英雄的資料需不需要被轉換」，其餘三欄變的時候他一點事都沒有。
+  //   ⚠️ `strict`（四欄全等）是**一鍵 rollback**，逐位元組等於 2026-09-10 之前的行為。
+  heroTargetMatch: "migration",
   // ⭐ GH#1025 Scope C —— 出貨 **on**（票文驗收：社群內容預設只進社群房）。
-  communityRoomOnly: true,
+  // ⭐⭐ owner 2026-09-09 逐字：「社群內容只出現在社群房 => 我之前也說過了
+  //   **不會分什麼社群房複雜化**，你又沒記錄下來了 對話開票超級重要！」
+  //   ⇒ ⛔ 不分房。⚠️ 這已經是他**第二次**講同一件事（第一次我沒記）。
+  communityRoomOnly: false,
   // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
   digestRecompute: true,
   heroModelUploadsEnabled: true,
@@ -270,6 +317,9 @@ export function resolveUgc(doc: unknown): UgcPolicyResolved {
     maxBytes: d.maxBytes,
     autoPromote: d.autoPromote,
     publishMode: d.publishMode,
+    // ⭐ GH#1157 —— ⛔ 留空的舊 override 一律回出貨值（⛔ 不是 undefined：
+    //   一個 `undefined` 會讓 Go 端那條 fail-closed 的 enum 檢查判 503）。
+    heroTargetMatch: d.heroTargetMatch ?? "migration",
     communityRoomOnly: d.communityRoomOnly,
     digestRecompute: d.digestRecompute,
   });

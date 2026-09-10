@@ -1,0 +1,96 @@
+{
+  "castTimeSec": 1.633,
+  "castType": "targeted",
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "provenance": "w3x-import",
+  "description": "「笑穴變成原地罰站！」\n消耗敵人的 numbness，轉為 root 定身 1.8 秒並小級打擊；沒繳械就只打一下。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "damageTier": "小"
+      },
+      "damageType": "physical",
+      "kind": "damage"
+    },
+    {
+      "count": "all",
+      "kind": "consumeStatus",
+      "onConsumed": [
+        {
+          "applyTo": "target",
+          "duration": 1.8,
+          "kind": "applyStatus",
+          "root": true,
+          "statusId": "root"
+        }
+      ],
+      "shape": "single",
+      "statusId": "numbness",
+      "subject": "target"
+    }
+  ],
+  "id": "b2-bojji.r",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "maxRank": 3,
+  "name": "笑穴變成原地罰站",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "R",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 1.633,
+      "castType": "targeted",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "applyTo": "target",
+              "duration": 1.8,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "shape": "single",
+          "statusId": "numbness",
+          "subject": "target"
+        }
+      ],
+      "radius": 3,
+      "side": "enemies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-bojji.r.webp",
+  "radiusTier": "極小"
+}

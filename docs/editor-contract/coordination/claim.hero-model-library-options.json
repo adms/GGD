@@ -5,8 +5,8 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
-  "contractFingerprint": "ed197415160df4f6",
-  "title": "素材庫守則與角色語音索引：跨平台整庫儲備、全世代選項、同級新作優先",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "81 名新英雄模型版本整合、157 角色盤點與七名 LOL 語音交付",
   "claims": [
     {
       "kind": "owner-decision",
@@ -119,10 +119,12 @@
     }
   ],
   "asks": [
-    "Main review 同一 PR 的 shared schema、正式後台九級選用順序與成品 Git 發布；既有手動選擇保留，合併後再同步站點。此批不部署。",
-    "此 PR 僅改素材選項與管理流程。新增角色名單涵蓋 37＋37＋7＝81；共 156 筆角色／形態 ID，85 筆未在目前靜態出貨目錄。11 個指定代理使用獨立模型／貼圖／骨架／動作副本，不能以素材索引存在宣稱完整英雄已上架。",
-    "保留遠端 88ac699fd 的 15 名既有英雄手動原模型選擇及所有候選。本次未修改戰情版；本機 board:check 顯示既有產物有 22 份帳本、分支來源僅 21 份，msgledger:check 也回報 2026-09-09 訊息漏列。待 Main 補齊來源後重生，不藉此覆蓋現有紀錄。",
-    "共編從 materials/asset-library/README.md 開始。第一守則保留全部來源與語音；第二守則的原著模型指原作遊戲直接擷取，300／MBA 維持第 6／7 位；第三守則要求全部成品進 Git，原始／半成品進 S3，本機全留。依 default-policy.json 及 git-release.json 取用；舊 S3 四級排序只作歷史記錄。"
+    "Main review 同一 PR 的模型匯入、不可變版本、原始產生流程保留選項及合格成品；合併後再部署各站。此批不直接部署。",
+    "本次新名單37＋37＋7＝81已完成221個本機版本登記；全盤點157個角色／形態。15個既有手動預設、11組指定加工副本完整保留。逐筆收據見 materials/hero-model-library/priority-release.json。",
+    "原18名缺口已查到17名其他工作流交付，伊藤開司仍未找到新的實體模型；3名指定相似替代也已整合。原生動作／專屬VFX／語音與模型就緒分開記錄，七件新轉換成品明標程序化六態。",
+    "來源工作流負責搜尋下載，本工作流負責轉換、合併、索引與分支推送。成品入口 current-resources.json；原始與半成品存 S3 legacy，本機全留。LOL後續僅七名，4,927 WAV本機可立即讀取。",
+    "以下 claims 的 commit 與測試數為歷史收據；現況以 priority-release.json 與本次PR驗證結果為準。歷史160通道限制及未上架數不再適用，目前限制500；不得用舊S3收據代表本次新檔已備份。",
+    "發布驗證現況：priority-evidence/release-gates/validation.json。模型幾何普查22項、shape_axes未分類欄位、技能驗收清單缺4種已使用effect、formreceipts生成後重複判定，以及已追蹤樹缺combat產生器仍待處理；不要將本次分支推送視為准予部署。"
   ],
   "ownerQuotes": [
     {

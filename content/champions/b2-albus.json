@@ -1,0 +1,396 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「這裡有捷徑！」\n走有限合法捷徑；先走捷徑的 4 秒內可使用 R 的急救分支。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "id": "b2-albus.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "這裡有捷徑",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+        "params": {
+          "castTimeSec": 0.467
+        },
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.567,
+      "castType": "targeted",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「世界紀錄第一刀！」\n小級斬擊，這段速通照常支付魔力與冷卻。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        }
+      ],
+      "id": "b2-albus.q",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "世界紀錄第一刀",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+        "params": {
+          "castTimeSec": 0.567,
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "physical"
+        },
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「走捷徑才趕得上急救！」\n隊友得到 100 護盾 2 秒；最近 4 秒用過 E，額外回復 200。這是趕到現場急救，不是讀檔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              75,
+              150
+            ]
+          },
+          "duration": 2,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        },
+        {
+          "amount": {
+            "flat": 200,
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          },
+          "applyTo": "target",
+          "condition": {
+            "kind": "recentCast",
+            "slot": "E",
+            "subject": "self",
+            "withinSec": 4
+          },
+          "kind": "heal"
+        }
+      ],
+      "id": "b2-albus.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "走捷徑才趕得上急救",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "targeted",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 100,
+                "perRank": [
+                  0,
+                  75,
+                  150
+                ]
+              },
+              "duration": 2,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            },
+            {
+              "amount": {
+                "flat": 200,
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              },
+              "applyTo": "target",
+              "condition": {
+                "kind": "recentCast",
+                "slot": "E",
+                "subject": "self",
+                "withinSec": 4
+              },
+              "kind": "heal"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「已花冷卻才准跳段！」\n攻略跳段：縮短自己 Q 剩餘冷卻 1.5 秒，不碰其他技能或隊友；沒用過 Q 就沒有收益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": 1.5,
+          "kind": "modifyCooldown",
+          "mode": "reduceFlat",
+          "shape": "single",
+          "slot": "Q",
+          "who": "self"
+        }
+      ],
+      "id": "b2-albus.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "已花冷卻才准跳段",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": 1.5,
+              "kind": "modifyCooldown",
+              "mode": "reduceFlat",
+              "shape": "single",
+              "slot": "Q",
+              "who": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 29,
+    "agiGrowth": 2.78,
+    "int": 13,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "勇者再次啟程｜勇者速通，NPC台詞一律跳過。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-albus.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.4578979591836735,
+    "as": 0,
+    "healthRegen": 0.13085306122448978,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 26.357142857142858,
+    "mr": 2.639795918367347
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-albus",
+  "modelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
+  "name": "阿爾巴斯",
+  "origin": "鬥士",
+  "passiveAbility": "b2-albus.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-albus.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.9007ef7a0fdf821b51fad194e34bb04119dd244b59efe049",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "modelSha256": "b17410681b77a6d39039bcafae26abd89e4120688b3e2b9f034703613b4a80f8",
+      "binarySha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "registeredAt": "2026-09-10T14:45:36.787Z",
+      "source": {
+        "kind": "previous",
+        "character": "阿爾巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a97c5ef50755d23f69965463e50fd89b18dc5a599260f480",
+      "label": "尤吉欧",
+      "sourceModelKey": "community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54",
+      "modelSha256": "e1eb6dbfacfabd893607843ca67567d6ded195cc64061ba774e8d846962f151c",
+      "binarySha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+      "registeredAt": "2026-09-10T14:45:36.806Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "尤吉欧",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:8c19c91adaebbcc55755a5ef",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
+      "label": "阿爾巴斯（獨立副本／尤吉欧）",
+      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "modelSha256": "60bc27eab0db4b19d1cad8eb7fcde1b1af8e367fd651dee0dbfbd6019d8581a6",
+      "binarySha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "registeredAt": "2026-09-10T14:45:36.953Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿爾巴斯（獨立副本／尤吉欧）",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "derivative:albus",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

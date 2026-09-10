@@ -1,0 +1,45 @@
+{
+  "id": "community-review-36-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔跟著本大爺衝〕",
+  "provenance": "w3x-import",
+  "description": "消耗戰意，為附近友軍提供短效移速與一次普攻強化。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 1.033,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-36-20260907.ex.webp"
+}

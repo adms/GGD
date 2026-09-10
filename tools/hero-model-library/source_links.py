@@ -36,6 +36,11 @@ def plan_sources(data, manifest, policy):
         entry['acquiredSourceIds'] = [s['id'] for s in acquired]
         held_sources = [s for s in acquired if is_model_source(s) and (s.get('purchaseDecision') in {'hold-purchase-review-free-source', 'hold-purchase-review-acquired-source'} or s in data.get('paidSources', []))]
         held_ids = {i for s in held_sources for i in s['heroIds']}
+        entry['retainedWorkflowSources'] = [
+            {'heroId':hid,'sourceId':o['sourceId'],'reference':o['source']['reference']}
+            for hid in entry['heroIds'] for o in heroes.get(hid,{}).get('options',[])
+            if o['sourceId'].startswith(('ou99:', 'runtime:')) and eligible(policy,hid,o['sourceId'],o['sourceModelKey'],o['source']['kind'])]
+        held_ids.update(x['heroId'] for x in entry['retainedWorkflowSources'])
         entry['purchaseHoldFor'] = [i for i in entry['heroIds'] if i in held_ids]
         entry['purchaseHoldWithoutHeroId'] = not entry['heroIds'] and any(entry['id'] in s.get('ownerEntryIds',[]) for s in held_sources)
         entry['purchaseHold'] = entry['purchaseHoldWithoutHeroId'] or bool(entry['heroIds']) and all(i in held_ids for i in entry['heroIds'])
@@ -60,10 +65,11 @@ def render_sources(data, policy):
     public = acquired_sources(data)
     lines = ['## 第一守則：所有取得資源完整歸檔，全部納入後台可選選項', '',
         '**所有工作流取得的模型、貼圖、骨架、動作、特效、音效與角色語音，包含免費來源與另一工作流從論壇付費取得的資源，都必須完整保存、登記角色與來源，完成標準化後成為對應角色後台下拉選單的獨立選項。不同來源與版本全部保留，不因已有本尊、已有較高順位模型、未選為預設、付費或免費、或不是本工作流找到，就省略、覆蓋或丟棄。**', '',
+        '**工作流分工：獨立來源工作流負責尋找、下載、原始擷取與交付；本整合工作流負責轉換驗收、合併全部合格後台選項、更新中央盤點／語音索引、分支 commit＋push。Main 負責審查合併與站點部署。整合批次不等待所有來源搜尋結束。**', '',
         '實際選用成品時依序完成：取得實檔 → 原始包與完整解包檔歸檔 → 角色／形態及來源 ID 對應 → 模型、貼圖、動作綁定與特效／音效／語音轉換 → 成品入庫 → 後台選項註冊與實際切換驗證 → 同批更新本盤點及 Git／S3 索引。尚未完成的步驟必須列為待辦；只有網址、只有備份、只有候選登記，都不能算完成上架。', '',
         '**語音也必須一起抓取。** 查找獨立音檔及包內音效庫，保留原始容器、全部音訊與不同語言／版本，轉換版另存並記錄角色、來源、原檔與轉換檔 SHA-256。對白、喊聲、音效與音樂分開分類；未聽審或事件對應未核實者標為待分類，不把音檔總數當成已確認語音數。已取得、已轉換、待角色／技能綁定與後台驗收分別記錄；包內沒有獨立音檔不等於沒有內嵌語音。', '',
         '**已驗證的本機音訊立即供其他工作流直接讀取，不等待 S3。** 語音索引提供本機絕對路徑及逐檔 SHA-256；S3 備份狀態獨立追蹤，未完成備份不阻擋找檔、聽審、轉錄與素材準備。這不等於音訊已完成正式遊戲綁定或合成品質驗收。', '',
-        '**語音優先日文，其次英文，再採其他語言；所有語言版本仍須保留。** LOL 等本機已有遊戲素材先擷取建檔，不重複下載。來源包語系及作者標示只作選用線索，逐段語言仍待聽審；缺少日／英語版就明列待補，不把未知語言改標成日文。', '',
+        '**語音優先日文，其次英文，再採其他語言；所有語言版本仍須保留。** LOL 等本機已有遊戲素材先擷取建檔，不重複下載。LOL 後續擷取只限專案七名 Karthus、LeeSin、Lux、MissFortune、Warwick、Xerath、Yasuo；已取得其他角色保留，不再擴抓全人物。來源包語系及作者標示只作選用線索，逐段語言仍待聽審；缺少日／英語版就明列待補，不把未知語言改標成日文。', '',
         '角色語音共編入口：[角色語音索引.md](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/角色語音索引.md)。`voice-index.json` 提供角色、語言／聽審狀態及 S3 備份入口，`voice-files.jsonl.gz` 以 gzip JSONL 保存完整逐檔路徑與 SHA-256（本機另留解壓版），供合成工作流選取、轉錄與準備素材；不將未分類音效當成已確認角色語音。', '',
         '原始與半成品存 S3 `legacy/`、本機留副本；標準化成品一律進 Git 固定成品庫。程式、角色設定、版本清單、SHA-256 與文件也進 Git。來源包內缺少的動作、特效、音效或語音要明列缺口並持續補齊，不能據此遺漏已取得的其他素材。', '',
         '預設依下方第二守則；**預設順位只決定預選哪個，不能拿來刪減可選來源。** 平行工作流使用相同角色 ID、獨立來源 ID 與逐檔 SHA-256 共編，合併來源後重建盤點，保留其他工作流登記。', '',
@@ -76,11 +82,12 @@ def render_sources(data, policy):
     lines += ['## 第二守則：預設模型選用順序', '',
         '**' + ' > '.join(policy['priorityLabels'][key] for key in policy['priority']) + '**', '',
         '原著模型＝原作遊戲直接擷取；300英雄／MBA 即使是角色本尊，仍按第 6／7 位。原版指 GGD 既有原版模型，與原著模型分開。手動選擇優先；指定的 11 組加工副本列為手動指定，其他未核准代理仍保留選項並按其驗收／核准狀態處理。', '',
+        '使用者本次確認的其他工作流相似模型另列逐角色核准清單，保留相似模型類別；未擴大原先 11 組貼圖加工名單。辛巴達巴力魔裝兼用一般形態，高速婆婆採招財貓形態；不再因這兩種形態誤列缺口。', '',
         '**同一級的合格候選，以來源作品越新者優先。** 對應到同一角色／形態後，按來源遊戲發售日由新到舊排序，保留發售日依據。網站上傳日、擷取日與入庫日不能冒充作品新舊；日期未知排在有已核實日期的同級候選之後，不自行猜測。手動指定仍最高優先，九級主順位維持不變；NS 新作優先查找，其他世代與作品仍完整保留供手選。', '',
         '來源庫與選用類別分欄保存，不用相同角色名稱推定原著來源。只有已取得、完成轉換並符合預設資格的模型參與自動選用；候選、半成品與網址不因順位較高就自動上架。Git 的 `default-policy.json` 是現行規則；舊版 S3 快照內的四級排序只作歷史紀錄。', '',
         '## 第三守則：成品進 Git，其餘素材進 S3，本機全保留', '',
         '**成品一律上傳至 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 成品包含已驗收的模型、貼圖、骨架／動作、特效、音效與語音。程式、角色／技能設定、版本清單、SHA-256 與文件仍以 Git 為準。', '',
-        '成品入口：`materials/asset-library/git-release.json`，檔案位於 `materials/asset-library/releases/<版本>/`；半成品與來源放 S3 `legacy/`，不供程序自動取用。既有 S3 成品版本保留作副本；新的成品不能只上 S3 而未進 Git。大型解析 JSON 屬於半成品，仍進 S3。已解碼但未完成分類／綁定驗收的音訊不能當成成品入 Git。', '',
+        '成品固定入口：`materials/asset-library/current-resources.json`，包含本次 `content/assets/models/` 模型；既有 `materials/asset-library/git-release.json` 與 `materials/asset-library/releases/<版本>/` 仍完整保留；半成品與來源放 S3 `legacy/`，不供程序自動取用。既有 S3 成品版本保留作副本；新的成品不能只上 S3 而未進 Git。大型解析 JSON 屬於半成品，仍進 S3。已解碼但未完成分類／綁定驗收的音訊不能當成成品入 Git。', '',
         '此規則取代先前「二進位一律 S3」的分類方式，改按完成狀態區分；詳細機器規則見 `materials/asset-library/STORAGE_POLICY.json`。', '']
     scope = data.get('consoleSourceScope')
     if scope:

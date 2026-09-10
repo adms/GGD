@@ -1,0 +1,349 @@
+{
+  "id": "lol-karthus",
+  "name": "卡爾瑟斯",
+  "description": "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。\n\n概念來源：LoL 卡爾瑟斯\nhttps://www.leagueoflegends.com/zh-tw/champions/karthus/\n\n本遊戲改編：\n• 死亡後施法改為每場一次的免死續命，仍須存活才能施法。\n• 安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 1.25,
+    "agiGrowth": 1.67,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-karthus.q",
+      "name": "暮點",
+      "provenance": "w3x-import",
+      "description": "短暫吟唱後，在指定區域引爆小級魔法傷害。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 6.0,
+      "rangeTier": "中",
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 1.133,
+      "castTimeTier": "中",
+      "template": {
+        "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "params": {
+          "radius": 300,
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.133
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+      },
+      "radiusTier": "中"
+    },
+    "W": {
+      "id": "lol-karthus.w",
+      "name": "亡途繫縛",
+      "provenance": "w3x-import",
+      "description": "以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow35",
+          "duration": 2,
+          "applyTo": "target",
+          "moveSpeedMult": 0.65
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      }
+    },
+    "E": {
+      "id": "lol-karthus.e",
+      "name": "荒蕪迴音",
+      "provenance": "w3x-import",
+      "description": "以自身為中心維持 3 秒傷害領域，每秒傷害一次。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "side": "enemies",
+          "delaySec": 1,
+          "count": 3,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "mult": 0.3333333333333333
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "params": {
+          "intervalSec": 1,
+          "durationSec": 3,
+          "radiusTier": "小",
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "damageTier": "極小",
+          "damageType": "magic",
+          "castTimeSec": 0.267,
+          "radius": 4.5
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
+      }
+    },
+    "R": {
+      "id": "lol-karthus.r",
+      "name": "暮鐘終曲",
+      "provenance": "w3x-import",
+      "description": "經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 12,
+      "radius": 6.0,
+      "rangeTier": "極大",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 3.4,
+      "castTimeTier": "極大",
+      "template": {
+        "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "params": {
+          "radius": 300,
+          "damage": {
+            "damageTier": "大",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 3.4
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+      },
+      "radiusTier": "中"
+    }
+  },
+  "exAbility": "lol-karthus.ex",
+  "passiveAbility": "lol-karthus.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-karthus.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0c5df87ee0f8b37a38897e2b5bc903c681d8250dbe156c75",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "60876c7c7df2efd1181dd5c8b5c1a2a4f12e40d8c8d7be1c8314cb183d777667",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.581Z",
+      "source": {
+        "kind": "previous",
+        "character": "卡爾瑟斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.0cb6555ccbf4b9e95eb4bc18071445cebafcf75d5675eb00",
+      "label": "卡爾瑟斯（LOL 原生模型）",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "4e43af5943de4d7703d21e96260f0f8c081b77dfc70f2f65ab1ccf517b2d1932",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.597Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-karthus.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
+      "label": "卡爾瑟斯",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "a5decad4c5ece0d1a79e3d6ccbd1d01fd2436f002b6c49b12d2299fd03e2c206",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.711Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:karthus",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

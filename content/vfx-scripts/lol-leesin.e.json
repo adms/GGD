@@ -1,0 +1,24 @@
+{
+  "id": "lol-leesin.e",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-leesin.e",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "震地迴響",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

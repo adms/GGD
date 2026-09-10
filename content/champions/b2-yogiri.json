@@ -1,0 +1,461 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「枕頭要搬去安靜處！」\n瞬移到指定合法落點，調整離敵人的距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "id": "b2-yogiri.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "枕頭要搬去安靜處",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+        "params": {
+          "castTimeSec": 0.467
+        },
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「下班通知已讀未回！」\n指定敵人取得 curse 通知 4 秒；此處只作條件標記，不假稱原作即死。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "target",
+          "duration": 4,
+          "kind": "applyStatus",
+          "statusId": "curse",
+          "missChance": 0.5
+        }
+      ],
+      "id": "b2-yogiri.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "下班通知已讀未回",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 4,
+              "kind": "applyStatus",
+              "statusId": "curse",
+              "missChance": 0.5
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 1.233,
+      "castType": "ground",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「全體不要吵我！」\n指定地點附近敵人各受極小傷害並被沉默 2.5 秒；友軍不在清單。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小"
+          },
+          "damageType": "magic",
+          "includeOrigin": true,
+          "kind": "damageArea",
+          "maxTargets": 6,
+          "onHitTargets": [
+            {
+              "applyTo": "target",
+              "duration": 2.5,
+              "kind": "applyStatus",
+              "silenced": true,
+              "statusId": "magic-break"
+            }
+          ],
+          "onHitTargetsMode": "perTarget",
+          "radius": 3,
+          "radiusTier": "極小"
+        }
+      ],
+      "id": "b2-yogiri.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "全體不要吵我",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.233,
+          "castType": "ground",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小"
+              },
+              "damageType": "magic",
+              "includeOrigin": true,
+              "kind": "damageArea",
+              "maxTargets": 6,
+              "onHitTargets": [
+                {
+                  "applyTo": "target",
+                  "duration": 2.5,
+                  "kind": "applyStatus",
+                  "silenced": true,
+                  "statusId": "magic-break"
+                }
+              ],
+              "onHitTargetsMode": "perTarget",
+              "radius": 3
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 1.7,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「符合門檻才能結算！」\n造成極小魔法傷害；目標同時帶 curse 且生命低於 45% 時追加中級魔法傷害，最後消耗通知並施加 1 秒沉默；沉默不另要求低血。傷害有限，沒有 kill 指令。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小"
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "amount": {
+            "damageTier": "中"
+          },
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "statusId": "curse",
+                "subject": "target"
+              },
+              {
+                "kind": "stat",
+                "mode": "percent",
+                "op": "<",
+                "stat": "hp",
+                "subject": "target",
+                "value": 0.45
+              }
+            ]
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "applyTo": "target",
+              "duration": 1,
+              "kind": "applyStatus",
+              "silenced": true,
+              "statusId": "magic-break"
+            }
+          ],
+          "shape": "single",
+          "statusId": "curse",
+          "subject": "target"
+        }
+      ],
+      "id": "b2-yogiri.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "符合門檻才能結算",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.7,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            },
+            {
+              "amount": {
+                "damageTier": "中"
+              },
+              "condition": {
+                "all": [
+                  {
+                    "kind": "status",
+                    "statusId": "curse",
+                    "subject": "target"
+                  },
+                  {
+                    "kind": "stat",
+                    "mode": "percent",
+                    "op": "<",
+                    "stat": "hp",
+                    "subject": "target",
+                    "value": 0.45
+                  }
+                ]
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            },
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "applyTo": "target",
+                  "duration": 1,
+                  "kind": "applyStatus",
+                  "silenced": true,
+                  "statusId": "magic-break"
+                }
+              ],
+              "shape": "single",
+              "statusId": "curse",
+              "subject": "target"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "mage",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 18,
+    "agiGrowth": 1.67,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 13,
+    "strGrowth": 1.25
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "秒殺外掛太強了｜秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-yogiri.ex",
+  "growth": {
+    "ad": 2.5489795918367353,
+    "ap": 0,
+    "armor": 0.45735714285714285,
+    "as": 0,
+    "healthRegen": 0.10673469387755102,
+    "manaRegen": 0,
+    "maxHealth": 45.833673469387755,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-yogiri",
+  "modelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
+  "name": "高遠夜霧",
+  "origin": "法師",
+  "passiveAbility": "b2-yogiri.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-yogiri.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.faa797490d76695722baee7ea86bbb6ecae77197f5d0fbcc",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "modelSha256": "b421162eeffd0340dee205e1892afa7ece0bfc1a8ad41c238628370052371331",
+      "binarySha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "registeredAt": "2026-09-10T14:45:40.951Z",
+      "source": {
+        "kind": "previous",
+        "character": "高遠夜霧",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.1b0166a2f3c372c6c7e599efa4faf6c24bf0f2c78d51ab5e",
+      "label": "富樫勇太",
+      "sourceModelKey": "community.body.e854c5c60388f5ecb54fe3cb34e5195ba4ad0128f79f733a",
+      "modelSha256": "6442301633454f54489cd121e8ebe39ca7bc3d5fa62d3073991c239ad29f2103",
+      "binarySha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
+      "registeredAt": "2026-09-10T14:45:40.958Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "富樫勇太",
+        "work": "中二病也想談戀愛！",
+        "library": "300heroes",
+        "reference": "300heroes:1dd02b6976c9ca0a89be6d66",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
+      "label": "高遠夜霧（獨立副本／富樫勇太）",
+      "sourceModelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "modelSha256": "14900891d1f1a5bbce2acee0b7a2dcbfe1c72b2e19f4ad31537c65fd70b7939d",
+      "binarySha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "registeredAt": "2026-09-10T14:45:41.016Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "高遠夜霧（獨立副本／富樫勇太）",
+        "work": "中二病也想談戀愛！",
+        "library": "300heroes",
+        "reference": "derivative:yogiri",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

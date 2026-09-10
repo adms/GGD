@@ -1,0 +1,55 @@
+{
+  "id": "community-review-35-20260907.e",
+  "name": "〔呼吸調整〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。\n【待補機制】標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "restore",
+      "manaPct": 0.15,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-35-20260907.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.ice.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "attachTo": "caster"
+    }
+  ]
+}

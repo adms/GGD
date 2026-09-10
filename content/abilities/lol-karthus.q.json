@@ -1,0 +1,56 @@
+{
+  "id": "lol-karthus.q",
+  "name": "暮點",
+  "provenance": "w3x-import",
+  "description": "短暫吟唱後，在指定區域引爆小級魔法傷害。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 6.0,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 1.133,
+  "castTimeTier": "中",
+  "template": {
+    "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.133
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-karthus.q.webp",
+  "radiusTier": "中"
+}

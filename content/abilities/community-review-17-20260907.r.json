@@ -1,0 +1,60 @@
+{
+  "id": "community-review-17-20260907.r",
+  "name": "墜落天空",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次大級範圍傷害。\n【目標設計】長起手的區域超位魔法，具有明顯預警與中斷機會。\n【待補機制】需長吟唱途中真正可中斷與落點預警。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "radius": 6.0,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 3.367,
+  "castTimeTier": "極大",
+  "icon": "assets/icons/abilities/community-review-17-20260907.r.webp",
+  "template": {
+    "ref": "tpl-ground-nova",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "大",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 3.367
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.void.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "中"
+}

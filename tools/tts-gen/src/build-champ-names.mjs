@@ -103,6 +103,19 @@ const MIX_JA_READING_OVERRIDE = Object.freeze({
     text: "ホアン",
     why: "`say -v Kyoko` renders 騜 as 0.030 s of silence (measured 2026-08-27); ホアン is this entry's own spokenName reading.",
   },
+  "b2-maomao": {
+    // 貓貓（薬屋のひとりごと）
+    //
+    // ⭐ 還原日文原作的字形：原作寫「猫猫」，⛔ 而顯示名用的是繁體專用的「貓」。
+    // ⚠️ `say -v Kyoko 貓貓` 量到 0.030 s 靜音（2026-09-10）—— ⭐ 與 騜 同一個坑：
+    //   ⛔ 那個字形日文根本沒有，Kyoko 沒有音可以發。
+    // ⇒ ⭐ 這裡換的是**字形**，⛔ 不是讀音：Kyoko 讀「猫猫」＝ マオマオ，
+    //   ⭐ 與 canonical pack 那一列（`["ja", null, null, "マオマオ", "Maomao"]`）一致，
+    //   ⭐ 而「Kyoko 用日語讀音唸中文全名」那個梗**完整保留**（⛔ 換成片假名就沒梗了）。
+    // ⚠️ 顯示名一個字都沒動（RULE：⛔ 只改唸的，不改看的）。
+    text: "猫猫",
+    why: "`say -v Kyoko` renders 貓貓 as 0.030 s of silence (measured 2026-09-10) — 貓 is a Traditional-only glyph; the Japanese original writes 猫猫, which Kyoko reads as マオマオ.",
+  },
 });
 
 const MIX_ZH_VOICE = "Tingting";
@@ -142,7 +155,10 @@ const SKIPPED = [
  *   titleReading romaji/pinyin for human review; null when the title text is
  *                already displayed in its own script
  *   name         katakana (or English)
- *   name/title may be null for the 4 champions authored without a 稱號.
+ *   title/titleReading are null for EVERY champion whose authored `name` carries no
+ *                " - " separator. ⛔ 不是一張固定名單 —— 誰有稱號是 `splitName()`
+ *                在 build 時從出貨內容算出來的（2026-09 那批 82 位全部沒有稱號）。
+ *                ⚠️ 這一行以前寫死「the 4 champions」，而 roster 一擴充它就變成謊話。
  */
 const CASTING = {
   // ── RULE 1 — a Japanese ORIGINAL exists: restore it. ──────────────────────
@@ -279,6 +295,138 @@ const CASTING = {
   // ── RULE 5 — the two English-named non-w3x champions go wholly to Karen. ───
   sela: ["en", null, null, "Sela, the Ember Sage", "Sela, the Ember Sage"],
   thorne: ["en", null, null, "Thorne, the Bramble Knight", "Thorne, the Bramble Knight"],
+
+  // ══ 2026-09 roster expansion — 82 champions, ⭐ ALL authored WITHOUT a 稱號 ══
+  //
+  // ⚠️ 這 82 位的 `name` 裡**沒有 " - "** ⇒ `splitName()` 的 `title` 是 null
+  //    ⇒ 「稱號絕不省略」那條**沒有東西可以省**，⛔ 而 zh+ja / zh+en 兩種 mode
+  //    結構上用不了（它們的第一段是 `${title}，`，title 為 null 會唸出 "null"）。
+  //    ⇒ ⭐ 剩下的選擇只有兩個：mode "ja"（Kyoko 唸片假名）或 mode "en"（Karen）。
+  //
+  // ⭐ 出處（⛔ 不是憑印象填的，每一列都指得到一個檔或一個官方端點）：
+  //   · b2-*（38）  `materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/
+  //                  intake/batch2-37/characters/<id>.json` 的 `work` + `canonical_name`
+  //                  —— 37 份裡 36 份帶 `identity_sources[].type == "official"`（官方角色頁），
+  //                  唯一的例外是 b2-kisaragi（GGD 原創，`user-instruction`）。
+  //   · community-review-*（37）`materials/asset-library/source/GGD社群英雄上傳內容_37名/
+  //                  projects/NN.hero-project.json` 的 `brief.concept` 逐字寫著「作品：《…》」。
+  //   · lol-*（7）   Riot Data Dragon **官方 ja_JP**：
+  //                  `https://ddragon.leagueoflegends.com/cdn/16.18.1/data/ja_JP/champion.json`
+  //                  ⭐ 而同一版的 zh_TW 名稱與這裡的出貨顯示名**逐字相同**（犽宿/拉克絲/好運姐/
+  //                  齊勒斯/卡爾瑟斯/沃維克/李星）⇒ join 過的，⛔ 不是照著念起來像去配的。
+  //
+  // ⚠️ 片假名**不放 ・**（沿用上面整張表的既有慣例：モンキーディールフィ・
+  //    ネギスプリングフィールド・フェイトテスタロッサ 都沒有）—— ・ 在 mode "ja" 的
+  //    `spokenLine` 裡是**稱號↔全名的分隔符**（`${title}・${name}。`）。
+
+  // ── B2 批（38）—— RULE 1：有日文原名就還原它，⛔ 不翻譯 ──────────────────
+  "b2-aladdin": ["ja", null, null, "アラジン", "Aladdin"], // 魔笛 MAGI
+  "b2-albus": ["ja", null, null, "アルバス", "Albus"], // 廻天のアルバス
+  "b2-bojji": ["ja", null, null, "ボッジ", "Bojji"], // 王様ランキング
+  // 「阿箱＋拉蜜絲」是**兩個角色**（ハッコン＋ラッミス）。＋ 唸不出來 ⇒ 用日語的並列助詞
+  // ト（＝と）接起來；片假名全寫是這張表的慣例（ヒャクエーカーノモリノオウ 的 ノ 同理）。
+  "b2-boxxo": ["ja", null, null, "ハッコントラッミス", "Hakkon to Rammis"],
+  "b2-elma": ["ja", null, null, "エルマ", "Elma"], // canonical エルマ・エドヴァン
+  "b2-fushi": ["ja", null, null, "フシ", "Fushi"], // 不滅のあなたへ
+  "b2-goblin": ["ja", null, null, "ゴブリンスレイヤー", "Goblin Slayer"],
+  "b2-guts": ["ja", null, null, "ガッツ", "Guts"], // ベルセルク
+  "b2-haga": ["ja", null, null, "ハガ", "Haga"], // canonical ハガ／羽賀誠
+  "b2-kaede": ["ja", null, null, "カエデ", "Kaede"],
+  "b2-kaiji": ["ja", null, null, "イトウカイジ", "Itou Kaiji"], // 賭博黙示録カイジ
+  "b2-keyaru": ["ja", null, null, "ケヤル", "Keyaru"], // 回復術士のやり直し
+  // GGD 原創（きさらぎ駅 都市傳說題材）—— ⛔ 沒有原作角色可以還原，
+  // 所以走 RULE 4：漢字用日語讀（如月＝きさらぎ、電車＝でんしゃ）。
+  "b2-kisaragi": ["ja", null, null, "キサラギデンシャ", "Kisaragi Densha"],
+  "b2-klaus": ["ja", null, null, "クラウス", "Klaus"],
+  // 官方角色名是「私」；⭐ 而 ja.wikipedia 逐字寫著「公式における愛称は蜘蛛子」——
+  // 出貨顯示名「蜘蛛子」對到的就是那個公式愛称，讀 くもこ。
+  "b2-kumoko": ["ja", null, null, "クモコ", "Kumoko"],
+  "b2-luckyman": ["ja", null, null, "ラッキーマン", "Lucky Man"], // とっても！ラッキーマン
+  "b2-makoto": ["ja", null, null, "ミスミマコト", "Misumi Makoto"], // 深澄 真（みすみ まこと）
+  "b2-maomao": ["ja", null, null, "マオマオ", "Maomao"], // 薬屋のひとりごと 猫猫
+  "b2-maple": ["ja", null, null, "メイプル", "Maple"], // canonical メイプル／本条楓
+  // 梅普露（變身）＝ b2-maple 的變身態 ⇒ 刻意與本體同一組（同 godie-o030／h00w／n01b／e010）。
+  "b2-maple-alt-9769eb88b85b": ["ja", null, null, "メイプル", "Maple"],
+  "b2-matthias": ["ja", null, null, "マティアス", "Mathias"], // canonical マティアス＝ヒルデスハイマー
+  "b2-misery": ["ja", null, null, "ミザリィ", "Misery"], // アウターゾーン
+  "b2-naofumi": ["ja", null, null, "イワタニナオフミ", "Iwatani Naofumi"],
+  // 名字那一半 ネッド 是 canonical（講談社作品頁）；⚠️「青蛙劍士」是中文側的描述詞，
+  // ⛔ 查不到對應的日文稱號 ⇒ 走 RULE 4 用漢字的日語讀（青蛙＝カエル、劍士＝ケンシ），
+  // ⛔ 不編一個原作沒有的頭銜。confidence = medium。
+  "b2-ned": ["ja", null, null, "カエルケンシネッド", "Kaeru Kenshi Ned"],
+  "b2-noor": ["ja", null, null, "ノール", "Noor"], // 俺は全てを【パリイ】する
+  "b2-nube": ["ja", null, null, "ヌエノメイスケ", "Nueno Meisuke"], // 鵺野 鳴介（ぬえの めいすけ）
+  "b2-orphen": ["ja", null, null, "オーフェン", "Orphen"], // canonical オーフェン／キリランシェロ
+  "b2-popp": ["ja", null, null, "ポップ", "Popp"], // ダイの大冒険
+  "b2-rem": ["ja", null, null, "レム", "Rem"],
+  "b2-rin": ["ja", null, null, "トオサカリン", "Toosaka Rin"], // 遠坂 凛
+  "b2-shadow": ["ja", null, null, "シャドウ", "Shadow"], // canonical シド・カゲノー／シャドウ
+  "b2-shinchan": ["ja", null, null, "ノハラシンノスケ", "Nohara Shinnosuke"],
+  "b2-sinbad": ["ja", null, null, "シンドバッド", "Sinbad"],
+  "b2-takopi": ["ja", null, null, "タコピー", "Takopi"],
+  "b2-touka": ["ja", null, null, "トウカスコット", "Touka Scott"], // 勇者が死んだ！
+  "b2-uncle": ["ja", null, null, "イセカイオジサン", "Isekai Ojisan"], // 異世界おじさん
+  "b2-yogiri": ["ja", null, null, "タカトオヨギリ", "Takatoo Yogiri"], // 高遠 夜霧（たかとお よぎり）
+  "b2-zenitsu": ["ja", null, null, "アガツマゼンイツ", "Agatsuma Zen'itsu"],
+
+  // ── 社群審查 37（37）—— 同 RULE 1／4；作品出處逐支寫在 hero-project 的 concept ──
+  "community-review-01-20260907": ["ja", null, null, "ムトウユウギ", "Mutou Yuugi"], // 遊戯王
+  "community-review-02-20260907": ["ja", null, null, "ヤガミイオリ", "Yagami Iori"], // KOF
+  "community-review-03-20260907": ["ja", null, null, "シラヌイマイ", "Shiranui Mai"], // KOF
+  "community-review-04-20260907": ["ja", null, null, "クウジョウジョウタロウ", "Kuujou Joutarou"], // JoJo 第三部
+  "community-review-05-20260907": ["ja", null, null, "ロックマン", "Rockman"], // 初代ロックマン
+  "community-review-06-20260907": ["ja", null, null, "カービィ", "Kirby"], // 星のカービィ
+  "community-review-07-20260907": ["ja", null, null, "ヒソカ", "Hisoka"], // HUNTER×HUNTER
+  "community-review-08-20260907": ["ja", null, null, "ミカサ", "Mikasa"], // 進撃の巨人
+  "community-review-09-20260907": ["ja", null, null, "ホロ", "Holo"], // 狼と香辛料
+  "community-review-10-20260907": ["ja", null, null, "ルルーシュ", "Lelouch"], // コードギアス
+  "community-review-11-20260907": ["ja", null, null, "リムル", "Rimuru"], // 転スラ
+  "community-review-12-20260907": ["ja", null, null, "エミヤシロウ", "Emiya Shirou"], // Fate/stay night UBW
+  "community-review-13-20260907": ["ja", null, null, "アサダシノ", "Asada Shino"], // SAO GGO
+  "community-review-14-20260907": ["ja", null, null, "コロセンセー", "Koro-sensei"], // 暗殺教室 殺せんせー
+  // ⭐ 唯一的 mode "en"：真實的美國摔角手／網路迷因本人，**英語是母語** ⇒ RULE 5，Karen 唸。
+  "community-review-15-20260907": ["en", null, null, "Billy Herrington", "Billy Herrington"],
+  // 出貨顯示名是**中文譯名的作品標題**「魔法少女☆伊莉雅」；⚠️ 日文原標題其實是
+  // 「プリズマ☆イリヤ」⇒ 這裡沿用本表既有的 マホウショウジョ（見 godie-o01z）＋ イリヤ，
+  // 而 ☆ 唸不出來所以不入 TTS。confidence = medium。
+  "community-review-16-20260907": ["ja", null, null, "マホウショウジョイリヤ", "Mahou Shoujo Illya"],
+  "community-review-17-20260907": ["ja", null, null, "アインズウールゴウン", "Ainz Ooal Gown"], // OVERLORD
+  "community-review-18-20260907": ["ja", null, null, "ギルガメッシュ", "Gilgamesh"], // Fate Archer
+  // ⚠️ 中文寫「桐谷」，日文原作是**桐ヶ谷 和人**（きりがや かずと）—— 還原原文。
+  "community-review-19-20260907": ["ja", null, null, "キリガヤカズト", "Kirigaya Kazuto"],
+  "community-review-20-20260907": ["ja", null, null, "ミサカミコト", "Misaka Mikoto"], // とある科学の超電磁砲
+  "community-review-21-20260907": ["ja", null, null, "カナメマドカ", "Kaname Madoka"], // まどか☆マギカ
+  "community-review-22-20260907": ["ja", null, null, "ナツキスバル", "Natsuki Subaru"], // Re:ゼロ
+  "community-review-23-20260907": ["ja", null, null, "サカタギントキ", "Sakata Gintoki"], // 銀魂
+  "community-review-24-20260907": ["ja", null, null, "キルア", "Killua"], // HUNTER×HUNTER
+  "community-review-25-20260907": ["ja", null, null, "ワンパンマン", "One Punch Man"],
+  "community-review-26-20260907": ["ja", null, null, "メイタンテイコナン", "Meitantei Conan"], // 名探偵コナン
+  // 出貨顯示名是**作品標題**（庫洛魔法使＝カードキャプターさくら），⛔ 不是角色名（木之本桜）
+  // ⇒ 還原標題本身。confidence = medium。
+  "community-review-27-20260907": ["ja", null, null, "カードキャプターサクラ", "Cardcaptor Sakura"],
+  "community-review-28-20260907": ["ja", null, null, "エリスボレアスグレイラット", "Eris Boreas Greyrat"], // 無職転生
+  "community-review-29-20260907": ["ja", null, null, "フリーレン", "Frieren"], // 葬送のフリーレン
+  // hero-project 逐字：「作品識別：《ヤニねこ／尼古喵喵》角色實體：佐藤ヤニ子」
+  // ⇒ 顯示名對到的是**ヤニねこ**這一側。confidence = medium。
+  "community-review-30-20260907": ["ja", null, null, "ヤニネコ", "Yani Neko"],
+  // SUN樂 ＝ サンラク（本名 陽務楽郎 の「陽楽」，陽を SUN に置き換えた PC 名）
+  "community-review-31-20260907": ["ja", null, null, "サンラク", "Sunraku"],
+  "community-review-32-20260907": ["ja", null, null, "アザゼル", "Azazel"], // よんでますよ、アザゼルさん。
+  "community-review-33-20260907": ["ja", null, null, "コノエトウタ", "Konoe Touta"], // UQ HOLDER!
+  "community-review-34-20260907": ["ja", null, null, "ターボババア", "Turbo Baba"], // ダンダダン
+  "community-review-35-20260907": ["ja", null, null, "タンジロウ", "Tanjirou"], // 竈門炭治郎
+  "community-review-36-20260907": ["ja", null, null, "キチクオウランス", "Kichiku Ou Rance"], // 鬼畜王ランス
+  "community-review-37-20260907": ["ja", null, null, "チイカワ", "Chiikawa"], // ちいかわ
+
+  // ── 英雄聯盟 7（7）—— RULE 1：Riot 自己出貨 ja_JP 名，⭐ 那就是「日文原名存在」 ──
+  // ⭐ 逐字取自 Data Dragon 16.18.1 的 ja_JP/champion.json（zh_TW 名逐字對得上出貨顯示名）。
+  "lol-karthus": ["ja", null, null, "カーサス", "Karthus"], // zh_TW 卡爾瑟斯
+  "lol-leesin": ["ja", null, null, "リーシン", "Lee Sin"], // 官方 リー・シン（・ 依本表慣例不入）
+  "lol-lux": ["ja", null, null, "ラックス", "Lux"], // zh_TW 拉克絲
+  "lol-missfortune": ["ja", null, null, "ミスフォーチュン", "Miss Fortune"], // 官方 ミス・フォーチュン
+  "lol-warwick": ["ja", null, null, "ワーウィック", "Warwick"], // zh_TW 沃維克
+  "lol-xerath": ["ja", null, null, "ゼラス", "Xerath"], // zh_TW 齊勒斯
+  "lol-yasuo": ["ja", null, null, "ヤスオ", "Yasuo"], // zh_TW 犽宿
 };
 
 /**
@@ -299,6 +447,18 @@ const CONFIDENCE = {
   "godie-h001": "low", "godie-h02n": "low", "godie-n01l": "low",
   "godie-ogld": "low", "godie-oshd": "low", "godie-u00b": "low",
   "godie-u00v": "low", "godie-uwar": "low",
+
+  // ── 2026-09 roster expansion —— ⭐ **零個 low**：82 列每一列都指得到一個出處
+  //    （intake `canonical_name` ／ hero-project 的「作品：」／ Riot ja_JP）。
+  //    下面 7 列標 medium，理由逐列寫在 CASTING 的註解裡 —— ⛔ 不是「沒查」，
+  //    是「查到的那個東西**不完全是角色名**」（作品標題／描述詞／並列助詞是我接的）。
+  "b2-boxxo": "medium",   // ＋ 換成並列助詞 ト 是我接的
+  "b2-kisaragi": "medium", // GGD 原創，⛔ 沒有原作角色可以還原
+  "b2-kumoko": "medium",   // 官方角色名是「私」，蜘蛛子是公式愛称
+  "b2-ned": "medium",      // 「青蛙劍士」⛔ 查不到對應日文稱號
+  "community-review-16-20260907": "medium", // 日文原標題其實是 プリズマ☆イリヤ
+  "community-review-27-20260907": "medium", // 顯示名是作品標題，⛔ 不是角色名
+  "community-review-30-20260907": "medium", // 角色實體是 佐藤ヤニ子
 };
 
 /** Why each casting decision was made — carried into the manifest as `evidence`. */
@@ -386,7 +546,8 @@ for (const [id, zhName] of champs) {
   // the ORIGINAL Traditional-Chinese text (splitName above), NOT the katakana the
   // canonical pack restores: the gag is Kyoko reading the Chinese 全名 back with
   // Japanese kana readings straight after Tingting announces the 稱號. Titleless
-  // champions (godie-h02s/h02z, sela, thorne) get the 全名 segment alone.
+  // champions — EVERY champion whose authored name has no " - " — get the 全名
+  // segment alone. ⛔ 這裡刻意不列 id：那是 `splitName()` 算出來的，⛔ 不是名單。
   const voSegments = [];
   if (zhTitle) {
     voSegments.push({
@@ -406,6 +567,15 @@ for (const [id, zhName] of champs) {
     voice: MIX_JA_VOICE,
     text: MIX_JA_READING_OVERRIDE[id]?.text ?? zhFullName,
     clip: `${NAMES_DIR}/${id}.name.mp3`,
+    // ⭐⭐ 覆寫的**理由**跟著上線 —— ⛔ 不是只換掉字然後讓下游自己猜。
+    //
+    // ⚠️ ⭐ 沒有這一格的時候，消費端（與守衛）只看得到「text 與 zhFullName 不一樣」
+    //   ⇒ ⛔ 它分不出「這是刻意的發音修正」還是「產生器寫錯了」，
+    //   ⭐ 於是守衛只能把覆寫名單**再抄一份**（第〇·四守則：第二個住處）。
+    // ⇒ ⭐ 把理由送出去，關係就驗得起來：**不一樣 ⇒ 必須有理由**。
+    ...(MIX_JA_READING_OVERRIDE[id]
+      ? { readingOverride: { from: zhFullName, why: MIX_JA_READING_OVERRIDE[id].why } }
+      : {}),
   });
   for (const seg of voSegments) {
     mixLines.push({
@@ -517,6 +687,13 @@ if (retiredCasting.length) {
 
 // ---- write ------------------------------------------------------------------
 
+/**
+ * ⭐ 沒有稱號的英雄有幾位是**算出來的**（`splitName()` 的結果），⛔ 不是一個手打的數字。
+ * ⚠️ 在此之前 `structure` 那一句寫死「the 4 champions … (godie-h02s, godie-h02z, sela,
+ *    thorne)」—— 2026-09 那批 82 位一上架，那句話當場變成謊話而**沒有東西會紅**。
+ */
+const titlelessCount = Object.values(champions).filter((e) => e.zhTitle === null).length;
+
 const manifest = {
   id: "champion-names-ja",
   schema: "audio.champion-names-ja@2",
@@ -526,7 +703,7 @@ const manifest = {
   direction:
     "惡搞, and the joke is the LINE, not the VOICE. The user's correction, verbatim: 「惡搞語音不應該是機械音 而是類似 google 語音那樣字正腔圓講話清楚但不帶感情所以嘲諷」. Every voice here is a real, full-band system voice reading correct text in a language it actually speaks. The comedy is that a composed broadcast voice treats 「外掛開很大的死神」 as a job title.",
   structure:
-    "EVERY call-out is 稱號, a beat, then 全名 — a two-beat announcement read flat, in anime-intro cadence. The 稱號 is NEVER dropped: if a line runs long the RATE goes up instead. The 4 champions authored without a 稱號 (godie-h02s 死亡騎士, godie-h02z 不良少年, sela, thorne) speak the name alone.",
+    `EVERY call-out is 稱號, a beat, then 全名 — a two-beat announcement read flat, in anime-intro cadence. The 稱號 is NEVER dropped: if a line runs long the RATE goes up instead. The ${titlelessCount} champions whose authored name carries NO 稱號 (no " - " separator) speak the name alone — that count is DERIVED from the shipping champion docs at build time, never a hand-written list, because the roster grows.`,
   whyTitlesMatter:
     "The 稱號 ARE THE BEST 惡搞 MATERIAL IN THE GAME — they are jokes, not labels (「美白大法師」 is a Taiwanese toothpaste gag, 「至尊學長」, 「鬼畜紅王」, 「外掛開很大的死神」). A name-only pack threw all of it away AND made champions indistinguishable: 6 pairs differ ONLY in their 稱號, so under name-only they collapsed to identical audio (h01n/h01o, e001/e00n, e007/ewar, o00x/ogrh, u00b/udea, o02l/ofar). Under 稱號+全名 they are genuinely distinct clips, consistent with task #55's champion-identity rule.",
   voice: {

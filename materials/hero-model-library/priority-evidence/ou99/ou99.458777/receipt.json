@@ -1,0 +1,321 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "ou99:458777",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_458777.glb",
+      "bytes": 2272724,
+      "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.458777/converted/body.glb",
+      "bytes": 3041836,
+      "sha256": "0d4459ad6ebf32e9fa78b8d98a91a0162144a45cbe03a3f62fa9c77efef134b3"
+    },
+    "stateClips": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "death": "Death",
+      "hurt": "Stand"
+    },
+    "yawOffsetDeg": 0,
+    "nativeAnimation": true,
+    "nativeClipProof": "../control/standardization.json",
+    "limitations": [
+      "Merged transparent primitives can alter per-primitive depth-sort granularity; no triangles or alpha pixels discarded.",
+      "Only existing clipMap-referenced native clips are in runtime; all source clips retained in original/source.glb.",
+      "No animation channel was removed or resampled."
+    ]
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+    "byteSize": 1614000,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "ou99.458777-standard-v2",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+    "scale": 1,
+    "collisionRadius": 0.55,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    }
+  },
+  "uploadedDocument": {
+    "id": "community.body.e3759f9e52edd8abc2fdd2269b3d9924a47529415dbd175c",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "selectedClips": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell One",
+    "death": "Death",
+    "hurt": "Stand"
+  },
+  "metrics": {
+    "triangles": 7003,
+    "drawPrimitives": 5,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 69394,
+        "sha256": "aba39729d9bd8de1a5287ce7a1d31172db008fc73fe9a57e2a87266899e6eca0"
+      },
+      {
+        "width": 128,
+        "height": 256,
+        "bytes": 29191,
+        "sha256": "a8de8786a123ac007a9a318801337c36dfb04ba377029d1baa1107eef1a019a6"
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "bytes": 15574,
+        "sha256": "94fc8def004ed7382977f6295ec08515c7a69fc3a2f60864ba89f5e19982d968"
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 222547,
+        "sha256": "a21d19a6a7ba14f6dab2dc953df1d4a0a029d34feea0735e807ce50676eeda78"
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "bytes": 8065,
+        "sha256": "43fc8ac83472bdffc06a598bf927dbd4476d4fb9392f471bc3bef823f5a1fdc8"
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "bytes": 5641,
+        "sha256": "fa0be06bb3c830b7749f3782a17656ab0981b05e0dfd5e70059999e4481728cc"
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "bytes": 7956,
+        "sha256": "31eebf11e786277751adafe715763b7dc7d40da2fa5b8b5e68d633a674983767"
+      },
+      {
+        "width": 256,
+        "height": 512,
+        "bytes": 33899,
+        "sha256": "617836ba10cce9b85b8ba6fe92a56caf0c84606c51ac0de24db7e1336fc60912"
+      }
+    ]
+  },
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "Stand",
+      "duration": 1.600000023841858,
+      "channels": 76
+    },
+    {
+      "index": 1,
+      "name": "Walk",
+      "duration": 0.5669999718666077,
+      "channels": 76
+    },
+    {
+      "index": 2,
+      "name": "Attack 1",
+      "duration": 1.034000039100647,
+      "channels": 76
+    },
+    {
+      "index": 3,
+      "name": "Spell One",
+      "duration": 1.1660000085830688,
+      "channels": 76
+    },
+    {
+      "index": 4,
+      "name": "Death",
+      "duration": 2,
+      "channels": 76
+    }
+  ],
+  "warnings": [
+    "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "ggd-w3x-import",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1455644
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/3",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/4",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/5",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/6",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/7",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 8,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 5,
+      "totalVertexCount": 12356,
+      "totalTriangleCount": 7003,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "sharedPrepareAndVerify": true,
+    "originalModelBindingPreservedExceptIdAndPath": true,
+    "nativeMotionNotResampled": true,
+    "visualAcceptance": "pending"
+  }
+}

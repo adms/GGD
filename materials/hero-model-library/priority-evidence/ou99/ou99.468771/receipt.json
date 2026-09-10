@@ -1,0 +1,226 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "ou99:468771",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_468771.glb",
+      "bytes": 5255564,
+      "sha256": "307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.468771/converted/body.glb",
+      "bytes": 5468792,
+      "sha256": "380daf41b4d62e8ab55e2cc8b548a9fa99306107332b6a0c7e4b6eaa71102a73"
+    },
+    "stateClips": {
+      "idle": "Stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "death": "death",
+      "hurt": "Stand"
+    },
+    "yawOffsetDeg": 0,
+    "nativeAnimation": true,
+    "nativeClipProof": "../control/standardization.json",
+    "limitations": [
+      "Merged transparent primitives can alter per-primitive depth-sort granularity; no triangles or alpha pixels discarded.",
+      "Only existing clipMap-referenced native clips are in runtime; all source clips retained in original/source.glb.",
+      "No animation channel was removed or resampled."
+    ]
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223",
+    "byteSize": 4983240,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "hurt": "Stand",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "ou99.468771-standard-v2",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
+    "scale": 1,
+    "collisionRadius": 0.55,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "hurt": "Stand",
+      "death": "death"
+    }
+  },
+  "uploadedDocument": {
+    "id": "community.body.044be2af653ee6c38ef9d5561cd5871c3e16018a4b81a645",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "walk",
+      "attack": "attack 1",
+      "cast": "spell",
+      "hurt": "Stand",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "selectedClips": {
+    "idle": "Stand",
+    "run": "walk",
+    "attack": "attack 1",
+    "cast": "spell",
+    "death": "death",
+    "hurt": "Stand"
+  },
+  "metrics": {
+    "triangles": 5628,
+    "drawPrimitives": 3,
+    "textures": [
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1489936,
+        "sha256": "bff98a3aec4b5d1b7c2c234d23d13c471931e5d5e2d56b3553ee9a736ae5e4c9"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1502400,
+        "sha256": "c3aa3073273df892a7b4d53eeb075ed75d35c7534793ca4d849bad12173356a6"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1492311,
+        "sha256": "502fdf0f0e059f9828866903de6dbea449a752d33934993c7eaa0d2653780fc6"
+      }
+    ]
+  },
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "Stand",
+      "duration": 1.9919999837875366,
+      "channels": 97
+    },
+    {
+      "index": 1,
+      "name": "walk",
+      "duration": 0.8100000023841858,
+      "channels": 97
+    },
+    {
+      "index": 2,
+      "name": "attack 1",
+      "duration": 1.2100000381469727,
+      "channels": 97
+    },
+    {
+      "index": 3,
+      "name": "spell",
+      "duration": 1.6100000143051147,
+      "channels": 97
+    },
+    {
+      "index": 4,
+      "name": "death",
+      "duration": 2.2100000381469727,
+      "channels": 97
+    }
+  ],
+  "warnings": [
+    "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "ggd-w3x-import",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 4787964
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 3,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 3,
+      "totalVertexCount": 3596,
+      "totalTriangleCount": 5628,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "sharedPrepareAndVerify": true,
+    "originalModelBindingPreservedExceptIdAndPath": true,
+    "nativeMotionNotResampled": true,
+    "visualAcceptance": "pending"
+  }
+}

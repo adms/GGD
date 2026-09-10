@@ -1,0 +1,60 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "provenance": "w3x-import",
+  "description": "「賭桌離場服務費！」\n施放大招後回復自身最大魔力 6%，內置冷卻 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-kaiji.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "賭桌離場服務費",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "applyTo": "self",
+                "kind": "restore",
+                "manaPct": 0.06
+              }
+            ],
+            "internalCooldown": 4,
+            "on": "onUltimateCast",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "applyTo": "self",
+              "kind": "restore",
+              "manaPct": 0.06
+            }
+          ],
+          "internalCooldown": 4,
+          "on": "onUltimateCast",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  },
+  "icon": "assets/icons/abilities/b2-kaiji.passive.webp"
+}

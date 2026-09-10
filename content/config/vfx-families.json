@@ -258,6 +258,51 @@
     }
   },
   "abilities": {
+    "b2-luckyman.w": {
+      "pitchDeg": 89
+    },
+    "b2-matthias.w": {
+      "pitchDeg": 19
+    },
+    "b2-noor.w": {
+      "pitchDeg": 35
+    },
+    "b2-orphen.r": {
+      "pitchDeg": 82
+    },
+    "b2-popp.q": {
+      "pitchDeg": 24
+    },
+    "b2-shadow.ex": {
+      "pitchDeg": 3
+    },
+    "b2-touka.e": {
+      "pitchDeg": 20
+    },
+    "community-review-14-20260907.q": {
+      "pitchDeg": 15
+    },
+    "community-review-14-20260907.w": {
+      "pitchDeg": 15
+    },
+    "community-review-22-20260907.q": {
+      "pitchDeg": 28
+    },
+    "community-review-33-20260907.e": {
+      "pitchDeg": 43
+    },
+    "community-review-34-20260907.e": {
+      "pitchDeg": 83
+    },
+    "community-review-34-20260907.ex": {
+      "pitchDeg": 83
+    },
+    "community-review-34-20260907.q": {
+      "pitchDeg": 83
+    },
+    "community-review-36-20260907.e": {
+      "pitchDeg": 87
+    },
     "godie-e001.passive": {
       "family": "shockwaveRing"
     },

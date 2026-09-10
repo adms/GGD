@@ -1,0 +1,60 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "provenance": "w3x-import",
+  "description": "「撤退路線也是回魔路線！」\n位移成功後回復自身最大魔力 4%，每 3 秒至多一次；撤退也要付施法成本。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-popp.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "撤退路線也是回魔路線",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "applyTo": "self",
+                "kind": "restore",
+                "manaPct": 0.04
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onDashOrBlink",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "applyTo": "self",
+              "kind": "restore",
+              "manaPct": 0.04
+            }
+          ],
+          "internalCooldown": 3,
+          "on": "onDashOrBlink",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  },
+  "icon": "assets/icons/abilities/b2-popp.passive.webp"
+}

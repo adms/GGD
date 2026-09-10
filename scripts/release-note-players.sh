@@ -91,10 +91,41 @@ trace() { [ "${GGD_PLAYERNOTE_TRACE:-0}" = 1 ] && echo "🔎 #$1 sha=${2:--} →
 # ⭐ 一顆 commit 在 SINCE..NOW 裡 ⇔ 是 NOW 的祖先 **且** 不是 SINCE 的祖先
 in_range() { git cat-file -e "$1" 2>/dev/null && git merge-base --is-ancestor "$1" "$NOW" 2>/dev/null && ! git merge-base --is-ancestor "$1" "$SINCE" 2>/dev/null; }
 
-LINES=""; MISSING=""; UNSCOPED=""
+LINES=""; MISSING=""; UNSCOPED=""; DECLARED=""; DUP=""
+
+# ⛔⛔ **第二個資料來源：這一版的 commit 真的動了什麼**（owner 2026-09-09 揪到）
+#
+# ⭐ 根因鏈（三環，量到的）：
+#   ① 這支腳本**只讀票的進度標記** —— 它的整個宇宙是「票說了什麼」，
+#      ⛔ 不是「這一版出貨了什麼」。沒有人寫 ⇒ 它就以為沒事發生。
+#   ② 被擋住時它給兩個出口（寫一句／答「無」）⇒ ⭐ 最便宜的是「無」，
+#      而我一次答了 13 張。**這道閘把人訓練成發罐頭。**
+#   ③ ⭐ 而帳本本身是**窄的**：117 列裡 63 列罐頭；54 句真內容中
+#      介面 14 · 戰鬥 13，⛔ 而「角色上架／造型」只有 **1** 句、編輯器 3、效能 3。
+#      ⇒ 讀著它長大的人（我）就把「玩家看得到」學成了「戰鬥或按鈕」。
+#
+# ⭐ 量到的代價：**v0.41.5 有 26 顆玩家面向的 commit，而它發出去的是「系統優化更新」。**
+#
+# ⇒ 這一段問 commit：出貨程式碼動了而沒有人寫一句 ⇒ ⛔ 擋下，並**把那幾行印出來**。
+#   ⚠️ ⭐ 它刻意**印出 commit 標題**：⛔ 答「無」之前你得先看見這一版做了什麼。
+PLAYER_SCOPES='client|render|ui|sim|economy|hero|community|editor|icons|forge|game|ugc|draft|templates|assets'
+SHIPPED=$(git log --format='%s' "${SINCE}..${NOW}" 2>/dev/null \
+  | grep -E "^(feat|fix)\((${PLAYER_SCOPES})\)" || true)
+SHIPPED_N=$(printf '%s' "$SHIPPED" | grep -c . || true)
 for N in $CLOSED; do
   # ⭐ title＋comments **一次**撈完（在此之前每張票打 2–3 次 gh：50 張 58 秒）
-  J=$(gh issue view "$N" --json title,comments 2>/dev/null) || continue
+  # ⭐ `GGD_PLAYERNOTE_CACHE=<dir>` —— **補發專用**的唯讀快取（GH#1152）。
+  #   ⚠️ 為什麼需要它：這一段對**每一張候選票**打一次 `gh issue view`（約 1–2 秒）。
+  #     一次 21 版的補發 ＝ 21 × 約 50 張 ⇒ ⭐ 實測**單一版本就跑不完 600 秒**。
+  #   ⛔ 它**不是**預設 —— 平時一版一發時票是活的，快取會讓一則剛寫好的進度標記讀不到。
+  #   ⭐ 補發時票是**靜止**的（那幾版早就出貨了），所以快取在那個情境下是等價的。
+  _CJ="${GGD_PLAYERNOTE_CACHE:+${GGD_PLAYERNOTE_CACHE}/${N}.json}"
+  if [ -n "$_CJ" ] && [ -s "$_CJ" ]; then
+    J=$(cat "$_CJ")
+  else
+    J=$(gh issue view "$N" --json title,comments 2>/dev/null) || continue
+    [ -n "$_CJ" ] && { mkdir -p "${GGD_PLAYERNOTE_CACHE}"; printf '%s' "$J" > "$_CJ"; }
+  fi
   RAW_T=$(printf '%s' "$J" | jq -r '.title // ""')
   # ⚠️ ⭐ 只讀**最新一則進度標記**，⛔ 不是「所有留言裡第一個命中的」：
   #   2026-08-30 量到 —— 我把 #866 的玩家那一句**清空**（它是後台的事，玩家無感），
@@ -102,10 +133,40 @@ for N in $CLOSED; do
   #   ⇒ ⭐ 一句已經被撤回的話又被發出去。**撤回要真的撤得掉。**
   B=$(printf '%s' "$J" | jq -r '[.comments[].body] | reverse | .[]' \
         | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}')
-  [ -n "$B" ] || continue
-  P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//')
-  # ⭐ 標記寫「無（…）」／「—」＝這張票玩家看不到 ⇒ 當成沒寫（⛔ 不要把「無（後台的事）」發成一行公告；2026-09-06 第一波 13 張這樣寫）
-  case "$P" in 無*|—*|-|"") P="";; esac
+  # ⛔⛔ **這一行在此之前是 `[ -n "$B" ] || continue`**（2026-09-09 owner 揪到）：
+  #   沒有進度標記的票**整個消失** ⇒ ⭐ 它既不進 `LINES`，也**不進 `MISSING`**
+  #   ⇒ 那道「有玩家可見的票卻沒寫玩家句 ⇒ ⛔ 不發」的閘**看不到它**
+  #   ⇒ fallback 誠實地印「這一版**真的**沒有玩家可見的票」——⛔ **而那是假的**。
+  #
+  # ⚠️ ⭐ 代價量到了：**v0.41.0–v0.42.15 共 21 版，Discord 收到的全是罐頭**，
+  #   其中至少 3 版真的有玩家看得到的東西（v0.41.5 的新減益「連段拘束」·
+  #   v0.42.9 的三選一背包滿標示 · v0.42.13 的 107 張圖示重畫）。
+  #
+  # ⭐ 而這支腳本**自己的註解**（下面那段）逐字寫著相反的意圖：
+  #   「⚠️ ⭐『沒有標記』的那一種**仍然要求** —— 那可能是一次真的落地而沒人寫標記,
+  #     ⛔ 正是這條閘的用途。」
+  #   ⇒ ⭐ **意圖與實作對不上，而中間隔著這一行 `continue`。**
+  #
+  # ⇒ 沒有標記 ⇒ `P` 與 `SHA` 都空，⭐ 而它**繼續往下走**：
+  #   `named`（commit 提到它）就有資格被要求一句玩家的話。
+  if [ -z "$B" ]; then P=""; SHA=""; fi
+  [ -n "$B" ] && P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//') || P=""
+  # ⭐ 標記寫「無（…）」／「—」＝這張票玩家看不到 ⇒ ⛔ 不發那一行
+  #   （⛔ 不要把「無（後台的事）」發成一行公告；2026-09-06 第一波 13 張這樣寫）
+  #
+  # ⛔⛔ **而在此之前它與「根本沒寫」被判成同一件事**（2026-09-09 owner 揪到的第二層）：
+  #   下面那道閘的訊息**自己**逐字寫著「兩種都要人回答，⛔ 不可以預設成後者」——
+  #   ⭐ 而寫了「無（後台的事）」的人**已經回答了**。把他的答案當成沒回答 ⇒
+  #   ⭐ 這道閘變成**答不出來的**：唯一的出路是去改票的**類型標籤**（把 [fix] 拿掉），
+  #     ⛔ 而那是為了讓閘閉嘴去竄改一張票 —— 一次比沉默更糟的失真。
+  #
+  # ⚠️ ⭐ 量到的代價：v0.41.0–v0.42.15 之間 **14/22 版**被這道閘擋住，
+  #   而擋住它們的 18 張票裡**絕大多數是 infra／編輯器／測試** ——
+  #   ⇒ 正確答案是「人說一聲：這張玩家看不到」，⛔ 不是改標籤、也⛔ 不是編一句假話。
+  #
+  # ⇒ ⭐ 拆成兩個變數：`P`（要發的那一句）與 `ANS`（**人答過了沒**）。
+  ANS=""
+  case "$P" in 無*|—*|-) ANS=declared; P="";; "") ANS="";; esac
   # ⛔⛔ **寫入端與消費端的格式對不上**（2026-08-30 量到，⭐ 同一天第二次）：
   #   `ticket-progress.sh:70` 寫的是 `| **commit** | fe252e8aa |`（⛔ **沒有**反引號），
   #   而這裡在此之前找的是 `` | **commit** | `fe252e8aa` | ``（要反引號）
@@ -116,7 +177,7 @@ for N in $CLOSED; do
   #   （第一次是進度欄：寫入端是**表格** `| **狀態** | \`完成\` |`，而我找 `狀態:`。）
   #
   # ⇒ ⭐ 反引號改成**可有可無**，⛔ 而 sha 本身仍然嚴格（7–40 個 hex）。
-  SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true)
+  [ -n "$B" ] && SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true) || SHA=""
   # ⭐ 這張票在這一版嗎？（兩個證據任一；⛔ 都沒有 ⇒ 它是別的版本的，⛔ 不進任何一欄）
   if [ "$SCOPE" = commits ]; then
     case " $NAMED " in *" #$N "*) IN=named;; *) IN="";; esac
@@ -143,6 +204,33 @@ for N in $CLOSED; do
     fi
   fi
   T=$(printf '%s' "$RAW_T" | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
+  # ⛔⛔ **這一句已經公告過了嗎？**（2026-09-09 量到，⭐ 同一天發生兩次）
+  #
+  # ⚠️ 玩家那一句住在**票**上，⛔ 而票會被再次動到（補標記、改 commit、關票）
+  #   ⇒ ⭐ 它會落進**下一版**的區間，於是同一句話被發第二次。
+  #   實例：#1129 的「107 張舊畫風的圖示重畫了」在 v0.42.13 發過，
+  #   而我把它的進度標記 commit 更新成本輪的稽核 commit ⇒ v0.42.17 **又發了一次**。
+  #
+  # ⭐ 而分辨它**不需要新資訊**：帳本 `_announced.tsv` 第三欄就記著「哪一版發過哪一句」。
+  #   ⇒ 這支腳本一直**答得出來**，⛔ 只是沒有人問它。
+  #
+  # ⚠️ ⭐ 比對的是**前 60 個字元**（帳本第三欄就是那樣切的，見下面記帳那一段）——
+  #   ⛔ 不是整句：帳本存的本來就是截短的。
+  if [ -n "$P" ]; then
+    _LG0="${GGD_ANNOUNCE_LEDGER:-docs/_release/_announced.tsv}"
+    _HEAD=$(printf '%s' "$P" | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())' 2>/dev/null || true)
+    # ⛔⛔ **⛔ 不可以把「這一版自己那一列」算成重複**（2026-09-09 當場踩到）：
+    #   一次刻意的補發（`--until v0.42.13` 而帳本第 v0.42.13 列就是那一句）
+    #   會被自己擋掉 ⇒ ⭐ **真內容退化成罐頭**，而且帳本被罐頭覆寫回去。
+    #   ⇒ 只比對**別的版號**那幾列。
+    _PREVROWS=$(awk -F'\t' -v now="$NOW" '$1!=now{print $3}' "$_LG0" 2>/dev/null || true)
+    if [ -n "$_HEAD" ] && [ -f "$_LG0" ] && printf '%s\n' "$_PREVROWS" | grep -qxF "$_HEAD"; then
+      DUP="${DUP}  · #$N ${P}
+"
+      trace "$N" "$SHA" "dup（這一句帳本上已經發過）"
+      P=""; WHY="dup"
+    fi
+  fi
   if [ -n "$P" ]; then
     LINES="${LINES}- ${P}
 "
@@ -176,6 +264,15 @@ for N in $CLOSED; do
         #   而我先前**只在 `commits` scope 測過** —— ⛔ 一把只驗過單邊的尺。
         if [ "${IN:-}" = named ] && [ -n "$SHA" ] && ! in_range "$SHA"; then
           trace "$N" "$SHA" "skip（只是被 commit 提到,這一版沒有改它 —— GH#1109）"
+        elif [ "${WHY:-}" = dup ]; then
+          # ⭐ 它**發過了** —— ⛔ 那不是「沒寫玩家句」,⛔ 不可以擋住這一版的公告。
+          trace "$N" "$SHA" "dup ⇒ ⛔ 不進 MISSING"
+        elif [ "$ANS" = declared ]; then
+          # ⭐ 人**答過了**：這張票玩家看不到 ⇒ ⛔ 不進 MISSING（它不擋公告）,
+          #   ⭐ 但仍然印出來 —— 一個被靜默吞掉的答案與沒有答案長得一樣。
+          DECLARED="${DECLARED}  · #$N $T
+"
+          trace "$N" "$SHA" "declared-none（人答過：這張票玩家看不到）"
         else
         MISSING="${MISSING}  · #$N $T
 "
@@ -217,6 +314,59 @@ if [ -z "$LINES" ]; then
   # ⛔ 而對「**一句都沒有**」只印一行警告然後照發 —— ⭐ 兩個失敗，相反的待遇，
   #   而被放過的那一個產出的是**假話**（第一·五守則：⛔ 不放任何無效說明）。
   # ⇒ 對齊成同一個待遇。⛔ 它擋的是**發公告**，⛔ 不是部署（BMPNDD 的 D 是另一步）。
+  # ⛔⛔ **出貨程式碼動了，而沒有人寫一句** —— ⭐ 這一條問的是 commit，⛔ 不是票。
+  # ⛔⛔ **2026-09-10：這一條在此之前是一個「綠不了的閘」（形態⑨）。**
+  #
+  # ⚠️ 它給的兩個出口都寫在下面的訊息裡（寫一句／答「無」），⛔ 而**兩個都到不了這裡** ——
+  #   `--player "無（…）"` 走的是 `DECLARED`,而這一條**根本不看 DECLARED**
+  #   ⇒ ⭐ 答了「無」還是擋,答第二次還是擋。⛔ 一個答了也不會變綠的閘,
+  #     與一個永遠不會響的閘是**同一件事**:它不再傳遞資訊,只傳遞挫折。
+  #
+  # ⭐ 修法是問**關係**,⛔ 不是放寬:「這一版有出貨程式碼,⭐ **而且沒有任何人看過它**」。
+  #   · 有人寫了真句子（LINES） ⇒ 本來就不會走到這裡
+  #   · ⭐ 有人**看過並且宣告了「無」**（DECLARED） ⇒ ⭐ 放行,⛔ 但把那些理由**印出來**
+  #   · ⛔ 一句都沒有 ⇒ 擋（⭐ 這才是這條閘要抓的東西）
+  # ⛔⛔ **`DUP` 也是「有人看過」的證據** —— ⭐ 而在此之前這一行只認 `DECLARED`。
+  #   ⚠️ 形狀：有人**真的寫了**玩家句,而它在更早的版本就公告過（票被再次動到才落進這一版）
+  #   ⇒ `P` 被清空 ⇒ `LINES` 空 ⇒ 走到這裡 ⇒ ⛔ **整版公告被擋下**,
+  #     而訊息說的是「⛔ 沒有一句玩家公告」——⭐ **那是假的,句子有,只是發過了**。
+  #   ⇒ ⭐ 它與 `DECLARED` 同一類：**這一版有人看過**。⛔ 而它與「沒人寫」相反。
+  #   ⚠️ 出口也不存在：唯一能讓它閉嘴的動作是**再寫一句新的**,⛔ 而那正是重複公告。
+  if [ "${SHIPPED_N:-0}" -gt 0 ] && { [ -n "$DECLARED" ] || [ -n "$DUP" ]; }; then
+    echo
+    echo "ℹ️ 這一版有 **${SHIPPED_N} 顆玩家面向的 commit**，⭐ 而它們**有人看過了**："
+    [ -n "$DECLARED" ] && {
+      echo "  ⭐ 逐張**宣告為玩家看不到**："
+      printf '%s' "$DECLARED"
+    }
+    [ -n "$DUP" ] && echo "  ⭐ 有人**寫過玩家句**，⛔ 而更早的版本已經公告過（詳見下方那一節）。"
+    echo "  ⇒ ⭐ 放行。⚠️ 有人看過是**證據**，⛔ 不是「反正沒人寫」。"
+  elif [ "${SHIPPED_N:-0}" -gt 0 ]; then
+    echo
+    echo "⛔⛔ 這一版有 **${SHIPPED_N} 顆玩家面向的 commit**，⛔ 而沒有一句玩家公告 ——"
+    echo "   ⇒ ⭐ 這時候發「系統優化更新」是**假話**，⛔ 不發。"
+    printf '%s\n' "$SHIPPED" | sed 's/^/  · /' | head -30
+    echo
+    echo "  ⭐ 玩家想知道的**不只是戰鬥**（owner 2026-09-09 逐字舉的例）："
+    echo "     · 動畫更順了嗎        · 網路更快響應了嗎"
+    echo "     · 編輯器多支援什麼    · 哪些角色**設計好了正在審查**"
+    echo "     · 哪些角色**上架成功**  · 哪些角色**換了造型**"
+    echo "  ⚠️ ⛔ 不要只挑「戰鬥／按鈕」那一類 —— 帳本上歷史句子就是這樣偏的"
+    echo "     （117 列裡「角色上架／造型」只有 1 句），⭐ 而那份偏見會傳染給下一個人。"
+    # ⛔⛔ **這一段在此之前先 `exit 1`，而 `MISSING` 印在它下面** ⇒ ⭐ 永遠印不到。
+    #   ⚠️ 於是這道閘叫人「補 <票號>」——⭐ **而它自己知道是哪幾張,卻沒有說**。
+    #   ⇒ 讀的人得自己去翻票庫,而那正是「一句指著錯方向（或不指方向）的訊息」。
+    if [ -n "$MISSING" ]; then
+      echo
+      echo "  ⭐ 而**是哪幾張**它答得出來（feature/fix/improve 卻沒寫玩家那一句）："
+      printf '%s' "$MISSING"
+    fi
+    echo
+    echo "  ⇒ 補：bash scripts/ticket-progress.sh write <票號> … --player \"<一句玩家看得懂的話>\""
+    echo "  ⇒ 真的一顆都不影響玩家 ⇒ 答一聲：--player \"無（<為什麼>）\"（⭐ 要看過上面那幾行再答）"
+    exit 1
+  fi
+
   if [ -n "$MISSING" ]; then
     echo
     echo "⛔⛔ 這一版有**玩家看得到**的票，⛔ 而沒有一張寫了玩家那一句 ——"
@@ -225,8 +375,10 @@ if [ -z "$LINES" ]; then
     echo "  ⇒ 補（一張就夠，⛔ 不必每一張都補）："
     echo "     bash scripts/ticket-progress.sh write <票號> --state 完成 \\"
     echo "       --baseline … --next … --commit <sha> --player \"<一句玩家看得懂的話>\""
-    echo "  ⚠️ ⭐ 真的只是例行維護 ⇒ 那幾張票**不該**帶 feature/fix/improve 標籤，"
-    echo "     ⛔ 或者它們確實有玩家影響而只是沒寫 —— 兩種都要人回答，⛔ 不可以預設成後者。"
+    echo "  ⚠️ ⭐ 真的玩家看不到（infra／編輯器／測試／文件）⇒ ⭐ **答一聲**就好："
+    echo "     bash scripts/ticket-progress.sh write <票號> … --player \"無（<為什麼玩家看不到>）\""
+    echo "     ⭐ 那算**回答過**，⛔ 不擋公告 —— ⛔ 不必為了讓這道閘閉嘴去改票的類型標籤。"
+    echo "  ⇒ 兩種都要人回答，⛔ 不可以預設成後者。"
     exit 1
   fi
   LINES="- 系統優化更新：穩定性與速度的例行維護。
@@ -235,6 +387,21 @@ if [ -z "$LINES" ]; then
   printf '%s' "$LINES"
 else
   printf '%s' "$LINES"
+fi
+
+# ⚠️ ⭐ fail-loud（負一）：**這一句帳本上已經發過** —— ⛔ 不重複發，⭐ 但要說出來
+if [ -n "$DUP" ]; then
+  echo
+  echo "ℹ️ 這幾句**已經在更早的版本公告過** ⇒ ⛔ 不重複發（⭐ 票被再次動到才落進這一版）："
+  printf '%s' "$DUP"
+fi
+
+# ⚠️ ⭐ fail-loud（〇）：**人答過「這張票玩家看不到」**的那幾張 —— ⛔ 它們不擋公告
+#   ⭐ 但要印出來：一個被靜默吞掉的答案，與**沒有答案**長得一模一樣。
+if [ -n "$DECLARED" ]; then
+  echo
+  echo "ℹ️ 這幾張**人答過了**「玩家看不到」（進度標記寫「無（…）」）——⛔ 不擋公告："
+  printf '%s' "$DECLARED"
 fi
 
 # ⚠️ ⭐ fail-loud（一）：**定位不到版本**的那幾句 —— ⛔ 它們不會進公告
@@ -331,11 +498,19 @@ case "$CODE" in
       #   ⇒ 用 python3 切**字元**（這支腳本本來就依賴 python3 做 JSON）。
       FIRSTLINE=$(printf '%s' "$LINES" | sed -n '1s/^[[:space:]·*-]*//p' \
         | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())')
-      for T in $(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
-            $0==a{seen=1; next} seen{print} $0==b{exit}'); do
-        grep -q "^${T}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$T" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
-      done
-      grep -q "^${NOW}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$NOW" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
+      # ⛔⛔ **補發時要更新那一列，⛔ 不是跳過**（2026-09-09 量到）：
+      #   在此之前這裡一律是 `grep -q … || printf … >>` ⇒ ⭐ **已經在帳本上的版號永遠不會被改**。
+      #   ⇒ 一次 `GGD_ANNOUNCE_FORCE=1` 的補發把**真的內容**發了出去，
+      #     ⛔ 而帳本第三欄還留著那句被取代掉的罐頭 ——
+      #   ⭐ 於是下一個讀帳本的人（含我自己）會得出「那一版本來就沒有玩家可見的改動」。
+      #   ⚠️ 那正是本 repo 一再記錄的形狀：**一個看起來已經量過的東西，量的不是你以為的那個。**
+      # ⇒ ⭐ 只有 `GGD_ANNOUNCE_FORCE=1`（＝明確的補發）才覆寫既有列；平常照舊只追加。
+      TAGS_IN_RANGE=$(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
+            $0==a{seen=1; next} seen{print} $0==b{exit}')
+      # ⭐ 邏輯住 `tools/release/ledger_merge.py`（⛔ 不是這裡的一段 heredoc）——
+      #   一段沒有辦法被單獨呼叫的邏輯，只能靠「真的發一次」來驗。
+      python3 tools/release/ledger_merge.py "$LEDGER" "$TODAY" "${FIRSTLINE:-玩家公告}" \
+        "${GGD_ANNOUNCE_FORCE:-0}" $TAGS_IN_RANGE "$NOW"
       echo "  ✓ 已記進 $LEDGER"
     fi
     ;;

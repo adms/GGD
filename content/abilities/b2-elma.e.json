@@ -1,0 +1,61 @@
+{
+  "castTimeSec": 0.267,
+  "castType": "self",
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「重劍攻略追加七十點！」\n重劍模式 3 秒攻擊力 +70；只改戰鬥屬性，未冒稱更换原作裝甲模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "duration": 3,
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "ad",
+          "value": 70
+        }
+      ]
+    }
+  ],
+  "id": "b2-elma.e",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 4,
+  "name": "重劍攻略追加七十點",
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "E",
+  "template": {
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
+    "params": {
+      "castTimeSec": 0.267,
+      "duration": 3,
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "ad",
+          "value": 70
+        }
+      ]
+    },
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-elma.e.webp"
+}

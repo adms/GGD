@@ -1,0 +1,61 @@
+{
+  "schema": "ggd-post-registration-review@1",
+  "state": "requires-main-review-before-deployment",
+  "modelVersionsIntegrity": "passed",
+  "registrationAndGeometryReviewAreSeparate": true,
+  "modelCensusFindingCount": 22,
+  "affectedSources": [
+    {
+      "heroId": "b2-keyaru",
+      "modelKeys": [
+        "ou99.458777",
+        "ou99.458777-standard-v3"
+      ],
+      "primitive": 0,
+      "signal": "suspect second-skeleton",
+      "state": "pending-component-identification"
+    },
+    {
+      "heroId": "b2-kaede",
+      "modelKeys": [
+        "ou99.474258",
+        "ou99.474258-standard"
+      ],
+      "primitive": 3,
+      "signal": "suspect second-skeleton",
+      "state": "pending-component-identification"
+    },
+    {
+      "heroId": "b2-haga",
+      "modelKeys": [
+        "ou99.495015",
+        "ou99.495015-standard"
+      ],
+      "primitive": 2,
+      "signal": "gore-joint and floor-slab",
+      "state": "pending-visibility-treatment-with-original-preservation"
+    },
+    {
+      "heroId": "godie-n00b",
+      "modelKeys": [
+        "ou99.496905",
+        "imported.doraemon-cat"
+      ],
+      "primitive": [
+        5,
+        7,
+        14,
+        15,
+        16
+      ],
+      "signal": "offset-floor, second-skeleton and airborne clone",
+      "state": "existing-model-pending-review"
+    }
+  ],
+  "rules": [
+    "Do not remove native pieces, hide suspected weapons, or change immutable versions merely to pass a gate.",
+    "Keep originals and acquired source variants; any accepted visibility correction becomes a separately registered version.",
+    "These findings do not invalidate checksums or backend registration, but do block a claim that every retained model passed full visual acceptance."
+  ],
+  "evidence": "priority-evidence/release-gates/models-check.log"
+}

@@ -1,0 +1,409 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「更改辦公室位置！」\n瞬移到指定合法地點，使跟身週期作業的中心一同移動。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "id": "b2-klaus.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "更改辦公室位置",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+        "params": {
+          "castTimeSec": 0.467
+        },
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「已加入工作佇列！」\n取得 red-comet 排程授權暫態 4 秒，並增加移速 10%；到期必須重新授權。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "duration": 4,
+          "kind": "applyStatus",
+          "moveSpeedMult": 1.1,
+          "statusId": "red-comet"
+        }
+      ],
+      "id": "b2-klaus.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "已加入工作佇列",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "applyTo": "self",
+              "duration": 4,
+              "kind": "applyStatus",
+              "moveSpeedMult": 1.1,
+              "statusId": "red-comet"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.667,
+      "castType": "self",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「移動式背景工作！」\n自己周身執行 3 秒週期傷害，每 0.5 秒重新尋找敵人；不是替玩家自動走位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "anchor": "caster",
+          "count": 6,
+          "delaySec": 0.5,
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "中",
+                "mult": 0.16666666666666666
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            }
+          ],
+          "intervalSec": 0.5,
+          "kind": "delayed",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "shape": "circle",
+          "side": "enemies",
+          "targetMode": "reresolve"
+        }
+      ],
+      "id": "b2-klaus.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "移動式背景工作",
+      "range": 0.0,
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189",
+        "params": {
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "castTimeSec": 0.667,
+          "damageTier": "中",
+          "damageType": "physical",
+          "durationSec": 3,
+          "intervalSec": 0.5,
+          "radius": 4.5,
+          "radiusTier": "小"
+        },
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「全部執行不要再問！」\n對指定敵人排出 3 次間隔 0.5 秒的極小傷害；每次付款時仍需持有 red-comet，授權到期後不再付款。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": 3,
+          "delaySec": 0.3,
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小"
+              },
+              "condition": {
+                "kind": "status",
+                "statusId": "red-comet",
+                "subject": "self"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "intervalSec": 0.5,
+          "kind": "delayed",
+          "shape": "single",
+          "stopOnCasterDeath": true
+        }
+      ],
+      "id": "b2-klaus.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "全部執行不要再問",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "count": 3,
+              "delaySec": 0.3,
+              "effects": [
+                {
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "red-comet",
+                    "subject": "self"
+                  },
+                  "damageType": "magic",
+                  "kind": "damage"
+                }
+              ],
+              "intervalSec": 0.5,
+              "kind": "delayed",
+              "shape": "single",
+              "stopOnCasterDeath": true
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "marksman",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 29,
+    "agiGrowth": 2.78,
+    "int": 18,
+    "intGrowth": 1.67,
+    "primary": "AGI",
+    "source": "authored",
+    "str": 13,
+    "strGrowth": 1.25
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "覺醒了自動機能｜把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-klaus.ex",
+  "growth": {
+    "ad": 7.6918367346938785,
+    "ap": 0,
+    "armor": 0,
+    "as": 0,
+    "healthRegen": 0.07234693877551021,
+    "manaRegen": 0,
+    "maxHealth": 29.202653061224485,
+    "maxMana": 19.291836734693877,
+    "mr": 1.3198979591836735
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-klaus",
+  "modelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
+  "name": "克勞斯",
+  "origin": "射手",
+  "passiveAbility": "b2-klaus.passive",
+  "role": "marksman",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-klaus.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.06f84bffd4849686b5a832e8e458fc52bc01c585cf25c062",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.487487-7yzc0mtk",
+      "modelSha256": "95da0de26da496ff347279390d42a26c823814f4e9a77959dc29e44c60fff43d",
+      "binarySha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
+      "registeredAt": "2026-09-10T14:45:41.760Z",
+      "source": {
+        "kind": "previous",
+        "character": "克勞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.487487-7yzc0mtk.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.24c681b07af5092a882abc56c1bbd4ff4f402a20931bebb8",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-sbhhkedr-standard",
+      "modelSha256": "48cbff23c8e12e1eb26354b8e6d3e9cee5b13990994b9cc31f2879591af72fc4",
+      "binarySha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
+      "registeredAt": "2026-09-10T14:45:41.769Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.689f7ba0800ee63c56192ca9cd95163249ad898c3008a5b5",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "43f59f9de5e171a28e7066c9f3b89370000d66ae676a77424a79c6ace69eaf60",
+      "binarySha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+      "registeredAt": "2026-09-10T14:45:41.878Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "modelSha256": "9735cdf294928758aeefcdda1f0f91743eb32c8066ff05637a1b550d739db0b3",
+      "binarySha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+      "registeredAt": "2026-09-10T14:48:57.173Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

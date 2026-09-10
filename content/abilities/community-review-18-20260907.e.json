@@ -1,0 +1,67 @@
+{
+  "id": "community-review-18-20260907.e",
+  "name": "〔黃金甲冑〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-18-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供短效護盾，降低正面承受的爆發。\n【待補機制】目前全方向盾；缺正面條件。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": [],
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-18-20260907.e.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-18-20260907.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.pulse",
+      "attachTo": "caster"
+    }
+  ]
+}

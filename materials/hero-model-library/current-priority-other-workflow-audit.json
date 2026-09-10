@@ -1,0 +1,3644 @@
+{
+  "schema": "ggd.current-priority-other-workflow-audit@1",
+  "auditedAt": "2026-09-10T14:19:56.815552+00:00",
+  "scope": "21 named heroes; local other-workflow supplied models and current origin/main defaults, read-only.",
+  "mainCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "oldCentralCheckoutCommit": "4d0aedccda9c37db72cfa4959374447a24af814f",
+  "sourceWorkflowLocalRoot": "/Users/Takuro/GGD-assets",
+  "results": {
+    "heroes": 21,
+    "heroesWithSuppliedOu99Default": 20,
+    "suppliedGlbFiles": 21,
+    "allSuppliedLocalGlbBytesMatchMainGitObjects": true,
+    "originalZipCount": 20,
+    "allOriginalZipCrcPass": true,
+    "nativeExactIdentityClaimsVerified": 0,
+    "stillPlaceholderHeroIds": [
+      "b2-kaiji"
+    ],
+    "additionalSkinHeroes": [
+      "b2-klaus"
+    ],
+    "extraNativeReserveCandidates": 1
+  },
+  "heroes": [
+    {
+      "heroId": "b2-uncle",
+      "name": "異世界舅舅",
+      "mainDefaultModelKey": "ou99.454482",
+      "mainChampionGitPath": "content/champions/b2-uncle.json",
+      "mainChampionGitBlobSha1": "60c5ab8a762396d2c3c0b099d6789fa0786d939b",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell 1",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_454482.glb",
+        "id": "ou99.454482",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-454482",
+          "modelKey": "ou99.454482",
+          "sourceTitle": "光刀女剑二次元",
+          "targetLabel": "異世界舅舅",
+          "sourceUrl": "https://www.ou99.com/thread-454482-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/454482/dwmx0011.glb",
+            "bytes": 2851116,
+            "sha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_454482.glb",
+          "gitBlobSha1": "f681e3ebda01962576dbc8b81ab13a3dca85ff5e",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell 1",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_454482.glb",
+            "id": "ou99.454482",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              103
+            ],
+            "animations": 9,
+            "animationNames": [
+              "Stand",
+              "Walk",
+              "Death",
+              "Attack 1",
+              "Attack 2",
+              "Spell 1",
+              "Spell 2 End",
+              "Spell 3",
+              "Spell 4"
+            ],
+            "multiKeyAnimations": 9,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "454482",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_454482.jpg",
+            "bytes": 2592,
+            "sha256": "ceeba4ffed9046dfa9943776808149709fa5e8c4ed6745cea808a6c502982771"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 9,
+            "joints": 103,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "Stand",
+              "Walk",
+              "Death",
+              "Attack 1"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-uncle",
+            "name": "異世界舅舅",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.454482",
+            "threadId": "454482",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+          "name": "坂本",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+            "glbPath": "assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "bytes": 2405996,
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "mainDefaultModelKey": "ou99.491448",
+      "mainChampionGitPath": "content/champions/b2-boxxo.json",
+      "mainChampionGitBlobSha1": "be974d43553f66676094a187a669c73ddc73f0ff",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack",
+          "cast": "Spell",
+          "death": "Death",
+          "hurt": "Stand Ready",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_491448.glb",
+        "id": "ou99.491448",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-491448",
+          "modelKey": "ou99.491448",
+          "sourceTitle": "逃亡的盗墓女孩",
+          "targetLabel": "轉生成自動販賣機 阿箱＋拉蜜絲",
+          "sourceUrl": "https://www.ou99.com/thread-491448-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/491448/mwwltarndo4f.glb",
+            "bytes": 1354252,
+            "sha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_491448.glb",
+          "gitBlobSha1": "c2f65d08ec808a59733b23b5bab444956e7e41fa",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack",
+              "cast": "Spell",
+              "death": "Death",
+              "hurt": "Stand Ready",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_491448.glb",
+            "id": "ou99.491448",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              62
+            ],
+            "animations": 14,
+            "animationNames": [
+              "Stand",
+              "Walk",
+              "Walk Fast",
+              "Stand Ready",
+              "Death",
+              "Attack",
+              "Attack Slam",
+              "Attack 2",
+              "Spell Slam",
+              "Morph",
+              "Attack 3",
+              "Spell",
+              "Portrait",
+              "¶¯×÷£º½ðÆ¤µ°"
+            ],
+            "multiKeyAnimations": 13,
+            "images": 6,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "491448",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_491448.jpg",
+            "bytes": 2879,
+            "sha256": "77812d4f42895fcb45554ef27a9223b759f051a423dc26df45c63df45ab214f8"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 14,
+            "joints": 62,
+            "meshes": 1,
+            "textures": 6,
+            "clipNames": [
+              "Stand",
+              "Walk",
+              "Walk Fast",
+              "Stand Ready"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-boxxo",
+            "name": "阿箱＋拉蜜絲",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.491448",
+            "threadId": "491448",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.4d64263f3044235d7aecedf3642860c37d061a06d95e0bc5",
+          "name": "POD 機械寵物 06_pod",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.4d64263f3044235d7aecedf3642860c37d061a06d95e0bc5",
+            "glbPath": "assets/models/community/bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f.glb",
+            "sha256": "bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.47ebc46da58908abb37ee42c/b103ca589e963f85/content/assets/models/community/bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.47ebc46da58908abb37ee42c/b103ca589e963f85/content/assets/models/community/bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f.glb",
+            "limitations": [
+              "Pet dance clips adapt attack/cast; no native combat or separate hurt reaction.",
+              "Visual proxy only; character-specific remodeling and composite bodies are not included.",
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.47ebc46da58908abb37ee42c/b103ca589e963f85/content/assets/models/community/bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f.glb",
+            "bytes": 158960,
+            "sha256": "bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json",
+      "scopeGap": "Model is the owner-selected girl proxy. Combined Boxxo/Lammis body plus rear vending machine modification not established by this file/metadata audit."
+    },
+    {
+      "heroId": "b2-elma",
+      "name": "艾爾瑪",
+      "mainDefaultModelKey": "ou99.472038",
+      "mainChampionGitPath": "content/champions/b2-elma.json",
+      "mainChampionGitBlobSha1": "902531b648b1aecde81caaafaadedc7b6fc29501",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell 2",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk Fast"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_472038.glb",
+        "id": "ou99.472038",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-472038",
+          "modelKey": "ou99.472038",
+          "sourceTitle": "圣洁化身戚小姐",
+          "targetLabel": "重騎士以遊戲知識開無雙 艾爾瑪",
+          "sourceUrl": "https://www.ou99.com/thread-472038-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/472038/aqhdba20250503.glb",
+            "bytes": 4182160,
+            "sha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_472038.glb",
+          "gitBlobSha1": "28d337f4b51690533fc130376a680966384d8bef",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell 2",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk Fast"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_472038.glb",
+            "id": "ou99.472038",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              114
+            ],
+            "animations": 7,
+            "animationNames": [
+              "Attack 1",
+              "Attack 4",
+              "Death",
+              "Spell 2",
+              "Stand",
+              "Walk Fast",
+              "QQ1536927470"
+            ],
+            "multiKeyAnimations": 6,
+            "images": 5,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "472038",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_472038.jpg",
+            "bytes": 2382,
+            "sha256": "4d7bd1fc0fffda0c59f9f2a09d446524ff7e51d9f237e683eff3752c94552d19"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 7,
+            "joints": 114,
+            "meshes": 1,
+            "textures": 5,
+            "clipNames": [
+              "Attack 1",
+              "Attack 4",
+              "Death",
+              "Spell 2"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-elma",
+            "name": "艾爾瑪",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.472038",
+            "threadId": "472038",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+          "name": "阿尔冯斯",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+            "glbPath": "assets/models/community/595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469.glb",
+            "sha256": "595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.f7b821d40970ffb5bd6fa542/f44b836d28a4435d/content/assets/models/community/595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.f7b821d40970ffb5bd6fa542/f44b836d28a4435d/content/assets/models/community/595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.f7b821d40970ffb5bd6fa542/f44b836d28a4435d/content/assets/models/community/595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469.glb",
+            "bytes": 652744,
+            "sha256": "595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-makoto",
+      "name": "深澄真",
+      "mainDefaultModelKey": "ou99.478642",
+      "mainChampionGitPath": "content/champions/b2-makoto.json",
+      "mainChampionGitBlobSha1": "30afd88ebbce7671ba091a97b2a1ffdffcd8d0f7",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell One",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_478642.glb",
+        "id": "ou99.478642",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-478642",
+          "modelKey": "ou99.478642",
+          "sourceTitle": "女刺客双见凛",
+          "targetLabel": "月光下的異世界之旅 深澄真",
+          "sourceUrl": "https://www.ou99.com/thread-478642-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/478642/yx-l-lys.glb",
+            "bytes": 2468404,
+            "sha256": "a23e59b9443a980aa767f91e19fb83249542816760a7c3d0962b03b5a7cc7b34"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_478642.glb",
+          "gitBlobSha1": "e5f3f677c957ec512f27564359c6702d798eb37f",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell One",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_478642.glb",
+            "id": "ou99.478642",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              75
+            ],
+            "animations": 13,
+            "animationNames": [
+              "Stand",
+              "Spell Four",
+              "Spell Eight",
+              "Spell Nine",
+              "Walk",
+              "Walk fast",
+              "Death",
+              "Spell One",
+              "Attack 1",
+              "Attack 2",
+              "Spell Seven",
+              "Spell Six",
+              "Spell Ten"
+            ],
+            "multiKeyAnimations": 13,
+            "images": 1,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "478642",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_478642.jpg",
+            "bytes": 2697,
+            "sha256": "694889c1d5b6190be0c8458c3dc09195e548578f38589520fba3dcd28c6e7eb3"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 13,
+            "joints": 75,
+            "meshes": 1,
+            "textures": 1,
+            "clipNames": [
+              "Stand",
+              "Spell Four",
+              "Spell Eight",
+              "Spell Nine"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-makoto",
+            "name": "深澄真",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.478642",
+            "threadId": "478642",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+          "name": "司波达也",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+            "glbPath": "assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "bytes": 783968,
+            "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-noor",
+      "name": "諾爾",
+      "mainDefaultModelKey": "ou99.453949",
+      "mainChampionGitPath": "content/champions/b2-noor.json",
+      "mainChampionGitBlobSha1": "4c031d408b6122444a8733de01d00ba46e86454a",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell One",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_453949.glb",
+        "id": "ou99.453949",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-453949",
+          "modelKey": "ou99.453949",
+          "sourceTitle": "狂刀风衣男",
+          "targetLabel": "我要招架一切 諾爾",
+          "sourceUrl": "https://www.ou99.com/thread-453949-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/453949/yxmx20.glb",
+            "bytes": 3634812,
+            "sha256": "e05aa7a67d3e4ac91484584bf40a66a10b27c06c0ce8d784b9b4eb7198d225be"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_453949.glb",
+          "gitBlobSha1": "1a8c50044dc4541d7e96af55d6cbabeb1af8ab86",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell One",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_453949.glb",
+            "id": "ou99.453949",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              61
+            ],
+            "animations": 9,
+            "animationNames": [
+              "Stand",
+              "Attack 1",
+              "Attack 2",
+              "Spell Eight",
+              "Spell Four",
+              "Spell Nine",
+              "Spell One",
+              "Death",
+              "Walk"
+            ],
+            "multiKeyAnimations": 9,
+            "images": 5,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "453949",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_453949.jpg",
+            "bytes": 2068,
+            "sha256": "0808d8a266189a0cda9d72d570ac894af61068555753a60e20ee9fd2f8d2f3f1"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 9,
+            "joints": 61,
+            "meshes": 1,
+            "textures": 5,
+            "clipNames": [
+              "Stand",
+              "Attack 1",
+              "Attack 2",
+              "Spell Eight"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-noor",
+            "name": "諾爾",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.453949",
+            "threadId": "453949",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+          "name": "赫拉克勒斯",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+            "glbPath": "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+            "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.550c1060c9dfa0f2c6cd0e63/5efe4cbe768bf7e0/content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.550c1060c9dfa0f2c6cd0e63/5efe4cbe768bf7e0/content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.550c1060c9dfa0f2c6cd0e63/5efe4cbe768bf7e0/content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+            "bytes": 881000,
+            "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+            "matchesIndexedSha256": true
+          }
+        },
+        {
+          "modelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
+          "name": "Cloud 克勞德模型",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
+            "glbPath": "assets/models/community/595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea.glb",
+            "sha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.dc5874e08aaa2980f8287bdd/d6c718c67f1c69b0/content/assets/models/community/595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.dc5874e08aaa2980f8287bdd/d6c718c67f1c69b0/content/assets/models/community/595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea.glb",
+            "limitations": [
+              "保留借用模型身形；未重製角色專屬外觀或複合身體。",
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.dc5874e08aaa2980f8287bdd/d6c718c67f1c69b0/content/assets/models/community/595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea.glb",
+            "bytes": 685580,
+            "sha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-touka",
+      "name": "托卡・史考特",
+      "mainDefaultModelKey": "ou99.459257",
+      "mainChampionGitPath": "content/champions/b2-touka.json",
+      "mainChampionGitBlobSha1": "6a87c85f1922abf65d0cce18c787c3e4938d15a9",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 1",
+          "cast": "spell two",
+          "death": "death",
+          "hurt": "stand ready",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_459257.glb",
+        "id": "ou99.459257",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-459257",
+          "modelKey": "ou99.459257",
+          "sourceTitle": "白西装七夜志贵",
+          "targetLabel": "勇者死了 托卡・史考特",
+          "sourceUrl": "https://www.ou99.com/thread-459257-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/459257/qiye.glb",
+            "bytes": 5408996,
+            "sha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_459257.glb",
+          "gitBlobSha1": "cd5ffdaea3479e1f6f4003824750cc463d5ff047",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 1",
+              "cast": "spell two",
+              "death": "death",
+              "hurt": "stand ready",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_459257.glb",
+            "id": "ou99.459257",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              101
+            ],
+            "animations": 43,
+            "animationNames": [
+              "dongzuo 1",
+              "dongzuo 2",
+              "dongzuo 3",
+              "dongzuo 4",
+              "dongzuo 5",
+              "stand ready",
+              "attack 1",
+              "attack 2",
+              "walk",
+              "death",
+              "spell two",
+              "spell three",
+              "spell four",
+              "spell one",
+              "spell slam one",
+              "spell slam three",
+              "spell slam two",
+              "spell slam four",
+              "spell slam five",
+              "spell throw two",
+              "spell throw one",
+              "spell throw three",
+              "spell throw four",
+              "spell channel three",
+              "spell throw five",
+              "spell channel one",
+              "spell channel two",
+              "stand hit 1",
+              "stand hit 2",
+              "stand",
+              "walk gold",
+              "spell channel four",
+              "spell channel five",
+              "spell zhanji",
+              "spell zhanli",
+              "spell zhaiyanzhao",
+              "spell five",
+              "ciji",
+              "tiren",
+              "chuairen",
+              "aoyi1",
+              "aoyi2",
+              "aiyo3"
+            ],
+            "multiKeyAnimations": 43,
+            "images": 4,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "459257",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_459257.jpg",
+            "bytes": 2502,
+            "sha256": "c6e2aabdbbc3d98d645b7b4692fdc43042f63e5dce21098df4a4f41df57a5cae"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 43,
+            "joints": 101,
+            "meshes": 1,
+            "textures": 4,
+            "clipNames": [
+              "dongzuo 1",
+              "dongzuo 2",
+              "dongzuo 3",
+              "dongzuo 4"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-touka",
+            "name": "托卡・史考特",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.459257",
+            "threadId": "459257",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+          "name": "绯村剑心",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+            "glbPath": "assets/models/community/9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077.glb",
+            "sha256": "9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ca573ffd30ec4008a2681d85/97d0b2b50d9e8cb1/content/assets/models/community/9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ca573ffd30ec4008a2681d85/97d0b2b50d9e8cb1/content/assets/models/community/9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ca573ffd30ec4008a2681d85/97d0b2b50d9e8cb1/content/assets/models/community/9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077.glb",
+            "bytes": 1290540,
+            "sha256": "9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-haga",
+      "name": "羽賀",
+      "mainDefaultModelKey": "ou99.495015",
+      "mainChampionGitPath": "content/champions/b2-haga.json",
+      "mainChampionGitBlobSha1": "95cd828b89f3c8b198919b85c11de13c20401c17",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack",
+          "cast": "Spell",
+          "death": "Death",
+          "hurt": "Stand Ready",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_495015.glb",
+        "id": "ou99.495015",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-495015",
+          "modelKey": "ou99.495015",
+          "sourceTitle": "海星动画人",
+          "targetLabel": "這個世界漏洞百出 羽賀",
+          "sourceUrl": "https://www.ou99.com/thread-495015-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/495015/patrick2.glb",
+            "bytes": 649672,
+            "sha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_495015.glb",
+          "gitBlobSha1": "5a1e7f3d320f0e3e61f86a28adf559ba92c88249",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack",
+              "cast": "Spell",
+              "death": "Death",
+              "hurt": "Stand Ready",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_495015.glb",
+            "id": "ou99.495015",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              55
+            ],
+            "animations": 13,
+            "animationNames": [
+              "Stand",
+              "Stand 2",
+              "Stand 3",
+              "Spell",
+              "Stand Ready",
+              "Attack",
+              "Attack 2",
+              "Spell Slam",
+              "Sleep",
+              "Death",
+              "Decay Flesh",
+              "Decay Bone",
+              "Walk"
+            ],
+            "multiKeyAnimations": 13,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "495015",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_495015.jpg",
+            "bytes": 2743,
+            "sha256": "50f605dbe374af33fb3e9beeef86b34752210103f474c6468367ca181e3fe80e"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 13,
+            "joints": 55,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "Stand",
+              "Stand 2",
+              "Stand 3",
+              "Spell"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-haga",
+            "name": "羽賀",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.495015",
+            "threadId": "495015",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+          "name": "坂本",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+            "glbPath": "assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "bytes": 2405996,
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-keyaru",
+      "name": "凱亞爾",
+      "mainDefaultModelKey": "ou99.458777",
+      "mainChampionGitPath": "content/champions/b2-keyaru.json",
+      "mainChampionGitBlobSha1": "6c4666fd4b5386c04d883d285a7c21c3f119d2be",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell One",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_458777.glb",
+        "id": "ou99.458777",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-458777",
+          "modelKey": "ou99.458777",
+          "sourceTitle": "假面绅士",
+          "targetLabel": "回復術士的重來人生 凱亞爾",
+          "sourceUrl": "https://www.ou99.com/thread-458777-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/458777/file.glb",
+            "bytes": 2272724,
+            "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_458777.glb",
+          "gitBlobSha1": "5e83244d8bb246f4714335754bcec6361f680105",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell One",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_458777.glb",
+            "id": "ou99.458777",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              67
+            ],
+            "animations": 12,
+            "animationNames": [
+              "Stand",
+              "Attack 1",
+              "Attack 2",
+              "Attack Slam",
+              "Spell Eight",
+              "Spell Four",
+              "Spell Nine",
+              "Spell One",
+              "Spell Seven",
+              "Spell Six",
+              "Death",
+              "Walk"
+            ],
+            "multiKeyAnimations": 12,
+            "images": 7,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "458777",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_458777.jpg",
+            "bytes": 2731,
+            "sha256": "776b5b354b07440f3fffc882ef81c2a8c9b24b24e93da3e00c893f0e40d9c910"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 12,
+            "joints": 67,
+            "meshes": 1,
+            "textures": 7,
+            "clipNames": [
+              "Stand",
+              "Attack 1",
+              "Attack 2",
+              "Attack Slam"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-keyaru",
+            "name": "凱亞爾",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.458777",
+            "threadId": "458777",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+          "name": "李小狼",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+            "glbPath": "assets/models/community/7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1.glb",
+            "sha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.6dc3ecdb1a61a91cbdfd6b6f/4e90f6f25ba19881/content/assets/models/community/7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.6dc3ecdb1a61a91cbdfd6b6f/4e90f6f25ba19881/content/assets/models/community/7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.6dc3ecdb1a61a91cbdfd6b6f/4e90f6f25ba19881/content/assets/models/community/7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1.glb",
+            "bytes": 762644,
+            "sha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-kaede",
+      "name": "楓",
+      "mainDefaultModelKey": "ou99.474258",
+      "mainChampionGitPath": "content/champions/b2-kaede.json",
+      "mainChampionGitBlobSha1": "ac09f7ca603be5e51d1dbd45de47f567fe7644c5",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 1",
+          "cast": "spell one",
+          "death": "Death",
+          "hurt": "Stand Ready",
+          "idle": "Stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_474258.glb",
+        "id": "ou99.474258",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-474258",
+          "modelKey": "ou99.474258",
+          "sourceTitle": "绯红女剑校服女",
+          "targetLabel": "異世界転移魔法剣士 楓",
+          "sourceUrl": "https://www.ou99.com/thread-474258-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/474258/file00012699.glb",
+            "bytes": 1387184,
+            "sha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_474258.glb",
+          "gitBlobSha1": "f61b1caedf14b95ce0a75410981c2ca5de381186",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 1",
+              "cast": "spell one",
+              "death": "Death",
+              "hurt": "Stand Ready",
+              "idle": "Stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_474258.glb",
+            "id": "ou99.474258",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              75
+            ],
+            "animations": 10,
+            "animationNames": [
+              "Stand Ready",
+              "attack 1",
+              "attack 2",
+              "spell one",
+              "spell two",
+              "spell three",
+              "Spell Slam",
+              "Death",
+              "walk",
+              "Stand"
+            ],
+            "multiKeyAnimations": 10,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "474258",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_474258.jpg",
+            "bytes": 2506,
+            "sha256": "b4464f97c261963aefe581bc309100b889819c37d1df5bbccce1c9339985666a"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 10,
+            "joints": 75,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "Stand Ready",
+              "attack 1",
+              "attack 2",
+              "spell one"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-kaede",
+            "name": "楓",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.474258",
+            "threadId": "474258",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+          "name": "黑衣剑士",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+            "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "bytes": 1104488,
+            "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json",
+      "identityDisambiguation": "楓 is b2-kaede (異世界転移魔法剣士), distinct from 梅普露 b2-maple; maple-v1 does not satisfy this row."
+    },
+    {
+      "heroId": "b2-matthias",
+      "name": "馬提亞斯",
+      "mainDefaultModelKey": "ou99.465884",
+      "mainChampionGitPath": "content/champions/b2-matthias.json",
+      "mainChampionGitBlobSha1": "c1de53e2693e51a80e20c0678e8e04005d1d2fd7",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 1",
+          "cast": "spell two",
+          "death": "death",
+          "hurt": "stand",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_465884.glb",
+        "id": "ou99.465884",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-465884",
+          "modelKey": "ou99.465884",
+          "sourceTitle": "休闲西装版七夜智贵",
+          "targetLabel": "失格紋的最強賢者 馬提亞斯",
+          "sourceUrl": "https://www.ou99.com/thread-465884-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/465884/qiye345.glb",
+            "bytes": 2720944,
+            "sha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_465884.glb",
+          "gitBlobSha1": "9e09077a08440b0941f3bc037f02e0b5f45c7e23",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 1",
+              "cast": "spell two",
+              "death": "death",
+              "hurt": "stand",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_465884.glb",
+            "id": "ou99.465884",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              67
+            ],
+            "animations": 30,
+            "animationNames": [
+              "dongzuo 1",
+              "dongzuo 2",
+              "dongzuo 3",
+              "dongzuo 4",
+              "dongzuo 5",
+              "stand",
+              "attack 1",
+              "attack 2",
+              "walk",
+              "death",
+              "spell two",
+              "spell three",
+              "spell four",
+              "spell one",
+              "spell slam one",
+              "spell slam three",
+              "spell slam two",
+              "spell slam four",
+              "spell slam five",
+              "spell throw two",
+              "spell throw one",
+              "spell throw three",
+              "spell throw four",
+              "spell channel three",
+              "spell throw five",
+              "spell channel one",
+              "spell channel two",
+              "stand hit 1",
+              "stand hit 2",
+              "spell channel four"
+            ],
+            "multiKeyAnimations": 30,
+            "images": 3,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "465884",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_465884.jpg",
+            "bytes": 1949,
+            "sha256": "6f65ae1bfcc19722f7b77a17eedbf3d2b303f39709c59d12b58cb64bacee7a51"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 30,
+            "joints": 67,
+            "meshes": 1,
+            "textures": 3,
+            "clipNames": [
+              "dongzuo 1",
+              "dongzuo 2",
+              "dongzuo 3",
+              "dongzuo 4"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-matthias",
+            "name": "馬提亞斯",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.465884",
+            "threadId": "465884",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+          "name": "司波达也",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+            "glbPath": "assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "bytes": 783968,
+            "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-kaiji",
+      "name": "伊藤開司",
+      "mainDefaultModelKey": "champ.thorne",
+      "mainChampionGitPath": "content/champions/b2-kaiji.json",
+      "mainChampionGitBlobSha1": "305720473383a470dcecc02715cef70f84c9d676",
+      "mainModel": {
+        "attachPoints": {
+          "overhead": {
+            "x": 0,
+            "y": 1.95,
+            "z": 0
+          },
+          "rightHand": {
+            "x": 0.34,
+            "y": 0.73,
+            "z": 0.11
+          }
+        },
+        "clipMap": {
+          "attack": "attack",
+          "cast": "cast",
+          "death": "death",
+          "hurt": "hurt",
+          "idle": "idle",
+          "run": "run"
+        },
+        "collisionRadius": 0.6,
+        "glbPath": "assets/models/champions/blocky-knight.glb",
+        "id": "champ.thorne",
+        "scale": 1,
+        "schema": "model@1",
+        "teamTintMaterials": []
+      },
+      "suppliedModelCount": 0,
+      "suppliedCandidates": [],
+      "status": "still-original-placeholder-in-main-no-new-model-mapping-found",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+          "name": "黑",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+            "glbPath": "assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "sha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387/content/assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387/content/assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387/content/assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "bytes": 658940,
+            "sha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+            "matchesIndexedSha256": true
+          }
+        },
+        {
+          "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+          "name": "坂本",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+            "glbPath": "assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "bytes": 2405996,
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json",
+      "placeholderFile": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/champions/blocky-knight.glb",
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810"
+      }
+    },
+    {
+      "heroId": "b2-fushi",
+      "name": "不死",
+      "mainDefaultModelKey": "ou99.467227",
+      "mainChampionGitPath": "content/champions/b2-fushi.json",
+      "mainChampionGitBlobSha1": "ac71103c3043b6672b0b7803bc7c227708351224",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 1",
+          "cast": "spell",
+          "death": "stand",
+          "hurt": "stand",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_467227.glb",
+        "id": "ou99.467227",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-467227",
+          "modelKey": "ou99.467227",
+          "sourceTitle": "天使可爱小女孩派蒙",
+          "targetLabel": "致不滅的你 不死",
+          "sourceUrl": "https://www.ou99.com/thread-467227-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/467227/file.glb",
+            "bytes": 2623940,
+            "sha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_467227.glb",
+          "gitBlobSha1": "be45afdf233ea07e88eee79d448e8c5c66888ca3",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 1",
+              "cast": "spell",
+              "death": "stand",
+              "hurt": "stand",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_467227.glb",
+            "id": "ou99.467227",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              61
+            ],
+            "animations": 4,
+            "animationNames": [
+              "stand",
+              "walk",
+              "attack 1",
+              "spell"
+            ],
+            "multiKeyAnimations": 4,
+            "images": 4,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "467227",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_467227.jpg",
+            "bytes": 2933,
+            "sha256": "b396b99a546e970e57030a58c88e6a5cf6a2febedc4e08bd578f943c1543dcf1"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 4,
+            "joints": 61,
+            "meshes": 1,
+            "textures": 4,
+            "clipNames": [
+              "stand",
+              "walk",
+              "attack 1",
+              "spell"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-fushi",
+            "name": "不死",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.467227",
+            "threadId": "467227",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+          "name": "坂田银时",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+            "glbPath": "assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+            "sha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.2edc9b2b73e70d1555474f3f/d57c9b7580d74150/content/assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.2edc9b2b73e70d1555474f3f/d57c9b7580d74150/content/assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.2edc9b2b73e70d1555474f3f/d57c9b7580d74150/content/assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+            "bytes": 958364,
+            "sha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-orphen",
+      "name": "歐菲",
+      "mainDefaultModelKey": "ou99.496452",
+      "mainChampionGitPath": "content/champions/b2-orphen.json",
+      "mainChampionGitBlobSha1": "bcf74115f9d69d46a1dbe67f8b4f7250130ef281",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 1",
+          "cast": "spell",
+          "death": "death",
+          "hurt": "stand ready",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_496452.glb",
+        "id": "ou99.496452",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-496452",
+          "modelKey": "ou99.496452",
+          "sourceTitle": "甲贺忍蛙",
+          "targetLabel": "魔術士歐菲",
+          "sourceUrl": "https://www.ou99.com/thread-496452-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/496452/file-000758.glb",
+            "bytes": 1155340,
+            "sha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_496452.glb",
+          "gitBlobSha1": "2ee1000470d33594fb7ff9353b3c26972188ad09",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 1",
+              "cast": "spell",
+              "death": "death",
+              "hurt": "stand ready",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_496452.glb",
+            "id": "ou99.496452",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              44
+            ],
+            "animations": 8,
+            "animationNames": [
+              "stand",
+              "walk",
+              "stand ready",
+              "attack 1",
+              "attack 2",
+              "attack slam",
+              "spell",
+              "death"
+            ],
+            "multiKeyAnimations": 8,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "496452",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_496452.jpg",
+            "bytes": 3427,
+            "sha256": "8f2241d0843f1840fae1a72d137e42d1d1f6b365e5557d3a329e1b3f1bfb8703"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 8,
+            "joints": 44,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "stand",
+              "walk",
+              "stand ready",
+              "attack 1"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-orphen",
+            "name": "歐菲",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.496452",
+            "threadId": "496452",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+          "name": "黑",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+            "glbPath": "assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "sha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387/content/assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387/content/assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387/content/assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+            "bytes": 658940,
+            "sha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-klaus",
+      "name": "克勞斯",
+      "mainDefaultModelKey": "ou99.487487-7yzc0mtk",
+      "mainChampionGitPath": "content/champions/b2-klaus.json",
+      "mainChampionGitBlobSha1": "984c67ea26d1388755b27a5796f62b897456a156",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 1",
+          "cast": "spell channel",
+          "death": "death",
+          "hurt": "stand",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+        "id": "ou99.487487-7yzc0mtk",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 2,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-487487-7yzc0mtk",
+          "modelKey": "ou99.487487-7yzc0mtk",
+          "sourceTitle": "银发动漫正装男",
+          "targetLabel": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+          "sourceUrl": "https://www.ou99.com/thread-487487-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/487487/7yzc0mtk.glb",
+            "bytes": 706356,
+            "sha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+          "gitBlobSha1": "dee91cbc44229868373fe96c7d9fa6828f07712c",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 1",
+              "cast": "spell channel",
+              "death": "death",
+              "hurt": "stand",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+            "id": "ou99.487487-7yzc0mtk",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              102
+            ],
+            "animations": 5,
+            "animationNames": [
+              "stand",
+              "walk",
+              "attack 1",
+              "spell channel",
+              "death"
+            ],
+            "multiKeyAnimations": 5,
+            "images": 3,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "487487",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_487487-7yzc0mtk.jpg",
+            "bytes": 2076,
+            "sha256": "4782ea733ab5f7b52330b21e52ce7aab923d1177095cb1fc135f5d4890214c70"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 5,
+            "joints": 102,
+            "meshes": 1,
+            "textures": 3,
+            "clipNames": [
+              "stand",
+              "walk",
+              "attack 1",
+              "spell channel"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-klaus",
+            "name": "克勞斯",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.487487-7yzc0mtk",
+            "threadId": "487487",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        },
+        {
+          "sourceId": "ou99-487487-sbhhkedr",
+          "modelKey": "ou99.487487-sbhhkedr",
+          "sourceTitle": "银发动漫正装男",
+          "targetLabel": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+          "sourceUrl": "https://www.ou99.com/thread-487487-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": false,
+          "skinIds": [
+            "skin.b2-klaus.487487sbhhkedr"
+          ],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/487487/sbhhkedr.glb",
+            "bytes": 1000240,
+            "sha256": "0a5041838fe595b877abd29cfceb353f475e8f9abc93135b1d0160f8a1d4059b"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_487487-sbhhkedr.glb",
+          "gitBlobSha1": "e8d8a934379c04d5d62457b5da56dfc5e6ffae6f",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_487487-sbhhkedr.glb",
+            "id": "ou99.487487-sbhhkedr",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              73
+            ],
+            "animations": 6,
+            "animationNames": [
+              "Walk",
+              "Stand",
+              "Attack 1",
+              "Attack 2",
+              "Death",
+              "Spell"
+            ],
+            "multiKeyAnimations": 6,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "487487",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_487487-sbhhkedr.jpg",
+            "bytes": 1980,
+            "sha256": "334f9dc2aa20edecdcd9ab3f3a043f96d0b729764ee88683f0ac26cff78b72e3"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 6,
+            "joints": 73,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "Walk",
+              "Stand",
+              "Attack 1",
+              "Attack 2"
+            ]
+          },
+          "mainWiringEntry": null
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+          "name": "司波达也",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+            "glbPath": "assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390/content/assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+            "bytes": 783968,
+            "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-luckyman",
+      "name": "幸運超人",
+      "mainDefaultModelKey": "ou99.457594",
+      "mainChampionGitPath": "content/champions/b2-luckyman.json",
+      "mainChampionGitBlobSha1": "53d1b242251bc49befc6297ad4f722b4d76b6c81",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack 2",
+          "cast": "spell one",
+          "death": "death",
+          "hurt": "stand ready",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_457594.glb",
+        "id": "ou99.457594",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-457594",
+          "modelKey": "ou99.457594",
+          "sourceTitle": "雷欧·凹凸曼无披风版",
+          "targetLabel": "幸運超人",
+          "sourceUrl": "https://www.ou99.com/thread-457594-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/457594/leo-m.glb",
+            "bytes": 736904,
+            "sha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_457594.glb",
+          "gitBlobSha1": "87dc7725884bef8c19d929b07f42624f26410419",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack 2",
+              "cast": "spell one",
+              "death": "death",
+              "hurt": "stand ready",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_457594.glb",
+            "id": "ou99.457594",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              34
+            ],
+            "animations": 25,
+            "animationNames": [
+              "stand",
+              "stand 2",
+              "walk",
+              "stand ready",
+              "attack 2",
+              "attack 1",
+              "attack 3",
+              "spell one",
+              "spell two",
+              "spell three",
+              "spell five",
+              "spell channel",
+              "spell channel one",
+              "spell channel two",
+              "spell channel three",
+              "spell channel four",
+              "animated: Katzura Rin",
+              "spell channel five",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "death",
+              "New"
+            ],
+            "multiKeyAnimations": 24,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "457594",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_457594.jpg",
+            "bytes": 2287,
+            "sha256": "cb62cc80eedcf4f3f3eb906a3c2ed6387904a1ca30ada9040d5bdcaf8ffe1fe8"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 25,
+            "joints": 34,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "stand",
+              "stand 2",
+              "walk",
+              "stand ready"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-luckyman",
+            "name": "幸運超人",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.457594",
+            "threadId": "457594",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+          "name": "埼玉",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+            "glbPath": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+            "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.01110beb6cdcbc910793f1b2/f57c1e4763d1508a/content/assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.01110beb6cdcbc910793f1b2/f57c1e4763d1508a/content/assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.01110beb6cdcbc910793f1b2/f57c1e4763d1508a/content/assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+            "bytes": 852356,
+            "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-nube",
+      "name": "鵺野鳴介",
+      "mainDefaultModelKey": "ou99.487484",
+      "mainChampionGitPath": "content/champions/b2-nube.json",
+      "mainChampionGitBlobSha1": "00f97721dfd51662f32b472a2ee5865b29c256e9",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 2",
+          "cast": "Spell",
+          "death": "Death",
+          "hurt": "Stand ready",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_487484.glb",
+        "id": "ou99.487484",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-487484",
+          "modelKey": "ou99.487484",
+          "sourceTitle": "中洲队潇洒哥",
+          "targetLabel": "靈異教師神眉 鵺野鳴介",
+          "sourceUrl": "https://www.ou99.com/thread-487484-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/487484/bsxwtej17g2v.glb",
+            "bytes": 1458232,
+            "sha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_487484.glb",
+          "gitBlobSha1": "f96ce50fa39675ac6cde943a6d3cbcac9aa4ae8b",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 2",
+              "cast": "Spell",
+              "death": "Death",
+              "hurt": "Stand ready",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_487484.glb",
+            "id": "ou99.487484",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              55
+            ],
+            "animations": 10,
+            "animationNames": [
+              "Stand",
+              "Walk",
+              "Stand ready",
+              "Attack 2",
+              "Attack 1",
+              "Attack 3",
+              "Spell",
+              "Spell two",
+              "Death",
+              "Dissipate"
+            ],
+            "multiKeyAnimations": 10,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "487484",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_487484.jpg",
+            "bytes": 1733,
+            "sha256": "1e3c7ac282bf3a2156a98a115d2808ef820f2e5341dd133e18ede2530aba0ef0"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 10,
+            "joints": 55,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "Stand",
+              "Walk",
+              "Stand ready",
+              "Attack 2"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-nube",
+            "name": "鵺野鳴介",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.487484",
+            "threadId": "487484",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+          "name": "坂本",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+            "glbPath": "assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5/content/assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+            "bytes": 2405996,
+            "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-aladdin",
+      "name": "阿拉丁",
+      "mainDefaultModelKey": "ou99.473324",
+      "mainChampionGitPath": "content/champions/b2-aladdin.json",
+      "mainChampionGitBlobSha1": "96a824fa4704b4f849ace672236cb915d1a9fe05",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell one",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_473324.glb",
+        "id": "ou99.473324",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-473324",
+          "modelKey": "ou99.473324",
+          "sourceTitle": "龙族亚瑟王",
+          "targetLabel": "魔笛 MAGI 阿拉丁",
+          "sourceUrl": "https://www.ou99.com/thread-473324-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/473324/fyiqz720250503.glb",
+            "bytes": 1650264,
+            "sha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_473324.glb",
+          "gitBlobSha1": "475c9cde6dd8684820ebd8645740af662b990fcf",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell one",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_473324.glb",
+            "id": "ou99.473324",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              59
+            ],
+            "animations": 7,
+            "animationNames": [
+              "Attack 1",
+              "Attack 2",
+              "Stand",
+              "Walk",
+              "Death",
+              "Spell one",
+              "Spell two"
+            ],
+            "multiKeyAnimations": 7,
+            "images": 7,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "473324",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_473324.jpg",
+            "bytes": 2702,
+            "sha256": "9ce370e81e3be80b1a543679871c2065262df658a38254fd4f9ba2a2dbcc86a5"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 7,
+            "joints": 59,
+            "meshes": 1,
+            "textures": 7,
+            "clipNames": [
+              "Attack 1",
+              "Attack 2",
+              "Stand",
+              "Walk"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-aladdin",
+            "name": "阿拉丁",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.473324",
+            "threadId": "473324",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230",
+          "name": "小悟空",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230",
+            "glbPath": "assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb",
+            "sha256": "32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.d2f724a650d13c43105fee70/93f7b199125f8fc4/content/assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.d2f724a650d13c43105fee70/93f7b199125f8fc4/content/assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.d2f724a650d13c43105fee70/93f7b199125f8fc4/content/assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb",
+            "bytes": 576712,
+            "sha256": "32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "mainDefaultModelKey": "ou99.456917",
+      "mainChampionGitPath": "content/champions/b2-ned.json",
+      "mainChampionGitBlobSha1": "609d781c44d6efd1d53fb72d140ae11ba81e911c",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack -1",
+          "cast": "Spell One",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_456917.glb",
+        "id": "ou99.456917",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-456917",
+          "modelKey": "ou99.456917",
+          "sourceTitle": "蛤蟆蘸酱柯松剑客",
+          "targetLabel": "AVARTH 青蛙劍士 Ned",
+          "sourceUrl": "https://www.ou99.com/thread-456917-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/456917/file.glb",
+            "bytes": 897596,
+            "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_456917.glb",
+          "gitBlobSha1": "8c946a9f89393136c61d815afbae93d1f084baa1",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack -1",
+              "cast": "Spell One",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_456917.glb",
+            "id": "ou99.456917",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              34
+            ],
+            "animations": 8,
+            "animationNames": [
+              "Stand",
+              "Walk",
+              "Attack -1",
+              "Attack -2",
+              "Spell One",
+              "Death",
+              "±¾Ä£ÐÍÓÉÍõÕßº½º£×÷ÕßGodBoy(QQ:724526101)ÖÆ×÷",
+              "Î´¾­ÔÊÐí½ûÖ¹·ÖÏíÓëÊ¹ÓÃ"
+            ],
+            "multiKeyAnimations": 6,
+            "images": 1,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "456917",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_456917.jpg",
+            "bytes": 3636,
+            "sha256": "863341357da38f2b9b501b1092c2c02c26c3d84f5bc43421d3438726f3bac576"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 8,
+            "joints": 34,
+            "meshes": 1,
+            "textures": 1,
+            "clipNames": [
+              "Stand",
+              "Walk",
+              "Attack -1",
+              "Attack -2"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "b2-ned",
+            "name": "青蛙劍士 Ned",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.456917",
+            "threadId": "456917",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": null,
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+          "name": "妙蛙種子模型",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+            "glbPath": "assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
+            "sha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.8c760ab364722f6d7cce619e/7150e44aa1445561/content/assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.8c760ab364722f6d7cce619e/7150e44aa1445561/content/assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
+            "limitations": [
+              "保留借用模型身形；未重製角色專屬外觀或複合身體。",
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.8c760ab364722f6d7cce619e/7150e44aa1445561/content/assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
+            "bytes": 375904,
+            "sha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+            "matchesIndexedSha256": true
+          }
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "mainDefaultModelKey": "ou99.498214",
+      "mainChampionGitPath": "content/champions/community-review-30-20260907.json",
+      "mainChampionGitBlobSha1": "29e72b8ce54e249db6c2c7f1d735613617ab11ab",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell two",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_498214.glb",
+        "id": "ou99.498214",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-498214",
+          "modelKey": "ou99.498214",
+          "sourceTitle": "可爱娃娃",
+          "targetLabel": "尼古貓貓",
+          "sourceUrl": "https://www.ou99.com/thread-498214-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/498214/file-001600.glb",
+            "bytes": 1806536,
+            "sha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_498214.glb",
+          "gitBlobSha1": "c3ad7df892c54ca5df75ba564ba2bb9d13a4b290",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell two",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_498214.glb",
+            "id": "ou99.498214",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              31
+            ],
+            "animations": 9,
+            "animationNames": [
+              "Stand",
+              "Walk",
+              "Attack 1",
+              "Attack 2",
+              "Spell two",
+              "Spell three",
+              "Spell one",
+              "Death",
+              "Spell slam"
+            ],
+            "multiKeyAnimations": 9,
+            "images": 1,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "498214",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_498214.jpg",
+            "bytes": 3352,
+            "sha256": "a0302d0fe4ee6d49bdbac582df5a0c87ea1112ae19d6f4a1512613afd50081e1"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 9,
+            "joints": 31,
+            "meshes": 1,
+            "textures": 1,
+            "clipNames": [
+              "Stand",
+              "Walk",
+              "Attack 1",
+              "Attack 2"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "community-review-30-20260907",
+            "name": "尼古貓貓",
+            "oldModelKey": "champ.sela",
+            "newModelKey": "ou99.498214",
+            "threadId": "498214",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": "champ.sela",
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+          "name": "玉藻前",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+            "glbPath": "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+            "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.70385886335b0f9fcc5549ef/1448e3a332e5392f/content/assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.70385886335b0f9fcc5549ef/1448e3a332e5392f/content/assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.70385886335b0f9fcc5549ef/1448e3a332e5392f/content/assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+            "bytes": 1275656,
+            "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+            "matchesIndexedSha256": true
+          }
+        },
+        {
+          "modelKey": "champ.sela",
+          "name": "Sela／方塊法師",
+          "kind": "previous",
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "champ.sela",
+            "location": "existing-project-model",
+            "s3Uri": null
+          },
+          "localCheck": null
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "mainDefaultModelKey": "ou99.470087",
+      "mainChampionGitPath": "content/champions/community-review-33-20260907.json",
+      "mainChampionGitBlobSha1": "30585c0e36cee198347e4076c8819ce760241316",
+      "mainModel": {
+        "clipMap": {
+          "attack": "attack",
+          "cast": "spell one",
+          "death": "death",
+          "hurt": "stand",
+          "idle": "stand",
+          "run": "walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_470087.glb",
+        "id": "ou99.470087",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-470087",
+          "modelKey": "ou99.470087",
+          "sourceTitle": "蓝瞳靓仔版远野志贵",
+          "targetLabel": "UQHOLDER 近衛刀太",
+          "sourceUrl": "https://www.ou99.com/thread-470087-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/470087/file.glb",
+            "bytes": 2140508,
+            "sha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_470087.glb",
+          "gitBlobSha1": "7751cf22bae208cc5d48319ce3596344ed395ac7",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "attack",
+              "cast": "spell one",
+              "death": "death",
+              "hurt": "stand",
+              "idle": "stand",
+              "run": "walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_470087.glb",
+            "id": "ou99.470087",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              68
+            ],
+            "animations": 31,
+            "animationNames": [
+              "stand",
+              "attack",
+              "attack 1",
+              "walk",
+              "death",
+              "spell one",
+              "spell two",
+              "spell three",
+              "spell four",
+              "spell five",
+              "spell slam one",
+              "spell slam two",
+              "spell slam three",
+              "spell slam four",
+              "spell slam five",
+              "spell slam six",
+              "Spell throw one",
+              "Spell throw two",
+              "Spell channel one",
+              "Spell throw three",
+              "Spell throw four",
+              "Spell throw five",
+              "Spell throw six",
+              "Stand hit 1",
+              "Stand hit 2",
+              "Stand hit 3",
+              "Spell six",
+              "Spell Channel Two",
+              "Spell Channel Three",
+              "Spell Channel One",
+              "Spell Channel Four"
+            ],
+            "multiKeyAnimations": 28,
+            "images": 2,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "470087",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_470087.jpg",
+            "bytes": 1889,
+            "sha256": "a7148356c97e27cb1f875d89886093b3819f1f95a07ac57c31c77baca9622cc4"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 31,
+            "joints": 68,
+            "meshes": 1,
+            "textures": 2,
+            "clipNames": [
+              "stand",
+              "attack",
+              "attack 1",
+              "walk"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "community-review-33-20260907",
+            "name": "近衛刀太",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.470087",
+            "threadId": "470087",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": "champ.thorne",
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+          "name": "黑衣剑士",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+            "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "bytes": 1104488,
+            "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+            "matchesIndexedSha256": true
+          }
+        },
+        {
+          "modelKey": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "kind": "previous",
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          },
+          "localCheck": null
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    },
+    {
+      "heroId": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "mainDefaultModelKey": "ou99.493578",
+      "mainChampionGitPath": "content/champions/community-review-36-20260907.json",
+      "mainChampionGitBlobSha1": "bcbe1d5203b98f672c50d2ea2c08eec1674481b2",
+      "mainModel": {
+        "clipMap": {
+          "attack": "Attack 1",
+          "cast": "Spell Four",
+          "death": "Death",
+          "hurt": "Stand",
+          "idle": "Stand",
+          "run": "Walk"
+        },
+        "collisionRadius": 0.55,
+        "glbPath": "assets/models/ou99/ou99_493578.glb",
+        "id": "ou99.493578",
+        "scale": 1,
+        "schema": "model@1"
+      },
+      "suppliedModelCount": 1,
+      "suppliedCandidates": [
+        {
+          "sourceId": "ou99-493578",
+          "modelKey": "ou99.493578",
+          "sourceTitle": "篮球小男孩",
+          "targetLabel": "鬼畜王蘭斯",
+          "sourceUrl": "https://www.ou99.com/thread-493578-1-1.html",
+          "identityStatus": "intentional-similar-proxy",
+          "identityBasis": "Main acquisition manifest explicitly records owner-intended similar proxies; no fresh visual identity claim.",
+          "isMainDefault": true,
+          "skinIds": [],
+          "localGlb": {
+            "path": "/Users/Takuro/GGD-assets/glb/493578/cdboss9.glb",
+            "bytes": 1241276,
+            "sha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51"
+          },
+          "gitPath": "content/assets/models/ou99/ou99_493578.glb",
+          "gitBlobSha1": "a84f5f4ad796e6ed8f12618d770bfc6a8eb9c1db",
+          "localBytesMatchMainGitBlob": true,
+          "acquisitionSha256Matches": true,
+          "glbManifestSha256Matches": true,
+          "modelDocument": {
+            "clipMap": {
+              "attack": "Attack 1",
+              "cast": "Spell Four",
+              "death": "Death",
+              "hurt": "Stand",
+              "idle": "Stand",
+              "run": "Walk"
+            },
+            "collisionRadius": 0.55,
+            "glbPath": "assets/models/ou99/ou99_493578.glb",
+            "id": "ou99.493578",
+            "scale": 1,
+            "schema": "model@1"
+          },
+          "structure": {
+            "glbVersion": 2,
+            "declaredLengthMatches": true,
+            "bufferViewBoundsValid": true,
+            "meshes": 1,
+            "skinCount": 1,
+            "skinJointCounts": [
+              46
+            ],
+            "animations": 7,
+            "animationNames": [
+              "Spell Eight",
+              "Stand",
+              "Spell Four",
+              "Spell Nine",
+              "Attack 1",
+              "Walk",
+              "Death"
+            ],
+            "multiKeyAnimations": 7,
+            "images": 1,
+            "externalUris": [],
+            "validationScope": "Header/chunk/accessor-count and bufferView bounds; not Khronos/full animation play-through/visual identity/E2E."
+          },
+          "clipMapMissingExactNames": [],
+          "archiveThreadId": "493578",
+          "otherWorkflowScreenshot": {
+            "path": "/Users/Takuro/GGD-assets/shots/ou99_493578.jpg",
+            "bytes": 2290,
+            "sha256": "87630635d674589f3f9c5359983f350ba6184119f708666b4578c4258454e0f5"
+          },
+          "visualReviewRepeated": false,
+          "reportedRig": {
+            "animationCount": 7,
+            "joints": 46,
+            "meshes": 1,
+            "textures": 1,
+            "clipNames": [
+              "Spell Eight",
+              "Stand",
+              "Spell Four",
+              "Spell Nine"
+            ]
+          },
+          "mainWiringEntry": {
+            "heroId": "community-review-36-20260907",
+            "name": "鬼畜王蘭斯",
+            "oldModelKey": "champ.thorne",
+            "newModelKey": "ou99.493578",
+            "threadId": "493578",
+            "wiredAt": "2026-09-10T14:06:22+08:00"
+          }
+        }
+      ],
+      "status": "delivered-owner-specified-proxy-default-in-main",
+      "oldCentralDefault": "champ.thorne",
+      "oldCentralCandidates": [
+        {
+          "modelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+          "name": "佐罗",
+          "kind": "style-proxy",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+            "glbPath": "assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+            "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.58505d3bb082ae9a68fd6b74/4153fdd8a30f6f05/content/assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.58505d3bb082ae9a68fd6b74/4153fdd8a30f6f05/content/assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
+          },
+          "localCheck": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.58505d3bb082ae9a68fd6b74/4153fdd8a30f6f05/content/assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+            "bytes": 896312,
+            "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+            "matchesIndexedSha256": true
+          }
+        },
+        {
+          "modelKey": "champ.thorne",
+          "name": "Thorne／方塊騎士",
+          "kind": "previous",
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "champ.thorne",
+            "location": "existing-project-model",
+            "s3Uri": null
+          },
+          "localCheck": null
+        }
+      ],
+      "oldCentralPaidCandidateCount": 0,
+      "oldCentralPublicCandidateCount": 0,
+      "centralInventoryNeedsReconciliation": true,
+      "mainBundleEvidence": "/private/tmp/ggd-priority-main-audit/main-bundle.json"
+    }
+  ],
+  "originalArchives": {
+    "454482": {
+      "path": "/Users/Takuro/GGD-assets/models/454482.zip",
+      "bytes": 852081,
+      "sha256": "4bd2c8bac3d01d3906b2c78a7eea56e5e93f8e819644925d0eb60573d7097daa",
+      "zipCrcVerified": true,
+      "entryCount": 6,
+      "fileCount": 6,
+      "uncompressedBytes": 1246410,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 5
+      }
+    },
+    "491448": {
+      "path": "/Users/Takuro/GGD-assets/models/491448.zip",
+      "bytes": 394496,
+      "sha256": "37b9aa16b937522afa428bfca755c1c95af90ff73892285dedeb766166a5152f",
+      "zipCrcVerified": true,
+      "entryCount": 7,
+      "fileCount": 7,
+      "uncompressedBytes": 727601,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 6
+      }
+    },
+    "472038": {
+      "path": "/Users/Takuro/GGD-assets/models/472038.zip",
+      "bytes": 1375495,
+      "sha256": "8385ac323bb525e32a22a692f877077899deff373e4031d3b03ebeb5b42d7382",
+      "zipCrcVerified": true,
+      "entryCount": 6,
+      "fileCount": 6,
+      "uncompressedBytes": 2271533,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 5
+      }
+    },
+    "478642": {
+      "path": "/Users/Takuro/GGD-assets/models/478642.zip",
+      "bytes": 914521,
+      "sha256": "150cdb1a2179de97f22f984357497568a48070b07aa965c51143d478ed9fa0ed",
+      "zipCrcVerified": true,
+      "entryCount": 2,
+      "fileCount": 2,
+      "uncompressedBytes": 1413215,
+      "extensions": {
+        ".blp": 1,
+        ".mdx": 1
+      }
+    },
+    "453949": {
+      "path": "/Users/Takuro/GGD-assets/models/453949.zip",
+      "bytes": 1258723,
+      "sha256": "e502e0f0affe4986416394330d3168ef9ee66a4528dbc436bbc76d8ebae3f2d0",
+      "zipCrcVerified": true,
+      "entryCount": 6,
+      "fileCount": 6,
+      "uncompressedBytes": 1995770,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 5
+      }
+    },
+    "459257": {
+      "path": "/Users/Takuro/GGD-assets/models/459257.zip",
+      "bytes": 2361233,
+      "sha256": "523b4fb4727632a6e59f31ac43997c1c2c5af73faf1a6152a0fd76aadadce13e",
+      "zipCrcVerified": true,
+      "entryCount": 5,
+      "fileCount": 5,
+      "uncompressedBytes": 3429907,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 4
+      }
+    },
+    "495015": {
+      "path": "/Users/Takuro/GGD-assets/models/495015.zip",
+      "bytes": 95382,
+      "sha256": "6688d46ac59eb71e318e7ec661f10ee4595bd79b91d1c5a2deda0fcba5cb713a",
+      "zipCrcVerified": true,
+      "entryCount": 2,
+      "fileCount": 2,
+      "uncompressedBytes": 179529,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 1
+      }
+    },
+    "458777": {
+      "path": "/Users/Takuro/GGD-assets/models/458777.zip",
+      "bytes": 800591,
+      "sha256": "7182e7cc7f7cb6d6afae393011485d3cf19287c40d3c8c72dd17be5f6c501b6d",
+      "zipCrcVerified": true,
+      "entryCount": 8,
+      "fileCount": 8,
+      "uncompressedBytes": 1504256,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 7
+      }
+    },
+    "474258": {
+      "path": "/Users/Takuro/GGD-assets/models/474258.zip",
+      "bytes": 537912,
+      "sha256": "d020bddc739f26f8ad78732711dc6cb6d9b5bc8516c62aa2306af7b42188d238",
+      "zipCrcVerified": true,
+      "entryCount": 5,
+      "fileCount": 5,
+      "uncompressedBytes": 712184,
+      "extensions": {
+        ".blp": 4,
+        ".mdx": 1
+      }
+    },
+    "465884": {
+      "path": "/Users/Takuro/GGD-assets/models/465884.zip",
+      "bytes": 1964721,
+      "sha256": "2002210a6d1a08f5fea0a1f16db853bb4eb8840d97c6e432a32e5ab2976a0062",
+      "zipCrcVerified": true,
+      "entryCount": 8,
+      "fileCount": 8,
+      "uncompressedBytes": 2842325,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 7
+      }
+    },
+    "467227": {
+      "path": "/Users/Takuro/GGD-assets/models/467227.zip",
+      "bytes": 852944,
+      "sha256": "c7c53a82d50014f74638eda904b81e65c4ebbd4c44964a9d2280fe00f10be3fb",
+      "zipCrcVerified": true,
+      "entryCount": 5,
+      "fileCount": 5,
+      "uncompressedBytes": 1119156,
+      "extensions": {
+        ".blp": 4,
+        ".mdx": 1
+      }
+    },
+    "496452": {
+      "path": "/Users/Takuro/GGD-assets/models/496452.zip",
+      "bytes": 279867,
+      "sha256": "89ab6f19311543baf87c40b701e805113da34db1271c71724100ceb336982e2c",
+      "zipCrcVerified": true,
+      "entryCount": 2,
+      "fileCount": 2,
+      "uncompressedBytes": 472041,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 1
+      }
+    },
+    "487487": {
+      "path": "/Users/Takuro/GGD-assets/models/487487.zip",
+      "bytes": 907401,
+      "sha256": "3a3c63aa7c019c28fd2877ae0a95d4cf4404d2784bdf4639feb707b341595118",
+      "zipCrcVerified": true,
+      "entryCount": 7,
+      "fileCount": 7,
+      "uncompressedBytes": 1101050,
+      "extensions": {
+        ".mdx": 2,
+        ".blp": 5
+      }
+    },
+    "457594": {
+      "path": "/Users/Takuro/GGD-assets/models/457594.zip",
+      "bytes": 372155,
+      "sha256": "9f7d0abefecd6fe2672538944a0f95edc1a525a8282d325f87c8e1908604918c",
+      "zipCrcVerified": true,
+      "entryCount": 3,
+      "fileCount": 3,
+      "uncompressedBytes": 522228,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 2
+      }
+    },
+    "487484": {
+      "path": "/Users/Takuro/GGD-assets/models/487484.zip",
+      "bytes": 1346763,
+      "sha256": "cf434194061cfe3248d649928e9aadd88d7b980a9ba6fddcacfa1863a04e4a68",
+      "zipCrcVerified": true,
+      "entryCount": 4,
+      "fileCount": 4,
+      "uncompressedBytes": 1648181,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 3
+      }
+    },
+    "473324": {
+      "path": "/Users/Takuro/GGD-assets/models/473324.zip",
+      "bytes": 622054,
+      "sha256": "db872c592620985fba9a6dd953afca508aa6f1fcd819157a481df84228a63cdb",
+      "zipCrcVerified": true,
+      "entryCount": 9,
+      "fileCount": 9,
+      "uncompressedBytes": 1094859,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 8
+      }
+    },
+    "456917": {
+      "path": "/Users/Takuro/GGD-assets/models/456917.zip",
+      "bytes": 256749,
+      "sha256": "941c7e9a41572296c97e59bb05f5be6c3baeb48ceacf117c9dce7eeb380dc672",
+      "zipCrcVerified": true,
+      "entryCount": 2,
+      "fileCount": 2,
+      "uncompressedBytes": 372482,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 1
+      }
+    },
+    "498214": {
+      "path": "/Users/Takuro/GGD-assets/models/498214.zip",
+      "bytes": 735983,
+      "sha256": "bdca515777c4d673c8e046e1438127a2b1f5aeb5fc6b26ee5a3576a5c17dac8c",
+      "zipCrcVerified": true,
+      "entryCount": 2,
+      "fileCount": 2,
+      "uncompressedBytes": 978126,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 1
+      }
+    },
+    "470087": {
+      "path": "/Users/Takuro/GGD-assets/models/470087.zip",
+      "bytes": 707479,
+      "sha256": "1fc1621ff49db61e9fdcb1c2e4ef958e084e112ff903cebf49b9d2b461dd6352",
+      "zipCrcVerified": true,
+      "entryCount": 3,
+      "fileCount": 3,
+      "uncompressedBytes": 1119563,
+      "extensions": {
+        ".blp": 2,
+        ".mdx": 1
+      }
+    },
+    "493578": {
+      "path": "/Users/Takuro/GGD-assets/models/493578.zip",
+      "bytes": 615990,
+      "sha256": "0be39a8071eb7234e39fdd4823a1f3bcf4fe476b9c861ca33b875f3cdadfbaf2",
+      "zipCrcVerified": true,
+      "entryCount": 2,
+      "fileCount": 2,
+      "uncompressedBytes": 873708,
+      "extensions": {
+        ".mdx": 1,
+        ".blp": 1
+      }
+    }
+  },
+  "additionalPendingNativeCandidates": [
+    {
+      "heroId": "community-review-36-20260907",
+      "candidateId": "rance-mmd-568-bowlroll-85995-native",
+      "sourceId": "rance-bowlroll-85995-round19",
+      "nativeModel": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/missing-hero-sources-round19/rance-modified-bowlroll-85995/extracted/ランス改/ランス改.pmx",
+        "bytes": 1302235,
+        "sha256": "28ebc9fe6560f374db9cf6e3cd7de71ff7eb2466e77f950decf08ca0e5a0f50a"
+      },
+      "identity": "Rance fan model; requested Kichikuou form unverified",
+      "status": "native-parsed-standardization-rights-and-visual-review-pending",
+      "modelKey": null,
+      "defaultChanged": false,
+      "runtimeReady": false,
+      "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/missing-hero-sources-round19/candidate-manifest.json",
+      "limitations": [
+        "Native PMX only; no standardized GLB produced in this bounded batch.",
+        "Missing active hand-material additive sphere map f.spa in original archive.",
+        "Rance 03 armor per creator; requested Kichikuou form not verified.",
+        "Source readmes prohibit commercial use and unmodified redistribution; keep local reserve and metadata pending manual rights review.",
+        "No original animation clips, VFX or audio files in package."
+      ]
+    }
+  ],
+  "commitEvidence": [
+    {
+      "commit": "7d5d36cab502a055084cf658be0bd8ee7e61c2a9",
+      "subject": "feat(models): 🎭 33 支 ou99 模型接上線 —— ⭐ 27 隻英雄的**方塊佔位換成真模型**",
+      "role": "33 OU99 metadata / 27 hero wiring",
+      "ancestorOfAuditedMain": true,
+      "pullRequest": null,
+      "pullRequestEvidence": "No explicit PR number established from inspected commit/manifest evidence."
+    },
+    {
+      "commit": "0166d636a288ab6693a256f98b6aa1a93984eb30",
+      "subject": "feat(models): 📸 你點名的 8 支上架 ＋ **41 支全部實拍驗收**",
+      "role": "additional eight / visual proof claim",
+      "ancestorOfAuditedMain": true,
+      "pullRequest": null,
+      "pullRequestEvidence": "No explicit PR number established from inspected commit/manifest evidence."
+    },
+    {
+      "commit": "9516e3138990ac3816e91196137adf8cfb97e960",
+      "subject": "fix(assets): 📦 41 份 glb **進 git** —— ⛔ 我先前讀錯了規則",
+      "role": "41 GLB added to Git",
+      "ancestorOfAuditedMain": true,
+      "pullRequest": null,
+      "pullRequestEvidence": "No explicit PR number established from inspected commit/manifest evidence."
+    },
+    {
+      "commit": "94c78f10a6074e8b21261f07ebc2560ecccbd2ca",
+      "subject": "feat(skins): 🎨 **增量多選項** —— 7 支買了沒用的模型變成 9 個造型選項",
+      "role": "additional skin options",
+      "ancestorOfAuditedMain": true,
+      "pullRequest": null,
+      "pullRequestEvidence": "No explicit PR number established from inspected commit/manifest evidence."
+    },
+    {
+      "commit": "b1a939f7c96ebd509989bc4237d5c67e55909d3a",
+      "subject": "feat(models): 🗿 **26 名英雄從骨架換成真模型** —— ⭐ 而 72MB 素材⛔ 不進 git（owner 裁決）",
+      "role": "earlier placeholder replacement",
+      "ancestorOfAuditedMain": true,
+      "pullRequest": null,
+      "pullRequestEvidence": "No explicit PR number established from inspected commit/manifest evidence."
+    }
+  ],
+  "inputEvidence": [
+    {
+      "path": "/private/tmp/ggd-priority-main-audit/main-bundle.json",
+      "bytes": 4077626,
+      "sha256": "19c0ae94a55cd70e94032e4228058a16b40712100d2bc3b2bea531d27c7734d2"
+    },
+    {
+      "path": "/private/tmp/ggd-priority-main-audit/ou99-acquired.json",
+      "bytes": 41455,
+      "sha256": "e9d9407130f5d1f5ff2c6058768369b15891e1987fc7485f92e8f5dff0b09431"
+    },
+    {
+      "path": "/private/tmp/ggd-priority-main-audit/wiring-ledger.json",
+      "bytes": 6490,
+      "sha256": "24057f629d2ef6eb39649b407f3630836045473f4254d13e552297fa2aa373c8"
+    },
+    {
+      "path": "/private/tmp/ggd-priority-main-audit/wiring-ledger-prio8.json",
+      "bytes": 1984,
+      "sha256": "86ec9e913f9a6225b35e788f82951de59d81dbd7448d89d05bec78b1cddc3124"
+    },
+    {
+      "path": "/private/tmp/ggd-priority-main-audit/glb-manifest.json",
+      "bytes": 6293,
+      "sha256": "599f295a8ace69749041b93f033a04f32711dfacbcdf9bd43628c1ca40fb6705"
+    },
+    {
+      "path": "/private/tmp/ggd-priority-main-audit/skin-options.json",
+      "bytes": 1282,
+      "sha256": "2a81208edbd35685628a48a5741fbf1cc63d368f14f2de7f21a49f3430571d17"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
+      "bytes": 3765282,
+      "sha256": "3019e505b7ecab27c108106ef24c549f53fc0ffc80254cdfd651f47611f7f781"
+    }
+  ],
+  "criticalFindings": [
+    "20 heroes were already delivered and default-wired in main using explicitly intended similar proxies; previous local inventory was stale and must not be used to reclassify them as unacquired.",
+    "21 GLBs (two Klaus variants) exist in /Users/Takuro/GGD-assets/glb; SHA256 matches both existing acquisition and GLB manifest; independently calculated Git blob SHA1 matches audited main objects.",
+    "Kaiji alone remains champ.thorne in current canonical main bundle/champion.",
+    "All 20 supplied identities are declared intentional-similar-proxy, not source-character exact models.",
+    "Klaus secondary option exists as skin; preserve old 300/W3X options during reconciliation.",
+    "Rance PMX reserve is additional pending candidate and must not replace the existing owner-selected OU99 default automatically."
+  ],
+  "limitations": [
+    "No live formal-site/backend state checked; main default and skin documents are code/config evidence, not UI E2E proof.",
+    "No fresh visual identity review or complete animation play-through; existing screenshot files are attributed only as other-workflow evidence.",
+    "GLB validation here is structural/bounds/count inspection, not Khronos Validator.",
+    "The local origin/main revision was pinned; old central inventory may change after parent merges main."
+  ],
+  "centralWrites": false,
+  "gitWrites": false,
+  "newAssetAcquisition": false,
+  "threadReads": false
+}

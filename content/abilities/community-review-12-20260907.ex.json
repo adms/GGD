@@ -1,0 +1,45 @@
+{
+  "id": "community-review-12-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔投影・迎擊〕",
+  "provenance": "w3x-import",
+  "description": "投影武器攔截一次正面攻擊，成功後開啟一次反擊。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 0.067,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-12-20260907.ex.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-12-20260907.ex.webp"
+}

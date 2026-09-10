@@ -1,0 +1,531 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 1.233,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「盾牌清空違停入口！」\n盾擊把敵人推離 3 單位並造成小級物理傷害；接人前先清空門口。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "distance": 3,
+          "from": "caster",
+          "kind": "knockback",
+          "speed": 12,
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "id": "b2-naofumi.e",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "盾牌清空違停入口",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.233,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "小"
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            },
+            {
+              "distance": 3,
+              "from": "caster",
+              "kind": "knockback",
+              "speed": 12,
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「友軍通行證附贈盾牌！」\n指定隊友獲得 240 護盾 3 秒及 spell-shield 通行標記；標記只供後招辨識，不自帶免控。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 240,
+            "perRank": [
+              0,
+              120,
+              240,
+              360
+            ]
+          },
+          "duration": 3,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        },
+        {
+          "applyTo": "target",
+          "duration": 3,
+          "kind": "applyStatus",
+          "statusId": "spell-shield"
+        }
+      ],
+      "id": "b2-naofumi.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "友軍通行證附贈盾牌",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "targeted",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 240,
+                "perRank": [
+                  0,
+                  120,
+                  240,
+                  360
+                ]
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            },
+            {
+              "applyTo": "target",
+              "duration": 3,
+              "kind": "applyStatus",
+              "statusId": "spell-shield"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.067,
+      "castType": "targeted",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「清完門口才能接隊友！」\n先給指定隊友 80 治療；最近 4 秒清過門口，額外把隊友瞬移到自己旁邊，抵達給 180 護盾 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 80,
+            "perRank": [
+              0,
+              60,
+              120
+            ]
+          },
+          "applyTo": "target",
+          "kind": "heal"
+        },
+        {
+          "applyTo": "target",
+          "condition": {
+            "kind": "recentCast",
+            "slot": "E",
+            "subject": "self",
+            "withinSec": 4
+          },
+          "kind": "blink",
+          "onArrive": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 180,
+                "perRank": [
+                  0,
+                  135,
+                  270
+                ]
+              },
+              "duration": 2,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "shape": "single",
+          "to": "caster"
+        }
+      ],
+      "id": "b2-naofumi.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "清完門口才能接隊友",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "flat": 80,
+                "perRank": [
+                  0,
+                  60,
+                  120
+                ]
+              },
+              "applyTo": "target",
+              "kind": "heal"
+            },
+            {
+              "applyTo": "target",
+              "condition": {
+                "kind": "recentCast",
+                "slot": "E",
+                "subject": "self",
+                "withinSec": 4
+              },
+              "kind": "blink",
+              "onArrive": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 180,
+                    "perRank": [
+                      0,
+                      135,
+                      270
+                    ]
+                  },
+                  "duration": 2,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "b2-protection"
+                }
+              ],
+              "shape": "single",
+              "to": "caster"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「憑通行證補一口血！」\n消耗該隊友的通行標記，追加 200 治療；沒有標記不兌換，先前的護盾仍按原到期時間運作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "amount": {
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "applyTo": "target",
+              "kind": "heal"
+            }
+          ],
+          "shape": "single",
+          "statusId": "spell-shield",
+          "subject": "target"
+        }
+      ],
+      "id": "b2-naofumi.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "憑通行證補一口血",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "amount": {
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  "applyTo": "target",
+                  "kind": "heal"
+                }
+              ],
+              "shape": "single",
+              "statusId": "spell-shield",
+              "subject": "target"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "tank",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 12,
+    "agiGrowth": 1.18,
+    "int": 23,
+    "intGrowth": 2.17,
+    "primary": "STR",
+    "source": "authored",
+    "str": 25,
+    "strGrowth": 2.36
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "盾之勇者｜盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-naofumi.ex",
+  "growth": {
+    "ad": 2.056,
+    "ap": 0,
+    "armor": 0.9537142857142857,
+    "as": 2.9226239784265093e-05,
+    "healthRegen": 0.023048979591836743,
+    "manaRegen": 0,
+    "maxHealth": 38.2761224489796,
+    "maxMana": 0.8520408163265306,
+    "mr": 3.299795918367347
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-naofumi",
+  "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
+  "name": "岩谷尚文",
+  "origin": "硬輔",
+  "passiveAbility": "b2-naofumi.passive",
+  "role": "tank",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-naofumi.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.af6acbd2cc678a2ce1c4cc584a367d605b8bafda27c5046d",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "eb579be7955156f68bf0941265756fbb1030739f49788ee21d123c0716b24489",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T14:45:37.414Z",
+      "source": {
+        "kind": "previous",
+        "character": "岩谷尚文",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.78fb667d88e454a748ee6dfc9691bc91184b1c3545a4ad82",
+      "label": "阿尔冯斯",
+      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+      "modelSha256": "00c1ffc5e546f566db58f13e0e892009428efedb78dece311f82f00856d8aa64",
+      "binarySha256": "595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469",
+      "registeredAt": "2026-09-10T14:45:37.419Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿尔冯斯",
+        "work": "鋼之鍊金術師",
+        "library": "300heroes",
+        "reference": "300heroes:aa89b351426082f8df362c89",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.0883dbe1f4facc6f264b2356d9579fa1ddfb639e3a349458",
+      "label": "骑士娃",
+      "sourceModelKey": "community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa",
+      "modelSha256": "027dd9a5d9472c46d05596076f6ac3abbe87df22bb1b642b530f60a4b5a4939b",
+      "binarySha256": "6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467",
+      "registeredAt": "2026-09-10T14:45:37.472Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "骑士娃",
+        "work": "葫蘆兄弟／葫蘆娃",
+        "library": "300heroes",
+        "reference": "300heroes:6533778837fecf4a5b811d57",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
+      "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
+      "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+      "modelSha256": "590e814b2bc15a9655fe0f8104dd8ddd7b4c0b2400ae46a89c651cb951d9c156",
+      "binarySha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
+      "registeredAt": "2026-09-10T15:02:43.123Z",
+      "source": {
+        "kind": "exact",
+        "character": "岩谷尚文",
+        "work": "盾之勇者成名錄",
+        "library": "GTA SA 社群 MOD",
+        "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

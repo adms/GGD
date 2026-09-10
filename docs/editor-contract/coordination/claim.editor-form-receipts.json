@@ -5,12 +5,12 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
-  "contractFingerprint": "ed197415160df4f6",
-  "title": "Editor 173 顆積木的 React 操作與回讀：168 通過、5 不可用",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "Editor 178 顆積木的 React 操作與回讀：173 通過、5 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，173 顆積木中 168 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，178 顆積木中 173 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,16 +26,16 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "1576d73b01cfc8b8635bdc1f568ac5a245adbbaa9ac87641ee59cfa622b7ce89",
-    "capabilityFingerprint": "3ce6f518",
+    "brickInputSha256": "3f2c27c99debcc5a1de9658c9f5673f378ec6a64ca6cc70039976ca1bd1c073e",
+    "capabilityFingerprint": "0a52bb76",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "ed197415160df4f66a1be98315187a9833da8680ec0a0f85ee301f80f7534125"
+    "typeCatalogSha256": "34e36ee3486cf36a362be073f44c4c9d98ef7acd2ba4a31d91efe0409a4099ff"
   },
   "summary": {
-    "total": 173,
-    "renderable": 168,
+    "total": 178,
+    "renderable": 173,
     "missing": 5,
-    "parameterEdited": 104,
+    "parameterEdited": 106,
     "byLayer": {
       "effect": {
         "total": 49,
@@ -53,13 +53,13 @@
         "missing": 0
       },
       "model-preset": {
-        "total": 15,
-        "renderable": 14,
+        "total": 18,
+        "renderable": 17,
         "missing": 1
       },
       "template": {
-        "total": 45,
-        "renderable": 45,
+        "total": 47,
+        "renderable": 47,
         "missing": 0
       },
       "vfx-call": {
@@ -270,7 +270,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 53,
+      "usedBy": 134,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=applyBuff",
@@ -418,7 +418,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 62,
+      "usedBy": 134,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=applyStatus",
@@ -521,7 +521,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 33,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=blink",
@@ -743,7 +743,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=chainLightning",
@@ -781,7 +781,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 13,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=championForm",
@@ -998,7 +998,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 28,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=consumeStatus",
@@ -1206,7 +1206,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 73,
+      "usedBy": 298,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damage",
@@ -1319,7 +1319,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 48,
+      "usedBy": 59,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damageArea",
@@ -1432,7 +1432,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 19,
+      "usedBy": 27,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damageLine",
@@ -1634,7 +1634,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 24,
+      "usedBy": 72,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=delayed",
@@ -1828,7 +1828,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 7,
+      "usedBy": 17,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=dispel",
@@ -1931,7 +1931,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 42,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=dot",
@@ -1982,7 +1982,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=evasion",
@@ -2525,7 +2525,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 47,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=heal",
@@ -2583,7 +2583,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 7,
+      "usedBy": 11,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=invulnerable",
@@ -2692,7 +2692,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 15,
+      "usedBy": 40,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=knockback",
@@ -2761,7 +2761,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 5,
+      "usedBy": 62,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=leap",
@@ -2852,7 +2852,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 1,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=manaBarrier",
@@ -2989,7 +2989,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=modifyCooldown",
@@ -3181,6 +3181,19 @@
           "optional": true
         },
         {
+          "name": "radiusTier",
+          "type": "enum",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "tier": true,
+          "optional": true
+        },
+        {
           "name": "shape",
           "type": "enum",
           "values": [
@@ -3214,13 +3227,13 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=pull",
       "renderable": true,
       "reason": null,
-      "controlCount": 19,
+      "controlCount": 20,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -3316,7 +3329,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 14,
+      "usedBy": 45,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=restore",
@@ -3574,7 +3587,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 7,
+      "usedBy": 81,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=shield",
@@ -3950,7 +3963,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 54,
+      "usedBy": 56,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=spawnVfx",
@@ -3993,7 +4006,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=spendHealth",
@@ -4045,7 +4058,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 4,
+      "usedBy": 6,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=spendMana",
@@ -4217,7 +4230,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=summon",
@@ -4446,7 +4459,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 9,
+      "usedBy": 12,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=weightedBranch",
@@ -4675,7 +4688,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onAbilityCast",
@@ -5133,7 +5146,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onAllyDamaged",
@@ -5591,7 +5604,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 38,
+      "usedBy": 80,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onBasicAttack",
@@ -6278,7 +6291,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 4,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onCrowdControlApplied",
@@ -6507,7 +6520,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onCrowdControlReceived",
@@ -6965,7 +6978,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 17,
+      "usedBy": 27,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onDamageTaken",
@@ -7194,7 +7207,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onDashOrBlink",
@@ -7652,7 +7665,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 4,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onEvade",
@@ -8339,7 +8352,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onHeal",
@@ -8568,7 +8581,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onInterval",
@@ -9713,7 +9726,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 9,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onReflectSuccess",
@@ -10858,7 +10871,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onShieldGained",
@@ -11774,7 +11787,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onUltimateCast",
@@ -12003,7 +12016,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onUltimateHit",
@@ -12026,7 +12039,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 36,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "condition.kind=chance",
@@ -12061,7 +12074,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 5,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "condition.kind=distance",
@@ -12145,7 +12158,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 3,
+      "usedBy": 4,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "condition.kind=form",
@@ -12241,7 +12254,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "condition.kind=recentCast",
@@ -12259,7 +12272,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 14,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "condition.kind=stat",
@@ -12277,7 +12290,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 30,
+      "usedBy": 39,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "condition.kind=status",
@@ -12286,6 +12299,87 @@
       "controlCount": 7,
       "editedPath": null,
       "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+      "layer": "model-preset",
+      "params": [
+        {
+          "name": "count",
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 20,
+          "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+      "layer": "model-preset",
+      "params": [
+        {
+          "name": "count",
+          "type": "number",
+          "default": 9,
+          "min": 2,
+          "max": 100
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "layer": "model-preset",
+      "params": [
+        {
+          "name": "anchor",
+          "type": "enum",
+          "values": [
+            "point",
+            "caster"
+          ],
+          "default": "caster"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
       "roundTrip": true,
       "browserVerified": false
     },
@@ -13455,17 +13549,17 @@
           "name": "status",
           "type": "applyStatus",
           "default": {
-            "statusId": "root",
             "duration": 1.5,
-            "root": true
+            "root": true,
+            "statusId": "root"
           },
           "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
         }
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 6,
-      "origin": "template@1:content/ability-templates/tpl-apply-status.json",
+      "usedBy": 11,
+      "origin": "template@1:content/ability-templates/hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b.json content/ability-templates/tpl-apply-status.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-apply-status",
       "renderable": true,
@@ -13820,8 +13914,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 7,
-      "origin": "template@1:content/ability-templates/tpl-blink.json",
+      "usedBy": 21,
+      "origin": "template@1:content/ability-templates/hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4.json content/ability-templates/tpl-blink.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-blink",
       "renderable": true,
@@ -13858,8 +13952,8 @@
             "damageTier": "小",
             "ratios": [
               {
-                "stat": "ad",
-                "coeff": 0.5
+                "coeff": 0.5,
+                "stat": "ad"
               }
             ]
           },
@@ -13895,8 +13989,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 1,
-      "origin": "template@1:content/ability-templates/tpl-blink-strike.json",
+      "usedBy": 3,
+      "origin": "template@1:content/ability-templates/hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16.json content/ability-templates/tpl-blink-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-blink-strike",
       "renderable": true,
@@ -13931,8 +14025,8 @@
           "type": "statModifiers",
           "default": [
             {
-              "stat": "ad",
               "op": "flat",
+              "stat": "ad",
               "value": 50
             }
           ]
@@ -13955,8 +14049,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 55,
-      "origin": "template@1:content/ability-templates/tpl-buff-self.json",
+      "usedBy": 112,
+      "origin": "template@1:content/ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json content/ability-templates/tpl-buff-self.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-buff-self",
       "renderable": true,
@@ -14062,13 +14156,87 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-charge-push.json",
+      "usedBy": 16,
+      "origin": "template@1:content/ability-templates/hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368.json content/ability-templates/tpl-charge-push.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-charge-push",
       "renderable": true,
       "reason": null,
       "controlCount": 24,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "charge-resource",
+      "layer": "template",
+      "params": [
+        {
+          "name": "durationSec",
+          "type": "number",
+          "default": 60,
+          "min": 0,
+          "max": 60,
+          "origin": "derived: ⭐ **沒有 census** —— 出貨零份 `applyStatus` 用 `refresh:\"keep\"`（這是新機制）。⇒ 預設從**語意**推導：武藤遊戲逐字「上限三層，**供 EX 消耗**」＝ 這個資源**不自己過期**，⇒ 用 `STATUS_MAX_DURATION_SEC`（`schema/effects/_shared.ts:137` ＝ **60**）—— schema 的上界。⚠️ ⭐ 而 `duration` 是**必填**（`zRankScalar`,⛔ 不是 optional）⇒ 這一格不能留空。⭐ 為什麼⛔不用全部 applyStatus 的中位數（2 秒）：那 118 筆是**控場與減益**的秒數,⛔ 一個 2 秒就消失的資源條等於沒有資源條 —— 那會是「說了但不會發生」（第一·五守則）。"
+        },
+        {
+          "name": "event",
+          "type": "enum",
+          "values": [
+            "onAbilityHit",
+            "onAbilityCast",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onBasicAttack",
+            "onUltimateHit",
+            "onStatusApplied"
+          ],
+          "default": "onAbilityHit",
+          "origin": "census: GH#1132 的 72 槽逐句分類 —— **命中 13** · 施法 7 · 觸發 4 · 普攻 3 · 受擊 3 · 時間 3 · 擊殺 1 ⇒ ⭐ 預設挑最多的「命中」（`onAbilityHit`）。⛔ **刻意不是 `onBasicAttack`**：票文逐字說「普攻額外傷害不作替代」,而今天 26 槽誤綁在 `tpl-on-attack` 上。"
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true,
+          "min": 0,
+          "max": 60,
+          "origin": "⭐ **去重**那一件（票文 AC④）—— hook 的既有欄位。⛔ 無預設：「每次施法最多一層」與「每 3 秒最多一層」是**兩種**去重,⛔ 猜一個會讓另一種靜默失效。"
+        },
+        {
+          "name": "maxStacks",
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 99,
+          "origin": "census: 武藤遊戲逐字「上限三層」。⚠️ ⭐ 而  **沒有** maxStacks 這一格（我第一版寫了,schema 回「Unrecognized key」）—— ⭐ 容量今天由  ＋ 窗口（durationSec）表達,而這一格是**卡面文案與後台可調的上限**。⛔ 留著它是因為 owner 之後要調的是這個數字,⛔ 不是 refresh 那個字。",
+          "inert": "⛔⛔ **引擎今天沒有逐狀態的層數上限** —— `zApplyStatus` 只有 `stacks`／`refresh`／`duration`，⛔ 沒有 `maxStacks`（我第一版寫了它，schema 逐字回「Unrecognized key(s): 'maxStacks'」）。⚠️ ⭐ 而 `dot` **有**（`sim/effects/dot.ts:128`）⇒ ⭐ 這不是「做不到」，是**那一格還沒長在 applyStatus 上**。⭐ 今天唯一的上界是全域的 `MARK_MAX_COUNT = 999`（`sim/markLimits.ts:54`），⛔ 而那是防「12 打成 120」的柵欄，⛔ 不是設計用的容量。⇒ ⭐ 這一格**留著**是因為 GH#1132 AC④ 逐字要求「**有限容量**」，而 owner 之後要調的是**這個數字**（⛔ 不是 `refresh` 那個字）—— 它是卡面文案與後台可調的上限。⭐ 到期條件（一行可查）：`grep -c maxStacks packages/shared/src/content/schema/effects/applyStatus.ts` > 0 的那一刻，把這一格接進展開器並刪掉這個 `inert`。"
+        },
+        {
+          "name": "perEvent",
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 9,
+          "origin": "census: 那 3 槽「四件都要」的逐字都是「**每次…最多增加一層**」（武藤遊戲／八神庵／西索）⇒ 1。"
+        },
+        {
+          "name": "statusId",
+          "type": "docRef",
+          "default": "aban-x-mark",
+          "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-charge-resource.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-charge-resource",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -14598,8 +14766,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 5,
-      "origin": "template@1:content/ability-templates/tpl-drain-leech.json",
+      "usedBy": 7,
+      "origin": "template@1:content/ability-templates/hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990.json content/ability-templates/tpl-drain-leech.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-drain-leech",
       "renderable": true,
@@ -14639,11 +14807,11 @@
           "type": "effects",
           "default": [
             {
-              "kind": "damage",
-              "damageType": "magic",
               "amount": {
                 "damageTier": "極小"
-              }
+              },
+              "damageType": "magic",
+              "kind": "damage"
             }
           ],
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
@@ -14669,8 +14837,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-effect-sequence.json",
+      "usedBy": 113,
+      "origin": "template@1:content/ability-templates/hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550.json content/ability-templates/tpl-effect-sequence.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-effect-sequence",
       "renderable": true,
@@ -14690,16 +14858,16 @@
           "type": "hooks",
           "default": [
             {
-              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "damage",
-                  "damageType": "magic",
                   "amount": {
                     "damageTier": "極小"
-                  }
+                  },
+                  "damageType": "magic",
+                  "kind": "damage"
                 }
-              ]
+              ],
+              "on": "onBasicAttack"
             }
           ],
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
@@ -14707,8 +14875,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-event-passive.json",
+      "usedBy": 35,
+      "origin": "template@1:content/ability-templates/hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77.json content/ability-templates/tpl-event-passive.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-event-passive",
       "renderable": true,
@@ -14761,8 +14929,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-ground-nova.json",
+      "usedBy": 9,
+      "origin": "template@1:content/ability-templates/hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68.json content/ability-templates/tpl-ground-nova.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-ground-nova",
       "renderable": true,
@@ -14892,8 +15060,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.465
+                "coeff": 0.465,
+                "stat": "ap"
               }
             ]
           },
@@ -14930,8 +15098,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 6,
-      "origin": "template@1:content/ability-templates/tpl-heal.json",
+      "usedBy": 12,
+      "origin": "template@1:content/ability-templates/hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6.json content/ability-templates/tpl-heal.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-heal",
       "renderable": true,
@@ -15082,8 +15250,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 3,
-      "origin": "template@1:content/ability-templates/tpl-leap-strike.json",
+      "usedBy": 16,
+      "origin": "template@1:content/ability-templates/hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52.json content/ability-templates/tpl-leap-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-leap-strike",
       "renderable": true,
@@ -15361,8 +15529,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 4,
-      "origin": "template@1:content/ability-templates/tpl-line-strike.json",
+      "usedBy": 12,
+      "origin": "template@1:content/ability-templates/hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71.json content/ability-templates/tpl-line-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-line-strike",
       "renderable": true,
@@ -15432,8 +15600,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 1,
-      "origin": "template@1:content/ability-templates/tpl-line-sweep.json",
+      "usedBy": 23,
+      "origin": "template@1:content/ability-templates/hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699.json content/ability-templates/tpl-line-sweep.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-line-sweep",
       "renderable": true,
@@ -15539,8 +15707,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-lock-combo.json",
+      "usedBy": 14,
+      "origin": "template@1:content/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json content/ability-templates/tpl-lock-combo.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-lock-combo",
       "renderable": true,
@@ -16150,13 +16318,13 @@
           "optional": true,
           "default": [
             {
-              "stat": "ad",
               "op": "pctAdd",
+              "stat": "ad",
               "value": 0.1
             },
             {
-              "stat": "maxHealth",
               "op": "pctAdd",
+              "stat": "maxHealth",
               "value": 0.1
             }
           ]
@@ -16202,8 +16370,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-mark-stacks.json",
+      "usedBy": 1,
+      "origin": "template@1:content/ability-templates/hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8.json content/ability-templates/tpl-mark-stacks.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-mark-stacks",
       "renderable": true,
@@ -16245,17 +16413,17 @@
                 "all": [
                   {
                     "not": {
+                      "is": "champion",
                       "kind": "kind",
-                      "subject": "target",
-                      "is": "champion"
+                      "subject": "target"
                     }
                   },
                   {
                     "kind": "stat",
-                    "subject": "target",
-                    "stat": "hp",
                     "mode": "percent",
                     "op": "<",
+                    "stat": "hp",
+                    "subject": "target",
                     "value": 0.35
                   }
                 ]
@@ -16263,9 +16431,9 @@
               {
                 "all": [
                   {
+                    "is": "champion",
                     "kind": "kind",
-                    "subject": "target",
-                    "is": "champion"
+                    "subject": "target"
                   },
                   {
                     "kind": "chance",
@@ -16306,8 +16474,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-on-attack.json",
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71.json content/ability-templates/tpl-on-attack.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-on-attack",
       "renderable": true,
@@ -16369,8 +16537,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-on-hit-react.json",
+      "usedBy": 2,
+      "origin": "template@1:content/ability-templates/hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4.json content/ability-templates/tpl-on-hit-react.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-on-hit-react",
       "renderable": true,
@@ -16548,8 +16716,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 5,
-      "origin": "template@1:content/ability-templates/tpl-periodic-field.json",
+      "usedBy": 13,
+      "origin": "template@1:content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json content/ability-templates/tpl-periodic-field.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-periodic-field",
       "renderable": true,
@@ -16906,8 +17074,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-pull-throw.json",
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6.json content/ability-templates/tpl-pull-throw.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-pull-throw",
       "renderable": true,
@@ -17114,8 +17282,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-random-barrage.json",
+      "usedBy": 11,
+      "origin": "template@1:content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json content/ability-templates/tpl-random-barrage.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-random-barrage",
       "renderable": true,
@@ -17178,13 +17346,85 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 54,
-      "origin": "template@1:content/ability-templates/tpl-single-strike.json",
+      "usedBy": 92,
+      "origin": "template@1:content/ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json content/ability-templates/tpl-single-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-single-strike",
       "renderable": true,
       "reason": null,
       "controlCount": 65,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "spend-resource",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "min": 0,
+          "max": 5,
+          "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它）。"
+        },
+        {
+          "name": "castType",
+          "type": "enum",
+          "values": [
+            "self",
+            "ground",
+            "targeted"
+          ],
+          "default": "self",
+          "origin": "census: 出貨 `damageArea` 主體那一族的同名槽用同一組值（`tpl-area-strike`）—— ⛔ 不另立一份值域。"
+        },
+        {
+          "name": "effects",
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ],
+          "origin": "census: 武藤遊戲 EX 逐字「射出強化**直線魔法**」⇒ 預設放一顆最小的魔法傷害,⭐ 讓這一族**展得開**（`templateStatusIsHonest` 要求宣告 enabled 的每一份都真的展得開）。⛔ 它只是預設 —— 每一支要填自己真正打的東西。"
+        },
+        {
+          "name": "minStacks",
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 99,
+          "origin": "census: 武藤遊戲逐字「上限**三層**，供 EX 消耗」⇒ 要求 3、扣 3。⭐ 而這一格**同時**是「要幾層」與「扣幾層」—— ⛔ 第〇·四守則：那是**同一個事實**。⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格,⭐ 而它們表達的是同一個數字 ——`paramsSchemaFor` 的閘當場抓到：擾動 `spend` **不會改變展開結果** ⇒ 那是一格死參數。⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計,那時候才是把它拆開的理由。"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "default": "資源不足",
+          "origin": "census: 武藤遊戲 EX 逐字「**缺少黑魔導時顯示使用條件**」⇒ ⭐ 層數不足時要**告訴玩家**，⛔ 不是按下去什麼都沒發生（第一·五守則：說了但不會發生）。⭐ 而 `consumeStatus.onMissing` 就是那個住處（schema 逐字：「層數不足時執行；省略則不產生後續效果」）。⭐ 預設用最短的一句 —— 每一支要填自己的（「缺少黑魔導」／「電力不足」／「線索不足」）。⚠️ ⭐ 型別是 `text` **⛔ 不是 `docRef`** —— 我第一版寫了 `docRef`,而它驗的是**文件編號**格式 ⇒「資源不足」四個中文字當場被拒。"
+        },
+        {
+          "name": "statusId",
+          "type": "docRef",
+          "default": "aban-x-mark",
+          "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-spend-resource.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-spend-resource",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 50,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -17312,8 +17552,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 3,
-      "origin": "template@1:content/ability-templates/tpl-summon-agent.json",
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json content/ability-templates/tpl-summon-agent.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-summon-agent",
       "renderable": true,
@@ -17377,8 +17617,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-teleport.json",
+      "usedBy": 3,
+      "origin": "template@1:content/ability-templates/hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b.json content/ability-templates/tpl-teleport.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-teleport",
       "renderable": true,
@@ -17444,8 +17684,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 12,
-      "origin": "template@1:content/ability-templates/tpl-transform.json",
+      "usedBy": 13,
+      "origin": "template@1:content/ability-templates/hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010.json content/ability-templates/tpl-transform.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-transform",
       "renderable": true,
@@ -17532,7 +17772,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 1,
+      "usedBy": 7,
       "origin": "template@1:content/ability-templates/tpl-traveling-wave.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-traveling-wave",
@@ -17746,7 +17986,7 @@
       ],
       "adminForm": false,
       "editorForm": false,
-      "usedBy": 2,
+      "usedBy": 9,
       "origin": "vfx-subtype@1:content/vfx-subtypes/sub.forward-twin-blast.json",
       "componentPath": "(未實作)",
       "surface": "bricks.layer=vfx-call",

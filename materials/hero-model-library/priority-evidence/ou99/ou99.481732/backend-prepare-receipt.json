@@ -1,0 +1,498 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-shadow.json",
+  "sourceHeroSha256": "cbde42fe08640e576dc6a0fa45ff6ea3759506c46ea0cd9adeefb29857ee76c4",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:acd6ca7a5ff7f0830eca88103086817a85438473caaf80b4f7acf289d3d3a38a",
+    "sourceModelKey": "ou99.481732-standard-v2",
+    "label": "202511z13（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "202511z13",
+      "work": "來源作品待核；論壇標題：202511z13",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-481732-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-shadow",
+    "name": "闇影",
+    "description": "我想成為影之強者｜先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "法刺",
+    "modelKey": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.481732",
+        "modelSha256": "9685e66b4791ee37fc38ac65df72716db81bdcd49dc1a9663219a970cedc686a",
+        "binarySha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+        "registeredAt": "2026-09-10T14:37:56.177Z",
+        "source": {
+          "kind": "previous",
+          "character": "闇影",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.481732.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.46967b7950b680e5e4585f41c2f08a867b8b4829ed4ea83b",
+        "label": "202511z13（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.481732-standard-v2",
+        "modelSha256": "204383952ee3aa40cadbfb5ef2cd1f39ac35287b07eaace2f4332dbdc6f4f223",
+        "binarySha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+        "registeredAt": "2026-09-10T14:37:56.188Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "202511z13",
+          "work": "來源作品待核；論壇標題：202511z13",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-481732-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 10,
+      "range": 1.4
+    },
+    "growth": {
+      "ad": 1.29534693877551,
+      "ap": 0,
+      "armor": 0.06742857142857146,
+      "as": 0,
+      "healthRegen": 0.07555510204081634,
+      "manaRegen": 0,
+      "maxHealth": 6.100816326530613,
+      "maxMana": 0.8520408163265306,
+      "mr": 1.3198979591836735
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 12,
+      "agi": 25,
+      "int": 23,
+      "strGrowth": 1.18,
+      "agiGrowth": 2.36,
+      "intGrowth": 2.17,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-shadow.q",
+        "name": "觀眾請往舞台靠攏",
+        "provenance": "w3x-import",
+        "description": "「觀眾請往舞台靠攏！」\n工作人員引導觀眾：半徑{{radius}} 內最多 6 名敵人拉到自己 1.5 單位外。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "pull",
+            "shape": "circle",
+            "radius": 6,
+            "radiusTier": "中",
+            "side": "enemies",
+            "maxTargets": 6,
+            "destination": "caster",
+            "speed": 20,
+            "stopDistance": 1.5
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "self",
+            "effects": [
+              {
+                "destination": "caster",
+                "kind": "pull",
+                "maxTargets": 6,
+                "radius": 6,
+                "shape": "circle",
+                "side": "enemies",
+                "speed": 20,
+                "stopDistance": 1.5
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-shadow.w",
+        "name": "掌聲先等零點七秒",
+        "provenance": "w3x-import",
+        "description": "「掌聲先等零點七秒！」\n等 0.7 秒才在自己半徑{{radius}} 重新選敵，最多 6 人中級魔法傷害；敵人走開可躲，本體死亡取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 3,
+            "radiusTier": "極小",
+            "side": "enemies",
+            "maxTargets": 6,
+            "delaySec": 0.7,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "中"
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "caster",
+            "stopOnCasterDeath": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "self",
+            "effects": [
+              {
+                "anchor": "caster",
+                "delaySec": 0.7,
+                "effects": [
+                  {
+                    "amount": {
+                      "damageTier": "中"
+                    },
+                    "damageType": "magic",
+                    "kind": "damage"
+                  }
+                ],
+                "kind": "delayed",
+                "maxTargets": 6,
+                "radius": 3,
+                "shape": "circle",
+                "side": "enemies",
+                "stopOnCasterDeath": true,
+                "targetMode": "reresolve"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-shadow.e",
+        "name": "對鏡練習我是路人",
+        "provenance": "w3x-import",
+        "description": "「對鏡練習我是路人！」\n對鏡練台詞，AP +80 持續 3 秒；沒有無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 80
+              }
+            ],
+            "duration": 3
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.267,
+        "template": {
+          "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+          "params": {
+            "castTimeSec": 0.267,
+            "duration": 3,
+            "modifiers": [
+              {
+                "op": "flat",
+                "stat": "ap",
+                "value": 80
+              }
+            ]
+          },
+          "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+        }
+      },
+      "R": {
+        "id": "b2-shadow.r",
+        "name": "I AM 加班到 ATOMIC",
+        "provenance": "w3x-import",
+        "description": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "ground",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "中",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.7725
+                }
+              ]
+            },
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.833,
+        "template": {
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+          "params": {
+            "aim": "target",
+            "castTimeSec": 0.833,
+            "damage": {
+              "damageTier": "中",
+              "ratios": [
+                {
+                  "coeff": 0.8,
+                  "stat": "ap"
+                }
+              ]
+            },
+            "damageType": "magic",
+            "length": 9,
+            "width": 1.5
+          },
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+        }
+      }
+    },
+    "exAbility": "b2-shadow.ex",
+    "passiveAbility": "b2-shadow.passive",
+    "icon": "assets/icons/champions/b2-shadow.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell 2",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.481732",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.481732",
+        "modelSha256": "9685e66b4791ee37fc38ac65df72716db81bdcd49dc1a9663219a970cedc686a",
+        "binarySha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+        "registeredAt": "2026-09-10T14:37:56.177Z",
+        "source": {
+          "kind": "previous",
+          "character": "闇影",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.481732.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 1766568,
+      "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33"
+    },
+    {
+      "document": {
+        "id": "version.body.46967b7950b680e5e4585f41c2f08a867b8b4829ed4ea83b",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell 2",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.481732-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.46967b7950b680e5e4585f41c2f08a867b8b4829ed4ea83b",
+        "label": "202511z13（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.481732-standard-v2",
+        "modelSha256": "204383952ee3aa40cadbfb5ef2cd1f39ac35287b07eaace2f4332dbdc6f4f223",
+        "binarySha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+        "registeredAt": "2026-09-10T14:37:56.188Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "202511z13",
+          "work": "來源作品待核；論壇標題：202511z13",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-481732-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 1465744,
+      "sha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

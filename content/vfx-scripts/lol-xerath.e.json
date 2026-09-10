@@ -1,0 +1,24 @@
+{
+  "id": "lol-xerath.e",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-xerath.e",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "奧能拘束",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

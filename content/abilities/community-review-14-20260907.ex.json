@@ -1,0 +1,42 @@
+{
+  "id": "community-review-14-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔分身式教學〕",
+  "provenance": "w3x-import",
+  "description": "以高速殘像演出三處依序打擊，實際由同一本體按時序結算。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "castTimeSec": 0.4,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.2,
+      "durationSec": 0.4,
+      "tickOnApply": true
+    }
+  ],
+  "vfxKey": "fx.prim.wind.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.nova",
+      "attachTo": "point"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-14-20260907.ex.webp",
+  "rangeTier": "中"
+}

@@ -1,6 +1,6 @@
 {
   "collection": "vfx-scripts",
-  "hash": "3d945d196d0a",
+  "hash": "20b5e06e9013",
   "entries": [
     {
       "id": "godie-e002.ex",
@@ -61,6 +61,216 @@
       "path": "vfx-scripts/godie-udea.r.json",
       "hash": "e85353b3d25b",
       "size": 1994
+    },
+    {
+      "id": "lol-karthus.e",
+      "path": "vfx-scripts/lol-karthus.e.json",
+      "hash": "c8ba32befc53",
+      "size": 403
+    },
+    {
+      "id": "lol-karthus.ex",
+      "path": "vfx-scripts/lol-karthus.ex.json",
+      "hash": "adb5fc330daa",
+      "size": 405
+    },
+    {
+      "id": "lol-karthus.q",
+      "path": "vfx-scripts/lol-karthus.q.json",
+      "hash": "02b81f74727d",
+      "size": 397
+    },
+    {
+      "id": "lol-karthus.r",
+      "path": "vfx-scripts/lol-karthus.r.json",
+      "hash": "72e8bd36bd5f",
+      "size": 641
+    },
+    {
+      "id": "lol-karthus.w",
+      "path": "vfx-scripts/lol-karthus.w.json",
+      "hash": "351353234185",
+      "size": 403
+    },
+    {
+      "id": "lol-leesin.e",
+      "path": "vfx-scripts/lol-leesin.e.json",
+      "hash": "f25a95757d26",
+      "size": 401
+    },
+    {
+      "id": "lol-leesin.ex",
+      "path": "vfx-scripts/lol-leesin.ex.json",
+      "hash": "faf8532a034b",
+      "size": 403
+    },
+    {
+      "id": "lol-leesin.q",
+      "path": "vfx-scripts/lol-leesin.q.json",
+      "hash": "ce05bd374bbd",
+      "size": 401
+    },
+    {
+      "id": "lol-leesin.r",
+      "path": "vfx-scripts/lol-leesin.r.json",
+      "hash": "32bc94e81ae3",
+      "size": 636
+    },
+    {
+      "id": "lol-leesin.w",
+      "path": "vfx-scripts/lol-leesin.w.json",
+      "hash": "b73a62e151f2",
+      "size": 401
+    },
+    {
+      "id": "lol-lux.e",
+      "path": "vfx-scripts/lol-lux.e.json",
+      "hash": "0842c91ee43c",
+      "size": 395
+    },
+    {
+      "id": "lol-lux.ex",
+      "path": "vfx-scripts/lol-lux.ex.json",
+      "hash": "cb15edfe3b41",
+      "size": 397
+    },
+    {
+      "id": "lol-lux.q",
+      "path": "vfx-scripts/lol-lux.q.json",
+      "hash": "41762bb695b9",
+      "size": 395
+    },
+    {
+      "id": "lol-lux.r",
+      "path": "vfx-scripts/lol-lux.r.json",
+      "hash": "e27a3c321382",
+      "size": 633
+    },
+    {
+      "id": "lol-lux.w",
+      "path": "vfx-scripts/lol-lux.w.json",
+      "hash": "ddf36d8f4d74",
+      "size": 395
+    },
+    {
+      "id": "lol-missfortune.e",
+      "path": "vfx-scripts/lol-missfortune.e.json",
+      "hash": "d52ea00d595c",
+      "size": 411
+    },
+    {
+      "id": "lol-missfortune.ex",
+      "path": "vfx-scripts/lol-missfortune.ex.json",
+      "hash": "fee0dfb71bac",
+      "size": 413
+    },
+    {
+      "id": "lol-missfortune.q",
+      "path": "vfx-scripts/lol-missfortune.q.json",
+      "hash": "7201d149e07a",
+      "size": 411
+    },
+    {
+      "id": "lol-missfortune.r",
+      "path": "vfx-scripts/lol-missfortune.r.json",
+      "hash": "ae0e40557309",
+      "size": 649
+    },
+    {
+      "id": "lol-missfortune.w",
+      "path": "vfx-scripts/lol-missfortune.w.json",
+      "hash": "e5645295351a",
+      "size": 411
+    },
+    {
+      "id": "lol-warwick.e",
+      "path": "vfx-scripts/lol-warwick.e.json",
+      "hash": "bf11d7084128",
+      "size": 403
+    },
+    {
+      "id": "lol-warwick.ex",
+      "path": "vfx-scripts/lol-warwick.ex.json",
+      "hash": "4f6abc99c027",
+      "size": 405
+    },
+    {
+      "id": "lol-warwick.q",
+      "path": "vfx-scripts/lol-warwick.q.json",
+      "hash": "e2e05d9f7b34",
+      "size": 397
+    },
+    {
+      "id": "lol-warwick.r",
+      "path": "vfx-scripts/lol-warwick.r.json",
+      "hash": "59bc2426c12b",
+      "size": 641
+    },
+    {
+      "id": "lol-warwick.w",
+      "path": "vfx-scripts/lol-warwick.w.json",
+      "hash": "0a84167a12da",
+      "size": 403
+    },
+    {
+      "id": "lol-xerath.e",
+      "path": "vfx-scripts/lol-xerath.e.json",
+      "hash": "b0c3ff640adf",
+      "size": 401
+    },
+    {
+      "id": "lol-xerath.ex",
+      "path": "vfx-scripts/lol-xerath.ex.json",
+      "hash": "8d32e51499fd",
+      "size": 403
+    },
+    {
+      "id": "lol-xerath.q",
+      "path": "vfx-scripts/lol-xerath.q.json",
+      "hash": "a1793722fd9d",
+      "size": 401
+    },
+    {
+      "id": "lol-xerath.r",
+      "path": "vfx-scripts/lol-xerath.r.json",
+      "hash": "568ddfe30aff",
+      "size": 639
+    },
+    {
+      "id": "lol-xerath.w",
+      "path": "vfx-scripts/lol-xerath.w.json",
+      "hash": "771fde1dcacf",
+      "size": 401
+    },
+    {
+      "id": "lol-yasuo.e",
+      "path": "vfx-scripts/lol-yasuo.e.json",
+      "hash": "1350a7608b11",
+      "size": 399
+    },
+    {
+      "id": "lol-yasuo.ex",
+      "path": "vfx-scripts/lol-yasuo.ex.json",
+      "hash": "d2b307191d85",
+      "size": 401
+    },
+    {
+      "id": "lol-yasuo.q",
+      "path": "vfx-scripts/lol-yasuo.q.json",
+      "hash": "93751c25c9db",
+      "size": 393
+    },
+    {
+      "id": "lol-yasuo.r",
+      "path": "vfx-scripts/lol-yasuo.r.json",
+      "hash": "dbe3c3337522",
+      "size": 637
+    },
+    {
+      "id": "lol-yasuo.w",
+      "path": "vfx-scripts/lol-yasuo.w.json",
+      "hash": "1a281a722fcf",
+      "size": 399
     }
   ]
 }

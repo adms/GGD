@@ -1,0 +1,78 @@
+{
+  "id": "community-review-15-20260907.r",
+  "name": "〔兄貴背摔〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 4.5,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "target",
+      "mode": "toPoint",
+      "apexHeight": 0.005,
+      "durationSec": 0.45,
+      "throwDistance": 7.33,
+      "dragToCaster": true,
+      "landRadius": 2,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.4577
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 1.633,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-15-20260907.r.webp",
+  "template": {
+    "ref": "tpl-pull-throw",
+    "params": {
+      "mode": "toPoint",
+      "grabMode": "dragToCaster",
+      "throwMode": "distance",
+      "apexHeight": 1.2,
+      "durationSec": 0.45,
+      "throwDistance": 400,
+      "landRadius": 2,
+      "landDamageTier": "小",
+      "landApRatio": 0,
+      "damageType": "physical",
+      "castTimeSec": 1.633
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.arc"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "castTimeSec": 0.267,
+  "castType": "self",
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "durationSec": 4,
+      "kind": "championForm",
+      "to": "alternate"
+    },
+    {
+      "duration": 4,
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "armor",
+          "value": 25
+        }
+      ]
+    }
+  ],
+  "id": "b2-maple.e",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 4,
+  "name": "這個形狀看起來很耐打",
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "E",
+  "template": {
+    "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705",
+    "params": {
+      "buffDurationSec": 4,
+      "castTimeSec": 0.267,
+      "durationSec": 4,
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "armor",
+          "value": 25
+        }
+      ],
+      "to": "alternate"
+    },
+    "ref": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-maple.e.webp"
+}

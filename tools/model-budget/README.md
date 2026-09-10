@@ -16,9 +16,20 @@ three tools that consult it.
 
 The supported portable target is **iPad mini (A17 Pro), 30 fps**; phones are
 outside this support scope. The budget uses development-machine measurements
-with an assumed 3× cost allowance. It is an estimate; an A17 Pro device test is
-not a release requirement. A 33.33 ms frame reserves 9 ms for animation, giving
-160 channels per hero (warning 120), or 1,920 for twelve heroes. Geometry, draws,
+with an assumed 3x cost allowance. It is an estimate; an A17 Pro device test is
+not a release requirement. A 33.33 ms frame reserves 9 ms for animation, which
+DERIVES 160 channels per hero.
+
+**That derived number is no longer the shipped limit.** owner set the thresholds
+directly on 2026-09-10 (GH#1164): "太低了 至少要有 300以上每個" and then
+"你改成 300 warning, 500 limit". The live values are a config knob --
+`content/config/model-lod.json`'s `championChannelWarn` / `championChannelLimit`
+(shipped 300 / 500) -- and the formula above is now a DIAGNOSTIC only:
+`derateFor(limit)` answers "how much safety margin does this setting imply"
+(500 gives roughly 1x, versus the 3x the derived 160 assumed).
+
+Do not hand-write the numbers here again: read them from the config, or from
+`HERO_MODEL_BUDGET.channels` which reads the same single home. Geometry, draws,
 and texture limits stay unchanged. A channel is one animated node property,
 not a clip: storing many clips does not mean playing them all in one frame.
 

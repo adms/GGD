@@ -33,6 +33,7 @@ import { StatsHoverPanel } from "./hud/StatsHoverPanel";
 import { PadHudFocusBanner } from "./hud/PadHudFocusBanner";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
+import { Round11Overlay } from "./hud/Round11Overlay";
 import { BossIntroOverlay } from "./hud/BossIntroOverlay";
 import { MapIntroOverlay } from "./hud/MapIntroOverlay";
 import { MapCornerLabel } from "./hud/MapCornerLabel";
@@ -204,6 +205,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [MarkBar, "標記層數"],
   [ZombieWaveBar, "殭屍來襲提示"],
   [MobBossOverlay, "殭屍王"],
+  [Round11Overlay, "第十一回合生存模式"],
   [BossIntroOverlay, "殭屍王出場演出"],
   [MapIntroOverlay, "開場地圖名"],
   [MapCornerLabel, "常駐地圖名"],
@@ -406,6 +408,13 @@ export function HudRoot(): React.JSX.Element {
               doubling. Owns its own combat gate and placement
               (hud/mobBossModel), and returns null when there is no room. */}
           <MobBossOverlay />
+          {/* ⭐ GH#1151 H —— 第十一回合・生存模式（模式橫幅 / 倒數 / 轟炸紅圈預警 /
+              換邊·旁觀 / 寶具損壞與復活權提示）。⛔ 在這一行之前，伺服器把整套
+              A–G 都送上線了而 `apps/client` 樹裡「round11」是**零命中** ——
+              玩家經歷的是地圖換掉、五百隻殭屍、地上掉半條血、背包少一件寶具，
+              ⛔ 而畫面上一個字都沒說（失敗形態②）。自己的閘（戰鬥階段 +
+              `round > finalRound`），不是那一回合就回 null。 */}
+          <Round11Overlay />
           {/* 殭屍王出場演出 (owner 2026-08-02「殭屍王出場 會音效+大字講該英雄的
               名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示淡出
               消失」)。⚠️ 音效不在這個元件裡 —— `mobBossSpawn` 早就對到

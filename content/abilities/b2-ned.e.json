@@ -1,0 +1,82 @@
+{
+  "castTimeSec": 0.833,
+  "castType": "targeted",
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「請退後不要問會不會呱！」\n對敵人造成極小物理傷害並推離 3 單位；改變後续近身與線斬位置。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "damageTier": "極小"
+      },
+      "damageType": "physical",
+      "kind": "damage"
+    },
+    {
+      "distance": 3,
+      "from": "caster",
+      "kind": "knockback",
+      "speed": 12,
+      "subtractGap": false,
+      "uncontrollable": false
+    }
+  ],
+  "id": "b2-ned.e",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "請退後不要問會不會呱",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 0.833,
+      "castType": "targeted",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小"
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "distance": 3,
+          "from": "caster",
+          "kind": "knockback",
+          "speed": 12,
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "radius": 3,
+      "side": "enemies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-ned.e.webp",
+  "radiusTier": "極小"
+}

@@ -1,0 +1,102 @@
+{
+  "id": "kof-xv-mai-whitemagesunny-raw",
+  "target": "KOF XV／Mai Shiranui／原作者 FBX + TGA + 遊戲骨架原包",
+  "heroIds": [
+    "community-review-03-20260907"
+  ],
+  "ownerEntryIds": [],
+  "url": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
+  "downloadUrl": "https://drive.google.com/file/d/1caTkddaLZIXrtypXlGGgAWd67K7bOUIX/view",
+  "uploader": "WhiteMageSunny",
+  "format": "FBX 7700 / 12 TGA",
+  "accessStatus": "public-direct-download",
+  "acquisitionStatus": "downloaded-verified",
+  "readiness": "pending-standardization",
+  "purchaseDecision": "hold-purchase-review-free-source",
+  "defaultEligible": false,
+  "resourceRole": "character-model-collection",
+  "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw",
+  "sourceGame": "The King of Fighters XV",
+  "platform": "unknown-original-platform",
+  "selectionClass": "canonical-game",
+  "discoveryChannel": "original-author-public-raw-export",
+  "assetKinds": [
+    "model",
+    "texture",
+    "skeleton"
+  ],
+  "modelCandidates": [
+    {
+      "candidateId": "kof-xv-mai-whitemagesunny-raw",
+      "sourceId": "kof-xv-mai-whitemagesunny-raw",
+      "character": "Mai Shiranui",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceGame": "The King of Fighters XV",
+      "sourcePlatform": "unknown-original-platform",
+      "platformEvidence": "Publisher names KOF XV; the game installation platform and patch are not specified. Publication date is not treated as game release or asset version.",
+      "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
+      "author": "WhiteMageSunny",
+      "sourceClass": "canonical-game-raw-export",
+      "nativeModel": "extracted-v1/Raw Files/Mai Shiranui.fbx",
+      "nativeModelBytes": 10074400,
+      "nativeModelSha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe",
+      "nativeFormat": "FBX 7700",
+      "meshCount": 21,
+      "vertices": 178947,
+      "triangles": 116939,
+      "boneCounts": [
+        319
+      ],
+      "maxVertexInfluences": 4,
+      "sourceSkeleton": "Original game rig according to author; bone counts and all-vertex skinning verified by readonly FBX import.",
+      "textureCount": 12,
+      "animationCount": 0,
+      "vfxCount": 0,
+      "audioCount": 0,
+      "readyStage": "pending-standardization",
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultChanged": false,
+      "candidateMustBeRetained": true,
+      "originalBytesPreserved": true,
+      "limitations": [
+        "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+        "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+        "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+        "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+        "Existing manually approved Mai proxy default is preserved; this is an additional candidate only.",
+        "Blender import reported Materials mapping type NoMappingInformation; per-material assignments require inspection during conversion."
+      ]
+    }
+  ],
+  "candidateManifest": {
+    "path": "source-manifest.json",
+    "sha256": "57da1b063ccf6e546eaf83cd2081cd82913522c45373b68fe1d41f8cd69a0cc7"
+  },
+  "filesManifest": {
+    "path": "delivery-20260910T151538200789Z.json",
+    "sha256": "67e91b59d9888679fbf8ffa41e08b60330bd5e9a2af97da315c64a8c26a76b35"
+  },
+  "files": [
+    {
+      "path": "raw/King of Fighters XV - Mai Shiranui.rar",
+      "bytes": 79735587,
+      "sha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67"
+    }
+  ],
+  "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
+  "publicationStatus": "local-only-not-uploaded",
+  "backendIntegration": {
+    "required": true,
+    "state": "pending-standardization",
+    "selectionVerified": false
+  },
+  "verification": "原包79735587 bytes，SHA與完整解包逐檔紀錄可查；21 mesh／116939 triangles／319骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
+  "backup": {
+    "status": "not-uploaded",
+    "readbackVerified": false
+  },
+  "audioFileIndex": null
+}

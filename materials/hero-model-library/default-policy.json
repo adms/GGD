@@ -144,5 +144,191 @@
     "useUploadOrRegistrationDateAsGameDate": false,
     "preserveAllAlternatives": true,
     "manualSelectionStillWins": true
-  }
+  },
+  "approvedWorkflowDefaults": [
+    {
+      "heroId": "b2-noor",
+      "sourceId": "ou99:453949",
+      "modelKey": "ou99.453949-standard-v2",
+      "sha256": "14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b",
+      "name": "諾爾",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-uncle",
+      "sourceId": "ou99:454482",
+      "modelKey": "ou99.454482-standard-v2",
+      "sha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016",
+      "name": "異世界舅舅",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-ned",
+      "sourceId": "ou99:456917",
+      "modelKey": "ou99.456917-standard-v2",
+      "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+      "name": "青蛙劍士 Ned",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-luckyman",
+      "sourceId": "ou99:457594",
+      "modelKey": "ou99.457594-standard-v2",
+      "sha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+      "name": "幸運超人",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-keyaru",
+      "sourceId": "ou99:458777",
+      "modelKey": "ou99.458777-standard-v3",
+      "sha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+      "name": "凱亞爾",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-touka",
+      "sourceId": "ou99:459257",
+      "modelKey": "ou99.459257-standard-v2",
+      "sha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+      "name": "托卡・史考特",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-37-20260907",
+      "sourceId": "ou99:459617",
+      "modelKey": "ou99.459617-standard",
+      "sha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "name": "吉伊卡哇",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-matthias",
+      "sourceId": "ou99:465884",
+      "modelKey": "ou99.465884-standard",
+      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+      "name": "馬提亞斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-fushi",
+      "sourceId": "ou99:467227",
+      "modelKey": "ou99.467227-standard",
+      "sha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564",
+      "name": "不死",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-33-20260907",
+      "sourceId": "ou99:470087",
+      "modelKey": "ou99.470087-standard-v2",
+      "sha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0",
+      "name": "近衛刀太",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-elma",
+      "sourceId": "ou99:472038",
+      "modelKey": "ou99.472038-standard-v2",
+      "sha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+      "name": "艾爾瑪",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-aladdin",
+      "sourceId": "ou99:473324",
+      "modelKey": "ou99.473324-standard-v3",
+      "sha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5",
+      "name": "阿拉丁",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-kaede",
+      "sourceId": "ou99:474258",
+      "modelKey": "ou99.474258-standard",
+      "sha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "name": "楓",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-makoto",
+      "sourceId": "ou99:478642",
+      "modelKey": "ou99.478642-standard",
+      "sha256": "63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f",
+      "name": "深澄真",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-shadow",
+      "sourceId": "ou99:481732",
+      "modelKey": "ou99.481732-standard-v2",
+      "sha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+      "name": "闇影",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-nube",
+      "sourceId": "ou99:487484",
+      "modelKey": "ou99.487484-standard",
+      "sha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a",
+      "name": "鵺野鳴介",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-klaus",
+      "sourceId": "ou99:487487-7yzc0mtk",
+      "modelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "sha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+      "name": "克勞斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-klaus",
+      "sourceId": "ou99:487487-sbhhkedr",
+      "modelKey": "ou99.487487-sbhhkedr-standard",
+      "sha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
+      "name": "克勞斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-boxxo",
+      "sourceId": "ou99:491448",
+      "modelKey": "ou99.491448-standard-v3",
+      "sha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+      "name": "阿箱＋拉蜜絲",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-36-20260907",
+      "sourceId": "ou99:493578",
+      "modelKey": "ou99.493578-standard-v2",
+      "sha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894",
+      "name": "鬼畜王蘭斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-haga",
+      "sourceId": "ou99:495015",
+      "modelKey": "ou99.495015-standard",
+      "sha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+      "name": "羽賀",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-orphen",
+      "sourceId": "ou99:496452",
+      "modelKey": "ou99.496452-standard-v2",
+      "sha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+      "name": "歐菲",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-30-20260907",
+      "sourceId": "ou99:498214",
+      "modelKey": "ou99.498214-standard-v2",
+      "sha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d",
+      "name": "尼古貓貓",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    }
+  ]
 }

@@ -1,0 +1,39 @@
+{
+  "id": "community-review-10-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔Checkmate〕",
+  "provenance": "w3x-import",
+  "description": "消耗指揮層數，對已標記區域發動有預警的戰術打擊。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "castTimeSec": 2.233,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "中",
+        "ratios": []
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.void.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.nova",
+      "attachTo": "point"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-10-20260907.ex.webp",
+  "rangeTier": "大"
+}

@@ -1,0 +1,77 @@
+{
+  "id": "community-review-06-20260907.r",
+  "name": "超級巨劍",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】有預警的大範圍揮砍，提供卡比本體的固定終結能力。\n【待補機制】巨劍造型待補；目前四段直線物理波。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3.0,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.833,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-06-20260907.r.webp",
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 4,
+      "stepSize": 100,
+      "segmentAoe": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.833
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam"
+    }
+  ]
+}

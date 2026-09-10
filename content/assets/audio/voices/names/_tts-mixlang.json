@@ -1,5 +1,755 @@
 [
   {
+    "id": "vo-name-b2-aladdin",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "阿拉丁",
+    "out": "b2-aladdin.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-albus",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "阿爾巴斯",
+    "out": "b2-albus.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-bojji",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "波吉",
+    "out": "b2-bojji.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-boxxo",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "阿箱＋拉蜜絲",
+    "out": "b2-boxxo.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-elma",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "艾爾瑪",
+    "out": "b2-elma.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-fushi",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "不死",
+    "out": "b2-fushi.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-goblin",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "哥布林殺手",
+    "out": "b2-goblin.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-guts",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "凱茲",
+    "out": "b2-guts.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-haga",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "羽賀",
+    "out": "b2-haga.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-kaede",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "楓",
+    "out": "b2-kaede.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-kaiji",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "伊藤開司",
+    "out": "b2-kaiji.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-keyaru",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "凱亞爾",
+    "out": "b2-keyaru.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-kisaragi",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "如月電車",
+    "out": "b2-kisaragi.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-klaus",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "克勞斯",
+    "out": "b2-klaus.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-kumoko",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "蜘蛛子",
+    "out": "b2-kumoko.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-luckyman",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "幸運超人",
+    "out": "b2-luckyman.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-makoto",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "深澄真",
+    "out": "b2-makoto.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-maomao",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "猫猫",
+    "out": "b2-maomao.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-maple-alt-9769eb88b85b",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "梅普露（變身）",
+    "out": "b2-maple-alt-9769eb88b85b.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-maple",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "梅普露",
+    "out": "b2-maple.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-matthias",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "馬提亞斯",
+    "out": "b2-matthias.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-misery",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "米瑟利",
+    "out": "b2-misery.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-naofumi",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "岩谷尚文",
+    "out": "b2-naofumi.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-ned",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "青蛙劍士 Ned",
+    "out": "b2-ned.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-noor",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "諾爾",
+    "out": "b2-noor.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-nube",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "鵺野鳴介",
+    "out": "b2-nube.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-orphen",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "歐菲",
+    "out": "b2-orphen.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-popp",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "何布",
+    "out": "b2-popp.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-rem",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "蕾姆",
+    "out": "b2-rem.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-rin",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "遠坂凜",
+    "out": "b2-rin.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-shadow",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "闇影",
+    "out": "b2-shadow.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-shinchan",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "野原新之助",
+    "out": "b2-shinchan.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-sinbad",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "辛巴達",
+    "out": "b2-sinbad.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-takopi",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "章魚嗶",
+    "out": "b2-takopi.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-touka",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "托卡・史考特",
+    "out": "b2-touka.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-uncle",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "異世界舅舅",
+    "out": "b2-uncle.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-yogiri",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "高遠夜霧",
+    "out": "b2-yogiri.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-b2-zenitsu",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "我妻善逸",
+    "out": "b2-zenitsu.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-01-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "武藤遊戲",
+    "out": "community-review-01-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-02-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "八神庵",
+    "out": "community-review-02-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-03-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "不知火舞",
+    "out": "community-review-03-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-04-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "空條承太郎",
+    "out": "community-review-04-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-05-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "洛克人",
+    "out": "community-review-05-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-06-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "卡比",
+    "out": "community-review-06-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-07-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "西索",
+    "out": "community-review-07-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-08-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "米卡莎",
+    "out": "community-review-08-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-09-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "赫蘿",
+    "out": "community-review-09-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-10-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "魯路修",
+    "out": "community-review-10-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-11-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "利姆路",
+    "out": "community-review-11-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-12-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "衛宮士郎",
+    "out": "community-review-12-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-13-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "朝田詩乃",
+    "out": "community-review-13-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-14-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "殺老師",
+    "out": "community-review-14-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-15-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "比利海靈頓",
+    "out": "community-review-15-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-16-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "魔法少女☆伊莉雅",
+    "out": "community-review-16-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-17-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "安茲·烏爾·恭",
+    "out": "community-review-17-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-18-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "吉爾伽美什",
+    "out": "community-review-18-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-19-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "桐谷和人",
+    "out": "community-review-19-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-20-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "御坂美琴",
+    "out": "community-review-20-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-21-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "鹿目圓",
+    "out": "community-review-21-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-22-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "菜月昴",
+    "out": "community-review-22-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-23-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "坂田銀時",
+    "out": "community-review-23-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-24-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "奇犽",
+    "out": "community-review-24-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-25-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "一拳超人",
+    "out": "community-review-25-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-26-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "名偵探柯南",
+    "out": "community-review-26-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-27-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "庫洛魔法使",
+    "out": "community-review-27-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-28-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "艾莉絲·伯雷亞斯·格雷拉特",
+    "out": "community-review-28-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-29-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "芙莉蓮",
+    "out": "community-review-29-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-30-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "尼古貓貓",
+    "out": "community-review-30-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-31-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "SUN樂",
+    "out": "community-review-31-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-32-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "阿薩謝爾",
+    "out": "community-review-32-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-33-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "近衛刀太",
+    "out": "community-review-33-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-34-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "高速婆婆",
+    "out": "community-review-34-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-35-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "炭治郎",
+    "out": "community-review-35-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-36-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "鬼畜王蘭斯",
+    "out": "community-review-36-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-community-review-37-20260907",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "吉伊卡哇",
+    "out": "community-review-37-20260907.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "vo-title-godie-e001",
     "lang": "zh-TW",
     "voice": "Tingting",
@@ -1375,6 +2125,76 @@
     "voice": "Kyoko",
     "text": "喪標麥可",
     "out": "godie-zombiex.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-karthus",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "卡爾瑟斯",
+    "out": "lol-karthus.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-leesin",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "李星",
+    "out": "lol-leesin.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-lux",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "拉克絲",
+    "out": "lol-lux.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-missfortune",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "好運姐",
+    "out": "lol-missfortune.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-warwick",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "沃維克",
+    "out": "lol-warwick.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-xerath",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "齊勒斯",
+    "out": "lol-xerath.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-lol-yasuo",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "犽宿",
+    "out": "lol-yasuo.name.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5

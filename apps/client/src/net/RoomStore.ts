@@ -20,6 +20,14 @@ import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_KIND, formIndexFromFlags } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 import type { MarkView } from "../ui/hud/markModel";
+import {
+  isRound11Event,
+  round11BombardFromEvent,
+  round11NoticeFromEvent,
+  round11Rules,
+  type Round11BombardView,
+  type Round11Notice,
+} from "../ui/hud/round11Model";
 // ⛔⛔ GH#816 —— `state.entities` 是 **view-gated**，view 裡一個實體都沒有的時候
 // Colyseus **整格不送** ⇒ 客戶端讀到 `undefined`（⛔ 不是 size 0 的空 map）。
 // 本檔在 2026-08-29 之前有 5 處無條件 `state.entities.get/forEach`，它們沒有一起
@@ -534,6 +542,22 @@ export interface HudState {
     entries: readonly { id: string; zh: string; voiceCategory: string }[];
     hovered: number | null;
   } | null;
+  /**
+   * ⭐ 第十一回合的**大轟炸落點**（GH#1151 H）。`null` ＝ 現在沒有紅圈。
+   *
+   * ⚠️ 它是**事件**投影，⛔ 不是快照欄位：`round11Bombardment` 一則一圈，
+   * 而 `MatchState` 上沒有這個東西（轟炸整件事住 `MatchController`）。
+   * ⇒ 過期由**時鐘**決定（`round11BombardSecondsLeft` 回 null），
+   * ⛔ 不是等下一個快照把它清掉 —— 沒有那個快照。
+   */
+  round11Bombard: Round11BombardView | null;
+  /**
+   * ⭐ 第十一回合的提示列（寶具損壞 / 復活權 +1 / 殭屍升級）。
+   *
+   * ⚠️ **只留最近幾則**（`ROUND11_NOTICE_CAP`）—— 一場十分鐘的生存局會發出上百則
+   * `mobPromote`，而一個無上限的陣列是一條慢性記憶體洩漏。
+   */
+  round11Notices: readonly Round11Notice[];
 }
 
 /**
@@ -732,9 +756,12 @@ const initial: HudState = {
   marks: [],
   roundScore: null,
   commsWheel: null,
+  round11Bombard: null,
+  round11Notices: [],
 };
 
 let shopEventSeq = 0;
+let round11Seq = 0;
 
 export const hudStore = createStore<HudState>(() => ({ ...initial }));
 
@@ -864,7 +891,13 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   // like every other field so a 20 Hz snapshot of an unchanged arena is a
   // no-op and never restarts the bed mid-round.
   if (prev.mapId !== state.mapId) patch.mapId = state.mapId;
-  if (prev.round !== state.round) patch.round = state.round;
+  if (prev.round !== state.round) {
+    patch.round = state.round;
+    // ⭐ GH#1151 H —— 回合換了就把上一回合的紅圈與提示丟掉。它們是**事件**投影,
+    //   ⛔ 沒有任何後續快照會把它們歸零(理由寫在 `resetRound11` 上)。
+    patch.round11Bombard = null;
+    patch.round11Notices = [];
+  }
 
   const secondsLeft = Math.max(0, Math.ceil(state.phaseTicksLeft / TICK_HZ));
   if (prev.phaseSecondsLeft !== secondsLeft) patch.phaseSecondsLeft = secondsLeft;
@@ -1524,6 +1557,48 @@ export function localDuelZone(s: HudState = hudStore.getState()): number {
 /** True when this event is a 殭屍王 beat (cheap pre-filter for the drain). */
 export function isMobBossEvent(type: string): boolean {
   return type === MOB_BOSS_SPAWN_EVENT || type === MOB_BOSS_SLAIN_EVENT;
+}
+
+/**
+ * ⭐ 提示列最多留幾則 —— 一場十分鐘的生存局會發出上百則 `mobPromote`。
+ * ⛔ 一個無上限的陣列是一條慢性記憶體洩漏（而它在測試裡看不出來）。
+ */
+export const ROUND11_NOTICE_CAP = 12;
+
+/**
+ * ⭐⭐ 第十一回合的四則事件 → HUD（GH#1151 H）。
+ *
+ * ⛔⛔ **在這一行之前，`apps/client` 整棵樹裡「round11」是零命中**：
+ * 伺服器把紅圈預警、寶具損壞、復活權都送上線了，⛔ 而沒有任何一個收端 ——
+ * 玩家挨的是一發沒有前兆的半血真傷、少一件不知道為什麼消失的寶具。
+ *
+ * ⭐ 判斷全部在 `ui/hud/round11Model`（純函式）；這裡只做兩件不能純的事：
+ * 蓋一個本機時鐘戳，以及寫進 store。
+ *
+ * ⚠️ ⭐ **座位／隊伍的過濾在 model 裡**，⛔ 不在這裡也⛔ 不在畫面那一層 ——
+ * 一個過濾器有兩個住處，就會有一天只改了其中一個。
+ */
+export function recordRound11Event(ev: EventMessage, nowMs: number = comboNowMs()): void {
+  if (!isRound11Event(ev.type)) return;
+  const s = hudStore.getState();
+  const data = (ev.data ?? {}) as Record<string, unknown>;
+  if (ev.type === "round11Bombardment") {
+    const view = round11BombardFromEvent(data, nowMs, round11Rules().bombardTelegraphSec);
+    // ⛔ 欄位不對 ⇒ 不動既有那一圈（一顆壞事件不可以把畫面上真的那一圈擦掉）。
+    if (view) hudStore.setState({ round11Bombard: view });
+    return;
+  }
+  const seat = s.localSeatId === null ? undefined : s.seats.find((x) => x.seatId === s.localSeatId);
+  const notice = round11NoticeFromEvent(
+    ev.type,
+    data,
+    s.localSeatId,
+    seat?.teamId ?? null,
+    nowMs,
+    ++round11Seq,
+  );
+  if (!notice) return;
+  hudStore.setState({ round11Notices: [...s.round11Notices, notice].slice(-ROUND11_NOTICE_CAP) });
 }
 
 /**

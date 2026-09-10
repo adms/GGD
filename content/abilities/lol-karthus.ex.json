@@ -1,0 +1,49 @@
+{
+  "id": "lol-karthus.ex",
+  "name": "靜默幕衣",
+  "provenance": "w3x-import",
+  "description": "獲得只吸收魔法傷害的 3 秒護盾，提供一段施法準備時間。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "magic",
+      "stackKey": "concept-karthus-guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-karthus.ex.webp"
+}

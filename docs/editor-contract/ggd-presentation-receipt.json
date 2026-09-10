@@ -29,15 +29,15 @@
       "dodge"
     ],
     "clipCoveragePct": {
-      "attack": 76.4,
-      "cast": 44.4,
-      "celebrate": 4.9,
-      "death": 62.2,
-      "dodge": 51.8,
-      "guard": 1.9,
-      "hurt": 7.1,
-      "idle": 91.8,
-      "run": 77.3
+      "attack": 83.9,
+      "cast": 55.1,
+      "celebrate": 4.1,
+      "death": 64.6,
+      "dodge": 54.3,
+      "guard": 1.1,
+      "hurt": 9.3,
+      "idle": 94.9,
+      "run": 86.4
     }
   },
   "clipFallback": {
@@ -216,5 +216,5 @@
     "why": "⭐ `displace` 帶著 `phase`（start/impact/end）與技能 identity。",
     "evidence": "packages/shared/src/sim/movement/leap.ts · packages/shared/src/sim/effects/blink.ts"
   },
-  "fingerprint": "decaece9bf6da041"
+  "fingerprint": "6877bcd76021efa8"
 }

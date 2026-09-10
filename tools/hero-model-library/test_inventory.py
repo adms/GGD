@@ -121,7 +121,7 @@ class InventoryHandoff(unittest.TestCase):
     def test_clean_checkout_needs_no_library_and_detects_stale_inputs(self):
         with tempfile.TemporaryDirectory(prefix='ggd-handoff-') as folder:
             target = Path(folder) / 'GGD'
-            for rel in ['materials/hero-model-library','materials/community-hero-forge/recipes','content/champions']:
+            for rel in ['materials/hero-model-library','materials/community-hero-forge/recipes','content/champions','content/config']:
                 shutil.copytree(REPO/rel, target/rel)
             for name in ['inventory.py','source_links.py','default_policy.py','query.py']:
                 dest=target/'tools/hero-model-library'/name

@@ -1,0 +1,75 @@
+{
+  "id": "community-review-34-20260907.w",
+  "name": "〔急轉彎〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】快速改變方向，降低當前加速層數以換取操作能力。\n【待補機制】需急轉向與消耗加速層，不能單純低跳。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 2.75,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0.12,
+      "durationSec": 0.5,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 1.033,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-34-20260907.w.webp",
+  "template": {
+    "ref": "tpl-leap-strike",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 30,
+      "durationSec": 0.5,
+      "landRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 1.033
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.wind.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.arc",
+      "attachTo": "point"
+    }
+  ]
+}

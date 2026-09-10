@@ -1,0 +1,534 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-elma.json",
+  "sourceHeroSha256": "17809a8de1256e7e73f7012ee1a3c5cd923349763b3570ff8045cadf0a8d4a10",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:9ef7203fb6aeb80ea8c83a7f950c84dfe2bd74eb84ad16f37da9e4d9443a7082",
+    "sourceModelKey": "ou99.472038-standard-v2",
+    "label": "圣洁化身戚小姐（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "圣洁化身戚小姐",
+      "work": "來源作品待核；論壇標題：圣洁化身戚小姐",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-472038-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-elma",
+    "name": "艾爾瑪",
+    "description": "轉生重騎士無雙｜攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "tank",
+    "attackType": "melee",
+    "archetype": "tank",
+    "origin": "坦克",
+    "modelKey": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.472038",
+        "modelSha256": "bb7e2c0743d9d2f3cae32cd9993ce00eb7d1e7a12d52f14c3960f1872bc70eda",
+        "binarySha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
+        "registeredAt": "2026-09-10T14:37:55.347Z",
+        "source": {
+          "kind": "previous",
+          "character": "艾爾瑪",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.472038.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.20fe2ed4e78771eac83c3f14a01fe01b592cfbb41b7478ec",
+        "label": "圣洁化身戚小姐（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.472038-standard-v2",
+        "modelSha256": "18a81c54007cf4d122343e3cf34cf423c9642896c5eed20c3b9f59856a1cdd7c",
+        "binarySha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+        "registeredAt": "2026-09-10T14:37:55.373Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "圣洁化身戚小姐",
+          "work": "來源作品待核；論壇標題：圣洁化身戚小姐",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-472038-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 6,
+      "range": 1.4
+    },
+    "growth": {
+      "ad": 1.8716734693877548,
+      "ap": 0,
+      "armor": 1.5605204081632653,
+      "as": 0,
+      "healthRegen": 0.08196326530612243,
+      "manaRegen": 0,
+      "maxHealth": 27.67734693877551,
+      "maxMana": 0.9209183673469388,
+      "mr": 5.279591836734694
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 29,
+      "agi": 18,
+      "int": 13,
+      "strGrowth": 2.78,
+      "agiGrowth": 1.67,
+      "intGrowth": 1.25,
+      "primary": "STR",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-elma.q",
+        "name": "攻略說先扣自己血",
+        "provenance": "w3x-import",
+        "description": "「攻略說先扣自己血！」\n照攻略支付最大生命 15%，底線 1 HP；先得到 60 護盾 2 秒，代價不被自己的護盾抵銷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "spendHealth",
+            "amount": {
+              "flat": 0
+            },
+            "pctMaxHealth": 0.15,
+            "minimumHp": 1
+          },
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 60,
+              "perRank": [
+                0,
+                30,
+                60,
+                90
+              ]
+            },
+            "duration": 2,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.067,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.067,
+            "castType": "self",
+            "effects": [
+              {
+                "amount": {
+                  "flat": 0
+                },
+                "kind": "spendHealth",
+                "minimumHp": 1,
+                "pctMaxHealth": 0.15
+              },
+              {
+                "absorbs": "all",
+                "amount": {
+                  "flat": 60,
+                  "perRank": [
+                    0,
+                    30,
+                    60,
+                    90
+                  ]
+                },
+                "duration": 2,
+                "kind": "shield",
+                "onExisting": "keepLarger",
+                "stackKey": "b2-protection"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-elma.w",
+        "name": "半血以下保固升級",
+        "provenance": "w3x-import",
+        "description": "「半血以下保固升級！」\n血量低於 50% 才給 300 護盾 3 秒；高血量按只回復最大魔力 2%，不可無代價厚盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "restore",
+            "manaPct": 0.02,
+            "applyTo": "self"
+          },
+          {
+            "kind": "shield",
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<",
+              "value": 0.5
+            },
+            "amount": {
+              "flat": 300,
+              "perRank": [
+                0,
+                150,
+                300,
+                450
+              ]
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.067,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.067,
+            "castType": "self",
+            "effects": [
+              {
+                "applyTo": "self",
+                "kind": "restore",
+                "manaPct": 0.02
+              },
+              {
+                "absorbs": "all",
+                "amount": {
+                  "flat": 300,
+                  "perRank": [
+                    0,
+                    150,
+                    300,
+                    450
+                  ]
+                },
+                "condition": {
+                  "kind": "stat",
+                  "mode": "percent",
+                  "op": "<",
+                  "stat": "hp",
+                  "subject": "self",
+                  "value": 0.5
+                },
+                "duration": 3,
+                "kind": "shield",
+                "onExisting": "keepLarger",
+                "stackKey": "b2-protection"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-elma.e",
+        "name": "重劍攻略追加七十點",
+        "provenance": "w3x-import",
+        "description": "「重劍攻略追加七十點！」\n重劍模式 3 秒攻擊力 +70；只改戰鬥屬性，未冒稱更换原作裝甲模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 70
+              }
+            ],
+            "duration": 3
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.267,
+        "template": {
+          "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+          "params": {
+            "castTimeSec": 0.267,
+            "duration": 3,
+            "modifiers": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 70
+              }
+            ]
+          },
+          "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+        }
+      },
+      "R": {
+        "id": "b2-elma.r",
+        "name": "照攻略抄的重擊",
+        "provenance": "w3x-import",
+        "description": "「照攻略抄的重擊！」\n中級重擊加 0.8 AD；受 E 實際攻擊力影響。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "中",
+              "ratios": [
+                {
+                  "stat": "ad",
+                  "coeff": 0.8
+                }
+              ]
+            }
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 1.7,
+        "template": {
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+          "params": {
+            "castTimeSec": 1.7,
+            "damage": {
+              "damageTier": "中",
+              "ratios": [
+                {
+                  "coeff": 0.8,
+                  "stat": "ad"
+                }
+              ]
+            },
+            "damageType": "physical"
+          },
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+        }
+      }
+    },
+    "exAbility": "b2-elma.ex",
+    "passiveAbility": "b2-elma.passive",
+    "icon": "assets/icons/champions/b2-elma.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk Fast",
+          "attack": "Attack 1",
+          "cast": "Spell 2",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.472038",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.472038",
+        "modelSha256": "bb7e2c0743d9d2f3cae32cd9993ce00eb7d1e7a12d52f14c3960f1872bc70eda",
+        "binarySha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
+        "registeredAt": "2026-09-10T14:37:55.347Z",
+        "source": {
+          "kind": "previous",
+          "character": "艾爾瑪",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.472038.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 4182160,
+      "sha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5"
+    },
+    {
+      "document": {
+        "id": "version.body.20fe2ed4e78771eac83c3f14a01fe01b592cfbb41b7478ec",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk Fast",
+          "attack": "Attack 1",
+          "cast": "Spell 2",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.472038-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.20fe2ed4e78771eac83c3f14a01fe01b592cfbb41b7478ec",
+        "label": "圣洁化身戚小姐（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.472038-standard-v2",
+        "modelSha256": "18a81c54007cf4d122343e3cf34cf423c9642896c5eed20c3b9f59856a1cdd7c",
+        "binarySha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+        "registeredAt": "2026-09-10T14:37:55.373Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "圣洁化身戚小姐",
+          "work": "來源作品待核；論壇標題：圣洁化身戚小姐",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-472038-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 3840024,
+      "sha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

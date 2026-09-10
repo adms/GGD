@@ -363,8 +363,9 @@ describe("runtime package builder", () => {
  *
  * ⚠️ 拆成兩段是**量出來的**，⛔ 不是為了好看：
  *   · Editor 這一側（閉包／entries／模板 ref 保真）**今天就全部走得通**；
- *   · Main 的 `zAuthoringKind`（packageSchema.ts:160）今天**還沒有 `champion`**
- *     ⇒ 最後那一步組 manifest 過不去。⭐ 兩個 `skipIf` 保證**任何一天**都有一條在跑：
+ *   · Main 的 `zAuthoringKind`（packageSchema.ts:168）**已經補上 `champion`**（2026-09-07，
+ *     ⭐ 2026-09-09 實測：完整驗收那一條在跑、「擋住的是哪一行」那一條被跳過）
+ *     ⇒ 最後那一步組 manifest **過得去了**。⭐ 兩個 `skipIf` 保證**任何一天**都有一條在跑：
  *     詞彙補上 ⇒ 跑完整驗收；還沒補 ⇒ 跑「擋住的是哪一行」。
  *     ⛔ 不可以合成一條 `try/catch`——那種寫法兩邊都綠，等於沒有守衛。
  */

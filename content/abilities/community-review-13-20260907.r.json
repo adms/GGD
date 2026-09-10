@@ -1,0 +1,77 @@
+{
+  "id": "community-review-13-20260907.r",
+  "name": "〔Hecate II・決定性一槍〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】較長瞄準後射出高傷害子彈，敵人可見射線預警。\n【待補機制】需單發高傷害射線、較長瞄準與移動取消。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3.0,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.833,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-13-20260907.r.webp",
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 4,
+      "stepSize": 100,
+      "segmentAoe": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.833
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.beam"
+    }
+  ]
+}

@@ -38,7 +38,7 @@ export const MODEL_UPLOAD_LIMITS = {
   clipChannels: 2048,
   clipSeconds: 300,
 } as const;
-const extensions = new Set(["KHR_materials_unlit", "KHR_texture_transform", "KHR_materials_emissive_strength"]);
+const extensions = new Set(["KHR_materials_unlit", "KHR_texture_transform", "KHR_materials_emissive_strength", "KHR_materials_specular"]);
 const dimensions: Record<string, number> = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4, MAT2: 4, MAT3: 9, MAT4: 16 };
 
 /** Bound work before calling the official validator or allocating accessor arrays. */

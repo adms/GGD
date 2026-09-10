@@ -1,0 +1,74 @@
+{
+  "castTimeSec": 1.433,
+  "castType": "ground",
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "provenance": "w3x-import",
+  "description": "「技能欄批次執行！」\n以起手命中中心固定 3 秒魔法傷害場（無目標時採施法點），之後每秒重新選取圈內敵人；不是保證以游標點為中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "count": 3,
+      "delaySec": 1,
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "中",
+            "mult": 0.3333333333333333
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        }
+      ],
+      "intervalSec": 1,
+      "kind": "delayed",
+      "radius": 4.5,
+      "radiusTier": "小",
+      "shape": "circle",
+      "side": "enemies",
+      "targetMode": "reresolve"
+    }
+  ],
+  "id": "b2-kaede.r",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "maxRank": 3,
+  "name": "技能欄批次執行",
+  "radius": 4.5,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "R",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189",
+    "params": {
+      "anchor": "point",
+      "applyTo": "enemies",
+      "castTimeSec": 1.433,
+      "damageTier": "中",
+      "damageType": "magic",
+      "durationSec": 3,
+      "intervalSec": 1,
+      "radius": 4.5,
+      "radiusTier": "小"
+    },
+    "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806"
+  },
+  "vfxKey": "fx.prim.arcane.nova",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.nova"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-kaede.r.webp",
+  "radiusTier": "小"
+}

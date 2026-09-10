@@ -26,6 +26,20 @@ describe("community GLB import boundaries", () => {
     ]) expect(() => parseUploadGlb(encodeUploadGlb({ ...f.json, ...patch } as unknown as GlbDocument, f.bin))).toThrow(/嵌入|擴充/);
   });
 
+  it("preserves supported specular materials through animation selection and validates their values", async () => {
+    const f = modelUploadFixture();
+    const material = { extensions: { KHR_materials_specular: { specularFactor: 0.7, specularColorFactor: [0.5, 0.4, 0.3] } } };
+    Object.assign(f.json.meshes![0]!.primitives[0]!, { material: 0 });
+    const json = { ...f.json, extensionsUsed: ["KHR_materials_specular"], extensionsRequired: ["KHR_materials_specular"], materials: [material] };
+    const inspected = await inspectModelUpload(encodeUploadGlb(json, f.bin));
+    expect(inspected.report.issues.numErrors).toBe(0);
+    const selected = await selectModelAnimations(encodeUploadGlb(json, f.bin), [0]);
+    expect((selected.inspected.json as typeof json).materials).toEqual([material]);
+    const invalid = structuredClone(json);
+    invalid.materials[0]!.extensions.KHR_materials_specular.specularFactor = 2;
+    await expect(inspectModelUpload(encodeUploadGlb(invalid, f.bin))).rejects.toThrow("GLB 格式檢查未通過");
+  });
+
   it("bounds sizes, primitive arrays, tree depth, and sparse implicit allocations", () => {
     const f = modelUploadFixture();
     expect(() => parseUploadGlb(f.bytes.subarray(0, f.bytes.length - 1))).toThrow("完整");

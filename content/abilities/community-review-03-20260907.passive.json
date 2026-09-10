@@ -1,0 +1,53 @@
+{
+  "id": "community-review-03-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔不知火流身法〕",
+  "provenance": "w3x-import",
+  "description": "完成位移後獲得一次短效普攻強化；刷新不疊加。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔不知火流身法〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.fire.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.fire.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-03-20260907.passive.webp"
+}

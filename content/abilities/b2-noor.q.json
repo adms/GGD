@@ -1,0 +1,136 @@
+{
+  "castTimeSec": 0.467,
+  "castType": "self",
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「這招物理技能我能擋！」\n取得護甲 +10 與 1.8 秒不限定角度的物理技能反制；反彈成功後會一併提早撤下護甲與反制：只對 physical 的 ability 來襲，以原始傷害的 100% 產生魔法回擊（仍受對方減傷）並免去原發；1 次後撤下。普通攻擊、魔法、真傷不列入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "applyTo": "self",
+      "duration": 1.8,
+      "hooks": [
+        {
+          "damageSource": "ability",
+          "damageType": "physical",
+          "effects": [
+            {
+              "amount": {
+                "flat": 0
+              },
+              "damageType": "magic",
+              "incomingPct": {
+                "basis": "raw",
+                "maxChainDepth": 1,
+                "negateOriginal": true,
+                "perRank": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "kind": "damage"
+            }
+          ],
+          "internalCooldown": 0,
+          "maxTriggers": 1,
+          "on": "onDamageTaken",
+          "onConsumed": "detachSource",
+          "target": "event"
+        }
+      ],
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "armor",
+          "value": 10
+        }
+      ]
+    }
+  ],
+  "id": "b2-noor.q",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 4,
+  "name": "這招物理技能我能擋",
+  "radius": 3,
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "effects": [
+        {
+          "applyTo": "self",
+          "duration": 1.8,
+          "hooks": [
+            {
+              "damageSource": "ability",
+              "damageType": "physical",
+              "effects": [
+                {
+                  "amount": {
+                    "flat": 0
+                  },
+                  "damageType": "magic",
+                  "incomingPct": {
+                    "basis": "raw",
+                    "maxChainDepth": 1,
+                    "negateOriginal": true,
+                    "perRank": [
+                      1,
+                      1,
+                      1,
+                      1
+                    ]
+                  },
+                  "kind": "damage"
+                }
+              ],
+              "internalCooldown": 0,
+              "maxTriggers": 1,
+              "on": "onDamageTaken",
+              "onConsumed": "detachSource",
+              "target": "event"
+            }
+          ],
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "armor",
+              "value": 10
+            }
+          ]
+        }
+      ],
+      "radius": 3,
+      "side": "enemies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-noor.q.webp",
+  "radiusTier": "極小"
+}

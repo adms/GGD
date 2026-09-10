@@ -1,0 +1,86 @@
+{
+  "id": "community-review-37-20260907.r",
+  "name": "〔鼓起勇氣討伐〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】消耗勇氣發動數次叉擊，層數決定有限的強化幅度。\n【待補機制】固定三段；需勇氣消耗与有限強化幅度。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "radius": 2.75,
+  "rangeTier": "極小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.18,
+      "durationSec": 0.54
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 0.54,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-37-20260907.r.webp",
+  "template": {
+    "ref": "tpl-lock-combo",
+    "params": {
+      "hitCount": 3,
+      "hitIntervalSec": 0.18,
+      "perHitDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "finisherDamage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "finisherRadius": 150,
+      "damageType": "physical",
+      "lockTarget": "none",
+      "casterGuard": "none",
+      "trigger": "onCast"
+    },
+    "inheritDefaults": true
+  },
+  "castTimeSec": 0.533,
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.slash"
+    }
+  ]
+}

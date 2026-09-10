@@ -1,0 +1,336 @@
+{
+  "id": "community-review-24-20260907",
+  "name": "奇犽",
+  "description": "奇犽 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。\n\n視覺方向：藍白短電弧、側移殘像、神速輪廓電流；電量 UI 不以裝飾光冒充。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "法刺",
+  "modelKey": "version.body.7f075191d8d759a8475e66b421de085eb1fcf8926a175681",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 10,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 31.047346938775508,
+    "healthRegen": 0.07555510204081634,
+    "maxMana": 11.026530612244898,
+    "manaRegen": 0,
+    "ad": 3.4382040816326525,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.3431428571428571,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 12,
+    "agi": 25,
+    "int": 23,
+    "strGrowth": 1.18,
+    "agiGrowth": 2.36,
+    "intGrowth": 2.17,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-24-20260907.q",
+      "name": "落雷",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】指定小區域的延遲電擊。\n【待補機制】短起手落點電擊對應基礎版。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 6.0,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 1.633,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-24-20260907.q.webp",
+      "template": {
+        "ref": "tpl-ground-nova",
+        "params": {
+          "radius": 300,
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.633
+        },
+        "inheritDefaults": true
+      },
+      "radiusTier": "中"
+    },
+    "W": {
+      "id": "community-review-24-20260907.w",
+      "name": "肢曲",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離側移並留下殘像；只有有效迴避才觸發後續反擊資源。\n【待補機制】需貼地肢曲殘像與有效閃避事件。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 2.75,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.2,
+          "durationSec": 0.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-24-20260907.w.webp",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 50,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-24-20260907.e",
+      "name": "電光石火",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】持續消耗電力提高移動速度，關閉或電力耗盡時停止。\n【待補機制】目前固定 3 秒加速；需開關及持續扣電。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-24-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-24-20260907.r",
+      "name": "神速・疾風迅雷",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：as +20%、極小級移速。\n【目標設計】短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。\n【待補機制】目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            },
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.667,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-24-20260907.r.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            },
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "castTimeSec": 0.667
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-24-20260907.ex",
+  "passiveAbility": "community-review-24-20260907.passive",
+  "icon": "assets/icons/champions/community-review-24-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.e54c9ed50878a152ef561b8659ce4e97c3a78f44737e212c",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "modelSha256": "feb0ac03b7773e2400e19abd4550b386d8bc315b8322dd6105ed3ae08f17261f",
+      "binarySha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "registeredAt": "2026-09-10T14:45:32.000Z",
+      "source": {
+        "kind": "previous",
+        "character": "奇犽",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.7f075191d8d759a8475e66b421de085eb1fcf8926a175681",
+      "label": "奇犽",
+      "sourceModelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "modelSha256": "636c7b06a8b1260a6996fa5c4e5764c16dcfd4f5c2d58c068539c5e5e2920590",
+      "binarySha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "registeredAt": "2026-09-10T14:45:32.007Z",
+      "source": {
+        "kind": "exact",
+        "character": "奇犽",
+        "work": "HUNTER×HUNTER 獵人",
+        "library": "300heroes",
+        "reference": "300heroes:37e03796cc2c9c2829f7e345",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

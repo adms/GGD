@@ -1,0 +1,38 @@
+{
+  "id": "community-review-06-20260907.ex",
+  "schema": "ability@1",
+  "name": "複製能力",
+  "provenance": "w3x-import",
+  "description": "從最近成功吸入的英雄取得一個核准的 Q 技能版本，替換自己的 Q，限時或用盡次數後還原。首批白名單：八神庵闇拂、不知火舞花蝶扇、御坂美琴電擊之槍。其他目標明確顯示不可複製。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 4.5,
+  "castTimeSec": 1.433,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.holy.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.slash"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-06-20260907.ex.webp",
+  "rangeTier": "小"
+}

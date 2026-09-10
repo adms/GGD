@@ -1,0 +1,53 @@
+{
+  "id": "community-review-25-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔興趣使然的英雄〕",
+  "provenance": "w3x-import",
+  "description": "一段時間未攻擊後，下一次普通拳獲得有限強化。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔興趣使然的英雄〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.ki.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ki.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-25-20260907.passive.webp"
+}

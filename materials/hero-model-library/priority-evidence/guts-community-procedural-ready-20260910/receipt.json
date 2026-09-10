@@ -1,0 +1,406 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "guts-community-true-character-procedural-v1",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-rig-v2/body.glb",
+      "bytes": 4807468,
+      "sha256": "0640dcb8eef1e5068786580d24d772be558487993d468e160d956c5945ada5f2"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/procedural-six-v1/body.glb",
+      "bytes": 4874316,
+      "sha256": "f452037ab0ceb5fe38b113030e163ccdcf902fc769f5f7f9df68f37ce2df7c30"
+    },
+    "stateClips": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0,
+    "animationProvenance": {
+      "kind": "GGD generated procedural fallback",
+      "native": false,
+      "retargeted": false,
+      "nativeAnimationCount": 0,
+      "timeUnit": "seconds",
+      "authoringSampleRateHz": 30
+    },
+    "clipDetails": [
+      {
+        "state": "idle",
+        "clip": "GGD_procedural_idle",
+        "seconds": 2.4,
+        "sampleKeys": 73,
+        "channels": 12,
+        "varyingChannels": 3,
+        "loopIntent": true,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "run",
+        "clip": "GGD_procedural_run",
+        "seconds": 0.8,
+        "sampleKeys": 25,
+        "channels": 12,
+        "varyingChannels": 10,
+        "loopIntent": true,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "attack",
+        "clip": "GGD_procedural_attack",
+        "seconds": 1,
+        "sampleKeys": 31,
+        "channels": 12,
+        "varyingChannels": 5,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "cast",
+        "clip": "GGD_procedural_cast",
+        "seconds": 1.6,
+        "sampleKeys": 49,
+        "channels": 12,
+        "varyingChannels": 6,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "hurt",
+        "clip": "GGD_procedural_hurt",
+        "seconds": 0.55,
+        "sampleKeys": 18,
+        "channels": 12,
+        "varyingChannels": 5,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "death",
+        "clip": "GGD_procedural_death",
+        "seconds": 1.25,
+        "sampleKeys": 39,
+        "channels": 12,
+        "varyingChannels": 6,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      }
+    ],
+    "boneMapping": {
+      "pelvis": "ValveBiped.Bip01_Pelvis",
+      "spine": "ValveBiped.Bip01_Spine2",
+      "head": "ValveBiped.Bip01_Head1",
+      "upperArmL": "ValveBiped.Bip01_L_UpperArm",
+      "upperArmR": "ValveBiped.Bip01_R_UpperArm",
+      "forearmL": "ValveBiped.Bip01_L_Forearm",
+      "forearmR": "ValveBiped.Bip01_R_Forearm",
+      "thighL": "ValveBiped.Bip01_L_Thigh",
+      "thighR": "ValveBiped.Bip01_R_Thigh",
+      "shinL": "ValveBiped.Bip01_L_Calf",
+      "shinR": "ValveBiped.Bip01_R_Calf"
+    },
+    "basePoseDegrees": {
+      "ValveBiped.Bip01_L_UpperArm": [
+        0,
+        0,
+        -65.34012664031648
+      ],
+      "ValveBiped.Bip01_R_UpperArm": [
+        0,
+        0,
+        65.33945427457238
+      ]
+    },
+    "config": {
+      "asset": "guts-community-true-character-procedural-v1",
+      "bones": {
+        "pelvis": "ValveBiped.Bip01_Pelvis",
+        "spine": "ValveBiped.Bip01_Spine2",
+        "head": "ValveBiped.Bip01_Head1",
+        "upperArmL": "ValveBiped.Bip01_L_UpperArm",
+        "upperArmR": "ValveBiped.Bip01_R_UpperArm",
+        "forearmL": "ValveBiped.Bip01_L_Forearm",
+        "forearmR": "ValveBiped.Bip01_R_Forearm",
+        "thighL": "ValveBiped.Bip01_L_Thigh",
+        "thighR": "ValveBiped.Bip01_R_Thigh",
+        "shinL": "ValveBiped.Bip01_L_Calf",
+        "shinR": "ValveBiped.Bip01_R_Calf"
+      },
+      "basePoseDegrees": {
+        "ValveBiped.Bip01_L_UpperArm": [
+          0,
+          0,
+          -65.34012664031648
+        ],
+        "ValveBiped.Bip01_R_UpperArm": [
+          0,
+          0,
+          65.33945427457238
+        ]
+      },
+      "roleSigns": {
+        "upperArmR": [
+          1,
+          1,
+          -1
+        ],
+        "forearmL": [
+          1,
+          1,
+          -1
+        ]
+      },
+      "unitsPerMeter": 1,
+      "yawOffsetDeg": 0,
+      "poseRationale": {
+        "L": {
+          "sourceDegrees": -2.659873359683512,
+          "desiredDegrees": -68,
+          "deltaDegrees": -65.34012664031648
+        },
+        "R": {
+          "sourceDegrees": -177.33945427457238,
+          "desiredDegrees": -112,
+          "deltaDegrees": 65.33945427457238
+        }
+      },
+      "sourceNativeAnimations": 0,
+      "sourceFolder": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-rig-v2/body.glb"
+    },
+    "canonicalWorldAxes": true,
+    "proceduralGroundCorrection": {
+      "method": "whole-body Y lift at authored 30Hz keys",
+      "maxLiftMetres": 0.2302864458323406,
+      "details": "ground-correction.json"
+    },
+    "matrixToTrsMaxError": 0,
+    "limitations": [
+      "Six clips are procedural fallback authored by GGD, not source-game motions.",
+      "Bone axes/base pose and visual gesture quality require character-specific visual acceptance.",
+      "No source voice, SFX, VFX or gameplay timing is created or implied.",
+      "Shared upload and runtime sampling must be run separately."
+    ],
+    "materialNormalization": {
+      "opaqueAlphaImages": [],
+      "rgbAndGeometryUnchanged": true
+    }
+  },
+  "selectedClips": {
+    "idle": "GGD_procedural_idle",
+    "run": "GGD_procedural_run",
+    "attack": "GGD_procedural_attack",
+    "cast": "GGD_procedural_cast",
+    "hurt": "GGD_procedural_hurt",
+    "death": "GGD_procedural_death"
+  },
+  "originalClipCount": 6,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "GGD_procedural_idle",
+      "duration": 2.4000000953674316,
+      "channels": 12
+    },
+    {
+      "index": 1,
+      "name": "GGD_procedural_run",
+      "duration": 0.800000011920929,
+      "channels": 12
+    },
+    {
+      "index": 2,
+      "name": "GGD_procedural_attack",
+      "duration": 1,
+      "channels": 12
+    },
+    {
+      "index": 3,
+      "name": "GGD_procedural_cast",
+      "duration": 1.600000023841858,
+      "channels": 12
+    },
+    {
+      "index": 4,
+      "name": "GGD_procedural_hurt",
+      "duration": 0.550000011920929,
+      "channels": 12
+    },
+    {
+      "index": 5,
+      "name": "GGD_procedural_death",
+      "duration": 1.25,
+      "channels": 12
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
+    "byteSize": 4389196,
+    "clipMap": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 25999,
+    "drawPrimitives": 4,
+    "textures": [
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 859282,
+        "sha256": "5e94feb20151c3f34caa2df5d95a0db8c77f169082a85d0632ebd7aa4afa9e7d"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 44388,
+        "sha256": "010fd17077fe90b086efe5320a5a958e0929f5ac4ab8f89e50797c5c3700d5a0"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1844614,
+        "sha256": "25420eb715d8846065d00be90d71baf0733d3df5374a21b88ad8c30ab54ceb2d"
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 124636,
+        "sha256": "d9a3e81167f686e3a0060b1941e440f41aa0c9a6e9402c2ce66eb19fd7ef3578"
+      }
+    ]
+  },
+  "warnings": [
+    "三角面 25999 高於警戒值 16000，送審時需檢查演出負載。",
+    "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+    "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 4347000
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/3",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 6,
+      "materialCount": 4,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 4,
+      "totalVertexCount": 19833,
+      "totalTriangleCount": 25999,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 6
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

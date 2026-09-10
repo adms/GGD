@@ -1,0 +1,73 @@
+{
+  "id": "community-review-20-20260907.w",
+  "name": "〔連鎖放電〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"chainLightning\",\"shape\":\"single\",\"amount\":{\"damageTier\":\"極小\",\"ratios\":[]},\"damageType\":\"magic\",\"jumps\":3,\"jumpRange\":3,\"decay\":0.8,\"revisit\":false,\"maxTotalJumps\":3,\"jumpIntervalSec\":0.12}]。\n【目標設計】在附近不同敵人間跳躍，同一施法不重複命中同一目標。\n【待補機制】模板主命中加鏈起點會對起點追加；需原設計整招同目標只命中一次。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "chainLightning",
+      "shape": "single",
+      "amount": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "jumps": 3,
+      "jumpRange": 3,
+      "decay": 0.8,
+      "jumpIntervalSec": 0.12,
+      "revisit": false,
+      "maxTotalJumps": 3
+    }
+  ],
+  "castTimeSec": 0.567,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-20-20260907.w.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.567
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.lightning.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.slash"
+    }
+  ]
+}

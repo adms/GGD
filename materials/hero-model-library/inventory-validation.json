@@ -1,12 +1,12 @@
 {
-  "time": "2026-09-10T22:14:54+08:00",
-  "inputs_sha256": "8946fa2390aaf0682fe9887c5a0171f09a7865ead4052b98fbd82c17ec369abb",
-  "rows": 156,
+  "time": "2026-09-10T23:19:06+08:00",
+  "inputs_sha256": "27f2e7469e4e0ebfccdd5d3763557a474e2a7dc927645a2c941b7e2f80d4a6d0",
+  "rows": 157,
   "missing_works": [],
-  "source_options": 97,
+  "source_options": 148,
   "s3_release": "7b6ec0c8c5bd75fc173c5f2d",
-  "live_selectable": 49,
-  "pending": 5,
-  "main_production_models_equal": true,
-  "sha256": "3527c425f4f7026c981987667ccc1ba75012e7c2c846a6309a5b58f83b1ee42d"
+  "live_selectable": 130,
+  "pending": 2,
+  "productionContentVersion": "cv_a5039179a7ff",
+  "sha256": "4b605308a60eca8c4cdd761ddc60d984ca9163db40539342210ada65d1ea6455"
 }

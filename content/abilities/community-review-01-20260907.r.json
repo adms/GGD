@@ -1,0 +1,60 @@
+{
+  "id": "community-review-01-20260907.r",
+  "name": "歐西里斯的天空龍",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次大級範圍傷害。\n【目標設計】以天空龍投影演出有預警的區域雷擊；此招是一次性施法投影，不增加常駐召喚物。\n【待補機制】天空龍投影是待製資產；預覽以雷電區域脈衝表達。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 6.0,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 3.367,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-01-20260907.r.webp",
+  "template": {
+    "ref": "tpl-ground-nova",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "大",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 3.367
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.lightning.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "中"
+}

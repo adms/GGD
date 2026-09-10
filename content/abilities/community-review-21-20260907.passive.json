@@ -1,0 +1,53 @@
+{
+  "id": "community-review-21-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔希望的連結〕",
+  "provenance": "w3x-import",
+  "description": "有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔希望的連結〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.holy.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-21-20260907.passive.webp"
+}

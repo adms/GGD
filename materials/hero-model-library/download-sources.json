@@ -36024,6 +36024,453 @@
         "readbackVerified": false,
         "status": "not-uploaded"
       }
+    },
+    {
+      "id": "parallel-infinity-strash-sorcerer-popp",
+      "target": "何布 Popp／PN020：Sorcerer Popp 動畫與法術加工補充包",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://patch.ali213.net/showpatch/263685.html",
+      "downloadUrl": "https://patch1.ventacorius.com/2024/AL213-Sorcerer%20Popp-21-0-1-1718317608-263685.zip",
+      "uploader": "Tellah9；公開鏡像 Ali213",
+      "format": "ZIP／未加密 PAK v3／53 UASSET＋53 UEXP＋3 LOCRES＋2 BAK；1 AnimSequence＋5 AnimMontage（MOD 加工來源）",
+      "accessStatus": "public-direct-download",
+      "checkedAt": "2026-09-10T15:07:56.786074+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "reserved-pending-dependencies",
+      "resourceRole": "animation-supplement",
+      "assetKinds": [
+        "animation",
+        "texture",
+        "configuration"
+      ],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase-continue-public-source-search",
+      "discoveryChannel": "mod-community-public-mirror",
+      "platform": "PC",
+      "sourceGame": "Infinity Strash: DRAGON QUEST The Adventure of Dai",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "selectionClass": "MOD社群修改",
+      "selectionClassNote": "社群加工的 Unreal 動畫／法術儲備，原遊戲 bytes 不在本批，不能稱原著原樣模型或原生 6 clips。",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
+      "files": [
+        {
+          "path": "original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
+          "bytes": 877392,
+          "sha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b"
+        },
+        {
+          "path": "extracted/MasterWizardPopp.pak",
+          "bytes": 14060310,
+          "sha256": "d0b035719bf17a8ff7f72a51c82bfa250f8ab4fdfeb332706c9dd50b5a6e2a33"
+        }
+      ],
+      "upstreamArchiveSha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b",
+      "modelCount": 0,
+      "modelCandidates": [],
+      "nativeAssetCounts": {
+        "bodyModelFileCount": 0,
+        "modelPartFileCount": 0,
+        "skeletonFileCount": 0,
+        "nativeAudioBankFileCount": 0,
+        "communityAnimSequenceAssetCount": 1,
+        "communityAnimMontageAssetCount": 5,
+        "playableGlbClipCount": 0,
+        "confirmedOriginalUnmodifiedClipCount": 0,
+        "skillIconTexture2DCount": 2,
+        "originalUnmodifiedEquivalence": "unknown-no-base-game-comparison"
+      },
+      "motionIndex": {
+        "path": "animation-candidates.json",
+        "bytes": 16841,
+        "sha256": "e7c57cbce791dddf75a98c18366e4e9afc391349c76536082d586994195424ca"
+      },
+      "audioFileIndex": {
+        "reportPath": "audio-file-index.json",
+        "reportSha256": "e8d4212f2a1a03be7290a11b806890811783cfd9328a0018bd252f197b58105f"
+      },
+      "sourceFileManifest": {
+        "path": "pak-extracted.manifest.json",
+        "bytes": 39130,
+        "sha256": "67f369ba9b376f3b0365c24196a1f9584b4141740c78bf1966a4f1bf398ab770"
+      },
+      "filesManifest": {
+        "path": "file-manifest.json",
+        "bytes": 28614,
+        "sha256": "682caa0d7ef3f86b7dd186e33ad02403488cad207d497b8b90ece92a9a41995b"
+      },
+      "sourceManifest": {
+        "path": "source.json",
+        "bytes": 3229,
+        "sha256": "a0cd4ffd97548eaf62ab10563f301fdb937c91c4e55f99a891b9d5e67458ee96"
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/source.json",
+        "motionIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/animation-candidates.json",
+        "audioFileIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/audio-file-index.json",
+        "dependencyIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/dependency-index.json",
+        "uassetExportAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/uasset-export-analysis.json",
+        "uassetExportAnalysisSha256": "9158248434cd8b05f22a7317e1c548283949026d2364c0bc6545c6c02925b87f",
+        "extractedManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted.manifest.json",
+        "extractedManifestSha256": "67f369ba9b376f3b0365c24196a1f9584b4141740c78bf1966a4f1bf398ab770",
+        "gameAliases": [
+          "インフィニティ ストラッシュ ドラゴンクエスト ダイの大冒険",
+          "Infinity Strash Dragon Quest Dai no Daibouken",
+          "無限神速斬 勇者鬥惡龍 達伊的大冒險",
+          "无限神速斩勇者斗恶龙达伊的大冒险",
+          "無限神速劍（使用者原稱）"
+        ],
+        "manifestScope": "file-manifest.json freezes the acquisition batch before this source-entry addendum; package payload list is pak-extracted.manifest.json"
+      },
+      "verification": "原 ZIP 877392 bytes／SHA-256 已核對；PAK v3 的索引與 111 個 payload 全部通過內建 SHA-1。UE4.26 export table 確認 1 AnimSequence 與 5 AnimMontage；AS_PN020_00_B_Spl01 屬性為36 frames／1.1666666秒，壓縮骨節尚未解碼與播放。5 montage 不能當5個獨立骨骼序列。未取得 Popp body、Skeleton、音訊或完整 NiagaraSystem。",
+      "gaps": [
+        "77 external Unreal package dependencies, including SK_PN020_Skeleton and other animations/VFX/audio",
+        "No Popp body model or skeleton; do not close character-model gap",
+        "1 community AnimSequence and 5 community AnimMontage, not six independent native clips",
+        "Compressed bone tracks not decoded; no GLB or runtime playback validation",
+        "No audio files or banks; 15 AkEvent notifications are references only"
+      ],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false,
+        "note": "AkEvent references are not acquired audio."
+      },
+      "reuseTerms": "Public mirror download; original mod author credited Tellah9; no explicit redistribution/conversion grant established in inspected mirror. Preserve provenance; do not treat acquisition as license grant.",
+      "publicRedistributionRightsVerified": false,
+      "usage": "intake-only animation reserve; no automatic runtime selection",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-dependencies",
+        "heroIds": [
+          "b2-popp"
+        ],
+        "selectionVerified": false,
+        "components": [
+          "AM_PN020_00_B_Spl011",
+          "AM_PN020_00_B_Spl0111",
+          "AM_PN020_00_B_Spl01111",
+          "AM_PN020_00_B_Spl022",
+          "AM_PN020_00_B_Spl02222",
+          "AS_PN020_00_B_Spl01"
+        ],
+        "note": "先補原骨架／body／外部依賴再轉換與驗收。保留 1 sequence＋5 montage 來源選項；目前不可作角色模型下拉成品或預設。"
+      },
+      "publicationStatus": "local-only-awaiting-s3-upload",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
+        "bytes": 877392,
+        "sha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b",
+        "readbackVerified": false
+      },
+      "verifiedLocalDeliveryOnly": true
+    },
+    {
+      "id": "kof-xv-mai-sfmlab-lordscrub-v1",
+      "target": "KOF XV／不知火舞／SFM 完整原包（頭身合一個角色來源）",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://sfmlab.com/project/96ca7f93-ac69-4a4e-a8ec-1f6617a7c40c/",
+      "downloadUrl": "https://sfmlab.com/project/mirror/download/559bf8e7-81fa-4871-b958-e528bcd92d6b/",
+      "upstreamUrl": "https://www.deviantart.com/enlightendshadow/art/KOFXV-Mai-EnlightendShadow-907248683",
+      "uploader": "lordscrub; original XPS port credited to EnlightendShadow",
+      "format": "Source MDL49/VVD/VTX + 9 PNG + 9 VTF + 6 VMT",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "resourceRole": "character-model-collection",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm",
+      "sourceGame": "The King of Fighters XV",
+      "platform": "unknown-original-platform",
+      "selectionClass": "community-mod",
+      "discoveryChannel": "author-public-model-library-free-mirror",
+      "assetKinds": [
+        "model",
+        "texture",
+        "skeleton"
+      ],
+      "modelCandidates": [
+        {
+          "candidateId": "kof-xv-mai-lordscrub-sfm",
+          "sourceId": "kof-xv-mai-sfmlab-lordscrub-v1",
+          "character": "Mai Shiranui",
+          "heroIds": [
+            "community-review-03-20260907"
+          ],
+          "sourceGame": "The King of Fighters XV",
+          "sourceClass": "mod-community-port",
+          "sourceUrl": "https://sfmlab.com/project/96ca7f93-ac69-4a4e-a8ec-1f6617a7c40c/",
+          "parts": [
+            "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.mdl",
+            "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.mdl"
+          ],
+          "partCount": 2,
+          "completeCharacterCandidateCount": 1,
+          "boneCountsByPart": {
+            "body": 152,
+            "head": 80
+          },
+          "vertexCountsLOD0ByPart": {
+            "body": 42059,
+            "head": 26034
+          },
+          "animationCount": 0,
+          "sourceStaticPoseActions": 2,
+          "readyStage": "pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "defaultChanged": false,
+          "candidateMustBeRetained": true,
+          "originalBytesPreserved": true,
+          "limitations": [
+            "Publisher says fan is absent.",
+            "Publisher says back-of-outfit flower pattern is missing in the SFM setup.",
+            "Publisher warns jaw is two parts.",
+            "No native gameplay animations, VFX, SFX or voice included.",
+            "No GGD runtime/visual acceptance performed."
+          ]
+        }
+      ],
+      "candidateManifest": {
+        "path": "source-manifest.json",
+        "sha256": "d0579e1fc37b113b2755639a03d56a79a29d4737878ffefe7cd876c5138a5756"
+      },
+      "filesManifest": {
+        "path": "delivery-20260910T151016200104Z.json",
+        "sha256": "936ec1e1e4ccb3c92918d463fb9cbfe3a9441a82db03ab89c85603c58abff349"
+      },
+      "files": [
+        {
+          "path": "raw/KOFVX_Mai_OFHXLWK.zip",
+          "bytes": 90764853,
+          "sha256": "2284c0ca7eb9b0201acb3497702154c7b1ea182f51b03072378f1e8fd2087b3e"
+        }
+      ],
+      "sourceLicense": "CC0 selected on SFMLab; site warns license unverified and fan-art rights may apply",
+      "publicationStatus": "local-only-not-uploaded",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "selectionVerified": false
+      },
+      "verification": "完整 90764853-byte ZIP、安全解出30實檔。body/head 是同一不知火舞的兩部件，不是兩個完整角色；各僅一個1-frame @idle pose，0原作動作、0音訊、0VFX。扇子及背部花紋缺口與jaw兩段限制照作者描述保留。未轉GLB、未後台驗收；既有核准11支加工預設不改。",
+      "backup": {
+        "status": "not-uploaded",
+        "readbackVerified": false
+      },
+      "audioFileIndex": null
+    },
+    {
+      "id": "kof-xv-mai-whitemagesunny-raw",
+      "target": "KOF XV／Mai Shiranui／原作者 FBX + TGA + 遊戲骨架原包",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
+      "downloadUrl": "https://drive.google.com/file/d/1caTkddaLZIXrtypXlGGgAWd67K7bOUIX/view",
+      "uploader": "WhiteMageSunny",
+      "format": "FBX 7700 / 12 TGA",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "resourceRole": "character-model-collection",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw",
+      "sourceGame": "The King of Fighters XV",
+      "platform": "unknown-original-platform",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "original-author-public-raw-export",
+      "assetKinds": [
+        "model",
+        "texture",
+        "skeleton"
+      ],
+      "modelCandidates": [
+        {
+          "candidateId": "kof-xv-mai-whitemagesunny-raw",
+          "sourceId": "kof-xv-mai-whitemagesunny-raw",
+          "character": "Mai Shiranui",
+          "heroIds": [
+            "community-review-03-20260907"
+          ],
+          "sourceGame": "The King of Fighters XV",
+          "sourcePlatform": "unknown-original-platform",
+          "platformEvidence": "Publisher names KOF XV; the game installation platform and patch are not specified. Publication date is not treated as game release or asset version.",
+          "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
+          "author": "WhiteMageSunny",
+          "sourceClass": "canonical-game-raw-export",
+          "nativeModel": "extracted-v1/Raw Files/Mai Shiranui.fbx",
+          "nativeModelBytes": 10074400,
+          "nativeModelSha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe",
+          "nativeFormat": "FBX 7700",
+          "meshCount": 21,
+          "vertices": 178947,
+          "triangles": 116939,
+          "boneCounts": [
+            319
+          ],
+          "maxVertexInfluences": 4,
+          "sourceSkeleton": "Original game rig according to author; bone counts and all-vertex skinning verified by readonly FBX import.",
+          "textureCount": 12,
+          "animationCount": 0,
+          "vfxCount": 0,
+          "audioCount": 0,
+          "readyStage": "pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "defaultChanged": false,
+          "candidateMustBeRetained": true,
+          "originalBytesPreserved": true,
+          "limitations": [
+            "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+            "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+            "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+            "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+            "Existing manually approved Mai proxy default is preserved; this is an additional candidate only.",
+            "Blender import reported Materials mapping type NoMappingInformation; per-material assignments require inspection during conversion."
+          ]
+        }
+      ],
+      "candidateManifest": {
+        "path": "source-manifest.json",
+        "sha256": "57da1b063ccf6e546eaf83cd2081cd82913522c45373b68fe1d41f8cd69a0cc7"
+      },
+      "filesManifest": {
+        "path": "delivery-20260910T151538200789Z.json",
+        "sha256": "67e91b59d9888679fbf8ffa41e08b60330bd5e9a2af97da315c64a8c26a76b35"
+      },
+      "files": [
+        {
+          "path": "raw/King of Fighters XV - Mai Shiranui.rar",
+          "bytes": 79735587,
+          "sha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67"
+        }
+      ],
+      "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
+      "publicationStatus": "local-only-not-uploaded",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "selectionVerified": false
+      },
+      "verification": "原包79735587 bytes，SHA與完整解包逐檔紀錄可查；21 mesh／116939 triangles／319骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
+      "backup": {
+        "status": "not-uploaded",
+        "readbackVerified": false
+      },
+      "audioFileIndex": null
+    },
+    {
+      "id": "kof-xv-iori-whitemagesunny-raw",
+      "target": "KOF XV／Iori Yagami／原作者 FBX + TGA + 遊戲骨架原包",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Iori-Yagami-1227665754",
+      "downloadUrl": "https://drive.google.com/file/d/1wOyuTZI7gRLrMdIbjTXYc4wHvITsOuhd/view",
+      "uploader": "WhiteMageSunny",
+      "format": "FBX 7700 / 12 TGA",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "resourceRole": "character-model-collection",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw",
+      "sourceGame": "The King of Fighters XV",
+      "platform": "unknown-original-platform",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "original-author-public-raw-export",
+      "assetKinds": [
+        "model",
+        "texture",
+        "skeleton"
+      ],
+      "modelCandidates": [
+        {
+          "candidateId": "kof-xv-iori-whitemagesunny-raw",
+          "sourceId": "kof-xv-iori-whitemagesunny-raw",
+          "character": "Iori Yagami",
+          "heroIds": [
+            "community-review-02-20260907"
+          ],
+          "sourceGame": "The King of Fighters XV",
+          "sourcePlatform": "unknown-original-platform",
+          "platformEvidence": "Publisher names KOF XV; the game installation platform and patch are not specified. Publication date is not treated as game release or asset version.",
+          "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Iori-Yagami-1227665754",
+          "author": "WhiteMageSunny",
+          "sourceClass": "canonical-game-raw-export",
+          "nativeModel": "extracted-v1/Raw Files/Iori Yagami.fbx",
+          "nativeModelBytes": 6416000,
+          "nativeModelSha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
+          "nativeFormat": "FBX 7700",
+          "meshCount": 26,
+          "vertices": 85852,
+          "triangles": 126007,
+          "boneCounts": [
+            241
+          ],
+          "maxVertexInfluences": 4,
+          "sourceSkeleton": "Original game rig according to author; bone counts and all-vertex skinning verified by readonly FBX import.",
+          "textureCount": 12,
+          "animationCount": 0,
+          "vfxCount": 0,
+          "audioCount": 0,
+          "readyStage": "pending-standardization",
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "defaultChanged": false,
+          "candidateMustBeRetained": true,
+          "originalBytesPreserved": true,
+          "limitations": [
+            "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+            "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+            "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+            "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+            "Existing manually approved Mai proxy default is preserved; this is an additional candidate only."
+          ]
+        }
+      ],
+      "candidateManifest": {
+        "path": "source-manifest.json",
+        "sha256": "33d2615520b2a2804c0a1d04a3081364f2caa5ad91317f0c82174d42a9681f6f"
+      },
+      "filesManifest": {
+        "path": "delivery-20260910T151539495752Z.json",
+        "sha256": "087ea81e82eb3242ddc4ebbe732e20db1f20e0181eeb8d9bb0496ee7661ab0b4"
+      },
+      "files": [
+        {
+          "path": "raw/The King of Fighters XV - Iori Yagami.rar",
+          "bytes": 100817444,
+          "sha256": "40d327cd60a6a196541b993370549f8563e9578d7b1c00e7b49507c338f50329"
+        }
+      ],
+      "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
+      "publicationStatus": "local-only-not-uploaded",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "selectionVerified": false
+      },
+      "verification": "原包100817444 bytes，SHA與完整解包逐檔紀錄可查；26 mesh／126007 triangles／241骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
+      "backup": {
+        "status": "not-uploaded",
+        "readbackVerified": false
+      },
+      "audioFileIndex": null
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -36376,6 +36823,56 @@
       "supplementSourceIds": [
         "github-udienzebeer-fate-uc-hd-c8c2d52b"
       ]
+    },
+    {
+      "id": "infinity-strash-dai-owner-source",
+      "target": "無限神速斬：小呆、何布、巴恩大魔王前後形態",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c",
+        "b2-popp",
+        "godie-ubal"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://www.nexusmods.com/games/infinitystrashdragonquesttheadventureofdai/mods",
+      "pageTitle": "インフィニティ ストラッシュ ドラゴンクエスト ダイの大冒険",
+      "aliases": [
+        "無限神速劍",
+        "無限神速斬 勇者鬥惡龍 達伊的大冒險",
+        "Infinity Strash Dragon Quest Dai no Daibouken"
+      ],
+      "checkedAt": "2026-09-10",
+      "accessStatus": "public-mod-catalog-indexed",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "purchaseDecision": "hold-purchase-investigate-public-source",
+      "verification": "使用者指定整包搜尋模型、動作、語音、音效及招式特效。已找到官方遊戲頁與 Nexus MOD 目錄；具體素材檔及巴恩變身前後尚待擷取核對，不把修改設定的 MOD 當成完整模型。獨立來源工作流持續查找，不阻擋目前成品 commit/push。",
+      "officialReference": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "resourceTypesRequested": [
+        "models",
+        "textures",
+        "skeletons",
+        "animations",
+        "voices",
+        "sfx",
+        "vfx"
+      ],
+      "formsRequested": {
+        "Dai": [
+          "base",
+          "Dragon Knight"
+        ],
+        "Vearn": [
+          "before transformation",
+          "after transformation"
+        ]
+      },
+      "formsVerified": [],
+      "languagePriority": [
+        "ja",
+        "en"
+      ],
+      "defaultPolicy": "Keep all independent versions; current approved Popp derivative remains manual priority until an explicit selection change."
     }
   ],
   "ingestionPolicy": {
@@ -36466,6 +36963,43 @@
       "mergeAllWorkflowDeliveries": true,
       "sourceChannelDoesNotOverrideDefaultClass": true,
       "downloadsUseNormalPublicOrAlreadyAuthorizedAccess": true
+    },
+    "workflowResponsibilities": {
+      "independentSourceWorkflows": [
+        "search",
+        "download",
+        "extract-and-inspect-originals",
+        "preserve-source-package-and-sha256",
+        "deliver-isolated-intake-and-evidence"
+      ],
+      "integrationWorkflow": [
+        "accept-deliveries",
+        "standardize-and-validate",
+        "preserve-native-motion-and-build-explicit-fallbacks",
+        "register-all-accepted-variants",
+        "merge-central-inventory-and-voice-index",
+        "commit-push-existing-feature-branch-and-PR"
+      ],
+      "mainWorkflow": [
+        "review-and-merge",
+        "deploy-and-verify-sites"
+      ],
+      "integrationDoesNotWaitForAllSourceSearches": true
+    },
+    "acquisitionScopeExceptions": {
+      "lol": {
+        "heroIds": [
+          "example:karthus",
+          "example:leesin",
+          "example:lux",
+          "example:missfortune",
+          "example:warwick",
+          "example:xerath",
+          "example:yasuo"
+        ],
+        "retainAlreadyAcquiredOtherCharacters": true,
+        "doNotExpandFullRoster": true
+      }
     }
   },
   "paidSources": [],

@@ -1,0 +1,40 @@
+{
+  "id": "community-review-03-20260907.ex",
+  "schema": "ability@1",
+  "name": "陽炎之舞",
+  "provenance": "w3x-import",
+  "description": "短時間產生跟隨施法的火焰殘像；追加傷害有次數上限，殘像不獨立尋敵。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 1.033,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "vfxKey": "fx.prim.fire.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.fire.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-03-20260907.ex.webp"
+}

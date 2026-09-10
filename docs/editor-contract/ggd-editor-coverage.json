@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "0e18cf393cde",
-  "capabilityFingerprint": "d9013d10",
+  "fingerprint": "d18427f10501",
+  "capabilityFingerprint": "0a52bb76",
   "required": [
     {
       "group": "abilityField",
@@ -8348,6 +8348,16 @@
     },
     {
       "group": "configField",
+      "name": "championChannelLimit",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "championChannelWarn",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
       "name": "champions",
       "owner": "config.boss-intro@1"
     },
@@ -11113,6 +11123,26 @@
     },
     {
       "group": "configField",
+      "name": "heroTargetMatch",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=game-and-migration",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=migration",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=strict",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
       "name": "hiddenChampions",
       "owner": "config.roster@1"
     },
@@ -12204,6 +12234,11 @@
     {
       "group": "configField",
       "name": "legendaryShelf.sellRefundPct",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "legendaryShelf.swapWhenFull",
       "owner": "config.arena-rules@1"
     },
     {
@@ -16943,6 +16978,26 @@
     },
     {
       "group": "configField",
+      "name": "round11.possession",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.possession.escapeWindowSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.possession.inheritBossAugments",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.possession.telegraphRadius",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "round11.scoring",
       "owner": "config.arena-rules@1"
     },
@@ -16968,12 +17023,47 @@
     },
     {
       "group": "configField",
+      "name": "round11.survivalLoop",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.bossRerollChancePct",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.bossRerollTable",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.breakItemOnDeath",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.normalToSpecialSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.specialDropsReviveCircle",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "round11.triggerBossKills",
       "owner": "config.arena-rules@1"
     },
     {
       "group": "configField",
       "name": "round11.waveTable",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.baseSpawnCount",
       "owner": "config.arena-rules@1"
     },
     {
@@ -24342,6 +24432,10 @@
     },
     {
       "group": "templateFamily",
+      "name": "charge-resource"
+    },
+    {
+      "group": "templateFamily",
       "name": "combo-finisher"
     },
     {
@@ -24471,6 +24565,10 @@
     {
       "group": "templateFamily",
       "name": "single-strike"
+    },
+    {
+      "group": "templateFamily",
+      "name": "spend-resource"
     },
     {
       "group": "templateFamily",
@@ -25053,7 +25151,7 @@
     "hookField": 22,
     "abilityField": 39,
     "auraField": 8,
-    "templateFamily": 45,
+    "templateFamily": 47,
     "conditionLeaf": 10,
     "conditionLeafField": 19,
     "effectFieldPath": 450,
@@ -25062,9 +25160,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4028,
+    "configField": 4046,
     "_notRequired": 15,
-    "_total": 5146,
+    "_total": 5166,
     "_ownerOnly": 39
   }
 }

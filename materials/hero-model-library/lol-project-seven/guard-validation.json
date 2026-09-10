@@ -1,0 +1,12 @@
+{
+  "scopeAllowsExactlySeven": true,
+  "fetchAllowsExactlyFour": true,
+  "englishLocaleRejected": true,
+  "eighthCharacterRejected": true,
+  "fullRosterFlagRejected": true,
+  "legacyFullRosterEntryPointDisabled": true,
+  "unlistedFetchStopsBeforeNetwork": true,
+  "testedUnlistedName": "Aatrox",
+  "decoderAndExtractorRequireSevenExactIds": true,
+  "optimizedPythonRejectedBeforeNetwork": true
+}

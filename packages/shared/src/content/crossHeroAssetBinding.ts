@@ -308,12 +308,37 @@ export function findCrossHeroMisbindings(
       // ⭐ 同層的 owner 欄位（修 ①：重複形狀的條目各有各的主人）。
       let owner = bindingHero;
       let from: string | undefined;
+      /**
+       * ⭐⭐ **effect 節點上的 `championId` 是「引用」，⛔ 不是「綁定」**（GH#1165）。
+       *
+       * ⚠️ 判準是**結構性**的（⛔ 不是一張 kind 名單）：
+       * 一個帶 `kind` 的物件就是 effect 節點 —— 玩法資料。
+       * ⭐ 而資產綁定住在**綁定表**裡（`skins` / `projectiles` / `vfx-scripts` /
+       *   `bindings[]`），那些節點**沒有** `kind`。
+       *
+       * ⇒ ⭐ `summon.championId: "sela"` ＝ **這支技能召喚一具 sela 樣板代理**，
+       *   而卡面文字逐字就是這樣寫的（「召喚 1 名 sela 樣板代理⋯代理採 sela」）
+       *   ⇒ ⛔ 卡面沒有說謊（第一·五守則過關），⛔ 它不是誤綁。
+       *
+       * ⚠️⚠️ ⭐ 而這**不會**放過真的誤綁：同一個 effect 節點裡的
+       *   `vfxId` / `modelKey` / `icon` 走的是別的欄位，⭐ 仍然逐個被掃。
+       *   ⇒ 放過的只有「這支技能引用了哪一位英雄」這一個語意。
+       */
+      // ⭐ effect 節點（帶 `kind`）或**模板參數**（`…template.params…`）——
+      //   兩者都是**玩法輸入**，⛔ 不是資產綁定表。
+      const isReferenceScope =
+        typeof obj.kind === "string" || fieldPath.includes(".template.params");
       for (const f of OWNER_FIELDS) {
         const v = obj[f];
         if (typeof v !== "string") continue;
         const h = bindingHeroOwner(v, roster);
         if (h === undefined) continue;
         from = f;
+        // ⭐⭐ 引用而非綁定 ⇒ ⛔ 不推違規、⛔ 也不改寫 owner。
+        //   ⚠️ 而 `from = f` **一定要在這之前設**：字串葉那一條
+        //   （`ownerField !== undefined` 才跳過）靠它認得這一格已經處理過，
+        //   ⛔ 少了它葉子會再推一次 —— 我第一版就是這樣「修完更紅」。
+        if (f === "championId" && isReferenceScope) break;
         // ⭐ 已經有更強的宣告時，同層 id **與它打架就是違規本身** ——
         // 那正是「複製一筆、改了 map key、忘了改裡面的 id」。⛔ 不可以讓它改寫上層。
         if (declared && owner !== undefined) push(`${fieldPath}.${f}`, v, h, owner);

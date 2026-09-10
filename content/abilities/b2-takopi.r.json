@@ -1,0 +1,105 @@
+{
+  "castTimeSec": 0.067,
+  "castType": "targeted",
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "provenance": "w3x-import",
+  "description": "「道具說明書暖心頁！」\n治療指定友軍 120 生命並清除最多 3 筆可驅散負面效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "flat": 120,
+        "perRank": [
+          0,
+          90,
+          180
+        ]
+      },
+      "kind": "heal"
+    },
+    {
+      "count": 3,
+      "kind": "dispel",
+      "order": "newest",
+      "polarity": "debuff",
+      "pools": {
+        "buffs": true,
+        "dot": true,
+        "status": true
+      },
+      "shape": "single"
+    }
+  ],
+  "id": "b2-takopi.r",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 3,
+  "name": "道具說明書暖心頁",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "R",
+  "targetsEnemies": false,
+  "template": {
+    "cards": [
+      {
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+        "params": {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              90,
+              180
+            ]
+          },
+          "castTimeSec": 0.1,
+          "target": "ally"
+        },
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+      },
+      {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "count": 3,
+              "kind": "dispel",
+              "order": "newest",
+              "polarity": "debuff",
+              "pools": {
+                "buffs": true,
+                "dot": true,
+                "status": true
+              },
+              "shape": "single"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.wind.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-takopi.r.webp",
+  "radiusTier": "極小"
+}

@@ -1,0 +1,45 @@
+{
+  "id": "community-review-30-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔今天真的不想動〕",
+  "provenance": "w3x-import",
+  "description": "消耗拖延層數，原地取得護盾；移動後提前結束。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 0.067,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 160,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-30-20260907.ex.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "vfxKey": "fx.prim.sound.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.sound.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-30-20260907.ex.webp"
+}

@@ -399,6 +399,8 @@ def main():
         '- 尚無 GGD ID 的來源組仍可查詢及準備素材；不能因未上架而刪除。新增音訊來源後重跑本產生器，保留其他來源及不同語言版本。',
         '- 重建：`python3 tools/hero-model-library/voice_index.py --workspace ..`。模型／素材守則見 `全角色模型盤點.md`。','']
     report='\n'.join(lines)
+    from priority_voice import insert_priority_voice
+    report=insert_priority_voice(report)
     (OUT/'角色語音索引.md').write_text(report)
     for target in [ws/'角色語音索引.md',ws/'GGD-Asset-Library/角色語音索引.md']:
         target.write_text(report)

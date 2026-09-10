@@ -1,0 +1,450 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.067,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「工傷才能領補助！」\n只在生命低於一半時回復自身 160 生命；高血量時不發補助。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 160,
+            "perRank": [
+              0,
+              80,
+              160,
+              240
+            ]
+          },
+          "applyTo": "self",
+          "condition": {
+            "kind": "stat",
+            "mode": "percent",
+            "op": "<",
+            "stat": "hp",
+            "subject": "self",
+            "value": 0.5
+          },
+          "kind": "heal"
+        }
+      ],
+      "id": "b2-guts.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "工傷才能領補助",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": {
+                "flat": 160,
+                "perRank": [
+                  0,
+                  80,
+                  160,
+                  240
+                ]
+              },
+              "applyTo": "self",
+              "condition": {
+                "kind": "stat",
+                "mode": "percent",
+                "op": "<",
+                "stat": "hp",
+                "subject": "self",
+                "value": 0.5
+              },
+              "kind": "heal"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.wind.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「這把劍不進垃圾車！」\n沿面向斬出直線物理清運波，打擊線上的敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "aim": "target",
+          "amount": {
+            "damageTier": "中"
+          },
+          "damageType": "physical",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "kind": "damageLine",
+          "length": 9,
+          "width": 1.5
+        }
+      ],
+      "id": "b2-guts.q",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "這把劍不進垃圾車",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "template": {
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+        "params": {
+          "aim": "target",
+          "castTimeSec": 0.467,
+          "damage": {
+            "damageTier": "中"
+          },
+          "damageType": "physical",
+          "length": 9,
+          "width": 1.5
+        },
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 2.433,
+      "castType": "ground",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「大型垃圾整排清運！」\n向前低弧衝撞，落地時對落點周圍敵人造成物理傷害並推開；不是沿途連續碰撞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "apexHeight": 0,
+          "applyTo": "self",
+          "durationSec": 0.4,
+          "kind": "leap",
+          "landRadius": 1.83,
+          "mode": "toPoint",
+          "onLand": [
+            {
+              "amount": {
+                "damageTier": "中"
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            },
+            {
+              "distance": 2.93,
+              "from": "facing",
+              "kind": "knockback",
+              "launchHeight": 0,
+              "speed": 15.99
+            }
+          ],
+          "throwDistance": 4.03
+        }
+      ],
+      "id": "b2-guts.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "大型垃圾整排清運",
+      "radius": 1.83,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
+        "params": {
+          "castTimeSec": 2.433,
+          "damage": {
+            "damageTier": "中"
+          },
+          "damageType": "physical",
+          "dashDistance": 220,
+          "dashDurationSec": 0.4,
+          "pushDistance": 160,
+          "radius": 100
+        },
+        "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.467,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「自願加班同意書！」\n支付最大生命 18%（保留至少 1 HP），攻擊力增加 90，持續 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 0
+          },
+          "kind": "spendHealth",
+          "minimumHp": 1,
+          "pctMaxHealth": 0.18
+        },
+        {
+          "applyTo": "self",
+          "duration": 4,
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 90
+            }
+          ]
+        }
+      ],
+      "id": "b2-guts.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "自願加班同意書",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": {
+                "flat": 0
+              },
+              "kind": "spendHealth",
+              "minimumHp": 1,
+              "pctMaxHealth": 0.18
+            },
+            {
+              "applyTo": "self",
+              "duration": 4,
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "op": "flat",
+                  "stat": "ad",
+                  "value": 90
+                }
+              ]
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 23,
+    "agiGrowth": 2.17,
+    "int": 12,
+    "intGrowth": 1.18,
+    "primary": "STR",
+    "source": "authored",
+    "str": 25,
+    "strGrowth": 2.36
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 10,
+    "range": 1.4
+  },
+  "buildPriority": [],
+  "description": "烙印勇士｜武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-guts.ex",
+  "growth": {
+    "ad": 3.9845714285714284,
+    "ap": 0,
+    "armor": 0.374704081632653,
+    "as": 0.005017163869659167,
+    "healthRegen": 0.22937551020408167,
+    "manaRegen": 0,
+    "maxHealth": 0.8563265306122456,
+    "maxMana": 2.1239795918367355,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-guts",
+  "modelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
+  "name": "凱茲",
+  "origin": "狂戰",
+  "passiveAbility": "b2-guts.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-guts.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.e90a364be5844cdaed4e0d537b1d8135e5dbbfd1a6ab4afb",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "a8868e1b42003957f4432b9130228cffccc8dd1010fb68fa079c5611296745e2",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T14:45:38.807Z",
+      "source": {
+        "kind": "previous",
+        "character": "凱茲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b063e512a3346de9ea34bb8e79528e84e7d46ea3266e2bcb",
+      "label": "Cloud 克勞德模型",
+      "sourceModelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
+      "modelSha256": "01ddd312a521c2a4b7c8ade3e0b28f9b381346bd0be5dda4f7ae6e8dd3208271",
+      "binarySha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
+      "registeredAt": "2026-09-10T14:45:38.813Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "Cloud 克勞德模型",
+        "work": "Final Fantasy VII；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:cloud",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.312ae63bf3a0833504025a5bb4e5166834c6b1260d5c77b7",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "d30106f875e8982a4b852553a678df079affaaa8cc460c27d7cbe83680e89275",
+      "binarySha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "registeredAt": "2026-09-10T14:45:38.876Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
+      "label": "凱茲｜狂戰士鎧甲（GGD 程序化動作）",
+      "sourceModelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+      "modelSha256": "e9a101deef1989deadcc89a9870c59717187b26a33046f9f4e2046cdcd2b4dac",
+      "binarySha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
+      "registeredAt": "2026-09-10T14:45:39.058Z",
+      "source": {
+        "kind": "exact",
+        "character": "凱茲｜狂戰士鎧甲",
+        "work": "烙印勇士 Berserk",
+        "library": "Lethal Company MOD／RRoD",
+        "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

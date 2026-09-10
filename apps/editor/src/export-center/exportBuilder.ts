@@ -125,13 +125,20 @@ const PACKAGE_KIND_BY_COLLECTION: Readonly<Record<RuntimeAuthoringCollection, st
 };
 
 /**
- * ⛔⛔ **Main 的 package 契約今天還沒有 `champion` 這個 kind。**
+ * ⭐ **2026-09-09 更正：Main 的契約已經收 `champion` 了。**
  *
- * ⭐ 量到的（2026-09-07）：`packages/shared/src/content/import/packageSchema.ts:160`
- * 的 `zAuthoringKind` 逐字是
- * `["effect-template","effect-product","ability","item","vfx"]`，
- * 而 `changes[].kind`（:210）與 `selectionRoots[].kind`（:174）都吃它。
- * ⇒ 一份含 `champion@1` 的包在 `zEditorImportPackage` 的自我驗證那一行被拒。
+ * ⛔ 這一段在此之前逐字寫著「Main 的 package 契約今天還沒有 `champion` 這個 kind」——
+ *   而 GH#1024 PR-2 **在 2026-09-07 就把它補進去了**
+ *   （`packages/shared/src/content/import/packageSchema.ts:168`）。
+ * ⇒ ⭐ 實測：`exportBuilder.test.ts` 的「匯出一隻英雄 ⇒ 包裡有 `champion@1` ＋ 它的技能」
+ *   **今天是綠的**（13 passed / 1 skipped，⭐ 而跳過的正是「擋住的是哪一行」那一條）。
+ *
+ * ⚠️ ⭐ 留這段話的代價本 repo 記過兩次（GH#763／#759）：
+ *   **一張票的程式做完了，而它被自己的一行過期散文卡著** ——
+ *   ⛔ 那一行不會因為程式做完就自己更新，⭐ 而下一輪讀到時它看起來就是「還沒做」。
+ *
+ * ⭐ 下面的守衛**留著**：它問的是「這個 kind 在不在契約裡」，
+ *   ⛔ 而那個問題在契約再變一次時仍然要有人答。
  *
  * ⭐ 這裡**先擋、並指名要改哪一行**，⛔ 不是讓 zod 丟一句
  * `manifest.changes.0.kind: Invalid enum value` —— 那句話讀起來像「英雄文件壞了」，

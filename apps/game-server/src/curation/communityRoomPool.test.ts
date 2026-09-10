@@ -105,20 +105,31 @@ afterEach(() => {
   setSharedCommunityContentCache(null);
 });
 
-describe("GH#1025 Scope C —— 社群內容預設只進社群房 (community-room-pool)", () => {
-  it("⭐ 官方房（房主沒選 ⇒ 預設）**選不到**社群英雄，官方英雄不受影響", async () => {
+describe("GH#1025 Scope C —— 社群內容的房間可見性 (community-room-pool)", () => {
+  /**
+   * ⛔⛔ **這一條在 2026-09-09 被 owner 逐字推翻了**（GH#1155）：
+   *
+   * > 「社群內容只出現在社群房 => 我之前也說過了 **不會分什麼社群房複雜化**
+   * >   你又沒記錄下來了 **對話開票超級重要！**」
+   *
+   * ⭐ 舊斷言是 `allowsChampion("thorne") === false` —— 它釘的是
+   *   `communityRoomOnly: true` 那個**已經被裁決掉的設計**。
+   * ⛔ 而 `content/config/ugc.json` 今天是 `communityRoomOnly: false`
+   *   ⇒ 社群英雄與官方英雄**同一個池**。
+   *
+   * ⚠️ ⭐ 這條**不是刪掉**，是改成守新的裁決：
+   *   一般房**選得到**社群英雄，⭐ 而官方英雄**不受影響**（⛔ 那一半仍要驗）。
+   */
+  it("⭐ 一般房（房主沒選 ⇒ 預設）**選得到**社群英雄，官方英雄不受影響", async () => {
     const r = room();
     await r.onCreate({ ...base() });
     expect(r.ctl.whitelist.allowsChampion("sela"), "官方英雄被誤傷了").toBe(true);
     expect(
       r.ctl.whitelist.allowsChampion("thorne"),
-      "⛔ 社群英雄出現在官方房 —— `applyContentPool` 那一行斷了",
-    ).toBe(false);
-    // ⭐ 權威那一道閘（偽造／重放的 SELECT_CHAMPION 也走它）真的擋得住。
-    expect(r.ctl.selectChampion(asSeatId(0), "thorne")).toEqual({
-      ok: false,
-      reason: "not-whitelisted",
-    });
+      "⛔ 社群英雄進不了一般房 —— `communityRoomOnly` 又被打開了？（owner 2026-09-09：不分房）",
+    ).toBe(true);
+    // ⭐ 權威那一道閘（偽造／重放的 SELECT_CHAMPION 也走它）也要放行。
+    expect(r.ctl.selectChampion(asSeatId(0), "thorne")).toEqual({ ok: true });
   });
 
   it("⭐ 社群房（`contentPool: \"community\"`）**選得到**", async () => {

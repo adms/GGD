@@ -148,6 +148,25 @@ interface Result {
   ticks: number;
   /** ticks the human was alive */
   aliveTicks: number;
+  /**
+   * ⭐ 2026-09-10 —— **與 `autoHeldUnderMoveTicks` / `authorityTicks` 同閘的分母**：
+   * 活著 ＋ `combatActive`。＝「這一 tick 玩家**能不能**操作」。
+   *
+   * ⛔ `ticks` 與 `aliveTicks` 都**不是**這個東西：`ticks` 含回合結算之後的尾巴
+   * （那時意圖已被 `freezeCombatIntent` 改寫成 `stop`），`aliveTicks` 不看
+   * `combatActive`。⭐ 而這個檔裡每一個「玩家能不能操作」的計數器都是**這兩個閘**
+   * ⇒ 拿別的東西當分母，比的就是兩個不同的母體。
+   */
+  steerableTicks: number;
+  /**
+   * ⭐ 同上兩個閘 ＋ 握著攻擊目標。
+   *
+   * ⛔ `heldTicks` **一個閘都沒有** —— 它連**屍體**身上留著的舊 `attackTarget`
+   * 都算進去。實測（seed 7919，`castTimeSec` 正規化之後）：
+   * `held=622` 而 `aliveTicks=342` ⇒ ⭐ **至少 280 個「握著目標」的 tick，
+   * champion 根本不是活的。**
+   */
+  heldWhileSteerableTicks: number;
   /** mean basic-attack hits across the bots in the same match */
   botHitsAvg: number;
   /**
@@ -307,6 +326,8 @@ function runMatch(feed: Feed, seed = SEED, hitstopScale?: number): Result {
   let autoHeldUnderMoveTicks = 0;
   let ticks = 0;
   let aliveTicks = 0;
+  let steerableTicks = 0;
+  let heldWhileSteerableTicks = 0;
   let hijackedTicks = 0;
   let authorityTicks = 0;
   let frozenTicks = 0;
@@ -378,6 +399,13 @@ function runMatch(feed: Feed, seed = SEED, hitstopScale?: number): Result {
       const t = ctl.world.transform.get(me);
       const hp = ctl.world.health.get(me);
       if (nav?.attackTarget != null) heldTicks++;
+      // ⭐ 2026-09-10 —— 上面那一格**沒有任何閘**（連屍體都算），所以另外量兩個
+      // **與下面每一個計數器同閘**的分母。⛔ 不要用它們替換 `heldTicks`：
+      // `heldTicks > 0` 仍然是「索敵到底有沒有發生過」那一條，它該保持無閘。
+      if (hp?.alive && ctl.world.combatActive) {
+        steerableTicks++;
+        if (nav?.attackTarget != null) heldWhileSteerableTicks++;
+      }
       // GH#334 —— **合取**：活著 + 戰鬥仍在跑 + 一個活的 `move` 指令 + 握著目標。
       // 前兩個閘與 `hijackedTicks` 逐字相同（回合結算會把意圖改寫成 `stop`）。
       if (
@@ -455,6 +483,8 @@ function runMatch(feed: Feed, seed = SEED, hitstopScale?: number): Result {
     autoHeldUnderMoveTicks,
     ticks,
     aliveTicks,
+    steerableTicks,
+    heldWhileSteerableTicks,
     botHitsAvg: vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0,
     orderClearedWhileAlive,
     hijackedTicks,
@@ -473,9 +503,50 @@ function report(r: Result): string {
     ).toFixed(0)}%) held=${r.heldTicks}/${r.ticks} (${pct}%) ` +
     `alive=${r.aliveTicks} botAvg=${r.botHitsAvg.toFixed(1)} ` +
     `orderClearedWhileAlive=${r.orderClearedWhileAlive} ` +
+    // ⭐ 分母要印出來（CLAUDE.md：一個統計要印出分母與探針，⛔ 不是只回一個數字）
+    `steerable=${r.steerableTicks} heldWhileSteerable=${r.heldWhileSteerableTicks} ` +
     `autoHeldUnderMove=${r.autoHeldUnderMoveTicks} ` +
     `hijacked=${r.hijackedTicks}/${r.authorityTicks} trace=${tr}`
   );
+}
+
+/**
+ * ⭐⭐ 2026-09-10 —— 「這個樣本是真的」的**儀器活性檢查**，⛔ 不是機制的閘。
+ *
+ * 它取代兩處寫死的 `expect(r.authorityTicks).toBeGreaterThan(500)`。
+ * ⛔ **那個 500 從一開始就量錯了東西**：`authorityTicks` 的閘是
+ * 「活著 ＋ `combatActive` ＋ 一條活的 move 指令」⇒ 它的上界是**這一場玩家活多久**，
+ * 而那取決於另外 11 個 bot 抽到哪些英雄、技能與施法時間 —— ⛔ 與「harness 有沒有在
+ * 餵指令」毫無關係。⇒ 500 釘住的是**一場特定長度的比賽**，⛔ 不是被測的性質。
+ *
+ * 量到的（bisect 定位到 `34f361d1e`「223 支技能的 `castTimeSec` 從一律 0.1 正規化成
+ * 真值」—— ⭐ 那一顆 **347 個檔裡零行引擎程式**，全是 content/tools/docs）：
+ *
+ *   | | ticks | alive | authority | steerable | `> 500` |
+ *   |---|---:|---:|---:|---:|---|
+ *   | `0f00d717c`（前一顆） | 550 | **550** | **549** | 550 | 綠（餘裕 49 tick ＝ 1.6 秒） |
+ *   | `34f361d1e`（第一顆紅） | 710 | **342** | **337** | 342 | ⛔ 紅 |
+ *
+ * ⇒ ⭐ 差別只有一件事：玩家改成**死在第 342 tick**。而 `hijacked` 仍然是 **0/337**、
+ *   `autoHeldUnderMove` 仍然是 **255** —— ⭐ 這兩條測試名字裡的機制**全部完好**。
+ *   ⇒ 它以前綠是因為**比賽剛好夠長**（CLAUDE.md 第二守則⑩：守衛靠一個前提才綠，
+ *     而前提消失時看起來就是回歸）。
+ *
+ * ⭐ 正確的問法是一個**會跟著比賽變的**比值：玩家**能操作**的每一 tick，
+ * 手上是不是真的有一條活的 move 指令。
+ * ⇒ ⭐ 這比 `> 500` **更嚴**：一場很長的比賽裡 harness 餵到一半停掉，
+ *   舊寫法照樣綠（500 早就過了），⛔ 而這一條會紅。
+ */
+function expectHarnessIsDriving(r: Result): void {
+  expect(
+    r.steerableTicks,
+    "⛔ 玩家能操作的 tick 太少 —— 這一場根本沒打起來（⛔ 那不是斷言的問題）",
+  ).toBeGreaterThan(100);
+  expect(
+    r.authorityTicks / Math.max(1, r.steerableTicks),
+    `⛔ harness 沒有在驅動：玩家能操作的 ${r.steerableTicks} 個 tick 裡，` +
+      `只有 ${r.authorityTicks} 個手上有活的 move 指令`,
+  ).toBeGreaterThan(0.9);
 }
 
 
@@ -513,6 +584,37 @@ function report(r: Result): string {
 //    `unit` job 動得了降級成 warn）。⭐ 兩個處置都錯在同一件事：`hits` 對一個站在
 //    出生點的座位量的是**別人的**行為 —— 「bot 會不會去打站著不動的人」——
 //    ⇒ 搬去 `ai/idleEnemyEngage.test.ts` 由構造驗，⛔ 不是等 11 個 bot 剛好走過來。
+//
+// ✅✅ 2026-09-10 —— **三條 STICK 紅了，而它們是「前提消失」，⛔ 不是回歸。**
+//
+//    `git bisect`（predicate 只跑 `-t "STICK HELD"` 這三條，⛔ 不是整個檔）定位到
+//    **`34f361d1e`**「fix(templates): 第六個『拿檔名前綴當身分』的缺陷」——
+//    ⭐ 那一顆 **347 個檔裡零行執行期程式**（5 個 `.ts` 全在 `tools/` 與
+//    `docs/legacy/`），真正的行為改動是 **223 支技能的 `castTimeSec`
+//    從一律 `0.1` 正規化成真值**（0.667 / 0.067 / 0.467 …）。
+//    ⇒ ⭐ `autoAcquirePass` 的 `case "move"`（＝這三條的名字所指的機制）
+//      **一個位元組都沒有動過**。
+//
+//    | | ticks | alive | authority | autoHeldUnderMove | hijacked | hits |
+//    |---|---:|---:|---:|---:|---|---:|
+//    | `0f00d717c` | 550 | **550** | 549 | 469 | 0 | 8 |
+//    | `34f361d1e` | 710 | **342** | 337 | **255** | **0** | 4 |
+//
+//    ⇒ ⭐ 唯一的差別是**玩家改成死在第 342 tick**。機制那三格（`autoHeldUnderMove>0`
+//      · `hijacked===0` · `hits>0`）**全部仍然是綠的**；紅掉的兩條都是**量值門檻**：
+//      ① `authorityTicks > 500` —— 釘住的是一場特定長度的比賽（餘裕只有 49 tick）
+//      ② `autoHeldUnderMoveTicks / heldTicks > 0.5` —— ⛔ **分子分母閘不同**
+//         （分母連屍體上的舊 `attackTarget` 都算）
+//    ⇒ 兩條都**改成會跟著比賽變的比值**，說明各自寫在斷言旁邊。
+//    ⛔ 兩處都**不是放寬**：①比舊寫法更嚴（餵到一半停掉舊寫法照樣綠）、
+//      ②是把一個從一開始就寫錯的比值修對。
+//
+//    ⚠️ ⭐ **下一個會紅的是 `hits > 0`**（stick 這一條與 movement-budget 那一條）。
+//      它在這一段 45 顆 commit 裡量到過 **8 → 1 → 7 → 4**，⭐ 而 clickOutside 與
+//      obstacle 兩個 feed 早就因為完全相同的理由把它降級成 `console.warn` 了
+//      （GH#878 · 2026-09-05，就在下面）。⛔ 這一輪**沒有動它**（它今天是綠的，
+//      而「⛔ 不要為了讓它綠而放寬斷言」兩個方向都適用）—— 但它掉到 0 的那一天，
+//      ⭐ 正解是套用下面那兩條已經寫好的結論，⛔ 不是去改索敵。
 describe("#274 auto-acquire survives a live move order (real match, real human seat)", () => {
   // ⭐⭐ GH#999（2026-09-06）—— **控制組量的是儀器，⛔ 不是那一架。**
   //
@@ -570,7 +672,27 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     ).toBeGreaterThan(0);
     // 而且要是**常態**，不是一 tick 的僥倖：搖桿是每一 tick 推一次移動指令的，
     // 所以「握著目標」與「移動指令在跑」幾乎完全重疊才是正確的行為。
-    expect(r.autoHeldUnderMoveTicks / Math.max(1, r.heldTicks)).toBeGreaterThan(0.5);
+    //
+    // ⭐⭐ 2026-09-10 —— 分母從 `heldTicks` 換成 `heldWhileSteerableTicks`。
+    //   ⛔ **這不是放寬，是把一個從一開始就寫錯的比值修對**：
+    //   分子 `autoHeldUnderMoveTicks` 有**三個閘**（活著 ＋ `combatActive` ＋ 活的
+    //   move 指令），而舊分母 `heldTicks` **一個都沒有** —— 它連 champion 死掉之後
+    //   `nav.attackTarget` 上留著的舊值都照算。
+    //   ⇒ 玩家一死，分母繼續長而分子**結構上不可能**再 +1。
+    //
+    //   量到的（`34f361d1e` 之後，seed 未動）：`held=622` · `alive=342` · `ticks=710`
+    //   ⇒ ⭐ **至少 280 個「握著目標」的 tick 是屍體上的** ⇒ 這個比值在這一場的
+    //   數學上限是 `342/622 = 0.55`。⛔ 也就是說：只要玩家死在半場之前，
+    //   `> 0.5` 就**不可能滿足**，⛔ 而索敵有沒有被關掉跟它一點關係都沒有。
+    //   （舊值 0.41 紅的那一次，`autoHeldUnderMove` 是 255、`hijacked` 是 0 ——
+    //     ⭐ 名字裡的機制**全部完好**。）
+    //
+    // ⚠️ ⛔ 不要順手把 `heldTicks` 也加上閘：`heldTicks > 0`（下面那條）問的是
+    //   「索敵**到底有沒有發生過**」，它就該是無閘的那一個。
+    expect(
+      r.autoHeldUnderMoveTicks / Math.max(1, r.heldWhileSteerableTicks),
+      "玩家能操作的那些 tick 裡，握著索敵目標的不到一半 —— 索敵在移動指令下被關掉了",
+    ).toBeGreaterThan(0.5);
     expect(r.hits).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
   }, 300_000);
@@ -578,7 +700,7 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
   it("STICK HELD — and the player keeps the wheel: the chase never re-points the walk", () => {
     const r = runMatch("stick");
     console.log(report(r));
-    expect(r.authorityTicks).toBeGreaterThan(500); // the sample is real
+    expectHarnessIsDriving(r); // the sample is real —— 說明在那支函式上面
     // Movement authority: with a live explicit move order the sim must never
     // rewrite the destination, no matter what it acquired.
     expect(r.hijackedTicks).toBe(0);
@@ -781,9 +903,7 @@ describe("#274 the movement budget: hit-feel may cost the walk, but only a littl
     const r = runMatch("stick");
 
     // The instrument has to be live, or the ceiling below proves nothing.
-    expect(r.authorityTicks, "no measurable ticks — the harness is not driving").toBeGreaterThan(
-      500,
-    );
+    expectHarnessIsDriving(r); // 說明在那支函式上面（⛔ 舊寫法是寫死的 `> 500`）
     expect(r.hits, "no hits means no hitstop means this test is vacuous").toBeGreaterThan(0);
 
     const frozenPct = (r.frozenTicks / r.authorityTicks) * 100;

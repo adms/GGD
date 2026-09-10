@@ -1,0 +1,95 @@
+{
+  "castTimeSec": 0.467,
+  "castType": "targeted",
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「憑通行證補一口血！」\n消耗該隊友的通行標記，追加 200 治療；沒有標記不兌換，先前的護盾仍按原到期時間運作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "count": "all",
+      "kind": "consumeStatus",
+      "onConsumed": [
+        {
+          "amount": {
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "applyTo": "target",
+          "kind": "heal"
+        }
+      ],
+      "shape": "single",
+      "statusId": "spell-shield",
+      "subject": "target"
+    }
+  ],
+  "id": "b2-naofumi.w",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 4,
+  "name": "憑通行證補一口血",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "W",
+  "targetsEnemies": false,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "effects": [
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "amount": {
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "applyTo": "target",
+              "kind": "heal"
+            }
+          ],
+          "shape": "single",
+          "statusId": "spell-shield",
+          "subject": "target"
+        }
+      ],
+      "radius": 3,
+      "side": "allies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.wind.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-naofumi.w.webp",
+  "radiusTier": "極小"
+}

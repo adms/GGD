@@ -247,6 +247,18 @@ export interface SettlementPlayer {
    * the player cannot tell it exists, which is this repo's #1 failure.
    */
   survivalBonus?: number;
+  /**
+   * ⭐⭐ 「**殭屍王擊倒 N 人**」——第十一回合換邊之後那具王打倒的英雄數（GH#922 驗收⑦）。
+   *
+   * ⛔⛔ 它**刻意不進 `score` / `survivalBonus`** —— owner 逐字
+   * 「結算多一行**獨立統計**⋯⛔ **不進生存分數**」。
+   * ⭐ 而它是**獨立的一行**正是為了讓玩家看得懂：分數凍在英雄死掉那一刻，
+   * ⛔ 開王期間的戰果不會回刷分數，⭐ 但它也不該憑空消失。
+   *
+   * ⚠️ 缺席（`undefined`）＝ 這一場沒有第十一回合，⛔ 不是 0
+   *   —— ⭐ 0 會被畫成「他開了王而一個都沒打到」。
+   */
+  bossKills?: number;
   /** ranked-ladder deltas — filled by the platform layer, not the game server */
   pointsDelta?: number;
   tierBefore?: string;
@@ -373,4 +385,67 @@ export interface MatchSettlement {
    * "no per-round data" rather than drawing a chart out of nothing.
    */
   rounds?: RoundStatsEntry[];
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ⭐ 第十一回合・生存模式 —— 四則事件的 payload 型別（GH#1151 H）
+//
+// ⛔⛔ **這一段是 APPEND —— ⛔ 上面一個位元組都沒動。** 這個檔沒有 Colyseus
+// `defineTypes`（那在 `protocol/schema.ts`），⛔ 但同一條規矩照樣適用於「別去
+// 重排既有宣告」，因為 `EventMessage.data` 是**無型別**的 `Record<string, unknown>`
+// ⇒ 每一個消費端想讀任何欄位都得 `as`，而**每一個 `as` 都是一個靜默的洞**
+// （CLAUDE.md 失敗形態⑧：一天之內中五次，四種守衛全部結構性失明）。
+//
+// ⭐ 所以這四個介面的用途只有一個：讓客戶端**有一個名字可以 import**，
+// ⛔ 而不是各自在自己的檔案裡手抄一次欄位名。
+//
+// ⚠️⚠️ ⭐ **誠實的限制**：發射站（`apps/game-server/src/match/MatchController.ts`）
+// 今天**沒有** `satisfies` 這幾個介面 ⇒ ⛔ 欄位漂掉**不會**是 `tsc` 的紅。
+// 唯一守著這條接縫的是 `apps/client/src/net/round11Wire.test.ts`：
+// 它跑真的 `MatchController` 到第十一回合，把真的事件餵進真的消費端。
+// ⭐ 想讓它變成 tsc 的紅，正解是在發射站加 `satisfies` —— 而 `MatchController`
+// 不在這一批的柵欄裡（GH#1151 H 的柵欄逐檔列名）。
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** ⭐ 大轟炸的紅圈預警（`MatchController.startRound11Bombardment`）。 */
+export interface Round11BombardmentEvent {
+  /** 落點中心（世界座標，格） */
+  x: number;
+  z: number;
+  /** 落點半徑（格）—— `round11.bombardment.radius` */
+  radius: number;
+  /** 紅圈出現到落下的秒數 —— `round11.bombardment.telegraphSec` */
+  telegraphSec: number;
+}
+
+/** ⭐ 英雄死亡 ⇒ 永久損壞一件寶具（owner：「就是損壞了 不能撿回」）。 */
+export interface Round11ItemBrokenEvent {
+  /** 死掉的那具實體 */
+  entity: number;
+  /** ⭐ 哪一個**座位**的東西壞了 —— 客戶端就是靠這一格只認自己那一則 */
+  seatId: number;
+  /** 背包第幾格 */
+  slot: number;
+  /** 壞掉的那件寶具 id（⭐ 用來查名字，⛔ 不是印裸 id 給玩家看） */
+  itemId: string;
+}
+
+/** ⭐ 打死特殊殭屍 ⇒ 那一隊多一格復活權（owner：「⛔ 而不是無限復活」）。 */
+export interface Round11ReviveChargeEvent {
+  /** 拿到這一格的隊伍 */
+  teamId: number;
+  /** 之前有幾格 → 現在有幾格（⭐ 帶兩端，畫面才說得出「+1」） */
+  from: number;
+  to: number;
+  /** 換來這一格的那一隻特殊殭屍 */
+  mobId: number;
+}
+
+/** ⭐ 一隻普通殭屍活滿門檻 ⇒ 升級成特殊殭屍（`sim/mobs.promoteMobToSpecial`）。 */
+export interface MobPromoteEvent {
+  id: number;
+  zone: number;
+  from: string;
+  to: string;
+  maxHp: number;
 }

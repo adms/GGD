@@ -1,0 +1,61 @@
+{
+  "id": "lol-yasuo.w",
+  "name": "迎風架勢",
+  "provenance": "w3x-import",
+  "description": "獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": [],
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "duration": 3,
+      "absorbs": "physical",
+      "stackKey": "concept-yasuo-guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-yasuo.w.webp"
+}

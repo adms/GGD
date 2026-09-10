@@ -1,0 +1,38 @@
+{
+  "id": "community-review-11-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔解析完成・能力再現〕",
+  "provenance": "w3x-import",
+  "description": "消耗 W 的樣本，以自己的屬性施放一次核准的技能副本；使用後清空樣本。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 4.5,
+  "castTimeSec": 1.433,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.ice.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ice.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-11-20260907.ex.webp",
+  "rangeTier": "小"
+}

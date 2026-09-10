@@ -1,0 +1,458 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.067,
+      "castType": "self",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「結界收據請保留！」\n精靈給了一張結界收據：180 護盾 3 秒，spell-shield 標記 3 秒；標記不自帶免疫。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 180,
+            "perRank": [
+              0,
+              90,
+              180,
+              270
+            ]
+          },
+          "duration": 3,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        },
+        {
+          "applyTo": "self",
+          "duration": 3,
+          "kind": "applyStatus",
+          "statusId": "spell-shield"
+        }
+      ],
+      "id": "b2-uncle.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "結界收據請保留",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.067,
+          "castType": "self",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 180,
+                "perRank": [
+                  0,
+                  90,
+                  180,
+                  270
+                ]
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            },
+            {
+              "applyTo": "self",
+              "duration": 3,
+              "kind": "applyStatus",
+              "statusId": "spell-shield"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "Q": {
+      "castTimeSec": 0.467,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「精靈把增益寄錯人！」\n客服選错收件人：替敵人增加 50 攻擊力，持續 3 秒，可被驅散；這是真實代價。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "target",
+          "dispellable": true,
+          "duration": 3,
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 50
+            }
+          ],
+          "polarity": "buff"
+        }
+      ],
+      "id": "b2-uncle.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "精靈把增益寄錯人",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.467,
+          "castType": "targeted",
+          "effects": [
+            {
+              "applyTo": "target",
+              "dispellable": true,
+              "duration": 3,
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "op": "flat",
+                  "stat": "ad",
+                  "value": 50
+                }
+              ],
+              "polarity": "buff"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "R": {
+      "castTimeSec": 0.833,
+      "castType": "self",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「收據換一位代理客服！」\n交出結界收據才能叫來一名 4 秒的自己分身；生命／攻擊倍率欄位各 0.3，依正式屬性管線產生，不繼承主人當下增益；該來源最多 2 具，本體死亡消失。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "body": "self",
+              "count": 1,
+              "damageMult": 0.3,
+              "durationSec": 4,
+              "formation": "ring",
+              "hpMult": 0.3,
+              "kind": "summon",
+              "maxAlive": 2,
+              "onOwnerDeath": "despawn",
+              "spread": 2
+            }
+          ],
+          "shape": "single",
+          "statusId": "spell-shield",
+          "subject": "self"
+        }
+      ],
+      "id": "b2-uncle.r",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 3,
+      "name": "收據換一位代理客服",
+      "radius": 3,
+      "range": 0.0,
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.833,
+          "castType": "self",
+          "effects": [
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "body": "self",
+                  "count": 1,
+                  "damageMult": 0.3,
+                  "durationSec": 4,
+                  "formation": "ring",
+                  "hpMult": 0.3,
+                  "kind": "summon",
+                  "maxAlive": 2,
+                  "onOwnerDeath": "despawn",
+                  "spread": 2
+                }
+              ],
+              "shape": "single",
+              "statusId": "spell-shield",
+              "subject": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    },
+    "W": {
+      "castTimeSec": 1,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「請按一撤回贈品！」\n撤回最近一份敵方增益（buff pool）；然後定身 1 秒。沒有訂單只剩定身，不會憑空偷取攻擊力。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "count": 1,
+          "kind": "dispel",
+          "order": "newest",
+          "polarity": "buff",
+          "pools": {
+            "buffs": true
+          },
+          "shape": "single"
+        },
+        {
+          "applyTo": "target",
+          "duration": 1,
+          "kind": "applyStatus",
+          "root": true,
+          "statusId": "root"
+        }
+      ],
+      "id": "b2-uncle.w",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "請按一撤回贈品",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "count": 1,
+              "kind": "dispel",
+              "order": "newest",
+              "polarity": "buff",
+              "pools": {
+                "buffs": true
+              },
+              "shape": "single"
+            },
+            {
+              "applyTo": "target",
+              "duration": 1,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "mage",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 18,
+    "agiGrowth": 1.67,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 13,
+    "strGrowth": 1.25
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "異世界舅舅｜精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-uncle.ex",
+  "growth": {
+    "ad": 2.5489795918367353,
+    "ap": 0,
+    "armor": 0.45735714285714285,
+    "as": 0,
+    "healthRegen": 0.10673469387755102,
+    "manaRegen": 0,
+    "maxHealth": 45.833673469387755,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-uncle",
+  "modelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
+  "name": "異世界舅舅",
+  "origin": "法師",
+  "passiveAbility": "b2-uncle.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-uncle.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.287ebb2bdd01052cd0faf8a27dafd0e9fe63623172b35bb9",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.454482",
+      "modelSha256": "744435cf208795ad276a54404e9a2e7a45770903690e990db9948eb40f768825",
+      "binarySha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1",
+      "registeredAt": "2026-09-10T14:45:35.477Z",
+      "source": {
+        "kind": "previous",
+        "character": "異世界舅舅",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.454482.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:35.497Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
+      "label": "光刀女剑二次元（論壇相似模型）",
+      "sourceModelKey": "ou99.454482-standard-v2",
+      "modelSha256": "48e3c0ecd91d5d12d0dcf269766b3db61efd9a7b39f77f495274414c80da900c",
+      "binarySha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016",
+      "registeredAt": "2026-09-10T14:48:51.342Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "光刀女剑二次元",
+        "work": "來源作品待核；論壇標題：光刀女剑二次元",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-454482-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

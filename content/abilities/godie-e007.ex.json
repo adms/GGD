@@ -21,7 +21,7 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "極大",
+        "damageTier": "大",
         "ratios": [
           {
             "stat": "ap",

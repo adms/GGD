@@ -1,0 +1,50 @@
+{
+  "schema": "ggd.project-audio-scope@1",
+  "id": "lol-project-seven-ja-jp",
+  "allowedLocales": [
+    "ja_JP"
+  ],
+  "fullRosterEnabled": false,
+  "englishEnabled": false,
+  "characters": [
+    {
+      "heroId": "example:karthus",
+      "nativeId": "Karthus"
+    },
+    {
+      "heroId": "example:leesin",
+      "nativeId": "LeeSin"
+    },
+    {
+      "heroId": "example:lux",
+      "nativeId": "Lux"
+    },
+    {
+      "heroId": "example:missfortune",
+      "nativeId": "MissFortune"
+    },
+    {
+      "heroId": "example:warwick",
+      "nativeId": "Warwick"
+    },
+    {
+      "heroId": "example:xerath",
+      "nativeId": "Xerath"
+    },
+    {
+      "heroId": "example:yasuo",
+      "nativeId": "Yasuo"
+    }
+  ],
+  "requiredSourceLocaleEvidence": "Riot official release manifest ja_JP flag",
+  "packageValidation": "Complete WAD chunk sizes/order, SHA-256, bounded WAD/WPK/Wwise extraction, decoded PCM frames/rate/channels",
+  "speakerVerified": false,
+  "synthesisReady": false,
+  "preserveAllPriorVersions": true,
+  "newDownloadAllowlist": [
+    "LeeSin",
+    "Lux",
+    "Warwick",
+    "Yasuo"
+  ]
+}

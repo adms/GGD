@@ -1,0 +1,53 @@
+{
+  "id": "community-review-13-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔狙擊專注〕",
+  "provenance": "w3x-import",
+  "description": "保持穩定姿勢累積瞄準，移動或受擊降低；效果有上限。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔狙擊專注〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.physical.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-13-20260907.passive.webp"
+}

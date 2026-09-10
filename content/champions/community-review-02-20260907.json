@@ -1,0 +1,430 @@
+{
+  "id": "community-review-02-20260907",
+  "name": "八神庵",
+  "description": "八神庵 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n採用：具有紫炎的八神庵。  \n定位：接續輸入、近身連段、爆發。\n\n視覺方向：紫炎低飽和外圈、白色拳爪切線；末段亮度提高但不延長實際判定。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-02-20260907.q",
+      "name": "百八式・闇拂",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】沿地面前進的紫炎投射物，遇到有效碰撞結算。\n【待補機制】推進波並非遇第一個單位即停的投射物。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.12,
+          "count": 4,
+          "intervalSec": 0.12,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "finalEffects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "radius": 8.0,
+              "radiusTier": "大"
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-02-20260907.q.webp",
+      "template": {
+        "ref": "tpl-traveling-wave",
+        "params": {
+          "stepSize": 100,
+          "stepCount": 4,
+          "stepIntervalSec": 0.12,
+          "aoePerStep": 100,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-02-20260907.w",
+      "name": "百式・鬼燒",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】原地上升火焰打擊，提供短暫迎擊窗口與有限擊退。\n【待補機制】固定落點跳擊；需原地迎擊與受擊窗口。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 2.75,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.72,
+          "durationSec": 0.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-02-20260907.w.webp",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 180,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-02-20260907.e",
+      "name": "百二十七式・葵花",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。\n【待補機制】目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 2.75,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.18,
+          "durationSec": 0.54
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.54,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-02-20260907.e.webp",
+      "template": {
+        "ref": "tpl-lock-combo",
+        "params": {
+          "hitCount": 3,
+          "hitIntervalSec": 0.18,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true
+      },
+      "castTimeSec": 0.533
+    },
+    "R": {
+      "id": "community-review-02-20260907.r",
+      "name": "禁千二百十一式・八稚女",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】8 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】突進命中後進入有限連擊，最後一擊引爆紫炎層數。\n【待補機制】缺命中突進接續與紫炎引爆。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 3,
+      "radius": 2.75,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.18,
+          "durationSec": 1.44
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 1.44,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-02-20260907.r.webp",
+      "template": {
+        "ref": "tpl-lock-combo",
+        "params": {
+          "hitCount": 8,
+          "hitIntervalSec": 0.18,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true
+      },
+      "castTimeSec": 1.433
+    }
+  },
+  "exAbility": "community-review-02-20260907.ex",
+  "passiveAbility": "community-review-02-20260907.passive",
+  "icon": "assets/icons/champions/community-review-02-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.cc18457fd9e72014081ff16a6a34789f34e394d45844a8e5",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.313646",
+      "modelSha256": "88fb492e3522266d09fe6d72073703eeb9b2591f9d3f795ee1fdad92604621e5",
+      "binarySha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722",
+      "registeredAt": "2026-09-10T14:45:26.915Z",
+      "source": {
+        "kind": "previous",
+        "character": "八神庵",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.313646.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.14cef5b9cea7df81526c39dc63490b90f59d4497d86ee60e",
+      "label": "周防尊",
+      "sourceModelKey": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+      "modelSha256": "8d5d2d9ba5e1fc3e7fd6e2f11a4922d2b63cca2d714e60738a10409b867e23f6",
+      "binarySha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "registeredAt": "2026-09-10T14:45:26.944Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "周防尊",
+        "work": "K",
+        "library": "300heroes",
+        "reference": "300heroes:8bb741c66037340e2f7efec7",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+      "label": "八神庵（論壇模型）",
+      "sourceModelKey": "ou99.313646-standard-v2",
+      "modelSha256": "46b44c18727f68739cab5e7c8d6c90cb9a140ae64ed173a3fed2b83342bb42c2",
+      "binarySha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+      "registeredAt": "2026-09-10T14:48:45.453Z",
+      "source": {
+        "kind": "exact",
+        "character": "八神庵",
+        "work": "THE KING OF FIGHTERS",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-313646-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

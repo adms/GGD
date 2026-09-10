@@ -1,0 +1,708 @@
+[
+  {
+    "sourceId": "ou99:458777",
+    "heroId": "b2-keyaru",
+    "runtimeHeroId": "b2-keyaru",
+    "originalModelKey": "ou99.458777",
+    "sourceGlbPath": "assets/models/ou99/ou99_458777.glb",
+    "sourceSha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+    "boundsControlSha256": "03b975bd5c45df1207ca918b2360ee8db4af203dcce34ae3d70f5d6586d3a203",
+    "modelKey": "ou99.458777-standard-v3",
+    "sha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+    "bytes": 1614080,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime/model.json",
+    "modelDocumentSha256": "3b954661c4ce81e78c783000ac9345548f77bcaaaf4963d8a150bae29a5b4338",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime/final-source-preservation.json",
+    "status": "backend-prepare-and-backdrop-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 1.600000023841858,
+        "channels": 76
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.5669999718666077,
+        "channels": 76
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.034000039100647,
+        "channels": 76
+      },
+      {
+        "index": 3,
+        "name": "Spell One",
+        "duration": 1.1660000085830688,
+        "channels": 76
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 2,
+        "channels": 76
+      }
+    ],
+    "metrics": {
+      "triangles": 7003,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 69394,
+          "sha256": "aba39729d9bd8de1a5287ce7a1d31172db008fc73fe9a57e2a87266899e6eca0"
+        },
+        {
+          "width": 128,
+          "height": 256,
+          "bytes": 29191,
+          "sha256": "a8de8786a123ac007a9a318801337c36dfb04ba377029d1baa1107eef1a019a6"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 15574,
+          "sha256": "94fc8def004ed7382977f6295ec08515c7a69fc3a2f60864ba89f5e19982d968"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 222547,
+          "sha256": "a21d19a6a7ba14f6dab2dc953df1d4a0a029d34feea0735e807ce50676eeda78"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 8065,
+          "sha256": "43fc8ac83472bdffc06a598bf927dbd4476d4fb9392f471bc3bef823f5a1fdc8"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 5641,
+          "sha256": "fa0be06bb3c830b7749f3782a17656ab0981b05e0dfd5e70059999e4481728cc"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 7956,
+          "sha256": "31eebf11e786277751adafe715763b7dc7d40da2fa5b8b5e68d633a674983767"
+        },
+        {
+          "width": 256,
+          "height": 512,
+          "bytes": 33980,
+          "sha256": "1d051a9b92e457af0073515b27b62d5ed8ef1c3cdddcb35150b91864a35d51ad"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 3,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": {
+      "atlasResolution": [
+        256,
+        512
+      ],
+      "atlasPngSha256": "617836ba10cce9b85b8ba6fe92a56caf0c84606c51ac0de24db7e1336fc60912",
+      "groups": [
+        {
+          "material": 2,
+          "originalTexture": 2,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            16,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 4,
+          "originalTexture": 4,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            176,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 5,
+          "originalTexture": 5,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            336,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        }
+      ],
+      "maxVertexBilinearRgbaError": 2.7601438227498054e-06,
+      "newMaterial": 7,
+      "limitation": "Full-resolution pixels and base-level bilinear samples verified; distant mip blending/transparent ordering require rendered acceptance.",
+      "v3AlphaRepair": [
+        {
+          "materialIndex": 7,
+          "imageIndex": 7,
+          "alphaMode": "OPAQUE",
+          "size": [
+            256,
+            512
+          ],
+          "changedAlphaPixels": 54272,
+          "transparentAlphaBefore": 54272,
+          "transparentAlphaAfter": 0,
+          "rgbAllPixelsByteExact": true,
+          "beforePngSha256": "617836ba10cce9b85b8ba6fe92a56caf0c84606c51ac0de24db7e1336fc60912",
+          "afterPngSha256": "1d051a9b92e457af0073515b27b62d5ed8ef1c3cdddcb35150b91864a35d51ad",
+          "note": "Only atlas alpha normalized; original embedded images unchanged, including source native alpha."
+        }
+      ],
+      "paddingOnlyProof": {
+        "changedPixels": 54272,
+        "onlyUnfilledCanvasChanged": true,
+        "allSourceRgbaAnd16pxGutterPixelsByteExact": true,
+        "allAtlasRgbPixelsByteExact": true
+      }
+    },
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": {
+      "status": "bounded-before-after-webgl-pass",
+      "method": "Actual Babylon7.54.3 PBR idle/front and run/oblique-front sampled60%; exactRGBA900x900 screenshots before and after",
+      "screenshotPairsPixelExact": true,
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/image-comparison.json",
+      "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-458777-comparison.png"
+    },
+    "centralWritesPerformed": false,
+    "supersedesModelKey": "ou99.458777-standard-v2",
+    "backendPrepareStatus": "passed",
+    "previousV2GlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/control/v2-body.glb",
+    "backdropCheckReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.458777/runtime/backdrop-check.json",
+    "geometryAndUvByteExactToPriorV2": true,
+    "sourceIdentityClassificationUnchanged": true
+  },
+  {
+    "sourceId": "ou99:473324",
+    "heroId": "b2-aladdin",
+    "runtimeHeroId": "b2-aladdin",
+    "originalModelKey": "ou99.473324",
+    "sourceGlbPath": "assets/models/ou99/ou99_473324.glb",
+    "sourceSha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
+    "boundsControlSha256": "737a994c612f757cfc15ec8ed41db2fcb71a8ed16fce65b5151d3a1f42f8eb5c",
+    "modelKey": "ou99.473324-standard-v3",
+    "sha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5",
+    "bytes": 1592200,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime/model.json",
+    "modelDocumentSha256": "74033b4af7eed67b005c64e9775dae8b554fc465e1ac8e1f761d916c87427d3e",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime/final-source-preservation.json",
+    "status": "backend-prepare-and-backdrop-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2,
+        "channels": 76
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 0.734000027179718,
+        "channels": 76
+      },
+      {
+        "index": 2,
+        "name": "Attack 1",
+        "duration": 1.3329999446868896,
+        "channels": 76
+      },
+      {
+        "index": 3,
+        "name": "Spell one",
+        "duration": 1.1660000085830688,
+        "channels": 76
+      },
+      {
+        "index": 4,
+        "name": "Death",
+        "duration": 2.4670000076293945,
+        "channels": 76
+      }
+    ],
+    "metrics": {
+      "triangles": 7970,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 217,
+          "sha256": "0cf81f39afb910b97f6d7b236bd99226d8b9a1cc16b854340b7d2a4be0c5a675"
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "bytes": 191810,
+          "sha256": "d28e083575d6061701c3d9905cc35a93cd85d867f8e62618c1375d565e24a456"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 6847,
+          "sha256": "0003947290226fe3b4b47aabbbcf65f3964414ffb559c54ddff5c1260aef7801"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 40987,
+          "sha256": "1cb73dbc331b3da91915085b4e01ddfa323a02693b18aec607f918e3a7630769"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 21978,
+          "sha256": "0295d43b3efab59f1e1eb114b79495abeba4c013f29b326ec1941294699d1f4e"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 7869,
+          "sha256": "7522e4fbd800cadb516897bccd3cc14bad484f18f91a25d9a99ff330c46c1723"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 1954,
+          "sha256": "e2e363599dd0f534c9b155ab11ed5574ff8d22e494f3e55bde602841b9335a20"
+        },
+        {
+          "width": 256,
+          "height": 512,
+          "bytes": 41388,
+          "sha256": "8fa63c9e2925f1ffaed9992b1f44ffb91711e1e2dbb6460148c46644c87d97f0"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 5,
+      "truncated": false
+    },
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": {
+      "atlasResolution": [
+        256,
+        512
+      ],
+      "atlasPngSha256": "f9173da870c8959ec4f14e04fff00534c0934f3a5e7ebf16d842c4f4478cd059",
+      "groups": [
+        {
+          "material": 0,
+          "originalTexture": 0,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            176,
+            176,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 8,
+          "originalTexture": 6,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            16,
+            336,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 4,
+          "originalTexture": 4,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            16,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 6,
+          "originalTexture": 5,
+          "originalResolution": [
+            128,
+            128
+          ],
+          "atlasRect": [
+            16,
+            176,
+            128,
+            128
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        }
+      ],
+      "maxVertexBilinearRgbaError": 6.752636502738163e-07,
+      "newMaterial": 9,
+      "limitation": "Full-resolution pixels and base-level bilinear samples verified; distant mip blending/transparent ordering require rendered acceptance.",
+      "v3AlphaRepair": [
+        {
+          "materialIndex": 9,
+          "imageIndex": 7,
+          "alphaMode": "OPAQUE",
+          "size": [
+            256,
+            512
+          ],
+          "changedAlphaPixels": 61440,
+          "transparentAlphaBefore": 61440,
+          "transparentAlphaAfter": 0,
+          "rgbAllPixelsByteExact": true,
+          "beforePngSha256": "f9173da870c8959ec4f14e04fff00534c0934f3a5e7ebf16d842c4f4478cd059",
+          "afterPngSha256": "8fa63c9e2925f1ffaed9992b1f44ffb91711e1e2dbb6460148c46644c87d97f0",
+          "note": "Only atlas alpha normalized; original embedded images unchanged, including source native alpha."
+        }
+      ],
+      "paddingOnlyProof": {
+        "changedPixels": 61440,
+        "onlyUnfilledCanvasChanged": true,
+        "allSourceRgbaAnd16pxGutterPixelsByteExact": true,
+        "allAtlasRgbPixelsByteExact": true
+      }
+    },
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": {
+      "status": "bounded-before-after-webgl-pass",
+      "method": "Actual Babylon7.54.3 PBR idle/front and run/oblique-front sampled60%; exactRGBA900x900 screenshots before and after",
+      "screenshotPairsPixelExact": true,
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/image-comparison.json",
+      "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-473324-comparison.png"
+    },
+    "centralWritesPerformed": false,
+    "supersedesModelKey": "ou99.473324-standard-v2",
+    "backendPrepareStatus": "passed",
+    "previousV2GlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/control/v2-body.glb",
+    "backdropCheckReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.473324/runtime/backdrop-check.json",
+    "geometryAndUvByteExactToPriorV2": true,
+    "sourceIdentityClassificationUnchanged": true
+  },
+  {
+    "sourceId": "ou99:491448",
+    "heroId": "b2-boxxo",
+    "runtimeHeroId": "b2-boxxo",
+    "originalModelKey": "ou99.491448",
+    "sourceGlbPath": "assets/models/ou99/ou99_491448.glb",
+    "sourceSha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+    "boundsControlSha256": "271ccb21960c7056f283017b6fa76c03729e2a54e59819d07a24371d90bed643",
+    "modelKey": "ou99.491448-standard-v3",
+    "sha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+    "bytes": 1226636,
+    "runtime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime",
+    "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime/body.glb",
+    "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime/model.json",
+    "modelDocumentSha256": "4b4ddd8381f301d8e6aa62a26cb2bf10a93a4eebc075113279bba050af07939f",
+    "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime/receipt.json",
+    "backendPrepareReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime/backend-prepare-receipt.json",
+    "sourcePreservationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime/final-source-preservation.json",
+    "status": "backend-prepare-and-backdrop-passed",
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack",
+      "cast": "Spell",
+      "hurt": "Stand Ready",
+      "death": "Death"
+    },
+    "clips": [
+      {
+        "index": 0,
+        "name": "Stand",
+        "duration": 2.6670000553131104,
+        "channels": 56
+      },
+      {
+        "index": 1,
+        "name": "Walk",
+        "duration": 1,
+        "channels": 56
+      },
+      {
+        "index": 2,
+        "name": "Attack",
+        "duration": 1,
+        "channels": 56
+      },
+      {
+        "index": 3,
+        "name": "Spell",
+        "duration": 0.8999999761581421,
+        "channels": 56
+      },
+      {
+        "index": 4,
+        "name": "Stand Ready",
+        "duration": 1,
+        "channels": 56
+      },
+      {
+        "index": 5,
+        "name": "Death",
+        "duration": 2,
+        "channels": 56
+      }
+    ],
+    "metrics": {
+      "triangles": 16643,
+      "drawPrimitives": 5,
+      "textures": [
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 16135,
+          "sha256": "b413e86d1cfa01427a42cf2cc9f626eeaff59460a21b3510e2a8b3c134e6b79b"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 5281,
+          "sha256": "e30812c5cfde5e3cc6aa5c9a9b21d25625e5bdfd2c823f849c9ea573a4ecc777"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 43337,
+          "sha256": "4502ef0a69c441cda843b4fcb6e04543cf0b8d31900eeec765c0c087cd5589eb"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 3254,
+          "sha256": "9dcdd5b1aff659eaff0a05a59b361fa3b4d070375b317f922287fc7c1d5fd05f"
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "bytes": 22849,
+          "sha256": "9c6120a8f70fe1d92b713e142dbe5239cdff5699db4cfbcc68e396001be87259"
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "bytes": 5679,
+          "sha256": "421b372a05d84bc6c715cea99b3fec3ee88a43d2fec6d17ad2c2f2e99586c8c3"
+        },
+        {
+          "width": 128,
+          "height": 256,
+          "bytes": 11983,
+          "sha256": "15f6ac15c33941d5a0304a3cbb3251e79d6e6cee6fdb9a835457a0dcbf85a0ea"
+        }
+      ]
+    },
+    "validator": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 2,
+      "truncated": false
+    },
+    "warnings": [
+      "三角面 16643 高於警戒值 16000，送審時需檢查演出負載。",
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+    "binaryUnchanged": false,
+    "fullNativeGlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/original/source.glb",
+    "nativeZipPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/original/source.zip",
+    "geometryLod": false,
+    "textureLod": false,
+    "atlas": {
+      "atlasResolution": [
+        128,
+        256
+      ],
+      "atlasPngSha256": "b54ced82e8583e4787e2277f8aa5a96ed7d1dcdca125e7663e1665656e1284f6",
+      "groups": [
+        {
+          "material": 1,
+          "originalTexture": 1,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            16,
+            16,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        },
+        {
+          "material": 3,
+          "originalTexture": 3,
+          "originalResolution": [
+            64,
+            64
+          ],
+          "atlasRect": [
+            16,
+            112,
+            64,
+            64
+          ],
+          "exactOriginalRgbaPixelsRetained": true,
+          "paddingPixels": 16,
+          "paddingMode": "source repeat wrap"
+        }
+      ],
+      "maxVertexBilinearRgbaError": 6.522790770790987e-06,
+      "newMaterial": 6,
+      "limitation": "Full-resolution pixels and base-level bilinear samples verified; distant mip blending/transparent ordering require rendered acceptance.",
+      "v3AlphaRepair": [
+        {
+          "materialIndex": 6,
+          "imageIndex": 6,
+          "alphaMode": "OPAQUE",
+          "size": [
+            128,
+            256
+          ],
+          "changedAlphaPixels": 14336,
+          "transparentAlphaBefore": 14336,
+          "transparentAlphaAfter": 0,
+          "rgbAllPixelsByteExact": true,
+          "beforePngSha256": "b54ced82e8583e4787e2277f8aa5a96ed7d1dcdca125e7663e1665656e1284f6",
+          "afterPngSha256": "15f6ac15c33941d5a0304a3cbb3251e79d6e6cee6fdb9a835457a0dcbf85a0ea",
+          "note": "Only atlas alpha normalized; original embedded images unchanged, including source native alpha."
+        }
+      ],
+      "paddingOnlyProof": {
+        "changedPixels": 14336,
+        "onlyUnfilledCanvasChanged": true,
+        "allSourceRgbaAnd16pxGutterPixelsByteExact": true,
+        "allAtlasRgbPixelsByteExact": true
+      }
+    },
+    "runtimeMotionValidation": {
+      "status": "native-motion-and-geometry-matched",
+      "maximumError": 0,
+      "method": "Babylon 7.54.3 CPU skinning and mesh world transform; exact source-to-merged vertex correspondence; six mapped states at first and 60% frame"
+    },
+    "visualAcceptance": {
+      "status": "bounded-before-after-webgl-pass",
+      "method": "Actual Babylon7.54.3 PBR idle/front and run/oblique-front sampled60%; exactRGBA900x900 screenshots before and after",
+      "screenshotPairsPixelExact": true,
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/image-comparison.json",
+      "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-491448-comparison.png"
+    },
+    "centralWritesPerformed": false,
+    "supersedesModelKey": "ou99.491448-standard-v2",
+    "backendPrepareStatus": "passed",
+    "previousV2GlbPreserved": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/control/v2-body.glb",
+    "backdropCheckReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/ou99.491448/runtime/backdrop-check.json",
+    "geometryAndUvByteExactToPriorV2": true,
+    "sourceIdentityClassificationUnchanged": true
+  }
+]

@@ -16,6 +16,46 @@ import {
   TICK_HZ,
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
+import { recordBossKill, round11EndReason, shouldEnterRound11 } from "@ggd/shared/sim/round11Gate";
+import {
+  round11MobRulesPatch,
+  round11AliveCap,
+  round11BossScale,
+  round11EventsDue,
+  pickRound11Event,
+  round11Difficulty,
+  type Round11MobRulesPatch,
+} from "@ggd/shared/sim/round11Waves";
+import {
+  bombardmentDamage,
+  bombardmentHits,
+  bombardmentPhase,
+  pickBombardmentTarget,
+  type BombardmentCandidate,
+} from "@ggd/shared/sim/round11Bombardment";
+import { Round11Claims } from "@ggd/shared/sim/round11Claims";
+import {
+  round11BumpBossKills,
+  round11ConvertibleSeats,
+  round11DenyPossession,
+  round11KillRewardHp,
+  round11ReconnectState,
+  round11TeamShouldConvert,
+  type Round11DenyReason,
+  type Round11Seat,
+} from "@ggd/shared/sim/round11Possession";
+import {
+  round11FrozenSurvivalFrac,
+  round11Score,
+} from "@ggd/shared/sim/round11Scoring";
+import {
+  bossRerollGranted,
+  pickItemToBreak,
+  shouldConvertToSpecial,
+} from "@ggd/shared/sim/round11SurvivalLoop";
+import { promoteMobToSpecial } from "@ggd/shared/sim/mobs";
+import { breakItem } from "@ggd/shared/sim/economy/shop";
+import { COMBAT_SCORE_SCALE } from "@ggd/shared/sim/stats/rating";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
@@ -879,6 +919,139 @@ export class MatchController {
   private readonly lastLedgerMobKills = new Map<SeatId, number>();
   /** 這一回合每個座位打死的王 / 特殊怪(`mobBossSlain`),每回合開打時歸零。 */
   private readonly roundBossKills = new Map<SeatId, number>();
+  /**
+   * ⭐⭐ 第十一回合的進場門檻用的**累計**王擊殺（GH#1151 A：「第 1–10 回合
+   * **累計**王擊殺達門檻⋯**去重計數**」）—— ⛔ 這一場**不歸零**。
+   *
+   * ⚠️⭐ 與上面那一個是**兩個不同的量**，⛔ 不要合併：
+   *   · `roundBossKills` —— **每回合歸零**、**按座位**、⭐ 而且**王與特殊殭屍都算**
+   *     （它餵的是 `RoundPerformance.bossKills` 評分）
+   *   · 這一個       —— **整場累計**、**不分座位**、⭐ 而且**只算 `kind === "boss"`**
+   *
+   * ⭐ 第十一回合的門檻問的是「打倒了幾隻**殭屍王**」——
+   * ⛔ 把特殊殭屍算進去，門檻 3 會在第二三回合就被一批特殊怪湊滿。
+   *
+   * ⭐ 存的是**王的實體 id**（⛔ 不是次數）：`mobBossSlain` 在重連／重播／
+   * 同一 tick 多來源致命時會重覆抵達 —— 去重靠 Set，⛔ 不靠「應該不會重覆」。
+   */
+  private readonly round11BossKills = new Set<number>();
+  /**
+   * ⭐ **只給測試**：把王擊殺累計器餵滿，⛔ 不必真的打死三隻王。
+   * ⚠️ 刻意是一個 getter 而不是「把欄位改成 public」——
+   * ⭐ 讀得到、⛔ 而換不掉那個 Set（出貨路徑仍然是唯一的寫入端）。
+   */
+  get round11BossKillsForTest(): Set<number> {
+    return this.round11BossKills;
+  }
+
+  /**
+   * ⭐ **只給測試**：第十一回合的王倍率（`round11BossScale` 吃累計已生成）。
+   * ⚠️ ⭐ 暴露的是**算出來的結果**而不是計數器本身 —— ⛔ 測試不該有機會
+   * 把計數器改成「目前存活數」，⭐ 而那正是票警告的那個坑。
+   */
+  /** ⭐ **只給測試**：一次性帳本（⛔ 出貨路徑仍是唯一的寫入端）。 */
+  get round11ClaimsForTest(): Round11Claims {
+    return this.round11Claims;
+  }
+
+  get round11BossScaleForTest(): number {
+    return round11BossScale(
+      this.round11MobsSpawned,
+      this.rules.round11.bossStrengthMult,
+      this.rules.round11.bossScaleFloor,
+      this.rules.round11.bossScaleCeil,
+    );
+  }
+
+  /**
+   * ⭐⭐ 第十一回合**累計已生成**的殭屍數（GH#1151 D）—— ⛔ 這一回合內不歸零。
+   *
+   * ⚠️⚠️ ⭐ 票逐字警告過：「依**累計已生成殭屍數**⋯**⛔ 不誤用目前存活數**」。
+   * ⭐ 而那個警告是有理由的（`round11Waves.round11BossScale` 的說明寫了全部）：
+   *   · 「目前存活數」被 `maxAliveZombies` **夾著** ⇒ ⭐ 它會**停止成長**
+   *   · 而且玩家**清場**會讓王變弱 ⇒ ⛔ 打得越好、王越軟
+   *
+   * ⭐ 而這個計數器**在此之前不存在** —— `SimWorld` 只有 `mobKills`（擊殺）
+   * 與 `mob`（**當前**存活的表）⇒ ⛔ 沿用任何一個都正好踩進票警告的那個坑。
+   */
+  private round11MobsSpawned = 0;
+  /**
+   * ⭐⭐ 第十一回合的**一次性獎勵帳本**（GH#1151 C）——
+   * 掉落／領取／重抽／復活／寶具損壞全部走它。
+   *
+   * ⚠️ ⭐ 票逐字：「⋯皆有**服務端去重**；**斷線重連**、**重複請求**、
+   * 背包或選擇尚未完成**不造成複製獎勵**」——⭐ 三個危險是同一個形狀，
+   * ⇒ ⛔ 不為每一種各寫一次防護（三份會各自腐爛的程式），
+   *   ⭐ 一個共用帳本（機制一份、用法 N 份）。
+   *
+   * ⭐ 進場時清空（⛔ 帳本不可以跨回合 —— 那會讓下一場領不到）。
+   */
+  private readonly round11Claims = new Round11Claims();
+
+  /** ⭐ 下一段中場是「第十一回合前的那一段」⇒ 關商店、立刻進 combat。 */
+  private enteringRound11 = false;
+  /**
+   * ⭐ **哪一個回合是第十一回合**（`null` ＝ 這一場沒有第十一回合）。
+   * ⚠️ ⭐ 存「回合編號」而不是「還沒用掉的 tick 數」是刻意的：長度由
+   * `combatMaxTicksForRound()` **推導**（⭐ 全專案唯一回答「這一回合多長」的那一支），
+   * ⛔ 而不是在 `enterCombat` 裡塞一個會被它覆蓋掉的第二個住處。
+   */
+  /**
+   * ⭐⭐ 第十一回合的**換邊**（GH#922 / #1151 E）—— 每個座位一筆。
+   *
+   * ⭐ 判定全部住 `sim/round11Possession`（純函式），⛔ 這裡只存狀態。
+   * ⚠️ ⭐ 存 `convertedAtSec` 而不是「還剩幾秒」是刻意的：`sim/**` ⛔ 不可以有
+   * 遞減計數器（`purity.test.ts` 在守），⭐ 而逃跑窗是「現在 − 那一刻」推出來的。
+   */
+  private readonly round11Possessions = new Map<
+    SeatId,
+    { convertedAtSec: number; bossEntityId: EntityId; bossDead: boolean }
+  >();
+  /**
+   * ⭐⭐ 分數在**英雄死亡那一刻凍結**（票驗收④）—— 存的是那一刻的 `MatchStats` 副本。
+   *
+   * ⚠️⚠️ ⭐ 凍結**只做在 `rankEntriesBySeat()` 這一個點**上，⛔ 不是去攔每一條
+   * 加分的路 —— 那一支的檔頭逐字寫著它是「**唯一**一份」組裝，
+   * ⭐ 於是即時回合分數與最終結算分數**一定**是同一條路算出來的。
+   * ⛔ 攔加分路等於做出第二個式子，而玩家會相信比較大的那一個。
+   */
+  private readonly round11FrozenStats = new Map<SeatId, PlayerMatchStats>();
+  /**
+   * ⭐ 「殭屍王擊倒 N 人」的**獨立統計**（票驗收⑦）。
+   * ⛔⛔ 它**刻意不進生存分數** —— 進了就是票點名的「回刷人類分數」。
+   */
+  private readonly round11BossKillTally = new Map<number, number>();
+  /**
+   * ⭐ 第十一回合**進場那一刻**每個座位的累計傷害（GH#1151 G 的分母基準）。
+   * ⛔ 沒有它,「本回合貢獻」就會變成「整場貢獻」——⭐ 而獎勵局會直接把
+   * 前十回合的戰果再乘一次倍率（票逐字警告的「**重複乘算**」的另一個入口）。
+   */
+  private readonly round11DamageBase = new Map<SeatId, number>();
+  /**
+   * ⭐⭐ 正在進行中的那一發大轟炸（GH#1151 F）—— `null` ＝ 沒有。
+   *
+   * ⚠️ ⭐ 存的是**開始的絕對 tick**，⛔ 不是「還剩幾秒」——
+   * `sim/**` ⛔ 不可以有遞減計數器，⭐ 而階段是 `bombardmentPhase()` 從時間推的。
+   * ⭐ 也因此⛔ 不需要一個「打過了沒」的旗標（旗標要有人記得清掉）。
+   */
+  private round11Bombard: { startTick: number; x: number; z: number } | null = null;
+  /** ⭐ 第十一回合已經發出去幾個波次事件（`round11EventsDue` 回的是**應該發幾個**）。 */
+  private round11EventsFired = 0;
+
+  /** ⭐ **只給測試**：換邊狀態（⛔ 出貨路徑仍是唯一的寫入端）。 */
+  get round11PossessionsForTest(): ReadonlyMap<
+    SeatId,
+    { convertedAtSec: number; bossEntityId: EntityId; bossDead: boolean }
+  > {
+    return this.round11Possessions;
+  }
+
+  /** ⭐ **只給測試**：擊倒統計。 */
+  get round11BossKillTallyForTest(): ReadonlyMap<number, number> {
+    return this.round11BossKillTally;
+  }
+
+  private round11Round: number | null = null;
   /** 一個座位手動鎖定英雄的絕對 tick;沒有 = 從未鎖定(系統代選)。 */
   private readonly pickLockTick = new Map<SeatId, number>();
   /**
@@ -2282,6 +2455,39 @@ export class MatchController {
         this.grantGachaReward(entity, table);
       }
     }
+
+    // ⭐⭐ GH#1151 A —— **第十一回合沒有商店。**
+    //
+    // ⚠️ ⭐ 這裡刻意**不繞過** `enterIntermission`，而是跑完它再把商店關掉：
+    // ⛔ 繞過它會一起丟掉「回商店的那一刻把身體還原」那四行（GH#455）——
+    // ⭐ 而 A 第 2 條逐字要的正是**全員滿血**。⇒ 重用，⛔ 不另寫一條進場路徑。
+    //
+    // ⭐ `ticksLeft = 0` ＝ 這一段中場**下一 tick 就結束** ⇒ 直接進 combat。
+    //   ⛔ 不是「把 intermissionTicks 設成 0」：那會影響**每一個**回合。
+    if (this.enteringRound11) {
+      this.enteringRound11 = false;
+      this.world.economyOpen = false;
+      this.phase.ticksLeft = 0;
+      // ⭐ 記下「哪一個回合是第十一回合」—— 長度由 `combatMaxTicksForRound()` 推導。
+      this.round11Round = this.phase.round;
+      // ⭐ 這一回合的累計從 0 起算（⛔ 不是整場 —— 前十回合的怪不算王的成長）。
+      this.round11MobsSpawned = 0;
+      // ⭐ 一次性獎勵帳本也歸零 —— ⛔ 跨回合的帳本會讓下一場領不到。
+      this.round11Claims.clear();
+      this.round11Possessions.clear();
+      this.round11FrozenStats.clear();
+      this.round11BossKillTally.clear();
+      // ⭐ GH#1151 G —— **本回合**的戰鬥貢獻要有分母:`matchStats` 是整場累計,
+      //   ⛔ 直接拿它當「這一回合打了多少」會把前十回合的戰果算進獎勵局。
+      //   ⇒ ⭐ 在進場那一刻抄一份基準,貢獻 ＝ 現在 − 基準。
+      this.round11Bombard = null;
+      this.round11EventsFired = 0;
+      this.round11DamageBase.clear();
+      for (const [seatId, seat] of this.seats) {
+        if (seat.entityId === null) continue;
+        this.round11DamageBase.set(seatId, this.world.matchStats.get(seat.entityId)?.damageDealt ?? 0);
+      }
+    }
   }
 
   /**
@@ -2788,9 +2994,20 @@ export class MatchController {
         // ⭐ GH#657 —— `inertSeats` 走**同一扇門**（`humanSeats` 的那一扇，理由逐字
         // 寫在 `MobRules.humanSeats` 上）：規則表本來就每一回合重建並交進 sim，
         // 所以「哪幾個座位是靶子」不需要在協定上開第二個欄位。
+        // ⭐⭐ GH#1151 B —— 第十一回合走**同一扇門**：把 `round11.waveTable`
+        // 翻成 `MobRules` 的那幾格疊上去（`sim/round11Waves.round11MobRulesPatch`）。
+        //
+        // ⭐ 與練習房**同一個形狀**（上面那段註解逐字：「規則表本來就每回合重建，
+        // 所以它跟著回合走、不會有殘留」）⇒ ⛔ 不必在 `SimWorld` 上開新欄位、
+        // ⛔ 也不必寫第二個生怪器（第〇·五守則）。
+        //
+        // ⚠️ ⭐ `spawnRampSec` **不在這裡** —— `MobRules.maxAlivePerZone` 是靜態的，
+        // 而漸進是逐 tick 的事（見 `round11Waves` 那條會紅的斷言）。⇒ 見 `step()`。
         this.practice
           ? { ...mobRules, autoWaves: this.practice.autoMobWaves, inertSeats: this.inertSeatIds() }
-          : mobRules,
+          : this.round11Round === this.phase.round
+            ? { ...mobRules, ...this.round11MobPatch() }
+            : mobRules,
         this.activeZones(),
       );
     } else if (this.rules.mobWaves && humanSeatsDue) {
@@ -2966,6 +3183,16 @@ export class MatchController {
    * make round 10 retroactively rewrite what rounds 1-9 recorded.
    */
   private fireRingForRound(round: number): FireRingConfig | null {
+    // ⭐⭐ GH#1151 A —— **第十一回合沒有火圈**（逐字：「無商店、無火圈」）。
+    //
+    // ⭐ 放在**這一支**是刻意的：它是全專案唯一回答「這一回合有沒有火圈、
+    // 什麼時候開始收」的地方（⭐ 與 `combatMaxTicksForRound` 同一個形狀）——
+    // ⛔ 而我上一個 commit 才因為把長度塞進 `enterCombat` 被它自己的註解打臉
+    //   （「兩份『決賽有多長』會差 5,700 ticks」）。⇒ ⛔ 不再造第二個住處。
+    //
+    // ⚠️ ⭐ 火圈是**生存模式的反面**：第十一回合的壓力來自殭屍潮與大轟炸（B / F），
+    // ⛔ 而一個會把場地收小的圈會把「撐滿時限」變成「被圈推到中間互相打」。
+    if (this.round11Round === round) return null;
     if (!this.fireRing) return null;
     if (!isRoyaleRound(round, this.rules.finalRound)) return this.fireRing;
     return { ...this.fireRing, startSec: ROYALE_FIRE_RING_START_SEC };
@@ -2992,6 +3219,16 @@ export class MatchController {
    */
   private combatMaxTicksForRound(round: number): number {
     const authored = this.phase.cfg.combatMaxTicks;
+    // ⭐⭐ GH#1151 —— 第十一回合的長度來自設定（`round11.durationSec`）。
+    //
+    // ⚠️ ⭐ 放在**這一支**是刻意的：這個檔頭自己寫著「Two copies of
+    // 「決賽有多長」 is precisely how the phase clock and the sim deadline would
+    // end up 5,700 ticks apart」——⛔ 我第一版把它塞進 `enterCombat`，
+    // 而下面那一行 `ticksLeft = combatMaxTicksForRound(...)` 當場把它蓋掉。
+    // ⇒ ⭐ 「這一回合多長」只有這一個住處（第〇·四守則）。
+    if (this.round11Round === round) {
+      return Math.max(1, Math.round(this.rules.round11.durationSec * TICK_HZ));
+    }
     // The finale needs long enough for the 180 s ring to actually arrive; see
     // ROYALE_COMBAT_SEC. Gated on a configured ring exactly as the old inline
     // `if (this.fireRing)` was: a ringless match (unit tests, skeleton boot) has
@@ -3305,8 +3542,63 @@ export class MatchController {
    * same champion. Ties are compared on `>` with a symmetric coin, so the answer
    * cannot depend on iteration order beyond the ascending-team-id list.
    */
+  /**
+   * ⭐⭐ 第十一回合**還有幾個活著的英雄**（GH#1151 A 第 4 條的分母）。
+   *
+   * ⛔⛔ 票逐字警告：「全滅判定的分母是**存活的英雄**，⛔ 不是實體數 ——
+   * **屍體都變成王了**」。⇒ ⭐ 換邊過的座位一律**不算**：
+   * 牠的實體還活著（而且血是滿的），⛔ 但牠已經不是一個活著的英雄。
+   * ⚠️ ⭐ 少了這半句，`deadPlayersControlBoss` 一打開，
+   *   `teamAliveCount()` 會永遠 > 0 ⇒ ⛔ **第十一回合永遠不會結束**。
+   */
+  private round11LivingChampions(team: TeamId | null, zone: number): number {
+    let n = 0;
+    for (const [seatId, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      if (team !== null && seat.teamId !== team) continue;
+      if (this.round11Possessions.has(seatId)) continue; // ⛔ 牠是王,⛔ 不是英雄
+      const t = this.world.transform.get(seat.entityId);
+      if (!t || t.zone !== zone) continue;
+      if (this.world.health.get(seat.entityId)?.alive) n++;
+    }
+    return n;
+  }
+
   private checkRoyaleEnd(bout: RoyaleBout, timerExpired: boolean): boolean {
     if (this.royaleWinner !== null) return true;
+    // ⭐⭐ GH#1151 A 第 4 條 —— 第十一回合有**自己的**結束條件（生存局，
+    //   ⛔ 不是「最後一隊站著」）：時間到，或**活著的英雄歸零**。
+    //   ⚠️ ⭐ 判定住 `sim/round11Gate.round11EndReason`（純函式，⭐ 時間優先）。
+    if (this.round11Round === this.phase.round) {
+      const reason = round11EndReason(
+        this.world.mobTicks / TICK_HZ,
+        this.round11LivingChampions(null, bout.zone),
+        this.rules.round11.durationSec,
+      );
+      if (reason === null) return false; // ⛔ 還沒結束 —— ⛔ 也不要走下面那些提前結束的路
+      // ⭐ 這一局的名次 ＝ 還有活著英雄的隊伍裡血量最高的；
+      //   ⭐ 全滅 ⇒ 沿用既有的「撐到最後的那一隊」，⛔ 不是憑空擲一個。
+      const alive = bout.teams.filter((t) => this.round11LivingChampions(t, bout.zone) > 0);
+      if (alive.length === 0) {
+        const pending = this.pendingDuelWinners.get(bout.zone);
+        return this.recordRoyaleWinner(
+          bout,
+          pending ?? bout.teams[this.world.rng.int(bout.teams.length)]!,
+        );
+      }
+      let best = alive[0]!;
+      let bestPct = this.teamHpPct(best, bout.zone);
+      for (const t of alive.slice(1)) {
+        const pct = this.teamHpPct(t, bout.zone);
+        if (pct > bestPct || (pct === bestPct && this.world.rng.chance(0.5))) {
+          best = t;
+          bestPct = pct;
+        }
+      }
+      // ⭐ `recordRoyaleWinner` 自己是**只記一次**的（上面第一行的 `royaleWinner !== null`）
+      //   ⇒ ⛔ 這裡⛔ 不需要第二個「結算過了沒」的旗標（第〇·四守則：一個住處）。
+      return this.recordRoyaleWinner(bout, best);
+    }
     const standing = bout.teams.filter((t) => this.teamAliveCount(t, bout.zone) > 0);
     if (standing.length === 1) {
       // #L2, same two owner rules as the duel path (see checkCombatEnd): the
@@ -3566,6 +3858,22 @@ export class MatchController {
    * Shared by the normal combat→resolution transition and the skipPhase cheat.
    */
   private concludeCombat(): void {
+    // ⭐⭐ GH#920 ④ —— 第十一回合是**最後一回合**，⛔ 它後面沒有 `enterCombat`。
+    //
+    // ⚠️ ⭐ 那條「把沒收掉的卡自動代選」的安全網住在 `enterCombat`（下一回合開打時），
+    //   ⇒ ⛔ 第十一回合發的重抽卡如果沒人按，它會**連被代選的機會都沒有**就蒸發。
+    // ⭐ 而 owner 2026-08-06 已經對**完全同一個形狀**裁決過（逐字）：
+    //   「我前面已購買 寶玉 或 強化屬性 出現隨機三選一**來不及選**，
+    //    請**隨機幫我選一個**避免買了沒選到吃虧」——⭐ 而「⛔ 不暫停時間」正好
+    //   保證了「來不及選」是這一回合的**常態**，⛔ 不是例外。
+    // ⛔ 用**同一支** `autoPickIndex`（seeded off the match，⛔ 不是 Math.random／
+    //   world.rng）⇒ 同種子重播一致；`applyPick` 自己記帳（auto ⇒ 算 `autoPicked`）
+    //   也自己從 `offers` 移除。⚠️ 用快照迭代（`applyPick` 會動 `this.offers`）。
+    if (this.round11Round === this.phase.round) {
+      for (const [offerId, offer] of [...this.offers]) {
+        this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer), true);
+      }
+    }
     endCombatFlowers(this.world); // round over: all flowers despawn
     endCombatRevives(this.world); // …and every circle + in-flight channel dies
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
@@ -3737,7 +4045,12 @@ export class MatchController {
     const out: { seatId: SeatId; entry: RankEntry }[] = [];
     for (const [seatId, seat] of this.seats) {
       if (seat.entityId === null) continue;
-      const stats = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
+      // ⭐⭐ GH#922 驗收④ —— 換邊之後服務**凍結的那一份**（英雄死亡那一刻的副本）。
+      //   ⛔⛔ 開王期間打死人**不會**讓生存分數上升,⭐ 而那是票點名的「回刷人類分數」。
+      //   ⚠️ ⭐ 凍結做在這一個點上是刻意的:這一支是**唯一**一份組裝
+      //   ⇒ 即時回合分數與最終結算分數一定是同一條路算出來的。
+      const frozen = this.round11FrozenStats.get(seatId);
+      const stats = frozen ?? this.world.matchStats.get(seat.entityId) ?? createMatchStats();
       const role = Champions.tryGet(seat.championId as ChampionId)?.role ?? "fighter";
       out.push({
         seatId,
@@ -3767,7 +4080,10 @@ export class MatchController {
       return {
         seatId,
         // ⭐ 逐字同一支：結算頁的 `SettlementPlayer.score` 也是這一行。
-        score: rankScore(entry, lobby),
+        //   ⭐ GH#1151 G —— 第十一回合走**它自己那支公式**（獎勵局）。
+        score: this.round11Round === this.phase.round
+          ? this.round11ScoreFor(seatId, entry)
+          : rankScore(entry, lobby),
         survivalBonus: survivalBonus(entry),
         rank: ranks[i]!,
         // 第一回合沒有上一次 ⇒ 留 undefined（⛔ 不是 0：0 會被畫成「從第 0 名掉下來」）。
@@ -3778,6 +4094,62 @@ export class MatchController {
       for (const p of players) this.lastRoundRank.set(asSeatId(p.seatId), p.rank);
     }
     return { round: this.phase.round, final, players };
+  }
+
+  /**
+   * ⭐⭐ 第十一回合那一名玩家的**本回合分數**（GH#1151 G）。
+   *
+   * > owner 2026-09-02（逐字）：「我說過了是**總分加倍的獎勵局**，所以影響最終計分的獎勵局」
+   *
+   * ⚠️⚠️ ⭐ 票逐字警告的坑是「⛔ 不能把**總分**與**本回合分數**混用而**重複乘算**」——
+   * ⭐ 而 `round11Score()` **不吃總分**（它只有兩個參數），
+   * ⇒ 這裡能做的事只有「算出本回合那一格」，⛔ 而那正是重點。
+   *
+   * ⭐ 兩個分數（都正規化到 [0,1]，由這裡算）：
+   *   · `survivalFrac`     —— 撐到第幾秒 ÷ 這一回合多長（換邊那一刻＝死亡那一刻）
+   *   · `contributionFrac` —— **本回合**傷害 ÷ 全場本回合最高
+   *
+   * ⚠️ ⭐ 分子刻意是「現在 − 進場基準」：`matchStats.damageDealt` 是**整場累計**，
+   * ⛔ 直接拿它當本回合貢獻 ＝ 把前十回合的戰果也乘上獎勵倍率
+   *   （⭐ 那是「重複乘算」的**第二個**入口，而它不在票文的字面上）。
+   *
+   * ⭐ 乘 `COMBAT_SCORE_SCALE` 是為了跟其他回合**同一個單位** ——
+   * ⛔ 一個 0..1 的分數混進 0..1000 的排行榜，玩家會以為獎勵局倒扣。
+   */
+  private round11ScoreFor(seatId: SeatId, entry: RankEntry): number {
+    const cfg = this.rules.round11.scoring;
+    const durationSec = this.rules.round11.durationSec;
+    const nowSec = this.world.tick / TICK_HZ;
+    // ⭐ 本回合貢獻的分母 ＝ 全場**本回合**最高（⛔ 不是整場最高）。
+    let best = 0;
+    const roundDamageOf = (sid: SeatId): number => {
+      const seat = this.seats.get(sid);
+      if (!seat || seat.entityId === null) return 0;
+      // ⛔⛔ 換邊之後讀的是**凍結的那一份**（GH#922 驗收④）——
+      //   ⚠️ ⭐ 這一行是被守衛抓出來的:第一版讀 `world.matchStats`(活的)
+      //   ⇒ ⭐ 開王期間的戰果會從**獎勵局的貢獻**這條路回刷進分數,
+      //   ⛔ 而 E 的凍結守在另一條路上(`rankEntriesBySeat`)——**兩條路,只堵了一條**。
+      const now =
+        (this.round11FrozenStats.get(sid) ?? this.world.matchStats.get(seat.entityId))
+          ?.damageDealt ?? 0;
+      return Math.max(0, now - (this.round11DamageBase.get(sid) ?? 0));
+    };
+    for (const sid of this.seats.keys()) best = Math.max(best, roundDamageOf(sid));
+    const mine = roundDamageOf(seatId);
+    // ⭐ 換邊那一刻就是英雄死亡那一刻;沒換邊 ⇒ 還活著 ⇒ 撐到現在。
+    const p = this.round11Possessions.get(seatId);
+    const enteredAtSec = nowSec - Math.min(nowSec, durationSec);
+    const survivalFrac = round11FrozenSurvivalFrac(
+      p === undefined ? null : Math.max(0, p.convertedAtSec - enteredAtSec),
+      Math.min(nowSec - enteredAtSec, durationSec),
+      durationSec,
+    );
+    const score = round11Score(
+      { survivalFrac, contributionFrac: best > 0 ? mine / best : 0 },
+      cfg,
+    );
+    // ⭐ 存活加成那一半仍然照舊(它是**回合數**的獎勵,⛔ 與這一回合的公式無關)。
+    return Math.round(score * COMBAT_SCORE_SCALE) + survivalBonus(entry);
   }
 
   /**
@@ -3825,6 +4197,12 @@ export class MatchController {
         grade: "C", // replaced below (kept non-optional for the type)
         rank: 0, // replaced below
         stats: entry.stats,
+        // ⭐ GH#922 驗收⑦ ——「殭屍王擊倒 N 人」是**獨立的一行**。
+        //   ⚠️ ⭐ 沒換邊的座位留 `undefined`(⛔ 不是 0):0 會被畫成
+        //   「他開了王而一個都沒打到」,⭐ 而他根本沒開過王。
+        ...(this.round11BossKillTally.has(seatId as unknown as number)
+          ? { bossKills: this.round11BossKillTally.get(seatId as unknown as number)! }
+          : {}),
       });
     }
     const lobby = entries.map((e) => e.stats);
@@ -4037,8 +4415,521 @@ export class MatchController {
    * 怎麼結束」的邏輯，那正是這個檔在 2026-07-27 花一整段註解拆掉的東西。
    */
   private isLastRound(): boolean {
+    // ⭐⭐ GH#1151 —— **第十一回合還沒打 ⇒ 這一回合就不是最後一回合。**
+    //
+    // ⭐ 這是第十一回合唯一需要的進場鉤子。原因是量出來的，⛔ 不是設計：
+    //   · `isRoyaleRound(r, final) === r >= final` ⇒ ⭐ **第 11 回合本來就是 royale 回合**
+    //     （`selectRoundArena` 已經會給它 `arena.royale`、十二人一區、放大的邊界，
+    //      而 client 的 `applyArena` 也已經會照著重建地面與火圈帶）
+    //   · ⇒ ⛔ 擋住第十一回合的**只有這一行**：round 10 已經是 royale ⇒ 比賽在這裡結束
+    //
+    // ⭐ 而它**自己會停**：`shouldEnterRound11` 只在「剛打完的是 finalRound」時成立
+    //   ⇒ 第十一回合打完後這裡回 true ⇒ ⛔ 不會有第十二回合。
+    if (this.round11Due()) return false;
     return (
       isRoyaleRound(this.phase.round, this.rules.finalRound) || roundCapReached(this.phase.round, this.rules.maxRounds)
+    );
+  }
+
+  /**
+   * ⭐ 第十一回合現在該開了嗎？—— ⛔ 判定住 `sim/round11Gate`（純函式），
+   * 這裡只把**這一場的三個輸入**餵給它。
+   */
+  /**
+   * ⭐ 第十一回合的**漸進生成** —— 逐 tick 把 `maxAlivePerZone` 從 0 夾到上限。
+   *
+   * ⚠️ ⭐ 這一支**只在第十一回合做事**（⛔ 其他回合一個位元組都不碰），
+   * 而它改的是 `world.mobRules` 上的那一格 —— ⭐ 規則表本來就每回合重建，
+   * ⛔ 所以不會有殘留（與練習房的 `autoWaves` 同一個理由）。
+   */
+  /**
+   * ⭐ 把座位翻譯成 `sim/round11Possession` 吃的形狀。
+   *
+   * ⛔⛔ `championAlive` 讀的是 `health.alive`,⛔ **不是「這個座位還有實體」** ——
+   * 票文逐字警告過:「屍體都變成王了,用實體數會**永遠不結束**」。
+   * ⭐ 而已經換邊的座位一律算**不活**(牠現在是敵方的王)。
+   */
+  private round11SeatStates(): Round11Seat[] {
+    const out: Round11Seat[] = [];
+    for (const [seatId, seat] of this.seats) {
+      const possessing = this.round11Possessions.has(seatId);
+      const hp = seat.entityId === null ? undefined : this.world.health.get(seat.entityId);
+      out.push({
+        seatId: seatId as unknown as number,
+        team: seat.teamId as unknown as number,
+        championAlive: !possessing && (hp?.alive ?? false),
+        possessing,
+      });
+    }
+    return out;
+  }
+
+  /**
+   * ⭐⭐ 第十一回合:一隊**零存活英雄** ⇒ 整隊換邊操作自己的殭屍王（GH#922）。
+   *
+   * ⚠️ ⭐ 「原地生成」＝ **沿用同一具實體**,⛔ 不生一具新的:
+   *   · `seat.entityId` 不動 ⇒ ⭐ 玩家的輸入**本來就送到那裡**
+   *     （票警告的「⛔ 不要只換鏡頭」在這個做法下寫不出來）
+   *   · 位置不動 ⇒ ⭐ 那就是票說的「出生位置原地生成」
+   *
+   * ⭐ 而**分數在這一刻凍結**（⛔ 不是在王死掉那一刻）—— 票驗收④逐字
+   * 「在英雄死亡那一刻**凍結**」。
+   */
+  private convertWipedTeamsToBosses(): void {
+    if (this.round11Round !== this.phase.round) return;
+    if (!this.rules.round11.deadPlayersControlBoss) return;
+    const seats = this.round11SeatStates();
+    const teams = [...new Set(seats.map((s) => s.team))].sort((a, b) => a - b);
+    const nowSec = this.world.tick / TICK_HZ;
+    for (const team of teams) {
+      if (!round11TeamShouldConvert(true, seats, team)) continue;
+      for (const rawSeatId of round11ConvertibleSeats(seats, team)) {
+        const seatId = asSeatId(rawSeatId);
+        const seat = this.seats.get(seatId);
+        if (!seat || seat.entityId === null) continue;
+        // ⭐ 去重走**同一本**一次性帳本(GH#1151 C)——⛔ 不是「應該不會重覆」。
+        if (!this.round11Claims.claim("possession", String(rawSeatId))) continue;
+        // ⭐ 分數凍結:抄一份**當下**的統計,之後 `rankEntriesBySeat()` 服務這一份。
+        const stats = this.world.matchStats.get(seat.entityId);
+        if (stats) this.round11FrozenStats.set(seatId, { ...stats });
+        this.round11Possessions.set(seatId, {
+          convertedAtSec: nowSec,
+          bossEntityId: seat.entityId,
+          bossDead: false,
+        });
+        // ⭐ 站起來:血拉到**夾限之後**的上限(票驗收⑤的同一條路)。
+        const hp = this.world.health.get(seat.entityId);
+        if (hp) {
+          const scale = this.rules.round11.possession.inheritBossAugments
+            ? this.round11BossScaleForTest
+            : 1;
+          hp.maxHp = hp.maxHp * scale;
+          hp.hp = hp.maxHp;
+          hp.alive = true;
+        }
+      }
+    }
+  }
+
+  /**
+   * ⭐⭐ 服務端的**控制權驗證**（GH#922）——`null` ＝ 放行。
+   *
+   * ⭐ 票逐字點名的四種濫用（⛔ 操作他人的王 · ⛔ 重生第二具 ·
+   * ⛔ 預警期間提前攻擊 · ⛔ 回刷人類分數）**全部撞這一道門**,
+   * ⛔ 而不是四個各寫一次檢查（四個會各自漏掉的地方）。
+   */
+  round11DenyCommand(seatId: SeatId, bossEntityId: EntityId): Round11DenyReason | null {
+    const p = this.round11Possessions.get(seatId);
+    return round11DenyPossession(
+      this.rules.round11.deadPlayersControlBoss && this.round11Round === this.phase.round,
+      {
+        convertedAtSec: p?.convertedAtSec ?? null,
+        bossEntityId: (p?.bossEntityId ?? null) as number | null,
+        bossDead: p?.bossDead ?? false,
+      },
+      bossEntityId as unknown as number,
+      p === undefined ? 0 : this.world.tick / TICK_HZ - p.convertedAtSec,
+      this.rules.round11.possession.escapeWindowSec,
+    );
+  }
+
+  /**
+   * ⭐⭐ 送上線的那一格（GH#922）—— ⭐ **只在第十一回合**回非空字串。
+   *
+   * ⚠️ ⭐ 其他回合回 `""` 是刻意的：⛔ 一個永遠有值的欄位會讓客戶端
+   * 以為「每一回合都有換邊這件事」，⭐ 而換邊只存在於第十一回合。
+   */
+  round11RoleOnWire(seatId: SeatId): string {
+    if (this.round11Round !== this.phase.round) return "";
+    return this.round11ReconnectRole(seatId);
+  }
+
+  /**
+   * ⭐ 重連之後這個座位是什麼（票:「重連恢復**同一個王／旁觀狀態**」）。
+   * ⛔⛔ 它**不分配新的王** —— 會分配的實作正是票說的「重生第二具」。
+   */
+  round11ReconnectRole(seatId: SeatId): "champion" | "boss" | "spectator" {
+    const p = this.round11Possessions.get(seatId);
+    return round11ReconnectState({
+      convertedAtSec: p?.convertedAtSec ?? null,
+      bossEntityId: (p?.bossEntityId ?? null) as number | null,
+      bossDead: p?.bossDead ?? false,
+    });
+  }
+
+  /**
+   * ⭐ 一具王死了 / 一具王擊倒了誰 —— 兩件事都由 `death` 事件驅動。
+   * ⭐ 擊倒 ⇒ **生命回滿**（票驗收⑤）＋ **獨立統計** +1（票驗收⑦）。
+   */
+  private onRound11Death(deadId: EntityId, killer: EntityId | null): void {
+    if (this.round11Round !== this.phase.round) return;
+    for (const [seatId, p] of this.round11Possessions) {
+      if (p.bossEntityId === deadId) {
+        p.bossDead = true; // ⭐ 徹底離場,⛔ 不可以再拿第二具
+        continue;
+      }
+      if (killer === null || p.bossEntityId !== killer || p.bossDead) continue;
+      round11BumpBossKills(this.round11BossKillTally, seatId as unknown as number);
+      const hp = this.world.health.get(p.bossEntityId);
+      if (hp) {
+        // ⚠️⭐ 吃的是**夾限之後**的 `hp.max` —— 票逐字「⛔ 不可以被王的強度夾限夾掉」。
+        hp.hp = round11KillRewardHp(
+          this.rules.round11.deadPlayersControlBoss,
+          hp.hp,
+          hp.maxHp,
+        );
+      }
+    }
+  }
+
+  /**
+   * ⭐⭐ 第十一回合的**波次事件排程**（GH#1151 B 的「發哪一種」那一半）。
+   *
+   * ⚠️ ⭐ `round11EventsDue()` 回的是「到現在**應該**發過幾個」——
+   * ⛔ 不是「這一 tick 要不要發」。⭐ 兩者的差別就是這裡的 `while`：
+   * 一次 lag（或一次重播快轉）不會**吞掉**中間那幾個事件。
+   *
+   * ⭐ 抽哪一種走 `world.rng`（⛔ 不是 `Math.random` —— `sim/**` 禁它，
+   * 而且錄影要重播得出同一場）。
+   */
+  private tickRound11Events(): void {
+    if (this.round11Round !== this.phase.round) return;
+    const wt = this.rules.round11.waveTable;
+    const elapsedSec = this.world.mobTicks / TICK_HZ;
+    const due = round11EventsDue(elapsedSec, wt.eventIntervalSec);
+    while (this.round11EventsFired < due) {
+      this.round11EventsFired++;
+      const kind = pickRound11Event(wt.events, this.world.rng.next());
+      if (kind === null) continue; // ⭐ 權重全 0 ⇒ 這一波空過（⛔ 不是崩）
+      this.runRound11Event(kind, this.round11EventsFired);
+    }
+  }
+
+  /**
+   * ⭐⭐ 跑一個波次事件（GH#1151 B / #924）。
+   *
+   * > owner 2026-09-01（逐字）：「這個殭屍組合⋯組合項目可以包含
+   * >  **殭屍 特殊殭屍 殭屍王** 的不同英雄組合 甚至加入**場景效果**」
+   * > owner 同一則，說了兩次：「**不要複雜化**」
+   *
+   * ⭐ 生怪那三種走的是**出貨的同兩扇門**（`spawnMob` / `summonMobBoss`）——
+   * ⛔ 不另外開一條生怪路徑（第二守則失敗形態⑤：被測的不是出貨的那個）。
+   * ⭐ 尤其王那扇門還管**每回合上限與回合延長**，繞過它就會生出一隻不算數的王。
+   *
+   * ⚠️⚠️ ⭐ 認不得的 `kind` **要出聲**（`round11EventUnhandled`），⛔ 不可以安靜地丟掉：
+   * `waveTable.events` 是**內容**（owner：「盡量彈性選項與數值」）⇒ 有人會打錯字，
+   * ⭐ 而一個安靜被丟掉的事件，看起來跟「那一格權重太低所以沒抽到」**一模一樣**。
+   * ⛔ fail-open 沒錯，**靜默**才是缺陷（第二守則）。
+   */
+  private runRound11Event(kind: string, waveIndex: number): void {
+    if (kind === "bombardment") {
+      this.startRound11Bombardment();
+      return;
+    }
+    const rules = this.world.mobRules;
+    // ⭐ 第十一回合是 royale ⇒ **一個 zone**,⭐ 而它的編號固定是 0（`royaleBout`）。
+    //   ⛔⛔ 這裡曾經寫成 `this.phase.round` —— 那會把整波怪生到一個**沒有人在的區**,
+    //   ⭐ 而畫面上看起來只是「這一波沒出怪」(⛔ 不像一個編號錯誤)。
+    const zone = this.activeZones()[0];
+    if (zone === undefined) return;
+    if (kind === "normal" || kind === "special") {
+      if (!rules) return;
+      // ⭐ 這一波生幾隻 ＝ 基數 × 難度成長（⛔ 不用 `Math.pow`：`round11Difficulty` 是連乘）。
+      //   ⚠️ ⭐ 上限仍然由 `maxAlivePerZone` 夾著(每 tick 由 `clampRound11AliveCap` 漸進放開)
+      //   ⇒ ⭐ 調大基數是讓「**補位變快**」,⛔ 不是讓場上變多。
+      const wt2 = this.rules.round11.waveTable;
+      const n = Math.round(wt2.baseSpawnCount * round11Difficulty(wt2.difficultyBase, waveIndex));
+      for (let i = 0; i < n; i++) {
+        if (mobsAliveInZone(this.world, zone) >= rules.maxAlivePerZone) break;
+        spawnMob(this.world, zone, rules, this.world.tick, i, kind);
+      }
+      return;
+    }
+    if (kind === "boss") {
+      if (!rules) return;
+      // ⚠️ 王要一個「召喚者」—— ⭐ 拿場上第一個活著的英雄（⛔ 王的門要它算歸屬）。
+      let summoner: EntityId | null = null;
+      for (const [, seat] of this.seats) {
+        if (seat.entityId === null) continue;
+        if (this.world.health.get(seat.entityId)?.alive) {
+          summoner = seat.entityId;
+          break;
+        }
+      }
+      if (summoner === null) return; // ⛔ 場上沒有活人 ⇒ 不召王
+      summonMobBoss(this.world, zone, rules, summoner, this.world.tick, this.world.tick + waveIndex);
+      return;
+    }
+    // ⛔⛔ 認不得 —— ⭐ **出聲**，⛔ 不安靜丟掉。
+    this.world.emit("round11EventUnhandled", { kind, waveIndex });
+  }
+
+  /**
+   * ⭐ 開始一發大轟炸：挑落點、記下開始的 tick、發預警事件。
+   *
+   * ⚠️⚠️ ⭐ **已經有一發在飛就不再開第二發** —— ⛔ 兩個紅圈同時倒數時，
+   * 玩家分不出哪一個是哪一個的倒數，⭐ 而那正是預警存在的理由。
+   * （⛔ 這不是「省事」：它是一個**決策**，所以下面那一行有註解說明選了哪一邊。）
+   */
+  private startRound11Bombardment(): void {
+    const cfg = this.rules.round11.bombardment;
+    if (!cfg.enabled) return;
+    if (this.round11Bombard !== null) return;
+    const candidates: BombardmentCandidate[] = [];
+    for (const [, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (!hp?.alive) continue;
+      const t = this.world.transform.get(seat.entityId);
+      if (t) candidates.push({ x: t.pos.x, z: t.pos.z });
+    }
+    const at = pickBombardmentTarget(candidates, cfg.radius, cfg.crowdBias, this.world.rng.next());
+    if (at === null) return; // ⛔ 場上沒有活人 ⇒ 不炸空地
+    this.round11Bombard = { startTick: this.world.tick, x: at.x, z: at.z };
+    // ⭐ 預警圈 —— ⚠️ 今天**沒有客戶端在讀這一則**（client UI 還沒做）。
+    //   ⛔ 而它仍然要發：它是這個事件唯一的「⭐ 我在這裡倒數」訊號，
+    //   ⭐ 錄影與後台重播讀得到它。（⛔ 這不是「玩家看得到了」——第一·五守則。）
+    this.world.emit("round11Bombardment", {
+      x: at.x,
+      z: at.z,
+      radius: cfg.radius,
+      telegraphSec: cfg.telegraphSec,
+    });
+  }
+
+  /**
+   * ⭐⭐ 大轟炸的每 tick 結算（GH#1151 F）。
+   *
+   * ⚠️⚠️ ⭐ 票逐字：「**倒數前不傷害**⋯事件**只結算一次**」——
+   * ⭐ 而「只一次」是 `bombardmentPhase()` 用**跨越**判出來的：
+   * `impact` 只在 `prevElapsed < telegraph <= elapsed` 的那一 tick 回一次。
+   *
+   * ⚠️⭐ 傷害走 `world.damageQueue`（**合法環境傷害入口**，與火圈同一條路）——
+   * ⛔ 不自己扣血：自己扣血會繞過無敵／免疫／護盾／免死，
+   * ⭐ 而票 D 項要的「⛔ 防止不合理一擊必殺」正是由那條管線提供的。
+   */
+  private tickRound11Bombardment(): void {
+    const b = this.round11Bombard;
+    if (b === null || this.round11Round !== this.phase.round) return;
+    const cfg = this.rules.round11.bombardment;
+    const elapsed = (this.world.tick - b.startTick) / TICK_HZ;
+    const prev = (this.world.tick - 1 - b.startTick) / TICK_HZ;
+    const phase = bombardmentPhase(prev, elapsed, cfg.telegraphSec);
+    if (phase === "telegraph") return; // ⛔ 倒數期間一點傷害都沒有
+    if (phase === "done") {
+      this.round11Bombard = null; // ⭐ 結算完就收掉 ⇒ 下一個事件可以再開一發
+      return;
+    }
+    for (const [, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (!hp?.alive) continue;
+      const t = this.world.transform.get(seat.entityId);
+      if (!t || !bombardmentHits({ x: t.pos.x, z: t.pos.z }, b.x, b.z, cfg.radius)) continue;
+      this.world.damageQueue.push({
+        source: seat.entityId, // ⚠️ 環境傷害沒有施法者 —— 與火圈同一個做法
+        target: seat.entityId,
+        amount: bombardmentDamage(hp.maxHp, cfg.damagePctOfMaxHp),
+        type: "true",
+        crit: false,
+        origin: "round11Bombardment",
+      });
+    }
+  }
+
+  /**
+   * ⭐⭐ ① 普通殭屍**放著不清就變成特殊殭屍**（GH#920 ①）。
+   *
+   * > owner 2026-09-01（逐字）：「**普通殭屍放著會變成特殊殭屍**」
+   * > owner 2026-09-02（逐字）：「[⋯存活滿 **45 秒** 就轉化] ok」
+   *
+   * ⭐ 這是整個取捨迴圈的心臟：清乾淨＝場面安全但**復活權變少**；
+   * 放著養＝復活權多但**場面失控**。
+   *
+   * ⚠️ ⭐ 迭代 `world.mob` 之前先把 id 收成陣列並**排序** ——
+   * `sim/**` 的「Map 迭代要先排序」（⛔ 而升級會寫回同一張表）。
+   */
+  private tickRound11Promotions(): void {
+    if (this.round11Round !== this.phase.round) return;
+    const secs = this.rules.round11.survivalLoop.normalToSpecialSec;
+    if (!(secs > 0)) return;
+    const rules = this.world.mobRules;
+    if (!rules) return;
+    const due: number[] = [];
+    for (const [id, m] of this.world.mob) {
+      if (m.kind !== "normal") continue;
+      if (shouldConvertToSpecial(m.spawnTick, this.world.mobTicks, secs, TICK_HZ)) {
+        due.push(id as unknown as number);
+      }
+    }
+    due.sort((a, b) => a - b);
+    for (const id of due) promoteMobToSpecial(this.world, id as EntityId, rules);
+  }
+
+  /**
+   * ⭐⭐ ② 特殊殭屍被打死 ⇒ 那一隊拿到**一次**復活權（GH#920 ②）。
+   *
+   * > owner 2026-09-01（逐字）：「**特殊殭屍打死才能復活隊友一次**（出現復活圈）
+   * >  ⛔ 而不是無限復活」
+   *
+   * ⛔⛔ **第一版我做錯了**，而且錯得很有教育意義：我直接 `spawnReviveCircle()`，
+   * 把 `ownerId` 填成**兇手**。⇒ ⭐ 那個圈在**下一 tick 就被熄掉**了 ——
+   * `ReviveSystem.updateCircle()` 逐字：「owner already alive again ⇒ 圈是多餘的」。
+   * ⭐ 因為復活圈的 `ownerId` 是**要被復活的那具屍體**，⛔ 不是誰生出它的。
+   *
+   * ⭐ 正解是**加一格復活權**，⛔ 不是自己生圈：
+   * `ReviveSystem.spawnCirclesForDeaths()` 本來就在「有人死 ＋ 那一隊還有 charge」
+   * 時生圈 ⇒ ⭐ 這條規則要做的事只有**發 charge**。
+   * ⚠️ 而那也正好是 owner 那句「⛔ 而不是無限復活」的意思：
+   * 第十一回合的基礎 charge 是 0，**每一格都要打一隻特殊怪換**。
+   */
+  private onRound11SpecialSlain(mobId: EntityId, killer: EntityId): void {
+    if (this.round11Round !== this.phase.round) return;
+    if (!this.rules.round11.survivalLoop.specialDropsReviveCircle) return;
+    // ⭐ 去重：一隻怪只換一格（同 tick 多來源致命／重播重複抵達都走同一本帳）。
+    if (!this.round11Claims.claim("specialRevive", String(mobId))) return;
+    const team = this.world.team.get(killer)?.teamId;
+    if (team === undefined) return;
+    const before = this.world.reviveCharges.get(team) ?? 0;
+    this.world.reviveCharges.set(team, before + 1);
+    this.world.emit("round11ReviveCharge", { teamId: team, from: before, to: before + 1, mobId });
+  }
+
+  /**
+   * ⭐⭐ ③ 英雄死亡 ⇒ **永久損壞一件隨機寶具**（GH#920 ③）。
+   *
+   * > owner 2026-09-01（逐字）：「噴寶具是**你死就一定會噴 被誰殺死都會隨機噴一件**⋯
+   * >  **寶具掉落 就是損壞了 不能撿回**」
+   *
+   * ⚠️⚠️ ⭐ 「被誰殺死都會噴」⇒ ⛔ **不看兇手**（火圈、轟炸、自殺一樣噴）。
+   * ⭐ 而「一定會噴」⇒ 抽籤只在**有東西的格子**之間進行
+   *   （⛔ 在 6 個格子裡抽會讓只帶一件的人有 5/6 的機率沒事）。
+   */
+  private onRound11ChampionDeath(id: EntityId): void {
+    if (this.round11Round !== this.phase.round) return;
+    if (!this.rules.round11.survivalLoop.breakItemOnDeath) return;
+    const champ = this.world.champion.get(id);
+    if (!champ) return;
+    const seatId = this.seatOfEntity(id);
+    if (seatId === null) return;
+    // ⭐ 去重：一次死亡只損壞一件（斷線重連／同 tick 多來源致命都走同一本帳）。
+    if (!this.round11Claims.claim("itemBreak", `${seatId}:${this.world.tick}`)) return;
+    const slot = pickItemToBreak(champ.items, this.world.rng.next());
+    if (slot === null) return;
+    const broken = breakItem(this.world, id, slot);
+    if (broken !== null) {
+      this.world.emit("round11ItemBroken", { entity: id, seatId, slot, itemId: broken });
+    }
+  }
+
+  /**
+   * ⭐⭐ ④ 打死殭屍王 ⇒ **重抽三選一**（GH#920 ④ / #1151 C）。
+   *
+   * > owner 2026-09-01 23:52（逐字）：「打死殭屍王後的**重抽三選一 不暫停時間**喔 我回答過了」
+   * > owner 2026-09-01（逐字，較早）：「寶具死掉會隨機噴 **有機會**隨機三選一再拿到新的」
+   *
+   * ── ⭐⭐ 「⛔ 不暫停時間」是怎麼做到的（⛔ 這不是「我沒有寫暫停」）───────
+   * ⭐ 這張卡走的是**這個檔案既有的第三條發卡路**：傳說寶玉／能力屬性強化
+   *   （`registerOrbOffer` / `registerAttrOffer`）—— ⭐ 那兩張**本來就是在
+   *   `combat` 相位發的**（陣亡者可以在戰鬥中買，見 `sim/economy/shopAccess.ts`），
+   *   而 `net/snapshot.ts:414` 投影 `SeatState.offers` **不看相位**。
+   * ⇒ ⭐ 相位、`phase.ticksLeft`、`world.combatActive`、`economyOpen` 一格都不碰。
+   * ⛔ 中場那條路（`grantRoundRewards`）反而**會**動時間（`bothDraftsExtraSec`
+   *   延長中場）—— ⭐ 那正是這裡⛔ 不重用它的原因之一。
+   *
+   * ── ⭐ 獎池為什麼是一格設定而不是 `pickWeaponTable` ──────────────────
+   * ⚠️ 中場那條路吃「**回合** `grant.weaponLootTable`」＋「逐座位劣勢值 D」＋
+   *   `weaponTiers`（按 `minRound`/`maxRound` **開窗**的升階表）。
+   * ⛔ 第十一回合三個前提**都不成立**：它沒有 `grant`（`grantForRound` 只排到
+   *   第 10 回合）、它在 `weaponTiers` 的排程表**之外**（`ex-origin` 是 10..10
+   *   ＝「最終回合大戰**前**」），而 D 量的是**前十回合**的勝場與裝備差距。
+   * ⇒ ⭐ 硬餵進去是「用現有參數湊一個看起來像的」（CLAUDE.md 明令禁止的第三條路），
+   *   ⛔ 不是翻譯。⭐ 翻譯是：owner 說的是「再拿到新的**寶具**」⇒ 一格**池子 id**，
+   *   而它預設就是 ③ 損壞的那一族（`legendary-weapons`，`rounds[2]`/`rounds[5]` 同一張）。
+   *
+   * ⚠️ ⭐ **可選的兩個守門，都是刻意的**：
+   * · ⛔ 換邊之後的座位（`round11Possessions`）不發 —— 牠現在是一具王，
+   *   分數已凍結（GH#922），發一件英雄裝備既沒有人拿得到也會動到王的屬性。
+   * · ⭐ 池子抽不出東西時**出聲**（`console.warn`）而不是發一張空卡
+   *   （fail-open 沒錯，**靜默**才是缺陷 —— 第二守則）。
+   */
+  private onRound11BossReroll(seatId: SeatId, bossId: number): void {
+    if (this.round11Round !== this.phase.round) return;
+    const pct = this.rules.round11.survivalLoop.bossRerollChancePct;
+    // ⭐ 關著 ⇒ **這裡就回**，⛔ 連 `world.rng` 都不動 —— 出貨（`enabled:false`）
+    //   與今天的行為要**逐位元**相同，⛔ 而多抽一顆亂數就會讓同一顆種子走出不同的一場。
+    if (!(pct > 0)) return;
+    const seat = this.seats.get(seatId);
+    if (!seat || seat.entityId === null) return;
+    if (this.round11Possessions.has(seatId)) return; // ⛔ 牠是王,⛔ 不是英雄
+    // ⭐ 去重走**同一本**一次性帳本：一隻王只發一次（斷線重連／重複請求／
+    //   同 tick 多來源致命都會讓這顆事件重覆抵達）。⛔ 不是「應該不會重覆」。
+    if (!this.round11Claims.claim("reroll", String(bossId))) return;
+    const granted = bossRerollGranted(pct, this.world.rng.next());
+    if (!granted) {
+      this.world.emit("round11BossReroll", { seatId, bossId, granted: false, choices: [] });
+      return;
+    }
+    const table = this.rules.round11.survivalLoop.bossRerollTable;
+    const offer = offerItems(
+      this.world,
+      seat.entityId,
+      table,
+      this.rules.offerCount,
+      this.rules.itemDraft,
+    );
+    if (offer.choices.length === 0) {
+      // ⭐ 出聲：⛔ 一張零選項的卡與「這次沒中」在畫面上長得一模一樣。
+      console.warn(
+        `[match ${this.matchId}] round 11 seat ${seatId}: the ${table} pool holds nothing this ` +
+          `champion may be offered — the boss-kill reroll card is EMPTY. Check ` +
+          `round11.survivalLoop.bossRerollTable and 內容白名單.`,
+      );
+      return;
+    }
+    this.offers.set(`r11reroll:${bossId}:${seatId}`, {
+      kind: "item",
+      ...offer,
+      seatId,
+      createdTick: this.world.tick,
+    });
+    this.world.emit("round11BossReroll", {
+      seatId,
+      bossId,
+      granted: true,
+      choices: [...offer.choices],
+    });
+  }
+
+  private clampRound11AliveCap(): void {
+    if (this.round11Round !== this.phase.round) return;
+    const rules = this.world.mobRules;
+    if (!rules) return;
+    const elapsedSec = this.world.mobTicks / TICK_HZ;
+    const cap = round11AliveCap(
+      elapsedSec,
+      this.rules.round11.spawnRampSec,
+      this.rules.round11.maxAliveZombies,
+    );
+    (rules as { maxAlivePerZone: number }).maxAlivePerZone = cap;
+  }
+
+  /** ⭐ 第十一回合的 `MobRules` 覆寫 —— 翻譯住 `sim/round11Waves`。 */
+  private round11MobPatch(): Round11MobRulesPatch {
+    return round11MobRulesPatch(
+      this.phase.round,
+      this.rules.round11.waveTable,
+      this.rules.round11.maxAliveZombies,
+      TICK_HZ,
+    );
+  }
+
+  private round11Due(): boolean {
+    return shouldEnterRound11(
+      this.rules.round11,
+      this.phase.round,
+      this.round11BossKills.size,
+      this.rules.finalRound,
     );
   }
 
@@ -4416,6 +5307,30 @@ export class MatchController {
         });
         return;
       }
+      case "death": {
+        // ⭐ GH#922 —— 換邊之後:王死了就徹底離場;王擊倒英雄 ⇒ 生命回滿 ＋ 獨立統計 +1。
+        //   ⚠️ ⭐ 只在第十一回合做事(`onRound11Death` 第一行就回),⛔ 其他回合一個位元組都不碰。
+        this.onRound11Death(
+          data.id as EntityId,
+          typeof data.killer === "number" ? (data.killer as EntityId) : null,
+        );
+        // ⭐ GH#920 ③ —— 英雄死亡損壞一件寶具（⛔ 不看兇手）。
+        this.onRound11ChampionDeath(data.id as EntityId);
+        return;
+      }
+      case "mobSpawn": {
+        // ⭐ GH#1151 D —— 第十一回合的王強度依**累計已生成**成長。
+        //   ⛔ 只在第十一回合數（其他回合這個欄位一直是 0）。
+        if (this.round11Round === this.phase.round) this.round11MobsSpawned++;
+        return;
+      }
+      case "mobSlain": {
+        // ⭐ GH#920 ② —— 特殊殭屍被打死 ⇒ 一次復活權。
+        if (data.kind === "special" && typeof data.killer === "number") {
+          this.onRound11SpecialSlain(data.id as EntityId, data.killer as EntityId);
+        }
+        return;
+      }
       case "mobBossSlain": {
         // 殭屍王 / 特殊殭屍的最後一擊。`RoundPerformance.bossKills` 的來源 ——
         // `world.mobKills` 只數一般小怪,不分王。
@@ -4423,6 +5338,14 @@ export class MatchController {
         if (typeof seatId !== "number" || seatId < 0 || !this.seats.has(asSeatId(seatId))) return;
         const key = asSeatId(seatId);
         this.roundBossKills.set(key, (this.roundBossKills.get(key) ?? 0) + 1);
+        // ⭐ 第十一回合的門檻：**只算殭屍王**、整場累計、⭐ 按王的實體 id 去重。
+        //   （見 `round11BossKills` 的說明：它與上面那一行是兩個不同的量。）
+        if (data.kind === "boss" && typeof data.id === "number") {
+          recordBossKill(this.round11BossKills, data.id);
+          // ⭐⭐ GH#920 ④ —— 打死殭屍王 ⇒ **重抽三選一**（⛔ 不暫停戰鬥）。
+          //   ⚠️ ⭐ 只在第十一回合做事（`onRound11BossReroll` 第一行就回）。
+          this.onRound11BossReroll(key, data.id);
+        }
         return;
       }
       default:
@@ -4722,6 +5645,20 @@ export class MatchController {
         // ⛔ 不可以改成「把 checkCombatEnd 的結束條件放寬」：那會動到**每一場**比賽
         // 的結束判定。這裡擋的是這一間房的相位推進，正式賽一個字都沒碰到。
         if (this.practice?.endlessCombat) break;
+        // ⭐⭐ GH#1151 B —— **漸進生成**：`MobRules.maxAlivePerZone` 是**靜態**的
+        // （見 `round11Waves.round11MobRulesPatch` 那條會紅的斷言），
+        // ⭐ 所以「從 0 長到上限」只能在這裡逐 tick 夾。
+        //
+        // ⛔ 一開場就允許 `maxAliveZombies` 隻，等於把「生存」變成「開場即團滅」。
+        this.clampRound11AliveCap();
+        // ⭐ GH#922 —— 一隊零存活英雄 ⇒ 整隊換邊操作自己的殭屍王。
+        //   ⚠️ ⭐ 排在夾上限**之後**：換邊會讓一具屍體站起來,⛔ 而牠不是殭屍,
+        //   ⛔ 不該被 `maxAlivePerZone` 那一格算進去。
+        this.convertWipedTeamsToBosses();
+        // ⭐ GH#1151 B/F —— 波次事件排程 ＋ 大轟炸的倒數與結算。
+        this.tickRound11Promotions(); // ⭐ GH#920 ① 普通 → 特殊
+        this.tickRound11Events();
+        this.tickRound11Bombardment();
         this.accelFireRingForBotOnly(); // GH#643 —— 只剩 bot 在打就提前縮火圈
         // ⭐【回合分數與排名】GH#737 —— owner:「進入戰鬥房間，**隨時**顯示玩家
         // 自己回合累積分數及排名」。1 Hz 取樣（⛔ 不是每 tick：12 席 × 4 個數字 ×
@@ -4735,7 +5672,12 @@ export class MatchController {
         break;
       case "resolution":
         if (expired) {
+          // ⭐ GH#1151 —— 先問「第十一回合該開了嗎」，⭐ 因為 `maybeFinish()`
+          //   會讀 `isLastRound()`，⛔ 而那一問**會把旗標的機會用掉**
+          //   （`round11Due()` 只在「剛打完 finalRound」那一刻成立）。
+          const round11 = this.round11Due();
           if (!this.maybeFinish()) {
+            this.enteringRound11 = round11;
             this.phase.advance(); // -> next intermission
             this.enterIntermission();
           }

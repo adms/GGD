@@ -1,0 +1,375 @@
+{
+  "id": "community-review-33-20260907",
+  "name": "近衛刀太",
+  "description": "近衛刀太 社群英雄功能驗收稿。作品：《UQ HOLDER!》  \n採用：不死身與重力劍為核心的版本。  \n定位：再生、武器重量、有限致死恢復。\n\n視覺方向：暗紅再生細線、重劍深色厚軌、輕劍白色細軌；再起保留可辨識硬直。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "狂戰",
+  "modelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 38.2761224489796,
+    "healthRegen": 0.10039591836734693,
+    "maxMana": 17.385714285714286,
+    "manaRegen": 0,
+    "ad": 3.9845714285714284,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.5585816326530613,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 25,
+    "agi": 23,
+    "int": 12,
+    "strGrowth": 2.36,
+    "agiGrowth": 2.17,
+    "intGrowth": 1.18,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-33-20260907.q",
+      "name": "〔重力劍・橫掃〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】使用重力劍進行扇形斬擊。\n【待補機制】需重力劍扇形判定。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-33-20260907.q.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-33-20260907.w",
+      "name": "〔重量切換〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：ad +15%。\n【目標設計】在輕劍與重劍模式間切換：輕模式較快、重模式傷害較高且動作較慢。\n【待補機制】固定 AD 增益；需輕／重模式、攻速與動作時長同步。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.15
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-33-20260907.w.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.15
+            }
+          ],
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-33-20260907.e",
+      "name": "〔踏地突進〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近並揮劍。\n【待補機制】近身突進可作基礎驗收。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 4.58,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-33-20260907.e.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 250,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-33-20260907.r",
+      "name": "〔不死者的再起〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n【待補機制】目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100,
+            "ratios": [],
+            "perRank": [
+              0,
+              75,
+              150
+            ]
+          },
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-33-20260907.r.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-33-20260907.ex",
+  "passiveAbility": "community-review-33-20260907.passive",
+  "icon": "assets/icons/champions/community-review-33-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b0f51f214cce617a5b9046a281f70626b9ddbee8cccd1375",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.470087",
+      "modelSha256": "89e3f448d232ea002d5ce6f9df0aaaaba44ff81163f143d4c4e9865b4d39ff99",
+      "binarySha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494",
+      "registeredAt": "2026-09-10T14:45:33.685Z",
+      "source": {
+        "kind": "previous",
+        "character": "近衛刀太",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.470087.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a5b79ca7632788eb9e9c32f54b5c3c8fa3b6e06d2e865f1a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4823275304f57f71ffdb0a7cfdd26c821e2849b62f85fe8aeac4a7d0a2806f3d",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-10T14:45:33.695Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
+      "label": "蓝瞳靓仔版远野志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.470087-standard-v2",
+      "modelSha256": "5d5af802b79977595e19da37643b02d8e24e3905861fb53d2034ad4234406b29",
+      "binarySha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0",
+      "registeredAt": "2026-09-10T14:48:49.967Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蓝瞳靓仔版远野志贵",
+        "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-470087-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

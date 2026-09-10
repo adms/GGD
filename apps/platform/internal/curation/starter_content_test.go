@@ -50,6 +50,13 @@ type abilityDoc struct {
 	Name        string `json:"name"`
 	Slot        string `json:"slot"`
 	Description string `json:"description"`
+	// Provenance says WHERE this ability came from, and it is the only honest
+	// discriminator for the hero-number rule below. "w3x-import" means there is
+	// a JASS ability behind it whose rawcode the xx-0N prefix joins to;
+	// "editor-json" (community/original heroes) means there is no such ability,
+	// so a number would be an INVENTED join key — the exact hazard CLAUDE.md
+	// records as 「join key 自己漂掉」.
+	Provenance string `json:"provenance"`
 }
 
 type itemDoc struct {
@@ -207,7 +214,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	set := curation.StarterSet()
-	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 49 champions")
+	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 130 champions")
 	require.GreaterOrEqual(t, len(set.Items), 24, "starter set must enable at least 24 items")
 	require.GreaterOrEqual(t, len(set.Abilities), len(set.Champions)*5,
 		"every starter champion contributes its full Q/W/E/R/EX kit")
@@ -275,6 +282,32 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 			require.Equalf(t, strings.ToUpper(slot), strings.ToUpper(ab.Slot),
 				"roster ability %q sits in the wrong slot", abilityID)
 
+			// ⭐⭐ THE xx-0N PREFIX IS A **w3x JOIN KEY**, NOT A NAMING STYLE.
+			//
+			// CLAUDE.md: 「編號↔技能是 JASS 對照的 join key（綁死，92-02 永遠是
+			// 消化液）」. It exists so a GGD ability can be traced back to the
+			// JASS ability it was imported from.
+			//
+			// ⛔ 2026-09-10 (GH#1165): this assertion's PREMISE — every roster
+			// champion is a w3x import — stopped being true. 37 community heroes
+			// shipped as official, and they have NO JASS ancestor at all. Giving
+			// them numbers would mint a join key that joins to nothing, which is
+			// the failure this repo has already been burned by (草泥馬 h02u: one
+			// drifted key, amplified by a key-driven syncer, destroyed a skill).
+			//
+			// ⚠️ The red here LOOKS like a regression and is not: it is 形態⑩,
+			// a guard that was green only because its premise held. ⇒ ask the
+			// question the guard is actually for, on the population it is for.
+			//
+			// ⛔ The exemption is DERIVED from the doc's own provenance — never a
+			// hardcoded id list, which would go stale the day someone converts a
+			// community hero to a w3x import (or the reverse) and nothing would
+			// go red.
+			if ab.Provenance != "w3x-import" {
+				require.NotEmptyf(t, ab.Provenance,
+					"roster ability %q declares no provenance — ⛔ it must say where it came from", abilityID)
+				continue
+			}
 			m := heroNumberRe.FindStringSubmatch(ab.Name)
 			require.NotNilf(t, m, "roster ability %q name %q lacks the task #11 xx-0N prefix",
 				abilityID, ab.Name)
@@ -570,7 +603,9 @@ func TestStarterShopIsFinalWeapons(t *testing.T) {
 // TestStarterSetMatchesContentTree's LOOT CLOSURE pins those tables to the
 // whitelist in BOTH directions — a stricter bar than the D-gates were.
 
-// firstOpenRoster is the user's 49 hand-picked champions — the FIRST OPEN
+// firstOpenRoster is the official roster: 49 hand-picked champions plus the
+// 74 community heroes owner ruled official on 2026-09-10 and the 7 LOL heroes
+// owner asked for the same day (「其實還有**七個LOL英雄**也要跟著上架喔」) — the FIRST OPEN
 // ROSTER (對戰可選名單), one canonical id per requested name after dropping the
 // test/placeholder and duplicate-reskin candidates (see starter.go and 附錄A of
 // docs/hero-popularity-ranking.md). Pinned here id-for-id so a re-import or a
@@ -608,16 +643,102 @@ var firstOpenRoster = []string{
 	"godie-ubal", "godie-ucrl", "godie-udea", "godie-udre", "godie-umal",
 	"godie-uvng",
 	"godie-zombiex",
+
+	// ── ⭐ 第一批 37 名社群英雄（GH#1165）────────────────────────────
+	// owner 2026-09-10：「⋯**已經取得審查授權可以直接上架，被認定為預設官方角色**⋯」
+	// ⚠️ 這一份與 starter.go 的 starterChampions 是**同一個事實的兩份抄寫**
+	//   ⇒ ⛔ 不可以只改一邊（`roster:check` 的第①條在守）。
+	"community-review-01-20260907",
+	"community-review-02-20260907",
+	"community-review-03-20260907",
+	"community-review-04-20260907",
+	"community-review-05-20260907",
+	"community-review-06-20260907",
+	"community-review-07-20260907",
+	"community-review-08-20260907",
+	"community-review-09-20260907",
+	"community-review-10-20260907",
+	"community-review-11-20260907",
+	"community-review-12-20260907",
+	"community-review-13-20260907",
+	"community-review-14-20260907",
+	"community-review-15-20260907",
+	"community-review-16-20260907",
+	"community-review-17-20260907",
+	"community-review-18-20260907",
+	"community-review-19-20260907",
+	"community-review-20-20260907",
+	"community-review-21-20260907",
+	"community-review-22-20260907",
+	"community-review-23-20260907",
+	"community-review-24-20260907",
+	"community-review-25-20260907",
+	"community-review-26-20260907",
+	"community-review-27-20260907",
+	"community-review-28-20260907",
+	"community-review-29-20260907",
+	"community-review-30-20260907",
+	"community-review-31-20260907",
+	"community-review-32-20260907",
+	"community-review-33-20260907",
+	"community-review-34-20260907",
+	"community-review-35-20260907",
+	"community-review-36-20260907",
+	"community-review-37-20260907",
+	"b2-aladdin",
+	"b2-albus",
+	"b2-bojji",
+	"b2-boxxo",
+	"b2-elma",
+	"b2-fushi",
+	"b2-goblin",
+	"b2-guts",
+	"b2-haga",
+	"b2-kaede",
+	"b2-kaiji",
+	"b2-keyaru",
+	"b2-kisaragi",
+	"b2-klaus",
+	"b2-kumoko",
+	"b2-luckyman",
+	"b2-makoto",
+	"b2-maomao",
+	"b2-maple",
+	"b2-matthias",
+	"b2-misery",
+	"b2-naofumi",
+	"b2-ned",
+	"b2-noor",
+	"b2-nube",
+	"b2-orphen",
+	"b2-popp",
+	"b2-rem",
+	"b2-rin",
+	"b2-shadow",
+	"b2-shinchan",
+	"b2-sinbad",
+	"b2-takopi",
+	"b2-touka",
+	"b2-uncle",
+	"b2-yogiri",
+	"b2-zenitsu",
+	// ⭐ GH#1158 / GH#1165 —— 七名 LOL 英雄（owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」）。
+	"lol-karthus", "lol-leesin", "lol-lux", "lol-missfortune",
+	"lol-warwick", "lol-xerath", "lol-yasuo",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
-// seeds is EXACTLY the 49 canonical first-open-roster ids — no more, no fewer,
+// seeds is EXACTLY the 130 canonical first-open-roster ids — no more, no fewer,
 // none swapped. This is the guard the task asks for; it needs no content tree,
 // so it runs in any environment.
 func TestFirstOpenRoster(t *testing.T) {
 	testkit.Cover(t, "whitelist-first-open-roster")
 
-	require.Len(t, firstOpenRoster, 49, "the first open roster is 49 champions")
+	// ⭐ 130 = 49 原本手挑的 ＋ 74 名 2026-09-10 owner 裁定為官方的社群英雄（37＋37）
+	//    ＋ 7 名 LOL 英雄（owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」）。
+	// ⚠️ 這個字面值是**刻意**的:它擋的是「有人不小心動了名單」——
+	//   ⇒ 真的要改名單就把它一起改,⛔ 而不是讓它自己跟著 len() 走(那等於沒有閘)。
+	require.Len(t, firstOpenRoster, 130, "the first open roster is 130 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -628,7 +749,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 49 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 130 canonical first-open-roster ids")
 }
 
 // storeDoc is the FLAT-PRICE half of content/config/store.json — the same two
@@ -652,8 +773,12 @@ type storeDoc struct {
 // —— 那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
 // ⛔ 如果哪天 free 也跟著動了，那就**不是**跟著名單走，要回來問 owner。
 const (
-	starterFreeChampions   = 12
-	starterPricedChampions = 37
+	starterFreeChampions = 12
+	// ⭐ GH#1165：+37（第一批社群英雄）—— ⚠️ **免費那 12 位一位都沒動**，
+	//   那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
+	// ⭐ 2026-09-10 GH#1165：第二批 37 名；GH#1158 再 +7（LOL 七名）
+	//   —— ⭐ **免費那 12 位一位都沒動**，那才是這條斷言真正在守的東西。
+	starterPricedChampions = 118
 )
 
 // clientWalletMetaPath is the champ-select module that carries the client's

@@ -1,0 +1,49 @@
+{
+  "modelKey": "ou99.472038-standard-v2",
+  "finalGlbSha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+  "nodeHierarchyAndInverseBindMatricesUnchanged": true,
+  "nativeMotion": [
+    {
+      "name": "Stand",
+      "channels": 333,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Walk Fast",
+      "channels": 333,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Attack 1",
+      "channels": 333,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Spell 2",
+      "channels": 333,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Death",
+      "channels": 333,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    }
+  ],
+  "allOriginalEmbeddedImageBytesRetainedInFinal": true,
+  "originalImageSha256": [
+    "18db3e2a5a9ecfc89f26439349ba37a5538d6057ae8d959146f32185beaa95c7",
+    "4166913db916d503cdcb568fca451b3c111d4fbb3fdad626644dbcf8cae3d289",
+    "91ec60d3d1a79deef826b424ac8812cb83b01ab666a0a3bcf079e5e2850cf058",
+    "d68e03aa64eb4186c377064fa9ef030fca1209453997650c86e50e69aed74475",
+    "4142a5b1dd2b80ab04d10fbaaac30cf6aa64e7092cfaba38ad77c464e63b188f"
+  ],
+  "finalImageSha256": [
+    "18db3e2a5a9ecfc89f26439349ba37a5538d6057ae8d959146f32185beaa95c7",
+    "4166913db916d503cdcb568fca451b3c111d4fbb3fdad626644dbcf8cae3d289",
+    "91ec60d3d1a79deef826b424ac8812cb83b01ab666a0a3bcf079e5e2850cf058",
+    "d68e03aa64eb4186c377064fa9ef030fca1209453997650c86e50e69aed74475",
+    "4142a5b1dd2b80ab04d10fbaaac30cf6aa64e7092cfaba38ad77c464e63b188f"
+  ],
+  "geometryLod": false,
+  "textureLod": false
+}

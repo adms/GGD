@@ -1,0 +1,53 @@
+{
+  "id": "community-review-24-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔電力儲備〕",
+  "provenance": "w3x-import",
+  "description": "技能消耗電力；停止攻擊一段時間後逐步充電，設上限。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔電力儲備〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.lightning.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-24-20260907.passive.webp"
+}

@@ -1,0 +1,67 @@
+{
+  "id": "community-review-29-20260907.r",
+  "name": "〔葬送連射〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。\n【待補機制】目前定點六波；需各方向獨立射線及總傷害上限。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    576.0,
+    576.0,
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.35,
+      "durationSec": 1.75,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 1.767,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-29-20260907.r.webp",
+  "template": {
+    "ref": "tpl-random-barrage",
+    "params": {
+      "count": 6,
+      "intervalSec": 0.35,
+      "impactDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "impactRadius": 150,
+      "scatterRadius": 120,
+      "payout": "perImpact",
+      "castTimeSec": 1.767
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.arcane.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "小"
+}

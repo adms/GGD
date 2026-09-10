@@ -1,0 +1,69 @@
+{
+  "id": "community-review-12-20260907.w",
+  "name": "〔投影・飛劍〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】將有限數量的投影劍射向指定方向。\n【待補機制】目前定點三發落劍；需按方向投影飛劍。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.15,
+      "durationSec": 0.3,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 0.3,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-12-20260907.w.webp",
+  "template": {
+    "ref": "tpl-random-barrage",
+    "params": {
+      "count": 3,
+      "intervalSec": 0.15,
+      "impactDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "impactRadius": 150,
+      "scatterRadius": 120,
+      "payout": "perImpact",
+      "castTimeSec": 0.3
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.nova",
+      "attachTo": "point"
+    }
+  ],
+  "radiusTier": "小"
+}

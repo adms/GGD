@@ -1,0 +1,64 @@
+{
+  "id": "community-review-23-20260907.w",
+  "name": "〔草莓牛奶休息時間〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短暫飲用補給恢復生命，受擊或移動會中斷。\n【待補機制】需喝草莓牛奶動作、移動／受擊中斷。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100,
+        "ratios": [],
+        "perRank": [
+          0,
+          50,
+          100,
+          150
+        ]
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-23-20260907.w.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ]
+}

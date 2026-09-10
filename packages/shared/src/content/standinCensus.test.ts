@@ -113,11 +113,29 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // ALTERNATE_FORM_IDS in standinRoster.test.ts. 兩對都整對留在營運名冊上。
   // ⭐ 2026-08-20（GH#479）：godie-e00u / godie-hblm / godie-u01f 三位隨退場批次
   // 進了 `_legacy`，所以他們離開這份**營運**普查（檔案沒有消失，見檔頭）。
+  // ⭐⭐ 2026-09-10（GH#1165）：37 名社群英雄以「預設官方角色」的身分上架，
+  // 其中 **13 名今天還沒有自己的模型**（`全角色模型盤點.md` 逐名記著「尚未取得」）
+  // ⇒ 他們**照設計**借替身：**2 名在這一格，11 名在 champ.thorne**。
+  // ⛔ 這**不是**缺陷、⛔ 也不是退步 —— 那 13 名的模型取得是另一條線；
+  // ⭐ 而把他們寫進這份普查，正是為了讓「他們拿到自己的模型了沒」**看得見**。
+  // ⭐ 2026-09-10（GH#1165）第二批 37 名：24 名的模型在 `全角色模型盤點.md` 上是
+  // **`pending-approval`** ⇒ ⛔ **不自動採用**（owner 2026-09-09 逐字：「其他相似模型
+  // 只保留候選，不自動採用」）⇒ ⭐ 他們照設計借替身：7 名 champ.sela · 17 名 champ.thorne。
   "champ.sela": [
+    "b2-aladdin",
+    "b2-kaede",
+    "b2-keyaru",
+    "b2-makoto",
+    "b2-matthias",
+    "b2-orphen",
+    "b2-uncle",
+    "community-review-11-20260907",
+    "community-review-30-20260907",
     "godie-e00s",
     "godie-e010",
     "godie-efur",
-    "godie-n00b",
+    // ⭐ 2026-09-10（`4058d8166`）：`godie-n00b` 哆啦A夢**畢業了** ——
+    // 從方塊法師換成 `imported.doraemon-cat`，⇒ 它不再借這顆替身。
     "godie-o030",
     "godie-ogld",
     "godie-orkn",
@@ -125,7 +143,46 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "sela",
   ],
   // blocky-knight.glb
-  "champ.thorne": ["godie-hapm", "godie-ucrl", "godie-udea", "thorne"],
+  // ⭐ 2026-09-10（GH#1165）：11 名社群英雄借這一格（見 champ.sela 上面的說明）。
+  "champ.thorne": [
+    "b2-boxxo",
+    "b2-elma",
+    "b2-fushi",
+    "b2-guts",
+    "b2-haga",
+    "b2-kaiji",
+    "b2-klaus",
+    "b2-luckyman",
+    "b2-maomao",
+    // ⭐ 變身態（梅普露）—— ⛔ 它**不在營運白名單上**（本體變身過去，不是一張可選的卡），
+    //   ⭐ 而這份普查的母體**含變身態** ⇒ 它借的替身也要算。
+    //   ⚠️ 我第一版用白名單去算，於是漏掉它 —— ⭐ 兩個母體不一樣，⛔ 別混用。
+    "b2-maple-alt-9769eb88b85b",
+    "b2-naofumi",
+    "b2-ned",
+    "b2-noor",
+    "b2-nube",
+    "b2-shadow",
+    "b2-shinchan",
+    "b2-sinbad",
+    "b2-touka",
+    "community-review-02-20260907",
+    "community-review-05-20260907",
+    "community-review-07-20260907",
+    "community-review-09-20260907",
+    "community-review-14-20260907",
+    "community-review-15-20260907",
+    "community-review-22-20260907",
+    "community-review-33-20260907",
+    "community-review-34-20260907",
+    "community-review-36-20260907",
+    "community-review-37-20260907",
+    "godie-hapm",
+    // ⭐ 2026-09-10（`107626f90`）：`godie-ucrl` 傑・富力士**畢業了** ——
+    // 同角色的另一張卡早就有模型（`imported.herobiggon`），⇒ 不再借這顆替身。
+    "godie-udea",
+    "thorne",
+  ],
   // blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form swap
   // moved him onto a shared mesh, a downgrade the owner already knows about,
   // and #231's per-champion skin is what makes it survivable.

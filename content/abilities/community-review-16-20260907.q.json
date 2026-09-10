@@ -1,0 +1,79 @@
+{
+  "id": "community-review-16-20260907.q",
+  "name": "〔魔力砲擊〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】由紅寶石之星發射直線魔力彈。\n【待補機制】魔杖彈体待製；目前分段光路。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3.0,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.267,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-16-20260907.q.webp",
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 4,
+      "stepSize": 100,
+      "segmentAoe": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.267
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam"
+    }
+  ]
+}

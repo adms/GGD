@@ -1,0 +1,53 @@
+{
+  "id": "community-review-31-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔糞作獵人的讀招〕",
+  "provenance": "w3x-import",
+  "description": "成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔糞作獵人的讀招〕"
+  },
+  "effects": [],
+  "innateKind": "passive",
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-31-20260907.passive.webp"
+}

@@ -1,0 +1,58 @@
+{
+  "id": "community-review-19-20260907.ex",
+  "schema": "ability@1",
+  "name": "The Eclipse",
+  "provenance": "w3x-import",
+  "description": "更長起手的二十七連擊終結技；具有更高的暴露時間與中斷風險。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "castTimeSec": 2,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.1,
+      "durationSec": 2
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 2,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.physical.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.slash"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-19-20260907.ex.webp",
+  "rangeTier": "極小"
+}

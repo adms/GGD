@@ -1,0 +1,385 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「隊友加油我先繞背！」\n瞬移到合法施法點，準備 4 秒急救窗口；不授予無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "id": "b2-popp.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "隊友加油我先繞背",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+        "params": {
+          "castTimeSec": 0.467
+        },
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.567,
+      "castType": "targeted",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「先幫你預熱！」\n小級火焰打擊並標記 burn 3 秒；火候標記本身不造成持續傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "applyTo": "target",
+          "duration": 3,
+          "kind": "applyStatus",
+          "statusId": "burn"
+        }
+      ],
+      "id": "b2-popp.q",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "先幫你預熱",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+        "params": {
+          "castTimeSec": 0.567,
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "status": {
+            "applyTo": "target",
+            "duration": 3,
+            "statusId": "burn"
+          }
+        },
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.833,
+      "castType": "ground",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「美拉佐瑪烤肉吃到飽！」\n一條中級直線魔法；一次命中結算，烤肉梗不額外偷偷加 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "aim": "target",
+          "amount": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "kind": "damageLine",
+          "length": 9,
+          "width": 1.5
+        }
+      ],
+      "id": "b2-popp.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "美拉佐瑪烤肉吃到飽",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "template": {
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+        "params": {
+          "aim": "target",
+          "castTimeSec": 0.833,
+          "damage": {
+            "damageTier": "中"
+          },
+          "damageType": "magic",
+          "length": 9,
+          "width": 1.5
+        },
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 1.233,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「冷氣帳單換定身！」\n小級冰擊；消耗目標全部 burn 才定身 1.8 秒，沒有火候就只降溫打擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "count": "all",
+          "kind": "consumeStatus",
+          "onConsumed": [
+            {
+              "applyTo": "target",
+              "duration": 1.8,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "shape": "single",
+          "statusId": "burn",
+          "subject": "target"
+        }
+      ],
+      "id": "b2-popp.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "冷氣帳單換定身",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.233,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "小"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            },
+            {
+              "count": "all",
+              "kind": "consumeStatus",
+              "onConsumed": [
+                {
+                  "applyTo": "target",
+                  "duration": 1.8,
+                  "kind": "applyStatus",
+                  "root": true,
+                  "statusId": "root"
+                }
+              ],
+              "shape": "single",
+              "statusId": "burn",
+              "subject": "target"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.ice.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "mage",
+  "attackType": "ranged",
+  "attributes": {
+    "agi": 18,
+    "agiGrowth": 1.67,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 13,
+    "strGrowth": 1.25
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 8.2
+  },
+  "buildPriority": [],
+  "description": "神龍之謎｜撤退也是施法距離管理。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-popp.ex",
+  "growth": {
+    "ad": 2.5489795918367353,
+    "ap": 0,
+    "armor": 0.45735714285714285,
+    "as": 0,
+    "healthRegen": 0.10673469387755102,
+    "manaRegen": 0,
+    "maxHealth": 45.833673469387755,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-popp",
+  "modelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
+  "name": "何布",
+  "origin": "法師",
+  "passiveAbility": "b2-popp.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-popp.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.19cac64b23e771710b951b12b35a4fee74ddcd256de2cb86",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "modelSha256": "f784ca701072c5e7356836b77579c3ae240f954833b18af12c54b7f73ef2d88a",
+      "binarySha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "registeredAt": "2026-09-10T14:45:34.726Z",
+      "source": {
+        "kind": "previous",
+        "character": "何布",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.7eb6f6479c9dde50a9d28924edb2e19f27c896f91b4c44ff",
+      "label": "李小狼",
+      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+      "modelSha256": "0b6e5a2e13e111540ef07543ecfacc8857b7f429c3fcdbb97621368ea981285c",
+      "binarySha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+      "registeredAt": "2026-09-10T14:45:34.734Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "李小狼",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "300heroes:f1660efeba7e0630c361c814",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
+      "label": "何布（獨立副本／李小狼）",
+      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "modelSha256": "ff39f062f6a30e88297b657b97d88250ede46a4e7cab5aa94d3b01762c8169d3",
+      "binarySha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "registeredAt": "2026-09-10T14:45:34.797Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "何布（獨立副本／李小狼）",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "derivative:popp",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

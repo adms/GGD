@@ -1,0 +1,571 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-boxxo.json",
+  "sourceHeroSha256": "6b999deed0c30c16ea2ecec19e9af268df99bdb4673abe46643c7d654a9d79ff",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:9d75450d2ac2e758562f87d94a8a70b85ff83758601364a896afdec4fff4e6d3",
+    "sourceModelKey": "ou99.491448-standard-v2",
+    "label": "逃亡的盗墓女孩（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "逃亡的盗墓女孩",
+      "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-491448-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-boxxo",
+    "name": "阿箱＋拉蜜絲",
+    "description": "轉生成自動販賣機｜拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "tank",
+    "attackType": "melee",
+    "archetype": "tank",
+    "origin": "硬輔",
+    "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.491448",
+        "modelSha256": "f620019299ac8f62484949f295cf13cf04f7dc595c8af1302c26d74059889dc8",
+        "binarySha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+        "registeredAt": "2026-09-10T14:37:56.648Z",
+        "source": {
+          "kind": "previous",
+          "character": "阿箱＋拉蜜絲",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.491448.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.bea123226b4e1eec78438f98a1a30a69e1518e2b7b7154de",
+        "label": "逃亡的盗墓女孩（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.491448-standard-v2",
+        "modelSha256": "5a10b9ca9565f669125bbd4ab3a902a1128556b5bfcb5537ecd70354e4df6991",
+        "binarySha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+        "registeredAt": "2026-09-10T14:37:56.656Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "逃亡的盗墓女孩",
+          "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-491448-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 6,
+      "range": 1.6
+    },
+    "growth": {
+      "ad": 2.056,
+      "ap": 0,
+      "armor": 0.9537142857142857,
+      "as": 0.000029226239784265093,
+      "healthRegen": 0.023048979591836743,
+      "manaRegen": 0,
+      "maxHealth": 38.2761224489796,
+      "maxMana": 0.8520408163265306,
+      "mr": 3.299795918367347
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 25,
+      "agi": 12,
+      "int": 23,
+      "strGrowth": 2.36,
+      "agiGrowth": 1.18,
+      "intGrowth": 2.17,
+      "primary": "STR",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-boxxo.q",
+        "name": "歡迎光臨飲料附憑證",
+        "provenance": "w3x-import",
+        "description": "「歡迎光臨飲料附憑證！」\n指定隊友喝飲料回復 120；售出後自身獲得 moon-combo 營業憑證 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "heal",
+            "amount": {
+              "flat": 120,
+              "perRank": [
+                0,
+                60,
+                120,
+                180
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "moon-combo",
+            "duration": 4,
+            "applyTo": "self"
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.067,
+        "template": {
+          "cards": [
+            {
+              "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+              "params": {
+                "amount": {
+                  "flat": 120,
+                  "perRank": [
+                    0,
+                    60,
+                    120,
+                    180
+                  ]
+                },
+                "castTimeSec": 0.1,
+                "target": "ally"
+              },
+              "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+            },
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "castTimeSec": 0.1,
+                "castType": "targeted",
+                "effects": [
+                  {
+                    "applyTo": "self",
+                    "duration": 4,
+                    "kind": "applyStatus",
+                    "statusId": "moon-combo"
+                  }
+                ],
+                "radius": 3,
+                "side": "allies"
+              },
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "W": {
+        "id": "b2-boxxo.w",
+        "name": "憑證兌換防撞贈品",
+        "provenance": "w3x-import",
+        "description": "「憑證兌換防撞贈品！」\n消耗自身全部營業憑證，給指定隊友 240 護盾 3 秒；沒有購買紀錄就沒有贈品。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "moon-combo",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 240,
+                  "perRank": [
+                    0,
+                    120,
+                    240,
+                    360
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "targeted",
+            "effects": [
+              {
+                "count": "all",
+                "kind": "consumeStatus",
+                "onConsumed": [
+                  {
+                    "absorbs": "all",
+                    "amount": {
+                      "flat": 240,
+                      "perRank": [
+                        0,
+                        120,
+                        240,
+                        360
+                      ]
+                    },
+                    "duration": 3,
+                    "kind": "shield",
+                    "onExisting": "keepLarger",
+                    "stackKey": "b2-protection"
+                  }
+                ],
+                "shape": "single",
+                "statusId": "moon-combo",
+                "subject": "self"
+              }
+            ],
+            "radius": 3,
+            "side": "allies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-boxxo.e",
+        "name": "拉蜜絲搬店不加價",
+        "provenance": "w3x-import",
+        "description": "「拉蜜絲搬店不加價！」\n拉蜜絲搬運到施法點，0.35 秒後落地；不扔敵人，也不讓阿箱自行走下機台。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 2.75,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "leap",
+            "applyTo": "self",
+            "mode": "toPoint",
+            "apexHeight": 0,
+            "durationSec": 0.35,
+            "landRadius": 2.75
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.667,
+        "template": {
+          "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+          "params": {
+            "arriveRadius": 150,
+            "castTimeSec": 0.667,
+            "destination": "castPoint",
+            "travelSec": 0.35
+          },
+          "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761"
+        }
+      },
+      "R": {
+        "id": "b2-boxxo.r",
+        "name": "搬家限定快閃補給站",
+        "provenance": "w3x-import",
+        "description": "「搬家限定快閃補給站！」\n移動後 4 秒內才開快閃店：三次每秒重選自身半徑{{radius}} 內最多 4 位友軍，各回復 80，離開就不再補；不是對友軍造成傷害的 periodic-field。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "self",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "E",
+              "withinSec": 4
+            },
+            "shape": "circle",
+            "radius": 3,
+            "radiusTier": "極小",
+            "side": "allies",
+            "maxTargets": 4,
+            "delaySec": 0.5,
+            "count": 3,
+            "intervalSec": 1,
+            "effects": [
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 80,
+                  "perRank": [
+                    0,
+                    60,
+                    120
+                  ]
+                },
+                "applyTo": "target"
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "caster",
+            "stopOnCasterDeath": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.833,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.833,
+            "castType": "self",
+            "effects": [
+              {
+                "anchor": "caster",
+                "condition": {
+                  "kind": "recentCast",
+                  "slot": "E",
+                  "subject": "self",
+                  "withinSec": 4
+                },
+                "count": 3,
+                "delaySec": 0.5,
+                "effects": [
+                  {
+                    "amount": {
+                      "flat": 80,
+                      "perRank": [
+                        0,
+                        60,
+                        120
+                      ]
+                    },
+                    "applyTo": "target",
+                    "kind": "heal"
+                  }
+                ],
+                "intervalSec": 1,
+                "kind": "delayed",
+                "maxTargets": 4,
+                "radius": 3,
+                "shape": "circle",
+                "side": "allies",
+                "stopOnCasterDeath": true,
+                "targetMode": "reresolve"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-boxxo.ex",
+    "passiveAbility": "b2-boxxo.passive",
+    "icon": "assets/icons/champions/b2-boxxo.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack",
+          "cast": "Spell",
+          "hurt": "Stand Ready",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.491448",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.491448",
+        "modelSha256": "f620019299ac8f62484949f295cf13cf04f7dc595c8af1302c26d74059889dc8",
+        "binarySha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+        "registeredAt": "2026-09-10T14:37:56.648Z",
+        "source": {
+          "kind": "previous",
+          "character": "阿箱＋拉蜜絲",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.491448.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 1354252,
+      "sha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51"
+    },
+    {
+      "document": {
+        "id": "version.body.bea123226b4e1eec78438f98a1a30a69e1518e2b7b7154de",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack",
+          "cast": "Spell",
+          "hurt": "Stand Ready",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.491448-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.bea123226b4e1eec78438f98a1a30a69e1518e2b7b7154de",
+        "label": "逃亡的盗墓女孩（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.491448-standard-v2",
+        "modelSha256": "5a10b9ca9565f669125bbd4ab3a902a1128556b5bfcb5537ecd70354e4df6991",
+        "binarySha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+        "registeredAt": "2026-09-10T14:37:56.656Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "逃亡的盗墓女孩",
+          "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-491448-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 1226524,
+      "sha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

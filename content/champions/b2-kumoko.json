@@ -1,0 +1,373 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.467,
+      "castType": "ground",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「房東來了躲牆角！」\n瞬移至指定合法地點；以真正位置改變移動自己的環身攻擊中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "id": "b2-kumoko.e",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "房東來了躲牆角",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+        "params": {
+          "castTimeSec": 0.467
+        },
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.567,
+      "castType": "targeted",
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「玄關地墊有點黏！」\n指定敵人被 root 定身 3 秒；這是主動蛛網控制，不是隱形陷阱物件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "duration": 3,
+          "kind": "applyStatus",
+          "root": true,
+          "statusId": "root"
+        }
+      ],
+      "id": "b2-kumoko.q",
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxRank": 4,
+      "name": "玄關地墊有點黏",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
+        "params": {
+          "castTimeSec": 0.567,
+          "status": {
+            "duration": 3,
+            "root": true,
+            "statusId": "root"
+          }
+        },
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.667,
+      "castType": "self",
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "cooldownTier": "大",
+      "provenance": "w3x-import",
+      "description": "「整個客廳都是我的網！」\n周身建立 3 秒傷害場，每 0.5 秒重新找自己附近敵人；跟隨施法者，不是固定地點陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "anchor": "caster",
+          "count": 6,
+          "delaySec": 0.5,
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "中",
+                "mult": 0.16666666666666666
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "intervalSec": 0.5,
+          "kind": "delayed",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "shape": "circle",
+          "side": "enemies",
+          "targetMode": "reresolve"
+        }
+      ],
+      "id": "b2-kumoko.r",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "整個客廳都是我的網",
+      "range": 0.0,
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189",
+        "params": {
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "castTimeSec": 0.667,
+          "damageTier": "中",
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 0.5,
+          "radius": 4.5,
+          "radiusTier": "小"
+        },
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 1.7,
+      "castType": "targeted",
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "cooldownTier": "小",
+      "provenance": "w3x-import",
+      "description": "「毒牙代收房租！」\n對指定敵人施加每秒一跳、持續 3 秒的魔法 DOT；若目標被 root，追加一筆獨立 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amountPerTick": {
+            "damageTier": "極小"
+          },
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "kind": "dot",
+          "onCasterDeath": "stop",
+          "stacking": "refresh"
+        },
+        {
+          "amountPerTick": {
+            "damageTier": "極小"
+          },
+          "condition": {
+            "kind": "status",
+            "statusId": "root",
+            "subject": "target"
+          },
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "kind": "dot",
+          "onCasterDeath": "stop",
+          "stacking": "independent"
+        }
+      ],
+      "id": "b2-kumoko.w",
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "毒牙代收房租",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 1.7,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amountPerTick": {
+                "damageTier": "極小"
+              },
+              "damageType": "magic",
+              "durationSec": 3,
+              "intervalSec": 1,
+              "kind": "dot",
+              "onCasterDeath": "stop",
+              "stacking": "refresh"
+            },
+            {
+              "amountPerTick": {
+                "damageTier": "極小"
+              },
+              "condition": {
+                "kind": "status",
+                "statusId": "root",
+                "subject": "target"
+              },
+              "damageType": "magic",
+              "durationSec": 3,
+              "intervalSec": 1,
+              "kind": "dot",
+              "onCasterDeath": "stop",
+              "stacking": "independent"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 25,
+    "agiGrowth": 2.36,
+    "int": 23,
+    "intGrowth": 2.17,
+    "primary": "AGI",
+    "source": "authored",
+    "str": 12,
+    "strGrowth": 1.18
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 10,
+    "range": 1.4
+  },
+  "buildPriority": [],
+  "description": "轉生成蜘蛛又怎樣｜宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-kumoko.ex",
+  "growth": {
+    "ad": 1.29534693877551,
+    "ap": 0,
+    "armor": 0.06742857142857146,
+    "as": 0,
+    "healthRegen": 0.07555510204081634,
+    "manaRegen": 0,
+    "maxHealth": 6.100816326530613,
+    "maxMana": 0.8520408163265306,
+    "mr": 1.3198979591836735
+  },
+  "msGrowthTier": "極小",
+  "id": "b2-kumoko",
+  "modelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
+  "name": "蜘蛛子",
+  "origin": "法刺",
+  "passiveAbility": "b2-kumoko.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "icon": "assets/icons/champions/b2-kumoko.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a2ef790f50f4896b622d64028d9e3f8c73e240e0a90d7142",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+      "modelSha256": "9dacd60ae10bd942b5e38daa8d6127b24c0ae0aa7d567c1524f225f629853f7a",
+      "binarySha256": "f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b",
+      "registeredAt": "2026-09-10T14:45:40.863Z",
+      "source": {
+        "kind": "previous",
+        "character": "蜘蛛子",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
+      "label": "蜘蛛子（300英雄寵物版）",
+      "sourceModelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+      "modelSha256": "fbcb47e6affe21434a6b4a70fc2113cff2a1ec69b0a93ee71d24634698367e49",
+      "binarySha256": "f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b",
+      "registeredAt": "2026-09-10T14:45:40.870Z",
+      "source": {
+        "kind": "exact",
+        "character": "蜘蛛子（300英雄寵物版）",
+        "work": "轉生成蜘蛛又怎樣！",
+        "library": "300heroes",
+        "reference": "300heroes:4157bcefff6690cc3cf84b76",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

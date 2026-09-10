@@ -1,0 +1,70 @@
+{
+  "id": "community-review-23-20260907.r",
+  "name": "〔白夜叉〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。\n【目標設計】限時強化近戰動作與追擊能力，不提供永久變形。\n【待補機制】短期 AD＋移速對應基础强化；白夜叉動作待製。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "duration": 4
+    }
+  ],
+  "castTimeSec": 0.667,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/community-review-23-20260907.r.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 4,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.667
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ]
+}

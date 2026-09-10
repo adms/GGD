@@ -1,0 +1,73 @@
+{
+  "id": "community-review-17-20260907.e",
+  "name": "高階傳送",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】傳送到指定落點，抵達後小範圍極小級傷害。\n【目標設計】移動到合法落點，保留可辨識的起點與終點演出。\n【待補機制】原設計只有傳送，模板帶抵達傷害，需審查這項改編。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 2.75,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.15,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 1.033,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-17-20260907.e.webp",
+  "template": {
+    "ref": "tpl-teleport",
+    "params": {
+      "destination": "castPoint",
+      "castTimeSec": 1.033,
+      "travelSec": 0.15,
+      "arriveRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic"
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.void.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.pulse",
+      "attachTo": "point"
+    }
+  ]
+}

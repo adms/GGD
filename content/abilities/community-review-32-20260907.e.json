@@ -1,0 +1,67 @@
+{
+  "id": "community-review-32-20260907.e",
+  "name": "闇ぱんち",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-32-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。「闇人格向敵人反擊」為 GGD 改編，不改寫原作招式使用者。\n【待補機制】護盾不代表闇人格反擊；需第一個近身受擊成功事件及一次出拳。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": [],
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-32-20260907.e.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-32-20260907.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.067
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.void.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.pulse",
+      "attachTo": "caster"
+    }
+  ]
+}

@@ -1,7 +1,2671 @@
 {
   "collection": "abilities",
-  "hash": "35a6502b6cc8",
+  "hash": "c7062c2234b7",
   "entries": [
+    {
+      "id": "b2-aladdin.e",
+      "path": "abilities/b2-aladdin.e.json",
+      "hash": "0e41569b70df",
+      "size": 1939
+    },
+    {
+      "id": "b2-aladdin.ex",
+      "path": "abilities/b2-aladdin.ex.json",
+      "hash": "2601243c683e",
+      "size": 2290
+    },
+    {
+      "id": "b2-aladdin.passive",
+      "path": "abilities/b2-aladdin.passive.json",
+      "hash": "b54e05f4ed22",
+      "size": 1592
+    },
+    {
+      "id": "b2-aladdin.q",
+      "path": "abilities/b2-aladdin.q.json",
+      "hash": "6d9adb61cff9",
+      "size": 2615
+    },
+    {
+      "id": "b2-aladdin.r",
+      "path": "abilities/b2-aladdin.r.json",
+      "hash": "08659c553243",
+      "size": 1595
+    },
+    {
+      "id": "b2-aladdin.w",
+      "path": "abilities/b2-aladdin.w.json",
+      "hash": "a48f9bd5b1fa",
+      "size": 2396
+    },
+    {
+      "id": "b2-albus.e",
+      "path": "abilities/b2-albus.e.json",
+      "hash": "38fbf62c4386",
+      "size": 1230
+    },
+    {
+      "id": "b2-albus.ex",
+      "path": "abilities/b2-albus.ex.json",
+      "hash": "33225fdd749a",
+      "size": 2129
+    },
+    {
+      "id": "b2-albus.passive",
+      "path": "abilities/b2-albus.passive.json",
+      "hash": "f83bdd2e3408",
+      "size": 1654
+    },
+    {
+      "id": "b2-albus.q",
+      "path": "abilities/b2-albus.q.json",
+      "hash": "7a64c662c304",
+      "size": 1388
+    },
+    {
+      "id": "b2-albus.r",
+      "path": "abilities/b2-albus.r.json",
+      "hash": "401d3c409d24",
+      "size": 2639
+    },
+    {
+      "id": "b2-albus.w",
+      "path": "abilities/b2-albus.w.json",
+      "hash": "2a991cb8c819",
+      "size": 1675
+    },
+    {
+      "id": "b2-bojji.e",
+      "path": "abilities/b2-bojji.e.json",
+      "hash": "36205805aa3f",
+      "size": 1272
+    },
+    {
+      "id": "b2-bojji.ex",
+      "path": "abilities/b2-bojji.ex.json",
+      "hash": "ce02d9f85fc0",
+      "size": 1691
+    },
+    {
+      "id": "b2-bojji.passive",
+      "path": "abilities/b2-bojji.passive.json",
+      "hash": "4c15c8e91e94",
+      "size": 1660
+    },
+    {
+      "id": "b2-bojji.q",
+      "path": "abilities/b2-bojji.q.json",
+      "hash": "f85ae573603e",
+      "size": 1657
+    },
+    {
+      "id": "b2-bojji.r",
+      "path": "abilities/b2-bojji.r.json",
+      "hash": "c8378515f27e",
+      "size": 2383
+    },
+    {
+      "id": "b2-bojji.w",
+      "path": "abilities/b2-bojji.w.json",
+      "hash": "a6859177e5f9",
+      "size": 1689
+    },
+    {
+      "id": "b2-boxxo.e",
+      "path": "abilities/b2-boxxo.e.json",
+      "hash": "05340dbb0f46",
+      "size": 1509
+    },
+    {
+      "id": "b2-boxxo.ex",
+      "path": "abilities/b2-boxxo.ex.json",
+      "hash": "1433fb8b2af1",
+      "size": 2023
+    },
+    {
+      "id": "b2-boxxo.passive",
+      "path": "abilities/b2-boxxo.passive.json",
+      "hash": "4bcb2cf200f9",
+      "size": 1959
+    },
+    {
+      "id": "b2-boxxo.q",
+      "path": "abilities/b2-boxxo.q.json",
+      "hash": "4acffaac3f77",
+      "size": 2367
+    },
+    {
+      "id": "b2-boxxo.r",
+      "path": "abilities/b2-boxxo.r.json",
+      "hash": "6aae7e5fd4da",
+      "size": 2911
+    },
+    {
+      "id": "b2-boxxo.w",
+      "path": "abilities/b2-boxxo.w.json",
+      "hash": "5fec4784efce",
+      "size": 2517
+    },
+    {
+      "id": "b2-elma.e",
+      "path": "abilities/b2-elma.e.json",
+      "hash": "0258f84c15b0",
+      "size": 1475
+    },
+    {
+      "id": "b2-elma.ex",
+      "path": "abilities/b2-elma.ex.json",
+      "hash": "c7e43e5d3bbf",
+      "size": 1197
+    },
+    {
+      "id": "b2-elma.passive",
+      "path": "abilities/b2-elma.passive.json",
+      "hash": "8e1c34b22ede",
+      "size": 1676
+    },
+    {
+      "id": "b2-elma.q",
+      "path": "abilities/b2-elma.q.json",
+      "hash": "fef1c2fa3e3c",
+      "size": 2265
+    },
+    {
+      "id": "b2-elma.r",
+      "path": "abilities/b2-elma.r.json",
+      "hash": "df60ad8c1ff3",
+      "size": 1580
+    },
+    {
+      "id": "b2-elma.w",
+      "path": "abilities/b2-elma.w.json",
+      "hash": "d1f9bc4e0fef",
+      "size": 2525
+    },
+    {
+      "id": "b2-fushi.e",
+      "path": "abilities/b2-fushi.e.json",
+      "hash": "4af0d78af2f2",
+      "size": 2683
+    },
+    {
+      "id": "b2-fushi.ex",
+      "path": "abilities/b2-fushi.ex.json",
+      "hash": "da5d7048302d",
+      "size": 1185
+    },
+    {
+      "id": "b2-fushi.passive",
+      "path": "abilities/b2-fushi.passive.json",
+      "hash": "663abb7455b7",
+      "size": 1733
+    },
+    {
+      "id": "b2-fushi.q",
+      "path": "abilities/b2-fushi.q.json",
+      "hash": "38c5470f1364",
+      "size": 2272
+    },
+    {
+      "id": "b2-fushi.r",
+      "path": "abilities/b2-fushi.r.json",
+      "hash": "d5702fa0e0cd",
+      "size": 1647
+    },
+    {
+      "id": "b2-fushi.w",
+      "path": "abilities/b2-fushi.w.json",
+      "hash": "48a9e7aae32e",
+      "size": 2256
+    },
+    {
+      "id": "b2-goblin.e",
+      "path": "abilities/b2-goblin.e.json",
+      "hash": "d228628630eb",
+      "size": 1651
+    },
+    {
+      "id": "b2-goblin.ex",
+      "path": "abilities/b2-goblin.ex.json",
+      "hash": "a629e8a6df15",
+      "size": 1664
+    },
+    {
+      "id": "b2-goblin.passive",
+      "path": "abilities/b2-goblin.passive.json",
+      "hash": "38c8d10bf0b3",
+      "size": 1890
+    },
+    {
+      "id": "b2-goblin.q",
+      "path": "abilities/b2-goblin.q.json",
+      "hash": "7e8d828f6d22",
+      "size": 2536
+    },
+    {
+      "id": "b2-goblin.r",
+      "path": "abilities/b2-goblin.r.json",
+      "hash": "0f09a3d3d2fd",
+      "size": 2270
+    },
+    {
+      "id": "b2-goblin.w",
+      "path": "abilities/b2-goblin.w.json",
+      "hash": "daade537164e",
+      "size": 1627
+    },
+    {
+      "id": "b2-guts.e",
+      "path": "abilities/b2-guts.e.json",
+      "hash": "9a37689bea61",
+      "size": 2109
+    },
+    {
+      "id": "b2-guts.ex",
+      "path": "abilities/b2-guts.ex.json",
+      "hash": "0387509d1a38",
+      "size": 1675
+    },
+    {
+      "id": "b2-guts.passive",
+      "path": "abilities/b2-guts.passive.json",
+      "hash": "63480e365ca8",
+      "size": 2197
+    },
+    {
+      "id": "b2-guts.q",
+      "path": "abilities/b2-guts.q.json",
+      "hash": "35ee065de1b5",
+      "size": 1566
+    },
+    {
+      "id": "b2-guts.r",
+      "path": "abilities/b2-guts.r.json",
+      "hash": "6fa37acfdab9",
+      "size": 1960
+    },
+    {
+      "id": "b2-guts.w",
+      "path": "abilities/b2-guts.w.json",
+      "hash": "d36635615795",
+      "size": 2067
+    },
+    {
+      "id": "b2-haga.e",
+      "path": "abilities/b2-haga.e.json",
+      "hash": "7ef9d8657de4",
+      "size": 1674
+    },
+    {
+      "id": "b2-haga.ex",
+      "path": "abilities/b2-haga.ex.json",
+      "hash": "f0c84fa71de5",
+      "size": 2218
+    },
+    {
+      "id": "b2-haga.passive",
+      "path": "abilities/b2-haga.passive.json",
+      "hash": "56aa0edb9060",
+      "size": 1725
+    },
+    {
+      "id": "b2-haga.q",
+      "path": "abilities/b2-haga.q.json",
+      "hash": "8274eccff668",
+      "size": 1693
+    },
+    {
+      "id": "b2-haga.r",
+      "path": "abilities/b2-haga.r.json",
+      "hash": "0dff2bb97286",
+      "size": 2435
+    },
+    {
+      "id": "b2-haga.w",
+      "path": "abilities/b2-haga.w.json",
+      "hash": "932c82f15891",
+      "size": 2053
+    },
+    {
+      "id": "b2-kaede.e",
+      "path": "abilities/b2-kaede.e.json",
+      "hash": "7929c50593b9",
+      "size": 1843
+    },
+    {
+      "id": "b2-kaede.ex",
+      "path": "abilities/b2-kaede.ex.json",
+      "hash": "7f9a7b1f8edc",
+      "size": 1950
+    },
+    {
+      "id": "b2-kaede.passive",
+      "path": "abilities/b2-kaede.passive.json",
+      "hash": "7d55ddc24b6e",
+      "size": 2076
+    },
+    {
+      "id": "b2-kaede.q",
+      "path": "abilities/b2-kaede.q.json",
+      "hash": "584d32641dd7",
+      "size": 1687
+    },
+    {
+      "id": "b2-kaede.r",
+      "path": "abilities/b2-kaede.r.json",
+      "hash": "36eddca07a2b",
+      "size": 1958
+    },
+    {
+      "id": "b2-kaede.w",
+      "path": "abilities/b2-kaede.w.json",
+      "hash": "c682db2c9537",
+      "size": 1547
+    },
+    {
+      "id": "b2-kaiji.e",
+      "path": "abilities/b2-kaiji.e.json",
+      "hash": "e2eec17004c6",
+      "size": 2496
+    },
+    {
+      "id": "b2-kaiji.ex",
+      "path": "abilities/b2-kaiji.ex.json",
+      "hash": "2e958af30b59",
+      "size": 1281
+    },
+    {
+      "id": "b2-kaiji.passive",
+      "path": "abilities/b2-kaiji.passive.json",
+      "hash": "8fa629fdbb56",
+      "size": 1567
+    },
+    {
+      "id": "b2-kaiji.q",
+      "path": "abilities/b2-kaiji.q.json",
+      "hash": "05cc47b40482",
+      "size": 1845
+    },
+    {
+      "id": "b2-kaiji.r",
+      "path": "abilities/b2-kaiji.r.json",
+      "hash": "5dc31e4127da",
+      "size": 3021
+    },
+    {
+      "id": "b2-kaiji.w",
+      "path": "abilities/b2-kaiji.w.json",
+      "hash": "24868030edd6",
+      "size": 1927
+    },
+    {
+      "id": "b2-keyaru.e",
+      "path": "abilities/b2-keyaru.e.json",
+      "hash": "6b0a0c33a2a0",
+      "size": 1458
+    },
+    {
+      "id": "b2-keyaru.ex",
+      "path": "abilities/b2-keyaru.ex.json",
+      "hash": "251428634810",
+      "size": 1907
+    },
+    {
+      "id": "b2-keyaru.passive",
+      "path": "abilities/b2-keyaru.passive.json",
+      "hash": "e34c5d847ff2",
+      "size": 1706
+    },
+    {
+      "id": "b2-keyaru.q",
+      "path": "abilities/b2-keyaru.q.json",
+      "hash": "cb9dac982a18",
+      "size": 1480
+    },
+    {
+      "id": "b2-keyaru.r",
+      "path": "abilities/b2-keyaru.r.json",
+      "hash": "72ffb85e1732",
+      "size": 2587
+    },
+    {
+      "id": "b2-keyaru.w",
+      "path": "abilities/b2-keyaru.w.json",
+      "hash": "116ed7b44995",
+      "size": 2517
+    },
+    {
+      "id": "b2-kisaragi.e",
+      "path": "abilities/b2-kisaragi.e.json",
+      "hash": "4406aa089c8e",
+      "size": 2777
+    },
+    {
+      "id": "b2-kisaragi.ex",
+      "path": "abilities/b2-kisaragi.ex.json",
+      "hash": "b8d2fd59e9ba",
+      "size": 1918
+    },
+    {
+      "id": "b2-kisaragi.passive",
+      "path": "abilities/b2-kisaragi.passive.json",
+      "hash": "f383dfb3d55e",
+      "size": 1940
+    },
+    {
+      "id": "b2-kisaragi.q",
+      "path": "abilities/b2-kisaragi.q.json",
+      "hash": "14725007b0e6",
+      "size": 1816
+    },
+    {
+      "id": "b2-kisaragi.r",
+      "path": "abilities/b2-kisaragi.r.json",
+      "hash": "72731b36a332",
+      "size": 9128
+    },
+    {
+      "id": "b2-kisaragi.w",
+      "path": "abilities/b2-kisaragi.w.json",
+      "hash": "f25f9a126a56",
+      "size": 2275
+    },
+    {
+      "id": "b2-klaus.e",
+      "path": "abilities/b2-klaus.e.json",
+      "hash": "a7453a6956db",
+      "size": 1260
+    },
+    {
+      "id": "b2-klaus.ex",
+      "path": "abilities/b2-klaus.ex.json",
+      "hash": "c049d589718d",
+      "size": 2177
+    },
+    {
+      "id": "b2-klaus.passive",
+      "path": "abilities/b2-klaus.passive.json",
+      "hash": "ce5d03fe6d19",
+      "size": 1595
+    },
+    {
+      "id": "b2-klaus.q",
+      "path": "abilities/b2-klaus.q.json",
+      "hash": "daac898aac63",
+      "size": 1642
+    },
+    {
+      "id": "b2-klaus.r",
+      "path": "abilities/b2-klaus.r.json",
+      "hash": "e30376657f11",
+      "size": 1887
+    },
+    {
+      "id": "b2-klaus.w",
+      "path": "abilities/b2-klaus.w.json",
+      "hash": "35a40fa56d65",
+      "size": 2455
+    },
+    {
+      "id": "b2-kumoko.e",
+      "path": "abilities/b2-kumoko.e.json",
+      "hash": "4a0b2d1433ba",
+      "size": 1259
+    },
+    {
+      "id": "b2-kumoko.ex",
+      "path": "abilities/b2-kumoko.ex.json",
+      "hash": "b1d43119e2a4",
+      "size": 1915
+    },
+    {
+      "id": "b2-kumoko.passive",
+      "path": "abilities/b2-kumoko.passive.json",
+      "hash": "ae0d260d5d85",
+      "size": 1896
+    },
+    {
+      "id": "b2-kumoko.q",
+      "path": "abilities/b2-kumoko.q.json",
+      "hash": "850758eb7616",
+      "size": 1399
+    },
+    {
+      "id": "b2-kumoko.r",
+      "path": "abilities/b2-kumoko.r.json",
+      "hash": "ee5c3bb455b0",
+      "size": 1895
+    },
+    {
+      "id": "b2-kumoko.w",
+      "path": "abilities/b2-kumoko.w.json",
+      "hash": "739b16f98594",
+      "size": 2656
+    },
+    {
+      "id": "b2-luckyman.e",
+      "path": "abilities/b2-luckyman.e.json",
+      "hash": "e88ec9880849",
+      "size": 1622
+    },
+    {
+      "id": "b2-luckyman.ex",
+      "path": "abilities/b2-luckyman.ex.json",
+      "hash": "2e3a21ed2329",
+      "size": 1206
+    },
+    {
+      "id": "b2-luckyman.passive",
+      "path": "abilities/b2-luckyman.passive.json",
+      "hash": "fea64819137a",
+      "size": 1576
+    },
+    {
+      "id": "b2-luckyman.q",
+      "path": "abilities/b2-luckyman.q.json",
+      "hash": "b43549b45acf",
+      "size": 1651
+    },
+    {
+      "id": "b2-luckyman.r",
+      "path": "abilities/b2-luckyman.r.json",
+      "hash": "8ef283f46c0d",
+      "size": 3335
+    },
+    {
+      "id": "b2-luckyman.w",
+      "path": "abilities/b2-luckyman.w.json",
+      "hash": "3d187e980d60",
+      "size": 1406
+    },
+    {
+      "id": "b2-makoto.e",
+      "path": "abilities/b2-makoto.e.json",
+      "hash": "6efc84c0c294",
+      "size": 2457
+    },
+    {
+      "id": "b2-makoto.ex",
+      "path": "abilities/b2-makoto.ex.json",
+      "hash": "14c3a105ce31",
+      "size": 1267
+    },
+    {
+      "id": "b2-makoto.passive",
+      "path": "abilities/b2-makoto.passive.json",
+      "hash": "88f18ed4e558",
+      "size": 1677
+    },
+    {
+      "id": "b2-makoto.q",
+      "path": "abilities/b2-makoto.q.json",
+      "hash": "7f9ac7dae385",
+      "size": 1690
+    },
+    {
+      "id": "b2-makoto.r",
+      "path": "abilities/b2-makoto.r.json",
+      "hash": "c1f6dcc8de41",
+      "size": 2381
+    },
+    {
+      "id": "b2-makoto.w",
+      "path": "abilities/b2-makoto.w.json",
+      "hash": "d589d2718543",
+      "size": 1920
+    },
+    {
+      "id": "b2-maomao.e",
+      "path": "abilities/b2-maomao.e.json",
+      "hash": "4b9efa1ccfd1",
+      "size": 2217
+    },
+    {
+      "id": "b2-maomao.ex",
+      "path": "abilities/b2-maomao.ex.json",
+      "hash": "2bcece677725",
+      "size": 1757
+    },
+    {
+      "id": "b2-maomao.passive",
+      "path": "abilities/b2-maomao.passive.json",
+      "hash": "ce32e5261548",
+      "size": 1619
+    },
+    {
+      "id": "b2-maomao.q",
+      "path": "abilities/b2-maomao.q.json",
+      "hash": "855b099715bc",
+      "size": 2286
+    },
+    {
+      "id": "b2-maomao.r",
+      "path": "abilities/b2-maomao.r.json",
+      "hash": "82b3c497054f",
+      "size": 2848
+    },
+    {
+      "id": "b2-maomao.w",
+      "path": "abilities/b2-maomao.w.json",
+      "hash": "73f31d0db3c3",
+      "size": 2607
+    },
+    {
+      "id": "b2-maple.e",
+      "path": "abilities/b2-maple.e.json",
+      "hash": "1d98323d2ff5",
+      "size": 1682
+    },
+    {
+      "id": "b2-maple.ex",
+      "path": "abilities/b2-maple.ex.json",
+      "hash": "e1efe4b22b11",
+      "size": 1950
+    },
+    {
+      "id": "b2-maple.passive",
+      "path": "abilities/b2-maple.passive.json",
+      "hash": "bdb05a36e73f",
+      "size": 1536
+    },
+    {
+      "id": "b2-maple.q",
+      "path": "abilities/b2-maple.q.json",
+      "hash": "48eadcb1d8ae",
+      "size": 1951
+    },
+    {
+      "id": "b2-maple.r",
+      "path": "abilities/b2-maple.r.json",
+      "hash": "d6a2f6f41f56",
+      "size": 2893
+    },
+    {
+      "id": "b2-maple.w",
+      "path": "abilities/b2-maple.w.json",
+      "hash": "677a46d65b54",
+      "size": 2231
+    },
+    {
+      "id": "b2-matthias.e",
+      "path": "abilities/b2-matthias.e.json",
+      "hash": "f4c37814e634",
+      "size": 1895
+    },
+    {
+      "id": "b2-matthias.ex",
+      "path": "abilities/b2-matthias.ex.json",
+      "hash": "8ab1407bd148",
+      "size": 2002
+    },
+    {
+      "id": "b2-matthias.passive",
+      "path": "abilities/b2-matthias.passive.json",
+      "hash": "8d90b961ee24",
+      "size": 1691
+    },
+    {
+      "id": "b2-matthias.q",
+      "path": "abilities/b2-matthias.q.json",
+      "hash": "b2b3edc2ce6e",
+      "size": 1955
+    },
+    {
+      "id": "b2-matthias.r",
+      "path": "abilities/b2-matthias.r.json",
+      "hash": "c05f04527486",
+      "size": 1647
+    },
+    {
+      "id": "b2-matthias.w",
+      "path": "abilities/b2-matthias.w.json",
+      "hash": "66ba58999ec8",
+      "size": 1436
+    },
+    {
+      "id": "b2-misery.e",
+      "path": "abilities/b2-misery.e.json",
+      "hash": "33d34d6fb984",
+      "size": 1247
+    },
+    {
+      "id": "b2-misery.ex",
+      "path": "abilities/b2-misery.ex.json",
+      "hash": "cd121a53a9fd",
+      "size": 2333
+    },
+    {
+      "id": "b2-misery.passive",
+      "path": "abilities/b2-misery.passive.json",
+      "hash": "5a464e117f15",
+      "size": 1603
+    },
+    {
+      "id": "b2-misery.q",
+      "path": "abilities/b2-misery.q.json",
+      "hash": "e8e8ea7c4f98",
+      "size": 1702
+    },
+    {
+      "id": "b2-misery.r",
+      "path": "abilities/b2-misery.r.json",
+      "hash": "165238ccb79b",
+      "size": 1819
+    },
+    {
+      "id": "b2-misery.w",
+      "path": "abilities/b2-misery.w.json",
+      "hash": "7308f3a945e5",
+      "size": 2050
+    },
+    {
+      "id": "b2-naofumi.e",
+      "path": "abilities/b2-naofumi.e.json",
+      "hash": "dff8045ac358",
+      "size": 2008
+    },
+    {
+      "id": "b2-naofumi.ex",
+      "path": "abilities/b2-naofumi.ex.json",
+      "hash": "0940a47148c1",
+      "size": 1672
+    },
+    {
+      "id": "b2-naofumi.passive",
+      "path": "abilities/b2-naofumi.passive.json",
+      "hash": "142defe995e5",
+      "size": 1617
+    },
+    {
+      "id": "b2-naofumi.q",
+      "path": "abilities/b2-naofumi.q.json",
+      "hash": "d72911d9bba1",
+      "size": 2278
+    },
+    {
+      "id": "b2-naofumi.r",
+      "path": "abilities/b2-naofumi.r.json",
+      "hash": "1b4aa468ebaf",
+      "size": 3089
+    },
+    {
+      "id": "b2-naofumi.w",
+      "path": "abilities/b2-naofumi.w.json",
+      "hash": "a3524b7bae4c",
+      "size": 2324
+    },
+    {
+      "id": "b2-ned.e",
+      "path": "abilities/b2-ned.e.json",
+      "hash": "f00607919a63",
+      "size": 2036
+    },
+    {
+      "id": "b2-ned.ex",
+      "path": "abilities/b2-ned.ex.json",
+      "hash": "77257cbf5f1e",
+      "size": 1214
+    },
+    {
+      "id": "b2-ned.passive",
+      "path": "abilities/b2-ned.passive.json",
+      "hash": "416ac1e52c7d",
+      "size": 2045
+    },
+    {
+      "id": "b2-ned.q",
+      "path": "abilities/b2-ned.q.json",
+      "hash": "50c56243c301",
+      "size": 1827
+    },
+    {
+      "id": "b2-ned.r",
+      "path": "abilities/b2-ned.r.json",
+      "hash": "ed475ce48a8a",
+      "size": 1585
+    },
+    {
+      "id": "b2-ned.w",
+      "path": "abilities/b2-ned.w.json",
+      "hash": "10065f48e182",
+      "size": 1887
+    },
+    {
+      "id": "b2-noor.e",
+      "path": "abilities/b2-noor.e.json",
+      "hash": "63a56586763f",
+      "size": 2178
+    },
+    {
+      "id": "b2-noor.ex",
+      "path": "abilities/b2-noor.ex.json",
+      "hash": "9824d912a27e",
+      "size": 1573
+    },
+    {
+      "id": "b2-noor.passive",
+      "path": "abilities/b2-noor.passive.json",
+      "hash": "01f922c96856",
+      "size": 1679
+    },
+    {
+      "id": "b2-noor.q",
+      "path": "abilities/b2-noor.q.json",
+      "hash": "8626459d0129",
+      "size": 3659
+    },
+    {
+      "id": "b2-noor.r",
+      "path": "abilities/b2-noor.r.json",
+      "hash": "335f235c3cdf",
+      "size": 2419
+    },
+    {
+      "id": "b2-noor.w",
+      "path": "abilities/b2-noor.w.json",
+      "hash": "d4373a314ff4",
+      "size": 2963
+    },
+    {
+      "id": "b2-nube.e",
+      "path": "abilities/b2-nube.e.json",
+      "hash": "e81e8a140509",
+      "size": 1401
+    },
+    {
+      "id": "b2-nube.ex",
+      "path": "abilities/b2-nube.ex.json",
+      "hash": "91cc17b6e814",
+      "size": 2357
+    },
+    {
+      "id": "b2-nube.passive",
+      "path": "abilities/b2-nube.passive.json",
+      "hash": "a524e5496de1",
+      "size": 1572
+    },
+    {
+      "id": "b2-nube.q",
+      "path": "abilities/b2-nube.q.json",
+      "hash": "767830fc16e2",
+      "size": 2024
+    },
+    {
+      "id": "b2-nube.r",
+      "path": "abilities/b2-nube.r.json",
+      "hash": "1ef279b0a4ee",
+      "size": 2325
+    },
+    {
+      "id": "b2-nube.w",
+      "path": "abilities/b2-nube.w.json",
+      "hash": "fa053d78ebec",
+      "size": 1955
+    },
+    {
+      "id": "b2-orphen.e",
+      "path": "abilities/b2-orphen.e.json",
+      "hash": "a610ef55531a",
+      "size": 1414
+    },
+    {
+      "id": "b2-orphen.ex",
+      "path": "abilities/b2-orphen.ex.json",
+      "hash": "c7b39668524b",
+      "size": 1271
+    },
+    {
+      "id": "b2-orphen.passive",
+      "path": "abilities/b2-orphen.passive.json",
+      "hash": "df2898cee18d",
+      "size": 1573
+    },
+    {
+      "id": "b2-orphen.q",
+      "path": "abilities/b2-orphen.q.json",
+      "hash": "d4cfde0dea2c",
+      "size": 2174
+    },
+    {
+      "id": "b2-orphen.r",
+      "path": "abilities/b2-orphen.r.json",
+      "hash": "7baa1a8f9efa",
+      "size": 1740
+    },
+    {
+      "id": "b2-orphen.w",
+      "path": "abilities/b2-orphen.w.json",
+      "hash": "59b63ca82a30",
+      "size": 1637
+    },
+    {
+      "id": "b2-popp.e",
+      "path": "abilities/b2-popp.e.json",
+      "hash": "e280f800df26",
+      "size": 1234
+    },
+    {
+      "id": "b2-popp.ex",
+      "path": "abilities/b2-popp.ex.json",
+      "hash": "926044a0edd2",
+      "size": 2369
+    },
+    {
+      "id": "b2-popp.passive",
+      "path": "abilities/b2-popp.passive.json",
+      "hash": "dce05279b0b9",
+      "size": 1596
+    },
+    {
+      "id": "b2-popp.q",
+      "path": "abilities/b2-popp.q.json",
+      "hash": "1bb25eab8afd",
+      "size": 1609
+    },
+    {
+      "id": "b2-popp.r",
+      "path": "abilities/b2-popp.r.json",
+      "hash": "7bc773192905",
+      "size": 1543
+    },
+    {
+      "id": "b2-popp.w",
+      "path": "abilities/b2-popp.w.json",
+      "hash": "707793f9253c",
+      "size": 2355
+    },
+    {
+      "id": "b2-rem.e",
+      "path": "abilities/b2-rem.e.json",
+      "hash": "804f962aeb75",
+      "size": 2079
+    },
+    {
+      "id": "b2-rem.ex",
+      "path": "abilities/b2-rem.ex.json",
+      "hash": "f3307cc113cb",
+      "size": 1854
+    },
+    {
+      "id": "b2-rem.passive",
+      "path": "abilities/b2-rem.passive.json",
+      "hash": "1a8940687bdf",
+      "size": 1511
+    },
+    {
+      "id": "b2-rem.q",
+      "path": "abilities/b2-rem.q.json",
+      "hash": "7063e450f95b",
+      "size": 1616
+    },
+    {
+      "id": "b2-rem.r",
+      "path": "abilities/b2-rem.r.json",
+      "hash": "a2bcf53e2c11",
+      "size": 2678
+    },
+    {
+      "id": "b2-rem.w",
+      "path": "abilities/b2-rem.w.json",
+      "hash": "de2b818018fa",
+      "size": 2559
+    },
+    {
+      "id": "b2-rin.e",
+      "path": "abilities/b2-rin.e.json",
+      "hash": "7f3a83cfa7b0",
+      "size": 1706
+    },
+    {
+      "id": "b2-rin.ex",
+      "path": "abilities/b2-rin.ex.json",
+      "hash": "e9eaf4936a3d",
+      "size": 1276
+    },
+    {
+      "id": "b2-rin.passive",
+      "path": "abilities/b2-rin.passive.json",
+      "hash": "c3952b7e8826",
+      "size": 1576
+    },
+    {
+      "id": "b2-rin.q",
+      "path": "abilities/b2-rin.q.json",
+      "hash": "8d70becf1a52",
+      "size": 2002
+    },
+    {
+      "id": "b2-rin.r",
+      "path": "abilities/b2-rin.r.json",
+      "hash": "b6d0d152743c",
+      "size": 2648
+    },
+    {
+      "id": "b2-rin.w",
+      "path": "abilities/b2-rin.w.json",
+      "hash": "cb531f2c95ac",
+      "size": 2569
+    },
+    {
+      "id": "b2-shadow.e",
+      "path": "abilities/b2-shadow.e.json",
+      "hash": "f8dd150e41d3",
+      "size": 1443
+    },
+    {
+      "id": "b2-shadow.ex",
+      "path": "abilities/b2-shadow.ex.json",
+      "hash": "c2b57f38eeae",
+      "size": 1715
+    },
+    {
+      "id": "b2-shadow.passive",
+      "path": "abilities/b2-shadow.passive.json",
+      "hash": "a967bb40ff33",
+      "size": 1924
+    },
+    {
+      "id": "b2-shadow.q",
+      "path": "abilities/b2-shadow.q.json",
+      "hash": "754cd1ede77d",
+      "size": 1798
+    },
+    {
+      "id": "b2-shadow.r",
+      "path": "abilities/b2-shadow.r.json",
+      "hash": "c6429b38453b",
+      "size": 1820
+    },
+    {
+      "id": "b2-shadow.w",
+      "path": "abilities/b2-shadow.w.json",
+      "hash": "b8a5209dfc39",
+      "size": 2342
+    },
+    {
+      "id": "b2-shinchan.e",
+      "path": "abilities/b2-shinchan.e.json",
+      "hash": "f029c1729311",
+      "size": 1250
+    },
+    {
+      "id": "b2-shinchan.ex",
+      "path": "abilities/b2-shinchan.ex.json",
+      "hash": "2edaf9654a87",
+      "size": 2107
+    },
+    {
+      "id": "b2-shinchan.passive",
+      "path": "abilities/b2-shinchan.passive.json",
+      "hash": "178bc2f8955a",
+      "size": 1670
+    },
+    {
+      "id": "b2-shinchan.q",
+      "path": "abilities/b2-shinchan.q.json",
+      "hash": "4fb2cb3614fb",
+      "size": 1679
+    },
+    {
+      "id": "b2-shinchan.r",
+      "path": "abilities/b2-shinchan.r.json",
+      "hash": "b02dd90af524",
+      "size": 2340
+    },
+    {
+      "id": "b2-shinchan.w",
+      "path": "abilities/b2-shinchan.w.json",
+      "hash": "766df33c220f",
+      "size": 1433
+    },
+    {
+      "id": "b2-sinbad.e",
+      "path": "abilities/b2-sinbad.e.json",
+      "hash": "e998578f05f4",
+      "size": 1259
+    },
+    {
+      "id": "b2-sinbad.ex",
+      "path": "abilities/b2-sinbad.ex.json",
+      "hash": "cb71b3dcbe71",
+      "size": 2346
+    },
+    {
+      "id": "b2-sinbad.passive",
+      "path": "abilities/b2-sinbad.passive.json",
+      "hash": "87b271c6f217",
+      "size": 1665
+    },
+    {
+      "id": "b2-sinbad.q",
+      "path": "abilities/b2-sinbad.q.json",
+      "hash": "cee92a035659",
+      "size": 1863
+    },
+    {
+      "id": "b2-sinbad.r",
+      "path": "abilities/b2-sinbad.r.json",
+      "hash": "5d0802f387ad",
+      "size": 1572
+    },
+    {
+      "id": "b2-sinbad.w",
+      "path": "abilities/b2-sinbad.w.json",
+      "hash": "98b977c44054",
+      "size": 1836
+    },
+    {
+      "id": "b2-takopi.e",
+      "path": "abilities/b2-takopi.e.json",
+      "hash": "84e31d5a85de",
+      "size": 1638
+    },
+    {
+      "id": "b2-takopi.ex",
+      "path": "abilities/b2-takopi.ex.json",
+      "hash": "85d3acd17cc7",
+      "size": 1993
+    },
+    {
+      "id": "b2-takopi.passive",
+      "path": "abilities/b2-takopi.passive.json",
+      "hash": "9e3b656ec5b3",
+      "size": 1895
+    },
+    {
+      "id": "b2-takopi.q",
+      "path": "abilities/b2-takopi.q.json",
+      "hash": "700a4e92267f",
+      "size": 1526
+    },
+    {
+      "id": "b2-takopi.r",
+      "path": "abilities/b2-takopi.r.json",
+      "hash": "812369cee3b2",
+      "size": 2553
+    },
+    {
+      "id": "b2-takopi.w",
+      "path": "abilities/b2-takopi.w.json",
+      "hash": "07ef0b9fd12b",
+      "size": 2215
+    },
+    {
+      "id": "b2-touka.e",
+      "path": "abilities/b2-touka.e.json",
+      "hash": "80bb7df13db6",
+      "size": 1681
+    },
+    {
+      "id": "b2-touka.ex",
+      "path": "abilities/b2-touka.ex.json",
+      "hash": "8c7c034f2005",
+      "size": 1179
+    },
+    {
+      "id": "b2-touka.passive",
+      "path": "abilities/b2-touka.passive.json",
+      "hash": "f2ac3af4b8f7",
+      "size": 1663
+    },
+    {
+      "id": "b2-touka.q",
+      "path": "abilities/b2-touka.q.json",
+      "hash": "b4065bb1f4c3",
+      "size": 2387
+    },
+    {
+      "id": "b2-touka.r",
+      "path": "abilities/b2-touka.r.json",
+      "hash": "9aebcdd5157d",
+      "size": 2441
+    },
+    {
+      "id": "b2-touka.w",
+      "path": "abilities/b2-touka.w.json",
+      "hash": "694edd1e562d",
+      "size": 1921
+    },
+    {
+      "id": "b2-uncle.e",
+      "path": "abilities/b2-uncle.e.json",
+      "hash": "ba091751108a",
+      "size": 2230
+    },
+    {
+      "id": "b2-uncle.ex",
+      "path": "abilities/b2-uncle.ex.json",
+      "hash": "3bbdffd54551",
+      "size": 1525
+    },
+    {
+      "id": "b2-uncle.passive",
+      "path": "abilities/b2-uncle.passive.json",
+      "hash": "d570b30c2965",
+      "size": 1612
+    },
+    {
+      "id": "b2-uncle.q",
+      "path": "abilities/b2-uncle.q.json",
+      "hash": "ef1cc2f2665d",
+      "size": 1942
+    },
+    {
+      "id": "b2-uncle.r",
+      "path": "abilities/b2-uncle.r.json",
+      "hash": "34bf856ac3d5",
+      "size": 2451
+    },
+    {
+      "id": "b2-uncle.w",
+      "path": "abilities/b2-uncle.w.json",
+      "hash": "ea491685f34f",
+      "size": 2066
+    },
+    {
+      "id": "b2-yogiri.e",
+      "path": "abilities/b2-yogiri.e.json",
+      "hash": "fbdec40d84dd",
+      "size": 1262
+    },
+    {
+      "id": "b2-yogiri.ex",
+      "path": "abilities/b2-yogiri.ex.json",
+      "hash": "1110540cdded",
+      "size": 2087
+    },
+    {
+      "id": "b2-yogiri.passive",
+      "path": "abilities/b2-yogiri.passive.json",
+      "hash": "dbd2b0fde9e4",
+      "size": 1949
+    },
+    {
+      "id": "b2-yogiri.q",
+      "path": "abilities/b2-yogiri.q.json",
+      "hash": "63d823129129",
+      "size": 1678
+    },
+    {
+      "id": "b2-yogiri.r",
+      "path": "abilities/b2-yogiri.r.json",
+      "hash": "553585356d7c",
+      "size": 2359
+    },
+    {
+      "id": "b2-yogiri.w",
+      "path": "abilities/b2-yogiri.w.json",
+      "hash": "8a07dffa27a8",
+      "size": 3616
+    },
+    {
+      "id": "b2-zenitsu.e",
+      "path": "abilities/b2-zenitsu.e.json",
+      "hash": "622c2b35107f",
+      "size": 1711
+    },
+    {
+      "id": "b2-zenitsu.ex",
+      "path": "abilities/b2-zenitsu.ex.json",
+      "hash": "c5f38ea26bc9",
+      "size": 1213
+    },
+    {
+      "id": "b2-zenitsu.passive",
+      "path": "abilities/b2-zenitsu.passive.json",
+      "hash": "080e80898a53",
+      "size": 1894
+    },
+    {
+      "id": "b2-zenitsu.q",
+      "path": "abilities/b2-zenitsu.q.json",
+      "hash": "203dbee0cfa4",
+      "size": 2302
+    },
+    {
+      "id": "b2-zenitsu.r",
+      "path": "abilities/b2-zenitsu.r.json",
+      "hash": "dfeaf8eda1b7",
+      "size": 2694
+    },
+    {
+      "id": "b2-zenitsu.w",
+      "path": "abilities/b2-zenitsu.w.json",
+      "hash": "8c597144d970",
+      "size": 2924
+    },
+    {
+      "id": "community-review-01-20260907.e",
+      "path": "abilities/community-review-01-20260907.e.json",
+      "hash": "4b807c6171e6",
+      "size": 1806
+    },
+    {
+      "id": "community-review-01-20260907.ex",
+      "path": "abilities/community-review-01-20260907.ex.json",
+      "hash": "1fe312a7b0c5",
+      "size": 1236
+    },
+    {
+      "id": "community-review-01-20260907.passive",
+      "path": "abilities/community-review-01-20260907.passive.json",
+      "hash": "7e574e2d3dcc",
+      "size": 1230
+    },
+    {
+      "id": "community-review-01-20260907.q",
+      "path": "abilities/community-review-01-20260907.q.json",
+      "hash": "39c553df5ccc",
+      "size": 1663
+    },
+    {
+      "id": "community-review-01-20260907.r",
+      "path": "abilities/community-review-01-20260907.r.json",
+      "hash": "62ad66275ead",
+      "size": 1458
+    },
+    {
+      "id": "community-review-01-20260907.w",
+      "path": "abilities/community-review-01-20260907.w.json",
+      "hash": "b6f15fd1cf14",
+      "size": 1727
+    },
+    {
+      "id": "community-review-02-20260907.e",
+      "path": "abilities/community-review-02-20260907.e.json",
+      "hash": "95795e8a0760",
+      "size": 2099
+    },
+    {
+      "id": "community-review-02-20260907.ex",
+      "path": "abilities/community-review-02-20260907.ex.json",
+      "hash": "b84d1aeaa920",
+      "size": 1272
+    },
+    {
+      "id": "community-review-02-20260907.passive",
+      "path": "abilities/community-review-02-20260907.passive.json",
+      "hash": "2bffbdf42bb7",
+      "size": 1204
+    },
+    {
+      "id": "community-review-02-20260907.q",
+      "path": "abilities/community-review-02-20260907.q.json",
+      "hash": "c56fe793f44b",
+      "size": 2126
+    },
+    {
+      "id": "community-review-02-20260907.r",
+      "path": "abilities/community-review-02-20260907.r.json",
+      "hash": "5f5f27c15faa",
+      "size": 2018
+    },
+    {
+      "id": "community-review-02-20260907.w",
+      "path": "abilities/community-review-02-20260907.w.json",
+      "hash": "3afc593cb4a8",
+      "size": 1711
+    },
+    {
+      "id": "community-review-03-20260907.e",
+      "path": "abilities/community-review-03-20260907.e.json",
+      "hash": "ac7ac267f4f8",
+      "size": 1918
+    },
+    {
+      "id": "community-review-03-20260907.ex",
+      "path": "abilities/community-review-03-20260907.ex.json",
+      "hash": "0daaab1b3819",
+      "size": 834
+    },
+    {
+      "id": "community-review-03-20260907.passive",
+      "path": "abilities/community-review-03-20260907.passive.json",
+      "hash": "c0c3849b2fe4",
+      "size": 1174
+    },
+    {
+      "id": "community-review-03-20260907.q",
+      "path": "abilities/community-review-03-20260907.q.json",
+      "hash": "23e266bf98d8",
+      "size": 2123
+    },
+    {
+      "id": "community-review-03-20260907.r",
+      "path": "abilities/community-review-03-20260907.r.json",
+      "hash": "4afd8dbec828",
+      "size": 1994
+    },
+    {
+      "id": "community-review-03-20260907.w",
+      "path": "abilities/community-review-03-20260907.w.json",
+      "hash": "868d6049f9fc",
+      "size": 1813
+    },
+    {
+      "id": "community-review-04-20260907.e",
+      "path": "abilities/community-review-04-20260907.e.json",
+      "hash": "ae16927b3652",
+      "size": 1741
+    },
+    {
+      "id": "community-review-04-20260907.ex",
+      "path": "abilities/community-review-04-20260907.ex.json",
+      "hash": "98d7beeb90d3",
+      "size": 828
+    },
+    {
+      "id": "community-review-04-20260907.passive",
+      "path": "abilities/community-review-04-20260907.passive.json",
+      "hash": "3d9191f39483",
+      "size": 1209
+    },
+    {
+      "id": "community-review-04-20260907.q",
+      "path": "abilities/community-review-04-20260907.q.json",
+      "hash": "cbb8463da7a2",
+      "size": 2059
+    },
+    {
+      "id": "community-review-04-20260907.r",
+      "path": "abilities/community-review-04-20260907.r.json",
+      "hash": "b0eed0db53e0",
+      "size": 1810
+    },
+    {
+      "id": "community-review-04-20260907.w",
+      "path": "abilities/community-review-04-20260907.w.json",
+      "hash": "f142d115b432",
+      "size": 1833
+    },
+    {
+      "id": "community-review-05-20260907.e",
+      "path": "abilities/community-review-05-20260907.e.json",
+      "hash": "1b8073fe2264",
+      "size": 1715
+    },
+    {
+      "id": "community-review-05-20260907.ex",
+      "path": "abilities/community-review-05-20260907.ex.json",
+      "hash": "e00412612150",
+      "size": 855
+    },
+    {
+      "id": "community-review-05-20260907.passive",
+      "path": "abilities/community-review-05-20260907.passive.json",
+      "hash": "03116407c820",
+      "size": 1196
+    },
+    {
+      "id": "community-review-05-20260907.q",
+      "path": "abilities/community-review-05-20260907.q.json",
+      "hash": "eb304130a093",
+      "size": 1841
+    },
+    {
+      "id": "community-review-05-20260907.r",
+      "path": "abilities/community-review-05-20260907.r.json",
+      "hash": "d2ee67c5da11",
+      "size": 1674
+    },
+    {
+      "id": "community-review-05-20260907.w",
+      "path": "abilities/community-review-05-20260907.w.json",
+      "hash": "f7962f1ed513",
+      "size": 2132
+    },
+    {
+      "id": "community-review-06-20260907.e",
+      "path": "abilities/community-review-06-20260907.e.json",
+      "hash": "cbb44fdd8947",
+      "size": 1712
+    },
+    {
+      "id": "community-review-06-20260907.ex",
+      "path": "abilities/community-review-06-20260907.ex.json",
+      "hash": "9cbf9c866d90",
+      "size": 966
+    },
+    {
+      "id": "community-review-06-20260907.passive",
+      "path": "abilities/community-review-06-20260907.passive.json",
+      "hash": "3e7e3302c186",
+      "size": 1558
+    },
+    {
+      "id": "community-review-06-20260907.q",
+      "path": "abilities/community-review-06-20260907.q.json",
+      "hash": "97a545773fb3",
+      "size": 1943
+    },
+    {
+      "id": "community-review-06-20260907.r",
+      "path": "abilities/community-review-06-20260907.r.json",
+      "hash": "ea8c6d2ac868",
+      "size": 1816
+    },
+    {
+      "id": "community-review-06-20260907.w",
+      "path": "abilities/community-review-06-20260907.w.json",
+      "hash": "57012ec168f0",
+      "size": 1858
+    },
+    {
+      "id": "community-review-07-20260907.e",
+      "path": "abilities/community-review-07-20260907.e.json",
+      "hash": "142dfa68d08c",
+      "size": 1968
+    },
+    {
+      "id": "community-review-07-20260907.ex",
+      "path": "abilities/community-review-07-20260907.ex.json",
+      "hash": "c12ed68cf166",
+      "size": 881
+    },
+    {
+      "id": "community-review-07-20260907.passive",
+      "path": "abilities/community-review-07-20260907.passive.json",
+      "hash": "10fa20efd956",
+      "size": 1202
+    },
+    {
+      "id": "community-review-07-20260907.q",
+      "path": "abilities/community-review-07-20260907.q.json",
+      "hash": "3f73f64044a0",
+      "size": 1689
+    },
+    {
+      "id": "community-review-07-20260907.r",
+      "path": "abilities/community-review-07-20260907.r.json",
+      "hash": "f802d3cfa59e",
+      "size": 1416
+    },
+    {
+      "id": "community-review-07-20260907.w",
+      "path": "abilities/community-review-07-20260907.w.json",
+      "hash": "fc24b23e363e",
+      "size": 1610
+    },
+    {
+      "id": "community-review-08-20260907.e",
+      "path": "abilities/community-review-08-20260907.e.json",
+      "hash": "a36b73f437a4",
+      "size": 1337
+    },
+    {
+      "id": "community-review-08-20260907.ex",
+      "path": "abilities/community-review-08-20260907.ex.json",
+      "hash": "dbea9927e3e8",
+      "size": 1274
+    },
+    {
+      "id": "community-review-08-20260907.passive",
+      "path": "abilities/community-review-08-20260907.passive.json",
+      "hash": "1e911b7483eb",
+      "size": 1206
+    },
+    {
+      "id": "community-review-08-20260907.q",
+      "path": "abilities/community-review-08-20260907.q.json",
+      "hash": "590d50e3860c",
+      "size": 1984
+    },
+    {
+      "id": "community-review-08-20260907.r",
+      "path": "abilities/community-review-08-20260907.r.json",
+      "hash": "28542bacc208",
+      "size": 1652
+    },
+    {
+      "id": "community-review-08-20260907.w",
+      "path": "abilities/community-review-08-20260907.w.json",
+      "hash": "24d528e187ec",
+      "size": 1740
+    },
+    {
+      "id": "community-review-09-20260907.e",
+      "path": "abilities/community-review-09-20260907.e.json",
+      "hash": "f494a9123516",
+      "size": 1677
+    },
+    {
+      "id": "community-review-09-20260907.ex",
+      "path": "abilities/community-review-09-20260907.ex.json",
+      "hash": "44e985ffe8e1",
+      "size": 977
+    },
+    {
+      "id": "community-review-09-20260907.passive",
+      "path": "abilities/community-review-09-20260907.passive.json",
+      "hash": "7d2b7d40e5b4",
+      "size": 1193
+    },
+    {
+      "id": "community-review-09-20260907.q",
+      "path": "abilities/community-review-09-20260907.q.json",
+      "hash": "e0fa457a91af",
+      "size": 1545
+    },
+    {
+      "id": "community-review-09-20260907.r",
+      "path": "abilities/community-review-09-20260907.r.json",
+      "hash": "5e99de6e206f",
+      "size": 1566
+    },
+    {
+      "id": "community-review-09-20260907.w",
+      "path": "abilities/community-review-09-20260907.w.json",
+      "hash": "fd180d3a7248",
+      "size": 1375
+    },
+    {
+      "id": "community-review-10-20260907.e",
+      "path": "abilities/community-review-10-20260907.e.json",
+      "hash": "e8cf634074ff",
+      "size": 1353
+    },
+    {
+      "id": "community-review-10-20260907.ex",
+      "path": "abilities/community-review-10-20260907.ex.json",
+      "hash": "3173572044cc",
+      "size": 817
+    },
+    {
+      "id": "community-review-10-20260907.passive",
+      "path": "abilities/community-review-10-20260907.passive.json",
+      "hash": "064d40426000",
+      "size": 1189
+    },
+    {
+      "id": "community-review-10-20260907.q",
+      "path": "abilities/community-review-10-20260907.q.json",
+      "hash": "b61391bb2ae0",
+      "size": 1283
+    },
+    {
+      "id": "community-review-10-20260907.r",
+      "path": "abilities/community-review-10-20260907.r.json",
+      "hash": "abcb1eeb0344",
+      "size": 1727
+    },
+    {
+      "id": "community-review-10-20260907.w",
+      "path": "abilities/community-review-10-20260907.w.json",
+      "hash": "0e8df6099feb",
+      "size": 1599
+    },
+    {
+      "id": "community-review-11-20260907.e",
+      "path": "abilities/community-review-11-20260907.e.json",
+      "hash": "3e07cfbe8518",
+      "size": 1384
+    },
+    {
+      "id": "community-review-11-20260907.ex",
+      "path": "abilities/community-review-11-20260907.ex.json",
+      "hash": "0701652b3275",
+      "size": 842
+    },
+    {
+      "id": "community-review-11-20260907.passive",
+      "path": "abilities/community-review-11-20260907.passive.json",
+      "hash": "39b11f7d5b06",
+      "size": 1145
+    },
+    {
+      "id": "community-review-11-20260907.q",
+      "path": "abilities/community-review-11-20260907.q.json",
+      "hash": "5c4d8e298105",
+      "size": 2085
+    },
+    {
+      "id": "community-review-11-20260907.r",
+      "path": "abilities/community-review-11-20260907.r.json",
+      "hash": "5c0d8bfcae7b",
+      "size": 1800
+    },
+    {
+      "id": "community-review-11-20260907.w",
+      "path": "abilities/community-review-11-20260907.w.json",
+      "hash": "cb40adc36f7c",
+      "size": 1740
+    },
+    {
+      "id": "community-review-12-20260907.e",
+      "path": "abilities/community-review-12-20260907.e.json",
+      "hash": "4c3a648d77f9",
+      "size": 1974
+    },
+    {
+      "id": "community-review-12-20260907.ex",
+      "path": "abilities/community-review-12-20260907.ex.json",
+      "hash": "292e5ca3e14d",
+      "size": 963
+    },
+    {
+      "id": "community-review-12-20260907.passive",
+      "path": "abilities/community-review-12-20260907.passive.json",
+      "hash": "3c46677dcbb3",
+      "size": 1200
+    },
+    {
+      "id": "community-review-12-20260907.q",
+      "path": "abilities/community-review-12-20260907.q.json",
+      "hash": "065516939417",
+      "size": 1999
+    },
+    {
+      "id": "community-review-12-20260907.r",
+      "path": "abilities/community-review-12-20260907.r.json",
+      "hash": "3520fcea6312",
+      "size": 1858
+    },
+    {
+      "id": "community-review-12-20260907.w",
+      "path": "abilities/community-review-12-20260907.w.json",
+      "hash": "c3b5ee56cee7",
+      "size": 1661
+    },
+    {
+      "id": "community-review-13-20260907.e",
+      "path": "abilities/community-review-13-20260907.e.json",
+      "hash": "85276883eb85",
+      "size": 1727
+    },
+    {
+      "id": "community-review-13-20260907.ex",
+      "path": "abilities/community-review-13-20260907.ex.json",
+      "hash": "b7184ab1fac5",
+      "size": 822
+    },
+    {
+      "id": "community-review-13-20260907.passive",
+      "path": "abilities/community-review-13-20260907.passive.json",
+      "hash": "aab92e32cbfe",
+      "size": 1179
+    },
+    {
+      "id": "community-review-13-20260907.q",
+      "path": "abilities/community-review-13-20260907.q.json",
+      "hash": "621e5bf01d41",
+      "size": 1863
+    },
+    {
+      "id": "community-review-13-20260907.r",
+      "path": "abilities/community-review-13-20260907.r.json",
+      "hash": "95419895e7d5",
+      "size": 1845
+    },
+    {
+      "id": "community-review-13-20260907.w",
+      "path": "abilities/community-review-13-20260907.w.json",
+      "hash": "74aaf7c7112c",
+      "size": 1343
+    },
+    {
+      "id": "community-review-14-20260907.e",
+      "path": "abilities/community-review-14-20260907.e.json",
+      "hash": "2c326cfa1299",
+      "size": 1471
+    },
+    {
+      "id": "community-review-14-20260907.ex",
+      "path": "abilities/community-review-14-20260907.ex.json",
+      "hash": "4ba39b47aac1",
+      "size": 919
+    },
+    {
+      "id": "community-review-14-20260907.passive",
+      "path": "abilities/community-review-14-20260907.passive.json",
+      "hash": "497f5bcca140",
+      "size": 1174
+    },
+    {
+      "id": "community-review-14-20260907.q",
+      "path": "abilities/community-review-14-20260907.q.json",
+      "hash": "6132e0494ea8",
+      "size": 2021
+    },
+    {
+      "id": "community-review-14-20260907.r",
+      "path": "abilities/community-review-14-20260907.r.json",
+      "hash": "a3c99609a322",
+      "size": 1706
+    },
+    {
+      "id": "community-review-14-20260907.w",
+      "path": "abilities/community-review-14-20260907.w.json",
+      "hash": "549c9198d975",
+      "size": 1999
+    },
+    {
+      "id": "community-review-15-20260907.e",
+      "path": "abilities/community-review-15-20260907.e.json",
+      "hash": "133a7454c484",
+      "size": 1681
+    },
+    {
+      "id": "community-review-15-20260907.ex",
+      "path": "abilities/community-review-15-20260907.ex.json",
+      "hash": "1e93dc0140ff",
+      "size": 1072
+    },
+    {
+      "id": "community-review-15-20260907.passive",
+      "path": "abilities/community-review-15-20260907.passive.json",
+      "hash": "b8e78c6e3ce4",
+      "size": 1167
+    },
+    {
+      "id": "community-review-15-20260907.q",
+      "path": "abilities/community-review-15-20260907.q.json",
+      "hash": "44164947345b",
+      "size": 1265
+    },
+    {
+      "id": "community-review-15-20260907.r",
+      "path": "abilities/community-review-15-20260907.r.json",
+      "hash": "264f8ec8966f",
+      "size": 1943
+    },
+    {
+      "id": "community-review-15-20260907.w",
+      "path": "abilities/community-review-15-20260907.w.json",
+      "hash": "a953ef480ad6",
+      "size": 1931
+    },
+    {
+      "id": "community-review-16-20260907.e",
+      "path": "abilities/community-review-16-20260907.e.json",
+      "hash": "cade36c9d38f",
+      "size": 1705
+    },
+    {
+      "id": "community-review-16-20260907.ex",
+      "path": "abilities/community-review-16-20260907.ex.json",
+      "hash": "3e252d1c156c",
+      "size": 1196
+    },
+    {
+      "id": "community-review-16-20260907.passive",
+      "path": "abilities/community-review-16-20260907.passive.json",
+      "hash": "3afbb04446da",
+      "size": 1219
+    },
+    {
+      "id": "community-review-16-20260907.q",
+      "path": "abilities/community-review-16-20260907.q.json",
+      "hash": "48766de715b4",
+      "size": 1798
+    },
+    {
+      "id": "community-review-16-20260907.r",
+      "path": "abilities/community-review-16-20260907.r.json",
+      "hash": "efafbd961847",
+      "size": 1537
+    },
+    {
+      "id": "community-review-16-20260907.w",
+      "path": "abilities/community-review-16-20260907.w.json",
+      "hash": "9e2e7088dc85",
+      "size": 1658
+    },
+    {
+      "id": "community-review-17-20260907.e",
+      "path": "abilities/community-review-17-20260907.e.json",
+      "hash": "9dbe1ce52d30",
+      "size": 1677
+    },
+    {
+      "id": "community-review-17-20260907.ex",
+      "path": "abilities/community-review-17-20260907.ex.json",
+      "hash": "a794f09b7610",
+      "size": 957
+    },
+    {
+      "id": "community-review-17-20260907.passive",
+      "path": "abilities/community-review-17-20260907.passive.json",
+      "hash": "d87ff93b3bd5",
+      "size": 1117
+    },
+    {
+      "id": "community-review-17-20260907.q",
+      "path": "abilities/community-review-17-20260907.q.json",
+      "hash": "1fbdf65711ad",
+      "size": 1331
+    },
+    {
+      "id": "community-review-17-20260907.r",
+      "path": "abilities/community-review-17-20260907.r.json",
+      "hash": "cd2d4493dfaa",
+      "size": 1379
+    },
+    {
+      "id": "community-review-17-20260907.w",
+      "path": "abilities/community-review-17-20260907.w.json",
+      "hash": "f1662ed8b684",
+      "size": 1598
+    },
+    {
+      "id": "community-review-18-20260907.e",
+      "path": "abilities/community-review-18-20260907.e.json",
+      "hash": "d8890c33ccdf",
+      "size": 1667
+    },
+    {
+      "id": "community-review-18-20260907.ex",
+      "path": "abilities/community-review-18-20260907.ex.json",
+      "hash": "acd258f4aa29",
+      "size": 929
+    },
+    {
+      "id": "community-review-18-20260907.passive",
+      "path": "abilities/community-review-18-20260907.passive.json",
+      "hash": "0d30cd3adb61",
+      "size": 1178
+    },
+    {
+      "id": "community-review-18-20260907.q",
+      "path": "abilities/community-review-18-20260907.q.json",
+      "hash": "0d4ee16f26cb",
+      "size": 1655
+    },
+    {
+      "id": "community-review-18-20260907.r",
+      "path": "abilities/community-review-18-20260907.r.json",
+      "hash": "5b7a1438c32c",
+      "size": 1814
+    },
+    {
+      "id": "community-review-18-20260907.w",
+      "path": "abilities/community-review-18-20260907.w.json",
+      "hash": "26090e4bd6c2",
+      "size": 1570
+    },
+    {
+      "id": "community-review-19-20260907.e",
+      "path": "abilities/community-review-19-20260907.e.json",
+      "hash": "8f812a49b566",
+      "size": 1717
+    },
+    {
+      "id": "community-review-19-20260907.ex",
+      "path": "abilities/community-review-19-20260907.ex.json",
+      "hash": "20ec84fcd9c8",
+      "size": 1232
+    },
+    {
+      "id": "community-review-19-20260907.passive",
+      "path": "abilities/community-review-19-20260907.passive.json",
+      "hash": "20a302e4a4b0",
+      "size": 1170
+    },
+    {
+      "id": "community-review-19-20260907.q",
+      "path": "abilities/community-review-19-20260907.q.json",
+      "hash": "32b578003017",
+      "size": 1993
+    },
+    {
+      "id": "community-review-19-20260907.r",
+      "path": "abilities/community-review-19-20260907.r.json",
+      "hash": "e9e17eda2a2e",
+      "size": 2082
+    },
+    {
+      "id": "community-review-19-20260907.w",
+      "path": "abilities/community-review-19-20260907.w.json",
+      "hash": "21db24f69dc8",
+      "size": 1693
+    },
+    {
+      "id": "community-review-20-20260907.e",
+      "path": "abilities/community-review-20-20260907.e.json",
+      "hash": "3ce20dc63261",
+      "size": 1689
+    },
+    {
+      "id": "community-review-20-20260907.ex",
+      "path": "abilities/community-review-20-20260907.ex.json",
+      "hash": "6ddf9ad7392a",
+      "size": 844
+    },
+    {
+      "id": "community-review-20-20260907.passive",
+      "path": "abilities/community-review-20-20260907.passive.json",
+      "hash": "e35763d1345d",
+      "size": 1178
+    },
+    {
+      "id": "community-review-20-20260907.q",
+      "path": "abilities/community-review-20-20260907.q.json",
+      "hash": "c4de85f35dbd",
+      "size": 1793
+    },
+    {
+      "id": "community-review-20-20260907.r",
+      "path": "abilities/community-review-20-20260907.r.json",
+      "hash": "242cf0397292",
+      "size": 1826
+    },
+    {
+      "id": "community-review-20-20260907.w",
+      "path": "abilities/community-review-20-20260907.w.json",
+      "hash": "1a953bc1b24c",
+      "size": 1935
+    },
+    {
+      "id": "community-review-21-20260907.e",
+      "path": "abilities/community-review-21-20260907.e.json",
+      "hash": "a702f13a1e86",
+      "size": 1341
+    },
+    {
+      "id": "community-review-21-20260907.ex",
+      "path": "abilities/community-review-21-20260907.ex.json",
+      "hash": "11132ad834a2",
+      "size": 1030
+    },
+    {
+      "id": "community-review-21-20260907.passive",
+      "path": "abilities/community-review-21-20260907.passive.json",
+      "hash": "072ba02b118b",
+      "size": 1195
+    },
+    {
+      "id": "community-review-21-20260907.q",
+      "path": "abilities/community-review-21-20260907.q.json",
+      "hash": "d2ac917a15b4",
+      "size": 2056
+    },
+    {
+      "id": "community-review-21-20260907.r",
+      "path": "abilities/community-review-21-20260907.r.json",
+      "hash": "a354e8ce90d9",
+      "size": 1617
+    },
+    {
+      "id": "community-review-21-20260907.w",
+      "path": "abilities/community-review-21-20260907.w.json",
+      "hash": "adfc1df8c748",
+      "size": 1685
+    },
+    {
+      "id": "community-review-22-20260907.e",
+      "path": "abilities/community-review-22-20260907.e.json",
+      "hash": "1bac1a0f43b0",
+      "size": 1685
+    },
+    {
+      "id": "community-review-22-20260907.ex",
+      "path": "abilities/community-review-22-20260907.ex.json",
+      "hash": "e4fc096a5209",
+      "size": 919
+    },
+    {
+      "id": "community-review-22-20260907.passive",
+      "path": "abilities/community-review-22-20260907.passive.json",
+      "hash": "5ac6e03bd52e",
+      "size": 1606
+    },
+    {
+      "id": "community-review-22-20260907.q",
+      "path": "abilities/community-review-22-20260907.q.json",
+      "hash": "62467e289f19",
+      "size": 1589
+    },
+    {
+      "id": "community-review-22-20260907.r",
+      "path": "abilities/community-review-22-20260907.r.json",
+      "hash": "d3ab71c334c3",
+      "size": 1700
+    },
+    {
+      "id": "community-review-22-20260907.w",
+      "path": "abilities/community-review-22-20260907.w.json",
+      "hash": "57f10ee0b165",
+      "size": 1914
+    },
+    {
+      "id": "community-review-23-20260907.e",
+      "path": "abilities/community-review-23-20260907.e.json",
+      "hash": "f85e197bb277",
+      "size": 1684
+    },
+    {
+      "id": "community-review-23-20260907.ex",
+      "path": "abilities/community-review-23-20260907.ex.json",
+      "hash": "78395df3ab63",
+      "size": 960
+    },
+    {
+      "id": "community-review-23-20260907.passive",
+      "path": "abilities/community-review-23-20260907.passive.json",
+      "hash": "a4875c0d634a",
+      "size": 1170
+    },
+    {
+      "id": "community-review-23-20260907.q",
+      "path": "abilities/community-review-23-20260907.q.json",
+      "hash": "8fb8f0bf11ca",
+      "size": 1785
+    },
+    {
+      "id": "community-review-23-20260907.r",
+      "path": "abilities/community-review-23-20260907.r.json",
+      "hash": "86166f416661",
+      "size": 1539
+    },
+    {
+      "id": "community-review-23-20260907.w",
+      "path": "abilities/community-review-23-20260907.w.json",
+      "hash": "1fd7197dfb06",
+      "size": 1494
+    },
+    {
+      "id": "community-review-24-20260907.e",
+      "path": "abilities/community-review-24-20260907.e.json",
+      "hash": "3966e996c8af",
+      "size": 1354
+    },
+    {
+      "id": "community-review-24-20260907.ex",
+      "path": "abilities/community-review-24-20260907.ex.json",
+      "hash": "d46aa546394e",
+      "size": 827
+    },
+    {
+      "id": "community-review-24-20260907.passive",
+      "path": "abilities/community-review-24-20260907.passive.json",
+      "hash": "694d34409ad5",
+      "size": 1178
+    },
+    {
+      "id": "community-review-24-20260907.q",
+      "path": "abilities/community-review-24-20260907.q.json",
+      "hash": "c91c68980601",
+      "size": 1353
+    },
+    {
+      "id": "community-review-24-20260907.r",
+      "path": "abilities/community-review-24-20260907.r.json",
+      "hash": "c3294c4efd41",
+      "size": 1623
+    },
+    {
+      "id": "community-review-24-20260907.w",
+      "path": "abilities/community-review-24-20260907.w.json",
+      "hash": "20e4f38a1629",
+      "size": 1719
+    },
+    {
+      "id": "community-review-25-20260907.e",
+      "path": "abilities/community-review-25-20260907.e.json",
+      "hash": "3672ed02325f",
+      "size": 1953
+    },
+    {
+      "id": "community-review-25-20260907.ex",
+      "path": "abilities/community-review-25-20260907.ex.json",
+      "hash": "123d325850c2",
+      "size": 831
+    },
+    {
+      "id": "community-review-25-20260907.passive",
+      "path": "abilities/community-review-25-20260907.passive.json",
+      "hash": "718e6bcdb023",
+      "size": 1176
+    },
+    {
+      "id": "community-review-25-20260907.q",
+      "path": "abilities/community-review-25-20260907.q.json",
+      "hash": "ac17e0de7e55",
+      "size": 1231
+    },
+    {
+      "id": "community-review-25-20260907.r",
+      "path": "abilities/community-review-25-20260907.r.json",
+      "hash": "263156af7a75",
+      "size": 1857
+    },
+    {
+      "id": "community-review-25-20260907.w",
+      "path": "abilities/community-review-25-20260907.w.json",
+      "hash": "a5912c005fab",
+      "size": 2040
+    },
+    {
+      "id": "community-review-26-20260907.e",
+      "path": "abilities/community-review-26-20260907.e.json",
+      "hash": "e19a005f2795",
+      "size": 1367
+    },
+    {
+      "id": "community-review-26-20260907.ex",
+      "path": "abilities/community-review-26-20260907.ex.json",
+      "hash": "064a18f45e00",
+      "size": 1191
+    },
+    {
+      "id": "community-review-26-20260907.passive",
+      "path": "abilities/community-review-26-20260907.passive.json",
+      "hash": "4293ec466670",
+      "size": 1188
+    },
+    {
+      "id": "community-review-26-20260907.q",
+      "path": "abilities/community-review-26-20260907.q.json",
+      "hash": "9b64930ff32c",
+      "size": 2119
+    },
+    {
+      "id": "community-review-26-20260907.r",
+      "path": "abilities/community-review-26-20260907.r.json",
+      "hash": "62bb7c5a5b06",
+      "size": 1633
+    },
+    {
+      "id": "community-review-26-20260907.w",
+      "path": "abilities/community-review-26-20260907.w.json",
+      "hash": "7e25bcaf5972",
+      "size": 1597
+    },
+    {
+      "id": "community-review-27-20260907.e",
+      "path": "abilities/community-review-27-20260907.e.json",
+      "hash": "9f1d08f19823",
+      "size": 1693
+    },
+    {
+      "id": "community-review-27-20260907.ex",
+      "path": "abilities/community-review-27-20260907.ex.json",
+      "hash": "9728de9f814e",
+      "size": 952
+    },
+    {
+      "id": "community-review-27-20260907.passive",
+      "path": "abilities/community-review-27-20260907.passive.json",
+      "hash": "b1714fce32ba",
+      "size": 1171
+    },
+    {
+      "id": "community-review-27-20260907.q",
+      "path": "abilities/community-review-27-20260907.q.json",
+      "hash": "76ad45507fb8",
+      "size": 1254
+    },
+    {
+      "id": "community-review-27-20260907.r",
+      "path": "abilities/community-review-27-20260907.r.json",
+      "hash": "25b309a06275",
+      "size": 1491
+    },
+    {
+      "id": "community-review-27-20260907.w",
+      "path": "abilities/community-review-27-20260907.w.json",
+      "hash": "33e4791aa06e",
+      "size": 1637
+    },
+    {
+      "id": "community-review-28-20260907.e",
+      "path": "abilities/community-review-28-20260907.e.json",
+      "hash": "408bda9338cb",
+      "size": 2016
+    },
+    {
+      "id": "community-review-28-20260907.ex",
+      "path": "abilities/community-review-28-20260907.ex.json",
+      "hash": "c6932e82339c",
+      "size": 822
+    },
+    {
+      "id": "community-review-28-20260907.passive",
+      "path": "abilities/community-review-28-20260907.passive.json",
+      "hash": "beeb2e41acdf",
+      "size": 1221
+    },
+    {
+      "id": "community-review-28-20260907.q",
+      "path": "abilities/community-review-28-20260907.q.json",
+      "hash": "b4dce0ef51a5",
+      "size": 1961
+    },
+    {
+      "id": "community-review-28-20260907.r",
+      "path": "abilities/community-review-28-20260907.r.json",
+      "hash": "33659a204d04",
+      "size": 1989
+    },
+    {
+      "id": "community-review-28-20260907.w",
+      "path": "abilities/community-review-28-20260907.w.json",
+      "hash": "9b9f0294bc50",
+      "size": 1666
+    },
+    {
+      "id": "community-review-29-20260907.e",
+      "path": "abilities/community-review-29-20260907.e.json",
+      "hash": "82e55b13058c",
+      "size": 1673
+    },
+    {
+      "id": "community-review-29-20260907.ex",
+      "path": "abilities/community-review-29-20260907.ex.json",
+      "hash": "0eb6969ea5ec",
+      "size": 987
+    },
+    {
+      "id": "community-review-29-20260907.passive",
+      "path": "abilities/community-review-29-20260907.passive.json",
+      "hash": "da5b25d1dbb3",
+      "size": 1193
+    },
+    {
+      "id": "community-review-29-20260907.q",
+      "path": "abilities/community-review-29-20260907.q.json",
+      "hash": "35a3898fc5b4",
+      "size": 1792
+    },
+    {
+      "id": "community-review-29-20260907.r",
+      "path": "abilities/community-review-29-20260907.r.json",
+      "hash": "8982d6b65bb5",
+      "size": 1677
+    },
+    {
+      "id": "community-review-29-20260907.w",
+      "path": "abilities/community-review-29-20260907.w.json",
+      "hash": "3ca75e3d1696",
+      "size": 1707
+    },
+    {
+      "id": "community-review-30-20260907.e",
+      "path": "abilities/community-review-30-20260907.e.json",
+      "hash": "0e45fbdfc4ca",
+      "size": 2013
+    },
+    {
+      "id": "community-review-30-20260907.ex",
+      "path": "abilities/community-review-30-20260907.ex.json",
+      "hash": "7470f4b5e3ff",
+      "size": 960
+    },
+    {
+      "id": "community-review-30-20260907.passive",
+      "path": "abilities/community-review-30-20260907.passive.json",
+      "hash": "63a75ff9d053",
+      "size": 1182
+    },
+    {
+      "id": "community-review-30-20260907.q",
+      "path": "abilities/community-review-30-20260907.q.json",
+      "hash": "4594d58b533a",
+      "size": 1408
+    },
+    {
+      "id": "community-review-30-20260907.r",
+      "path": "abilities/community-review-30-20260907.r.json",
+      "hash": "79d916d3d720",
+      "size": 1658
+    },
+    {
+      "id": "community-review-30-20260907.w",
+      "path": "abilities/community-review-30-20260907.w.json",
+      "hash": "29651cfb786a",
+      "size": 1631
+    },
+    {
+      "id": "community-review-31-20260907.e",
+      "path": "abilities/community-review-31-20260907.e.json",
+      "hash": "7230e243bc33",
+      "size": 1724
+    },
+    {
+      "id": "community-review-31-20260907.ex",
+      "path": "abilities/community-review-31-20260907.ex.json",
+      "hash": "1511065ecf15",
+      "size": 817
+    },
+    {
+      "id": "community-review-31-20260907.passive",
+      "path": "abilities/community-review-31-20260907.passive.json",
+      "hash": "18fca8140ba3",
+      "size": 1219
+    },
+    {
+      "id": "community-review-31-20260907.q",
+      "path": "abilities/community-review-31-20260907.q.json",
+      "hash": "43ea6902955f",
+      "size": 1309
+    },
+    {
+      "id": "community-review-31-20260907.r",
+      "path": "abilities/community-review-31-20260907.r.json",
+      "hash": "bb712b6c3248",
+      "size": 1525
+    },
+    {
+      "id": "community-review-31-20260907.w",
+      "path": "abilities/community-review-31-20260907.w.json",
+      "hash": "bcd075404237",
+      "size": 1702
+    },
+    {
+      "id": "community-review-32-20260907.e",
+      "path": "abilities/community-review-32-20260907.e.json",
+      "hash": "3415cd23073f",
+      "size": 1873
+    },
+    {
+      "id": "community-review-32-20260907.ex",
+      "path": "abilities/community-review-32-20260907.ex.json",
+      "hash": "359228910211",
+      "size": 1082
+    },
+    {
+      "id": "community-review-32-20260907.passive",
+      "path": "abilities/community-review-32-20260907.passive.json",
+      "hash": "8e9daa8be243",
+      "size": 1249
+    },
+    {
+      "id": "community-review-32-20260907.q",
+      "path": "abilities/community-review-32-20260907.q.json",
+      "hash": "643fa3c1d641",
+      "size": 1373
+    },
+    {
+      "id": "community-review-32-20260907.r",
+      "path": "abilities/community-review-32-20260907.r.json",
+      "hash": "ccf0bd731b1f",
+      "size": 1519
+    },
+    {
+      "id": "community-review-32-20260907.w",
+      "path": "abilities/community-review-32-20260907.w.json",
+      "hash": "644795ae4581",
+      "size": 1791
+    },
+    {
+      "id": "community-review-33-20260907.e",
+      "path": "abilities/community-review-33-20260907.e.json",
+      "hash": "3244c24fdc72",
+      "size": 1950
+    },
+    {
+      "id": "community-review-33-20260907.ex",
+      "path": "abilities/community-review-33-20260907.ex.json",
+      "hash": "56cb532fdce0",
+      "size": 1221
+    },
+    {
+      "id": "community-review-33-20260907.passive",
+      "path": "abilities/community-review-33-20260907.passive.json",
+      "hash": "fd7c7c3dcb0a",
+      "size": 1596
+    },
+    {
+      "id": "community-review-33-20260907.q",
+      "path": "abilities/community-review-33-20260907.q.json",
+      "hash": "47eb6131cef0",
+      "size": 1799
+    },
+    {
+      "id": "community-review-33-20260907.r",
+      "path": "abilities/community-review-33-20260907.r.json",
+      "hash": "e384bce94548",
+      "size": 1544
+    },
+    {
+      "id": "community-review-33-20260907.w",
+      "path": "abilities/community-review-33-20260907.w.json",
+      "hash": "395499e60e0d",
+      "size": 1367
+    },
+    {
+      "id": "community-review-34-20260907.e",
+      "path": "abilities/community-review-34-20260907.e.json",
+      "hash": "eb37f97049ec",
+      "size": 1599
+    },
+    {
+      "id": "community-review-34-20260907.ex",
+      "path": "abilities/community-review-34-20260907.ex.json",
+      "hash": "d58b9bde7e3c",
+      "size": 1245
+    },
+    {
+      "id": "community-review-34-20260907.passive",
+      "path": "abilities/community-review-34-20260907.passive.json",
+      "hash": "3ea7131aba57",
+      "size": 1198
+    },
+    {
+      "id": "community-review-34-20260907.q",
+      "path": "abilities/community-review-34-20260907.q.json",
+      "hash": "28968a2c1397",
+      "size": 1933
+    },
+    {
+      "id": "community-review-34-20260907.r",
+      "path": "abilities/community-review-34-20260907.r.json",
+      "hash": "41ad9a3db614",
+      "size": 1339
+    },
+    {
+      "id": "community-review-34-20260907.w",
+      "path": "abilities/community-review-34-20260907.w.json",
+      "hash": "ba26af125448",
+      "size": 1716
+    },
+    {
+      "id": "community-review-35-20260907.e",
+      "path": "abilities/community-review-35-20260907.e.json",
+      "hash": "79a7370b2f8e",
+      "size": 1364
+    },
+    {
+      "id": "community-review-35-20260907.ex",
+      "path": "abilities/community-review-35-20260907.ex.json",
+      "hash": "8dbdf70e76e1",
+      "size": 880
+    },
+    {
+      "id": "community-review-35-20260907.passive",
+      "path": "abilities/community-review-35-20260907.passive.json",
+      "hash": "687ef6a4dfc3",
+      "size": 1211
+    },
+    {
+      "id": "community-review-35-20260907.q",
+      "path": "abilities/community-review-35-20260907.q.json",
+      "hash": "db147d42abea",
+      "size": 1808
+    },
+    {
+      "id": "community-review-35-20260907.r",
+      "path": "abilities/community-review-35-20260907.r.json",
+      "hash": "0371ac61bfd9",
+      "size": 1816
+    },
+    {
+      "id": "community-review-35-20260907.w",
+      "path": "abilities/community-review-35-20260907.w.json",
+      "hash": "5e3e9b216912",
+      "size": 1683
+    },
+    {
+      "id": "community-review-36-20260907.e",
+      "path": "abilities/community-review-36-20260907.e.json",
+      "hash": "39385d47ca6d",
+      "size": 1959
+    },
+    {
+      "id": "community-review-36-20260907.ex",
+      "path": "abilities/community-review-36-20260907.ex.json",
+      "hash": "9dcc6075e78c",
+      "size": 931
+    },
+    {
+      "id": "community-review-36-20260907.passive",
+      "path": "abilities/community-review-36-20260907.passive.json",
+      "hash": "1dc02e033453",
+      "size": 1182
+    },
+    {
+      "id": "community-review-36-20260907.q",
+      "path": "abilities/community-review-36-20260907.q.json",
+      "hash": "6d4c9993c2e8",
+      "size": 1785
+    },
+    {
+      "id": "community-review-36-20260907.r",
+      "path": "abilities/community-review-36-20260907.r.json",
+      "hash": "1202a8baff7b",
+      "size": 1827
+    },
+    {
+      "id": "community-review-36-20260907.w",
+      "path": "abilities/community-review-36-20260907.w.json",
+      "hash": "b206f6932e32",
+      "size": 1735
+    },
+    {
+      "id": "community-review-37-20260907.e",
+      "path": "abilities/community-review-37-20260907.e.json",
+      "hash": "9e7ba850cc8f",
+      "size": 1444
+    },
+    {
+      "id": "community-review-37-20260907.ex",
+      "path": "abilities/community-review-37-20260907.ex.json",
+      "hash": "fc316b55eb9a",
+      "size": 961
+    },
+    {
+      "id": "community-review-37-20260907.passive",
+      "path": "abilities/community-review-37-20260907.passive.json",
+      "hash": "9e2f2fdbf9ac",
+      "size": 1228
+    },
+    {
+      "id": "community-review-37-20260907.q",
+      "path": "abilities/community-review-37-20260907.q.json",
+      "hash": "249af882a99c",
+      "size": 1286
+    },
+    {
+      "id": "community-review-37-20260907.r",
+      "path": "abilities/community-review-37-20260907.r.json",
+      "hash": "533abd105328",
+      "size": 2024
+    },
+    {
+      "id": "community-review-37-20260907.w",
+      "path": "abilities/community-review-37-20260907.w.json",
+      "hash": "0008ff78a751",
+      "size": 2038
+    },
     {
       "id": "godie-e001.e",
       "path": "abilities/godie-e001.e.json",
@@ -83,8 +2747,8 @@
     {
       "id": "godie-e007.ex",
       "path": "abilities/godie-e007.ex.json",
-      "hash": "44302b2d2045",
-      "size": 1457
+      "hash": "cbe7aeda452b",
+      "size": 1454
     },
     {
       "id": "godie-e007.passive",
@@ -581,8 +3245,8 @@
     {
       "id": "godie-ewar.ex",
       "path": "abilities/godie-ewar.ex.json",
-      "hash": "3cbaa99544cc",
-      "size": 1457
+      "hash": "684a5aead97f",
+      "size": 1454
     },
     {
       "id": "godie-ewar.passive",
@@ -647,8 +3311,8 @@
     {
       "id": "godie-h01n.e",
       "path": "abilities/godie-h01n.e.json",
-      "hash": "ee278253b7f0",
-      "size": 2438
+      "hash": "c6124c39f906",
+      "size": 2444
     },
     {
       "id": "godie-h01n.ex",
@@ -749,8 +3413,8 @@
     {
       "id": "godie-h01u.w",
       "path": "abilities/godie-h01u.w.json",
-      "hash": "41476e9bf11e",
-      "size": 3208
+      "hash": "ceca1abad99c",
+      "size": 3125
     },
     {
       "id": "godie-h020.e",
@@ -959,7 +3623,7 @@
     {
       "id": "godie-hapm.r",
       "path": "abilities/godie-hapm.r.json",
-      "hash": "d9cd62b2bdfc",
+      "hash": "b2578bd312f7",
       "size": 1710
     },
     {
@@ -2479,6 +5143,258 @@
       "path": "abilities/godie-zombiex.w.json",
       "hash": "4fe4c13e0a89",
       "size": 1178
+    },
+    {
+      "id": "lol-karthus.e",
+      "path": "abilities/lol-karthus.e.json",
+      "hash": "9d496a5919f4",
+      "size": 1544
+    },
+    {
+      "id": "lol-karthus.ex",
+      "path": "abilities/lol-karthus.ex.json",
+      "hash": "3b05165ce96d",
+      "size": 1115
+    },
+    {
+      "id": "lol-karthus.passive",
+      "path": "abilities/lol-karthus.passive.json",
+      "hash": "14b2e1e39ab9",
+      "size": 1833
+    },
+    {
+      "id": "lol-karthus.q",
+      "path": "abilities/lol-karthus.q.json",
+      "hash": "48f35bf32f7a",
+      "size": 1182
+    },
+    {
+      "id": "lol-karthus.r",
+      "path": "abilities/lol-karthus.r.json",
+      "hash": "06b062671885",
+      "size": 1203
+    },
+    {
+      "id": "lol-karthus.w",
+      "path": "abilities/lol-karthus.w.json",
+      "hash": "6e32bb397be2",
+      "size": 1285
+    },
+    {
+      "id": "lol-leesin.e",
+      "path": "abilities/lol-leesin.e.json",
+      "hash": "4744b1ad8e01",
+      "size": 1200
+    },
+    {
+      "id": "lol-leesin.ex",
+      "path": "abilities/lol-leesin.ex.json",
+      "hash": "cfb45eca2886",
+      "size": 1449
+    },
+    {
+      "id": "lol-leesin.passive",
+      "path": "abilities/lol-leesin.passive.json",
+      "hash": "45c82a85205a",
+      "size": 1456
+    },
+    {
+      "id": "lol-leesin.q",
+      "path": "abilities/lol-leesin.q.json",
+      "hash": "c493cc782ed6",
+      "size": 1145
+    },
+    {
+      "id": "lol-leesin.r",
+      "path": "abilities/lol-leesin.r.json",
+      "hash": "9a27946333ef",
+      "size": 1763
+    },
+    {
+      "id": "lol-leesin.w",
+      "path": "abilities/lol-leesin.w.json",
+      "hash": "e2474aa948cc",
+      "size": 1415
+    },
+    {
+      "id": "lol-lux.e",
+      "path": "abilities/lol-lux.e.json",
+      "hash": "f732be92039c",
+      "size": 1571
+    },
+    {
+      "id": "lol-lux.ex",
+      "path": "abilities/lol-lux.ex.json",
+      "hash": "03dfb1f96a72",
+      "size": 1215
+    },
+    {
+      "id": "lol-lux.passive",
+      "path": "abilities/lol-lux.passive.json",
+      "hash": "979cab95b1a5",
+      "size": 1441
+    },
+    {
+      "id": "lol-lux.q",
+      "path": "abilities/lol-lux.q.json",
+      "hash": "1dba84aa80eb",
+      "size": 1269
+    },
+    {
+      "id": "lol-lux.r",
+      "path": "abilities/lol-lux.r.json",
+      "hash": "19cde3e3a285",
+      "size": 1604
+    },
+    {
+      "id": "lol-lux.w",
+      "path": "abilities/lol-lux.w.json",
+      "hash": "c9586a9f3f7b",
+      "size": 1234
+    },
+    {
+      "id": "lol-missfortune.e",
+      "path": "abilities/lol-missfortune.e.json",
+      "hash": "c91e9a415d4e",
+      "size": 1593
+    },
+    {
+      "id": "lol-missfortune.ex",
+      "path": "abilities/lol-missfortune.ex.json",
+      "hash": "ec5e6560287b",
+      "size": 1323
+    },
+    {
+      "id": "lol-missfortune.passive",
+      "path": "abilities/lol-missfortune.passive.json",
+      "hash": "6463d46a5123",
+      "size": 1469
+    },
+    {
+      "id": "lol-missfortune.q",
+      "path": "abilities/lol-missfortune.q.json",
+      "hash": "f92bb43a793f",
+      "size": 1494
+    },
+    {
+      "id": "lol-missfortune.r",
+      "path": "abilities/lol-missfortune.r.json",
+      "hash": "532ec59fe3c0",
+      "size": 1391
+    },
+    {
+      "id": "lol-missfortune.w",
+      "path": "abilities/lol-missfortune.w.json",
+      "hash": "6d7d59370f66",
+      "size": 1336
+    },
+    {
+      "id": "lol-warwick.e",
+      "path": "abilities/lol-warwick.e.json",
+      "hash": "05f7257feaa2",
+      "size": 1267
+    },
+    {
+      "id": "lol-warwick.ex",
+      "path": "abilities/lol-warwick.ex.json",
+      "hash": "d835d19a18ef",
+      "size": 1104
+    },
+    {
+      "id": "lol-warwick.passive",
+      "path": "abilities/lol-warwick.passive.json",
+      "hash": "d8983dc517cd",
+      "size": 1706
+    },
+    {
+      "id": "lol-warwick.q",
+      "path": "abilities/lol-warwick.q.json",
+      "hash": "fae8a0bd4469",
+      "size": 1811
+    },
+    {
+      "id": "lol-warwick.r",
+      "path": "abilities/lol-warwick.r.json",
+      "hash": "e3fbd68e6fbc",
+      "size": 1973
+    },
+    {
+      "id": "lol-warwick.w",
+      "path": "abilities/lol-warwick.w.json",
+      "hash": "45b8c845df4a",
+      "size": 1334
+    },
+    {
+      "id": "lol-xerath.e",
+      "path": "abilities/lol-xerath.e.json",
+      "hash": "53d75641e28b",
+      "size": 1275
+    },
+    {
+      "id": "lol-xerath.ex",
+      "path": "abilities/lol-xerath.ex.json",
+      "hash": "f41a519618f9",
+      "size": 1206
+    },
+    {
+      "id": "lol-xerath.passive",
+      "path": "abilities/lol-xerath.passive.json",
+      "hash": "dea8da45b1e5",
+      "size": 1453
+    },
+    {
+      "id": "lol-xerath.q",
+      "path": "abilities/lol-xerath.q.json",
+      "hash": "1f1bbe8be673",
+      "size": 1625
+    },
+    {
+      "id": "lol-xerath.r",
+      "path": "abilities/lol-xerath.r.json",
+      "hash": "bf6963f6f7bf",
+      "size": 1394
+    },
+    {
+      "id": "lol-xerath.w",
+      "path": "abilities/lol-xerath.w.json",
+      "hash": "5413e84a22b3",
+      "size": 1165
+    },
+    {
+      "id": "lol-yasuo.e",
+      "path": "abilities/lol-yasuo.e.json",
+      "hash": "a53ef9e22076",
+      "size": 1802
+    },
+    {
+      "id": "lol-yasuo.ex",
+      "path": "abilities/lol-yasuo.ex.json",
+      "hash": "e0ad5e27037b",
+      "size": 1224
+    },
+    {
+      "id": "lol-yasuo.passive",
+      "path": "abilities/lol-yasuo.passive.json",
+      "hash": "e22caa09c909",
+      "size": 1454
+    },
+    {
+      "id": "lol-yasuo.q",
+      "path": "abilities/lol-yasuo.q.json",
+      "hash": "a933a21292de",
+      "size": 1622
+    },
+    {
+      "id": "lol-yasuo.r",
+      "path": "abilities/lol-yasuo.r.json",
+      "hash": "9f2478c78a29",
+      "size": 1979
+    },
+    {
+      "id": "lol-yasuo.w",
+      "path": "abilities/lol-yasuo.w.json",
+      "hash": "48b52f9ef1cf",
+      "size": 1254
     },
     {
       "id": "sela.e",

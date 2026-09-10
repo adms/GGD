@@ -29,13 +29,27 @@ const DOC = JSON.parse(
 ) as { round11?: unknown };
 
 describe("第十一回合的旋鈕骨架（GH#919–#925）", () => {
-  it("★★ ⭐⭐ 骨架**不可以開著出貨**（sim 那一半還沒做）", () => {
-    expect(
-      SHIPPED_ROUND11.enabled,
-      "⛔⛔ 一個「有欄位、有預設值、而 sim 沒實作」的模式**開著出貨** ⇒\n" +
-        "  ⭐ 那是這個 repo 記過最多次的形狀：機制在、玩家拿不到、而每一條測試都是綠的。",
-    ).toBe(false);
-    expect((DOC.round11 as { enabled: boolean }).enabled, "⛔ JSON 那一份是開的").toBe(false);
+  it("★★ ⭐⭐ 開著出貨 ⇒ 這個模式**每一格都要真的配置好**（⛔ 不是半空的）", () => {
+    // ⚠️⚠️ ⭐ 這一條**換過前提**（2026-09-10）。
+    //
+    // ⛔ 原本它斷言的是 `enabled === false`，理由逐字是「sim 那一半還沒做」。
+    // ⭐ 那個前提今天**不成立了**：A/B/C/D/E/F/G 七段全部有出貨消費端
+    //   （`enabledSwitchesHaveConsumers` 在守，而它的兩列 round11 豁免已經刪掉），
+    //   663/663 綠 —— 而 owner 2026-09-09 23:53 逐字「**round11快上線**」。
+    //
+    // ⛔⛔ 而「前提消失」⛔ 不等於「這條斷言該刪掉」——⭐ 它在防的東西還在：
+    //   **一個開著的模式，欄位卻是空的／零的** ⇒ 玩家進到一個沒有時間、沒有場地、
+    //   橫幅是空字串的回合。⭐ 那正是第一·五守則的形狀（畫面上宣稱了而什麼都沒有）。
+    // ⇒ ⭐ 改成驗**那個**：開著 ⇒ 每一格都要有值。
+    const on = SHIPPED_ROUND11.enabled;
+    expect((DOC.round11 as { enabled: boolean }).enabled, "⛔ 兩個住處要一致").toBe(on);
+    if (!on) return; // ⭐ 關著 ⇒ 逐位元 no-op,⛔ 沒有什麼要驗的
+
+    expect(SHIPPED_ROUND11.durationSec, "⛔ 開著而回合長度是 0 ⇒ 一進去就結束").toBeGreaterThan(0);
+    expect(SHIPPED_ROUND11.arenaId, "⛔ 開著而沒有場地 id ⇒ 載不到地圖").not.toBe("");
+    expect(SHIPPED_ROUND11.bannerText.trim(), "⛔ 開著而橫幅是空的 ⇒ 畫面上一個空框").not.toBe("");
+    expect(SHIPPED_ROUND11.triggerBossKills, "⛔ 開著而門檻是 0 ⇒ 每一場都會進").toBeGreaterThan(0);
+    expect(SHIPPED_ROUND11.maxAliveZombies, "⛔ 開著而上限是 0 ⇒ 一隻怪都不會出現").toBeGreaterThan(0);
   });
 
   it("★★ ⭐ 出貨值與 JSON **逐格相同**（兩個住處會漂 ⇒ 紅）", () => {

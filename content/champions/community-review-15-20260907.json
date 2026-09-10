@@ -1,0 +1,372 @@
+{
+  "id": "community-review-15-20260907",
+  "name": "比利海靈頓",
+  "description": "比利海靈頓 社群英雄功能驗收稿。來源：摔角與網路迷因形象。  \n定位：抓取、雙人動作同步、近身支援。  \n註：本組招式名稱為 GGD 創編。\n\n視覺方向：藍白摔角衝擊線、落地塵環、夥伴鼓舞光；招式名均為 GGD 創編。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "硬輔",
+  "modelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 38.2761224489796,
+    "healthRegen": 0.05743673469387757,
+    "maxMana": 11.026530612244898,
+    "manaRegen": 0,
+    "ad": 2.9131428571428573,
+    "as": 2.9226239784265093e-05,
+    "mr": 2.639795918367347,
+    "armor": 0.9537142857142857,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 25,
+    "agi": 12,
+    "int": 23,
+    "strGrowth": 2.36,
+    "agiGrowth": 1.18,
+    "intGrowth": 2.17,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-15-20260907.q",
+      "name": "〔正面擒抱〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】抓取一名近身敵人，雙方短暫進入配對動作；抓取總時間有上限。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-15-20260907.q.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-15-20260907.w",
+      "name": "〔肌肉防線〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲 200 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】消耗氣勢提高短期防禦，無氣勢時仍有較弱效果。\n【待補機制】雙人摔角動作、抓取免疫與同步挂點須驗收。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "target",
+          "mode": "toPoint",
+          "apexHeight": 0.005,
+          "durationSec": 0.45,
+          "throwDistance": 3.67,
+          "dragToCaster": true,
+          "landRadius": 2,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.4082
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.567,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-15-20260907.w.webp",
+      "template": {
+        "ref": "tpl-pull-throw",
+        "params": {
+          "mode": "toPoint",
+          "grabMode": "dragToCaster",
+          "throwMode": "distance",
+          "apexHeight": 1.2,
+          "durationSec": 0.45,
+          "throwDistance": 200,
+          "landRadius": 2,
+          "landDamageTier": "小",
+          "landApRatio": 0,
+          "damageType": "physical",
+          "castTimeSec": 0.567
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-15-20260907.e",
+      "name": "〔肩膀衝撞〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-15-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】向前衝撞，命中第一名敵人後停止。\n【待補機制】需保護指定友軍與氣勢；目前自身。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-15-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-15-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-15-20260907.r",
+      "name": "〔兄貴背摔〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "target",
+          "mode": "toPoint",
+          "apexHeight": 0.005,
+          "durationSec": 0.45,
+          "throwDistance": 7.33,
+          "dragToCaster": true,
+          "landRadius": 2,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 1.4577
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.633,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-15-20260907.r.webp",
+      "template": {
+        "ref": "tpl-pull-throw",
+        "params": {
+          "mode": "toPoint",
+          "grabMode": "dragToCaster",
+          "throwMode": "distance",
+          "apexHeight": 1.2,
+          "durationSec": 0.45,
+          "throwDistance": 400,
+          "landRadius": 2,
+          "landDamageTier": "小",
+          "landApRatio": 0,
+          "damageType": "physical",
+          "castTimeSec": 1.633
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-15-20260907.ex",
+  "passiveAbility": "community-review-15-20260907.passive",
+  "icon": "assets/icons/champions/community-review-15-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b4ff5a804c418807cf914810d3a45d9989f1c847069f7aec",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457123",
+      "modelSha256": "26077ba090de3f0e9ed2022f50ac6af3b48485876d5f2051f85e6cd613ba9ac7",
+      "binarySha256": "d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119",
+      "registeredAt": "2026-09-10T14:45:30.645Z",
+      "source": {
+        "kind": "previous",
+        "character": "比利海靈頓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457123.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.312ae63bf3a0833504025a5bb4e5166834c6b1260d5c77b7",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "d30106f875e8982a4b852553a678df079affaaa8cc460c27d7cbe83680e89275",
+      "binarySha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "registeredAt": "2026-09-10T14:45:30.652Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+      "label": "比利海靈頓（論壇模型）",
+      "sourceModelKey": "ou99.457123-standard-v2",
+      "modelSha256": "b03385fed8793f3815e9f51133d7a118b86a2ba9209fa215b0a5a1869cd5a8c0",
+      "binarySha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+      "registeredAt": "2026-09-10T14:48:47.915Z",
+      "source": {
+        "kind": "exact",
+        "character": "比利海靈頓",
+        "work": "摔角與網路迷因形象。",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457123-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

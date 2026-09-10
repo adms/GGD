@@ -1,0 +1,20 @@
+{
+  "id": "version.body.9b0127aa10fd9e70d9e92c8151cf30ef2bafb3afdd61bcdf",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "missfortune_idle1",
+    "run": "missfortune_run",
+    "attack": "missfortune_attack1",
+    "cast": "missfortune_spell1",
+    "hurt": "missfortune_idle1",
+    "death": "missfortune_death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+    "legacyAppearance": true
+  },
+  "yawOffsetDeg": 0
+}

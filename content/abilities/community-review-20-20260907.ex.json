@@ -1,0 +1,40 @@
+{
+  "id": "community-review-20-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔電磁過載〕",
+  "provenance": "w3x-import",
+  "description": "消耗電荷，強化下一次 Q 的範圍或 W 的跳躍數；使用時明示強化結果。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "castTimeSec": 1.033,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "pctAdd",
+          "value": 0.15
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "vfxKey": "fx.prim.lightning.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.pulse",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-20-20260907.ex.webp"
+}

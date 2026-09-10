@@ -33,6 +33,7 @@ import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { cover } from "../../testkit/cover";
 import {
   characterKeys,
@@ -75,6 +76,33 @@ function exAbilityName(id: string | undefined): string | undefined {
     if (existsSync(p)) return (JSON.parse(readFileSync(p, "utf8")) as { name?: string }).name;
   }
   return undefined;
+}
+
+/**
+ * ⭐⭐ 一隻英雄**實際用的那顆 mesh** —— ⛔ 不是 `modelKey` 這個字串。
+ *
+ * ⛔⛔ 2026-09-09 量到：`modelKey` **停止**是 mesh 身分的有效代理。
+ *   PR #1152 引入「模型版本」之後，同一顆 GLB 會有**兩個合法的鍵** ——
+ *   `imported.herosaber`（原鍵）與 `version.body.<hash>`（內容定址的副本），
+ *   ⭐ 而兩者逐位元組是**同一顆**（實測 `binarySha256` 與檔案 sha256 相等）。
+ *   ⇒ 用字串比對就會說「這兩隻不是同一顆 mesh」——⛔ 而那是假的。
+ *
+ * ⭐ 這條斷言是「同一顆 mesh、兩隻英雄，⛔ 不可以被折成一隻」的**前提**。
+ *   ⇒ 前提要問**關係**（是不是同一顆 mesh），⛔ 不是問一個會改名的名詞。
+ *   ⚠️ 而它比字串比對**更嚴**：兩個不同的鍵指到同一顆會被認出來，
+ *     同一個鍵指到不同位元組也會（⛔ 字串比對兩種都看不出來）。
+ */
+function meshOf(c: { readonly modelKey?: string | null | undefined }): string {
+  const key = c.modelKey ?? "";
+  const doc = join(CONTENT_DIR, "models", `${key}.json`);
+  if (!existsSync(doc)) return `key:${key}`; // ⭐ 沒有模型文件 ⇒ 誠實回鍵本身
+  const glb = (JSON.parse(readFileSync(doc, "utf8")) as { glbPath?: string }).glbPath ?? "";
+  // ⭐ 內容定址的路徑（檔名 = 64 hex）⇒ 檔名就是它的 sha
+  const m = /\/([0-9a-f]{64})\.glb$/.exec(glb);
+  if (m) return m[1]!;
+  const abs = join(CONTENT_DIR, glb);
+  if (!existsSync(abs)) return `path:${glb}`;
+  return createHash("sha256").update(readFileSync(abs)).digest("hex");
 }
 
 /** Every champion@1 doc in one tree, as the identity helper wants to see it. */
@@ -178,7 +206,11 @@ describe("黑化Saber stays a separate hero (champion-identity-saber-alter)", ()
     cover("champion-identity-saber-alter");
     // Same mesh, same extracted portrait, near-identical name — every heuristic
     // the old code used said "duplicate". The hero number says otherwise.
-    expect(champ("godie-e00q").modelKey).toBe(champ("godie-e002").modelKey);
+    expect(meshOf(champ("godie-e00q"))).toBe(meshOf(champ("godie-e002")));
+    // ⭐ **反方向**：這把尺要分得出「不同的 mesh」——⛔ 否則它可能對每一對都回相等
+    //   （⚠️ 一把只驗過單邊的尺不算自證過；本 repo 記過三個同族的量尺陷阱）。
+    expect(meshOf(champ("godie-e00q"))).not.toBe(meshOf(champ("godie-e008")));
+    expect(meshOf(champ("godie-e00q"))).not.toMatch(/^(key|path):/); // ⭐ 真的解析到 sha
     expect(heroNumberOf(champ("godie-e00q"))).toBe("69");
     expect(heroNumberOf(champ("godie-e002"))).toBe("20");
 
@@ -395,7 +427,7 @@ describe("numberless champions each stay distinct (champion-identity-no-number)"
     }
     // …and never merged into a NUMBERED hero either, however similar the name.
     // godie-u01q 測試英雄-索隆 shares 索隆 AND its mesh with hero 11's 三刀流劍士.
-    expect(champ("godie-u01q").modelKey).toBe(champ("godie-udre").modelKey);
+    expect(meshOf(champ("godie-u01q"))).toBe(meshOf(champ("godie-udre")));
     expect(isSameCharacter(champ("godie-u01q"), champ("godie-udre"))).toBe(false);
     // 黑化張飛 vs 十六夜Sakuya: both numberless — still two heroes, not one.
     expect(isSameCharacter(champ("godie-u01f"), champ("godie-e00u"))).toBe(false);

@@ -1,0 +1,36 @@
+{
+  "schema": "ggd-priority10-visual-handoff@1",
+  "frozen": true,
+  "report": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/visual-audit.json",
+  "reportSha256": "a87a72383f406f129324c3112c67c8a1d367ff625b901668144544c989b64548",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910",
+  "models": 10,
+  "roots": [
+    {
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-visual-audit-20260910",
+      "fileManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-visual-audit-20260910/file-manifest.json",
+      "fileManifestSha256": "ca8b17fd478d32e879fe92e6f4f9b8d8ac2578e63f374d6f0ef28dd65e26ed61",
+      "filesIncludingManifest": 31
+    },
+    {
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-atlas-lod-review-20260910",
+      "fileManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-atlas-lod-review-20260910/file-manifest.json",
+      "fileManifestSha256": "af24221719c30a09eae370aaea5c4c713b24ef4e3d88e44f2e173bf0589240c7",
+      "filesIncludingManifest": 31
+    },
+    {
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910",
+      "fileManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/file-manifest.json",
+      "fileManifestSha256": "a6e1221e01aed204caa5f08fd433a5df59f5c2d65435828458f7b8a0cac9255c",
+      "filesIncludingManifest": 33
+    }
+  ],
+  "priorityContactSheets": [
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/contact-sheet-1.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/contact-sheet-2.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/contact-sheet-3.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/contact-sheet-4.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/contact-sheet-5.png"
+  ],
+  "centralWrites": false
+}

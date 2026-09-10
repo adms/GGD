@@ -1,0 +1,486 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-orphen.json",
+  "sourceHeroSha256": "649eb9383967557b16cbc8d9325a2cf7d3285e3f728505053b1992976bf95e06",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:65ed5451b94bf1561f394b3509fab39e9f1c2e267d960f4cbdf0dc4abfb1aaac",
+    "sourceModelKey": "ou99.496452-standard-v2",
+    "label": "甲贺忍蛙（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "甲贺忍蛙",
+      "work": "來源作品待核；論壇標題：甲贺忍蛙",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-496452-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-orphen",
+    "name": "歐菲",
+    "description": "魔術士歐菲｜咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "mage",
+    "attackType": "melee",
+    "archetype": "mage",
+    "origin": "法鬥",
+    "modelKey": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.496452",
+        "modelSha256": "7ae267be3f122b3be3a1dc70deafc3cf78223139b961d77b48f3e02d69d666b9",
+        "binarySha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
+        "registeredAt": "2026-09-10T14:37:57.023Z",
+        "source": {
+          "kind": "previous",
+          "character": "歐菲",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.496452.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.e3d6321e67667b2677067dfec715b698ebde6215679cf799",
+        "label": "甲贺忍蛙（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.496452-standard-v2",
+        "modelSha256": "9af03704729fedaeb3c47a5068bd2c2bf7c3e8de4017a7d2d8bb1faec44adcf3",
+        "binarySha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+        "registeredAt": "2026-09-10T14:37:57.029Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "甲贺忍蛙",
+          "work": "來源作品待核；論壇標題：甲贺忍蛙",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-496452-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 6,
+      "range": 1.6
+    },
+    "growth": {
+      "ad": 4.289142857142858,
+      "ap": 0,
+      "armor": 0.5280102040816326,
+      "as": 0,
+      "healthRegen": 0.08789387755102042,
+      "manaRegen": 0,
+      "maxHealth": 35.000204081632646,
+      "maxMana": 0.9581632653061187,
+      "mr": 2.1118367346938776
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 18,
+      "agi": 13,
+      "int": 29,
+      "strGrowth": 1.67,
+      "agiGrowth": 1.25,
+      "intGrowth": 2.78,
+      "primary": "INT",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-orphen.q",
+        "name": "我放出的光之催繳函",
+        "provenance": "w3x-import",
+        "description": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "極小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.6867
+                }
+              ]
+            }
+          },
+          {
+            "kind": "heal",
+            "amount": {
+              "flat": 100,
+              "perRank": [
+                0,
+                50,
+                100,
+                150
+              ]
+            },
+            "applyTo": "self"
+          },
+          {
+            "kind": "dot",
+            "damageType": "magic",
+            "amountPerTick": {
+              "damageTier": "極小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.2289
+                }
+              ]
+            },
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "refresh"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.567,
+        "template": {
+          "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+          "params": {
+            "apRatio": 0.2,
+            "castTimeSec": 0.567,
+            "damageTier": "極小",
+            "damageType": "magic",
+            "durationSec": 3,
+            "intervalSec": 1,
+            "leechFlat": 100,
+            "stacking": "refresh"
+          },
+          "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"
+        }
+      },
+      "W": {
+        "id": "b2-orphen.w",
+        "name": "利息可以再寄一次",
+        "provenance": "w3x-import",
+        "description": "「利息可以再寄一次！」\n縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "modifyCooldown",
+            "shape": "single",
+            "who": "self",
+            "slot": "Q",
+            "mode": "reduceFlat",
+            "amount": 2
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "self",
+            "effects": [
+              {
+                "amount": 2,
+                "kind": "modifyCooldown",
+                "mode": "reduceFlat",
+                "shape": "single",
+                "slot": "Q",
+                "who": "self"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-orphen.e",
+        "name": "債務人請勿插話",
+        "provenance": "w3x-import",
+        "description": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "magic-break",
+            "duration": 2.5,
+            "silenced": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.267,
+        "template": {
+          "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+          "params": {
+            "castTimeSec": 0.267,
+            "status": {
+              "duration": 2.5,
+              "silenced": true,
+              "statusId": "magic-break"
+            }
+          },
+          "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+        }
+      },
+      "R": {
+        "id": "b2-orphen.r",
+        "name": "債主不用敲門",
+        "provenance": "w3x-import",
+        "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "blink",
+            "shape": "single",
+            "to": "targetUnit",
+            "applyTo": "self",
+            "stopShortUnits": 1.2,
+            "onArrive": [
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.lightning.slash",
+                "at": "point"
+              },
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "中"
+                }
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.667,
+        "template": {
+          "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+          "params": {
+            "castTimeSec": 0.667,
+            "damage": {
+              "damageTier": "中"
+            },
+            "damageType": "magic",
+            "range": 6,
+            "stopShortUnits": 1.2
+          },
+          "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
+        }
+      }
+    },
+    "exAbility": "b2-orphen.ex",
+    "passiveAbility": "b2-orphen.passive",
+    "icon": "assets/icons/champions/b2-orphen.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand",
+          "run": "walk",
+          "attack": "attack 1",
+          "cast": "spell",
+          "hurt": "stand ready",
+          "death": "death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.496452",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.496452",
+        "modelSha256": "7ae267be3f122b3be3a1dc70deafc3cf78223139b961d77b48f3e02d69d666b9",
+        "binarySha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
+        "registeredAt": "2026-09-10T14:37:57.023Z",
+        "source": {
+          "kind": "previous",
+          "character": "歐菲",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.496452.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 1155340,
+      "sha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c"
+    },
+    {
+      "document": {
+        "id": "version.body.e3d6321e67667b2677067dfec715b698ebde6215679cf799",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand",
+          "run": "walk",
+          "attack": "attack 1",
+          "cast": "spell",
+          "hurt": "stand ready",
+          "death": "death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.496452-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.e3d6321e67667b2677067dfec715b698ebde6215679cf799",
+        "label": "甲贺忍蛙（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.496452-standard-v2",
+        "modelSha256": "9af03704729fedaeb3c47a5068bd2c2bf7c3e8de4017a7d2d8bb1faec44adcf3",
+        "binarySha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+        "registeredAt": "2026-09-10T14:37:57.029Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "甲贺忍蛙",
+          "work": "來源作品待核；論壇標題：甲贺忍蛙",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-496452-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 1178620,
+      "sha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

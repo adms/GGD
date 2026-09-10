@@ -1,0 +1,42 @@
+{
+  "id": "community-review-18-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔王之財寶・齊射〕",
+  "provenance": "w3x-import",
+  "description": "消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "castTimeSec": 1.333,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.12,
+      "durationSec": 1.32,
+      "tickOnApply": true
+    }
+  ],
+  "vfxKey": "fx.prim.holy.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.nova",
+      "attachTo": "point"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-18-20260907.ex.webp",
+  "rangeTier": "大"
+}

@@ -1,0 +1,64 @@
+{
+  "castTimeSec": 0.067,
+  "castType": "self",
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "provenance": "w3x-import",
+  "description": "「醫生先給自己掛號！」\n回復自身 120 生命；缺血時的真治療事件會建立病歷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "flat": 120,
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "kind": "heal"
+    }
+  ],
+  "id": "b2-keyaru.q",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "maxRank": 4,
+  "name": "醫生先給自己掛號",
+  "range": 0.0,
+  "schema": "ability@1",
+  "slot": "Q",
+  "template": {
+    "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+    "params": {
+      "amount": {
+        "flat": 120,
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "castTimeSec": 0.067,
+      "target": "self"
+    },
+    "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+  },
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.wind.pulse-sm"
+    }
+  ],
+  "icon": "assets/icons/abilities/b2-keyaru.q.webp"
+}

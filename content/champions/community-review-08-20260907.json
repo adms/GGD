@@ -1,0 +1,353 @@
+{
+  "id": "community-review-08-20260907",
+  "name": "米卡莎",
+  "description": "米卡莎 社群英雄功能驗收稿。作品：《進擊的巨人》  \n採用：配備立體機動裝置與雷槍的版本。  \n定位：錨點移動、氣體與刀刃雙資源。\n\n視覺方向：雙刃白線、鋼索細線、瓦斯短尾跡、雷槍橘色延遲警示圈。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "version.body.66097b65102bec44b3d65cc9e524ba10b3e175261680a998",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 10,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-08-20260907.q",
+      "name": "〔雙刃斬擊〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】近身雙段斬擊，消耗刀刃耐久。\n【待補機制】缺刀刃耐久。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 2.75,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.18,
+          "durationSec": 0.36
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.36,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-08-20260907.q.webp",
+      "template": {
+        "ref": "tpl-lock-combo",
+        "params": {
+          "hitCount": 2,
+          "hitIntervalSec": 0.18,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true
+      },
+      "castTimeSec": 0.367
+    },
+    "W": {
+      "id": "community-review-08-20260907.w",
+      "name": "立體機動裝置",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】射出鉤索連接合法錨點，消耗氣體沿路徑移動。\n【待補機制】需合法場景錨點、鉤索路径、氣體消耗；不是自由跳躍。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 2.75,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 1,
+          "durationSec": 0.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-08-20260907.w.webp",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 250,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-08-20260907.e",
+      "name": "〔補給與換刃〕",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫停留更換刀刃並補充部分氣體；受到控制會中斷。\n【待補機制】需換刃及氣體資源／控制中斷。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "restore",
+          "manaPct": 0.15,
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/community-review-08-20260907.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-08-20260907.r",
+      "name": "雷槍",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】發射兩支可辨識的雷槍，命中或落地後延遲爆炸。\n【待補機制】兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "radius": 4.5,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.4,
+          "durationSec": 0.4,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 0.4,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/community-review-08-20260907.r.webp",
+      "template": {
+        "ref": "tpl-random-barrage",
+        "params": {
+          "count": 2,
+          "intervalSec": 0.4,
+          "impactDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "impactRadius": 150,
+          "scatterRadius": 120,
+          "payout": "perImpact",
+          "castTimeSec": 0.4
+        },
+        "inheritDefaults": true
+      },
+      "radiusTier": "小"
+    }
+  },
+  "exAbility": "community-review-08-20260907.ex",
+  "passiveAbility": "community-review-08-20260907.passive",
+  "icon": "assets/icons/champions/community-review-08-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.95becb4fc895bfcd39d73435c0188347223dbe58bfd2f4a8",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "modelSha256": "18caab8c03a2b7f3c9f3815d1d7298dabeb44fc5af62390dab48e91b36aebc8e",
+      "binarySha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "registeredAt": "2026-09-10T14:45:29.263Z",
+      "source": {
+        "kind": "previous",
+        "character": "米卡莎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.66097b65102bec44b3d65cc9e524ba10b3e175261680a998",
+      "label": "笠笠笠",
+      "sourceModelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "modelSha256": "488fdeec458b8feee463c2583140fb111f01b5627e6d53fb675e43771e01fcdd",
+      "binarySha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "registeredAt": "2026-09-10T14:45:29.275Z",
+      "source": {
+        "kind": "exact",
+        "character": "笠笠笠",
+        "work": "進擊的巨人",
+        "library": "300heroes",
+        "reference": "300heroes:2b730a6724d72692c2c95046",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

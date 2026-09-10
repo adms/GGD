@@ -1,0 +1,141 @@
+{
+  "schema": "ggd-candidate-manifest@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/sinbad-baal-runtime-option-20260910",
+  "candidates": [
+    {
+      "candidateId": "tmr-sinbad-baal-procedural-six-state-v1",
+      "sourceId": "tmr-sinbad-baal",
+      "heroIds": [
+        "b2-sinbad"
+      ],
+      "displayName": "辛巴達｜巴力魔裝（3DS 原作模型＋GGD 程序化六態）",
+      "identityMatch": "same character, Baal Djinn Equip form",
+      "form": "Baal Djinn Equip",
+      "ownerAcceptedAsNormalModel": true,
+      "defaultChangePerformed": false,
+      "modelSourceCategory": "original-game-extracted-model",
+      "animationSourceCategory": "ggd-procedural-fallback",
+      "nativeAnimationCount": 0,
+      "generatedAnimationCount": 6,
+      "runtimeModelId": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+      "glbPath": "runtime-v3/body.glb",
+      "modelDocumentPath": "runtime-v3/model.json",
+      "preparationReceiptPath": "procedural-v3/preparation.receipt.json",
+      "runtimeReceiptPath": "runtime-v3/receipt.json",
+      "uploadedModelPath": "runtime-v3/uploaded-model.json",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "clips": [
+        {
+          "state": "idle",
+          "clip": "GGD_procedural_idle",
+          "seconds": 2.4,
+          "sampleKeys": 73,
+          "channels": 12,
+          "varyingChannels": 3,
+          "loopIntent": true,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "run",
+          "clip": "GGD_procedural_run",
+          "seconds": 0.8,
+          "sampleKeys": 25,
+          "channels": 12,
+          "varyingChannels": 10,
+          "loopIntent": true,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "attack",
+          "clip": "GGD_procedural_attack",
+          "seconds": 1,
+          "sampleKeys": 31,
+          "channels": 12,
+          "varyingChannels": 5,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "cast",
+          "clip": "GGD_procedural_cast",
+          "seconds": 1.6,
+          "sampleKeys": 49,
+          "channels": 12,
+          "varyingChannels": 6,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "hurt",
+          "clip": "GGD_procedural_hurt",
+          "seconds": 0.55,
+          "sampleKeys": 18,
+          "channels": 12,
+          "varyingChannels": 5,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "death",
+          "clip": "GGD_procedural_death",
+          "seconds": 1.25,
+          "sampleKeys": 39,
+          "channels": 12,
+          "varyingChannels": 6,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        }
+      ],
+      "readiness": {
+        "sourceAcquired": true,
+        "modelConverted": true,
+        "standardRuntimeContractVerified": true,
+        "runtimeMotionSampled": true,
+        "textureRendered": true,
+        "visualBasicInspection": "six gestures visibly distinct; source form/materials intact, no missing body parts seen in the inspected front samples",
+        "fullVisualQualityAcceptance": "pending",
+        "backendSelectionVerified": false,
+        "deployed": false
+      },
+      "limits": {
+        "triangles": 3674,
+        "vertices": 3185,
+        "drawPrimitives": 5,
+        "weightedJoints": 48,
+        "maximumClipChannels": 12,
+        "largestTextureEdge": 512
+      },
+      "preservation": {
+        "originalCopyRoot": "original",
+        "allOriginalFilesByteExact": true,
+        "allSixPngRetained": true,
+        "originalAndCompactedRestVertexWorldPositionsMaxError": 0.0
+      },
+      "materialAdaptation": [
+        "Unsupported source KHR_materials_ior IOR1 converted to supported zero-specular material; original materials preserved separately.",
+        "Unused KHR_materials_volume / FB_ngon_encoding declarations removed.",
+        "Shared finalizer made opaque image 3 alpha fully opaque; original RGB unchanged and original PNG retained."
+      ],
+      "gaps": [
+        "No source native animations, VFX, SFX or voice in this package.",
+        "Procedural run has no source root-motion or foot-contact guarantee; death has no collision/grounding guarantee.",
+        "Six states are general fallback gestures, not Sinbad game attack choreography.",
+        "Source long-tail geometry and source head angle retained; full animation aesthetics and in-game framing remain pending.",
+        "Backend option publication and default selection belong to root integration."
+      ]
+    }
+  ]
+}

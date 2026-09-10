@@ -1,0 +1,395 @@
+{
+  "id": "lol-yasuo",
+  "name": "犽宿",
+  "description": "以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。\n\n概念來源：LoL 犽宿\nhttps://www.leagueoflegends.com/zh-tw/champions/yasuo/\n\n本遊戲改編：\n• 第三次斬擊旋風改為獨立 EX；大招不要求擊飛，但有固定鎖足與冷卻。\n• 風牆改為限時物理護盾，不摧毀投射物；不提供雙倍暴擊或無限突進。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.13085306122448978,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-yasuo.q",
+      "name": "斬風",
+      "provenance": "w3x-import",
+      "description": "朝前方斬出四段窄風刃，以本遊戲線段判定命中。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3.0,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.267,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.267
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
+      }
+    },
+    "W": {
+      "id": "lol-yasuo.w",
+      "name": "迎風架勢",
+      "provenance": "w3x-import",
+      "description": "獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "physical",
+          "stackKey": "concept-yasuo-guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.067
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+      }
+    },
+    "E": {
+      "id": "lol-yasuo.e",
+      "name": "踏風進擊",
+      "provenance": "w3x-import",
+      "description": "朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.25,
+          "throwDistance": 5.5,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 5.5,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1.033,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+        "params": {
+          "dashDistance": 300,
+          "dashDurationSec": 0.25,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "pushDistance": 300,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 1.033
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
+      }
+    },
+    "R": {
+      "id": "lol-yasuo.r",
+      "name": "天際斷章",
+      "provenance": "w3x-import",
+      "description": "鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "manaCostTier": "大",
+      "range": 3,
+      "radius": 7.33,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "lock-combo",
+          "duration": 0.8999999999999999,
+          "applyTo": "target",
+          "root": true
+        },
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.3,
+          "durationSec": 0.8999999999999999
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.8999999999999999,
+          "landRadius": 7.33,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "大",
+      "template": {
+        "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+        "params": {
+          "hitCount": 3,
+          "hitIntervalSec": 0.3,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "finisherRadius": 400,
+          "damageType": "physical",
+          "lockTarget": "root",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
+      },
+      "castTimeSec": 0.9
+    }
+  },
+  "exAbility": "lol-yasuo.ex",
+  "passiveAbility": "lol-yasuo.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-yasuo.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.94ace3ac3ea8da708363cf83848e1023783438f26dd23e99",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "modelSha256": "12573e982bca2287f28a8a97a49fc83f9a171fdd9fc6df5bb213545a422034ef",
+      "binarySha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
+      "registeredAt": "2026-09-10T14:45:45.169Z",
+      "source": {
+        "kind": "previous",
+        "character": "犽宿",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
+      "label": "犽宿（LOL 原生模型）",
+      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "modelSha256": "7843b03475f2e6cd3ae7749ce952993df95291322bed0257c047bad5962cd9b5",
+      "binarySha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
+      "registeredAt": "2026-09-10T14:45:45.188Z",
+      "source": {
+        "kind": "exact",
+        "character": "犽宿",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-yasuo.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
+}

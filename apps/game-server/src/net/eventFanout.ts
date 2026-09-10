@@ -220,6 +220,22 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // 12,000+ hp rather than a zombie's 60.
   "mobBossSpawn",
   "mobBossSlain",
+  // ⭐ GH#1151 C —— `mobPromote`「一隻普通殭屍活滿 N 秒，變成特殊殭屍」。
+  //
+  // ⚠️⚠️ 它在 2026-09-10 被加進 `sim/mobs.promoteMobToSpecial()` 而**兩張表都沒有
+  // 它的名字** ⇒ `eventFanout.test.ts` 的「未分類」那一條當場紅（實測：紅的，
+  // 訊息逐字指名 `packages/shared/src/sim/mobs.ts:2794`）。⭐ 這一行是那個決定。
+  //
+  // ⭐ 它**必須**外送，理由與上面那兩則同型：升級整件事發生在 sim 裡，
+  // 而畫面上只會看到「這一隻突然變大變硬」——⛔ 沒有任何東西說出「你放著沒清的
+  // 那一隻升級了」，而那正是第十一回合取捨迴圈的**第一步**（owner 2026-09-01
+  // 逐字：「**普通殭屍放著會變成特殊殭屍**」）。一個看不見的取捨不是取捨。
+  //
+  // PAYLOAD `{ id, zone, from: "normal", to: "special", maxHp }`。
+  // CLIENT CONSUMER：`ui/hud/round11Model.round11NoticeFromEvent` →
+  //   `ui/hud/Round11Overlay` 的提示列（`net/RoomStore.recordRound11Event` 收）。
+  // CADENCE：一隻怪一則，⛔ 不是每 tick —— `Round11Claims` 在 sim 側去重過。
+  "mobPromote",
   // FLOATING COMBAT TEXT (task #92): 補血 / 補魔 — the half `damage` does not
   // carry. Emitted only for DISCRETE restores, so no steady-state regen spam.
   "heal",
@@ -771,9 +787,63 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "objectiveDestroyed",
 ]);
 
+/**
+ * ⭐⭐ 由 **`MatchController`** 發、而且**要外送**的事件（GH#1151 H）。
+ *
+ * ⛔⛔ **為什麼這是第三張表，⛔ 不是直接加進 `FANNED_OUT_EVENT_TYPES`。**
+ *
+ * `MatchRoom` 的漏斗（`MatchRoom.ts:1001`）是
+ * `for (const ev of this.ctl.world.events) if (isFannedOutEvent(ev))` ——
+ * ⭐ 它掃的是 **`world.events` 全部**，⛔ 不分「誰發的」。所以 `MatchController`
+ * 發的事件確實要通過這道白名單才到得了客戶端。
+ *
+ * ⚠️ ⭐ **而 `eventFanout.test.ts` 的「stale entries」那一條會擋下來**：
+ * 它逐字要求「`FANNED_OUT_EVENT_TYPES` ∪ `SERVER_ONLY_EVENT_TYPES` 的每一個名字
+ * 都必須在 **`packages/shared/src/sim`** 裡有 emit 站」——
+ * ⭐ 而這四則的 emit 站在 `apps/game-server/src/match/MatchController.ts`
+ * ⇒ 把它們寫進上面任何一張表，那一條**當場紅**（同一個理由，
+ * `roundStart` / `roundEnd` 到今天也不在上面兩張表上，見 `SERVER_ONLY` 的檔頭）。
+ *
+ * ⇒ ⭐ 分成第三張表，並且把「誰保證它不過期」講清楚：
+ *
+ * | 誰守 | 守什麼 |
+ * |---|---|
+ * | `eventFanout.test.ts` | sim 的 emit 集合**全部分類過**（這張表不在它視野內，刻意的） |
+ * | ⭐ `apps/client/src/net/round11Wire.test.ts` | ⭐ **關係**：跑**真的** `MatchController` 到第十一回合，把**真的** `world.events` 餵過**真的** `isFannedOutEvent`，再餵進**真的**客戶端消費端 ⇒ 名字打錯 / 漏放行 / payload 欄位漂掉，三種都紅 |
+ *
+ * ⚠️ ⭐ 第二列才是承重的那一條 —— 一張名字清單只證明得了「這個字串在集合裡」，
+ * ⛔ 證明不了「那顆事件真的發得出來，而且畫面讀得到它」（失敗形態⑧）。
+ *
+ * ── 逐則的消費端與 cadence ────────────────────────────────────────────────
+ *   · `round11Bombardment` `{ x, z, radius, telegraphSec }` —— ⭐ 大轟炸的**紅圈
+ *     預警**。⛔ 沒有它，玩家挨的是一發**沒有任何前兆**的真傷（`damagePctOfMaxHp`
+ *     出貨 0.5 ＝ 半條血），而票逐字要的是「紅圈倒數後落下」。
+ *     CLIENT: `ui/hud/Round11Overlay` 的預警條 + `ui/hud/Minimap` 的落點圈。
+ *     CADENCE：一次轟炸一則（波次表抽到 `bombardment` 才發，出貨權重 5/100）。
+ *   · `round11ItemBroken` `{ entity, seatId, slot, itemId }` —— ⭐ 死亡永久損壞
+ *     一件寶具。⛔ **一件裝備無聲消失是最糟的形狀**：玩家會把它讀成 bug，
+ *     而 owner 逐字「**就是損壞了 不能撿回**」正是要他知道這是規則。
+ *     CLIENT: `ui/hud/Round11Overlay` 的提示列（⭐ 只認自己那一格 `seatId`）。
+ *     CADENCE：一次死亡最多一則。
+ *   · `round11ReviveCharge` `{ teamId, from, to, mobId }` —— ⭐ 打死特殊殭屍換到
+ *     一格復活權。⛔ 沒有它，取捨迴圈的**報酬那一半**在畫面上不存在。
+ *     CLIENT: 同上（⭐ 只認自己那一隊）。CADENCE：一隻特殊殭屍最多一則。
+ *   · `mobPromote` —— ⚠️ 它**不在這張表**，因為它是 **sim** 發的
+ *     （`sim/mobs.ts`）⇒ 它住在上面那張表，由既有的閘守著。
+ *
+ * ⛔ **`round11EventUnhandled` 刻意不外送**：它是「波次表上出現了一個這一版
+ * 引擎不認得的 `kind`」——⭐ 一個**內容編寫的錯**，與 `summonFailed` 同型。
+ * 玩家沒有東西可看（正確的行為就是什麼都不發生），而它要吵的對象是伺服器的 log。
+ */
+export const CONTROLLER_FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
+  "round11Bombardment",
+  "round11ItemBroken",
+  "round11ReviveCharge",
+]);
+
 /** True when this sim event should be broadcast to clients on MSG.EVENT. */
 export function isFannedOutEvent(ev: SimEvent): boolean {
-  return FANNED_OUT_EVENT_TYPES.has(ev.type);
+  return FANNED_OUT_EVENT_TYPES.has(ev.type) || CONTROLLER_FANNED_OUT_EVENT_TYPES.has(ev.type);
 }
 
 // ───────────────────────────── PRIVATE (single-recipient) DELIVERY ──────────

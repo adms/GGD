@@ -1,0 +1,57 @@
+{
+  "id": "community-review-08-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔立體機動・迴旋斬〕",
+  "provenance": "w3x-import",
+  "description": "選定錨點與敵人後，沿限定弧線移動斬擊；路線失效時安全停止。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 4.5,
+  "castTimeSec": 1.433,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.3,
+      "throwDistance": 7.33,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "knockback",
+          "distance": 3.67,
+          "speed": 15.99,
+          "from": "facing",
+          "launchHeight": 0
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.physical.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.slash",
+      "attachTo": "caster"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-08-20260907.ex.webp",
+  "rangeTier": "小"
+}

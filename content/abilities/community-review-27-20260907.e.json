@@ -1,0 +1,75 @@
+{
+  "id": "community-review-27-20260907.e",
+  "name": "翔牌",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短期飛行位移，具有合法落點與高度限制。\n【待補機制】有限落點飛躍可預覽；翔牌武器姿態待補。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "radius": 2.75,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0.88,
+      "durationSec": 0.5,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 1.033,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-27-20260907.e.webp",
+  "template": {
+    "ref": "tpl-leap-strike",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 220,
+      "durationSec": 0.5,
+      "landRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.033
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.wind.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.arc",
+      "attachTo": "point"
+    }
+  ]
+}

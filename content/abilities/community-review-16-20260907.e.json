@@ -1,0 +1,75 @@
+{
+  "id": "community-review-16-20260907.e",
+  "name": "〔魔法少女飛行〕",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離浮空移動，仍受對決邊界與落點合法性限制。\n【待補機制】有限落點跳躍，不是持續飛行。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 2.75,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 1,
+      "durationSec": 0.5,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 1.033,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/community-review-16-20260907.e.webp",
+  "template": {
+    "ref": "tpl-leap-strike",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 250,
+      "durationSec": 0.5,
+      "landRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.033
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.arc",
+      "attachTo": "point"
+    }
+  ]
+}

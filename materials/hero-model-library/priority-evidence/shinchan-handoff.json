@@ -1,0 +1,51 @@
+{
+  "schema": "ggd-shinchan-local-handoff@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910",
+  "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/deliveries/local-model-delivery-20260910T144328497118Z.json",
+  "manifestSha256": "ba12642de2912cc6fe35d1e7a744b1c6fb5f994f905568d2b8b54d66bc88a948",
+  "manifestBytes": 72065,
+  "fileCount": 200,
+  "totalBytes": 85790686,
+  "candidateManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/candidate-manifest.json",
+  "candidateManifestSha256": "63cff986527f2796081e82f9d9a3eb3935f3964748af4b1591feaa9cdec8b008",
+  "candidates": [
+    {
+      "candidateId": "gta5mod-shinchan-sd2-procedural-six-state-v1",
+      "sourceUrl": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+      "glbPath": "sd2-runtime-v2/body.glb",
+      "glbSha256": "9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e",
+      "glbBytes": 1459204,
+      "modelDocumentPath": "sd2-runtime-v2/model.json",
+      "modelDocumentSha256": "20f51a6f820bfc182a054630cb186ce23e5546af0998fa51187baf297c34dbc3",
+      "previews": {
+        "front": "budget-visual-v1/sd2-budget-front.png",
+        "threeQuarter": "budget-visual-v1/sd2-budget-three-quarter.png",
+        "comparison": "visual-review/sd2-front-comparison.png",
+        "sixStates": "visual-review/sd2-six-states-contact.png",
+        "webglProof": "sd2-webgl-v1/render-proof.json"
+      }
+    },
+    {
+      "candidateId": "gta5mod-shinchan-kstamil-procedural-six-state-v1",
+      "sourceUrl": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+      "glbPath": "kstamil-runtime-v2/body.glb",
+      "glbSha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+      "glbBytes": 1424356,
+      "modelDocumentPath": "kstamil-runtime-v2/model.json",
+      "modelDocumentSha256": "be27bdd44a4c1aecfd8f8f96ba6e4150d0c237af9796b0d07bc7e4c3b8615447",
+      "previews": {
+        "front": "budget-visual-v1/kstamil-budget-front.png",
+        "threeQuarter": "budget-visual-v1/kstamil-budget-three-quarter.png",
+        "comparison": "visual-review/kstamil-front-comparison.png",
+        "sixStates": "visual-review/kstamil-six-states-contact.png",
+        "webglProof": "kstamil-webgl-v1/render-proof.json"
+      }
+    }
+  ],
+  "recommendedDefault": "gta5mod-shinchan-kstamil-procedural-six-state-v1",
+  "notes": [
+    "Technical runtime preparation complete; backend and full gameplay acceptance pending.",
+    "Rights restrictions preserved; no permission inferred.",
+    "KS extra 8 native textures retained, awaiting authored variant composition."
+  ]
+}

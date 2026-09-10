@@ -1,0 +1,58 @@
+{
+  "id": "community-review-02-20260907.ex",
+  "schema": "ability@1",
+  "name": "裏三百十六式・豺華",
+  "provenance": "w3x-import",
+  "description": "可獨立使用；在八稚女完成後的短窗口內使用，改為接續追擊並消耗自己的冷卻。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "castTimeSec": 0.533,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.18,
+      "durationSec": 0.54
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 0.54,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.fire.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.fire.slash"
+    }
+  ],
+  "icon": "assets/icons/abilities/community-review-02-20260907.ex.webp",
+  "rangeTier": "極小"
+}

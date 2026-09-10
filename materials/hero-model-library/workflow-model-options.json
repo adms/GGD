@@ -1,0 +1,3479 @@
+{
+  "schema": "ggd-workflow-model-options@1",
+  "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "aliases": {
+    "example:karthus": "lol-karthus",
+    "example:leesin": "lol-leesin",
+    "example:lux": "lol-lux",
+    "example:missfortune": "lol-missfortune",
+    "example:warwick": "lol-warwick",
+    "example:xerath": "lol-xerath",
+    "example:yasuo": "lol-yasuo"
+  },
+  "models": [
+    {
+      "id": "ou99:453949",
+      "modelKey": "ou99.453949-standard-v2",
+      "glbPath": "assets/models/community/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb",
+      "sha256": "14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b",
+      "bytes": 3328636,
+      "documentSha256": "1a58d54d804ed78312a804d57461805eb6222ed31ba7e5285e62ad4b595d2172",
+      "sourceCharacter": "狂刀风衣男",
+      "sourceWork": "來源作品待核；論壇標題：狂刀风衣男",
+      "sourceAssetId": "https://www.ou99.com/thread-453949-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.453949",
+        "glbPath": "assets/models/ou99/ou99_453949.glb",
+        "sha256": "e05aa7a67d3e4ac91484584bf40a66a10b27c06c0ce8d784b9b4eb7198d225be",
+        "gitPath": "content/assets/models/ou99/ou99_453949.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:454482",
+      "modelKey": "ou99.454482-standard-v2",
+      "glbPath": "assets/models/community/86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016.glb",
+      "sha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016",
+      "bytes": 2518536,
+      "documentSha256": "30e1c795f14f95216358d5d94bf82d6a3dca907e4474b1f71666c8a7e3c25565",
+      "sourceCharacter": "光刀女剑二次元",
+      "sourceWork": "來源作品待核；論壇標題：光刀女剑二次元",
+      "sourceAssetId": "https://www.ou99.com/thread-454482-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell 1",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.454482",
+        "glbPath": "assets/models/ou99/ou99_454482.glb",
+        "sha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1",
+        "gitPath": "content/assets/models/ou99/ou99_454482.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:456546",
+      "modelKey": "ou99.456546",
+      "glbPath": "assets/models/ou99/ou99_456546.glb",
+      "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
+      "bytes": 6136544,
+      "documentSha256": "75be5241b63f8badd09f8b1b175da04ddf48f2203ec12fef0fcc5e43c9ea7f36",
+      "sourceCharacter": "动漫卡尔斯",
+      "sourceWork": "來源作品待核；論壇標題：动漫卡尔斯",
+      "sourceAssetId": "https://www.ou99.com/thread-456546-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell Ten",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_456546.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.456546",
+        "glbPath": "assets/models/ou99/ou99_456546.glb",
+        "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6",
+        "gitPath": "content/assets/models/ou99/ou99_456546.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:456917",
+      "modelKey": "ou99.456917-standard-v2",
+      "glbPath": "assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
+      "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+      "bytes": 886408,
+      "documentSha256": "af8bd7f3700f1997bd19b7f6d001ab330263322c39fa0a4b85dd58872772ecad",
+      "sourceCharacter": "蛤蟆蘸酱柯松剑客",
+      "sourceWork": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+      "sourceAssetId": "https://www.ou99.com/thread-456917-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack -1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.456917",
+        "glbPath": "assets/models/ou99/ou99_456917.glb",
+        "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+        "gitPath": "content/assets/models/ou99/ou99_456917.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:457594",
+      "modelKey": "ou99.457594-standard-v2",
+      "glbPath": "assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
+      "sha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+      "bytes": 502336,
+      "documentSha256": "d5695d4811493e432cef273434288bed51f6dd5dfd5cbaaa540c7bb433ee2a14",
+      "sourceCharacter": "雷欧·凹凸曼无披风版",
+      "sourceWork": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+      "sourceAssetId": "https://www.ou99.com/thread-457594-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 2",
+        "cast": "spell one",
+        "hurt": "stand ready",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.457594",
+        "glbPath": "assets/models/ou99/ou99_457594.glb",
+        "sha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
+        "gitPath": "content/assets/models/ou99/ou99_457594.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:457883",
+      "modelKey": "ou99.457883",
+      "glbPath": "assets/models/ou99/ou99_457883.glb",
+      "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65",
+      "bytes": 1270272,
+      "documentSha256": "c3d9ae90d465828d8db26b26d15665072ca86d355e1a43fc120517e2d29ef1f5",
+      "sourceCharacter": "牛魔角仙人男",
+      "sourceWork": "來源作品待核；論壇標題：牛魔角仙人男",
+      "sourceAssetId": "https://www.ou99.com/thread-457883-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "death": "Death",
+        "hurt": "Stand Ready",
+        "cast": "Attack Slam"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_457883.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.457883",
+        "glbPath": "assets/models/ou99/ou99_457883.glb",
+        "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65",
+        "gitPath": "content/assets/models/ou99/ou99_457883.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:458013",
+      "modelKey": "ou99.458013-standard",
+      "glbPath": "assets/models/community/fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7.glb",
+      "sha256": "fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7",
+      "bytes": 1338616,
+      "documentSha256": "e728a80cc6ef3f7269d2a2a3738d9ab5af53fea7ac1fefe451b06f3e92cbe237",
+      "sourceCharacter": "人妖喜乐",
+      "sourceWork": "來源作品待核；論壇標題：人妖喜乐",
+      "sourceAssetId": "https://www.ou99.com/thread-458013-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.458013",
+        "glbPath": "assets/models/ou99/ou99_458013.glb",
+        "sha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039",
+        "gitPath": "content/assets/models/ou99/ou99_458013.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:458777",
+      "modelKey": "ou99.458777-standard-v3",
+      "glbPath": "assets/models/community/bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb",
+      "sha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+      "bytes": 1614080,
+      "documentSha256": "3b954661c4ce81e78c783000ac9345548f77bcaaaf4963d8a150bae29a5b4338",
+      "sourceCharacter": "假面绅士",
+      "sourceWork": "來源作品待核；論壇標題：假面绅士",
+      "sourceAssetId": "https://www.ou99.com/thread-458777-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.458777",
+        "glbPath": "assets/models/ou99/ou99_458777.glb",
+        "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+        "gitPath": "content/assets/models/ou99/ou99_458777.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": {
+          "status": "bounded-before-after-webgl-pass",
+          "method": "Actual Babylon7.54.3 PBR idle/front and run/oblique-front sampled60%; exactRGBA900x900 screenshots before and after",
+          "screenshotPairsPixelExact": true,
+          "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/image-comparison.json",
+          "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-458777-comparison.png"
+        }
+      }
+    },
+    {
+      "id": "ou99:459257",
+      "modelKey": "ou99.459257-standard-v2",
+      "glbPath": "assets/models/community/b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8.glb",
+      "sha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+      "bytes": 2753524,
+      "documentSha256": "c1f76a60fdd0edc1cc71c1558181de40a68066d78a52421316ba22e4eca80e66",
+      "sourceCharacter": "白西装七夜志贵",
+      "sourceWork": "來源作品待核；論壇標題：白西装七夜志贵",
+      "sourceAssetId": "https://www.ou99.com/thread-459257-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell two",
+        "hurt": "stand ready",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.459257",
+        "glbPath": "assets/models/ou99/ou99_459257.glb",
+        "sha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+        "gitPath": "content/assets/models/ou99/ou99_459257.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:459617",
+      "modelKey": "ou99.459617-standard",
+      "glbPath": "assets/models/community/94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b.glb",
+      "sha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "bytes": 1347640,
+      "documentSha256": "78480d02e509526c75ef837439bc223ec949b378b35e9f1c22a3dc936f365b51",
+      "sourceCharacter": "可爱小宠物chii吉伊",
+      "sourceWork": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+      "sourceAssetId": "https://www.ou99.com/thread-459617-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "attack": "Spell",
+        "death": "Stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.459617",
+        "glbPath": "assets/models/ou99/ou99_459617.glb",
+        "sha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
+        "gitPath": "content/assets/models/ou99/ou99_459617.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:465205",
+      "modelKey": "ou99.465205",
+      "glbPath": "assets/models/ou99/ou99_465205.glb",
+      "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4",
+      "bytes": 1924208,
+      "documentSha256": "df826ad707935dabbb0b531a6ccd846d5b87913effc2c87c3d3187c98f9bb596",
+      "sourceCharacter": "韩当武侠猛男",
+      "sourceWork": "來源作品待核；論壇標題：韩当武侠猛男",
+      "sourceAssetId": "https://www.ou99.com/thread-465205-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell One",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_465205.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.465205",
+        "glbPath": "assets/models/ou99/ou99_465205.glb",
+        "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4",
+        "gitPath": "content/assets/models/ou99/ou99_465205.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:465884",
+      "modelKey": "ou99.465884-standard",
+      "glbPath": "assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+      "bytes": 2738508,
+      "documentSha256": "9767d8afdb1c25136ef2994f826c2133e768a6ec04e73bfe4d0c47d9409d13f7",
+      "sourceCharacter": "休闲西装版七夜智贵",
+      "sourceWork": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+      "sourceAssetId": "https://www.ou99.com/thread-465884-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell two",
+        "death": "death",
+        "hurt": "stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.465884",
+        "glbPath": "assets/models/ou99/ou99_465884.glb",
+        "sha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a",
+        "gitPath": "content/assets/models/ou99/ou99_465884.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:467227",
+      "modelKey": "ou99.467227-standard",
+      "glbPath": "assets/models/community/ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564.glb",
+      "sha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564",
+      "bytes": 2626964,
+      "documentSha256": "b85305fc219dcfbda541174ad645e3c2c8cf24ed473c23f00fcdeb527b378e6a",
+      "sourceCharacter": "天使可爱小女孩派蒙",
+      "sourceWork": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+      "sourceAssetId": "https://www.ou99.com/thread-467227-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell",
+        "hurt": "stand",
+        "death": "stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.467227",
+        "glbPath": "assets/models/ou99/ou99_467227.glb",
+        "sha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612",
+        "gitPath": "content/assets/models/ou99/ou99_467227.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:470087",
+      "modelKey": "ou99.470087-standard-v2",
+      "glbPath": "assets/models/community/5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0.glb",
+      "sha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0",
+      "bytes": 1148412,
+      "documentSha256": "14bfb0bec138936d13e97ae909855145a103e8f2777992a73edf98043f6ce2e4",
+      "sourceCharacter": "蓝瞳靓仔版远野志贵",
+      "sourceWork": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+      "sourceAssetId": "https://www.ou99.com/thread-470087-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack",
+        "cast": "spell one",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.470087",
+        "glbPath": "assets/models/ou99/ou99_470087.glb",
+        "sha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494",
+        "gitPath": "content/assets/models/ou99/ou99_470087.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:470426",
+      "modelKey": "ou99.470426",
+      "glbPath": "assets/models/ou99/ou99_470426.glb",
+      "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
+      "bytes": 2839116,
+      "documentSha256": "a6f00258f0d28d20ffbc4b1ef250bbfa2cf15386b6eeac0e0906d58160958ae3",
+      "sourceCharacter": "二次元巫女",
+      "sourceWork": "來源作品待核；論壇標題：二次元巫女",
+      "sourceAssetId": "https://www.ou99.com/thread-470426-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_470426.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.470426",
+        "glbPath": "assets/models/ou99/ou99_470426.glb",
+        "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4",
+        "gitPath": "content/assets/models/ou99/ou99_470426.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:472035",
+      "modelKey": "ou99.472035",
+      "glbPath": "assets/models/ou99/ou99_472035.glb",
+      "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171",
+      "bytes": 4363676,
+      "documentSha256": "7b6d47e13a893281477b5ac731d1dfb9088822ad954ef4f342f3bbb8df95a26a",
+      "sourceCharacter": "WOW兽人祭祀法师",
+      "sourceWork": "來源作品待核；論壇標題：WOW兽人祭祀法师",
+      "sourceAssetId": "https://www.ou99.com/thread-472035-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack Spell",
+        "death": "Death",
+        "hurt": "Stand Ready",
+        "cast": "Attack Spell"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_472035.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.472035",
+        "glbPath": "assets/models/ou99/ou99_472035.glb",
+        "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171",
+        "gitPath": "content/assets/models/ou99/ou99_472035.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:472038",
+      "modelKey": "ou99.472038-standard-v2",
+      "glbPath": "assets/models/community/6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380.glb",
+      "sha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+      "bytes": 3840024,
+      "documentSha256": "69c83098bdd03d68a3f7da80e8a6e0d9a8d1ded1abdf9989062be91094721591",
+      "sourceCharacter": "圣洁化身戚小姐",
+      "sourceWork": "來源作品待核；論壇標題：圣洁化身戚小姐",
+      "sourceAssetId": "https://www.ou99.com/thread-472038-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk Fast",
+        "attack": "Attack 1",
+        "cast": "Spell 2",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.472038",
+        "glbPath": "assets/models/ou99/ou99_472038.glb",
+        "sha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
+        "gitPath": "content/assets/models/ou99/ou99_472038.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:473324",
+      "modelKey": "ou99.473324-standard-v3",
+      "glbPath": "assets/models/community/5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5.glb",
+      "sha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5",
+      "bytes": 1592200,
+      "documentSha256": "74033b4af7eed67b005c64e9775dae8b554fc465e1ac8e1f761d916c87427d3e",
+      "sourceCharacter": "龙族亚瑟王",
+      "sourceWork": "來源作品待核；論壇標題：龙族亚瑟王",
+      "sourceAssetId": "https://www.ou99.com/thread-473324-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell one",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.473324",
+        "glbPath": "assets/models/ou99/ou99_473324.glb",
+        "sha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
+        "gitPath": "content/assets/models/ou99/ou99_473324.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": {
+          "status": "bounded-before-after-webgl-pass",
+          "method": "Actual Babylon7.54.3 PBR idle/front and run/oblique-front sampled60%; exactRGBA900x900 screenshots before and after",
+          "screenshotPairsPixelExact": true,
+          "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/image-comparison.json",
+          "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-473324-comparison.png"
+        }
+      }
+    },
+    {
+      "id": "ou99:474258",
+      "modelKey": "ou99.474258-standard",
+      "glbPath": "assets/models/community/57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb",
+      "sha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "bytes": 1392892,
+      "documentSha256": "5531a1eb2a31126ccdc26eace13372f1ba031b723787bc8f377bf060188829d0",
+      "sourceCharacter": "绯红女剑校服女",
+      "sourceWork": "來源作品待核；論壇標題：绯红女剑校服女",
+      "sourceAssetId": "https://www.ou99.com/thread-474258-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell one",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.474258",
+        "glbPath": "assets/models/ou99/ou99_474258.glb",
+        "sha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06",
+        "gitPath": "content/assets/models/ou99/ou99_474258.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:478642",
+      "modelKey": "ou99.478642-standard",
+      "glbPath": "assets/models/community/63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f.glb",
+      "sha256": "63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f",
+      "bytes": 2475460,
+      "documentSha256": "968d5672dcbf667efe1a55cc7b1cbe437ebc451c0ee279ad59a85fbe733677d3",
+      "sourceCharacter": "女刺客双见凛",
+      "sourceWork": "來源作品待核；論壇標題：女刺客双见凛",
+      "sourceAssetId": "https://www.ou99.com/thread-478642-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.478642",
+        "glbPath": "assets/models/ou99/ou99_478642.glb",
+        "sha256": "a23e59b9443a980aa767f91e19fb83249542816760a7c3d0962b03b5a7cc7b34",
+        "gitPath": "content/assets/models/ou99/ou99_478642.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:481732",
+      "modelKey": "ou99.481732-standard-v2",
+      "glbPath": "assets/models/community/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
+      "sha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+      "bytes": 1465744,
+      "documentSha256": "a81b36ff740299a2fcacd9e6b840447c1071a3d21041e1f073f89f25029d1b1d",
+      "sourceCharacter": "202511z13",
+      "sourceWork": "來源作品待核；論壇標題：202511z13",
+      "sourceAssetId": "https://www.ou99.com/thread-481732-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell 2",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.481732",
+        "glbPath": "assets/models/ou99/ou99_481732.glb",
+        "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+        "gitPath": "content/assets/models/ou99/ou99_481732.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:487191",
+      "modelKey": "ou99.487191",
+      "glbPath": "assets/models/ou99/ou99_487191.glb",
+      "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615",
+      "bytes": 2028668,
+      "documentSha256": "500b729e54d5713dec75de62c881bbf3f640b4e013723b25ca5cfa6517dfe7ac",
+      "sourceCharacter": "SSR鬼神吕布鬼脸将军",
+      "sourceWork": "來源作品待核；論壇標題：SSR鬼神吕布鬼脸将军",
+      "sourceAssetId": "https://www.ou99.com/thread-487191-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "death": "Death",
+        "hurt": "Stand Ready",
+        "cast": "spell slam"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_487191.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.487191",
+        "glbPath": "assets/models/ou99/ou99_487191.glb",
+        "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615",
+        "gitPath": "content/assets/models/ou99/ou99_487191.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:487484",
+      "modelKey": "ou99.487484-standard",
+      "glbPath": "assets/models/community/773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a.glb",
+      "sha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a",
+      "bytes": 1462100,
+      "documentSha256": "1f5adeed83f3eeae9e4b583ea6eb626406961c97e7a797d7d43569995eee6d58",
+      "sourceCharacter": "中洲队潇洒哥",
+      "sourceWork": "來源作品待核；論壇標題：中洲队潇洒哥",
+      "sourceAssetId": "https://www.ou99.com/thread-487484-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 2",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.487484",
+        "glbPath": "assets/models/ou99/ou99_487484.glb",
+        "sha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b",
+        "gitPath": "content/assets/models/ou99/ou99_487484.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:487487-7yzc0mtk",
+      "modelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "glbPath": "assets/models/community/030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0.glb",
+      "sha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+      "bytes": 971380,
+      "documentSha256": "09b609c6422d70869c51fccedaa78d13a3fff13dd37f7787c523c408394d8201",
+      "sourceCharacter": "银发动漫正装男",
+      "sourceWork": "來源作品待核；論壇標題：银发动漫正装男",
+      "sourceAssetId": "https://www.ou99.com/thread-487487-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell channel",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.487487-7yzc0mtk",
+        "glbPath": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+        "sha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
+        "gitPath": "content/assets/models/ou99/ou99_487487-7yzc0mtk.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:487487-sbhhkedr",
+      "modelKey": "ou99.487487-sbhhkedr-standard",
+      "glbPath": "assets/models/community/ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b.glb",
+      "sha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
+      "bytes": 1004748,
+      "documentSha256": "31ca4a1283407f098893a86f66a4989c7a86a936dd7e478363cc7c34fb9589b6",
+      "sourceCharacter": "银发动漫正装男",
+      "sourceWork": "來源作品待核；論壇標題：银发动漫正装男",
+      "sourceAssetId": "https://www.ou99.com/thread-487487-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.487487-sbhhkedr",
+        "glbPath": "assets/models/ou99/ou99_487487-sbhhkedr.glb",
+        "sha256": "0a5041838fe595b877abd29cfceb353f475e8f9abc93135b1d0160f8a1d4059b",
+        "gitPath": "content/assets/models/ou99/ou99_487487-sbhhkedr.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:491448",
+      "modelKey": "ou99.491448-standard-v3",
+      "glbPath": "assets/models/community/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb",
+      "sha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+      "bytes": 1226636,
+      "documentSha256": "4b4ddd8381f301d8e6aa62a26cb2bf10a93a4eebc075113279bba050af07939f",
+      "sourceCharacter": "逃亡的盗墓女孩",
+      "sourceWork": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+      "sourceAssetId": "https://www.ou99.com/thread-491448-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand Ready",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.491448",
+        "glbPath": "assets/models/ou99/ou99_491448.glb",
+        "sha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+        "gitPath": "content/assets/models/ou99/ou99_491448.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": {
+          "status": "bounded-before-after-webgl-pass",
+          "method": "Actual Babylon7.54.3 PBR idle/front and run/oblique-front sampled60%; exactRGBA900x900 screenshots before and after",
+          "screenshotPairsPixelExact": true,
+          "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/image-comparison.json",
+          "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-491448-comparison.png"
+        }
+      }
+    },
+    {
+      "id": "ou99:491497",
+      "modelKey": "ou99.491497-standard",
+      "glbPath": "assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
+      "sha256": "9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378",
+      "bytes": 5463692,
+      "documentSha256": "3dcbe353b57912a8fdc8fce629a4b1ff177d3119da98be2f6d7563589eb96dfd",
+      "sourceCharacter": "遥远救世主拳皇",
+      "sourceWork": "來源作品待核；論壇標題：遥远救世主拳皇",
+      "sourceAssetId": "https://www.ou99.com/thread-491497-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell",
+        "death": "death",
+        "hurt": "stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.491497",
+        "glbPath": "assets/models/ou99/ou99_491497.glb",
+        "sha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99",
+        "gitPath": "content/assets/models/ou99/ou99_491497.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:493578",
+      "modelKey": "ou99.493578-standard-v2",
+      "glbPath": "assets/models/community/a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894.glb",
+      "sha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894",
+      "bytes": 1036608,
+      "documentSha256": "1576386edbf2b8d8d42234137610a9b95c6c9209659fcf706a71e4ebca899f09",
+      "sourceCharacter": "篮球小男孩",
+      "sourceWork": "來源作品待核；論壇標題：篮球小男孩",
+      "sourceAssetId": "https://www.ou99.com/thread-493578-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell Four",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.493578",
+        "glbPath": "assets/models/ou99/ou99_493578.glb",
+        "sha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51",
+        "gitPath": "content/assets/models/ou99/ou99_493578.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:495015",
+      "modelKey": "ou99.495015-standard",
+      "glbPath": "assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
+      "sha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+      "bytes": 653604,
+      "documentSha256": "94919888ba110de705b60aa13e4d535f2c49dbb12ad5403610e4b99557bdfe92",
+      "sourceCharacter": "海星动画人",
+      "sourceWork": "來源作品待核；論壇標題：海星动画人",
+      "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.495015",
+        "glbPath": "assets/models/ou99/ou99_495015.glb",
+        "sha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3",
+        "gitPath": "content/assets/models/ou99/ou99_495015.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:496452",
+      "modelKey": "ou99.496452-standard-v2",
+      "glbPath": "assets/models/community/97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501.glb",
+      "sha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+      "bytes": 1178620,
+      "documentSha256": "259c896e1b93c38f2a32a67fc86731b4f780bd0286fb3db100775ff1d756b672",
+      "sourceCharacter": "甲贺忍蛙",
+      "sourceWork": "來源作品待核；論壇標題：甲贺忍蛙",
+      "sourceAssetId": "https://www.ou99.com/thread-496452-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell",
+        "hurt": "stand ready",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.496452",
+        "glbPath": "assets/models/ou99/ou99_496452.glb",
+        "sha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
+        "gitPath": "content/assets/models/ou99/ou99_496452.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:496905",
+      "modelKey": "ou99.496905",
+      "glbPath": "assets/models/ou99/ou99_496905.glb",
+      "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
+      "bytes": 4368388,
+      "documentSha256": "8fd88ddc9c9eb2373f759a569123d95d2b2aa9b470b8808efcb28134ea443b2d",
+      "sourceCharacter": "搞怪哆啦A梦猫",
+      "sourceWork": "來源作品待核；論壇標題：搞怪哆啦A梦猫",
+      "sourceAssetId": "https://www.ou99.com/thread-496905-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell One",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_496905.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.496905",
+        "glbPath": "assets/models/ou99/ou99_496905.glb",
+        "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
+        "gitPath": "content/assets/models/ou99/ou99_496905.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:497131",
+      "modelKey": "ou99.497131",
+      "glbPath": "assets/models/ou99/ou99_497131.glb",
+      "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
+      "bytes": 753372,
+      "documentSha256": "d5af0e15461e61923efd96eb6525cfd095a2d07e0ad740a52a2bb74fb6632bad",
+      "sourceCharacter": "龙珠超孙悟空",
+      "sourceWork": "來源作品待核；論壇標題：龙珠超孙悟空",
+      "sourceAssetId": "https://www.ou99.com/thread-497131-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell Two",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_497131.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.497131",
+        "glbPath": "assets/models/ou99/ou99_497131.glb",
+        "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521",
+        "gitPath": "content/assets/models/ou99/ou99_497131.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "ou99:498214",
+      "modelKey": "ou99.498214-standard-v2",
+      "glbPath": "assets/models/community/445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d.glb",
+      "sha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d",
+      "bytes": 1759096,
+      "documentSha256": "2eb82a6dfe35c88defa2653b4ba6762ac5791e1f3d25f58b6e3500370a79f405",
+      "sourceCharacter": "可爱娃娃",
+      "sourceWork": "來源作品待核；論壇標題：可爱娃娃",
+      "sourceAssetId": "https://www.ou99.com/thread-498214-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell two",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "intentional-similar-proxy",
+      "originalDelivery": {
+        "modelKey": "ou99.498214",
+        "glbPath": "assets/models/ou99/ou99_498214.glb",
+        "sha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480",
+        "gitPath": "content/assets/models/ou99/ou99_498214.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:313646",
+      "modelKey": "ou99.313646-standard-v2",
+      "glbPath": "assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+      "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+      "bytes": 1182776,
+      "documentSha256": "aefeb4de43328938d54d334fc5c49fe8f9dbfba5736beb1e5294a023ff980361",
+      "sourceCharacter": "八神庵",
+      "sourceWork": "THE KING OF FIGHTERS",
+      "sourceAssetId": "https://www.ou99.com/thread-313646-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell one",
+        "hurt": "Stand ready",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.313646",
+        "glbPath": "assets/models/ou99/ou99_313646.glb",
+        "sha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722",
+        "gitPath": "content/assets/models/ou99/ou99_313646.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:287871",
+      "modelKey": "ou99.287871-standard",
+      "glbPath": "assets/models/community/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb",
+      "sha256": "6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d",
+      "bytes": 321196,
+      "documentSha256": "23d11c5d8200f7740219e5eadf208365d702da2aaaceb14a33c4798e3d9efb3d",
+      "sourceCharacter": "洛克人",
+      "sourceWork": "Mega Man",
+      "sourceAssetId": "https://www.ou99.com/thread-287871-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack -1",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.287871",
+        "glbPath": "assets/models/ou99/ou99_287871.glb",
+        "sha256": "7a5f9e627a13c041459d9b94d75bd2533b83226b12498915528b2ffb0e977bae",
+        "gitPath": "content/assets/models/ou99/ou99_287871.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {}
+    },
+    {
+      "id": "ou99:497211",
+      "modelKey": "ou99.497211-standard-v2",
+      "glbPath": "assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
+      "sha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+      "bytes": 6370760,
+      "documentSha256": "77c99a4a683d0af7c5a53971c56acbafec6724026386bf52dff4e06ae02e1868",
+      "sourceCharacter": "西索",
+      "sourceWork": "HUNTER×HUNTER",
+      "sourceAssetId": "https://www.ou99.com/thread-497211-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack",
+        "cast": "spell one",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。",
+        "可用副本已減面；完整原生高面數模型與動作仍保留。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.497211",
+        "glbPath": "assets/models/ou99/ou99_497211.glb",
+        "sha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
+        "gitPath": "content/assets/models/ou99/ou99_497211.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": true,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:472112",
+      "modelKey": "ou99.472112-standard-v2",
+      "glbPath": "assets/models/community/b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e.glb",
+      "sha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e",
+      "bytes": 846580,
+      "documentSha256": "78c0a735f9e3be85227858e4c34e63c2e1120303df2cd941a390ddda24ac0873",
+      "sourceCharacter": "殺老師",
+      "sourceWork": "暗殺教室",
+      "sourceAssetId": "https://www.ou99.com/thread-472112-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。",
+        "可用副本貼圖已縮至模型预算；完整原圖仍保留。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.472112",
+        "glbPath": "assets/models/ou99/ou99_472112.glb",
+        "sha256": "3d5c9fb99d0a3be253d3c413ba18b875136307183cc0eb75008375ab793ac35c",
+        "gitPath": "content/assets/models/ou99/ou99_472112.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": true,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:457123",
+      "modelKey": "ou99.457123-standard-v2",
+      "glbPath": "assets/models/community/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
+      "sha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+      "bytes": 727156,
+      "documentSha256": "4536eeb2d3d5c6a43d768c16eed5e156bfdfe72efe2deb94f2c3590ddf75a3ef",
+      "sourceCharacter": "比利海靈頓",
+      "sourceWork": "摔角與網路迷因形象。",
+      "sourceAssetId": "https://www.ou99.com/thread-457123-1-1.html",
+      "clipMap": {
+        "idle": "stand 1",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell",
+        "hurt": "stand ready",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.457123",
+        "glbPath": "assets/models/ou99/ou99_457123.glb",
+        "sha256": "d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119",
+        "gitPath": "content/assets/models/ou99/ou99_457123.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:311294",
+      "modelKey": "ou99.311294-standard-v2",
+      "glbPath": "assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
+      "sha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+      "bytes": 1531624,
+      "documentSha256": "bc30b91f877a9f781cf81b646a0e1da54d02537d55168578ff3d727b73b60a7e",
+      "sourceCharacter": "菜月昴",
+      "sourceWork": "Re:從零開始的異世界生活",
+      "sourceAssetId": "https://www.ou99.com/thread-311294-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell One",
+        "hurt": "Stand Ready",
+        "death": "Death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.311294",
+        "glbPath": "assets/models/ou99/ou99_311294.glb",
+        "sha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
+        "gitPath": "content/assets/models/ou99/ou99_311294.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:468771",
+      "modelKey": "ou99.468771-standard-v2",
+      "glbPath": "assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
+      "sha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223",
+      "bytes": 4983240,
+      "documentSha256": "5ac7723605cab745d7b6a3023423f1a38de4b47c4a5bfe100f72fbd952d8aacd",
+      "sourceCharacter": "赫蘿",
+      "sourceWork": "狼與辛香料",
+      "sourceAssetId": "https://www.ou99.com/thread-468771-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell",
+        "hurt": "Stand",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.468771",
+        "glbPath": "assets/models/ou99/ou99_468771.glb",
+        "sha256": "307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447",
+        "gitPath": "content/assets/models/ou99/ou99_468771.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "ou99:457280",
+      "modelKey": "ou99.457280-standard-v2",
+      "glbPath": "assets/models/community/ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd.glb",
+      "sha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd",
+      "bytes": 2461344,
+      "documentSha256": "c789018df8c4bd74a2bae6c8c334b9ae0f74ed977e1fb0bdd42bde763fcfd82e",
+      "sourceCharacter": "利姆路",
+      "sourceWork": "關於我轉生變成史萊姆這檔事",
+      "sourceAssetId": "https://www.ou99.com/thread-457280-1-1.html",
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack - 1",
+        "cast": "spell one",
+        "hurt": "stand ready",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "backend-prepare-passed",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "originalDelivery": {
+        "modelKey": "ou99.457280",
+        "glbPath": "assets/models/ou99/ou99_457280.glb",
+        "sha256": "9cc19189b317670be5438a49bf6b0f529a4d7dc2e7e1730707d98736118b3748",
+        "gitPath": "content/assets/models/ou99/ou99_457280.glb"
+      },
+      "boundsRepaired": true,
+      "standardization": {
+        "geometryLod": false,
+        "textureLod": false,
+        "nativeAnimationChannelsTargetsAndTimeValuesUnchanged": true,
+        "visualAcceptance": "pending; render transparency sorting/atlas mip and LOD details separately"
+      }
+    },
+    {
+      "id": "lol:karthus",
+      "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "glbPath": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+      "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "bytes": 1715124,
+      "documentSha256": "d76a057d4869e4913d9a7327b04cd1d99473a034c74f3099a8c576af18b21641",
+      "sourceCharacter": "卡爾瑟斯",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-karthus.json",
+      "clipMap": {
+        "idle": "karthus_idle01",
+        "run": "karthus_run",
+        "attack": "karthus_attack1",
+        "cast": "karthus_spell1a",
+        "hurt": "karthus_idle01",
+        "death": "karthus_death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+        "glbPath": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+        "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+        "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "lol:leesin",
+      "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+      "glbPath": "assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
+      "sha256": "17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e",
+      "bytes": 2518200,
+      "documentSha256": "8406ee74488d54b31f36fc0779e8dc609aa0526037266d525c067efa13892bdc",
+      "sourceCharacter": "李星",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-leesin.json",
+      "clipMap": {
+        "idle": "idle_active",
+        "run": "run_combat",
+        "attack": "attack1",
+        "cast": "spell1_cast",
+        "hurt": "idle_active",
+        "death": "death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+        "glbPath": "assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
+        "sha256": "17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e",
+        "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "lol:lux",
+      "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "glbPath": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+      "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "bytes": 1968836,
+      "documentSha256": "5ad7e0cc65e3eca8ead74227735bb06f2c8224a8fa020696b66a90f9a666a4ec",
+      "sourceCharacter": "拉克絲",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-lux.json",
+      "clipMap": {
+        "idle": "lux_idle1",
+        "run": "lux_run",
+        "attack": "lux_attack1",
+        "cast": "lux_spell1",
+        "hurt": "lux_idle1",
+        "death": "lux_death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+        "glbPath": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+        "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+        "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "lol:missfortune",
+      "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+      "glbPath": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+      "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+      "bytes": 1426364,
+      "documentSha256": "589d121ff37d383fbfaa85f68baf262d507facda768959dd6e4c5a7a53f05018",
+      "sourceCharacter": "好運姐",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-missfortune.json",
+      "clipMap": {
+        "idle": "missfortune_idle1",
+        "run": "missfortune_run",
+        "attack": "missfortune_attack1",
+        "cast": "missfortune_spell1",
+        "hurt": "missfortune_idle1",
+        "death": "missfortune_death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+        "glbPath": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+        "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+        "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "lol:warwick",
+      "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+      "glbPath": "assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+      "sha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
+      "bytes": 2043016,
+      "documentSha256": "b41b93bef186a48c8cb0fc52ab88ef06367c59a31d288bd006487c5db1a45a57",
+      "sourceCharacter": "沃維克",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-warwick.json",
+      "clipMap": {
+        "idle": "warwick_idle_v1",
+        "run": "warwick_run",
+        "attack": "warwick_attack1",
+        "cast": "warwick_spell1",
+        "hurt": "warwick_idle_v1",
+        "death": "warwick_death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+        "glbPath": "assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+        "sha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
+        "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "lol:xerath",
+      "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+      "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+      "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+      "bytes": 2287728,
+      "documentSha256": "0817d46424cf8193b7b3229a2c0dbb7d7155638a36c17626f118e54e892c864b",
+      "sourceCharacter": "齊勒斯",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-xerath.json",
+      "clipMap": {
+        "idle": "xerath_idle1",
+        "run": "xerath_run",
+        "attack": "xerath_attack1",
+        "cast": "xerath_spell1",
+        "hurt": "xerath_idle1",
+        "death": "xerath_death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+        "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+        "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+        "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb"
+      },
+      "boundsRepaired": false
+    },
+    {
+      "id": "lol:yasuo",
+      "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "glbPath": "assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+      "sha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
+      "bytes": 1837560,
+      "documentSha256": "acf415db1ca28bd96b81b011d51ad9a9c1a76e00a3c6f02df4f24f34c00f6bd7",
+      "sourceCharacter": "犽宿",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "sourceAssetId": "content/champions/lol-yasuo.json",
+      "clipMap": {
+        "idle": "yasuo_idle1",
+        "run": "yasuo_run1",
+        "attack": "yasuo_attack1",
+        "cast": "yasuo_spell1a",
+        "hurt": "yasuo_idle1",
+        "death": "yasuo_death"
+      },
+      "limitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "validation": "published-main-source; backend import assessed separately",
+      "fullCharacterPackage": false,
+      "storage": "git",
+      "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+      "sourceCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+      "identityStatus": "native-game-character",
+      "originalDelivery": {
+        "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+        "glbPath": "assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+        "sha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
+        "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb"
+      },
+      "boundsRepaired": false
+    }
+  ],
+  "heroes": [
+    {
+      "id": "b2-noor",
+      "runtimeHeroId": "b2-noor",
+      "name": "諾爾",
+      "options": [
+        {
+          "sourceId": "ou99:453949",
+          "sourceModelKey": "ou99.453949-standard-v2",
+          "label": "狂刀风衣男（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "狂刀风衣男",
+            "work": "來源作品待核；論壇標題：狂刀风衣男",
+            "reference": "https://www.ou99.com/thread-453949-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-uncle",
+      "runtimeHeroId": "b2-uncle",
+      "name": "異世界舅舅",
+      "options": [
+        {
+          "sourceId": "ou99:454482",
+          "sourceModelKey": "ou99.454482-standard-v2",
+          "label": "光刀女剑二次元（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "光刀女剑二次元",
+            "work": "來源作品待核；論壇標題：光刀女剑二次元",
+            "reference": "https://www.ou99.com/thread-454482-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-o030",
+      "runtimeHeroId": "godie-o030",
+      "name": "電車癡漢 - 臭作",
+      "options": [
+        {
+          "sourceId": "ou99:456546",
+          "sourceModelKey": "ou99.456546",
+          "label": "动漫卡尔斯（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "动漫卡尔斯",
+            "work": "來源作品待核；論壇標題：动漫卡尔斯",
+            "reference": "https://www.ou99.com/thread-456546-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-orkn",
+      "runtimeHeroId": "godie-orkn",
+      "name": "電車癡漢 - 臭作",
+      "options": [
+        {
+          "sourceId": "ou99:456546",
+          "sourceModelKey": "ou99.456546",
+          "label": "动漫卡尔斯（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "动漫卡尔斯",
+            "work": "來源作品待核；論壇標題：动漫卡尔斯",
+            "reference": "https://www.ou99.com/thread-456546-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-ned",
+      "runtimeHeroId": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "options": [
+        {
+          "sourceId": "ou99:456917",
+          "sourceModelKey": "ou99.456917-standard-v2",
+          "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "蛤蟆蘸酱柯松剑客",
+            "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+            "reference": "https://www.ou99.com/thread-456917-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-luckyman",
+      "runtimeHeroId": "b2-luckyman",
+      "name": "幸運超人",
+      "options": [
+        {
+          "sourceId": "ou99:457594",
+          "sourceModelKey": "ou99.457594-standard-v2",
+          "label": "雷欧·凹凸曼无披风版（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "雷欧·凹凸曼无披风版",
+            "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+            "reference": "https://www.ou99.com/thread-457594-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-ubal",
+      "runtimeHeroId": "godie-ubal",
+      "name": "魔界霸主 - 巴恩大魔王",
+      "options": [
+        {
+          "sourceId": "ou99:457883",
+          "sourceModelKey": "ou99.457883",
+          "label": "牛魔角仙人男（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "牛魔角仙人男",
+            "work": "來源作品待核；論壇標題：牛魔角仙人男",
+            "reference": "https://www.ou99.com/thread-457883-1-1.html"
+          }
+        },
+        {
+          "sourceId": "ou99:472035",
+          "sourceModelKey": "ou99.472035",
+          "label": "WOW兽人祭祀法师（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "WOW兽人祭祀法师",
+            "work": "來源作品待核；論壇標題：WOW兽人祭祀法师",
+            "reference": "https://www.ou99.com/thread-472035-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-34-20260907",
+      "runtimeHeroId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "options": [
+        {
+          "sourceId": "ou99:458013",
+          "sourceModelKey": "ou99.458013-standard",
+          "label": "人妖喜乐（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "人妖喜乐",
+            "work": "來源作品待核；論壇標題：人妖喜乐",
+            "reference": "https://www.ou99.com/thread-458013-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-keyaru",
+      "runtimeHeroId": "b2-keyaru",
+      "name": "凱亞爾",
+      "options": [
+        {
+          "sourceId": "ou99:458777",
+          "sourceModelKey": "ou99.458777-standard-v3",
+          "label": "假面绅士（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "假面绅士",
+            "work": "來源作品待核；論壇標題：假面绅士",
+            "reference": "https://www.ou99.com/thread-458777-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-touka",
+      "runtimeHeroId": "b2-touka",
+      "name": "托卡・史考特",
+      "options": [
+        {
+          "sourceId": "ou99:459257",
+          "sourceModelKey": "ou99.459257-standard-v2",
+          "label": "白西装七夜志贵（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "白西装七夜志贵",
+            "work": "來源作品待核；論壇標題：白西装七夜志贵",
+            "reference": "https://www.ou99.com/thread-459257-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-37-20260907",
+      "runtimeHeroId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "options": [
+        {
+          "sourceId": "ou99:459617",
+          "sourceModelKey": "ou99.459617-standard",
+          "label": "可爱小宠物chii吉伊（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "可爱小宠物chii吉伊",
+            "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+            "reference": "https://www.ou99.com/thread-459617-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-hpb1",
+      "runtimeHeroId": "godie-hpb1",
+      "name": "獸矛傳承使 - 蒼月潮",
+      "options": [
+        {
+          "sourceId": "ou99:465205",
+          "sourceModelKey": "ou99.465205",
+          "label": "韩当武侠猛男（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "韩当武侠猛男",
+            "work": "來源作品待核；論壇標題：韩当武侠猛男",
+            "reference": "https://www.ou99.com/thread-465205-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-matthias",
+      "runtimeHeroId": "b2-matthias",
+      "name": "馬提亞斯",
+      "options": [
+        {
+          "sourceId": "ou99:465884",
+          "sourceModelKey": "ou99.465884-standard",
+          "label": "休闲西装版七夜智贵（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "休闲西装版七夜智贵",
+            "work": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+            "reference": "https://www.ou99.com/thread-465884-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-fushi",
+      "runtimeHeroId": "b2-fushi",
+      "name": "不死",
+      "options": [
+        {
+          "sourceId": "ou99:467227",
+          "sourceModelKey": "ou99.467227-standard",
+          "label": "天使可爱小女孩派蒙（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "天使可爱小女孩派蒙",
+            "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+            "reference": "https://www.ou99.com/thread-467227-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-33-20260907",
+      "runtimeHeroId": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "options": [
+        {
+          "sourceId": "ou99:470087",
+          "sourceModelKey": "ou99.470087-standard-v2",
+          "label": "蓝瞳靓仔版远野志贵（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "蓝瞳靓仔版远野志贵",
+            "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+            "reference": "https://www.ou99.com/thread-470087-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-n003",
+      "runtimeHeroId": "godie-n003",
+      "name": "黑暗福音 - 依文潔琳",
+      "options": [
+        {
+          "sourceId": "ou99:470426",
+          "sourceModelKey": "ou99.470426",
+          "label": "二次元巫女（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "二次元巫女",
+            "work": "來源作品待核；論壇標題：二次元巫女",
+            "reference": "https://www.ou99.com/thread-470426-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-n01g",
+      "runtimeHeroId": "godie-n01g",
+      "name": "黑暗福音 - 依文潔琳",
+      "options": [
+        {
+          "sourceId": "ou99:470426",
+          "sourceModelKey": "ou99.470426",
+          "label": "二次元巫女（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "二次元巫女",
+            "work": "來源作品待核；論壇標題：二次元巫女",
+            "reference": "https://www.ou99.com/thread-470426-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-elma",
+      "runtimeHeroId": "b2-elma",
+      "name": "艾爾瑪",
+      "options": [
+        {
+          "sourceId": "ou99:472038",
+          "sourceModelKey": "ou99.472038-standard-v2",
+          "label": "圣洁化身戚小姐（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "圣洁化身戚小姐",
+            "work": "來源作品待核；論壇標題：圣洁化身戚小姐",
+            "reference": "https://www.ou99.com/thread-472038-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-aladdin",
+      "runtimeHeroId": "b2-aladdin",
+      "name": "阿拉丁",
+      "options": [
+        {
+          "sourceId": "ou99:473324",
+          "sourceModelKey": "ou99.473324-standard-v3",
+          "label": "龙族亚瑟王（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "龙族亚瑟王",
+            "work": "來源作品待核；論壇標題：龙族亚瑟王",
+            "reference": "https://www.ou99.com/thread-473324-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-kaede",
+      "runtimeHeroId": "b2-kaede",
+      "name": "楓",
+      "options": [
+        {
+          "sourceId": "ou99:474258",
+          "sourceModelKey": "ou99.474258-standard",
+          "label": "绯红女剑校服女（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "绯红女剑校服女",
+            "work": "來源作品待核；論壇標題：绯红女剑校服女",
+            "reference": "https://www.ou99.com/thread-474258-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-makoto",
+      "runtimeHeroId": "b2-makoto",
+      "name": "深澄真",
+      "options": [
+        {
+          "sourceId": "ou99:478642",
+          "sourceModelKey": "ou99.478642-standard",
+          "label": "女刺客双见凛（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "女刺客双见凛",
+            "work": "來源作品待核；論壇標題：女刺客双见凛",
+            "reference": "https://www.ou99.com/thread-478642-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-shadow",
+      "runtimeHeroId": "b2-shadow",
+      "name": "闇影",
+      "options": [
+        {
+          "sourceId": "ou99:481732",
+          "sourceModelKey": "ou99.481732-standard-v2",
+          "label": "202511z13（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "202511z13",
+            "work": "來源作品待核；論壇標題：202511z13",
+            "reference": "https://www.ou99.com/thread-481732-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-h01u",
+      "runtimeHeroId": "godie-h01u",
+      "name": "亂世癿王者 - 呂布奉先",
+      "options": [
+        {
+          "sourceId": "ou99:487191",
+          "sourceModelKey": "ou99.487191",
+          "label": "SSR鬼神吕布鬼脸将军（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "SSR鬼神吕布鬼脸将军",
+            "work": "來源作品待核；論壇標題：SSR鬼神吕布鬼脸将军",
+            "reference": "https://www.ou99.com/thread-487191-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-nube",
+      "runtimeHeroId": "b2-nube",
+      "name": "鵺野鳴介",
+      "options": [
+        {
+          "sourceId": "ou99:487484",
+          "sourceModelKey": "ou99.487484-standard",
+          "label": "中洲队潇洒哥（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "中洲队潇洒哥",
+            "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+            "reference": "https://www.ou99.com/thread-487484-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-klaus",
+      "runtimeHeroId": "b2-klaus",
+      "name": "克勞斯",
+      "options": [
+        {
+          "sourceId": "ou99:487487-7yzc0mtk",
+          "sourceModelKey": "ou99.487487-7yzc0mtk-standard-v2",
+          "label": "银发动漫正装男（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "银发动漫正装男",
+            "work": "來源作品待核；論壇標題：银发动漫正装男",
+            "reference": "https://www.ou99.com/thread-487487-1-1.html"
+          }
+        },
+        {
+          "sourceId": "ou99:487487-sbhhkedr",
+          "sourceModelKey": "ou99.487487-sbhhkedr-standard",
+          "label": "银发动漫正装男（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "银发动漫正装男",
+            "work": "來源作品待核；論壇標題：银发动漫正装男",
+            "reference": "https://www.ou99.com/thread-487487-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-boxxo",
+      "runtimeHeroId": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "options": [
+        {
+          "sourceId": "ou99:491448",
+          "sourceModelKey": "ou99.491448-standard-v3",
+          "label": "逃亡的盗墓女孩（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "逃亡的盗墓女孩",
+            "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+            "reference": "https://www.ou99.com/thread-491448-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-sinbad",
+      "runtimeHeroId": "b2-sinbad",
+      "name": "辛巴達",
+      "options": [
+        {
+          "sourceId": "ou99:491497",
+          "sourceModelKey": "ou99.491497-standard",
+          "label": "遥远救世主拳皇（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "遥远救世主拳皇",
+            "work": "來源作品待核；論壇標題：遥远救世主拳皇",
+            "reference": "https://www.ou99.com/thread-491497-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-36-20260907",
+      "runtimeHeroId": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "options": [
+        {
+          "sourceId": "ou99:493578",
+          "sourceModelKey": "ou99.493578-standard-v2",
+          "label": "篮球小男孩（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "篮球小男孩",
+            "work": "來源作品待核；論壇標題：篮球小男孩",
+            "reference": "https://www.ou99.com/thread-493578-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-haga",
+      "runtimeHeroId": "b2-haga",
+      "name": "羽賀",
+      "options": [
+        {
+          "sourceId": "ou99:495015",
+          "sourceModelKey": "ou99.495015-standard",
+          "label": "海星动画人（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "海星动画人",
+            "work": "來源作品待核；論壇標題：海星动画人",
+            "reference": "https://www.ou99.com/thread-495015-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-orphen",
+      "runtimeHeroId": "b2-orphen",
+      "name": "歐菲",
+      "options": [
+        {
+          "sourceId": "ou99:496452",
+          "sourceModelKey": "ou99.496452-standard-v2",
+          "label": "甲贺忍蛙（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "甲贺忍蛙",
+            "work": "來源作品待核；論壇標題：甲贺忍蛙",
+            "reference": "https://www.ou99.com/thread-496452-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-n00b",
+      "runtimeHeroId": "godie-n00b",
+      "name": "小叮噹 - 哆拉A夢",
+      "options": [
+        {
+          "sourceId": "ou99:496905",
+          "sourceModelKey": "ou99.496905",
+          "label": "搞怪哆啦A梦猫（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "搞怪哆啦A梦猫",
+            "work": "來源作品待核；論壇標題：搞怪哆啦A梦猫",
+            "reference": "https://www.ou99.com/thread-496905-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-o00x",
+      "runtimeHeroId": "godie-o00x",
+      "name": "超級賽亞人 - 悟空",
+      "options": [
+        {
+          "sourceId": "ou99:497131",
+          "sourceModelKey": "ou99.497131",
+          "label": "龙珠超孙悟空（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "龙珠超孙悟空",
+            "work": "來源作品待核；論壇標題：龙珠超孙悟空",
+            "reference": "https://www.ou99.com/thread-497131-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-ogrh",
+      "runtimeHeroId": "godie-ogrh",
+      "name": "賽亞人 - 悟空",
+      "options": [
+        {
+          "sourceId": "ou99:497131",
+          "sourceModelKey": "ou99.497131",
+          "label": "龙珠超孙悟空（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "龙珠超孙悟空",
+            "work": "來源作品待核；論壇標題：龙珠超孙悟空",
+            "reference": "https://www.ou99.com/thread-497131-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-30-20260907",
+      "runtimeHeroId": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "options": [
+        {
+          "sourceId": "ou99:498214",
+          "sourceModelKey": "ou99.498214-standard-v2",
+          "label": "可爱娃娃（論壇相似模型）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "可爱娃娃",
+            "work": "來源作品待核；論壇標題：可爱娃娃",
+            "reference": "https://www.ou99.com/thread-498214-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-02-20260907",
+      "runtimeHeroId": "community-review-02-20260907",
+      "name": "八神庵",
+      "options": [
+        {
+          "sourceId": "ou99:313646",
+          "sourceModelKey": "ou99.313646-standard-v2",
+          "label": "八神庵（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "八神庵",
+            "work": "THE KING OF FIGHTERS",
+            "reference": "https://www.ou99.com/thread-313646-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-05-20260907",
+      "runtimeHeroId": "community-review-05-20260907",
+      "name": "洛克人",
+      "options": [
+        {
+          "sourceId": "ou99:287871",
+          "sourceModelKey": "ou99.287871-standard",
+          "label": "洛克人（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "洛克人",
+            "work": "Mega Man",
+            "reference": "https://www.ou99.com/thread-287871-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-07-20260907",
+      "runtimeHeroId": "community-review-07-20260907",
+      "name": "西索",
+      "options": [
+        {
+          "sourceId": "ou99:497211",
+          "sourceModelKey": "ou99.497211-standard-v2",
+          "label": "西索（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "西索",
+            "work": "HUNTER×HUNTER",
+            "reference": "https://www.ou99.com/thread-497211-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-14-20260907",
+      "runtimeHeroId": "community-review-14-20260907",
+      "name": "殺老師",
+      "options": [
+        {
+          "sourceId": "ou99:472112",
+          "sourceModelKey": "ou99.472112-standard-v2",
+          "label": "殺老師（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "殺老師",
+            "work": "暗殺教室",
+            "reference": "https://www.ou99.com/thread-472112-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-15-20260907",
+      "runtimeHeroId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "options": [
+        {
+          "sourceId": "ou99:457123",
+          "sourceModelKey": "ou99.457123-standard-v2",
+          "label": "比利海靈頓（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "比利海靈頓",
+            "work": "摔角與網路迷因形象。",
+            "reference": "https://www.ou99.com/thread-457123-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-22-20260907",
+      "runtimeHeroId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "options": [
+        {
+          "sourceId": "ou99:311294",
+          "sourceModelKey": "ou99.311294-standard-v2",
+          "label": "菜月昴（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "菜月昴",
+            "work": "Re:從零開始的異世界生活",
+            "reference": "https://www.ou99.com/thread-311294-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-09-20260907",
+      "runtimeHeroId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "options": [
+        {
+          "sourceId": "ou99:468771",
+          "sourceModelKey": "ou99.468771-standard-v2",
+          "label": "赫蘿（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "赫蘿",
+            "work": "狼與辛香料",
+            "reference": "https://www.ou99.com/thread-468771-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-11-20260907",
+      "runtimeHeroId": "community-review-11-20260907",
+      "name": "利姆路",
+      "options": [
+        {
+          "sourceId": "ou99:457280",
+          "sourceModelKey": "ou99.457280-standard-v2",
+          "label": "利姆路（論壇模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "library": "ou99",
+            "character": "利姆路",
+            "work": "關於我轉生變成史萊姆這檔事",
+            "reference": "https://www.ou99.com/thread-457280-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:karthus",
+      "runtimeHeroId": "lol-karthus",
+      "name": "卡爾瑟斯",
+      "options": [
+        {
+          "sourceId": "lol:karthus",
+          "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+          "label": "卡爾瑟斯（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "卡爾瑟斯",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-karthus.json"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:leesin",
+      "runtimeHeroId": "lol-leesin",
+      "name": "李星",
+      "options": [
+        {
+          "sourceId": "lol:leesin",
+          "sourceModelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+          "label": "李星（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "李星",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-leesin.json"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:lux",
+      "runtimeHeroId": "lol-lux",
+      "name": "拉克絲",
+      "options": [
+        {
+          "sourceId": "lol:lux",
+          "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+          "label": "拉克絲（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "拉克絲",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-lux.json"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:missfortune",
+      "runtimeHeroId": "lol-missfortune",
+      "name": "好運姐",
+      "options": [
+        {
+          "sourceId": "lol:missfortune",
+          "sourceModelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+          "label": "好運姐（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "好運姐",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-missfortune.json"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:warwick",
+      "runtimeHeroId": "lol-warwick",
+      "name": "沃維克",
+      "options": [
+        {
+          "sourceId": "lol:warwick",
+          "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+          "label": "沃維克（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "沃維克",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-warwick.json"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:xerath",
+      "runtimeHeroId": "lol-xerath",
+      "name": "齊勒斯",
+      "options": [
+        {
+          "sourceId": "lol:xerath",
+          "sourceModelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+          "label": "齊勒斯（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "齊勒斯",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-xerath.json"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "example:yasuo",
+      "runtimeHeroId": "lol-yasuo",
+      "name": "犽宿",
+      "options": [
+        {
+          "sourceId": "lol:yasuo",
+          "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+          "label": "犽宿（LOL 原生模型）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "lol",
+            "character": "犽宿",
+            "work": "英雄聯盟 League of Legends",
+            "reference": "content/champions/lol-yasuo.json"
+          }
+        }
+      ],
+      "pending": []
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "ou99:453949",
+      "heroId": "b2-noor",
+      "runtimeHeroId": "b2-noor",
+      "modelKey": "ou99.453949-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-453949-1-1.html",
+      "gitPath": "content/assets/models/community/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb",
+      "sha256": "14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b"
+    },
+    {
+      "candidateId": "ou99:454482",
+      "heroId": "b2-uncle",
+      "runtimeHeroId": "b2-uncle",
+      "modelKey": "ou99.454482-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-454482-1-1.html",
+      "gitPath": "content/assets/models/community/86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016.glb",
+      "sha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016"
+    },
+    {
+      "candidateId": "ou99:456546",
+      "heroId": "godie-o030",
+      "runtimeHeroId": "godie-o030",
+      "modelKey": "ou99.456546",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-456546-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_456546.glb",
+      "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6"
+    },
+    {
+      "candidateId": "ou99:456546",
+      "heroId": "godie-orkn",
+      "runtimeHeroId": "godie-orkn",
+      "modelKey": "ou99.456546",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-456546-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_456546.glb",
+      "sha256": "c96719b8145ea3a51af321c298d7f00e57a2bdac1b5f9ffe0fa7cfb9083045a6"
+    },
+    {
+      "candidateId": "ou99:456917",
+      "heroId": "b2-ned",
+      "runtimeHeroId": "b2-ned",
+      "modelKey": "ou99.456917-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-456917-1-1.html",
+      "gitPath": "content/assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
+      "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919"
+    },
+    {
+      "candidateId": "ou99:457594",
+      "heroId": "b2-luckyman",
+      "runtimeHeroId": "b2-luckyman",
+      "modelKey": "ou99.457594-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-457594-1-1.html",
+      "gitPath": "content/assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
+      "sha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625"
+    },
+    {
+      "candidateId": "ou99:457883",
+      "heroId": "godie-ubal",
+      "runtimeHeroId": "godie-ubal",
+      "modelKey": "ou99.457883",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-457883-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_457883.glb",
+      "sha256": "9a97e0f8fcd547f0b9b76b89c6da2480ee98bbaea7b7cd0f28154fed28e81c65"
+    },
+    {
+      "candidateId": "ou99:458013",
+      "heroId": "community-review-34-20260907",
+      "runtimeHeroId": "community-review-34-20260907",
+      "modelKey": "ou99.458013-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-458013-1-1.html",
+      "gitPath": "content/assets/models/community/fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7.glb",
+      "sha256": "fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7"
+    },
+    {
+      "candidateId": "ou99:458777",
+      "heroId": "b2-keyaru",
+      "runtimeHeroId": "b2-keyaru",
+      "modelKey": "ou99.458777-standard-v3",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-458777-1-1.html",
+      "gitPath": "content/assets/models/community/bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb",
+      "sha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991"
+    },
+    {
+      "candidateId": "ou99:459257",
+      "heroId": "b2-touka",
+      "runtimeHeroId": "b2-touka",
+      "modelKey": "ou99.459257-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-459257-1-1.html",
+      "gitPath": "content/assets/models/community/b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8.glb",
+      "sha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8"
+    },
+    {
+      "candidateId": "ou99:459617",
+      "heroId": "community-review-37-20260907",
+      "runtimeHeroId": "community-review-37-20260907",
+      "modelKey": "ou99.459617-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-459617-1-1.html",
+      "gitPath": "content/assets/models/community/94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b.glb",
+      "sha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b"
+    },
+    {
+      "candidateId": "ou99:465205",
+      "heroId": "godie-hpb1",
+      "runtimeHeroId": "godie-hpb1",
+      "modelKey": "ou99.465205",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-465205-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_465205.glb",
+      "sha256": "e33d59ab75848debf980e3819f95b11e2586ef17dba70037eb723965b84776e4"
+    },
+    {
+      "candidateId": "ou99:465884",
+      "heroId": "b2-matthias",
+      "runtimeHeroId": "b2-matthias",
+      "modelKey": "ou99.465884-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-465884-1-1.html",
+      "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06"
+    },
+    {
+      "candidateId": "ou99:467227",
+      "heroId": "b2-fushi",
+      "runtimeHeroId": "b2-fushi",
+      "modelKey": "ou99.467227-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-467227-1-1.html",
+      "gitPath": "content/assets/models/community/ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564.glb",
+      "sha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564"
+    },
+    {
+      "candidateId": "ou99:470087",
+      "heroId": "community-review-33-20260907",
+      "runtimeHeroId": "community-review-33-20260907",
+      "modelKey": "ou99.470087-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-470087-1-1.html",
+      "gitPath": "content/assets/models/community/5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0.glb",
+      "sha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0"
+    },
+    {
+      "candidateId": "ou99:470426",
+      "heroId": "godie-n003",
+      "runtimeHeroId": "godie-n003",
+      "modelKey": "ou99.470426",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-470426-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_470426.glb",
+      "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4"
+    },
+    {
+      "candidateId": "ou99:470426",
+      "heroId": "godie-n01g",
+      "runtimeHeroId": "godie-n01g",
+      "modelKey": "ou99.470426",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-470426-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_470426.glb",
+      "sha256": "4dd409e5b9e7299381f497d399226cf943dcaa044bd91d8725fcc6db2a62edf4"
+    },
+    {
+      "candidateId": "ou99:472035",
+      "heroId": "godie-ubal",
+      "runtimeHeroId": "godie-ubal",
+      "modelKey": "ou99.472035",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-472035-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_472035.glb",
+      "sha256": "1254be095fc909c957bbbb4fe9c356e2a124727e3eac4428ad874d1c440ef171"
+    },
+    {
+      "candidateId": "ou99:472038",
+      "heroId": "b2-elma",
+      "runtimeHeroId": "b2-elma",
+      "modelKey": "ou99.472038-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-472038-1-1.html",
+      "gitPath": "content/assets/models/community/6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380.glb",
+      "sha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380"
+    },
+    {
+      "candidateId": "ou99:473324",
+      "heroId": "b2-aladdin",
+      "runtimeHeroId": "b2-aladdin",
+      "modelKey": "ou99.473324-standard-v3",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-473324-1-1.html",
+      "gitPath": "content/assets/models/community/5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5.glb",
+      "sha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5"
+    },
+    {
+      "candidateId": "ou99:474258",
+      "heroId": "b2-kaede",
+      "runtimeHeroId": "b2-kaede",
+      "modelKey": "ou99.474258-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-474258-1-1.html",
+      "gitPath": "content/assets/models/community/57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb",
+      "sha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6"
+    },
+    {
+      "candidateId": "ou99:478642",
+      "heroId": "b2-makoto",
+      "runtimeHeroId": "b2-makoto",
+      "modelKey": "ou99.478642-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-478642-1-1.html",
+      "gitPath": "content/assets/models/community/63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f.glb",
+      "sha256": "63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f"
+    },
+    {
+      "candidateId": "ou99:481732",
+      "heroId": "b2-shadow",
+      "runtimeHeroId": "b2-shadow",
+      "modelKey": "ou99.481732-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-481732-1-1.html",
+      "gitPath": "content/assets/models/community/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
+      "sha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c"
+    },
+    {
+      "candidateId": "ou99:487191",
+      "heroId": "godie-h01u",
+      "runtimeHeroId": "godie-h01u",
+      "modelKey": "ou99.487191",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-487191-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_487191.glb",
+      "sha256": "8bffd1a5df7d541c85db1b29d9d5b4780110e747707911d96958a1b81d2f9615"
+    },
+    {
+      "candidateId": "ou99:487484",
+      "heroId": "b2-nube",
+      "runtimeHeroId": "b2-nube",
+      "modelKey": "ou99.487484-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-487484-1-1.html",
+      "gitPath": "content/assets/models/community/773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a.glb",
+      "sha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a"
+    },
+    {
+      "candidateId": "ou99:487487-7yzc0mtk",
+      "heroId": "b2-klaus",
+      "runtimeHeroId": "b2-klaus",
+      "modelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-487487-1-1.html",
+      "gitPath": "content/assets/models/community/030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0.glb",
+      "sha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0"
+    },
+    {
+      "candidateId": "ou99:487487-sbhhkedr",
+      "heroId": "b2-klaus",
+      "runtimeHeroId": "b2-klaus",
+      "modelKey": "ou99.487487-sbhhkedr-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-487487-1-1.html",
+      "gitPath": "content/assets/models/community/ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b.glb",
+      "sha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b"
+    },
+    {
+      "candidateId": "ou99:491448",
+      "heroId": "b2-boxxo",
+      "runtimeHeroId": "b2-boxxo",
+      "modelKey": "ou99.491448-standard-v3",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-491448-1-1.html",
+      "gitPath": "content/assets/models/community/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb",
+      "sha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3"
+    },
+    {
+      "candidateId": "ou99:491497",
+      "heroId": "b2-sinbad",
+      "runtimeHeroId": "b2-sinbad",
+      "modelKey": "ou99.491497-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-491497-1-1.html",
+      "gitPath": "content/assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
+      "sha256": "9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378"
+    },
+    {
+      "candidateId": "ou99:493578",
+      "heroId": "community-review-36-20260907",
+      "runtimeHeroId": "community-review-36-20260907",
+      "modelKey": "ou99.493578-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-493578-1-1.html",
+      "gitPath": "content/assets/models/community/a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894.glb",
+      "sha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894"
+    },
+    {
+      "candidateId": "ou99:495015",
+      "heroId": "b2-haga",
+      "runtimeHeroId": "b2-haga",
+      "modelKey": "ou99.495015-standard",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-495015-1-1.html",
+      "gitPath": "content/assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
+      "sha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d"
+    },
+    {
+      "candidateId": "ou99:496452",
+      "heroId": "b2-orphen",
+      "runtimeHeroId": "b2-orphen",
+      "modelKey": "ou99.496452-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-496452-1-1.html",
+      "gitPath": "content/assets/models/community/97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501.glb",
+      "sha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501"
+    },
+    {
+      "candidateId": "ou99:496905",
+      "heroId": "godie-n00b",
+      "runtimeHeroId": "godie-n00b",
+      "modelKey": "ou99.496905",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-496905-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_496905.glb",
+      "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16"
+    },
+    {
+      "candidateId": "ou99:497131",
+      "heroId": "godie-o00x",
+      "runtimeHeroId": "godie-o00x",
+      "modelKey": "ou99.497131",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-497131-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_497131.glb",
+      "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521"
+    },
+    {
+      "candidateId": "ou99:497131",
+      "heroId": "godie-ogrh",
+      "runtimeHeroId": "godie-ogrh",
+      "modelKey": "ou99.497131",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-497131-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_497131.glb",
+      "sha256": "799e40ab0dbd2fb4059fd5022100580717e84e0fbcb81934103578d87453b521"
+    },
+    {
+      "candidateId": "ou99:498214",
+      "heroId": "community-review-30-20260907",
+      "runtimeHeroId": "community-review-30-20260907",
+      "modelKey": "ou99.498214-standard-v2",
+      "identityStatus": "intentional-similar-proxy",
+      "sourceReference": "https://www.ou99.com/thread-498214-1-1.html",
+      "gitPath": "content/assets/models/community/445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d.glb",
+      "sha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d"
+    },
+    {
+      "candidateId": "ou99:313646",
+      "heroId": "community-review-02-20260907",
+      "runtimeHeroId": "community-review-02-20260907",
+      "modelKey": "ou99.313646-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-313646-1-1.html",
+      "gitPath": "content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+      "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123"
+    },
+    {
+      "candidateId": "ou99:287871",
+      "heroId": "community-review-05-20260907",
+      "runtimeHeroId": "community-review-05-20260907",
+      "modelKey": "ou99.287871-standard",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-287871-1-1.html",
+      "gitPath": "content/assets/models/community/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb",
+      "sha256": "6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d"
+    },
+    {
+      "candidateId": "ou99:497211",
+      "heroId": "community-review-07-20260907",
+      "runtimeHeroId": "community-review-07-20260907",
+      "modelKey": "ou99.497211-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-497211-1-1.html",
+      "gitPath": "content/assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
+      "sha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340"
+    },
+    {
+      "candidateId": "ou99:472112",
+      "heroId": "community-review-14-20260907",
+      "runtimeHeroId": "community-review-14-20260907",
+      "modelKey": "ou99.472112-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-472112-1-1.html",
+      "gitPath": "content/assets/models/community/b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e.glb",
+      "sha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e"
+    },
+    {
+      "candidateId": "ou99:457123",
+      "heroId": "community-review-15-20260907",
+      "runtimeHeroId": "community-review-15-20260907",
+      "modelKey": "ou99.457123-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-457123-1-1.html",
+      "gitPath": "content/assets/models/community/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
+      "sha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4"
+    },
+    {
+      "candidateId": "ou99:311294",
+      "heroId": "community-review-22-20260907",
+      "runtimeHeroId": "community-review-22-20260907",
+      "modelKey": "ou99.311294-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-311294-1-1.html",
+      "gitPath": "content/assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
+      "sha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684"
+    },
+    {
+      "candidateId": "ou99:468771",
+      "heroId": "community-review-09-20260907",
+      "runtimeHeroId": "community-review-09-20260907",
+      "modelKey": "ou99.468771-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-468771-1-1.html",
+      "gitPath": "content/assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
+      "sha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223"
+    },
+    {
+      "candidateId": "ou99:457280",
+      "heroId": "community-review-11-20260907",
+      "runtimeHeroId": "community-review-11-20260907",
+      "modelKey": "ou99.457280-standard-v2",
+      "identityStatus": "character-labelled-by-delivering-workflow",
+      "sourceReference": "https://www.ou99.com/thread-457280-1-1.html",
+      "gitPath": "content/assets/models/community/ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd.glb",
+      "sha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd"
+    },
+    {
+      "candidateId": "lol:karthus",
+      "heroId": "example:karthus",
+      "runtimeHeroId": "lol-karthus",
+      "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-karthus.json",
+      "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+      "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b"
+    },
+    {
+      "candidateId": "lol:leesin",
+      "heroId": "example:leesin",
+      "runtimeHeroId": "lol-leesin",
+      "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-leesin.json",
+      "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
+      "sha256": "17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e"
+    },
+    {
+      "candidateId": "lol:lux",
+      "heroId": "example:lux",
+      "runtimeHeroId": "lol-lux",
+      "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-lux.json",
+      "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+      "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee"
+    },
+    {
+      "candidateId": "lol:missfortune",
+      "heroId": "example:missfortune",
+      "runtimeHeroId": "lol-missfortune",
+      "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-missfortune.json",
+      "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+      "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c"
+    },
+    {
+      "candidateId": "lol:warwick",
+      "heroId": "example:warwick",
+      "runtimeHeroId": "lol-warwick",
+      "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-warwick.json",
+      "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+      "sha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975"
+    },
+    {
+      "candidateId": "lol:xerath",
+      "heroId": "example:xerath",
+      "runtimeHeroId": "lol-xerath",
+      "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-xerath.json",
+      "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+      "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc"
+    },
+    {
+      "candidateId": "lol:yasuo",
+      "heroId": "example:yasuo",
+      "runtimeHeroId": "lol-yasuo",
+      "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "identityStatus": "native-game-character",
+      "sourceReference": "content/champions/lol-yasuo.json",
+      "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+      "sha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b"
+    }
+  ],
+  "scope": "Other workflow delivered models retained as independent candidates; original immutable S3 release unchanged. Backend readiness and current website are separate records."
+}
