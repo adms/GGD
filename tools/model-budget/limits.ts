@@ -89,8 +89,8 @@ const round = (n: number, step: number): number => Math.round(n / step) * step;
 
 /** meshes resident before the mesh/draw slice is spent: 6.0 ms ÷ (c_mesh × 3). */
 export const MESH_LIMIT = round(6.0 / (C_MESH_MS * DERATE), 10); // 240
-/** The scene allowance covers twelve heroes at the rounded-down per-hero cap. */
-export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES; // 1,920
+/** The scene allowance covers twelve heroes at the configured per-hero cap. */
+export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES;
 
 /**
  * Texture VRAM is deliberately NOT derived from a guessed hardware ceiling.
@@ -153,7 +153,7 @@ export const LINES: Line[] = [
     unit: "channels",
     limit: CHAN_LIMIT,
     warn: Math.round(CHAN_LIMIT * 0.7),
-    why: `${ANIMATION_FRAME_MS} ms ÷ (${C_CHAN_MS.toFixed(5)} ms/channel × ${DERATE}) ≈ ${Math.round(ANIMATION_FRAME_MS / (C_CHAN_MS * DERATE))}；分給 ${CHAMPION_INSTANCES} 隻、每隻向下取十的倍數 ${CHAMPION_CHANNEL_LIMIT}，合計 ${CHAN_LIMIT}。成本沿用 KayKit 開發機量測；${DERATE} 倍是平板效能估算，非實機保證。警戒線 = 上限的 70%。`,
+    why: `出貨設定每名上限 ${CHAMPION_CHANNEL_LIMIT} × ${CHAMPION_INSTANCES} 名 = ${CHAN_LIMIT}。原 ${ANIMATION_FRAME_MS} ms ÷ (${C_CHAN_MS.toFixed(5)} ms/channel × ${DERATE}) 的估算分攤後為每名 ${DERIVED_CHAMPION_CHANNEL_LIMIT}，僅作診斷，不決定出貨上限。成本沿用 KayKit 開發機量測，非實機保證。同畫面警戒線 = 上限的 70%。`,
   },
   {
     key: "textureBytes",
@@ -218,7 +218,7 @@ export const GATES: Gate[] = [
       "面數 =(250k 警戒 − 58k 最重競技場)/12 ≈ 16k、(400k − 64k)/12 = 28k。" +
       "Mesh = 英雄可用的 60 個 mesh 額度 ÷ 12。" +
       "貼圖 = 32 MB 英雄額度 ÷ 12 = 2.67 MB/隻，512²+mip = 1.33 MB 過關，1024²+mip = 5.33 MB 不過（除非它被多隻英雄共用、只上傳一次）。" +
-      `通道 = ${CHAN_LIMIT} ÷ ${CHAMPION_INSTANCES} = ${CHAMPION_CHANNEL_LIMIT}；以 iPad mini A17 Pro／30 fps 的估算額度執行，警戒線為上限的 75%。`,
+      `通道上限 ${CHAMPION_CHANNEL_LIMIT}、警戒線 ${HERO_MODEL_BUDGET.channels.warn}，讀取英雄模型匯入設定；iPad mini A17 Pro／30 fps 的成本仍為估算。`,
   },
   {
     role: "arena-decor",

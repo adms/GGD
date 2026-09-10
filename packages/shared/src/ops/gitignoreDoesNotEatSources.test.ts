@@ -27,6 +27,7 @@ const SOURCE = /\.(ts|tsx|mts|cts|js|mjs|cjs|go|py)$/;
 const EXEMPT: { where: RegExp; why: string }[] = [
   { where: /(^|\/)node_modules\//, why: "第三方相依 —— lockfile 重建得出來，⛔ 不是我們的原始碼" },
   { where: /(^|\/)dist\//, why: "Vite／tsc 產物（apps/*/dist 的 .js chunk）—— 這個 repo 沒有手寫原始碼住在 dist/ 底下" },
+  { where: /(^|\/)vite\.config\.[cm]?[jt]s\.timestamp-\d+-[0-9a-f]+\.mjs$/, why: "Vite loadConfigFromBundledFile 寫在 config 旁的暫存 bundle（時間戳＋隨機十六進位），import 後刪除；並行審查可能在刪除前看見" },
   { where: /^(build|(apps|packages|tools)\/[^/]+\/build)\//, why: "產物住的深度（與 .gitignore 四條錨定規則同一組）—— ⚠️ src/ 底下的 build 刻意不在這裡" },
   { where: /(^|\/)\.venv\//, why: "python venv（tools/**/.venv · voice-reference-pipeline/.venv）—— requirements 重建得出來" },
   { where: /(^|\/)__pycache__\//, why: "python 位元組碼 —— 純產物" },
@@ -34,6 +35,8 @@ const EXEMPT: { where: RegExp; why: string }[] = [
   { where: /(^|\/)(\.backup[^/]*|backup-[^/]*)\//, why: "整樹快照（vitest.config.ts）—— 每一份都是某個 commit 的副本" },
   { where: /^docs\/legacy\/_overwrites\/.*\/\.claude\/worktrees\//, why: "覆蓋前留底裡夾帶的 worktree 副本 —— 本體在各自的分支上" },
 ];
+const unexplainedSources = (paths: string[]): string[] =>
+  paths.filter((p) => p && SOURCE.test(p) && !EXEMPT.some((e) => e.where.test(p)));
 
 /** `git check-ignore -q`：離開碼 0 = 被吃、1 = 沒被吃；其他 ⇒ 擲出（⛔ 不要讓錯誤長得像「沒被吃」）。 */
 function ignored(p: string): boolean {
@@ -49,10 +52,23 @@ describe("`.gitignore` 不可以吃掉原始碼（GH#1038）", () => {
       expect(ignored(p), `${p} 沒被吃 —— 放行過寬，產物會進 git`).toBe(true);
   });
 
+  it("Vite 的 config 暫存 bundle 是產物；原始設定、近似檔名與 src/build 仍受來源檢查", () => {
+    const artifact = "apps/editor/vite.config.ts.timestamp-1788984093150-48dae76a0c6bf.mjs";
+    expect(ignored(artifact), "Vite 暫存 bundle 仍應被 gitignore 擋住").toBe(true);
+    const sources = [
+      "apps/editor/vite.config.ts",
+      "apps/editor/vite.config.mjs",
+      "apps/editor/vite.config.ts.timestamp-manual.mjs",
+      "apps/editor/vite.config.ts.timestamp-1788984093150-fixture.mjs",
+      "apps/editor/src/build/config.mjs",
+    ];
+    expect(unexplainedSources([artifact, ...sources])).toEqual(sources);
+  });
+
   it("反方向：從實體走 —— 被 ignore 的原始碼檔 ⇒ 0 個，或在帶理由的豁免表", () => {
     const eaten = git(["ls-files", "--others", "--ignored", "--exclude-standard", "-z"])
-      .split("\0").filter((p) => p && SOURCE.test(p));
-    const stray = eaten.filter((p) => !EXEMPT.some((e) => e.where.test(p)));
+      .split("\0");
+    const stray = unexplainedSources(eaten);
     // `check-ignore -v -z --stdin` 每一條路徑回四段：<來源檔> <行號> <樣式> <路徑>
     const blame = stray.length ? git(["check-ignore", "-v", "-z", "--stdin"], stray.join("\0") + "\0").split("\0") : [];
     const rows = stray.map((p, i) => `${p}  ← ${blame[i * 4] ?? "?"}:${blame[i * 4 + 1] ?? "?"} 「${blame[i * 4 + 2] ?? "?"}」`);

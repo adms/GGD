@@ -1,3 +1,6 @@
+import shippedModelLod from "../../../../../content/config/model-lod.json";
+import { DEFAULT_MODEL_LOD } from "../schema/config/modelLod";
+
 /** Shared with tools/model-budget/limits.ts: iPad mini A17 Pro at 30 fps, estimated. */
 export const C_CHAN_MS = 2.19 / 1476;
 export const DERATE = 3;
@@ -8,7 +11,7 @@ export const CHAMPION_INSTANCES = 12;
  *
  * > owner 2026-09-10（逐字）：「（每幀動畫通道上限 160）**太低了 至少要有 300以上每個**」
  *
- * ⇒ ⭐ 出貨值住 `content/config/model-lod.json` 的 `championChannelLimit`（**300**）。
+ * ⇒ ⭐ 出貨值住 `content/config/model-lod.json` 的 `championChannelLimit`。
  * ⭐ 這個常數留著當**診斷**：它回答「照原本那組假設，上限會是多少」，
  * ⛔ 而它**不再決定**任何一顆模型過不過（第〇·四守則：上限只有一個住處）。
  */
@@ -21,8 +24,9 @@ export const DERIVED_CHAMPION_CHANNEL_LIMIT = Math.floor(ANIMATION_FRAME_MS / (C
  *
  * ⭐ 兩條線的意思不同：**警戒**只印一行、⛔ 不擋；**上限**才讓 `guard.ts` 回非零。
  */
-export const CHAMPION_CHANNEL_WARN = 300;
-export const CHAMPION_CHANNEL_LIMIT = 500;
+// The CLI reads this JSON when it starts; the browser worker bundles it at build time.
+export const CHAMPION_CHANNEL_WARN = shippedModelLod.championChannelWarn ?? DEFAULT_MODEL_LOD.championChannelWarn;
+export const CHAMPION_CHANNEL_LIMIT = shippedModelLod.championChannelLimit ?? DEFAULT_MODEL_LOD.championChannelLimit;
 
 /**
  * ⭐ 這一格設成 N 等於**多大的保守餘裕**？（⛔ 診斷用，不決定任何事）

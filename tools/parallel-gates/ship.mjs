@@ -48,12 +48,13 @@
 import { execFileSync, spawn } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { cpus, tmpdir } from "node:os";
+import { fileURLToPath } from "node:url";
 import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
 
-const HERE = new URL(".", import.meta.url).pathname;
-const REPO = new URL("../../", import.meta.url).pathname;
+const HERE = fileURLToPath(new URL(".", import.meta.url));
+const REPO = fileURLToPath(new URL("../../", import.meta.url));
 
 const argv = process.argv.slice(2);
 const noSync = argv.includes("--no-sync");
@@ -391,7 +392,8 @@ mkdirSync(LOGDIR, { recursive: true });
  *
  * ── ⭐ 修法（三個都修,⛔ 不是只修最上面那個）──────────────────────────────
  *   ① 估時**真的**從帳本讀（`estimateMs`,同一份 `deploy-timings.json`）並傳進來;
- *      地板抬到 10 分鐘 —— 一支正常 283s 的 suite ⛔ 不可以被判死。
+ *      地板抬到 15 分鐘 —— 2026-09-09 帳本的 apps/client 已量到 754730ms，
+ *      正常結束且回報測試失敗、無 hung 的 suite 不可被誤殺（900000ms 留約 19% 餘裕）。
  *   ② `detached:true` 讓子行程自成一個 **process group**,逾時殺 `-pid`（**整組**）,
  *      SIGTERM → 寬限 → SIGKILL。⇒ 孤兒不再握著 pipe,也不再繼續吃 CPU 拖垮同儕。
  *   ③ ⭐⭐ **無論如何都會 settle**：`close` 沒來就靠 `exit`＋寬限計時器收尾,
@@ -403,7 +405,7 @@ mkdirSync(LOGDIR, { recursive: true });
  *   `GGD_SHIP_WATCHDOG_FLOOR_MS=300000` 退回舊地板 · `GGD_SHIP_WATCHDOG_MULT=0` 退回「只看地板」
  *   `GGD_SHIP_WATCHDOG_OFF=1` 整隻關掉（⚠️ 那就回到「等 11 分鐘」的那一版）
  */
-const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 10 * 60 * 1000);
+const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 15 * 60 * 1000);
 const WATCHDOG_MULT = Number(process.env.GGD_SHIP_WATCHDOG_MULT ?? 3);
 // 送出 SIGKILL（或看到 exit）之後,還等多久 `close` —— 等不到就自己收尾。
 const WATCHDOG_GRACE_MS = Number(process.env.GGD_SHIP_WATCHDOG_GRACE_MS ?? 20000);
