@@ -92250,6 +92250,121 @@
       ],
       "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/4b3950578db1861e3a037492c4a93ec9878343bbffa7e0027e9c7aad0f6088d5.zip",
       "readbackVerified": true
+    },
+    {
+      "id": "tmr-sinbad-baal",
+      "bytes": 2029171,
+      "sha256": "6d3263c3bc71805eef39184360cdd77cad75d58e6f84fd8e29dbf47145df3386",
+      "contentKind": "complete-intake",
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 451,
+          "sha256": "7576306480a84aa491a5704ee39e7474553834b674a00fbe364838ebac877242"
+        },
+        {
+          "path": "converted-assimp/assimp-export.log",
+          "bytes": 1094,
+          "sha256": "5c5fcb006bd893268633cecaa3af0ad3116f04eb4f71ee12c4c47406dfeedd71"
+        },
+        {
+          "path": "converted-assimp/body.glb",
+          "bytes": 547928,
+          "sha256": "7755786136f6462692f2ae3ba83c4dd8c6ddf09de6d146c155a49f89b28a3610"
+        },
+        {
+          "path": "converted-assimp/gltf-validation.json",
+          "bytes": 19417,
+          "sha256": "2e292965440324f1a88180fde7bdd3d508a057a59d6baac392dc52f69527f4b8"
+        },
+        {
+          "path": "converted-collada/assimp-export.log",
+          "bytes": 1118,
+          "sha256": "d3b4e8ab999387532f0cf460ae75af4b4ca7fe4db77b4ca32d6d99f4fe14c846"
+        },
+        {
+          "path": "converted-collada/assimp-original.glb",
+          "bytes": 547928,
+          "sha256": "117f238124461835b4c66c665567609ec4496f9a143ae578147caee10375123e"
+        },
+        {
+          "path": "converted-collada/body.glb",
+          "bytes": 547892,
+          "sha256": "37f63735972799b3768327a3ac385924266eca5517a6054f0d3efb92754c5a79"
+        },
+        {
+          "path": "converted-collada/browser-proof.json",
+          "bytes": 286,
+          "sha256": "4e67686bfe39b918dedcba5e177af4c27051a693718e3219997da8d5a974def4"
+        },
+        {
+          "path": "converted-collada/conversion.json",
+          "bytes": 3811,
+          "sha256": "17ad7f23a7deda897b92464586532323a40b780f9c4698bb73b6cf358004ff2e"
+        },
+        {
+          "path": "converted-collada/gltf-validation.json",
+          "bytes": 12407,
+          "sha256": "3410b3a3bf740fd9bd3ff5395097e0134da325048ee94a247c32121c6fe77596"
+        },
+        {
+          "path": "converted-collada/preview-back.png",
+          "bytes": 22773,
+          "sha256": "43f64570f11e1faa77a35d4408b26786617f598824a271e426657413411b74bb"
+        },
+        {
+          "path": "converted-collada/preview-front.png",
+          "bytes": 23824,
+          "sha256": "f659d758d4d90f0bc9fc069a1c538083adc133a5466249d7d801eed5be3f45e3"
+        },
+        {
+          "path": "converted-collada/preview-side.png",
+          "bytes": 21781,
+          "sha256": "cf2c2ab9a31a904ca59b9d008e4144a8c6015359d211ebded66d54462291e8ce"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/Magi_AS_character_SinbadBaalDjinnEquip_DAE.dae",
+          "bytes": 800476,
+          "sha256": "f902dcc3e2ec91e1dbb794133dcde61e60ece4021b6801960771e7b73e867661"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_01.png",
+          "bytes": 218616,
+          "sha256": "84583e0ef1fbb2317568ce8c457ea341d10c6f2de84dd561f4e3e03bf2b28717"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_02.png",
+          "bytes": 19210,
+          "sha256": "a91d7deabb8d1a10fa0f4636437b40c85e39eee01e09d0a84f64b6aa0c911bbe"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_03.png",
+          "bytes": 10589,
+          "sha256": "29de458f2edf31f8a9215bd6982391ed9ba49bc44ed4aaf5a38a696dd764e095"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_04.png",
+          "bytes": 2285,
+          "sha256": "0be523f0b3bb2d598b2db943113f2d8c7c6ddcacaf6d679d517b77e628335382"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_f_01.png",
+          "bytes": 10102,
+          "sha256": "2332c580b39d549c48f22f029673bce53728d770d5826595937bb5939c6ceb39"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_n.png",
+          "bytes": 66481,
+          "sha256": "3879c4e78218930ca0a3ec8f5dbcea4c7e1d2f06e1185001c163e5f43da2f09a"
+        },
+        {
+          "path": "source.zip",
+          "bytes": 468650,
+          "sha256": "cb8600b8fc10b57bb4197ba6f4c74e8fcd23ed609d75f8a8fcdd1ebd446c4e31"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/tmr-sinbad-baal/6d3263c3bc71805eef39184360cdd77cad75d58e6f84fd8e29dbf47145df3386.zip",
+      "readbackVerified": true
     }
   ],
   "pendingUploads": []

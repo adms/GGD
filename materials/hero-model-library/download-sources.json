@@ -4749,6 +4749,99 @@
         "readbackVerified": true,
         "usage": "manual-only legacy backup; not runtime-ready"
       }
+    },
+    {
+      "id": "tmr-sinbad-baal",
+      "target": "辛巴達（巴力魔裝形態）",
+      "heroIds": [
+        "b2-sinbad"
+      ],
+      "url": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+      "uploader": "Ozci；來源遊戲 MAGI: Aratanaru Sekai（3DS）",
+      "format": "Collada DAE + PNG → 蒙皮 GLB",
+      "accessStatus": "public-browser-download",
+      "checkedAt": "2026-09-10T09:26:21.591140+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "review-acquired-form-continue-other-forms",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/tmr-sinbad-baal",
+      "files": [
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/Magi_AS_character_SinbadBaalDjinnEquip_DAE.dae",
+          "bytes": 800476,
+          "sha256": "f902dcc3e2ec91e1dbb794133dcde61e60ece4021b6801960771e7b73e867661",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/Magi_AS_character_SinbadBaalDjinnEquip_DAE.dae"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_01.png",
+          "bytes": 218616,
+          "sha256": "84583e0ef1fbb2317568ce8c457ea341d10c6f2de84dd561f4e3e03bf2b28717",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_01.png"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_02.png",
+          "bytes": 19210,
+          "sha256": "a91d7deabb8d1a10fa0f4636437b40c85e39eee01e09d0a84f64b6aa0c911bbe",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_02.png"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_03.png",
+          "bytes": 10589,
+          "sha256": "29de458f2edf31f8a9215bd6982391ed9ba49bc44ed4aaf5a38a696dd764e095",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_03.png"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_04.png",
+          "bytes": 2285,
+          "sha256": "0be523f0b3bb2d598b2db943113f2d8c7c6ddcacaf6d679d517b77e628335382",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_04.png"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_f_01.png",
+          "bytes": 10102,
+          "sha256": "2332c580b39d549c48f22f029673bce53728d770d5826595937bb5939c6ceb39",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_f_01.png"
+        },
+        {
+          "path": "extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_n.png",
+          "bytes": 66481,
+          "sha256": "3879c4e78218930ca0a3ec8f5dbcea4c7e1d2f06e1185001c163e5f43da2f09a",
+          "archiveMember": "Magi_AS_character_SinbadBaalDjinnEquip_DAE/c006_sin_n.png"
+        }
+      ],
+      "verification": "巴力魔裝原包 ZIP CRC 通過；14 網格、50 個骨節節點、6 PNG。已轉 GLB：3,674 三角面、1 蒙皮／48 個有權重骨節；5 張被材質引用的貼圖逐位元嵌入，第 6 張未引用貼圖仍留原包。依單一 UV 0 證據修正匯出錯誤；格式 0 錯誤、14 個蒙皮階層警告，三面可載入。無動畫、特效或音效；14 繪製批次超限，尺寸／骨架姿勢、動作與後台切換仍待驗收。一般形態未取得，不能因此勾銷一般形態下載。",
+      "reuseTerms": "保存上傳者署名及來源遊戲；公開下載不等於已確認跨遊戲再散布權限。",
+      "usage": "intake-only; no automatic runtime selection",
+      "form": "Baal Djinn Equip",
+      "coverage": "Baal Djinn Equip only; base Sinbad remains a separate pending source",
+      "conversion": {
+        "path": "converted-collada/body.glb",
+        "sha256": "37f63735972799b3768327a3ac385924266eca5517a6054f0d3efb92754c5a79",
+        "bytes": 547892,
+        "proof": "converted-collada/conversion.json",
+        "formatValidation": "converted-collada/gltf-validation.json",
+        "runtimeReady": false,
+        "backendSelectionVerified": false
+      },
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "heroIds": [
+          "b2-sinbad"
+        ],
+        "ownerEntryIds": [],
+        "release": null,
+        "selectionVerified": false
+      },
+      "publicationStatus": "s3-legacy-readback-verified",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/tmr-sinbad-baal/6d3263c3bc71805eef39184360cdd77cad75d58e6f84fd8e29dbf47145df3386.zip",
+        "bytes": 2029171,
+        "sha256": "6d3263c3bc71805eef39184360cdd77cad75d58e6f84fd8e29dbf47145df3386",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
     }
   ],
   "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。",
@@ -4910,6 +5003,23 @@
         "readbackVerified": true,
         "usage": "manual-only legacy backup; not runtime-ready"
       }
+    },
+    {
+      "id": "tmr-sinbad-base",
+      "target": "辛巴達（一般形態）",
+      "heroIds": [
+        "b2-sinbad"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309923/",
+      "pageTitle": "Sinbad - Magi: Aratanaru Sekai (JPN)",
+      "checkedAt": "2026-09-10T09:26:21.591140+00:00",
+      "accessStatus": "public-page-download-not-observed",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "purchaseDecision": "hold-purchase-investigate-public-source",
+      "verification": "瀏覽器已正常開啟頁面並確認 Ozci 上傳的 DAE／PNG ZIP（453.80 KB）。下載動作後未在本機觀測到檔案，不能列為已取得。巴力魔裝是另一獨立來源，不能代替此一般形態。",
+      "downloadUrl": "https://models.spriters-resource.com/media/assets/307/309923.zip?updated=1755502676"
     }
   ],
   "ingestionPolicy": {

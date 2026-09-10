@@ -24,6 +24,8 @@ try {
     min = Vector3.Minimize(min, box.minimumWorld);
     max = Vector3.Maximize(max, box.maximumWorld);
   }
+  camera.setTarget(Vector3.Center(min, max));
+  camera.radius = Math.max(.1, max.subtract(min).length() * 1.2);
   document.querySelector('#proof').textContent = JSON.stringify({
     loaded: true, meshes: container.meshes.filter(m => m.getTotalVertices()).length,
     skeletons: container.skeletons.length, animations: container.animationGroups.length,

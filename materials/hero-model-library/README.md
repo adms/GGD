@@ -29,4 +29,6 @@
 
 靜態預覽來源為 `tools/hero-model-library/preview-unity.html` 與 `preview-unity.mjs`：以工作區的 esbuild 將 JS 和 Babylon.js／glTF loader 打包成 `preview.js`，HTML 另存 `index.html`，與 `body.glb` 放同一個本機 HTTP 目錄即可檢查；三面預覽不等於後台實際切換驗證。
 
+`convert_collada_intake.py <DAE> <新輸出目錄>` 使用已安裝的 Assimp 轉出含原圖的 GLB，保留未修正版。只有原 Collada 的輸入／材質綁定與所有使用該材質的網格均證明只有 UV 0 時，才修正引用不存在 UV 的錯誤；二進位資料、貼圖 SHA 與三角面數另行比對。辛巴達巴力魔裝已取得並轉換，一般形態仍是獨立待下載線索；不能因同一角色已有魔裝就取消一般形態的取得安排。此轉換不代表動作、尺寸、繪製預算與後台切換已驗收。
+
 已通過標準化的來源，由 `register.mts` 全部註冊；`automaticEligible` 只控制自動預選，不再以預設資格略過候選。未核准相似模型保留為「手動選用」，11 組核准副本由同一 `default-policy.json` 明確給予預設資格。未帶此欄位的舊相似模型不會自動取得核准；再次匯入時，核准副本會追加具明確資格的新版本，保留舊版本。不同來源／版本即使二進位相同，也依來源及版本名稱保存獨立選項；同一筆完整交付重複註冊則拒絕。開發 Content API、正式站 Go 選擇服務與後台共同遵守此規則，實際站點仍須發布該程式與資料版本才生效。
