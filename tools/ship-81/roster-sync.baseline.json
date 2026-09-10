@@ -3,56 +3,7 @@
   "staleBlockers": {
     "note": "⭐ 盤點表『尚未通過轉換的候選』裡，理由引用了**已經被改掉的上限**（160）的每一列。GH#1164 把每幀動畫通道上限改成後台設定（content/config/model-lod.json：warn 300 / limit 500）⇒ 這些理由全部不再成立。⭐ 下面每一列都**實跑過** tools/model-budget/guard.ts（⛔ 不是讀程式碼推論），逐名 exit code 記在 guard 欄。",
     "measuredAt": "2026-09-10",
-    "rows": [
-      {
-        "rowId": "b2-boxxo",
-        "citedValue": 237,
-        "citedLimit": 160,
-        "guard": {
-          "exit": 0,
-          "measuredChannels": 110,
-          "verdict": "ok",
-          "modelMeasured": "lol:lux（素材庫 catalog 的標準化『拉克絲』ggd.model.5ad7e0cc65e3eca8ead74227）",
-          "caveat": "⚠️ ⭐ 這一列**沒有完全對上**：盤點表引用的是 `existing:lux`（原 W3X 匯入），⛔ 而它在 catalog.json 與 intake/catalog.json 裡**都不存在**（hero-model-options.json 只把它記成一筆沒有 sourceModelKey 的 pending）⇒ ⛔ 那顆 glb 今天量不到。⭐ 而 237 這個數字的出處找到了：outputs/community-lol-models-20260907/lux-optimization.json 的 `before` 欄 —— 20 段動作**全部** 237 通道，`after` 降到 134–158。⇒ ⭐ 237 是**最佳化之前**的量值，而今天標準化入庫的那顆是 110。"
-        }
-      },
-      {
-        "rowId": "example:leesin",
-        "citedValue": 196,
-        "citedLimit": 160,
-        "guard": {
-          "exit": 0,
-          "measuredChannels": 196,
-          "verdict": "WARN",
-          "modelMeasured": "lol:leesin（ggd.model.f9e0593bc69748052ff9f72d）",
-          "caveat": "⭐ 通道數與盤點表引用的 196 **逐字相符** ⇒ 過期的是上限，⛔ 不是量值。⚠️ WARN 來自**另一個軸**（貼圖最長邊 1024，warn 512 / limit 1024），⛔ 與這一列的阻塞理由無關，且 guard 仍 exit=0。"
-        }
-      },
-      {
-        "rowId": "example:warwick",
-        "citedValue": 188,
-        "citedLimit": 160,
-        "guard": {
-          "exit": 0,
-          "measuredChannels": 188,
-          "verdict": "WARN",
-          "modelMeasured": "lol:warwick（ggd.model.b021c68877664a89b7ec8d46）",
-          "caveat": "⭐ 通道數與引用值 188 逐字相符。⚠️ WARN 同樣是貼圖 1024 那一軸，⛔ 不是通道。"
-        }
-      },
-      {
-        "rowId": "example:yasuo",
-        "citedValue": 170,
-        "citedLimit": 160,
-        "guard": {
-          "exit": 0,
-          "measuredChannels": 170,
-          "verdict": "ok",
-          "modelMeasured": "lol:yasuo（ggd.model.1b523670f582b44d8f9595b9）",
-          "caveat": "⭐ 通道數與引用值 170 逐字相符，四軸全 ok。"
-        }
-      }
-    ]
+    "rows": []
   },
   "notShipped": {
     "note": "⭐ **正向**落差：盤點表有這一列，⛔ 而 content/champions/ 裡沒有對應的 champion@1 ——「**有宣告而無實體**」。⭐ 2026-09-10：**清空**（7 → 0）。⛔ 在此之前這裡記著整個『LOL 追加 7 名』那一節，而那句話**今天已經是假的** —— 那 7 名在 `5f7d222ef` 就上架了，只是 id 叫 `lol-*` 而盤點表那一節的 rowId 叫 `example:*` ⇒ 舊的比對看不見它們。⇒ ⭐ 它們搬到 `idAliases`（帶著三軸證據＋每次跑都重驗的顯示名比對），⛔ 不是留在這裡當成「還沒上架」——那會是一句**被棘輪保護著的謊話**。",
