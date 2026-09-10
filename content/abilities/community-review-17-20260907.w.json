@@ -1,7 +1,7 @@
 {
   "id": "community-review-17-20260907.w",
   "name": "死亡騎士",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】召喚 1 名 thorne 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的死亡騎士，負責近身牽制。\n【待補機制】死亡騎士造型待製，代理採 thorne。",
   "slot": "W",
   "castType": "self",

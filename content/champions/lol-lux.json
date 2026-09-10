@@ -50,7 +50,7 @@
     "Q": {
       "id": "lol-lux.q",
       "name": "稜光束縛",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。",
       "slot": "Q",
       "castType": "targeted",
@@ -108,7 +108,7 @@
     "W": {
       "id": "lol-lux.w",
       "name": "折光護衣",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "獲得持續 3 秒的全傷害護盾，同名護盾保留較大值。",
       "slot": "W",
       "castType": "self",
@@ -167,7 +167,7 @@
     "E": {
       "id": "lol-lux.e",
       "name": "流光之域",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "在落點留下 3 秒光域，每秒造成極小級魔法傷害。",
       "slot": "E",
       "castType": "ground",
@@ -236,7 +236,7 @@
     "R": {
       "id": "lol-lux.r",
       "name": "破曉光路",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "向前依序展開四段光束判定；敵人可受到相交段落的傷害。",
       "slot": "R",
       "castType": "skillshot",

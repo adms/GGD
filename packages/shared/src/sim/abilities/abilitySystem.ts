@@ -29,6 +29,7 @@ import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules"
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
+import { armRecast, bindRecastSerial, consumeRecastCharge, recastPressGate, sweepRecast } from "./recast";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
 import { spellWardRefusesCast } from "../spellWardCast";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
@@ -210,6 +211,8 @@ export type CastResult =
   | "stunned"
   | "silenced"
   | "cooldown"
+  /** GH#1187【再次施放】：在後段窗口內，但 `gate:"onHit"` 而首段還沒打中任何人 */
+  | "recast-gate"
   | "no-mana"
   | "no-resource"
   | "out-of-range"
@@ -572,7 +575,13 @@ export function castAbility(
   if ((world.knockdown.get(caster) ?? 0) > 0) return "stunned";
   // already mid-cast (another ability's cast time) — animation-locked
   if (ab.cast) return "cooldown";
-  if (inst.cooldownRemainingTicks > 0) return "cooldown";
+  // ⭐ GH#1187【再次施放】—— 窗口內的按鍵是「後段」：⛔ 不撞冷卻、耗魔走 costPerRecast、
+  //   效果走 recastEffects（沒寫就重跑 effects —— 阿璃 R 三段同一個衝刺）。
+  //   放在冷卻閘**前面**是這個機制存在的全部意義：`cooldownAt:"first"` 時冷卻已經在跑。
+  const recastPress = recastPressGate(inst, def.recast, world.tick);
+  if (recastPress === "gate") return "recast-gate";
+  const isRecast = recastPress === "recast";
+  if (!isRecast && inst.cooldownRemainingTicks > 0) return "cooldown";
 
   // The SIXTH slot is castable only for `innateKind: "active"` — the ~60 real
   // WC3 D-slot innates. A permanent 天生技 (迴避/靈氣/on-hit proc) answers
@@ -594,9 +603,9 @@ export function castAbility(
   // 同一條規則 —— 見 abilities/berserkRules.ts。
   const berserkBlock = berserkCastBlock(world, def, caster);
   if (berserkBlock) return berserkBlock;
-  const mana = def.manaCost[inst.rank - 1] ?? 0;
+  const mana = isRecast ? (def.recast?.costPerRecast ?? 0) : (def.manaCost[inst.rank - 1] ?? 0);
   if (hp.mana < mana) return "no-mana";
-  const statusCost = def.statusCost;
+  const statusCost = isRecast ? undefined : def.statusCost; // 後段不再扣狀態層數（首段扣過了）
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
   if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < statusCost.count) {
     return "no-resource";
@@ -744,7 +753,14 @@ export function castAbility(
       world.combatEnv.cooldown *
       berserkCooldownFactor(world, caster),
   );
-  inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
+  const cdTicks = Math.round(cdSecs / world.dt);
+  if (isRecast) {
+    consumeRecastCharge(inst); // 用完 ⇒ finishRecast 會把 `cooldownAt:"end"` 暫存的冷卻寫進去
+  } else if (def.recast) {
+    inst.cooldownRemainingTicks = armRecast(inst, def.recast, world.tick, world.dt, cdTicks);
+  } else {
+    inst.cooldownRemainingTicks = cdTicks;
+  }
 
   // ── 【切換】打開 ───────────────────────────────────────────────────────
   //
@@ -769,8 +785,9 @@ export function castAbility(
   //    所以後台改了下一場就生效，⛔ 不必重跑 content:build。
   //    ⚠️ 0 = 瞬發技，它**不吃地板**（地板管的是「有吟唱的技能最短多長」，
   //    不是「把每一支瞬發技都變成 0.06 秒」—— 那會讓全部技能都變鈍）。
+  // ⭐ 後段一律瞬發：施法時間是首段的（cast-time 路徑只認 def.effects，走它會漏掉 recastEffects）。
   const castSec =
-    (def.castTimeSec ?? 0) > 0 ? applyCastTimeRules(world.castTimeRules, def.castTimeSec!) : 0;
+    !isRecast && (def.castTimeSec ?? 0) > 0 ? applyCastTimeRules(world.castTimeRules, def.castTimeSec!) : 0;
   const castTicksForAim = Math.round(castSec / world.dt);
   const fTicks = facingTicks(world); // 後台可調 (config.combat-feel@1 → facing)
   if (direction) {
@@ -787,6 +804,7 @@ export function castAbility(
   // 判準逐字相同（「一次真的提交出去的施放」），而它們在同一個位置就不可能分歧。
   // ⛔ 放在任何一道拒絕閘之前，「最近施放過」就會對著一次被拒的按鍵回 true。
   const acceptedCast = noteAbilityCast(world, caster, slot, inst.abilityId);
+  if (!isRecast && def.recast) bindRecastSerial(inst, acceptedCast.serial); // onHit 只認首段這一次
   const castInstance = opts.suppressCastCredit === true ? undefined : acceptedCast;
   // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
   // audio mapper can play the ELEMENT whoosh (fire/ice/lightning) for the cast
@@ -891,7 +909,7 @@ export function castAbility(
   // 除非那條測試讀的是「打出去的傷害」而不是「schema 收不收得下」。
   // ⚠️ 有吟唱的技能走的是 `systems/CastResolveSystem.ts`，那裡有同一行。
   const augmentedEffects = applyAugmentToEffects(
-    def.effects,
+    isRecast ? (def.recastEffects ?? def.effects) : def.effects,
     collectAugmentOps(world, caster, inst.abilityId),
   );
   // ⭐ GH#1091 —— 【法術護盾】整發攔截（原作 ANss）。⚠️ 有吟唱的技能走的是
@@ -1003,6 +1021,10 @@ export function cooldownDrainTicks(tick: number, rate: number): number {
 /** Tick down cooldowns (called by commandSystem each tick). */
 export function tickCooldowns(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    // ⭐ GH#1187 後段窗口到期／施法者死亡 ⇒ 結束。放在冷卻凍結的 `continue` **前面**：
+    //   窗口是真實時間，⛔ 不吃流逝速度。
+    const alive = world.health.get(id)?.alive !== false;
+    for (const slot of ["Q", "W", "E", "R"] as const) sweepRecast(ab.slots[slot], world.tick, alive);
     // ⭐ G17 —— 這個單位的流逝速度。0 = ×1 = 今天（同 `OutputDamagePct` 那一族：
     // 出貨 0，內容不開就是**嚴格 no-op**，而且下面走的是原本那條 `--`）。
     const bonus = world.stats.get(id)?.final[Stat.CooldownDrainRate] ?? 0;

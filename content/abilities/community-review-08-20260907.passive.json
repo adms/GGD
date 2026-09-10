@@ -2,7 +2,7 @@
   "id": "community-review-08-20260907.passive",
   "schema": "ability@1",
   "name": "〔阿卡曼戰鬥直覺〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "成功避開攻擊後，下一次刀刃命中獲得有限增傷；有觸發間隔。",
   "slot": "PASSIVE",
   "castType": "self",

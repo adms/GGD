@@ -1,111 +1,113 @@
 {
- "note": "⭐ 盤點表 ↔ 出貨名單的**棘輪基準線**（GH#1165）。⛔ 只能變短。⚠️ 盤點表是 owner 的檔（repo 外），⛔ 我不可以改它 —— 所以這裡記的是「**我今天知道它不一致，而且我量過**」，⛔ 不是「算了不管」。閘：packages/shared/src/ops/inventoryRosterSync.test.ts。⭐ 新增一列 ⇒ 紅並指名；owner 修好一列而這裡沒跟著刪 ⇒ 也紅（棘輪不會自己變短）。",
- "staleBlockers": {
-  "note": "⭐ 盤點表『尚未通過轉換的候選』裡，理由引用了**已經被改掉的上限**（160）的每一列。GH#1164 把每幀動畫通道上限改成後台設定（content/config/model-lod.json：warn 300 / limit 500）⇒ 這些理由全部不再成立。⭐ 下面每一列都**實跑過** tools/model-budget/guard.ts（⛔ 不是讀程式碼推論），逐名 exit code 記在 guard 欄。",
-  "measuredAt": "2026-09-10",
-  "rows": [
-   {
-    "rowId": "b2-boxxo",
-    "citedValue": 237,
-    "citedLimit": 160,
-    "guard": {
-     "exit": 0,
-     "measuredChannels": 110,
-     "verdict": "ok",
-     "modelMeasured": "lol:lux（素材庫 catalog 的標準化『拉克絲』ggd.model.5ad7e0cc65e3eca8ead74227）",
-     "caveat": "⚠️ ⭐ 這一列**沒有完全對上**：盤點表引用的是 `existing:lux`（原 W3X 匯入），⛔ 而它在 catalog.json 與 intake/catalog.json 裡**都不存在**（hero-model-options.json 只把它記成一筆沒有 sourceModelKey 的 pending）⇒ ⛔ 那顆 glb 今天量不到。⭐ 而 237 這個數字的出處找到了：outputs/community-lol-models-20260907/lux-optimization.json 的 `before` 欄 —— 20 段動作**全部** 237 通道，`after` 降到 134–158。⇒ ⭐ 237 是**最佳化之前**的量值，而今天標準化入庫的那顆是 110。"
-    }
-   },
-   {
-    "rowId": "example:leesin",
-    "citedValue": 196,
-    "citedLimit": 160,
-    "guard": {
-     "exit": 0,
-     "measuredChannels": 196,
-     "verdict": "WARN",
-     "modelMeasured": "lol:leesin（ggd.model.f9e0593bc69748052ff9f72d）",
-     "caveat": "⭐ 通道數與盤點表引用的 196 **逐字相符** ⇒ 過期的是上限，⛔ 不是量值。⚠️ WARN 來自**另一個軸**（貼圖最長邊 1024，warn 512 / limit 1024），⛔ 與這一列的阻塞理由無關，且 guard 仍 exit=0。"
-    }
-   },
-   {
-    "rowId": "example:warwick",
-    "citedValue": 188,
-    "citedLimit": 160,
-    "guard": {
-     "exit": 0,
-     "measuredChannels": 188,
-     "verdict": "WARN",
-     "modelMeasured": "lol:warwick（ggd.model.b021c68877664a89b7ec8d46）",
-     "caveat": "⭐ 通道數與引用值 188 逐字相符。⚠️ WARN 同樣是貼圖 1024 那一軸，⛔ 不是通道。"
-    }
-   },
-   {
-    "rowId": "example:yasuo",
-    "citedValue": 170,
-    "citedLimit": 160,
-    "guard": {
-     "exit": 0,
-     "measuredChannels": 170,
-     "verdict": "ok",
-     "modelMeasured": "lol:yasuo（ggd.model.1b523670f582b44d8f9595b9）",
-     "caveat": "⭐ 通道數與引用值 170 逐字相符，四軸全 ok。"
-    }
-   }
-  ]
- },
- "notShipped": {
-  "note": "⭐ **正向**落差：盤點表有這一列，⛔ 而 content/champions/ 裡沒有對應的 champion@1 ——「**有宣告而無實體**」。⭐ 2026-09-10：**清空**（7 → 0）。⛔ 在此之前這裡記著整個『LOL 追加 7 名』那一節，而那句話**今天已經是假的** —— 那 7 名在 `5f7d222ef` 就上架了，只是 id 叫 `lol-*` 而盤點表那一節的 rowId 叫 `example:*` ⇒ 舊的比對看不見它們。⇒ ⭐ 它們搬到 `idAliases`（帶著三軸證據＋每次跑都重驗的顯示名比對），⛔ 不是留在這裡當成「還沒上架」——那會是一句**被棘輪保護著的謊話**。",
-  "measuredAt": "2026-09-10",
-  "rows": []
- },
- "idAliases": {
-  "note": "⭐ 盤點表 rowId ↔ 出貨 champion id 的**別名**。⛔ 這不是一條 `example: → lol-` 的字串規則 —— 那是「照 key 同步」，也就是 GH#635 把消化液整支覆蓋掉的形狀。⭐ 每一筆**逐列宣告**，而 roster_sync.py 的 `_resolve_aliases()` **每次跑都重驗四道**：①那一列今天還在盤點表上 ②那個出貨 id 今天還在 ③⭐ **獨立軸**：盤點表顯示名 == 出貨 champion@1.name（⛔ 顯示名不是 join key，它是**驗算**）④rowId 本身已經是出貨 id ⇒ 這筆多餘 ⇒ 🔴 要刪掉。⇒ 任何一道不過就進 aliasIssues 並且**不套用**，閘 `inventoryRosterSync.test.ts` 斷言它是空的。",
-  "measuredAt": "2026-09-10",
-  "why": "⛔⛔ 量到的：`example:*` 7 筆在 forwardGap、`lol-*` 7 筆在 reverseGap —— ⭐ **同一批 7 個人被兩個方向各數了一次**，⛔ 而兩邊都不是真的落差。⭐ 三個各自獨立的軸同時對上（⛔ 不是只有 slug 像）：①盤點表『## LOL 追加 7 名（7 筆）』**正好 7 列**，而出貨 `lol-*` **正好 7 名**；②slug 逐字 1:1（karthus/leesin/lux/missfortune/warwick/xerath/yasuo），兩邊都沒有剩下的；③顯示名逐字相同（卡爾瑟斯／李星／拉克絲／好運姐／沃維克／齊勒斯／犽宿）。⚠️ 而③是**閘每次跑都會重算的那一格** —— ⛔ 不是寫在這裡的一句話。⚠️ 盤點表是 owner 的檔（repo 外）⇒ ⛔ 我不可以去改它的 rowId；⭐ 這張別名表就是「我知道兩邊的命名空間不同，而且我驗過它們指同一個人」的落點。",
-  "rows": [
-   {
-    "rowId": "example:karthus",
-    "shippedId": "lol-karthus",
-    "heroName": "卡爾瑟斯",
-    "section": "LOL 追加 7 名"
-   },
-   {
-    "rowId": "example:leesin",
-    "shippedId": "lol-leesin",
-    "heroName": "李星",
-    "section": "LOL 追加 7 名"
-   },
-   {
-    "rowId": "example:lux",
-    "shippedId": "lol-lux",
-    "heroName": "拉克絲",
-    "section": "LOL 追加 7 名"
-   },
-   {
-    "rowId": "example:missfortune",
-    "shippedId": "lol-missfortune",
-    "heroName": "好運姐",
-    "section": "LOL 追加 7 名"
-   },
-   {
-    "rowId": "example:warwick",
-    "shippedId": "lol-warwick",
-    "heroName": "沃維克",
-    "section": "LOL 追加 7 名"
-   },
-   {
-    "rowId": "example:xerath",
-    "shippedId": "lol-xerath",
-    "heroName": "齊勒斯",
-    "section": "LOL 追加 7 名"
-   },
-   {
-    "rowId": "example:yasuo",
-    "shippedId": "lol-yasuo",
-    "heroName": "犽宿",
-    "section": "LOL 追加 7 名"
-   }
-  ]
- }
+  "note": "⭐ 盤點表 ↔ 出貨名單的**棘輪基準線**（GH#1165）。⛔ 只能變短。⚠️ 盤點表是 owner 的檔（repo 外），⛔ 我不可以改它 —— 所以這裡記的是「**我今天知道它不一致，而且我量過**」，⛔ 不是「算了不管」。閘：packages/shared/src/ops/inventoryRosterSync.test.ts。⭐ 新增一列 ⇒ 紅並指名；owner 修好一列而這裡沒跟著刪 ⇒ 也紅（棘輪不會自己變短）。",
+  "staleBlockers": {
+    "note": "⭐ 盤點表『尚未通過轉換的候選』裡，理由引用了**已經被改掉的上限**（160）的每一列。GH#1164 把每幀動畫通道上限改成後台設定（content/config/model-lod.json：warn 300 / limit 500）⇒ 這些理由全部不再成立。⭐ 下面每一列都**實跑過** tools/model-budget/guard.ts（⛔ 不是讀程式碼推論），逐名 exit code 記在 guard 欄。",
+    "measuredAt": "2026-09-10",
+    "rows": []
+  },
+  "notShipped": {
+    "note": "⭐ **正向**落差：盤點表有這一列，⛔ 而 content/champions/ 裡沒有對應的 champion@1 ——「**有宣告而無實體**」。⭐ 2026-09-10：**清空**（7 → 0）。⛔ 在此之前這裡記著整個『LOL 追加 7 名』那一節，而那句話**今天已經是假的** —— 那 7 名在 `5f7d222ef` 就上架了，只是 id 叫 `lol-*` 而盤點表那一節的 rowId 叫 `example:*` ⇒ 舊的比對看不見它們。⇒ ⭐ 它們搬到 `idAliases`（帶著三軸證據＋每次跑都重驗的顯示名比對），⛔ 不是留在這裡當成「還沒上架」——那會是一句**被棘輪保護著的謊話**。",
+    "measuredAt": "2026-09-10",
+    "rows": []
+  },
+  "idAliases": {
+    "note": "⭐ 盤點表 rowId ↔ 出貨 champion id 的**別名**。⛔ 這不是一條 `example: → lol-` 的字串規則 —— 那是「照 key 同步」，也就是 GH#635 把消化液整支覆蓋掉的形狀。⭐ 每一筆**逐列宣告**，而 roster_sync.py 的 `_resolve_aliases()` **每次跑都重驗四道**：①那一列今天還在盤點表上 ②那個出貨 id 今天還在 ③⭐ **獨立軸**：盤點表顯示名 == 出貨 champion@1.name（⛔ 顯示名不是 join key，它是**驗算**）④rowId 本身已經是出貨 id ⇒ 這筆多餘 ⇒ 🔴 要刪掉。⇒ 任何一道不過就進 aliasIssues 並且**不套用**，閘 `inventoryRosterSync.test.ts` 斷言它是空的。",
+    "measuredAt": "2026-09-10",
+    "why": "⛔⛔ 量到的：`example:*` 7 筆在 forwardGap、`lol-*` 7 筆在 reverseGap —— ⭐ **同一批 7 個人被兩個方向各數了一次**，⛔ 而兩邊都不是真的落差。⭐ 三個各自獨立的軸同時對上（⛔ 不是只有 slug 像）：①盤點表『## LOL 追加 7 名（7 筆）』**正好 7 列**，而出貨 `lol-*` **正好 7 名**；②slug 逐字 1:1（karthus/leesin/lux/missfortune/warwick/xerath/yasuo），兩邊都沒有剩下的；③顯示名逐字相同（卡爾瑟斯／李星／拉克絲／好運姐／沃維克／齊勒斯／犽宿）。⚠️ 而③是**閘每次跑都會重算的那一格** —— ⛔ 不是寫在這裡的一句話。⚠️ 盤點表是 owner 的檔（repo 外）⇒ ⛔ 我不可以去改它的 rowId；⭐ 這張別名表就是「我知道兩邊的命名空間不同，而且我驗過它們指同一個人」的落點。",
+    "rows": [
+      {
+        "rowId": "example:karthus",
+        "shippedId": "lol-karthus",
+        "heroName": "卡爾瑟斯",
+        "section": "LOL 追加 7 名"
+      },
+      {
+        "rowId": "example:leesin",
+        "shippedId": "lol-leesin",
+        "heroName": "李星",
+        "section": "LOL 追加 7 名"
+      },
+      {
+        "rowId": "example:lux",
+        "shippedId": "lol-lux",
+        "heroName": "拉克絲",
+        "section": "LOL 追加 7 名"
+      },
+      {
+        "rowId": "example:missfortune",
+        "shippedId": "lol-missfortune",
+        "heroName": "好運姐",
+        "section": "LOL 追加 7 名"
+      },
+      {
+        "rowId": "example:warwick",
+        "shippedId": "lol-warwick",
+        "heroName": "沃維克",
+        "section": "LOL 追加 7 名"
+      },
+      {
+        "rowId": "example:xerath",
+        "shippedId": "lol-xerath",
+        "heroName": "齊勒斯",
+        "section": "LOL 追加 7 名"
+      },
+      {
+        "rowId": "example:yasuo",
+        "shippedId": "lol-yasuo",
+        "heroName": "犽宿",
+        "section": "LOL 追加 7 名"
+      }
+    ]
+  },
+  "skeletonPlaceholders": {
+    "note": "⭐ 誰在用引擎骨架（champ.sela / champ.thorne），⭐ 而**為什麼**。⛔ 這不是豁免名單，是分類：一個暫時的佔位與一個刻意的選擇在 JSON 裡長得一模一樣（都只是 champ.thorne），⭐ 而它們的下一步完全不同。⚠️ 每一列的 why 必須引用得到盤點表上的一句話 —— ⛔ 「還沒排到」不是理由。⭐ 棘輪：pending-* 只能變少；一名轉檔完成之後把它那一列刪掉，⛔ 而如果忘了刪，skeletonStaleDeclarations 會紅。",
+    "kinds": {
+      "pending-conversion": "來源**已取得**，還沒轉成 GGD 的 glb（⇒ 模型側工作流的待辦）",
+      "pending-source": "來源**還沒拿到**（連結未核／file_url 為空）",
+      "pending-approval": "只有**相似外觀代理**，盤點表逐字標「未核准預設」⇒ 等 owner 核准",
+      "alternate-inherits-base": "變身態，⛔ 玩家選不到它；本體已有真模型"
+    },
+    "rows": [
+      {
+        "id": "b2-aladdin",
+        "kind": "pending-approval",
+        "why": "盤點表 L479「**待取得核准模型**」；候選是小悟空／300英雄，逐字標「相似外觀代理；**未核准預設**」"
+      },
+      {
+        "id": "b2-keyaru",
+        "kind": "pending-approval",
+        "why": "盤點表 L464「**待取得核准模型**」；候選是李小狼／300英雄，逐字標「相似外觀代理；**未核准預設**」"
+      },
+      {
+        "id": "b2-guts",
+        "kind": "pending-conversion",
+        "why": "盤點表 L202「免費來源已取得，暫緩購買；thunderstore-guts；**待完成標準化**」"
+      },
+      {
+        "id": "b2-maomao",
+        "kind": "pending-conversion",
+        "why": "盤點表 L192「免費來源已取得，暫緩購買；thunderstore-maomao；**待完成標準化**」"
+      },
+      {
+        "id": "b2-shinchan",
+        "kind": "pending-conversion",
+        "why": "盤點表 L116/117 兩個免費公開 GTA V 來源（gta5mod SD2 v1.2 / KS TAMIL v1.0）—— 已取得，待轉檔"
+      },
+      {
+        "id": "b2-kaiji",
+        "kind": "pending-source",
+        "why": "盤點表 L154「官方 API 確認公開項目，但 **file_url 為空；尚未取得模型**，繼續查找正常取得管道」"
+      },
+      {
+        "id": "b2-naofumi",
+        "kind": "pending-source",
+        "why": "盤點表 L151「Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，**尚未下載模型**」"
+      },
+      {
+        "id": "b2-maple-alt-9769eb88b85b",
+        "kind": "alternate-inherits-base",
+        "why": "transform.role = alternate，counterpart b2-maple **已有真模型** community.body.449bf321…；⛔ 玩家在選角畫面選不到變身態"
+      }
+    ]
+  }
 }

@@ -1,7 +1,7 @@
 {
   "id": "community-review-10-20260907.r",
   "name": "絕對遵守的 Geass",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】在視線成立後，命令一名敵人沿合法路徑朝指定位置移動，持續約 1 秒。每名目標每回合只能成功受此命令一次；控制免疫或視線失敗時不記為成功。\n【待補機制】單體 0.8 秒暈眩不能代替 Geass；需視線、強制合法移動與每目標每回合成功一次。",
   "slot": "R",
   "castType": "targeted",

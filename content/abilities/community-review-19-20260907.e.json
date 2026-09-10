@@ -1,7 +1,7 @@
 {
   "id": "community-review-19-20260907.e",
   "name": "Sonic Leap",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離躍進斬擊，碰撞或落點失效時安全停止。\n【待補機制】需對目標的躍進斬、牆體與落點失效處理。",
   "slot": "E",
   "castType": "ground",

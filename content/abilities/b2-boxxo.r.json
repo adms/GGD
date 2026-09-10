@@ -7,7 +7,7 @@
     90.0
   ],
   "cooldownTier": "大",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "「搬家限定快閃補給站！」\n移動後 4 秒內才開快閃店：三次每秒重選自身半徑{{radius}} 內最多 4 位友軍，各回復 80，離開就不再補；不是對友軍造成傷害的 periodic-field。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {

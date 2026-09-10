@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-17-20260907.q",
       "name": "心臟掌握",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】對單一目標造成魔法傷害；低生命時追加有限傷害，仍經正常致死與保命流程。\n【待補機制】缺低生命有限追加與處決流程專測。",
       "slot": "Q",
       "castType": "targeted",
@@ -101,7 +101,7 @@
     "W": {
       "id": "community-review-17-20260907.w",
       "name": "死亡騎士",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】召喚 1 名 thorne 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的死亡騎士，負責近身牽制。\n【待補機制】死亡騎士造型待製，代理採 thorne。",
       "slot": "W",
       "castType": "self",
@@ -160,7 +160,7 @@
     "E": {
       "id": "community-review-17-20260907.e",
       "name": "高階傳送",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】傳送到指定落點，抵達後小範圍極小級傷害。\n【目標設計】移動到合法落點，保留可辨識的起點與終點演出。\n【待補機制】原設計只有傳送，模板帶抵達傷害，需審查這項改編。",
       "slot": "E",
       "castType": "ground",
@@ -225,7 +225,7 @@
     "R": {
       "id": "community-review-17-20260907.r",
       "name": "墜落天空",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次大級範圍傷害。\n【目標設計】長起手的區域超位魔法，具有明顯預警與中斷機會。\n【待補機制】需長吟唱途中真正可中斷與落點預警。",
       "slot": "R",
       "castType": "ground",

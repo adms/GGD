@@ -1,7 +1,7 @@
 {
   "id": "community-review-37-20260907.w",
   "name": "〔哇啊啊撤退〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向指定方向突進 220 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。\n【待補機制】需無傷害撤退並可扣勇氣換小盾；目前衝撞模板不等價。",
   "slot": "W",
   "castType": "ground",

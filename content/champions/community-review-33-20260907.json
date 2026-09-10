@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-33-20260907.q",
       "name": "〔重力劍・橫掃〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】使用重力劍進行扇形斬擊。\n【待補機制】需重力劍扇形判定。",
       "slot": "Q",
       "castType": "skillshot",
@@ -122,7 +122,7 @@
     "W": {
       "id": "community-review-33-20260907.w",
       "name": "〔重量切換〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：ad +15%。\n【目標設計】在輕劍與重劍模式間切換：輕模式較快、重模式傷害較高且動作較慢。\n【待補機制】固定 AD 增益；需輕／重模式、攻速與動作時長同步。",
       "slot": "W",
       "castType": "self",
@@ -176,7 +176,7 @@
     "E": {
       "id": "community-review-33-20260907.e",
       "name": "〔踏地突進〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近並揮劍。\n【待補機制】近身突進可作基礎驗收。",
       "slot": "E",
       "castType": "ground",
@@ -254,7 +254,7 @@
     "R": {
       "id": "community-review-33-20260907.r",
       "name": "〔不死者的再起〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n【待補機制】目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
       "slot": "R",
       "castType": "self",

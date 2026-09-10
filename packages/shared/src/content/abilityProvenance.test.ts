@@ -17,6 +17,7 @@
  *
  * 突變紀錄：把任何一份 ability 的 `provenance` 刪掉 → 第一條紅並指名那一份。
  */
+import { SKELETON_CHAMPION_IDS } from "./skillNormalize";
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -91,7 +92,9 @@ describe("技能文件的來源層級（owner 2026-08-13「怎麼會搞混呢?�
       .filter((d) => {
         const head = d.file.replace(/\.json$/, "").split(".")[0]!;
         // 沒有主人 ⇒ 原創 ⇒ 只可能是 owner 的規格（w3x 裡沒有它的來源）。
-        const want = prefixes.has(head) || !champs.has(head) ? "owner-spec" : "w3x-import";
+        // ⭐ GH#1194：第三種出身 —— 非 godie 的英雄是編輯器產生的 JSON（階梯第 2 層），⛔ 不是 w3x 匯入。
+        //   與 tools/skill-remake/stamp_provenance.py::classify 是同一條規則（⛔ 兩邊分岔就會互相打）。
+        const want = prefixes.has(head) || !champs.has(head) ? "owner-spec" : head.startsWith("godie-") || SKELETON_CHAMPION_IDS.has(head) ? "w3x-import" : "editor-json";
         return d.provenance !== want;
       })
       .map((d) => `${d.file}: ${String(d.provenance)}`);

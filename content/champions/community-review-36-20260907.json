@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-36-20260907.q",
       "name": "〔蠻力斬擊〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】大開大合的正面斬擊。\n【待補機制】需正面蠻力弧形斬。",
       "slot": "Q",
       "castType": "skillshot",
@@ -122,7 +122,7 @@
     "W": {
       "id": "community-review-36-20260907.w",
       "name": "〔本大爺還沒認真〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-36-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短暫蓄勢取得護盾，下一次主動攻擊消耗護盾換取有限增傷。\n【待補機制】需下一次主動攻擊消耗剩餘盾換取有限增傷。",
       "slot": "W",
       "castType": "self",
@@ -181,7 +181,7 @@
     "E": {
       "id": "community-review-36-20260907.e",
       "name": "〔霸王突進〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向指定方向突進 350 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線衝鋒，命中後停止。\n【待補機制】需命中第一人後停止。",
       "slot": "E",
       "castType": "ground",
@@ -259,7 +259,7 @@
     "R": {
       "id": "community-review-36-20260907.r",
       "name": "Rance Attack／蘭斯攻擊",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】蓄力後的大範圍重斬，保留喊招與誇張爆發。\n【待補機制】需大範圍重斬、長起手與總傷害預算。",
       "slot": "R",
       "castType": "skillshot",

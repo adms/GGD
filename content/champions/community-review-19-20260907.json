@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-19-20260907.q",
       "name": "〔雙劍交叉斬〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】左右手各進行一次近戰判定。\n【待補機制】需左右手掛點對應。",
       "slot": "Q",
       "castType": "targeted",
@@ -131,7 +131,7 @@
     "W": {
       "id": "community-review-19-20260907.w",
       "name": "〔劍技招架〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-19-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口迎擊正面攻擊，成功後強化下一次近戰。\n【待補機制】需迎擊窗口與成功後下一刀加成。",
       "slot": "W",
       "castType": "self",
@@ -190,7 +190,7 @@
     "E": {
       "id": "community-review-19-20260907.e",
       "name": "Sonic Leap",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離躍進斬擊，碰撞或落點失效時安全停止。\n【待補機制】需對目標的躍進斬、牆體與落點失效處理。",
       "slot": "E",
       "castType": "ground",
@@ -257,7 +257,7 @@
     "R": {
       "id": "community-review-19-20260907.r",
       "name": "Starburst Stream",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】16 段連擊，間隔 0.1 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】十六次依序發生的斬擊機會；每次重新檢查目標範圍，整招共享傷害預算。\n【待補機制】16 段已可配置；須證明每段重查距離、中斷後不再命中及總預算。",
       "slot": "R",
       "castType": "targeted",

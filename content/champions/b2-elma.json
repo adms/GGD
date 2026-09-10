@@ -10,7 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「重劍攻略追加七十點！」\n重劍模式 3 秒攻擊力 +70；只改戰鬥屬性，未冒稱更换原作裝甲模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -69,7 +69,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「攻略說先扣自己血！」\n照攻略支付最大生命 15%，底線 1 HP；先得到 60 護盾 2 秒，代價不被自己的護盾抵銷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -164,7 +164,7 @@
         45.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「照攻略抄的重擊！」\n中級重擊加 0.8 AD；受 E 實際攻擊力影響。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -229,7 +229,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「半血以下保固升級！」\n血量低於 50% 才給 300 護盾 3 秒；高血量按只回復最大魔力 2%，不可無代價厚盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

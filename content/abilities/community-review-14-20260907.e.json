@@ -1,7 +1,7 @@
 {
   "id": "community-review-14-20260907.e",
   "name": "〔觸手再生〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】消耗資源分段恢復生命，受控制時停止。\n【待補機制】目前立即回血；需分段再生與受控中止。",
   "slot": "E",
   "castType": "self",

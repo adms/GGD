@@ -10,6 +10,7 @@
 #
 #   bash scripts/bmpndd.sh "<這一版的一句話說明>"
 #   bash scripts/bmpndd.sh "<說明>" --no-deploy
+#   bash scripts/bmpndd.sh "<說明>" --no-gate     # ⛔ 跳過第 0 步的閘（會印出來）
 #
 # ⚠️ ⭐ 為什麼是一個指令：這五步在此之前是五段**要記得**的手打，
 # 而 2026-08-29/30 這一天它們漏過四次（M 忘了整理 · N 忘了發 · D 靜默跳過 · D 診斷錯方向）。
@@ -26,6 +27,27 @@ FAIL=""
 BOARD_EARLY="docs/_execution-batches.md"
 
 # ── B：備份戰情版 ────────────────────────────────────────────────────────
+# ⭐ GH#1162 —— **第 0 步：閘**。在此之前這六步零個閘：`pnpm typecheck` 紅了好幾輪，
+#   中間跑過 5 輪 BMPNDD、5 次部署，每一次都「綠」——「部署綠」與「typecheck 綠」是兩件事。
+#   ⭐ 真的閘是 `pnpm ship:check`（它自己有跑 typecheck）。`--no-gate` 可跳過，⭐ 但要**印一行明說**跳過了
+#   （靜默跳過與跑過長得一模一樣）。純函式：bmpnddGate.test.ts 用假的 pnpm 真的跑它。
+bmpndd_gate() {
+  if [ "${GGD_BMPNDD_NO_GATE:-0}" = 1 ]; then
+    echo "⚠️ --no-gate：⛔ 這一輪**沒有跑** pnpm ship:check —— 你在沒有閘的情況下 push／部署（GH#1162）"
+    return 0
+  fi
+  local t0 t1; t0=$(date +%s)
+  if pnpm ship:check; then
+    t1=$(date +%s); echo "✓ 閘過了：pnpm ship:check（$((t1-t0)) 秒）"; return 0
+  fi
+  t1=$(date +%s)
+  echo "⛔ pnpm ship:check 紅（$((t1-t0)) 秒）⇒ **停在 push 之前**。修好再跑；真的要繞過用 --no-gate（會印出來）。"
+  return 1
+}
+for _a in "$@"; do [ "$_a" = "--no-gate" ] && export GGD_BMPNDD_NO_GATE=1; done
+step "0/6  閘（pnpm ship:check）"
+bmpndd_gate || exit 1
+
 step "B/6  備份戰情版"
 # ⚠️ ⭐ 為什麼它是**一步**而不是一行：PreToolUse hook 對**檔案 API 直寫**是瞎的
 #   （`Path.write_text()` / `writeFileSync` 它看不到）⇒ 戰情版 2026-08-30 被改了

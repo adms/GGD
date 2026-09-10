@@ -54,6 +54,13 @@ export class SeatState extends Schema {
   declare offers: ArraySchema<OfferState>;
   declare abilityRanks: ArraySchema<number>; // Q W E R
   declare cooldowns: ArraySchema<number>; // remaining ticks Q W E R
+  /**
+   * ⭐ GH#1187【再次施放】—— 每槽（Q W E R）還可以按幾次後段；0 = 不在後段。
+   * ⚠️ APPEND-ONLY：這兩個欄位接在 defineTypes 的**最後**，⛔ 不要搬。
+   */
+  declare recastCharges: ArraySchema<number>;
+  /** 每槽後段窗口剩餘 tick；0 = 不在後段。與 {@link recastCharges} 同索引。 */
+  declare recastWindow: ArraySchema<number>;
   declare unspentPoints: number;
   // per-hero "EX 技能" (5th slot). exAbilityId "" = this hero has no EX skill;
   // exRank 0 = locked (pre-unlock), 1 = unlocked. exCooldown in remaining ticks.
@@ -469,6 +476,8 @@ export class SeatState extends Schema {
     this.offers = new ArraySchema<OfferState>();
     this.abilityRanks = new ArraySchema<number>();
     this.cooldowns = new ArraySchema<number>();
+    this.recastCharges = new ArraySchema<number>();
+    this.recastWindow = new ArraySchema<number>();
     this.unspentPoints = 0;
     this.exAbilityId = "";
     this.exRank = 0;
@@ -844,6 +853,10 @@ defineTypes(EntityState, {
   // ⚠️ 這是**改一個既有欄位的型別**，不是 append。理由與代價寫在下面的 BIT BUDGET。
   flags: "uint32",
   h: "float32",
+  // ⭐ GH#1187【再次施放】—— APPEND（2026-09-11）：每槽剩餘後段次數／窗口 tick。
+  //   ⚠️ 加在最後是 APPEND-ONLY 的硬性約束；uint8／uint16 夠用（次數 ≤ 9、窗口 ≤ 60 s × 20 Hz）。
+  recastCharges: ["uint8"],
+  recastWindow: ["uint16"],
 });
 
 export class MatchState extends Schema {

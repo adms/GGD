@@ -1,7 +1,7 @@
 {
   "id": "community-review-19-20260907.w",
   "name": "〔劍技招架〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-19-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口迎擊正面攻擊，成功後強化下一次近戰。\n【待補機制】需迎擊窗口與成功後下一刀加成。",
   "slot": "W",
   "castType": "self",

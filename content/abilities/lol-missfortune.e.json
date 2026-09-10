@@ -1,7 +1,7 @@
 {
   "id": "lol-missfortune.e",
   "name": "緋帆彈雨",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。",
   "slot": "E",
   "castType": "ground",

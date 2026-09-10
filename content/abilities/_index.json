@@ -1,2670 +1,2670 @@
 {
   "collection": "abilities",
-  "hash": "58ad457f2406",
+  "hash": "e3d32b894881",
   "entries": [
     {
       "id": "b2-aladdin.e",
       "path": "abilities/b2-aladdin.e.json",
-      "hash": "0e41569b70df",
-      "size": 1939
+      "hash": "b2f7cf850892",
+      "size": 1940
     },
     {
       "id": "b2-aladdin.ex",
       "path": "abilities/b2-aladdin.ex.json",
-      "hash": "2601243c683e",
-      "size": 2290
+      "hash": "5efd52df0d3a",
+      "size": 2291
     },
     {
       "id": "b2-aladdin.passive",
       "path": "abilities/b2-aladdin.passive.json",
-      "hash": "b54e05f4ed22",
-      "size": 1592
+      "hash": "9da35bfaae43",
+      "size": 1593
     },
     {
       "id": "b2-aladdin.q",
       "path": "abilities/b2-aladdin.q.json",
-      "hash": "6d9adb61cff9",
-      "size": 2615
+      "hash": "a0ada0ff978e",
+      "size": 2616
     },
     {
       "id": "b2-aladdin.r",
       "path": "abilities/b2-aladdin.r.json",
-      "hash": "08659c553243",
-      "size": 1595
+      "hash": "32eda37e7c54",
+      "size": 1596
     },
     {
       "id": "b2-aladdin.w",
       "path": "abilities/b2-aladdin.w.json",
-      "hash": "a48f9bd5b1fa",
-      "size": 2396
+      "hash": "37a2ec521a75",
+      "size": 2397
     },
     {
       "id": "b2-albus.e",
       "path": "abilities/b2-albus.e.json",
-      "hash": "38fbf62c4386",
-      "size": 1230
+      "hash": "1afc9414f679",
+      "size": 1231
     },
     {
       "id": "b2-albus.ex",
       "path": "abilities/b2-albus.ex.json",
-      "hash": "33225fdd749a",
-      "size": 2129
+      "hash": "72a8245515f9",
+      "size": 2130
     },
     {
       "id": "b2-albus.passive",
       "path": "abilities/b2-albus.passive.json",
-      "hash": "f83bdd2e3408",
-      "size": 1654
+      "hash": "e9d1accdb000",
+      "size": 1655
     },
     {
       "id": "b2-albus.q",
       "path": "abilities/b2-albus.q.json",
-      "hash": "7a64c662c304",
-      "size": 1388
+      "hash": "acff8e7d5da7",
+      "size": 1389
     },
     {
       "id": "b2-albus.r",
       "path": "abilities/b2-albus.r.json",
-      "hash": "401d3c409d24",
-      "size": 2639
+      "hash": "beb27f8fbbf3",
+      "size": 2640
     },
     {
       "id": "b2-albus.w",
       "path": "abilities/b2-albus.w.json",
-      "hash": "2a991cb8c819",
-      "size": 1675
+      "hash": "f5ba2378173b",
+      "size": 1676
     },
     {
       "id": "b2-bojji.e",
       "path": "abilities/b2-bojji.e.json",
-      "hash": "36205805aa3f",
-      "size": 1272
+      "hash": "9ab76efd87e8",
+      "size": 1273
     },
     {
       "id": "b2-bojji.ex",
       "path": "abilities/b2-bojji.ex.json",
-      "hash": "ce02d9f85fc0",
-      "size": 1691
+      "hash": "5bef903a5fc6",
+      "size": 1692
     },
     {
       "id": "b2-bojji.passive",
       "path": "abilities/b2-bojji.passive.json",
-      "hash": "4c15c8e91e94",
-      "size": 1660
+      "hash": "f9c02c178e7e",
+      "size": 1661
     },
     {
       "id": "b2-bojji.q",
       "path": "abilities/b2-bojji.q.json",
-      "hash": "f85ae573603e",
-      "size": 1657
+      "hash": "b2650b5fa6dd",
+      "size": 1658
     },
     {
       "id": "b2-bojji.r",
       "path": "abilities/b2-bojji.r.json",
-      "hash": "c8378515f27e",
-      "size": 2383
+      "hash": "d1a3126fb929",
+      "size": 2384
     },
     {
       "id": "b2-bojji.w",
       "path": "abilities/b2-bojji.w.json",
-      "hash": "a6859177e5f9",
-      "size": 1689
+      "hash": "6e6910957da7",
+      "size": 1690
     },
     {
       "id": "b2-boxxo.e",
       "path": "abilities/b2-boxxo.e.json",
-      "hash": "05340dbb0f46",
-      "size": 1509
+      "hash": "620ea6f58d2f",
+      "size": 1510
     },
     {
       "id": "b2-boxxo.ex",
       "path": "abilities/b2-boxxo.ex.json",
-      "hash": "1433fb8b2af1",
-      "size": 2023
+      "hash": "83ce8535555d",
+      "size": 2024
     },
     {
       "id": "b2-boxxo.passive",
       "path": "abilities/b2-boxxo.passive.json",
-      "hash": "4bcb2cf200f9",
-      "size": 1959
+      "hash": "8ed3de07f195",
+      "size": 1960
     },
     {
       "id": "b2-boxxo.q",
       "path": "abilities/b2-boxxo.q.json",
-      "hash": "4acffaac3f77",
-      "size": 2367
+      "hash": "88e1590cdbff",
+      "size": 2368
     },
     {
       "id": "b2-boxxo.r",
       "path": "abilities/b2-boxxo.r.json",
-      "hash": "6aae7e5fd4da",
-      "size": 2911
+      "hash": "f65fb99aab9a",
+      "size": 2912
     },
     {
       "id": "b2-boxxo.w",
       "path": "abilities/b2-boxxo.w.json",
-      "hash": "5fec4784efce",
-      "size": 2517
+      "hash": "95f16050751b",
+      "size": 2518
     },
     {
       "id": "b2-elma.e",
       "path": "abilities/b2-elma.e.json",
-      "hash": "0258f84c15b0",
-      "size": 1475
+      "hash": "9ae29c7cf8f6",
+      "size": 1476
     },
     {
       "id": "b2-elma.ex",
       "path": "abilities/b2-elma.ex.json",
-      "hash": "c7e43e5d3bbf",
-      "size": 1197
+      "hash": "1629dfbf63ed",
+      "size": 1198
     },
     {
       "id": "b2-elma.passive",
       "path": "abilities/b2-elma.passive.json",
-      "hash": "8e1c34b22ede",
-      "size": 1676
+      "hash": "2205510f6de6",
+      "size": 1677
     },
     {
       "id": "b2-elma.q",
       "path": "abilities/b2-elma.q.json",
-      "hash": "fef1c2fa3e3c",
-      "size": 2265
+      "hash": "f16e8ec2f039",
+      "size": 2266
     },
     {
       "id": "b2-elma.r",
       "path": "abilities/b2-elma.r.json",
-      "hash": "df60ad8c1ff3",
-      "size": 1580
+      "hash": "b9e583a95fb2",
+      "size": 1581
     },
     {
       "id": "b2-elma.w",
       "path": "abilities/b2-elma.w.json",
-      "hash": "d1f9bc4e0fef",
-      "size": 2525
+      "hash": "a4715befe2d3",
+      "size": 2526
     },
     {
       "id": "b2-fushi.e",
       "path": "abilities/b2-fushi.e.json",
-      "hash": "4af0d78af2f2",
-      "size": 2683
+      "hash": "ccc08483db98",
+      "size": 2684
     },
     {
       "id": "b2-fushi.ex",
       "path": "abilities/b2-fushi.ex.json",
-      "hash": "da5d7048302d",
-      "size": 1185
+      "hash": "11a0099f7e7e",
+      "size": 1186
     },
     {
       "id": "b2-fushi.passive",
       "path": "abilities/b2-fushi.passive.json",
-      "hash": "663abb7455b7",
-      "size": 1733
+      "hash": "4f85217370ae",
+      "size": 1734
     },
     {
       "id": "b2-fushi.q",
       "path": "abilities/b2-fushi.q.json",
-      "hash": "38c5470f1364",
-      "size": 2272
+      "hash": "ad972d0ed943",
+      "size": 2273
     },
     {
       "id": "b2-fushi.r",
       "path": "abilities/b2-fushi.r.json",
-      "hash": "d5702fa0e0cd",
-      "size": 1647
+      "hash": "37b15f49cb0c",
+      "size": 1648
     },
     {
       "id": "b2-fushi.w",
       "path": "abilities/b2-fushi.w.json",
-      "hash": "48a9e7aae32e",
-      "size": 2256
+      "hash": "62e61abcf13e",
+      "size": 2257
     },
     {
       "id": "b2-goblin.e",
       "path": "abilities/b2-goblin.e.json",
-      "hash": "d228628630eb",
-      "size": 1651
+      "hash": "08e58da9f893",
+      "size": 1652
     },
     {
       "id": "b2-goblin.ex",
       "path": "abilities/b2-goblin.ex.json",
-      "hash": "a629e8a6df15",
-      "size": 1664
+      "hash": "4d154bde056f",
+      "size": 1665
     },
     {
       "id": "b2-goblin.passive",
       "path": "abilities/b2-goblin.passive.json",
-      "hash": "38c8d10bf0b3",
-      "size": 1890
+      "hash": "e4799739f6dd",
+      "size": 1891
     },
     {
       "id": "b2-goblin.q",
       "path": "abilities/b2-goblin.q.json",
-      "hash": "7e8d828f6d22",
-      "size": 2536
+      "hash": "49e4cedc3443",
+      "size": 2537
     },
     {
       "id": "b2-goblin.r",
       "path": "abilities/b2-goblin.r.json",
-      "hash": "0f09a3d3d2fd",
-      "size": 2270
+      "hash": "0edd3a4f8d50",
+      "size": 2271
     },
     {
       "id": "b2-goblin.w",
       "path": "abilities/b2-goblin.w.json",
-      "hash": "daade537164e",
-      "size": 1627
+      "hash": "1358a3176fac",
+      "size": 1628
     },
     {
       "id": "b2-guts.e",
       "path": "abilities/b2-guts.e.json",
-      "hash": "9a37689bea61",
-      "size": 2109
+      "hash": "82e1775cda23",
+      "size": 2110
     },
     {
       "id": "b2-guts.ex",
       "path": "abilities/b2-guts.ex.json",
-      "hash": "0387509d1a38",
-      "size": 1675
+      "hash": "8ff72af4503f",
+      "size": 1676
     },
     {
       "id": "b2-guts.passive",
       "path": "abilities/b2-guts.passive.json",
-      "hash": "63480e365ca8",
-      "size": 2197
+      "hash": "dac7bd0177bd",
+      "size": 2198
     },
     {
       "id": "b2-guts.q",
       "path": "abilities/b2-guts.q.json",
-      "hash": "35ee065de1b5",
-      "size": 1566
+      "hash": "7835b2fb15fb",
+      "size": 1567
     },
     {
       "id": "b2-guts.r",
       "path": "abilities/b2-guts.r.json",
-      "hash": "6fa37acfdab9",
-      "size": 1960
+      "hash": "82b8bed1fa91",
+      "size": 1961
     },
     {
       "id": "b2-guts.w",
       "path": "abilities/b2-guts.w.json",
-      "hash": "d36635615795",
-      "size": 2067
+      "hash": "8faebb927736",
+      "size": 2068
     },
     {
       "id": "b2-haga.e",
       "path": "abilities/b2-haga.e.json",
-      "hash": "7ef9d8657de4",
-      "size": 1674
+      "hash": "ecc385810ca7",
+      "size": 1675
     },
     {
       "id": "b2-haga.ex",
       "path": "abilities/b2-haga.ex.json",
-      "hash": "f0c84fa71de5",
-      "size": 2218
+      "hash": "00e9013bfc57",
+      "size": 2219
     },
     {
       "id": "b2-haga.passive",
       "path": "abilities/b2-haga.passive.json",
-      "hash": "56aa0edb9060",
-      "size": 1725
+      "hash": "f908a3367fa1",
+      "size": 1726
     },
     {
       "id": "b2-haga.q",
       "path": "abilities/b2-haga.q.json",
-      "hash": "8274eccff668",
-      "size": 1693
+      "hash": "85e71fd19eb1",
+      "size": 1694
     },
     {
       "id": "b2-haga.r",
       "path": "abilities/b2-haga.r.json",
-      "hash": "0dff2bb97286",
-      "size": 2435
+      "hash": "e657cbb7886b",
+      "size": 2436
     },
     {
       "id": "b2-haga.w",
       "path": "abilities/b2-haga.w.json",
-      "hash": "932c82f15891",
-      "size": 2053
+      "hash": "c2f85c6994c6",
+      "size": 2054
     },
     {
       "id": "b2-kaede.e",
       "path": "abilities/b2-kaede.e.json",
-      "hash": "7929c50593b9",
-      "size": 1843
+      "hash": "cb6f303c2efc",
+      "size": 1844
     },
     {
       "id": "b2-kaede.ex",
       "path": "abilities/b2-kaede.ex.json",
-      "hash": "7f9a7b1f8edc",
-      "size": 1950
+      "hash": "d9e95d465511",
+      "size": 1951
     },
     {
       "id": "b2-kaede.passive",
       "path": "abilities/b2-kaede.passive.json",
-      "hash": "7d55ddc24b6e",
-      "size": 2076
+      "hash": "c9eb7df71cea",
+      "size": 2077
     },
     {
       "id": "b2-kaede.q",
       "path": "abilities/b2-kaede.q.json",
-      "hash": "584d32641dd7",
-      "size": 1687
+      "hash": "94b670b44af0",
+      "size": 1688
     },
     {
       "id": "b2-kaede.r",
       "path": "abilities/b2-kaede.r.json",
-      "hash": "36eddca07a2b",
-      "size": 1958
+      "hash": "bdae11c79b89",
+      "size": 1959
     },
     {
       "id": "b2-kaede.w",
       "path": "abilities/b2-kaede.w.json",
-      "hash": "c682db2c9537",
-      "size": 1547
+      "hash": "a4e032f02ac7",
+      "size": 1548
     },
     {
       "id": "b2-kaiji.e",
       "path": "abilities/b2-kaiji.e.json",
-      "hash": "e2eec17004c6",
-      "size": 2496
+      "hash": "edb158eeba29",
+      "size": 2497
     },
     {
       "id": "b2-kaiji.ex",
       "path": "abilities/b2-kaiji.ex.json",
-      "hash": "2e958af30b59",
-      "size": 1281
+      "hash": "5dfc63b81cf8",
+      "size": 1282
     },
     {
       "id": "b2-kaiji.passive",
       "path": "abilities/b2-kaiji.passive.json",
-      "hash": "8fa629fdbb56",
-      "size": 1567
+      "hash": "3218cfd58048",
+      "size": 1568
     },
     {
       "id": "b2-kaiji.q",
       "path": "abilities/b2-kaiji.q.json",
-      "hash": "05cc47b40482",
-      "size": 1845
+      "hash": "3afa5e15e18f",
+      "size": 1846
     },
     {
       "id": "b2-kaiji.r",
       "path": "abilities/b2-kaiji.r.json",
-      "hash": "5dc31e4127da",
-      "size": 3021
+      "hash": "bb47181eaeab",
+      "size": 3022
     },
     {
       "id": "b2-kaiji.w",
       "path": "abilities/b2-kaiji.w.json",
-      "hash": "24868030edd6",
-      "size": 1927
+      "hash": "048cf2d47f51",
+      "size": 1928
     },
     {
       "id": "b2-keyaru.e",
       "path": "abilities/b2-keyaru.e.json",
-      "hash": "6b0a0c33a2a0",
-      "size": 1458
+      "hash": "f3b15104b0af",
+      "size": 1459
     },
     {
       "id": "b2-keyaru.ex",
       "path": "abilities/b2-keyaru.ex.json",
-      "hash": "251428634810",
-      "size": 1907
+      "hash": "e73c225e91f5",
+      "size": 1908
     },
     {
       "id": "b2-keyaru.passive",
       "path": "abilities/b2-keyaru.passive.json",
-      "hash": "e34c5d847ff2",
-      "size": 1706
+      "hash": "859899269de2",
+      "size": 1707
     },
     {
       "id": "b2-keyaru.q",
       "path": "abilities/b2-keyaru.q.json",
-      "hash": "cb9dac982a18",
-      "size": 1480
+      "hash": "9bc88845bafd",
+      "size": 1481
     },
     {
       "id": "b2-keyaru.r",
       "path": "abilities/b2-keyaru.r.json",
-      "hash": "72ffb85e1732",
-      "size": 2587
+      "hash": "6496749ba90e",
+      "size": 2588
     },
     {
       "id": "b2-keyaru.w",
       "path": "abilities/b2-keyaru.w.json",
-      "hash": "116ed7b44995",
-      "size": 2517
+      "hash": "8296a511ac7f",
+      "size": 2518
     },
     {
       "id": "b2-kisaragi.e",
       "path": "abilities/b2-kisaragi.e.json",
-      "hash": "4406aa089c8e",
-      "size": 2777
+      "hash": "626952a12521",
+      "size": 2778
     },
     {
       "id": "b2-kisaragi.ex",
       "path": "abilities/b2-kisaragi.ex.json",
-      "hash": "b8d2fd59e9ba",
-      "size": 1918
+      "hash": "0fb2c0599677",
+      "size": 1919
     },
     {
       "id": "b2-kisaragi.passive",
       "path": "abilities/b2-kisaragi.passive.json",
-      "hash": "f383dfb3d55e",
-      "size": 1940
+      "hash": "0b9ebb1decbb",
+      "size": 1941
     },
     {
       "id": "b2-kisaragi.q",
       "path": "abilities/b2-kisaragi.q.json",
-      "hash": "14725007b0e6",
-      "size": 1816
+      "hash": "53f774252cec",
+      "size": 1817
     },
     {
       "id": "b2-kisaragi.r",
       "path": "abilities/b2-kisaragi.r.json",
-      "hash": "72731b36a332",
-      "size": 9128
+      "hash": "a97e67af22db",
+      "size": 9129
     },
     {
       "id": "b2-kisaragi.w",
       "path": "abilities/b2-kisaragi.w.json",
-      "hash": "f25f9a126a56",
-      "size": 2275
+      "hash": "edfa69efb7f2",
+      "size": 2276
     },
     {
       "id": "b2-klaus.e",
       "path": "abilities/b2-klaus.e.json",
-      "hash": "a7453a6956db",
-      "size": 1260
+      "hash": "becd7f595176",
+      "size": 1261
     },
     {
       "id": "b2-klaus.ex",
       "path": "abilities/b2-klaus.ex.json",
-      "hash": "c049d589718d",
-      "size": 2177
+      "hash": "90ba195e0c4c",
+      "size": 2178
     },
     {
       "id": "b2-klaus.passive",
       "path": "abilities/b2-klaus.passive.json",
-      "hash": "ce5d03fe6d19",
-      "size": 1595
+      "hash": "f7f62f74bd0a",
+      "size": 1596
     },
     {
       "id": "b2-klaus.q",
       "path": "abilities/b2-klaus.q.json",
-      "hash": "daac898aac63",
-      "size": 1642
+      "hash": "c3ff53f1df49",
+      "size": 1643
     },
     {
       "id": "b2-klaus.r",
       "path": "abilities/b2-klaus.r.json",
-      "hash": "e30376657f11",
-      "size": 1887
+      "hash": "a88ee604d261",
+      "size": 1888
     },
     {
       "id": "b2-klaus.w",
       "path": "abilities/b2-klaus.w.json",
-      "hash": "35a40fa56d65",
-      "size": 2455
+      "hash": "2198043d3f61",
+      "size": 2456
     },
     {
       "id": "b2-kumoko.e",
       "path": "abilities/b2-kumoko.e.json",
-      "hash": "4a0b2d1433ba",
-      "size": 1259
+      "hash": "3b68400f44e5",
+      "size": 1260
     },
     {
       "id": "b2-kumoko.ex",
       "path": "abilities/b2-kumoko.ex.json",
-      "hash": "b1d43119e2a4",
-      "size": 1915
+      "hash": "bcc2eead48d1",
+      "size": 1916
     },
     {
       "id": "b2-kumoko.passive",
       "path": "abilities/b2-kumoko.passive.json",
-      "hash": "ae0d260d5d85",
-      "size": 1896
+      "hash": "3d95c6879047",
+      "size": 1897
     },
     {
       "id": "b2-kumoko.q",
       "path": "abilities/b2-kumoko.q.json",
-      "hash": "850758eb7616",
-      "size": 1399
+      "hash": "083bb9149af6",
+      "size": 1400
     },
     {
       "id": "b2-kumoko.r",
       "path": "abilities/b2-kumoko.r.json",
-      "hash": "ee5c3bb455b0",
-      "size": 1895
+      "hash": "26e21b9dbe23",
+      "size": 1896
     },
     {
       "id": "b2-kumoko.w",
       "path": "abilities/b2-kumoko.w.json",
-      "hash": "739b16f98594",
-      "size": 2656
+      "hash": "bf9099f63f81",
+      "size": 2657
     },
     {
       "id": "b2-luckyman.e",
       "path": "abilities/b2-luckyman.e.json",
-      "hash": "e88ec9880849",
-      "size": 1622
+      "hash": "b1da2ac214e7",
+      "size": 1623
     },
     {
       "id": "b2-luckyman.ex",
       "path": "abilities/b2-luckyman.ex.json",
-      "hash": "2e3a21ed2329",
-      "size": 1206
+      "hash": "743876612d2f",
+      "size": 1207
     },
     {
       "id": "b2-luckyman.passive",
       "path": "abilities/b2-luckyman.passive.json",
-      "hash": "fea64819137a",
-      "size": 1576
+      "hash": "e2d30bfa1c08",
+      "size": 1577
     },
     {
       "id": "b2-luckyman.q",
       "path": "abilities/b2-luckyman.q.json",
-      "hash": "b43549b45acf",
-      "size": 1651
+      "hash": "2c8d76dcfd2c",
+      "size": 1652
     },
     {
       "id": "b2-luckyman.r",
       "path": "abilities/b2-luckyman.r.json",
-      "hash": "8ef283f46c0d",
-      "size": 3335
+      "hash": "5d2c50155b9a",
+      "size": 3336
     },
     {
       "id": "b2-luckyman.w",
       "path": "abilities/b2-luckyman.w.json",
-      "hash": "3d187e980d60",
-      "size": 1406
+      "hash": "fba79ab023df",
+      "size": 1407
     },
     {
       "id": "b2-makoto.e",
       "path": "abilities/b2-makoto.e.json",
-      "hash": "6efc84c0c294",
-      "size": 2457
+      "hash": "c049e5e62b5b",
+      "size": 2458
     },
     {
       "id": "b2-makoto.ex",
       "path": "abilities/b2-makoto.ex.json",
-      "hash": "14c3a105ce31",
-      "size": 1267
+      "hash": "3eee3d61e5bf",
+      "size": 1268
     },
     {
       "id": "b2-makoto.passive",
       "path": "abilities/b2-makoto.passive.json",
-      "hash": "88f18ed4e558",
-      "size": 1677
+      "hash": "3ceeae03f3cc",
+      "size": 1678
     },
     {
       "id": "b2-makoto.q",
       "path": "abilities/b2-makoto.q.json",
-      "hash": "7f9ac7dae385",
-      "size": 1690
+      "hash": "3c875a9b0edd",
+      "size": 1691
     },
     {
       "id": "b2-makoto.r",
       "path": "abilities/b2-makoto.r.json",
-      "hash": "c1f6dcc8de41",
-      "size": 2381
+      "hash": "c7129861ff51",
+      "size": 2382
     },
     {
       "id": "b2-makoto.w",
       "path": "abilities/b2-makoto.w.json",
-      "hash": "d589d2718543",
-      "size": 1920
+      "hash": "4593ec837a12",
+      "size": 1921
     },
     {
       "id": "b2-maomao.e",
       "path": "abilities/b2-maomao.e.json",
-      "hash": "4b9efa1ccfd1",
-      "size": 2217
+      "hash": "381a05e0e48b",
+      "size": 2218
     },
     {
       "id": "b2-maomao.ex",
       "path": "abilities/b2-maomao.ex.json",
-      "hash": "2bcece677725",
-      "size": 1757
+      "hash": "06a8b4f8d0ff",
+      "size": 1758
     },
     {
       "id": "b2-maomao.passive",
       "path": "abilities/b2-maomao.passive.json",
-      "hash": "ce32e5261548",
-      "size": 1619
+      "hash": "dd3922cafec4",
+      "size": 1620
     },
     {
       "id": "b2-maomao.q",
       "path": "abilities/b2-maomao.q.json",
-      "hash": "855b099715bc",
-      "size": 2286
+      "hash": "600bd21fd1d7",
+      "size": 2287
     },
     {
       "id": "b2-maomao.r",
       "path": "abilities/b2-maomao.r.json",
-      "hash": "82b3c497054f",
-      "size": 2848
+      "hash": "d938ae2da8cf",
+      "size": 2849
     },
     {
       "id": "b2-maomao.w",
       "path": "abilities/b2-maomao.w.json",
-      "hash": "73f31d0db3c3",
-      "size": 2607
+      "hash": "241207c0348f",
+      "size": 2608
     },
     {
       "id": "b2-maple.e",
       "path": "abilities/b2-maple.e.json",
-      "hash": "1d98323d2ff5",
-      "size": 1682
+      "hash": "573b965048d3",
+      "size": 1683
     },
     {
       "id": "b2-maple.ex",
       "path": "abilities/b2-maple.ex.json",
-      "hash": "e1efe4b22b11",
-      "size": 1950
+      "hash": "372d4ea42732",
+      "size": 1951
     },
     {
       "id": "b2-maple.passive",
       "path": "abilities/b2-maple.passive.json",
-      "hash": "bdb05a36e73f",
-      "size": 1536
+      "hash": "b28ce8dd13b6",
+      "size": 1537
     },
     {
       "id": "b2-maple.q",
       "path": "abilities/b2-maple.q.json",
-      "hash": "48eadcb1d8ae",
-      "size": 1951
+      "hash": "25b68382435d",
+      "size": 1952
     },
     {
       "id": "b2-maple.r",
       "path": "abilities/b2-maple.r.json",
-      "hash": "d6a2f6f41f56",
-      "size": 2893
+      "hash": "0d78d8cd3289",
+      "size": 2894
     },
     {
       "id": "b2-maple.w",
       "path": "abilities/b2-maple.w.json",
-      "hash": "677a46d65b54",
-      "size": 2231
+      "hash": "9433641f3644",
+      "size": 2232
     },
     {
       "id": "b2-matthias.e",
       "path": "abilities/b2-matthias.e.json",
-      "hash": "f4c37814e634",
-      "size": 1895
+      "hash": "9f2dea5d62f8",
+      "size": 1896
     },
     {
       "id": "b2-matthias.ex",
       "path": "abilities/b2-matthias.ex.json",
-      "hash": "8ab1407bd148",
-      "size": 2002
+      "hash": "beaff3dd3a7e",
+      "size": 2003
     },
     {
       "id": "b2-matthias.passive",
       "path": "abilities/b2-matthias.passive.json",
-      "hash": "8d90b961ee24",
-      "size": 1691
+      "hash": "4fb0e699bf52",
+      "size": 1692
     },
     {
       "id": "b2-matthias.q",
       "path": "abilities/b2-matthias.q.json",
-      "hash": "b2b3edc2ce6e",
-      "size": 1955
+      "hash": "9e9123e457db",
+      "size": 1956
     },
     {
       "id": "b2-matthias.r",
       "path": "abilities/b2-matthias.r.json",
-      "hash": "c05f04527486",
-      "size": 1647
+      "hash": "29516ea7f654",
+      "size": 1648
     },
     {
       "id": "b2-matthias.w",
       "path": "abilities/b2-matthias.w.json",
-      "hash": "66ba58999ec8",
-      "size": 1436
+      "hash": "b61258f58ee9",
+      "size": 1437
     },
     {
       "id": "b2-misery.e",
       "path": "abilities/b2-misery.e.json",
-      "hash": "33d34d6fb984",
-      "size": 1247
+      "hash": "0144809f13c8",
+      "size": 1248
     },
     {
       "id": "b2-misery.ex",
       "path": "abilities/b2-misery.ex.json",
-      "hash": "cd121a53a9fd",
-      "size": 2333
+      "hash": "43d8824c6e35",
+      "size": 2334
     },
     {
       "id": "b2-misery.passive",
       "path": "abilities/b2-misery.passive.json",
-      "hash": "5a464e117f15",
-      "size": 1603
+      "hash": "7792465bba3d",
+      "size": 1604
     },
     {
       "id": "b2-misery.q",
       "path": "abilities/b2-misery.q.json",
-      "hash": "e8e8ea7c4f98",
-      "size": 1702
+      "hash": "e5c4020cf68b",
+      "size": 1703
     },
     {
       "id": "b2-misery.r",
       "path": "abilities/b2-misery.r.json",
-      "hash": "165238ccb79b",
-      "size": 1819
+      "hash": "9e3a0838bae2",
+      "size": 1820
     },
     {
       "id": "b2-misery.w",
       "path": "abilities/b2-misery.w.json",
-      "hash": "7308f3a945e5",
-      "size": 2050
+      "hash": "2e7f7d5e8c9a",
+      "size": 2051
     },
     {
       "id": "b2-naofumi.e",
       "path": "abilities/b2-naofumi.e.json",
-      "hash": "dff8045ac358",
-      "size": 2008
+      "hash": "32186b9edc09",
+      "size": 2009
     },
     {
       "id": "b2-naofumi.ex",
       "path": "abilities/b2-naofumi.ex.json",
-      "hash": "0940a47148c1",
-      "size": 1672
+      "hash": "93fa1808a02b",
+      "size": 1673
     },
     {
       "id": "b2-naofumi.passive",
       "path": "abilities/b2-naofumi.passive.json",
-      "hash": "142defe995e5",
-      "size": 1617
+      "hash": "2748550f60d8",
+      "size": 1618
     },
     {
       "id": "b2-naofumi.q",
       "path": "abilities/b2-naofumi.q.json",
-      "hash": "d72911d9bba1",
-      "size": 2278
+      "hash": "cffe131f3e8c",
+      "size": 2279
     },
     {
       "id": "b2-naofumi.r",
       "path": "abilities/b2-naofumi.r.json",
-      "hash": "1b4aa468ebaf",
-      "size": 3089
+      "hash": "42033844f3ba",
+      "size": 3090
     },
     {
       "id": "b2-naofumi.w",
       "path": "abilities/b2-naofumi.w.json",
-      "hash": "a3524b7bae4c",
-      "size": 2324
+      "hash": "87a649f0be74",
+      "size": 2325
     },
     {
       "id": "b2-ned.e",
       "path": "abilities/b2-ned.e.json",
-      "hash": "f00607919a63",
-      "size": 2036
+      "hash": "ccf18b9a17c5",
+      "size": 2037
     },
     {
       "id": "b2-ned.ex",
       "path": "abilities/b2-ned.ex.json",
-      "hash": "77257cbf5f1e",
-      "size": 1214
+      "hash": "1c7254db1311",
+      "size": 1215
     },
     {
       "id": "b2-ned.passive",
       "path": "abilities/b2-ned.passive.json",
-      "hash": "416ac1e52c7d",
-      "size": 2045
+      "hash": "f27bcdcb33cf",
+      "size": 2046
     },
     {
       "id": "b2-ned.q",
       "path": "abilities/b2-ned.q.json",
-      "hash": "50c56243c301",
-      "size": 1827
+      "hash": "db46d0b12953",
+      "size": 1828
     },
     {
       "id": "b2-ned.r",
       "path": "abilities/b2-ned.r.json",
-      "hash": "ed475ce48a8a",
-      "size": 1585
+      "hash": "d62813aa5348",
+      "size": 1586
     },
     {
       "id": "b2-ned.w",
       "path": "abilities/b2-ned.w.json",
-      "hash": "10065f48e182",
-      "size": 1887
+      "hash": "dd30278bc19d",
+      "size": 1888
     },
     {
       "id": "b2-noor.e",
       "path": "abilities/b2-noor.e.json",
-      "hash": "63a56586763f",
-      "size": 2178
+      "hash": "eff5b203f42b",
+      "size": 2179
     },
     {
       "id": "b2-noor.ex",
       "path": "abilities/b2-noor.ex.json",
-      "hash": "9824d912a27e",
-      "size": 1573
+      "hash": "b694f86d7f73",
+      "size": 1574
     },
     {
       "id": "b2-noor.passive",
       "path": "abilities/b2-noor.passive.json",
-      "hash": "01f922c96856",
-      "size": 1679
+      "hash": "47e9a5c5ab25",
+      "size": 1680
     },
     {
       "id": "b2-noor.q",
       "path": "abilities/b2-noor.q.json",
-      "hash": "8626459d0129",
-      "size": 3659
+      "hash": "ba651c119f75",
+      "size": 3660
     },
     {
       "id": "b2-noor.r",
       "path": "abilities/b2-noor.r.json",
-      "hash": "335f235c3cdf",
-      "size": 2419
+      "hash": "3a0f2b8951cd",
+      "size": 2420
     },
     {
       "id": "b2-noor.w",
       "path": "abilities/b2-noor.w.json",
-      "hash": "d4373a314ff4",
-      "size": 2963
+      "hash": "6f4a645558b8",
+      "size": 2964
     },
     {
       "id": "b2-nube.e",
       "path": "abilities/b2-nube.e.json",
-      "hash": "e81e8a140509",
-      "size": 1401
+      "hash": "d43266edb88b",
+      "size": 1402
     },
     {
       "id": "b2-nube.ex",
       "path": "abilities/b2-nube.ex.json",
-      "hash": "91cc17b6e814",
-      "size": 2357
+      "hash": "cd6276648d33",
+      "size": 2358
     },
     {
       "id": "b2-nube.passive",
       "path": "abilities/b2-nube.passive.json",
-      "hash": "a524e5496de1",
-      "size": 1572
+      "hash": "14904820e5b1",
+      "size": 1573
     },
     {
       "id": "b2-nube.q",
       "path": "abilities/b2-nube.q.json",
-      "hash": "767830fc16e2",
-      "size": 2024
+      "hash": "76c12d10e8da",
+      "size": 2025
     },
     {
       "id": "b2-nube.r",
       "path": "abilities/b2-nube.r.json",
-      "hash": "1ef279b0a4ee",
-      "size": 2325
+      "hash": "661b84050f79",
+      "size": 2326
     },
     {
       "id": "b2-nube.w",
       "path": "abilities/b2-nube.w.json",
-      "hash": "fa053d78ebec",
-      "size": 1955
+      "hash": "dd5e88f9a00a",
+      "size": 1956
     },
     {
       "id": "b2-orphen.e",
       "path": "abilities/b2-orphen.e.json",
-      "hash": "a610ef55531a",
-      "size": 1414
+      "hash": "40f895e5d231",
+      "size": 1415
     },
     {
       "id": "b2-orphen.ex",
       "path": "abilities/b2-orphen.ex.json",
-      "hash": "c7b39668524b",
-      "size": 1271
+      "hash": "bf458ceb1330",
+      "size": 1272
     },
     {
       "id": "b2-orphen.passive",
       "path": "abilities/b2-orphen.passive.json",
-      "hash": "df2898cee18d",
-      "size": 1573
+      "hash": "524c3d825d15",
+      "size": 1574
     },
     {
       "id": "b2-orphen.q",
       "path": "abilities/b2-orphen.q.json",
-      "hash": "d4cfde0dea2c",
-      "size": 2174
+      "hash": "9496940ccc33",
+      "size": 2175
     },
     {
       "id": "b2-orphen.r",
       "path": "abilities/b2-orphen.r.json",
-      "hash": "7baa1a8f9efa",
-      "size": 1740
+      "hash": "96ccb65efada",
+      "size": 1741
     },
     {
       "id": "b2-orphen.w",
       "path": "abilities/b2-orphen.w.json",
-      "hash": "59b63ca82a30",
-      "size": 1637
+      "hash": "e1a1695860ab",
+      "size": 1638
     },
     {
       "id": "b2-popp.e",
       "path": "abilities/b2-popp.e.json",
-      "hash": "e280f800df26",
-      "size": 1234
+      "hash": "d4d40704179f",
+      "size": 1235
     },
     {
       "id": "b2-popp.ex",
       "path": "abilities/b2-popp.ex.json",
-      "hash": "926044a0edd2",
-      "size": 2369
+      "hash": "04d73c0d6cd5",
+      "size": 2370
     },
     {
       "id": "b2-popp.passive",
       "path": "abilities/b2-popp.passive.json",
-      "hash": "dce05279b0b9",
-      "size": 1596
+      "hash": "5b5bc7766e89",
+      "size": 1597
     },
     {
       "id": "b2-popp.q",
       "path": "abilities/b2-popp.q.json",
-      "hash": "1bb25eab8afd",
-      "size": 1609
+      "hash": "fefe4f2247b4",
+      "size": 1610
     },
     {
       "id": "b2-popp.r",
       "path": "abilities/b2-popp.r.json",
-      "hash": "7bc773192905",
-      "size": 1543
+      "hash": "334b9c6ac0cd",
+      "size": 1544
     },
     {
       "id": "b2-popp.w",
       "path": "abilities/b2-popp.w.json",
-      "hash": "707793f9253c",
-      "size": 2355
+      "hash": "2201b1032705",
+      "size": 2356
     },
     {
       "id": "b2-rem.e",
       "path": "abilities/b2-rem.e.json",
-      "hash": "804f962aeb75",
-      "size": 2079
+      "hash": "a9e71a6d96c2",
+      "size": 2080
     },
     {
       "id": "b2-rem.ex",
       "path": "abilities/b2-rem.ex.json",
-      "hash": "f3307cc113cb",
-      "size": 1854
+      "hash": "6f55203c3d85",
+      "size": 1855
     },
     {
       "id": "b2-rem.passive",
       "path": "abilities/b2-rem.passive.json",
-      "hash": "1a8940687bdf",
-      "size": 1511
+      "hash": "39dff8922570",
+      "size": 1512
     },
     {
       "id": "b2-rem.q",
       "path": "abilities/b2-rem.q.json",
-      "hash": "7063e450f95b",
-      "size": 1616
+      "hash": "f1450784a889",
+      "size": 1617
     },
     {
       "id": "b2-rem.r",
       "path": "abilities/b2-rem.r.json",
-      "hash": "a2bcf53e2c11",
-      "size": 2678
+      "hash": "b4643e409bf1",
+      "size": 2679
     },
     {
       "id": "b2-rem.w",
       "path": "abilities/b2-rem.w.json",
-      "hash": "de2b818018fa",
-      "size": 2559
+      "hash": "c80db9aecb51",
+      "size": 2560
     },
     {
       "id": "b2-rin.e",
       "path": "abilities/b2-rin.e.json",
-      "hash": "7f3a83cfa7b0",
-      "size": 1706
+      "hash": "28cc028990ff",
+      "size": 1707
     },
     {
       "id": "b2-rin.ex",
       "path": "abilities/b2-rin.ex.json",
-      "hash": "e9eaf4936a3d",
-      "size": 1276
+      "hash": "a0a6fabecc21",
+      "size": 1277
     },
     {
       "id": "b2-rin.passive",
       "path": "abilities/b2-rin.passive.json",
-      "hash": "c3952b7e8826",
-      "size": 1576
+      "hash": "a6b3249e3d61",
+      "size": 1577
     },
     {
       "id": "b2-rin.q",
       "path": "abilities/b2-rin.q.json",
-      "hash": "8d70becf1a52",
-      "size": 2002
+      "hash": "aec8af85153b",
+      "size": 2003
     },
     {
       "id": "b2-rin.r",
       "path": "abilities/b2-rin.r.json",
-      "hash": "b6d0d152743c",
-      "size": 2648
+      "hash": "528c1e7601e0",
+      "size": 2649
     },
     {
       "id": "b2-rin.w",
       "path": "abilities/b2-rin.w.json",
-      "hash": "cb531f2c95ac",
-      "size": 2569
+      "hash": "87154ad60044",
+      "size": 2570
     },
     {
       "id": "b2-shadow.e",
       "path": "abilities/b2-shadow.e.json",
-      "hash": "f8dd150e41d3",
-      "size": 1443
+      "hash": "ca7eb25c0a67",
+      "size": 1444
     },
     {
       "id": "b2-shadow.ex",
       "path": "abilities/b2-shadow.ex.json",
-      "hash": "c2b57f38eeae",
-      "size": 1715
+      "hash": "3dbbfbf98d7f",
+      "size": 1716
     },
     {
       "id": "b2-shadow.passive",
       "path": "abilities/b2-shadow.passive.json",
-      "hash": "a967bb40ff33",
-      "size": 1924
+      "hash": "cc538bb41690",
+      "size": 1925
     },
     {
       "id": "b2-shadow.q",
       "path": "abilities/b2-shadow.q.json",
-      "hash": "754cd1ede77d",
-      "size": 1798
+      "hash": "19838a88abaa",
+      "size": 1799
     },
     {
       "id": "b2-shadow.r",
       "path": "abilities/b2-shadow.r.json",
-      "hash": "c6429b38453b",
-      "size": 1820
+      "hash": "961d5c8ed204",
+      "size": 1821
     },
     {
       "id": "b2-shadow.w",
       "path": "abilities/b2-shadow.w.json",
-      "hash": "b8a5209dfc39",
-      "size": 2342
+      "hash": "611f17057d93",
+      "size": 2343
     },
     {
       "id": "b2-shinchan.e",
       "path": "abilities/b2-shinchan.e.json",
-      "hash": "f029c1729311",
-      "size": 1250
+      "hash": "18259cb7e348",
+      "size": 1251
     },
     {
       "id": "b2-shinchan.ex",
       "path": "abilities/b2-shinchan.ex.json",
-      "hash": "2edaf9654a87",
-      "size": 2107
+      "hash": "7fa14e8b48cd",
+      "size": 2108
     },
     {
       "id": "b2-shinchan.passive",
       "path": "abilities/b2-shinchan.passive.json",
-      "hash": "178bc2f8955a",
-      "size": 1670
+      "hash": "33360f7814a1",
+      "size": 1671
     },
     {
       "id": "b2-shinchan.q",
       "path": "abilities/b2-shinchan.q.json",
-      "hash": "4fb2cb3614fb",
-      "size": 1679
+      "hash": "36d5756c0513",
+      "size": 1680
     },
     {
       "id": "b2-shinchan.r",
       "path": "abilities/b2-shinchan.r.json",
-      "hash": "b02dd90af524",
-      "size": 2340
+      "hash": "701275e50339",
+      "size": 2341
     },
     {
       "id": "b2-shinchan.w",
       "path": "abilities/b2-shinchan.w.json",
-      "hash": "766df33c220f",
-      "size": 1433
+      "hash": "5f837ad3ae5c",
+      "size": 1434
     },
     {
       "id": "b2-sinbad.e",
       "path": "abilities/b2-sinbad.e.json",
-      "hash": "e998578f05f4",
-      "size": 1259
+      "hash": "0bb5a02a4e32",
+      "size": 1260
     },
     {
       "id": "b2-sinbad.ex",
       "path": "abilities/b2-sinbad.ex.json",
-      "hash": "cb71b3dcbe71",
-      "size": 2346
+      "hash": "440799f23b84",
+      "size": 2347
     },
     {
       "id": "b2-sinbad.passive",
       "path": "abilities/b2-sinbad.passive.json",
-      "hash": "87b271c6f217",
-      "size": 1665
+      "hash": "9a2b6430e896",
+      "size": 1666
     },
     {
       "id": "b2-sinbad.q",
       "path": "abilities/b2-sinbad.q.json",
-      "hash": "cee92a035659",
-      "size": 1863
+      "hash": "8db1d9a498a9",
+      "size": 1864
     },
     {
       "id": "b2-sinbad.r",
       "path": "abilities/b2-sinbad.r.json",
-      "hash": "5d0802f387ad",
-      "size": 1572
+      "hash": "540b86998ad2",
+      "size": 1573
     },
     {
       "id": "b2-sinbad.w",
       "path": "abilities/b2-sinbad.w.json",
-      "hash": "98b977c44054",
-      "size": 1836
+      "hash": "c52014047901",
+      "size": 1837
     },
     {
       "id": "b2-takopi.e",
       "path": "abilities/b2-takopi.e.json",
-      "hash": "84e31d5a85de",
-      "size": 1638
+      "hash": "5fb8e389c060",
+      "size": 1639
     },
     {
       "id": "b2-takopi.ex",
       "path": "abilities/b2-takopi.ex.json",
-      "hash": "85d3acd17cc7",
-      "size": 1993
+      "hash": "28607d5c76e8",
+      "size": 1994
     },
     {
       "id": "b2-takopi.passive",
       "path": "abilities/b2-takopi.passive.json",
-      "hash": "9e3b656ec5b3",
-      "size": 1895
+      "hash": "b936a6d333b1",
+      "size": 1896
     },
     {
       "id": "b2-takopi.q",
       "path": "abilities/b2-takopi.q.json",
-      "hash": "700a4e92267f",
-      "size": 1526
+      "hash": "8141db7b6bc9",
+      "size": 1527
     },
     {
       "id": "b2-takopi.r",
       "path": "abilities/b2-takopi.r.json",
-      "hash": "812369cee3b2",
-      "size": 2553
+      "hash": "6431d0be40df",
+      "size": 2554
     },
     {
       "id": "b2-takopi.w",
       "path": "abilities/b2-takopi.w.json",
-      "hash": "07ef0b9fd12b",
-      "size": 2215
+      "hash": "19cb228cd72f",
+      "size": 2216
     },
     {
       "id": "b2-touka.e",
       "path": "abilities/b2-touka.e.json",
-      "hash": "80bb7df13db6",
-      "size": 1681
+      "hash": "73edcd5a4b7b",
+      "size": 1682
     },
     {
       "id": "b2-touka.ex",
       "path": "abilities/b2-touka.ex.json",
-      "hash": "8c7c034f2005",
-      "size": 1179
+      "hash": "fc2ca7c8f30e",
+      "size": 1180
     },
     {
       "id": "b2-touka.passive",
       "path": "abilities/b2-touka.passive.json",
-      "hash": "f2ac3af4b8f7",
-      "size": 1663
+      "hash": "b01025bd6c7c",
+      "size": 1664
     },
     {
       "id": "b2-touka.q",
       "path": "abilities/b2-touka.q.json",
-      "hash": "b4065bb1f4c3",
-      "size": 2387
+      "hash": "b422ae5b275d",
+      "size": 2388
     },
     {
       "id": "b2-touka.r",
       "path": "abilities/b2-touka.r.json",
-      "hash": "9aebcdd5157d",
-      "size": 2441
+      "hash": "fb50d7f0d71f",
+      "size": 2442
     },
     {
       "id": "b2-touka.w",
       "path": "abilities/b2-touka.w.json",
-      "hash": "694edd1e562d",
-      "size": 1921
+      "hash": "bdb9cf2205bb",
+      "size": 1922
     },
     {
       "id": "b2-uncle.e",
       "path": "abilities/b2-uncle.e.json",
-      "hash": "ba091751108a",
-      "size": 2230
+      "hash": "5a7440091299",
+      "size": 2231
     },
     {
       "id": "b2-uncle.ex",
       "path": "abilities/b2-uncle.ex.json",
-      "hash": "3bbdffd54551",
-      "size": 1525
+      "hash": "a63bee05689b",
+      "size": 1526
     },
     {
       "id": "b2-uncle.passive",
       "path": "abilities/b2-uncle.passive.json",
-      "hash": "d570b30c2965",
-      "size": 1612
+      "hash": "439109858f0e",
+      "size": 1613
     },
     {
       "id": "b2-uncle.q",
       "path": "abilities/b2-uncle.q.json",
-      "hash": "ef1cc2f2665d",
-      "size": 1942
+      "hash": "72db77ad4bee",
+      "size": 1943
     },
     {
       "id": "b2-uncle.r",
       "path": "abilities/b2-uncle.r.json",
-      "hash": "34bf856ac3d5",
-      "size": 2451
+      "hash": "7f5989ec254d",
+      "size": 2452
     },
     {
       "id": "b2-uncle.w",
       "path": "abilities/b2-uncle.w.json",
-      "hash": "ea491685f34f",
-      "size": 2066
+      "hash": "c1045ff39a96",
+      "size": 2067
     },
     {
       "id": "b2-yogiri.e",
       "path": "abilities/b2-yogiri.e.json",
-      "hash": "fbdec40d84dd",
-      "size": 1262
+      "hash": "563cfc941c38",
+      "size": 1263
     },
     {
       "id": "b2-yogiri.ex",
       "path": "abilities/b2-yogiri.ex.json",
-      "hash": "1110540cdded",
-      "size": 2087
+      "hash": "9c3628786367",
+      "size": 2088
     },
     {
       "id": "b2-yogiri.passive",
       "path": "abilities/b2-yogiri.passive.json",
-      "hash": "dbd2b0fde9e4",
-      "size": 1949
+      "hash": "adcf734ddf76",
+      "size": 1950
     },
     {
       "id": "b2-yogiri.q",
       "path": "abilities/b2-yogiri.q.json",
-      "hash": "63d823129129",
-      "size": 1678
+      "hash": "79897f44a380",
+      "size": 1679
     },
     {
       "id": "b2-yogiri.r",
       "path": "abilities/b2-yogiri.r.json",
-      "hash": "553585356d7c",
-      "size": 2359
+      "hash": "39fffec04440",
+      "size": 2360
     },
     {
       "id": "b2-yogiri.w",
       "path": "abilities/b2-yogiri.w.json",
-      "hash": "8a07dffa27a8",
-      "size": 3616
+      "hash": "989b61582c96",
+      "size": 3617
     },
     {
       "id": "b2-zenitsu.e",
       "path": "abilities/b2-zenitsu.e.json",
-      "hash": "622c2b35107f",
-      "size": 1711
+      "hash": "077f64c2131f",
+      "size": 1712
     },
     {
       "id": "b2-zenitsu.ex",
       "path": "abilities/b2-zenitsu.ex.json",
-      "hash": "c5f38ea26bc9",
-      "size": 1213
+      "hash": "c4cff9628d3c",
+      "size": 1214
     },
     {
       "id": "b2-zenitsu.passive",
       "path": "abilities/b2-zenitsu.passive.json",
-      "hash": "080e80898a53",
-      "size": 1894
+      "hash": "c0106cfdbcb0",
+      "size": 1895
     },
     {
       "id": "b2-zenitsu.q",
       "path": "abilities/b2-zenitsu.q.json",
-      "hash": "203dbee0cfa4",
-      "size": 2302
+      "hash": "c0a764f0de82",
+      "size": 2303
     },
     {
       "id": "b2-zenitsu.r",
       "path": "abilities/b2-zenitsu.r.json",
-      "hash": "dfeaf8eda1b7",
-      "size": 2694
+      "hash": "3219193e2f50",
+      "size": 2695
     },
     {
       "id": "b2-zenitsu.w",
       "path": "abilities/b2-zenitsu.w.json",
-      "hash": "8c597144d970",
-      "size": 2924
+      "hash": "4480a60e4faa",
+      "size": 2925
     },
     {
       "id": "community-review-01-20260907.e",
       "path": "abilities/community-review-01-20260907.e.json",
-      "hash": "4b807c6171e6",
-      "size": 1806
+      "hash": "9fd3051cfef3",
+      "size": 1807
     },
     {
       "id": "community-review-01-20260907.ex",
       "path": "abilities/community-review-01-20260907.ex.json",
-      "hash": "1fe312a7b0c5",
-      "size": 1236
+      "hash": "9b48d86c9893",
+      "size": 1237
     },
     {
       "id": "community-review-01-20260907.passive",
       "path": "abilities/community-review-01-20260907.passive.json",
-      "hash": "7e574e2d3dcc",
-      "size": 1230
+      "hash": "7c649308500a",
+      "size": 1231
     },
     {
       "id": "community-review-01-20260907.q",
       "path": "abilities/community-review-01-20260907.q.json",
-      "hash": "39c553df5ccc",
-      "size": 1663
+      "hash": "bf32c06c3d73",
+      "size": 1664
     },
     {
       "id": "community-review-01-20260907.r",
       "path": "abilities/community-review-01-20260907.r.json",
-      "hash": "62ad66275ead",
-      "size": 1458
+      "hash": "5b481235a9f0",
+      "size": 1459
     },
     {
       "id": "community-review-01-20260907.w",
       "path": "abilities/community-review-01-20260907.w.json",
-      "hash": "b6f15fd1cf14",
-      "size": 1727
+      "hash": "a9fb426e0d7f",
+      "size": 1728
     },
     {
       "id": "community-review-02-20260907.e",
       "path": "abilities/community-review-02-20260907.e.json",
-      "hash": "95795e8a0760",
-      "size": 2099
+      "hash": "dc24640dcf43",
+      "size": 2100
     },
     {
       "id": "community-review-02-20260907.ex",
       "path": "abilities/community-review-02-20260907.ex.json",
-      "hash": "b84d1aeaa920",
-      "size": 1272
+      "hash": "c23b08505a65",
+      "size": 1273
     },
     {
       "id": "community-review-02-20260907.passive",
       "path": "abilities/community-review-02-20260907.passive.json",
-      "hash": "2bffbdf42bb7",
-      "size": 1204
+      "hash": "68aca88d9d9c",
+      "size": 1205
     },
     {
       "id": "community-review-02-20260907.q",
       "path": "abilities/community-review-02-20260907.q.json",
-      "hash": "c56fe793f44b",
-      "size": 2126
+      "hash": "febb79911983",
+      "size": 2127
     },
     {
       "id": "community-review-02-20260907.r",
       "path": "abilities/community-review-02-20260907.r.json",
-      "hash": "5f5f27c15faa",
-      "size": 2018
+      "hash": "9024a6ab125e",
+      "size": 2019
     },
     {
       "id": "community-review-02-20260907.w",
       "path": "abilities/community-review-02-20260907.w.json",
-      "hash": "3afc593cb4a8",
-      "size": 1711
+      "hash": "f60135a8b86b",
+      "size": 1712
     },
     {
       "id": "community-review-03-20260907.e",
       "path": "abilities/community-review-03-20260907.e.json",
-      "hash": "ac7ac267f4f8",
-      "size": 1918
+      "hash": "212e04fc27a8",
+      "size": 1919
     },
     {
       "id": "community-review-03-20260907.ex",
       "path": "abilities/community-review-03-20260907.ex.json",
-      "hash": "0daaab1b3819",
-      "size": 834
+      "hash": "3e3e6a8d38c1",
+      "size": 835
     },
     {
       "id": "community-review-03-20260907.passive",
       "path": "abilities/community-review-03-20260907.passive.json",
-      "hash": "c0c3849b2fe4",
-      "size": 1174
+      "hash": "0a146ffd2376",
+      "size": 1175
     },
     {
       "id": "community-review-03-20260907.q",
       "path": "abilities/community-review-03-20260907.q.json",
-      "hash": "23e266bf98d8",
-      "size": 2123
+      "hash": "ad11dbee1549",
+      "size": 2124
     },
     {
       "id": "community-review-03-20260907.r",
       "path": "abilities/community-review-03-20260907.r.json",
-      "hash": "4afd8dbec828",
-      "size": 1994
+      "hash": "511bf90db92e",
+      "size": 1995
     },
     {
       "id": "community-review-03-20260907.w",
       "path": "abilities/community-review-03-20260907.w.json",
-      "hash": "868d6049f9fc",
-      "size": 1813
+      "hash": "436fcec3f989",
+      "size": 1814
     },
     {
       "id": "community-review-04-20260907.e",
       "path": "abilities/community-review-04-20260907.e.json",
-      "hash": "ae16927b3652",
-      "size": 1741
+      "hash": "3888e8859a9c",
+      "size": 1742
     },
     {
       "id": "community-review-04-20260907.ex",
       "path": "abilities/community-review-04-20260907.ex.json",
-      "hash": "98d7beeb90d3",
-      "size": 828
+      "hash": "995047f530e3",
+      "size": 829
     },
     {
       "id": "community-review-04-20260907.passive",
       "path": "abilities/community-review-04-20260907.passive.json",
-      "hash": "3d9191f39483",
-      "size": 1209
+      "hash": "9ceb17448126",
+      "size": 1210
     },
     {
       "id": "community-review-04-20260907.q",
       "path": "abilities/community-review-04-20260907.q.json",
-      "hash": "cbb8463da7a2",
-      "size": 2059
+      "hash": "22c1fe008d3a",
+      "size": 2060
     },
     {
       "id": "community-review-04-20260907.r",
       "path": "abilities/community-review-04-20260907.r.json",
-      "hash": "b0eed0db53e0",
-      "size": 1810
+      "hash": "9b4fbaa8c1bc",
+      "size": 1811
     },
     {
       "id": "community-review-04-20260907.w",
       "path": "abilities/community-review-04-20260907.w.json",
-      "hash": "f142d115b432",
-      "size": 1833
+      "hash": "daa31633574b",
+      "size": 1834
     },
     {
       "id": "community-review-05-20260907.e",
       "path": "abilities/community-review-05-20260907.e.json",
-      "hash": "1b8073fe2264",
-      "size": 1715
+      "hash": "2b215fff742d",
+      "size": 1716
     },
     {
       "id": "community-review-05-20260907.ex",
       "path": "abilities/community-review-05-20260907.ex.json",
-      "hash": "e00412612150",
-      "size": 855
+      "hash": "80be311e7983",
+      "size": 856
     },
     {
       "id": "community-review-05-20260907.passive",
       "path": "abilities/community-review-05-20260907.passive.json",
-      "hash": "03116407c820",
-      "size": 1196
+      "hash": "92723e5fe870",
+      "size": 1197
     },
     {
       "id": "community-review-05-20260907.q",
       "path": "abilities/community-review-05-20260907.q.json",
-      "hash": "eb304130a093",
-      "size": 1841
+      "hash": "05627c51e874",
+      "size": 1842
     },
     {
       "id": "community-review-05-20260907.r",
       "path": "abilities/community-review-05-20260907.r.json",
-      "hash": "d2ee67c5da11",
-      "size": 1674
+      "hash": "6fb251a795ef",
+      "size": 1675
     },
     {
       "id": "community-review-05-20260907.w",
       "path": "abilities/community-review-05-20260907.w.json",
-      "hash": "f7962f1ed513",
-      "size": 2132
+      "hash": "025be87522ae",
+      "size": 2133
     },
     {
       "id": "community-review-06-20260907.e",
       "path": "abilities/community-review-06-20260907.e.json",
-      "hash": "cbb44fdd8947",
-      "size": 1712
+      "hash": "f34c3580b747",
+      "size": 1713
     },
     {
       "id": "community-review-06-20260907.ex",
       "path": "abilities/community-review-06-20260907.ex.json",
-      "hash": "9cbf9c866d90",
-      "size": 966
+      "hash": "cdbad84010e3",
+      "size": 967
     },
     {
       "id": "community-review-06-20260907.passive",
       "path": "abilities/community-review-06-20260907.passive.json",
-      "hash": "3e7e3302c186",
-      "size": 1558
+      "hash": "758a54c002cd",
+      "size": 1559
     },
     {
       "id": "community-review-06-20260907.q",
       "path": "abilities/community-review-06-20260907.q.json",
-      "hash": "97a545773fb3",
-      "size": 1943
+      "hash": "c394cc6869a1",
+      "size": 1944
     },
     {
       "id": "community-review-06-20260907.r",
       "path": "abilities/community-review-06-20260907.r.json",
-      "hash": "ea8c6d2ac868",
-      "size": 1816
+      "hash": "fd49f8aa6080",
+      "size": 1817
     },
     {
       "id": "community-review-06-20260907.w",
       "path": "abilities/community-review-06-20260907.w.json",
-      "hash": "57012ec168f0",
-      "size": 1858
+      "hash": "9dcd0aaa5381",
+      "size": 1859
     },
     {
       "id": "community-review-07-20260907.e",
       "path": "abilities/community-review-07-20260907.e.json",
-      "hash": "142dfa68d08c",
-      "size": 1968
+      "hash": "d8d738003080",
+      "size": 1969
     },
     {
       "id": "community-review-07-20260907.ex",
       "path": "abilities/community-review-07-20260907.ex.json",
-      "hash": "c12ed68cf166",
-      "size": 881
+      "hash": "567fcd21cc1c",
+      "size": 882
     },
     {
       "id": "community-review-07-20260907.passive",
       "path": "abilities/community-review-07-20260907.passive.json",
-      "hash": "10fa20efd956",
-      "size": 1202
+      "hash": "6e6062b5b27f",
+      "size": 1203
     },
     {
       "id": "community-review-07-20260907.q",
       "path": "abilities/community-review-07-20260907.q.json",
-      "hash": "3f73f64044a0",
-      "size": 1689
+      "hash": "4007d48dd724",
+      "size": 1690
     },
     {
       "id": "community-review-07-20260907.r",
       "path": "abilities/community-review-07-20260907.r.json",
-      "hash": "f802d3cfa59e",
-      "size": 1416
+      "hash": "aa38beddfc5b",
+      "size": 1417
     },
     {
       "id": "community-review-07-20260907.w",
       "path": "abilities/community-review-07-20260907.w.json",
-      "hash": "fc24b23e363e",
-      "size": 1610
+      "hash": "bf28e521b07f",
+      "size": 1611
     },
     {
       "id": "community-review-08-20260907.e",
       "path": "abilities/community-review-08-20260907.e.json",
-      "hash": "a36b73f437a4",
-      "size": 1337
+      "hash": "54d385a48ce5",
+      "size": 1338
     },
     {
       "id": "community-review-08-20260907.ex",
       "path": "abilities/community-review-08-20260907.ex.json",
-      "hash": "dbea9927e3e8",
-      "size": 1274
+      "hash": "e017292842da",
+      "size": 1275
     },
     {
       "id": "community-review-08-20260907.passive",
       "path": "abilities/community-review-08-20260907.passive.json",
-      "hash": "1e911b7483eb",
-      "size": 1206
+      "hash": "c05ad1658cdb",
+      "size": 1207
     },
     {
       "id": "community-review-08-20260907.q",
       "path": "abilities/community-review-08-20260907.q.json",
-      "hash": "590d50e3860c",
-      "size": 1984
+      "hash": "2e202741a7cb",
+      "size": 1985
     },
     {
       "id": "community-review-08-20260907.r",
       "path": "abilities/community-review-08-20260907.r.json",
-      "hash": "28542bacc208",
-      "size": 1652
+      "hash": "61411f09c76f",
+      "size": 1653
     },
     {
       "id": "community-review-08-20260907.w",
       "path": "abilities/community-review-08-20260907.w.json",
-      "hash": "24d528e187ec",
-      "size": 1740
+      "hash": "02dd920343ad",
+      "size": 1741
     },
     {
       "id": "community-review-09-20260907.e",
       "path": "abilities/community-review-09-20260907.e.json",
-      "hash": "f494a9123516",
-      "size": 1677
+      "hash": "dda1de38128c",
+      "size": 1678
     },
     {
       "id": "community-review-09-20260907.ex",
       "path": "abilities/community-review-09-20260907.ex.json",
-      "hash": "44e985ffe8e1",
-      "size": 977
+      "hash": "679ffebdaa5a",
+      "size": 978
     },
     {
       "id": "community-review-09-20260907.passive",
       "path": "abilities/community-review-09-20260907.passive.json",
-      "hash": "7d2b7d40e5b4",
-      "size": 1193
+      "hash": "2b60dc9eff30",
+      "size": 1194
     },
     {
       "id": "community-review-09-20260907.q",
       "path": "abilities/community-review-09-20260907.q.json",
-      "hash": "e0fa457a91af",
-      "size": 1545
+      "hash": "1b509bb0c088",
+      "size": 1546
     },
     {
       "id": "community-review-09-20260907.r",
       "path": "abilities/community-review-09-20260907.r.json",
-      "hash": "5e99de6e206f",
-      "size": 1566
+      "hash": "f9dc4291947c",
+      "size": 1567
     },
     {
       "id": "community-review-09-20260907.w",
       "path": "abilities/community-review-09-20260907.w.json",
-      "hash": "fd180d3a7248",
-      "size": 1375
+      "hash": "ed4f8569f464",
+      "size": 1376
     },
     {
       "id": "community-review-10-20260907.e",
       "path": "abilities/community-review-10-20260907.e.json",
-      "hash": "e8cf634074ff",
-      "size": 1353
+      "hash": "ee6be1736a23",
+      "size": 1354
     },
     {
       "id": "community-review-10-20260907.ex",
       "path": "abilities/community-review-10-20260907.ex.json",
-      "hash": "3173572044cc",
-      "size": 817
+      "hash": "3e5805a1ca4b",
+      "size": 818
     },
     {
       "id": "community-review-10-20260907.passive",
       "path": "abilities/community-review-10-20260907.passive.json",
-      "hash": "064d40426000",
-      "size": 1189
+      "hash": "caf94394bd79",
+      "size": 1190
     },
     {
       "id": "community-review-10-20260907.q",
       "path": "abilities/community-review-10-20260907.q.json",
-      "hash": "b61391bb2ae0",
-      "size": 1283
+      "hash": "a7a687a1e599",
+      "size": 1284
     },
     {
       "id": "community-review-10-20260907.r",
       "path": "abilities/community-review-10-20260907.r.json",
-      "hash": "abcb1eeb0344",
-      "size": 1727
+      "hash": "22938646a950",
+      "size": 1728
     },
     {
       "id": "community-review-10-20260907.w",
       "path": "abilities/community-review-10-20260907.w.json",
-      "hash": "0e8df6099feb",
-      "size": 1599
+      "hash": "2462b8e5c331",
+      "size": 1600
     },
     {
       "id": "community-review-11-20260907.e",
       "path": "abilities/community-review-11-20260907.e.json",
-      "hash": "3e07cfbe8518",
-      "size": 1384
+      "hash": "766d3413d8f1",
+      "size": 1385
     },
     {
       "id": "community-review-11-20260907.ex",
       "path": "abilities/community-review-11-20260907.ex.json",
-      "hash": "0701652b3275",
-      "size": 842
+      "hash": "8026d3e25204",
+      "size": 843
     },
     {
       "id": "community-review-11-20260907.passive",
       "path": "abilities/community-review-11-20260907.passive.json",
-      "hash": "39b11f7d5b06",
-      "size": 1145
+      "hash": "97f3cf46ba54",
+      "size": 1146
     },
     {
       "id": "community-review-11-20260907.q",
       "path": "abilities/community-review-11-20260907.q.json",
-      "hash": "5c4d8e298105",
-      "size": 2085
+      "hash": "c47fc17ecf33",
+      "size": 2086
     },
     {
       "id": "community-review-11-20260907.r",
       "path": "abilities/community-review-11-20260907.r.json",
-      "hash": "5c0d8bfcae7b",
-      "size": 1800
+      "hash": "8dffd1e81b2d",
+      "size": 1801
     },
     {
       "id": "community-review-11-20260907.w",
       "path": "abilities/community-review-11-20260907.w.json",
-      "hash": "cb40adc36f7c",
-      "size": 1740
+      "hash": "86c347a611b4",
+      "size": 1741
     },
     {
       "id": "community-review-12-20260907.e",
       "path": "abilities/community-review-12-20260907.e.json",
-      "hash": "4c3a648d77f9",
-      "size": 1974
+      "hash": "8f482ad055fb",
+      "size": 1975
     },
     {
       "id": "community-review-12-20260907.ex",
       "path": "abilities/community-review-12-20260907.ex.json",
-      "hash": "292e5ca3e14d",
-      "size": 963
+      "hash": "163ae4a626a9",
+      "size": 964
     },
     {
       "id": "community-review-12-20260907.passive",
       "path": "abilities/community-review-12-20260907.passive.json",
-      "hash": "3c46677dcbb3",
-      "size": 1200
+      "hash": "8d847cbdf207",
+      "size": 1201
     },
     {
       "id": "community-review-12-20260907.q",
       "path": "abilities/community-review-12-20260907.q.json",
-      "hash": "065516939417",
-      "size": 1999
+      "hash": "3a663c48c802",
+      "size": 2000
     },
     {
       "id": "community-review-12-20260907.r",
       "path": "abilities/community-review-12-20260907.r.json",
-      "hash": "3520fcea6312",
-      "size": 1858
+      "hash": "d2853a9bf215",
+      "size": 1859
     },
     {
       "id": "community-review-12-20260907.w",
       "path": "abilities/community-review-12-20260907.w.json",
-      "hash": "c3b5ee56cee7",
-      "size": 1661
+      "hash": "e3c71abe58f6",
+      "size": 1662
     },
     {
       "id": "community-review-13-20260907.e",
       "path": "abilities/community-review-13-20260907.e.json",
-      "hash": "85276883eb85",
-      "size": 1727
+      "hash": "22dc8df116a7",
+      "size": 1728
     },
     {
       "id": "community-review-13-20260907.ex",
       "path": "abilities/community-review-13-20260907.ex.json",
-      "hash": "b7184ab1fac5",
-      "size": 822
+      "hash": "489474258234",
+      "size": 823
     },
     {
       "id": "community-review-13-20260907.passive",
       "path": "abilities/community-review-13-20260907.passive.json",
-      "hash": "aab92e32cbfe",
-      "size": 1179
+      "hash": "13f375851474",
+      "size": 1180
     },
     {
       "id": "community-review-13-20260907.q",
       "path": "abilities/community-review-13-20260907.q.json",
-      "hash": "621e5bf01d41",
-      "size": 1863
+      "hash": "5e4d60891329",
+      "size": 1864
     },
     {
       "id": "community-review-13-20260907.r",
       "path": "abilities/community-review-13-20260907.r.json",
-      "hash": "95419895e7d5",
-      "size": 1845
+      "hash": "dac79b82f467",
+      "size": 1846
     },
     {
       "id": "community-review-13-20260907.w",
       "path": "abilities/community-review-13-20260907.w.json",
-      "hash": "74aaf7c7112c",
-      "size": 1343
+      "hash": "952a18e16a22",
+      "size": 1344
     },
     {
       "id": "community-review-14-20260907.e",
       "path": "abilities/community-review-14-20260907.e.json",
-      "hash": "2c326cfa1299",
-      "size": 1471
+      "hash": "f17448b64f11",
+      "size": 1472
     },
     {
       "id": "community-review-14-20260907.ex",
       "path": "abilities/community-review-14-20260907.ex.json",
-      "hash": "4ba39b47aac1",
-      "size": 919
+      "hash": "65829c3f4053",
+      "size": 920
     },
     {
       "id": "community-review-14-20260907.passive",
       "path": "abilities/community-review-14-20260907.passive.json",
-      "hash": "497f5bcca140",
-      "size": 1174
+      "hash": "ba96f0c37107",
+      "size": 1175
     },
     {
       "id": "community-review-14-20260907.q",
       "path": "abilities/community-review-14-20260907.q.json",
-      "hash": "6132e0494ea8",
-      "size": 2021
+      "hash": "3ca982779e4e",
+      "size": 2022
     },
     {
       "id": "community-review-14-20260907.r",
       "path": "abilities/community-review-14-20260907.r.json",
-      "hash": "a3c99609a322",
-      "size": 1706
+      "hash": "9bd209ba8a50",
+      "size": 1707
     },
     {
       "id": "community-review-14-20260907.w",
       "path": "abilities/community-review-14-20260907.w.json",
-      "hash": "549c9198d975",
-      "size": 1999
+      "hash": "1adb99de40e0",
+      "size": 2000
     },
     {
       "id": "community-review-15-20260907.e",
       "path": "abilities/community-review-15-20260907.e.json",
-      "hash": "133a7454c484",
-      "size": 1681
+      "hash": "993130421b63",
+      "size": 1682
     },
     {
       "id": "community-review-15-20260907.ex",
       "path": "abilities/community-review-15-20260907.ex.json",
-      "hash": "1e93dc0140ff",
-      "size": 1072
+      "hash": "ebfb20a55a0c",
+      "size": 1073
     },
     {
       "id": "community-review-15-20260907.passive",
       "path": "abilities/community-review-15-20260907.passive.json",
-      "hash": "b8e78c6e3ce4",
-      "size": 1167
+      "hash": "60b80c9efff4",
+      "size": 1168
     },
     {
       "id": "community-review-15-20260907.q",
       "path": "abilities/community-review-15-20260907.q.json",
-      "hash": "44164947345b",
-      "size": 1265
+      "hash": "a6d3c5b2a2ca",
+      "size": 1266
     },
     {
       "id": "community-review-15-20260907.r",
       "path": "abilities/community-review-15-20260907.r.json",
-      "hash": "264f8ec8966f",
-      "size": 1943
+      "hash": "5f51e63df6c1",
+      "size": 1944
     },
     {
       "id": "community-review-15-20260907.w",
       "path": "abilities/community-review-15-20260907.w.json",
-      "hash": "a953ef480ad6",
-      "size": 1931
+      "hash": "4e17967bd682",
+      "size": 1932
     },
     {
       "id": "community-review-16-20260907.e",
       "path": "abilities/community-review-16-20260907.e.json",
-      "hash": "cade36c9d38f",
-      "size": 1705
+      "hash": "db062ebe2a6c",
+      "size": 1706
     },
     {
       "id": "community-review-16-20260907.ex",
       "path": "abilities/community-review-16-20260907.ex.json",
-      "hash": "3e252d1c156c",
-      "size": 1196
+      "hash": "0a673547ee12",
+      "size": 1197
     },
     {
       "id": "community-review-16-20260907.passive",
       "path": "abilities/community-review-16-20260907.passive.json",
-      "hash": "3afbb04446da",
-      "size": 1219
+      "hash": "ce075a226cf7",
+      "size": 1220
     },
     {
       "id": "community-review-16-20260907.q",
       "path": "abilities/community-review-16-20260907.q.json",
-      "hash": "48766de715b4",
-      "size": 1798
+      "hash": "d0238336c324",
+      "size": 1799
     },
     {
       "id": "community-review-16-20260907.r",
       "path": "abilities/community-review-16-20260907.r.json",
-      "hash": "efafbd961847",
-      "size": 1537
+      "hash": "02c54b3b6a8f",
+      "size": 1538
     },
     {
       "id": "community-review-16-20260907.w",
       "path": "abilities/community-review-16-20260907.w.json",
-      "hash": "9e2e7088dc85",
-      "size": 1658
+      "hash": "34145b7297c0",
+      "size": 1659
     },
     {
       "id": "community-review-17-20260907.e",
       "path": "abilities/community-review-17-20260907.e.json",
-      "hash": "9dbe1ce52d30",
-      "size": 1677
+      "hash": "df70e149cf16",
+      "size": 1678
     },
     {
       "id": "community-review-17-20260907.ex",
       "path": "abilities/community-review-17-20260907.ex.json",
-      "hash": "a794f09b7610",
-      "size": 957
+      "hash": "2fbaea557d62",
+      "size": 958
     },
     {
       "id": "community-review-17-20260907.passive",
       "path": "abilities/community-review-17-20260907.passive.json",
-      "hash": "d87ff93b3bd5",
-      "size": 1117
+      "hash": "c37a07e736b7",
+      "size": 1118
     },
     {
       "id": "community-review-17-20260907.q",
       "path": "abilities/community-review-17-20260907.q.json",
-      "hash": "1fbdf65711ad",
-      "size": 1331
+      "hash": "757f379b0cc9",
+      "size": 1332
     },
     {
       "id": "community-review-17-20260907.r",
       "path": "abilities/community-review-17-20260907.r.json",
-      "hash": "cd2d4493dfaa",
-      "size": 1379
+      "hash": "2ded7897ffb1",
+      "size": 1380
     },
     {
       "id": "community-review-17-20260907.w",
       "path": "abilities/community-review-17-20260907.w.json",
-      "hash": "f1662ed8b684",
-      "size": 1598
+      "hash": "3d6ed65772da",
+      "size": 1599
     },
     {
       "id": "community-review-18-20260907.e",
       "path": "abilities/community-review-18-20260907.e.json",
-      "hash": "d8890c33ccdf",
-      "size": 1667
+      "hash": "c79f3c28d681",
+      "size": 1668
     },
     {
       "id": "community-review-18-20260907.ex",
       "path": "abilities/community-review-18-20260907.ex.json",
-      "hash": "acd258f4aa29",
-      "size": 929
+      "hash": "f65dea01f522",
+      "size": 930
     },
     {
       "id": "community-review-18-20260907.passive",
       "path": "abilities/community-review-18-20260907.passive.json",
-      "hash": "0d30cd3adb61",
-      "size": 1178
+      "hash": "e778e476f284",
+      "size": 1179
     },
     {
       "id": "community-review-18-20260907.q",
       "path": "abilities/community-review-18-20260907.q.json",
-      "hash": "0d4ee16f26cb",
-      "size": 1655
+      "hash": "ee9f38d03936",
+      "size": 1656
     },
     {
       "id": "community-review-18-20260907.r",
       "path": "abilities/community-review-18-20260907.r.json",
-      "hash": "5b7a1438c32c",
-      "size": 1814
+      "hash": "7f0ee229b57f",
+      "size": 1815
     },
     {
       "id": "community-review-18-20260907.w",
       "path": "abilities/community-review-18-20260907.w.json",
-      "hash": "26090e4bd6c2",
-      "size": 1570
+      "hash": "69affb358b5f",
+      "size": 1571
     },
     {
       "id": "community-review-19-20260907.e",
       "path": "abilities/community-review-19-20260907.e.json",
-      "hash": "8f812a49b566",
-      "size": 1717
+      "hash": "ec5278cb8573",
+      "size": 1718
     },
     {
       "id": "community-review-19-20260907.ex",
       "path": "abilities/community-review-19-20260907.ex.json",
-      "hash": "20ec84fcd9c8",
-      "size": 1232
+      "hash": "325585c64c4d",
+      "size": 1233
     },
     {
       "id": "community-review-19-20260907.passive",
       "path": "abilities/community-review-19-20260907.passive.json",
-      "hash": "20a302e4a4b0",
-      "size": 1170
+      "hash": "343440111fcc",
+      "size": 1171
     },
     {
       "id": "community-review-19-20260907.q",
       "path": "abilities/community-review-19-20260907.q.json",
-      "hash": "32b578003017",
-      "size": 1993
+      "hash": "8d84e9492be0",
+      "size": 1994
     },
     {
       "id": "community-review-19-20260907.r",
       "path": "abilities/community-review-19-20260907.r.json",
-      "hash": "e9e17eda2a2e",
-      "size": 2082
+      "hash": "9c6160710d59",
+      "size": 2083
     },
     {
       "id": "community-review-19-20260907.w",
       "path": "abilities/community-review-19-20260907.w.json",
-      "hash": "21db24f69dc8",
-      "size": 1693
+      "hash": "3432d2403b7e",
+      "size": 1694
     },
     {
       "id": "community-review-20-20260907.e",
       "path": "abilities/community-review-20-20260907.e.json",
-      "hash": "3ce20dc63261",
-      "size": 1689
+      "hash": "72ce06e7f2a5",
+      "size": 1690
     },
     {
       "id": "community-review-20-20260907.ex",
       "path": "abilities/community-review-20-20260907.ex.json",
-      "hash": "6ddf9ad7392a",
-      "size": 844
+      "hash": "958e9806f493",
+      "size": 845
     },
     {
       "id": "community-review-20-20260907.passive",
       "path": "abilities/community-review-20-20260907.passive.json",
-      "hash": "e35763d1345d",
-      "size": 1178
+      "hash": "0ba84e2cfe16",
+      "size": 1179
     },
     {
       "id": "community-review-20-20260907.q",
       "path": "abilities/community-review-20-20260907.q.json",
-      "hash": "c4de85f35dbd",
-      "size": 1793
+      "hash": "db071cd8a0ed",
+      "size": 1794
     },
     {
       "id": "community-review-20-20260907.r",
       "path": "abilities/community-review-20-20260907.r.json",
-      "hash": "242cf0397292",
-      "size": 1826
+      "hash": "ca2def70103f",
+      "size": 1827
     },
     {
       "id": "community-review-20-20260907.w",
       "path": "abilities/community-review-20-20260907.w.json",
-      "hash": "1a953bc1b24c",
-      "size": 1935
+      "hash": "82150f221e3c",
+      "size": 1936
     },
     {
       "id": "community-review-21-20260907.e",
       "path": "abilities/community-review-21-20260907.e.json",
-      "hash": "a702f13a1e86",
-      "size": 1341
+      "hash": "b774e560f2c6",
+      "size": 1342
     },
     {
       "id": "community-review-21-20260907.ex",
       "path": "abilities/community-review-21-20260907.ex.json",
-      "hash": "11132ad834a2",
-      "size": 1030
+      "hash": "7ab442cb9d8b",
+      "size": 1031
     },
     {
       "id": "community-review-21-20260907.passive",
       "path": "abilities/community-review-21-20260907.passive.json",
-      "hash": "072ba02b118b",
-      "size": 1195
+      "hash": "9cbed05f4c3e",
+      "size": 1196
     },
     {
       "id": "community-review-21-20260907.q",
       "path": "abilities/community-review-21-20260907.q.json",
-      "hash": "d2ac917a15b4",
-      "size": 2056
+      "hash": "554dde5765f8",
+      "size": 2057
     },
     {
       "id": "community-review-21-20260907.r",
       "path": "abilities/community-review-21-20260907.r.json",
-      "hash": "a354e8ce90d9",
-      "size": 1617
+      "hash": "8b42197ff6bf",
+      "size": 1618
     },
     {
       "id": "community-review-21-20260907.w",
       "path": "abilities/community-review-21-20260907.w.json",
-      "hash": "adfc1df8c748",
-      "size": 1685
+      "hash": "56b920a52f16",
+      "size": 1686
     },
     {
       "id": "community-review-22-20260907.e",
       "path": "abilities/community-review-22-20260907.e.json",
-      "hash": "1bac1a0f43b0",
-      "size": 1685
+      "hash": "84dadb2c12d0",
+      "size": 1686
     },
     {
       "id": "community-review-22-20260907.ex",
       "path": "abilities/community-review-22-20260907.ex.json",
-      "hash": "e4fc096a5209",
-      "size": 919
+      "hash": "00344d765eef",
+      "size": 920
     },
     {
       "id": "community-review-22-20260907.passive",
       "path": "abilities/community-review-22-20260907.passive.json",
-      "hash": "5ac6e03bd52e",
-      "size": 1606
+      "hash": "2e837d90fb47",
+      "size": 1607
     },
     {
       "id": "community-review-22-20260907.q",
       "path": "abilities/community-review-22-20260907.q.json",
-      "hash": "62467e289f19",
-      "size": 1589
+      "hash": "8a48ee40e838",
+      "size": 1590
     },
     {
       "id": "community-review-22-20260907.r",
       "path": "abilities/community-review-22-20260907.r.json",
-      "hash": "d3ab71c334c3",
-      "size": 1700
+      "hash": "885ebf06acf6",
+      "size": 1701
     },
     {
       "id": "community-review-22-20260907.w",
       "path": "abilities/community-review-22-20260907.w.json",
-      "hash": "57f10ee0b165",
-      "size": 1914
+      "hash": "20334c9befb9",
+      "size": 1915
     },
     {
       "id": "community-review-23-20260907.e",
       "path": "abilities/community-review-23-20260907.e.json",
-      "hash": "f85e197bb277",
-      "size": 1684
+      "hash": "f9d0489ae9bb",
+      "size": 1685
     },
     {
       "id": "community-review-23-20260907.ex",
       "path": "abilities/community-review-23-20260907.ex.json",
-      "hash": "78395df3ab63",
-      "size": 960
+      "hash": "539d585e77c3",
+      "size": 961
     },
     {
       "id": "community-review-23-20260907.passive",
       "path": "abilities/community-review-23-20260907.passive.json",
-      "hash": "a4875c0d634a",
-      "size": 1170
+      "hash": "bdaf68d44512",
+      "size": 1171
     },
     {
       "id": "community-review-23-20260907.q",
       "path": "abilities/community-review-23-20260907.q.json",
-      "hash": "8fb8f0bf11ca",
-      "size": 1785
+      "hash": "d35f47fa2876",
+      "size": 1786
     },
     {
       "id": "community-review-23-20260907.r",
       "path": "abilities/community-review-23-20260907.r.json",
-      "hash": "86166f416661",
-      "size": 1539
+      "hash": "4b28c0232887",
+      "size": 1540
     },
     {
       "id": "community-review-23-20260907.w",
       "path": "abilities/community-review-23-20260907.w.json",
-      "hash": "1fd7197dfb06",
-      "size": 1494
+      "hash": "6271260d20cb",
+      "size": 1495
     },
     {
       "id": "community-review-24-20260907.e",
       "path": "abilities/community-review-24-20260907.e.json",
-      "hash": "3966e996c8af",
-      "size": 1354
+      "hash": "435d5a3ee0b2",
+      "size": 1355
     },
     {
       "id": "community-review-24-20260907.ex",
       "path": "abilities/community-review-24-20260907.ex.json",
-      "hash": "d46aa546394e",
-      "size": 827
+      "hash": "29e801257c88",
+      "size": 828
     },
     {
       "id": "community-review-24-20260907.passive",
       "path": "abilities/community-review-24-20260907.passive.json",
-      "hash": "694d34409ad5",
-      "size": 1178
+      "hash": "92ee54b0f292",
+      "size": 1179
     },
     {
       "id": "community-review-24-20260907.q",
       "path": "abilities/community-review-24-20260907.q.json",
-      "hash": "c91c68980601",
-      "size": 1353
+      "hash": "ab41b5249b91",
+      "size": 1354
     },
     {
       "id": "community-review-24-20260907.r",
       "path": "abilities/community-review-24-20260907.r.json",
-      "hash": "c3294c4efd41",
-      "size": 1623
+      "hash": "e4c4f194cf06",
+      "size": 1624
     },
     {
       "id": "community-review-24-20260907.w",
       "path": "abilities/community-review-24-20260907.w.json",
-      "hash": "20e4f38a1629",
-      "size": 1719
+      "hash": "65ff018a39a2",
+      "size": 1720
     },
     {
       "id": "community-review-25-20260907.e",
       "path": "abilities/community-review-25-20260907.e.json",
-      "hash": "3672ed02325f",
-      "size": 1953
+      "hash": "aaf7f9635daf",
+      "size": 1954
     },
     {
       "id": "community-review-25-20260907.ex",
       "path": "abilities/community-review-25-20260907.ex.json",
-      "hash": "123d325850c2",
-      "size": 831
+      "hash": "487cb897a357",
+      "size": 832
     },
     {
       "id": "community-review-25-20260907.passive",
       "path": "abilities/community-review-25-20260907.passive.json",
-      "hash": "718e6bcdb023",
-      "size": 1176
+      "hash": "44b7c0c9f223",
+      "size": 1177
     },
     {
       "id": "community-review-25-20260907.q",
       "path": "abilities/community-review-25-20260907.q.json",
-      "hash": "ac17e0de7e55",
-      "size": 1231
+      "hash": "5661997371f7",
+      "size": 1232
     },
     {
       "id": "community-review-25-20260907.r",
       "path": "abilities/community-review-25-20260907.r.json",
-      "hash": "263156af7a75",
-      "size": 1857
+      "hash": "c2c5cf5c1086",
+      "size": 1858
     },
     {
       "id": "community-review-25-20260907.w",
       "path": "abilities/community-review-25-20260907.w.json",
-      "hash": "a5912c005fab",
-      "size": 2040
+      "hash": "5d1299c9c42f",
+      "size": 2041
     },
     {
       "id": "community-review-26-20260907.e",
       "path": "abilities/community-review-26-20260907.e.json",
-      "hash": "e19a005f2795",
-      "size": 1367
+      "hash": "09423ab9c7e4",
+      "size": 1368
     },
     {
       "id": "community-review-26-20260907.ex",
       "path": "abilities/community-review-26-20260907.ex.json",
-      "hash": "064a18f45e00",
-      "size": 1191
+      "hash": "b71598237c54",
+      "size": 1192
     },
     {
       "id": "community-review-26-20260907.passive",
       "path": "abilities/community-review-26-20260907.passive.json",
-      "hash": "4293ec466670",
-      "size": 1188
+      "hash": "a71e8697c498",
+      "size": 1189
     },
     {
       "id": "community-review-26-20260907.q",
       "path": "abilities/community-review-26-20260907.q.json",
-      "hash": "9b64930ff32c",
-      "size": 2119
+      "hash": "5323335b6439",
+      "size": 2120
     },
     {
       "id": "community-review-26-20260907.r",
       "path": "abilities/community-review-26-20260907.r.json",
-      "hash": "62bb7c5a5b06",
-      "size": 1633
+      "hash": "bd943363383f",
+      "size": 1634
     },
     {
       "id": "community-review-26-20260907.w",
       "path": "abilities/community-review-26-20260907.w.json",
-      "hash": "7e25bcaf5972",
-      "size": 1597
+      "hash": "7d3dea769701",
+      "size": 1598
     },
     {
       "id": "community-review-27-20260907.e",
       "path": "abilities/community-review-27-20260907.e.json",
-      "hash": "9f1d08f19823",
-      "size": 1693
+      "hash": "9b79686db632",
+      "size": 1694
     },
     {
       "id": "community-review-27-20260907.ex",
       "path": "abilities/community-review-27-20260907.ex.json",
-      "hash": "9728de9f814e",
-      "size": 952
+      "hash": "47857f65e9c0",
+      "size": 953
     },
     {
       "id": "community-review-27-20260907.passive",
       "path": "abilities/community-review-27-20260907.passive.json",
-      "hash": "b1714fce32ba",
-      "size": 1171
+      "hash": "d92c513974e2",
+      "size": 1172
     },
     {
       "id": "community-review-27-20260907.q",
       "path": "abilities/community-review-27-20260907.q.json",
-      "hash": "76ad45507fb8",
-      "size": 1254
+      "hash": "22febf0a6af4",
+      "size": 1255
     },
     {
       "id": "community-review-27-20260907.r",
       "path": "abilities/community-review-27-20260907.r.json",
-      "hash": "25b309a06275",
-      "size": 1491
+      "hash": "3a4652cdbc75",
+      "size": 1492
     },
     {
       "id": "community-review-27-20260907.w",
       "path": "abilities/community-review-27-20260907.w.json",
-      "hash": "33e4791aa06e",
-      "size": 1637
+      "hash": "98a16beeac0c",
+      "size": 1638
     },
     {
       "id": "community-review-28-20260907.e",
       "path": "abilities/community-review-28-20260907.e.json",
-      "hash": "408bda9338cb",
-      "size": 2016
+      "hash": "6c3bbf062b00",
+      "size": 2017
     },
     {
       "id": "community-review-28-20260907.ex",
       "path": "abilities/community-review-28-20260907.ex.json",
-      "hash": "c6932e82339c",
-      "size": 822
+      "hash": "84dbfb0ff37c",
+      "size": 823
     },
     {
       "id": "community-review-28-20260907.passive",
       "path": "abilities/community-review-28-20260907.passive.json",
-      "hash": "beeb2e41acdf",
-      "size": 1221
+      "hash": "25f56b1fa1ce",
+      "size": 1222
     },
     {
       "id": "community-review-28-20260907.q",
       "path": "abilities/community-review-28-20260907.q.json",
-      "hash": "b4dce0ef51a5",
-      "size": 1961
+      "hash": "856018d5cbb7",
+      "size": 1962
     },
     {
       "id": "community-review-28-20260907.r",
       "path": "abilities/community-review-28-20260907.r.json",
-      "hash": "33659a204d04",
-      "size": 1989
+      "hash": "190122b39bae",
+      "size": 1990
     },
     {
       "id": "community-review-28-20260907.w",
       "path": "abilities/community-review-28-20260907.w.json",
-      "hash": "9b9f0294bc50",
-      "size": 1666
+      "hash": "7f6d62ee54a5",
+      "size": 1667
     },
     {
       "id": "community-review-29-20260907.e",
       "path": "abilities/community-review-29-20260907.e.json",
-      "hash": "82e55b13058c",
-      "size": 1673
+      "hash": "124edcd8e490",
+      "size": 1674
     },
     {
       "id": "community-review-29-20260907.ex",
       "path": "abilities/community-review-29-20260907.ex.json",
-      "hash": "0eb6969ea5ec",
-      "size": 987
+      "hash": "b549af0daf62",
+      "size": 988
     },
     {
       "id": "community-review-29-20260907.passive",
       "path": "abilities/community-review-29-20260907.passive.json",
-      "hash": "da5b25d1dbb3",
-      "size": 1193
+      "hash": "95a64df8be9e",
+      "size": 1194
     },
     {
       "id": "community-review-29-20260907.q",
       "path": "abilities/community-review-29-20260907.q.json",
-      "hash": "35a3898fc5b4",
-      "size": 1792
+      "hash": "75e6616dcf5c",
+      "size": 1793
     },
     {
       "id": "community-review-29-20260907.r",
       "path": "abilities/community-review-29-20260907.r.json",
-      "hash": "8982d6b65bb5",
-      "size": 1677
+      "hash": "61fb3afd4c5f",
+      "size": 1678
     },
     {
       "id": "community-review-29-20260907.w",
       "path": "abilities/community-review-29-20260907.w.json",
-      "hash": "3ca75e3d1696",
-      "size": 1707
+      "hash": "9475d07f1f7b",
+      "size": 1708
     },
     {
       "id": "community-review-30-20260907.e",
       "path": "abilities/community-review-30-20260907.e.json",
-      "hash": "0e45fbdfc4ca",
-      "size": 2013
+      "hash": "a90da58bc162",
+      "size": 2014
     },
     {
       "id": "community-review-30-20260907.ex",
       "path": "abilities/community-review-30-20260907.ex.json",
-      "hash": "7470f4b5e3ff",
-      "size": 960
+      "hash": "607b1076281d",
+      "size": 961
     },
     {
       "id": "community-review-30-20260907.passive",
       "path": "abilities/community-review-30-20260907.passive.json",
-      "hash": "63a75ff9d053",
-      "size": 1182
+      "hash": "7ae269785827",
+      "size": 1183
     },
     {
       "id": "community-review-30-20260907.q",
       "path": "abilities/community-review-30-20260907.q.json",
-      "hash": "4594d58b533a",
-      "size": 1408
+      "hash": "b1b330461c5b",
+      "size": 1409
     },
     {
       "id": "community-review-30-20260907.r",
       "path": "abilities/community-review-30-20260907.r.json",
-      "hash": "79d916d3d720",
-      "size": 1658
+      "hash": "3daac366f27c",
+      "size": 1659
     },
     {
       "id": "community-review-30-20260907.w",
       "path": "abilities/community-review-30-20260907.w.json",
-      "hash": "29651cfb786a",
-      "size": 1631
+      "hash": "17aa852cbf8d",
+      "size": 1632
     },
     {
       "id": "community-review-31-20260907.e",
       "path": "abilities/community-review-31-20260907.e.json",
-      "hash": "7230e243bc33",
-      "size": 1724
+      "hash": "5916bb07e10e",
+      "size": 1725
     },
     {
       "id": "community-review-31-20260907.ex",
       "path": "abilities/community-review-31-20260907.ex.json",
-      "hash": "1511065ecf15",
-      "size": 817
+      "hash": "99d3cf3cd881",
+      "size": 818
     },
     {
       "id": "community-review-31-20260907.passive",
       "path": "abilities/community-review-31-20260907.passive.json",
-      "hash": "18fca8140ba3",
-      "size": 1219
+      "hash": "ae950fa1b810",
+      "size": 1220
     },
     {
       "id": "community-review-31-20260907.q",
       "path": "abilities/community-review-31-20260907.q.json",
-      "hash": "43ea6902955f",
-      "size": 1309
+      "hash": "6568b1a83746",
+      "size": 1310
     },
     {
       "id": "community-review-31-20260907.r",
       "path": "abilities/community-review-31-20260907.r.json",
-      "hash": "bb712b6c3248",
-      "size": 1525
+      "hash": "52d553240fed",
+      "size": 1526
     },
     {
       "id": "community-review-31-20260907.w",
       "path": "abilities/community-review-31-20260907.w.json",
-      "hash": "bcd075404237",
-      "size": 1702
+      "hash": "3f4d070dd448",
+      "size": 1703
     },
     {
       "id": "community-review-32-20260907.e",
       "path": "abilities/community-review-32-20260907.e.json",
-      "hash": "3415cd23073f",
-      "size": 1873
+      "hash": "ab29f54cf51d",
+      "size": 1874
     },
     {
       "id": "community-review-32-20260907.ex",
       "path": "abilities/community-review-32-20260907.ex.json",
-      "hash": "359228910211",
-      "size": 1082
+      "hash": "d210c70efe66",
+      "size": 1083
     },
     {
       "id": "community-review-32-20260907.passive",
       "path": "abilities/community-review-32-20260907.passive.json",
-      "hash": "8e9daa8be243",
-      "size": 1249
+      "hash": "042520bfacf2",
+      "size": 1250
     },
     {
       "id": "community-review-32-20260907.q",
       "path": "abilities/community-review-32-20260907.q.json",
-      "hash": "643fa3c1d641",
-      "size": 1373
+      "hash": "084361f9263a",
+      "size": 1374
     },
     {
       "id": "community-review-32-20260907.r",
       "path": "abilities/community-review-32-20260907.r.json",
-      "hash": "ccf0bd731b1f",
-      "size": 1519
+      "hash": "e19cfbc4d570",
+      "size": 1520
     },
     {
       "id": "community-review-32-20260907.w",
       "path": "abilities/community-review-32-20260907.w.json",
-      "hash": "644795ae4581",
-      "size": 1791
+      "hash": "8da508dcd52c",
+      "size": 1792
     },
     {
       "id": "community-review-33-20260907.e",
       "path": "abilities/community-review-33-20260907.e.json",
-      "hash": "3244c24fdc72",
-      "size": 1950
+      "hash": "9c1a3798380d",
+      "size": 1951
     },
     {
       "id": "community-review-33-20260907.ex",
       "path": "abilities/community-review-33-20260907.ex.json",
-      "hash": "56cb532fdce0",
-      "size": 1221
+      "hash": "7abd679fd2b3",
+      "size": 1222
     },
     {
       "id": "community-review-33-20260907.passive",
       "path": "abilities/community-review-33-20260907.passive.json",
-      "hash": "fd7c7c3dcb0a",
-      "size": 1596
+      "hash": "6d7f2e938a9a",
+      "size": 1597
     },
     {
       "id": "community-review-33-20260907.q",
       "path": "abilities/community-review-33-20260907.q.json",
-      "hash": "47eb6131cef0",
-      "size": 1799
+      "hash": "b8fc7fe6c384",
+      "size": 1800
     },
     {
       "id": "community-review-33-20260907.r",
       "path": "abilities/community-review-33-20260907.r.json",
-      "hash": "e384bce94548",
-      "size": 1544
+      "hash": "d6ca991893de",
+      "size": 1545
     },
     {
       "id": "community-review-33-20260907.w",
       "path": "abilities/community-review-33-20260907.w.json",
-      "hash": "395499e60e0d",
-      "size": 1367
+      "hash": "e3a1bfa34450",
+      "size": 1368
     },
     {
       "id": "community-review-34-20260907.e",
       "path": "abilities/community-review-34-20260907.e.json",
-      "hash": "eb37f97049ec",
-      "size": 1599
+      "hash": "5d8f0aeaa077",
+      "size": 1600
     },
     {
       "id": "community-review-34-20260907.ex",
       "path": "abilities/community-review-34-20260907.ex.json",
-      "hash": "d58b9bde7e3c",
-      "size": 1245
+      "hash": "0a7ef3ea3906",
+      "size": 1246
     },
     {
       "id": "community-review-34-20260907.passive",
       "path": "abilities/community-review-34-20260907.passive.json",
-      "hash": "3ea7131aba57",
-      "size": 1198
+      "hash": "c2eaa0b7fb88",
+      "size": 1199
     },
     {
       "id": "community-review-34-20260907.q",
       "path": "abilities/community-review-34-20260907.q.json",
-      "hash": "28968a2c1397",
-      "size": 1933
+      "hash": "51f6956a99ce",
+      "size": 1934
     },
     {
       "id": "community-review-34-20260907.r",
       "path": "abilities/community-review-34-20260907.r.json",
-      "hash": "41ad9a3db614",
-      "size": 1339
+      "hash": "33b1347eea0a",
+      "size": 1340
     },
     {
       "id": "community-review-34-20260907.w",
       "path": "abilities/community-review-34-20260907.w.json",
-      "hash": "ba26af125448",
-      "size": 1716
+      "hash": "ee7354cae28c",
+      "size": 1717
     },
     {
       "id": "community-review-35-20260907.e",
       "path": "abilities/community-review-35-20260907.e.json",
-      "hash": "79a7370b2f8e",
-      "size": 1364
+      "hash": "a1f598e4e492",
+      "size": 1365
     },
     {
       "id": "community-review-35-20260907.ex",
       "path": "abilities/community-review-35-20260907.ex.json",
-      "hash": "8dbdf70e76e1",
-      "size": 880
+      "hash": "b4602a10f09a",
+      "size": 881
     },
     {
       "id": "community-review-35-20260907.passive",
       "path": "abilities/community-review-35-20260907.passive.json",
-      "hash": "687ef6a4dfc3",
-      "size": 1211
+      "hash": "b601e927ac7b",
+      "size": 1212
     },
     {
       "id": "community-review-35-20260907.q",
       "path": "abilities/community-review-35-20260907.q.json",
-      "hash": "db147d42abea",
-      "size": 1808
+      "hash": "a3d49bc8d41b",
+      "size": 1809
     },
     {
       "id": "community-review-35-20260907.r",
       "path": "abilities/community-review-35-20260907.r.json",
-      "hash": "0371ac61bfd9",
-      "size": 1816
+      "hash": "2afc8a3f3114",
+      "size": 1817
     },
     {
       "id": "community-review-35-20260907.w",
       "path": "abilities/community-review-35-20260907.w.json",
-      "hash": "5e3e9b216912",
-      "size": 1683
+      "hash": "121a9af20710",
+      "size": 1684
     },
     {
       "id": "community-review-36-20260907.e",
       "path": "abilities/community-review-36-20260907.e.json",
-      "hash": "39385d47ca6d",
-      "size": 1959
+      "hash": "da8b523a4765",
+      "size": 1960
     },
     {
       "id": "community-review-36-20260907.ex",
       "path": "abilities/community-review-36-20260907.ex.json",
-      "hash": "9dcc6075e78c",
-      "size": 931
+      "hash": "8fb6fff41f75",
+      "size": 932
     },
     {
       "id": "community-review-36-20260907.passive",
       "path": "abilities/community-review-36-20260907.passive.json",
-      "hash": "1dc02e033453",
-      "size": 1182
+      "hash": "42414babaa81",
+      "size": 1183
     },
     {
       "id": "community-review-36-20260907.q",
       "path": "abilities/community-review-36-20260907.q.json",
-      "hash": "6d4c9993c2e8",
-      "size": 1785
+      "hash": "a37bfef0f8f7",
+      "size": 1786
     },
     {
       "id": "community-review-36-20260907.r",
       "path": "abilities/community-review-36-20260907.r.json",
-      "hash": "1202a8baff7b",
-      "size": 1827
+      "hash": "b570035688a2",
+      "size": 1828
     },
     {
       "id": "community-review-36-20260907.w",
       "path": "abilities/community-review-36-20260907.w.json",
-      "hash": "b206f6932e32",
-      "size": 1735
+      "hash": "cea62b81303e",
+      "size": 1736
     },
     {
       "id": "community-review-37-20260907.e",
       "path": "abilities/community-review-37-20260907.e.json",
-      "hash": "9e7ba850cc8f",
-      "size": 1444
+      "hash": "af41c1aa59e6",
+      "size": 1445
     },
     {
       "id": "community-review-37-20260907.ex",
       "path": "abilities/community-review-37-20260907.ex.json",
-      "hash": "fc316b55eb9a",
-      "size": 961
+      "hash": "cff6b1ecb1ed",
+      "size": 962
     },
     {
       "id": "community-review-37-20260907.passive",
       "path": "abilities/community-review-37-20260907.passive.json",
-      "hash": "9e2f2fdbf9ac",
-      "size": 1228
+      "hash": "aad37e341f3f",
+      "size": 1229
     },
     {
       "id": "community-review-37-20260907.q",
       "path": "abilities/community-review-37-20260907.q.json",
-      "hash": "249af882a99c",
-      "size": 1286
+      "hash": "31a560a8925b",
+      "size": 1287
     },
     {
       "id": "community-review-37-20260907.r",
       "path": "abilities/community-review-37-20260907.r.json",
-      "hash": "533abd105328",
-      "size": 2024
+      "hash": "33f4e36da1fa",
+      "size": 2025
     },
     {
       "id": "community-review-37-20260907.w",
       "path": "abilities/community-review-37-20260907.w.json",
-      "hash": "0008ff78a751",
-      "size": 2038
+      "hash": "530b03856a44",
+      "size": 2039
     },
     {
       "id": "godie-e001.e",
@@ -5147,254 +5147,254 @@
     {
       "id": "lol-karthus.e",
       "path": "abilities/lol-karthus.e.json",
-      "hash": "cb031efa0508",
-      "size": 1540
+      "hash": "7d4850785cda",
+      "size": 1545
     },
     {
       "id": "lol-karthus.ex",
       "path": "abilities/lol-karthus.ex.json",
-      "hash": "8b910815afd4",
-      "size": 1111
+      "hash": "11678ddbc219",
+      "size": 1116
     },
     {
       "id": "lol-karthus.passive",
       "path": "abilities/lol-karthus.passive.json",
-      "hash": "14b2e1e39ab9",
-      "size": 1833
+      "hash": "a56ad3aeff51",
+      "size": 1834
     },
     {
       "id": "lol-karthus.q",
       "path": "abilities/lol-karthus.q.json",
-      "hash": "f0c0cfa10a5a",
-      "size": 1178
+      "hash": "19025d455a1e",
+      "size": 1183
     },
     {
       "id": "lol-karthus.r",
       "path": "abilities/lol-karthus.r.json",
-      "hash": "34f626ba050a",
-      "size": 1201
+      "hash": "1fd8dc7244b2",
+      "size": 1204
     },
     {
       "id": "lol-karthus.w",
       "path": "abilities/lol-karthus.w.json",
-      "hash": "03c6d8a00ea6",
-      "size": 1281
+      "hash": "dc9a299eb043",
+      "size": 1286
     },
     {
       "id": "lol-leesin.e",
       "path": "abilities/lol-leesin.e.json",
-      "hash": "1aed1b4b1c19",
-      "size": 1196
+      "hash": "35438bedc624",
+      "size": 1201
     },
     {
       "id": "lol-leesin.ex",
       "path": "abilities/lol-leesin.ex.json",
-      "hash": "9ad84d98df86",
-      "size": 1445
+      "hash": "40d4e9e84355",
+      "size": 1450
     },
     {
       "id": "lol-leesin.passive",
       "path": "abilities/lol-leesin.passive.json",
-      "hash": "45c82a85205a",
-      "size": 1456
+      "hash": "1232a403455a",
+      "size": 1457
     },
     {
       "id": "lol-leesin.q",
       "path": "abilities/lol-leesin.q.json",
-      "hash": "7505a92e057f",
-      "size": 1141
+      "hash": "25bc7fde8869",
+      "size": 1146
     },
     {
       "id": "lol-leesin.r",
       "path": "abilities/lol-leesin.r.json",
-      "hash": "0b93091d6f7d",
-      "size": 1759
+      "hash": "a1c6e4dea8ab",
+      "size": 1764
     },
     {
       "id": "lol-leesin.w",
       "path": "abilities/lol-leesin.w.json",
-      "hash": "019f3b78ee8f",
-      "size": 1411
+      "hash": "ac13a5904da3",
+      "size": 1416
     },
     {
       "id": "lol-lux.e",
       "path": "abilities/lol-lux.e.json",
-      "hash": "c6449a9f0e05",
-      "size": 1567
+      "hash": "ff595208d094",
+      "size": 1572
     },
     {
       "id": "lol-lux.ex",
       "path": "abilities/lol-lux.ex.json",
-      "hash": "bb6b217d5fee",
-      "size": 1211
+      "hash": "93c9ee9e4de3",
+      "size": 1216
     },
     {
       "id": "lol-lux.passive",
       "path": "abilities/lol-lux.passive.json",
-      "hash": "979cab95b1a5",
-      "size": 1441
+      "hash": "8773749ad545",
+      "size": 1442
     },
     {
       "id": "lol-lux.q",
       "path": "abilities/lol-lux.q.json",
-      "hash": "7675d587631a",
-      "size": 1265
+      "hash": "5b26f6d7d75f",
+      "size": 1270
     },
     {
       "id": "lol-lux.r",
       "path": "abilities/lol-lux.r.json",
-      "hash": "b4ff3c670a71",
-      "size": 1600
+      "hash": "343f810c1fb6",
+      "size": 1605
     },
     {
       "id": "lol-lux.w",
       "path": "abilities/lol-lux.w.json",
-      "hash": "5730f3cc14d8",
-      "size": 1230
+      "hash": "42b2a626342f",
+      "size": 1235
     },
     {
       "id": "lol-missfortune.e",
       "path": "abilities/lol-missfortune.e.json",
-      "hash": "9f6dd03571dd",
-      "size": 1589
+      "hash": "3e622cb5d97c",
+      "size": 1594
     },
     {
       "id": "lol-missfortune.ex",
       "path": "abilities/lol-missfortune.ex.json",
-      "hash": "dd6224bfcd5a",
-      "size": 1319
+      "hash": "1cf805ce1c1f",
+      "size": 1324
     },
     {
       "id": "lol-missfortune.passive",
       "path": "abilities/lol-missfortune.passive.json",
-      "hash": "6463d46a5123",
-      "size": 1469
+      "hash": "64771cc843aa",
+      "size": 1470
     },
     {
       "id": "lol-missfortune.q",
       "path": "abilities/lol-missfortune.q.json",
-      "hash": "e544badcf05c",
-      "size": 1490
+      "hash": "d4b7e170c5cc",
+      "size": 1495
     },
     {
       "id": "lol-missfortune.r",
       "path": "abilities/lol-missfortune.r.json",
-      "hash": "ea18bed89668",
-      "size": 1395
+      "hash": "20966988a6d3",
+      "size": 1392
     },
     {
       "id": "lol-missfortune.w",
       "path": "abilities/lol-missfortune.w.json",
-      "hash": "5b981ed8c064",
-      "size": 1332
+      "hash": "46e23ec2eac1",
+      "size": 1337
     },
     {
       "id": "lol-warwick.e",
       "path": "abilities/lol-warwick.e.json",
-      "hash": "5864010879d5",
-      "size": 1263
+      "hash": "98af2e9a67c6",
+      "size": 1268
     },
     {
       "id": "lol-warwick.ex",
       "path": "abilities/lol-warwick.ex.json",
-      "hash": "5584d0466a8e",
-      "size": 1100
+      "hash": "41c257d1ea24",
+      "size": 1105
     },
     {
       "id": "lol-warwick.passive",
       "path": "abilities/lol-warwick.passive.json",
-      "hash": "d8983dc517cd",
-      "size": 1706
+      "hash": "e686de76d7d0",
+      "size": 1707
     },
     {
       "id": "lol-warwick.q",
       "path": "abilities/lol-warwick.q.json",
-      "hash": "883e255da408",
-      "size": 1807
+      "hash": "8292ba272cbd",
+      "size": 1812
     },
     {
       "id": "lol-warwick.r",
       "path": "abilities/lol-warwick.r.json",
-      "hash": "e5ed400f9cce",
-      "size": 1973
+      "hash": "5347f7822218",
+      "size": 1974
     },
     {
       "id": "lol-warwick.w",
       "path": "abilities/lol-warwick.w.json",
-      "hash": "730f1219af4d",
-      "size": 1330
+      "hash": "7c5e5389604e",
+      "size": 1335
     },
     {
       "id": "lol-xerath.e",
       "path": "abilities/lol-xerath.e.json",
-      "hash": "86194a99e569",
-      "size": 1271
+      "hash": "1bf3fcd322a5",
+      "size": 1276
     },
     {
       "id": "lol-xerath.ex",
       "path": "abilities/lol-xerath.ex.json",
-      "hash": "1220ed695e78",
-      "size": 1202
+      "hash": "739429233926",
+      "size": 1207
     },
     {
       "id": "lol-xerath.passive",
       "path": "abilities/lol-xerath.passive.json",
-      "hash": "dea8da45b1e5",
-      "size": 1453
+      "hash": "17bee3f0f90b",
+      "size": 1454
     },
     {
       "id": "lol-xerath.q",
       "path": "abilities/lol-xerath.q.json",
-      "hash": "1c879589c467",
-      "size": 1621
+      "hash": "be7dd7510413",
+      "size": 1626
     },
     {
       "id": "lol-xerath.r",
       "path": "abilities/lol-xerath.r.json",
-      "hash": "bf6963f6f7bf",
-      "size": 1394
+      "hash": "d1a22515bb84",
+      "size": 1395
     },
     {
       "id": "lol-xerath.w",
       "path": "abilities/lol-xerath.w.json",
-      "hash": "48a8aed92bdd",
-      "size": 1161
+      "hash": "b1c982120699",
+      "size": 1166
     },
     {
       "id": "lol-yasuo.e",
       "path": "abilities/lol-yasuo.e.json",
-      "hash": "890ffa050140",
-      "size": 1798
+      "hash": "383232745050",
+      "size": 1803
     },
     {
       "id": "lol-yasuo.ex",
       "path": "abilities/lol-yasuo.ex.json",
-      "hash": "97efb576c810",
-      "size": 1224
+      "hash": "303cbd712e32",
+      "size": 1225
     },
     {
       "id": "lol-yasuo.passive",
       "path": "abilities/lol-yasuo.passive.json",
-      "hash": "e22caa09c909",
-      "size": 1454
+      "hash": "fb25093f4853",
+      "size": 1455
     },
     {
       "id": "lol-yasuo.q",
       "path": "abilities/lol-yasuo.q.json",
-      "hash": "812fc5544216",
-      "size": 1618
+      "hash": "787790029a51",
+      "size": 1623
     },
     {
       "id": "lol-yasuo.r",
       "path": "abilities/lol-yasuo.r.json",
-      "hash": "e253d4ad359f",
-      "size": 1979
+      "hash": "9efa23e7b397",
+      "size": 1980
     },
     {
       "id": "lol-yasuo.w",
       "path": "abilities/lol-yasuo.w.json",
-      "hash": "f09cdffd8752",
-      "size": 1250
+      "hash": "373a04d63f8a",
+      "size": 1255
     },
     {
       "id": "sela.e",

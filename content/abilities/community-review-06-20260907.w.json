@@ -1,7 +1,7 @@
 {
   "id": "community-review-06-20260907.w",
   "name": "吐出",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】含住目標時將其安全釋放並射出星彈；空腹時只能使用較弱的普通星彈。\n【待補機制】目前固定星光線；需持有物判斷與安全吐出。",
   "slot": "W",
   "castType": "skillshot",

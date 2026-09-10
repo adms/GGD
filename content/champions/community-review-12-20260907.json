@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-12-20260907.q",
       "name": "干將・莫邪",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】投影雙劍進行近身交叉斬擊。\n【待補機制】雙劍掛點與交叉斬動畫待製。",
       "slot": "Q",
       "castType": "targeted",
@@ -131,7 +131,7 @@
     "W": {
       "id": "community-review-12-20260907.w",
       "name": "〔投影・飛劍〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】將有限數量的投影劍射向指定方向。\n【待補機制】目前定點三發落劍；需按方向投影飛劍。",
       "slot": "W",
       "castType": "ground",
@@ -192,7 +192,7 @@
     "E": {
       "id": "community-review-12-20260907.e",
       "name": "〔強化・踏步〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離移動並強化下一次近戰命中。\n【待補機制】缺下一次近戰強化。",
       "slot": "E",
       "castType": "ground",
@@ -270,7 +270,7 @@
     "R": {
       "id": "community-review-12-20260907.r",
       "name": "無限劍製",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】展開有期限的劍域，強化 W 並在固定節奏追加投影劍；領域不改寫地圖邊界。\n【待補機制】目前領域傷害；需領域内 W 強化、投影劍生成與退出還原。",
       "slot": "R",
       "castType": "ground",

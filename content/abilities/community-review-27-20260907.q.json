@@ -1,7 +1,7 @@
 {
   "id": "community-review-27-20260907.q",
   "name": "風牌",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】以風束攻擊並推動目標。\n【待補機制】風束推動缺 knockback；目前單體魔法。",
   "slot": "Q",
   "castType": "targeted",

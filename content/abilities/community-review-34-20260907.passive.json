@@ -2,7 +2,7 @@
   "id": "community-review-34-20260907.passive",
   "schema": "ability@1",
   "name": "〔追上你了〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。",
   "slot": "PASSIVE",
   "castType": "self",

@@ -2152,8 +2152,17 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   `pnpm content:build`」。它驗的是「打包器正確」，不是「出貨的那一份最新」（失敗
   形態 ⑤：被測的不是出貨的那個）。所以 2026-08-01 一份過期的 `bundle.json` 帶著
   全綠的 759 條測試被 push 上線，**客戶端整個選人畫面空掉**。
-  真正的守衛是 `packages/shared/src/content/shippedBundleIsCurrent.test.ts`
-  —— 它比對 repo 裡被 commit 的那一份。它紅了不要改它，跑 build 然後 `git add content/`。
+  真正的守衛有**兩支**，⛔ 而在 2026-09-10 之前這裡只寫了一支、還寫錯了它做什麼：
+  · `packages/shared/src/content/shippedBundleIsCurrent.test.ts` —— ⚠️ 它讀的是**工作區**
+    （`readBundle(CONTENT_DIR)`），比對「工作區重建 ↔ 工作區檔案」。⛔ 這一行以前寫著
+    「它比對 repo 裡被 commit 的那一份」—— **那句是假的**（第三守則）：只要有人在跑它之前
+    重生成過工作區的 bundle，它就是綠的，而 git 裡那一份仍是舊的 ⇒ 「第十一回合開了」
+    四個 commit 而玩家拿到 false（GH#1180）。
+  · ⭐ `packages/shared/src/ops/committedBundleMatchesSources.test.ts` —— **只讀 git**
+    （`git archive HEAD content`），對 commit 進去的來源重算 `hashDoc`，和 commit 進去的
+    bundle／索引裡記的雜湊比。**出貨的是 git，⛔ 不是你這台機器的工作區。**
+  · 同族 `ops/committedIndexMatchesTree.test.ts`（GH#1172）—— 索引 ↔ 樹，兩個方向都走。
+  它們紅了不要改它，跑 build 然後 `git add content/`。
   **它現在會先跑一次嚴格 Zod 驗證再寫入**（2026-08-01 補上）—— 超過上下界的欄位在這裡
   就會被擋，訊息指名那個檔與那個欄位。
   ⚠️ **在此之前它什麼都不驗**，只重建索引，對 schema 拒絕的內容照樣 EXIT 0。上界確實

@@ -10,7 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「房東來了躲牆角！」\n瞬移至指定合法地點；以真正位置改變移動自己的環身攻擊中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -57,7 +57,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「玄關地墊有點黏！」\n指定敵人被 root 定身 3 秒；這是主動蛛網控制，不是隱形陷阱物件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -109,7 +109,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「整個客廳都是我的網！」\n周身建立 3 秒傷害場，每 0.5 秒重新找自己附近敵人；跟隨施法者，不是固定地點陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -180,7 +180,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「毒牙代收房租！」\n對指定敵人施加每秒一跳、持續 3 秒的魔法 DOT；若目標被 root，追加一筆獨立 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-29-20260907.q",
       "name": "一般攻擊魔法・Zoltraak",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】直線魔法射擊。\n【待補機制】Zoltraak 原型；需單束碰撞去重。",
       "slot": "Q",
       "castType": "skillshot",
@@ -122,7 +122,7 @@
     "W": {
       "id": "community-review-29-20260907.w",
       "name": "防禦魔法",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】展開方向明確的防壁，消耗資源抵擋有限傷害。\n【待補機制】目前無方向盾；需六角防壁方向、耐久與持續消耗。",
       "slot": "W",
       "castType": "self",
@@ -181,7 +181,7 @@
     "E": {
       "id": "community-review-29-20260907.e",
       "name": "飛行魔法",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離浮空移動。\n【待補機制】短期浮空可用落點跳躍預覽，不提供持續飛行。",
       "slot": "E",
       "castType": "ground",
@@ -248,7 +248,7 @@
     "R": {
       "id": "community-review-29-20260907.r",
       "name": "〔葬送連射〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。\n【待補機制】目前定點六波；需各方向獨立射線及總傷害上限。",
       "slot": "R",
       "castType": "ground",

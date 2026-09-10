@@ -1,7 +1,7 @@
 {
   "id": "community-review-11-20260907.q",
   "name": "水刃",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】直線水刃，可穿過有限數量目標。\n【待補機制】需穿透人數上限及單彈命中去重。",
   "slot": "Q",
   "castType": "skillshot",

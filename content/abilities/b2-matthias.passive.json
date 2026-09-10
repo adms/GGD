@@ -3,7 +3,7 @@
   "cooldown": [
     0
   ],
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "「老師題目真的過期了！」\n施加帶正式 cc 標籤的控制時回復自身最大魔力 5%，內置冷卻 3 秒；本套由 EX 致盲觸發，R 的 magic-break 沉默不派發此事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-matthias.passive",

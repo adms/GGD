@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「開心貼紙先貼對人！」\n在指定友軍身上施加 spell-shield 貼紙 4 秒；此處只作可消耗暫態，不自帶魔法免疫。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -71,7 +71,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「和好緞帶先接回來！」\n把指定友軍搬到自己腳邊，使用現有 rallyToCaster 低弧位移；落點遵守既有合法地形。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -125,7 +125,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「道具說明書暖心頁！」\n治療指定友軍 120 生命並清除最多 3 筆可驅散負面效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -229,7 +229,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「抱抱罩尺寸有限嗶！」\n友軍與自己距離在 2.5 以內時，給予 200 點護盾 3 秒；遠距離時抱抱罩套不到。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

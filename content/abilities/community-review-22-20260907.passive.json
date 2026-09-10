@@ -2,7 +2,7 @@
   "id": "community-review-22-20260907.passive",
   "schema": "ability@1",
   "name": "〔記住這次失敗〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。\n\n【尚未實作】這個被動的效果還在調整中，目前**不會發生任何事**。",
   "slot": "PASSIVE",
   "castType": "self",

@@ -109,11 +109,14 @@ const KNOWN: Record<string, string> = {
   // ── ⭐ 第十一回合的骨架（GH#919–#925）—— 一個理由，16 格共用 ──────────
   // ── ⭐ owner 親自點名的那一族（A · dominated）──────────────────────────
   "arena-rules.json:finalRound":
-    "⭐ 普查的 A/B 探針**沒有跑第十一回合** —— `finalRound` 決定的是「哪一回合之後進生存模式」，" +
-    "而探針的情境短到看不出回合數差異。⛔ 它**不是**裝飾：`round11Entry.test.ts` 逐字斷言" +
-    "「開關關著 ⇒ 比賽停在 finalRound」，那條是綠的。⇒ 到期條件：**探針開始跑第十一回合**（GH#1168）。",
+    "⭐ 普查判的是 `schema-locks-engine-zero`（⛔ 2026-09-11 更正：這裡先前寫「探針沒跑第十一回合」—— " +
+    "**那是編的**，普查根本不跑模擬，它是 Zod 面 ↔ 引擎讀端的靜態對照）：Zod 下界 `min(2)`，" +
+    "而引擎留著 `finalRound <= 0 ⇒ return false` 的防禦分支 ⇒ 一個做得到卻調不到的狀態。" +
+    "⛔ 對玩家它**不是**裝飾：`round11Entry.test.ts` 逐字斷言「開關關著 ⇒ 比賽停在 finalRound」。" +
+    "⇒ 到期條件：引擎拿掉那個 `<= 0` 分支（它只防手造的規則物件），或 Zod 下界降到 0（GH#1168）。",
   "arena-rules.json:round11.maxAliveZombies":
-    "⭐ 同上，同一個根因：探針沒有跑第十一回合 ⇒ 場上殭屍上限量不到。" +
+    "⭐ 同上一格：`schema-locks-engine-zero` —— Zod `min(1)`，而 `sim/round11Waves.ts:147` 留著 " +
+    "`maxAliveZombies > 0 ? … : 0` 的分支（⛔ 2026-09-11 更正：先前寫的「探針沒跑第十一回合」是編的）。" +
     "⛔ 它**不是**裝飾：消費端是 `MatchController.clampRound11AliveCap()` → `sim/round11Waves.round11AliveCap`，" +
     "而 `round11Skeleton.test.ts` 逐字要求「開著 ⇒ 上限 > 0」。⇒ 到期條件：同 GH#1168。",
   "arena-rules.json:mobWaves.boss.bountyXp":

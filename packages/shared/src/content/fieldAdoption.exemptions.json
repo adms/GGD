@@ -5,12 +5,6 @@
     "why": "GH#885 —— **反彈成功**的演出錨。⭐ 這一格今天是 0 是**對的**:它的第一份採用者會是 owner 指名的驗收三招之一 **20-002 理想鄉EX**,而那一招是**由外部編輯器（Codex 的特效工坊）產出**的內容(owner 2026-08-31:「給 codex 編輯器做,你到時候參考就好」)。⛔ 我不先填它 —— 填了就是替 owner 決定那一招長什麼樣,而這張票的目的正好相反:**讓他做得出來**。⚠️ 機制側四段接縫全通並有守衛(reflectSuccessTrigger.test.ts,兩個突變驗過):schema 列舉 · ReflectHookSystem 的 emit · eventFanout 放行 · VfxScriptPlayer 的 case。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "enum:abilities.provenance=editor-json": {
-    "status": "landing",
-    "since": "2026-08-31",
-    "why": "第〇·六守則優先序階梯的第 2 層。2026-08-31 把 provenance 從兩層擴成五層,好讓一份說明說得出自己是**哪一層**的。這一格要等**外部編輯器真的產出內容**才會有第一份採用者(Codex 的 Electron 編輯器,見 docs/editor-contract/CODEX_COORDINATION_20260831.md)。⛔ 不可以先填 —— 填了等於宣稱一份 owner 手寫的說明是編輯器產的。",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "enum:abilities.provenance=jass-verified": {
     "status": "landing",
     "since": "2026-08-31",
@@ -21,12 +15,6 @@
     "status": "landing",
     "since": "2026-08-31",
     "why": "階梯第 4 層(w3x 的**文案**,排在 JASS 後面)。⚠️ 今天的 421 份 w3x-import 是**混的** —— 有些來自 JASS、有些來自 tooltip,而在此之前它們**沒有辦法分開**。這一格要等一次逐支回填才會有採用者;⛔ 不可以整批改名(那會宣稱我們知道每一份的出處,而我們不知道)。",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
-  },
-  "field:abilities.template|0.cards[].contentSha256": {
-    "status": "landing",
-    "since": "2026-08-31",
-    "why": "模板引用的**精確鎖**(JCS+sha256)。⭐ 刻意是**選填**:出貨的 84 個引用一格都沒填,而守衛 templateRefPinIsHonest.test.ts **今天不要求任何一格** —— 它只在有人填了之後才對帳。第一份採用者會是外部編輯器(它需要「我當時看到的模板長這樣」這個保證)。⛔ 先幫全部填上等於把一個會過期的快照烘進 84 個地方(第〇·四守則)。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
   "field:vfx-scripts.segments[]|1#floatingText.driftSpeed": {
@@ -195,12 +183,6 @@
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 這一格的**預設值就是它**（省略＝caster），所以沒有一份腳本會顯式寫它。⭐ 這與「機制沒發生」相反：它每一份腳本都在發生，只是不需要寫出來。⚠️ 30 天到期仍是對的 —— 若屆時仍為零，該問的是「這個 enum 值需不需要存在」。",
-    "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
-  },
-  "enum:abilities.effects[]#delayed.anchor=point": {
-    "status": "default-live",
-    "since": "2026-08-31",
-    "why": "省略 anchor ＝ 釘住 ＝ point（sim/effects/delayed.ts 只認 \"caster\"）,而 periodic-field 展開器對 point 刻意不寫這一格。⇒ 零採用代表「沒有人需要覆寫」,⛔ 不是機制死的:04-02 炸彈陣 ×2 與 37-03 災難之牆今天走的就是這條分支。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
   "enum:abilities.effects[]#applyBuff.modifiers[].msBonusTier=極大": {
@@ -380,26 +362,10 @@
     "why": "蝗蟲群掃描（locust_scan/synthesis 缺口表）量到 alpha 是唯一「兩側都空白」的欄：原作 w3u 結構上沒有 alpha 欄（ucua 全檔 0 次），它只存在 runtime 的 57 個 SetUnitVertexColorBJ 呼叫點。這一格是**模型級恆定半透明**那一半（幻影 50% 那一族），機制先行；採用者要等 57 個呼叫點的逐技能接線批（GH#688 Phase 6 的 alpha 掃描）把「哪幾具 dummy 是恆定半透明」從 JASS 撈出來 —— ⛔ 不要為了讓它變綠自己挑一具調透明。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#chainLightning.shape=single": {
-    "status": "landing",
-    "since": "2026-08-20",
-    "why": "`single` = 原作那顆**單獨**的鏈鎖閃電(A04H,說明「傳遞16次」),`circle` = 圈內每個敵人各起一條。出貨那兩支的 JASS 都是後者(所以 owner 說「聚集越多敵人威力越強」),⛔ 這不是預設值在服務它 —— `shape` 是**必填**,寫 `single` 與寫 `circle` 一樣容易。零純粹代表**還沒有一支被移植成單體鏈**。**到期**:任何一支單體連鎖(原作 A04H 直接移植)填了它。",
-    "group": "以下九列才是真的 chainLightning 自己的欄位"
-  },
   "enum:abilities.effects[]#chainLightning.centre=target": {
     "status": "landing",
     "since": "2026-08-20",
     "why": "起始圈的圓心。出貨兩支分別用 `caster`(天譴,JASS 讀施法者位置)與 `point`(打雷,落點),`target` 要等一支「**指定某個單位**、以他為圓心炸開連鎖」的技能。⛔ 三個成員走同一行(`variants/chainLightning.ts` 的圓心解析),寫上去就生效。**到期**:第一支指定型連鎖。",
-    "group": "以下九列才是真的 chainLightning 自己的欄位"
-  },
-  "field:abilities.effects[]#chainLightning.maxTotalJumps": {
-    "status": "default-live",
-    "why": "**保險絲,不是平衡旋鈕**。留空 = `DEFAULT_CHAIN_MAX_TOTAL_JUMPS` = `CHAIN_MAX_TOTAL_JUMPS`(480 = 20 來源 × 24 跳 = 兩個上界都拉滿),⭐ 它**刻意不咬人**:出貨兩支是 20 × 16 = 320,本來就在下面。⇒ 明寫它今天是位元級的 no-op。⛔ 這不是「沒有上限」—— 缺席時的上限是有限的 480,而那正是它存在的目的(擋 O(來源數×跳數) 落在同一 tick)。**到期**:某一支需要比 480 更緊的保險絲。",
-    "group": "以下九列才是真的 chainLightning 自己的欄位"
-  },
-  "field:abilities.effects[]#chainLightning.revisit": {
-    "status": "default-live",
-    "why": "留空 = 同一條連鎖裡**不能**跳回同一個人 —— 那正是原作 A04H 的行為,也是出貨兩支要的。⚠️ 不同連鎖打到同一個人一律允許(那才是「越多單位越痛」),所以這一格與 owner 那句裁決無關。⭐ 機制不在零:`variants/chainLightning.ts` 的終止性證明明寫「`revisit: true` 也停得下來」(jumps 與 maxTotalJumps 兩個都嚴格遞增)。",
     "group": "以下九列才是真的 chainLightning 自己的欄位"
   },
   "field:abilities.effects[]#chainLightning.canCrit": {
@@ -548,19 +514,7 @@
     "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
     "group": "具名標記（marks）家族裡沒被用到的那幾格"
   },
-  "enum:abilities.effects[]#blink.applyTo=target": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
   "enum:abilities.effects[]#blink.shape=circle": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#blink.to=caster": {
     "status": "landing",
     "since": "2026-08-17",
     "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
@@ -761,11 +715,6 @@
     "why": "59-02 高週波短刀的規格逐字是「將**該次攻擊**轉為真傷」⇒ `scope:\"basic\"`（只蓋普攻）。`all` 要的是「這段期間**連技能傷害**也一起變真傷」—— 那是一個強得多的效果，出貨內容裡沒有任何一支這樣寫。⇒ 零採用是對的。",
     "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
   },
-  "field:abilities.effects[]#damage.incomingPct.basis": {
-    "status": "default-live",
-    "why": "省略＝反彈基數用「這一發打進來的量」。B3-A 的五支反彈全部要的就是那個讀法，所以零採用正是它該有的樣子 —— 這一格是換一種基數時才寫的覆寫鈕。",
-    "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
-  },
   "field:abilities.effects[]#damage.incomingPct.whenTooLate": {
     "status": "default-live",
     "why": "省略＝引擎預設的「反彈封包比原傷害晚到」處理（照樣送出，不丟棄）。B3-A 的五支反彈（20-04 理想鄉 · 45-00 寫輪眼 · 60-04 完美盾反 · 15-002 太陰道）都沒有要改這個時序邊界，而改它會影響的是「同一 tick 內兩面互相反彈」這種罕見情況 —— 沒有客戶就不該填，填了反而多一份沒有人驗過的行為。",
@@ -779,12 +728,6 @@
   "enum:abilities.effects[]#applyBuff.hooks[].damageType=any": {
     "status": "default-live",
     "why": "**省略這一格就等於 any**（60-04 完美盾反正是靠省略來同時反彈魔法與物理），所以明寫 any 的文件永遠是 0 —— 零採用是這個列舉值的正確狀態。",
-    "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].damageType=physical": {
-    "status": "landing",
-    "since": "2026-08-13",
-    "why": "B3-A 的五支反彈裡，只有 45-00 寫輪眼與 15-002 太陰道指定了型別，而兩支都指定 magic（規格逐字是「反彈魔法([AP])傷害」）；60-04 完美盾反刻意省略以同時反彈魔法與物理。「只反彈物理」這個讀法在這 90 支裡沒有客戶 —— 下一批出現時填這一格就好。",
     "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].damageType=true": {
@@ -829,18 +772,6 @@
     "status": "landing",
     "since": "2026-08-13",
     "why": "「延長敵人的冷卻」是一個很強的控場設計，這 90 支裡沒有任何一支規格寫了它。三支出貨的 modifyCooldown 都是 self（自己的技能冷卻縮短或重置）。⛔ 零採用是正確的 —— 憑空給某支技能加這個效果就是在改設計。",
-    "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
-  },
-  "enum:abilities.effects[]#modifyCooldown.mode=reduceFlat": {
-    "status": "landing",
-    "since": "2026-08-13",
-    "why": "出貨的三支用的是 `reduce`（按比例縮短 50%，79-04／79-002）與 `reset`（直接重置，60-002），規格寫的都是比例或重置。「固定縮短 N 秒」這個讀法在這 90 支裡沒有客戶，而它與 reduce 是**真的兩件事**（比例對長冷卻更有價值），所以留著等第一個客戶。",
-    "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
-  },
-  "field:champions.archetype": {
-    "status": "landing",
-    "since": "2026-08-12",
-    "why": "推導有預設值（deriveArchetype：主屬性 lv10 權重 × 攻擊型別），74 位全部判得出來，所以英雄卡不需要填。這一欄是覆寫用的。機制與守衛在 content/statNormalization.ts + statNormalization.test.ts（突變驗過）。",
     "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
   },
   "field:items.sets[].requiredPieces": {
@@ -892,18 +823,6 @@
     "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n引擎側已通。⭐ 這一格是 critRules.stackMode:\"multiply\"(owner 2026-08-09)的理由指向的東西:那條規則存在就是為了「玩家的第二張暴擊卡不可以是廢牌」,而在這一格之前一張卡根本沒有辦法**成為**第二條獨立的暴擊來源(只能加聚合屬性)。零採用是內容決定,不是機制缺席。",
     "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
   },
-  "field:abilities.effects[]#shield.stackKey": {
-    "status": "debt",
-    "since": "2026-08-09",
-    "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\nS1 —— 59-03 的文案明寫「[護盾]不會疊加」,而實測連放兩次拿到**兩片各 300 點**的獨立池子:卡片說不疊、遊戲裡疊,而兩片盾在畫面上跟一片厚的長得一樣。缺席 = 每次都是新的一片 = 2026-08-09 之前的行為,所以既有 20 份文件逐字不變。",
-    "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
-  },
-  "field:abilities.effects[]#shield.onExisting": {
-    "status": "debt",
-    "since": "2026-08-09",
-    "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n同上的另一半(replace/keepLarger/stack)。⛔ 兩格要一起填 —— 只填 onExisting 會被 refineEffectDef 擋下並指名那一格,免得它變成一個永遠不會被讀到的欄位。",
-    "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
-  },
   "field:champions.abilities.*.augment": {
     "status": "debt",
     "since": "2026-08-08",
@@ -912,116 +831,116 @@
   },
   "field:abilities.effects[]#damageArea.maxTargetsCounts": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "G1 —— 「最多幾人」數的是通過過濾的前 N 個（卡面「最多 5 名帶〔恐懼〕的敵人」）還是最近 N 個再過濾。真的 A/B，所以是欄位；預設 qualified。沒填 victimCondition 時無作用。",
+    "since": "2026-09-11",
+    "why": "G1 —— 「最多幾人」數的是通過過濾的前 N 個（卡面「最多 5 名帶〔恐懼〕的敵人」）還是最近 N 個再過濾。真的 A/B，所以是欄位；預設 qualified。沒填 victimCondition 時無作用。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#damageArea.runOnEmptyHit": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "G1 ② —— 一個人都沒打到時要不要照樣跑下游。省略 = false = 今天什麼都不會發生的那個語意。",
+    "since": "2026-09-11",
+    "why": "G1 ② —— 一個人都沒打到時要不要照樣跑下游。省略 = false = 今天什麼都不會發生的那個語意。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#damageLine.victimCondition": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "同 damageArea.victimCondition 的膠囊版本。⚠️ 兩個 kind 在這一族上是同一個機制的兩個形狀，欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事 —— 所以四格同名同語意、共用同一組常數。",
+    "since": "2026-09-11",
+    "why": "同 damageArea.victimCondition 的膠囊版本。⚠️ 兩個 kind 在這一族上是同一個機制的兩個形狀，欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事 —— 所以四格同名同語意、共用同一組常數。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#damageLine.maxTargetsCounts": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "同 damageArea.maxTargetsCounts —— 「最多幾人」數的是通過過濾的前 N 個還是最近 N 個再過濾。⛔ 兩個 kind 這一族的欄位名與語意必須完全一致，否則編輯器上長得一樣的兩格會是兩件事。",
+    "since": "2026-09-11",
+    "why": "同 damageArea.maxTargetsCounts —— 「最多幾人」數的是通過過濾的前 N 個還是最近 N 個再過濾。⛔ 兩個 kind 這一族的欄位名與語意必須完全一致，否則編輯器上長得一樣的兩格會是兩件事。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#damageLine.runOnEmptyHit": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "同 damageArea.runOnEmptyHit —— 一個人都沒打到時要不要照樣跑下游。省略 = 不跑 = 今天什麼都不會發生的那個語意。",
+    "since": "2026-09-11",
+    "why": "同 damageArea.runOnEmptyHit —— 一個人都沒打到時要不要照樣跑下游。省略 = 不跑 = 今天什麼都不會發生的那個語意。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "G9 —— 只針對某一格技能的持續性冷卻縮減（79-04 卍解「[瞬步] 冷卻縮短 50% 持續 8 秒」）。今天 Stat.CooldownReduction 是一顆全域純量，全 sim 只有一個消費點。缺席 = 全域 = 每一條既有 modifier 的行為。⚠️ 帶 scope 的加成**不進** sc.final，所以它不會出現在面板的冷卻縮減那一列 —— 那是對的（它不是全域的），但要說出來。",
+    "since": "2026-09-11",
+    "why": "G9 —— 只針對某一格技能的持續性冷卻縮減（79-04 卍解「[瞬步] 冷卻縮短 50% 持續 8 秒」）。今天 Stat.CooldownReduction 是一顆全域純量，全 sim 只有一個消費點。缺席 = 全域 = 每一條既有 modifier 的行為。⚠️ 帶 scope 的加成**不進** sc.final，所以它不會出現在面板的冷卻縮減那一列 —— 那是對的（它不是全域的），但要說出來。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#applyBuff.modifiers[].scopeAbilityId": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "G9 的另一半：指名一支具名技能而不是槽位。兩格互斥（理由與 modifyCooldown 的 slot/abilityId 逐字相同：一半的卡講的是「這一格」、另一半講的是「這一支」）。⚠️ 軟參照，打錯 id 會安靜地不生效 —— ⛔ 不要假裝它會紅。",
+    "since": "2026-09-11",
+    "why": "G9 的另一半：指名一支具名技能而不是槽位。兩格互斥（理由與 modifyCooldown 的 slot/abilityId 逐字相同：一半的卡講的是「這一格」、另一半講的是「這一支」）。⚠️ 軟參照，打錯 id 會安靜地不生效 —— ⛔ 不要假裝它會紅。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.modifiers[].scopeSlot": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "同上，道具那一面。⚠️ zStatModifier 是道具／三選一／applyBuff／天生技／靈氣**五個授權面共用**的同一份，所以加一格會同時開在五處 —— 而只有冷卻縮減有讀取端。那道 superRefine（scope 只收 CooldownReduction）就是這一格不會變成一堆死設定的閘。",
+    "since": "2026-09-11",
+    "why": "同上，道具那一面。⚠️ zStatModifier 是道具／三選一／applyBuff／天生技／靈氣**五個授權面共用**的同一份，所以加一格會同時開在五處 —— 而只有冷卻縮減有讀取端。那道 superRefine（scope 只收 CooldownReduction）就是這一格不會變成一堆死設定的閘。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.modifiers[].scopeAbilityId": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "G9 —— 道具那一面的具名技能版本（「這件裝備只縮短瞬步的冷卻」）。與 scopeSlot 互斥；⚠️ 軟參照，打錯 id 會安靜地不生效，⛔ 不要假裝它會紅。",
+    "since": "2026-09-11",
+    "why": "G9 —— 道具那一面的具名技能版本（「這件裝備只縮短瞬步的冷卻」）。與 scopeSlot 互斥；⚠️ 軟參照，打錯 id 會安靜地不生效，⛔ 不要假裝它會紅。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#applyBuff.hooks[].perTarget": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.passive[].consumeOn": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.passive[].onConsumed": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.passive[].perTarget": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.passive[].critSource": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.passive[].reflectedDamageSource": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:items.passive[].reflectedDamageType": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+    "since": "2026-09-11",
+    "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#dash.onEndOn": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S7 —— 被地形擋下來的衝刺算不算「衝完」。真的岔路：位移系統今天把「撞牆停下」與「跑完距離」合成同一個結束條件。預設 always，因為卡面說「衝刺後揮出」，而一刀被場景取消是玩家看不見的失敗。",
+    "since": "2026-09-11",
+    "why": "S7 —— 被地形擋下來的衝刺算不算「衝完」。真的岔路：位移系統今天把「撞牆停下」與「跑完距離」合成同一個結束條件。預設 always，因為卡面說「衝刺後揮出」，而一刀被場景取消是玩家看不見的失敗。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#dash.onEndWhenDead": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "S7 —— 衝刺途中陣亡還要不要揮。省略 = 不揮，形狀與精神逐字沿用 randomArea.stopOnCasterDeath。",
+    "since": "2026-09-11",
+    "why": "S7 —— 衝刺途中陣亡還要不要揮。省略 = 不揮，形狀與精神逐字沿用 randomArea.stopOnCasterDeath。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:champions.abilities.*.innateActivePassive": {
     "status": "landing",
-    "since": "2026-08-10",
-    "why": "同上，而且是**鏡像側**：同步方向永遠 standalone→embedded。⚠️ 2026-08-13 更正：standalone 那一格已經被 70-00 紮根採用而刪掉了，但這一格**不可以跟著刪** —— `innateActivePassive` 只長在 slot PASSIVE 上，而鏡射迴圈只跑 Q/W/E/R，所以鏡像側是**結構性永遠 0**，刪掉會在反方向紅（unexplained zero）。⛔ 舊文案「兩格要一起刪」是錯的。",
+    "since": "2026-09-11",
+    "why": "同上，而且是**鏡像側**：同步方向永遠 standalone→embedded。⚠️ 2026-08-13 更正：standalone 那一格已經被 70-00 紮根採用而刪掉了，但這一格**不可以跟著刪** —— `innateActivePassive` 只長在 slot PASSIVE 上，而鏡射迴圈只跑 Q/W/E/R，所以鏡像側是**結構性永遠 0**，刪掉會在反方向紅（unexplained zero）。⛔ 舊文案「兩格要一起刪」是錯的。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#applyBuff.attributes": {
@@ -1135,11 +1054,6 @@
     "why": "mirror of field:abilities.rootWhileCasting.",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
-  "enum:abilities.vfxLayers[].attachTo=caster": {
-    "status": "default-live",
-    "why": "`caster` IS the absent behaviour: schema/abilityVfx.ts:231 resolves `layer.attachTo ?? \"caster\"`, and render/vfx/abilityLayers.ts:126 only leaves the caster when the value is \"point\". Writing it explicitly therefore produces a byte-identical ResolvedVfxLayer — and because attachTo is not one of the picked override fields it does not enter the pool-key signature either, so not even the particle pool can tell the two apart. The admin dropdown offers it (vfxLayers.ts:134-138 ATTACH_OPTIONS) so an operator can pin a layer down deliberately; all 10 shipped stacks spell it by omission, which is the designed resting state. The sibling member \"point\" is authored on 6 of those 10 docs, which is what proves the enum is read at all.",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
   "field:abilities.vfxLayers[].enabled": {
     "status": "default-live",
     "why": "ABSENT == play. schema/abilityVfx.ts:227 `if (layer.enabled === false) continue` is the only thing this field can do, so `enabled: true` is a no-op and `enabled: false` is a WORKBENCH state — 'mute this layer but keep its settings' while an operator auditions a stack in 鑄技工坊 (admin vfxLayers.ts:157/236, label 「這一層播不播」). Shipped content at zero is therefore correct by construction: a layer that ships disabled is a layer that should have been deleted. Proven live by VfxSystem.layerKnobs.test.ts, which switches the second layer off in the form and watches the engine come back with one emitter instead of two.",
@@ -1191,11 +1105,6 @@
     "why": "`to: \"base\"` is a MANUAL cancel — 'drop the form now, before it expires'. No w3x ability asks for one: all 26 metamorphoses either time out on `ahdu` or are toggles, and the automatic reverts (expiry, death, combat end) go through `revertToBaseForm` in ChampionFormSystem, not through an authored effect. It is exercised by championFormContent.test.ts on all 26 pairs, so the direction works; what is missing is a DESIGN decision that some hero should be able to cancel early. Resolve by authoring it on that hero, or reclassify to \"runtime-authored\" once the owner rules that no hero ever will.",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
-  "enum:abilities.effects[]#shield.absorbs=physical": {
-    "status": "debt",
-    "why": "the sim honours it (sim/effects/shieldAbsorb.test.ts drives a real step for every member) but NO shipped doc is a physical-only barrier: the map's three shield spells are 破法對咒 (magic, now authored), 守護之光 「阻擋任何傷害」 and 機警 「可抵擋90%傷害」, both genuinely all-type. The member exists because the enum mirrors `DamageType` — the seam's stated reason (sim/effects/effect.ts) — not because content asked. Kept `debt` rather than `landing` so it stays in the banner instead of expiring into silence; delete this entry when a physical-only barrier is imported, or narrow the enum to `\"all\" | \"magic\"` if owner rules none ever will be.",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
   "enum:abilities.effects[]#shield.absorbs=true": {
     "status": "debt",
     "why": "same story as the physical member, one step further: a true-damage-absorbing pool would also eat the arena fire ring (#270 made the burn true damage), which is a balance decision nobody has made. Live in the sim, unused by content, deliberately visible here until it is either authored or removed.",
@@ -1205,21 +1114,6 @@
     "status": "debt",
     "since": "2026-07-26",
     "why": "task #229's 鑄形工坊 studio authors this block and task #226's `pnpm voxel:gen` consumes it; the field is the seam BETWEEN the two, so it lands with the schema and is populated when the first generated model doc is written (the studio's own save, or #226's five archetype docs). Zero adoption today is correct — no generated model exists yet — and NOT permanent: `packages/shared/src/voxel/doc.test.ts` proves a populated doc validates, so the only thing missing is a saved character. Delete this entry the moment one lands. ⚠️ 2026-08-26: re-filed from `landing` to `debt` — the 30-day grace expired and no generated model doc has been written since 2026-07-26. Nothing about the seam changed; what changed is the honesty of the label: `landing` promised imminent adoption and that promise is a month old. `debt` keeps it visible in the banner every run instead of expiring into silence.",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onUltimateHit": {
-    "status": "default-live",
-    "why": "GH#354（owner 2026-08-17 的引擎盤點）—— 「大絕打中的時候⋯」——`abilityHit` 的 slot 切片。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onCrowdControlApplied": {
-    "status": "default-live",
-    "why": "GH#354（owner 2026-08-17 的引擎盤點）—— 「控到人的時候⋯」——`statusApplied` 裡帶 `cc` 標籤的那些，施加者視角。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onHeal": {
-    "status": "default-live",
-    "why": "GH#354（owner 2026-08-17 的引擎盤點）—— 「治療生效的時候⋯」——`heal` 事件（`restore.ts` 已經擋掉零治療）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onProjectileExpire": {
@@ -1273,26 +1167,10 @@
     "why": "extract_item_roles.py recovers 7 roles from the map triggers and assigned `direct` to nothing across 214 items. Either the extractor never emits it (a recovery gap worth checking against the JASS) or the role is redundant and should leave the enum.",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
-  "field:abilities.template|0.onConflict": {
-    "status": "default-live",
-    "why": "the stack conflict policy is only expressible in the {cards,onConflict} binding shape, and all 143 adopters use the 1-card {ref,params} shape — where a conflict is arithmetically impossible (there is no second card to collide with). The shipped behaviour comes from DEFAULT_TEMPLATE_CONFLICT=\"reject\" in schema/template.ts; the field exists to OVERRIDE it on a real multi-card stack.",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
   "field:abilities.template|0.cards[].version": {
     "status": "debt",
     "why": "the §5 breaking-migration hook. zAbilityTemplateCard accepts it, but NOTHING reads it — normalizeTemplateBinding/expandStack never branch on a card version, so a doc that set it would be inert (the same shape as the onLevelUp hook above). Resolve by implementing version-aware re-expansion or by deleting the member — do not 'adopt' it.",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
-  "variant:abilities.effects[]#evasion": {
-    "status": "debt",
-    "why": "GH#289 lane P5 landed the MECHANISM (sim/effects/evasion.ts + the DECISION-5 ability channel in combat/evasion.ts); the content half is a separate lane and content/ is a single-threaded domain this session. NOT 'nobody needs it' — the source map has named abilities waiting: the timed-dodge shape is 12-00 感應意脈 (+20% 迴避), 74-00 JENOVA (15%), 92-00 憂鬱的眼神 (18%). Note the STAT half is already adopted (13 content files author `stat: evasion` on 3 champion docs, 8 ability docs and the phantom-step augment), so what is unadopted is specifically the TIMED-GRANT effect variant, not the evasion axis. Resolve by porting one of those three onto an `evasion` effect with an explicit durationSec; the 30-day expiry is the reminder, because 'the primitive landed, the content did not' is exactly the S8 this census exists to catch.",
-    "group": "靈氣 (auras) — the container FELL BACK UNDER MIN_REACH on 2026-07-30 ---"
-  },
-  "variant:abilities.effects[]#pull": {
-    "status": "landing",
-    "since": "2026-08-22",
-    "why": "#147 落地的是**機制**（sim/effects/pull.ts：destination 三檔 caster / point / anchorRing，等分錨點環用單位旋轉常數表因為 sim/** 禁三角函式），內容那一半由主 session 接。⛔ NOT 「沒有人需要」：A091 05-03 及喀爾度（godie-h021.e / godie-hblm.e）的 JASS 白紙黑字是 `2×等級` 個錨點 + `250+100×等級` 半徑（war3map.j:28224-28233），而它今天寫不出來 —— `knockback` 的 from:\"pull\" 只推得動一段長度而且會走 GH#193 的距離減法（對拉是反過來的）。`content/ability-templates/tpl-pull-throw.json` 也還掛著 status:\"draft\" 等這一格。接內容的做法寫在報告的『需要主 session 接線』。機制由 sim/effects/comboAndPull.test.ts 釘住（兩具身體真的被搬到環上、而且去的是不同的錨點）。",
-    "group": "靈氣 (auras) — the container FELL BACK UNDER MIN_REACH on 2026-07-30 ---"
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=!=": {
     "status": "debt",
@@ -1372,11 +1250,6 @@
     "why": "缺席 = \"refresh\"(`sim/effects/dot.ts` 的 `stacking = e.stacking ?? \"refresh\"`),而出貨的四份 DoT 只需要兩種語意:同一支技能重複點燃就延長期限(refresh,揍敵客 R 龍星群 + 兩件武器),或每一次施放各自獨立計時(independent,GH#250 的 01-04 超究武神霸斬 —— 七連斬的基礎段與終結段是同一個 origin 的兩條線,必須互不合併)。stack 是第三種語意「疊層數、傷害相乘」,而原作沒有任何一支被移植過來的燒傷是這樣算的 —— 它的存在是給未來的疊毒用的,不是壞掉。⚠️ 不要為了讓這一列變綠而把某一支改成 stack:那會直接改變玩家吃到的總傷害。",
     "group": "GH#250 把 reach 推過門檻的兩組(2026-08-01)"
   },
-  "field:abilities.effects[]#dot.tickOnApply": {
-    "status": "default-live",
-    "why": "缺席 = false = 「等一個 interval 才第一次結算」(`dot.ts` 的 `firstTick`)。寫 true 是**多加**一次結算,而四份出貨 DoT 的數字都是照『總量 ÷ 次數』寫的:血染八月「88流血傷害,持續3秒」= 29.33×3、妖物碎殺牙「255傷害,持續3秒」= 85×3、揍敵客 R「持續 2 秒、每 0.2 秒」= 10 跳。任何一支打開它,玩家吃到的總量就會比 owner 文案上的數字多一跳。所以這一格空著不只是預設,是**文案正確性的條件**。",
-    "group": "GH#250 把 reach 推過門檻的兩組(2026-08-01)"
-  },
   "field:abilities.effects[]#knockback.hpBasis": {
     "status": "default-live",
     "why": "缺席就是 \"max\",也就是 GH#193 的出貨規則(擊退距離對照的是最大生命)。\"current\" 是處決風味的另一種讀法,兩者差一個下拉選單。四支出貨的擊退都要可預測的距離,所以都吃預設。",
@@ -1385,11 +1258,6 @@
   "field:abilities.effects[]#knockback.impactPower": {
     "status": "default-live",
     "why": "缺席 = 只有 `distance` 那個地板值,不跑 GH#193 的重量法則。它是「這一擊有多重」的額外軸(以傷害為單位但不造成傷害),四支出貨的擊退都是招式自帶固定距離(13-02 牙突 6.0、13-002 7.0、13-03 佈壁 4.5),所以沒有一支需要再按體重換算。",
-    "group": "GH#250 把 reach 推過門檻的兩組(2026-08-01)"
-  },
-  "field:abilities.effects[]#knockback.launchHeight": {
-    "status": "default-live",
-    "why": "缺席 = 貼地推(不是拋物線)。> 0 才是「擊飛」。四支出貨的擊退都是牙突/佈壁那種水平推,擊飛留給 06-00 猜猜拳「擊飛目標」那一批 —— 它們今天還是純文字(見 variant#knockback 那條被刪掉的 landing 記錄:機制已經被 13-02 採用了,擊飛這個子選項還沒有)。",
     "group": "GH#250 把 reach 推過門檻的兩組(2026-08-01)"
   },
   "enum:abilities.passive.ranks[].whileForm=any": {
@@ -1467,12 +1335,6 @@
     "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
     "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
   },
-  "field:abilities.effects[]#heal.condition": {
-    "status": "debt",
-    "since": "2026-08-09",
-    "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-    "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
-  },
   "field:abilities.effects[]#invulnerable.condition": {
     "status": "debt",
     "since": "2026-08-09",
@@ -1490,12 +1352,6 @@
     "since": "2026-08-18",
     "why": "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。 ⚠️ 2026-08-18 由 1 掉回 0：見上面那段，唯一的採用者是一發**從來不會發生**的復活。",
     "group": "③ 四個 hook 事件今天是**零發射點**"
-  },
-  "field:abilities.effects[]#shield.condition": {
-    "status": "debt",
-    "since": "2026-08-09",
-    "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-    "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
   },
   "field:abilities.effects[]#spawnProjectile.condition": {
     "status": "debt",
@@ -1521,22 +1377,11 @@
     "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n擊飛四檔落點（owner 2026-08-09，GH#301-1：「應該要可以[指定落點]，但簡化成 一小段/預設/一大段/到底部 四種」）。省略＝default＝今天的推算行為，所以既有 5 份文件一格都不用改。⭐ 引擎側**已經落地**（`sim/effects/knockback.ts` 的 `tierDistance`），四檔的實際距離住在 `config.combat-feel@1` 的 `knockback.launchShortUnits` / `launchLongUnits` / `launchEdgeUsesFireRing`（⛔ 不是引擎常數，第一守則）。零採用＝owner 手動重製中的技能還沒挑這一格。",
     "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onShieldGained": {
-    "status": "debt",
-    "since": "2026-08-09",
-    "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n護盾產生時。持有者＝拿到護盾的人,target＝給護盾的人。✅ 發射點已接（GH#300）：`effects/shield.ts` 每一次 `addShield` 發一則 `shieldGained`，`systems/WorldHookSystem.ts` 那張表轉成 hook。⚠️ 口徑是「新出現一片盾」不是「這個人身上的盾變多了」——一發 AoE 給三個人＝三則。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
-    "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onShieldBroken": {
     "status": "debt",
     "since": "2026-08-09",
     "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n護盾破碎時(護盾池歸零那一格)。✅ 發射點已接（GH#300）：吃 `combat/damage.ts` 早就在發的 `guardBreak`（判準逐字就是「打之前 >0、這一發吃到、之後合格總量 <=0」），沒有第二套判斷。⚠️ 三件**不算**破碎:被打到但還有剩 · 自然到期 · 【破盾】(`shieldBreak` effect)主動拆掉別人的——最後這一項是**已知缺口不是漏掉**（那是動作，這是時刻），要不要納入是 owner 的裁決。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
     "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
-  },
-  "field:abilities.effects[]#delayed.maxTargets": {
-    "status": "schema-impossible",
-    "why": "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
-    "group": "①「填了就會紅」：`refineDispelShape` 明文禁止的六格"
   },
   "field:abilities.effects[]#devour.condition": {
     "status": "debt",
@@ -1555,11 +1400,6 @@
     "why": "省略 = `\"victim\"`，而 schema 自己的註解就寫死了關鍵：「⚠️ 對 `shape:\"single\"`（出貨唯一形狀）兩者完全等價，也就是預設值不替任何人做決定」。6 份 devour 全部是 single，所以這一格今天**選哪個都一樣** —— 零採用不是缺席，是這個決策在目前的內容下還不存在。",
     "group": "⑤「省略正是出貨行為」的九格旋鈕（default-live）"
   },
-  "field:abilities.effects[]#dot.onCasterDeath": {
-    "status": "default-live",
-    "why": "省略 = `\"continue\"`（`sim/effects/dot.ts` 的 `e.onCasterDeath ?? \"continue\"`）＝點燃的火不會因為放火的人倒下就熄掉，那是出貨行為也是玩家預期。`\"stop\"` 是「維持型」DoT 的讀法（施法者一死就停），10 份 dot 沒有一支要那個語意。",
-    "group": "⑤「省略正是出貨行為」的九格旋鈕（default-live）"
-  },
   "field:abilities.effects[]#knockback.getupTicks": {
     "status": "default-live",
     "why": "省略 = `0`（`sim/effects/knockback.ts` 的 `clampKb(e.getupTicks, …)`，而 `clampKb` 的 `fallback = 0`）＝落地即可行動，沒有額外的爬起來硬直。14 份擊退全部吃這個預設是**刻意**的：多加一格硬直是設計決策，而它一旦有人寫就會出現在這張表上。",
@@ -1569,12 +1409,6 @@
     "status": "default-live",
     "why": "省略 = 不暴擊（`sim/effects/damage.ts` 的 `if (e.canCrit)`）＝技能傷害預設不吃暴擊，那是出貨行為。⭐ 機制**不在零**：同一條 `sim/combat/critStrike.ts` 管線在 `damageArea.canCrit`（1/49）與 `damageLine.canCrit`（2/16）上都有客戶。90 支重製稿裡 11 處提到[暴擊]，逐字讀都是**普攻**暴擊（走 critStrike grant，不走這一格），所以單體技能傷害沒有人要暴擊是誠實的。",
     "group": "⑤「省略正是出貨行為」的九格旋鈕（default-live）"
-  },
-  "enum:abilities.effects[]#knockback.from=facing": {
-    "status": "landing",
-    "since": "2026-08-12",
-    "why": "擊退的方向來源。預設是 `\"caster\"`（`sim/effects/knockback.ts` 的 `e.from ?? \"caster\"`，從施法者往外推），`\"pull\"` 今天剛被 `godie-h02k.r` 的抓取採用，只剩 `\"facing\"`（照**受害者自己的面向**推）沒有人選。它是「把人往他自己看的方向推」那一種招式的寫法，14 份擊退沒有一支是。",
-    "group": "⑥ 五個「真的還沒有人選」的成員（landing，30 天後回來看）"
   },
   "enum:abilities.effects[]#randomArea.who=target": {
     "status": "landing",
@@ -1991,12 +1825,6 @@
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
     "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
   },
-  "field:abilities.effects[]#summon.maxAlive": {
-    "status": "landing",
-    "since": "2026-08-31",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
-  },
   "field:abilities.effects[]#summon.mobTargetable": {
     "status": "landing",
     "since": "2026-08-31",
@@ -2024,11 +1852,6 @@
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ `dodge` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
-  },
-  "field:champions.abilities.*.castTimeTier": {
-    "status": "landing",
-    "since": "2026-09-02",
-    "why": "⭐ `castTimeTier` 是 2026-09-02（GH#943）新做的**五級距軸** —— owner 逐字：「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」。⛔ 出貨內容零採用是**這條 lane 的定義**（Main 做積木、內容側／編輯器採用），⛔ 不是遷移沒做完。⚠️ 而它**不是空的**：載入時由 `resolveCastTimeTierOnDoc` 翻譯（⭐ 級距贏），而 `contract:numbers` 逐字擋過一次「沒有人翻譯它」。⇒ 30 天後若仍是零，代表**沒有人採用它** —— ⭐ 那正是這條閘該喊的時候。"
   },
   "field:abilities.effects[]#chainLightning.amount.conditionTier": {
     "status": "landing",
@@ -2173,24 +1996,11 @@
     "since": "2026-09-06",
     "why": "⭐ GH#1024 A2 的**覆寫層** —— 十一屬性逐格選填級別名，值在載入時由 `bandFor`（覆寫 > 出身 > 定位）解析，守衛 `championTemplateOverrides.test.ts`（突變①驗過：拿掉合併那一段 ⇒ 紅）。⛔ 出貨零採用是**設計**：出貨 71 位的級距全部由出身那一列決定（owner 2026-08-16 逐隻指派），今天沒有任何一位需要偏離模板。第一份採用者會是外部編輯器投稿的英雄（#1024 PR-2：匯出＝模板 ref＋覆寫）或 owner 在後台對某一位的微調。30 天後仍是零 ⇒ 沒有人採用它 —— ⭐ 那正是這條閘該喊的時候。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=E": {
-    "status": "landing",
-    "since": "2026-09-07",
-    "why": "GH#1070（2026-09-07）把 09-04／11-03／11-04 變身增幅的 `recentCast E` 換成 `form` 葉之後，`recentCast` 的 slot=E 今天 0 個採用者。enum 是 CastableSlot 全集推導的，⛔ 不砍；等下一支「E 之後 N 秒內」的連段內容。",
-    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
-  },
   "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=PASSIVE": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "GH#1082（2026-09-07）把 11-03／11-04 的 `recentCast PASSIVE 15` 換成 `status` 葉（三刀流有 statusId 了）⇒ slot=PASSIVE 今天 0 個採用者。同上，⛔ 不砍 enum。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
-  },
-  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=E": {
-    "status": "landing",
-    "since": "2026-09-07",
-    "why": "同 |0|5|1.slot=E（learned 葉的 slot 值域）：今天沒有「E 學了才…」的內容；EX 那一格有（#1020 小傑）。",
-    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件",
-    "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
   "enum:abilities.effects[]#applyBuff.condition|0|8.slot=PASSIVE": {
     "status": "landing",
@@ -2218,12 +2028,6 @@
     "why": "GH#1076／#993 第三批之後普查改讀展開後的文件，`summon.formation` 才第一次被看見；出貨三支召喚都是 circle。scatter 是模板槽的合法值（隨機散佈），等第一支散佈型召喚（原作：亡靈狂潮那一族）。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
   },
-  "field:abilities.effects[]#applyBuff.condition|0|3|0.appliedBy": {
-    "status": "landing",
-    "since": "2026-09-08",
-    "why": "⭐ PR 1118 —— 狀態條件的**來源過濾**（「這個狀態是**我**掛的嗎」）。⛔ 出貨 107 份可以用它的技能今天零採用,而那個零是誠實的：既有 421 支是逐支從 JASS 翻過來的,原作的狀態判定**不分來源**（`GetUnitAbilityLevel(u,'Axxx')>0`）⇒ 沒有一支翻譯得出這一格。⭐ 它的第一份採用者會是**編輯器產出的內容**（社群英雄要區分「我的中毒」與「隊友的中毒」才疊得對）。⛔ 我不先填它 —— 替既有技能加一個原作沒有的來源條件,就是改設計。",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:abilities.effects[]#applyBuff.hooks[].oncePerCast": {
     "status": "landing",
     "since": "2026-09-08",
@@ -2236,22 +2040,10 @@
     "why": "⭐ PR 1118 —— buff 的**來源作用域**。同 `condition.appliedBy` 那一列的理由：既有 184 份是原作翻譯,原作不分來源。⛔ 不先填。",
     "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:abilities.effects[]#applyStatus.sourceScope": {
-    "status": "landing",
-    "since": "2026-09-08",
-    "why": "⭐ PR 1118 —— 同上,`applyStatus` 那一側（164 份）。⚠️ 兩格**刻意成對**：只接一邊的話「掛上去分來源、判定不分來源」會變成一個查不出來的錯配。",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:abilities.statusCost": {
     "status": "landing",
     "since": "2026-09-08",
     "why": "⭐ PR 1118 —— 技能的**狀態消耗**（消耗 N 層某標記才放得出來）。⛔ 出貨 421 支零採用,而零是誠實的：既有的資源門檻全部走 `manaCost`／冷卻,原作的「集氣放大招」在 GGD 是用 `condition.status` + 分支做的。⭐ 第一份採用者是編輯器的 no-code 積木（`tpl-event-passive` 的集氣路線,見 `templateFamiliesAreAdopted.test.ts` 的 AWAITING_CONTENT）。",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
-  },
-  "field:abilities.template|0.cards[].inheritDefaults": {
-    "status": "landing",
-    "since": "2026-09-08",
-    "why": "⭐ PR 1118 —— 多張模板卡疊用時「這一張要不要繼承家族預設」。⛔ 出貨 260 份零採用：既有技能全部是**單卡**（`template.ref` 一個 ref）⇒ 結構上碰不到 `cards[]`。⭐ 第一份採用者是編輯器的多卡組合（no-code 積木疊起來時才需要決定繼承）。",
     "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
   },
   "field:champions.abilities.*.statusCost": {
@@ -2260,40 +2052,235 @@
     "why": "⭐ PR 1118 —— `abilities.statusCost` 的**內嵌鏡像**。⛔ 它結構上不可能早於 standalone 那一側有採用（鏡射方向永遠 standalone→embedded）⇒ **兩格要一起刪**。",
     "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:champions.modelVersions": {
-    "status": "landing",
-    "since": "2026-09-08",
-    "why": "⭐ PR 1118 —— 一位英雄的**多版模型**（社群投稿會有「作者的第 N 版」）。⛔ 出貨 71 位零採用：官方英雄一位一具模型,⛔ 沒有版本這個概念。⭐ 第一份採用者是**社群投稿的英雄**（`hero_intake.go` 收的完整英雄 ZIP 帶版本）—— 而那條路今天還沒有第一份投稿（同 `ugc.ts` 那一頁的狀態）。",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:items.passive[].oncePerCast": {
     "status": "landing",
     "since": "2026-09-08",
     "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
     "why": "⭐ PR 1118 —— `hooks[].oncePerCast` 在**道具被動**那一側的同一格。⛔ 出貨 77 件零採用,理由與技能那一側逐字相同：既有被動全部是逐發計數（原作就是那樣）⇒ 沒有一件需要去重。⚠️ 兩格**刻意成對**（同一個 `HookDef`）—— ⛔ 只在一邊開,道具與技能對同一句「一次施放只給一次」會給出不同答案。"
   },
-  "field:models.bodyVersion": {
+  "enum:abilities.castTimeTier=極小": {
     "status": "landing",
-    "since": "2026-09-08",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "⭐ PR 1118 —— 模型的**身體版本**（社群投稿會有「同一位英雄的第 N 版身體」）。⛔ 出貨 152 份零採用：官方模型一具就是一具,⛔ 沒有版本這個概念。⚠️ 它與 `champions.modelVersions` 是**同一件事的兩半**（英雄那一份指哪幾版、模型那一份說自己是第幾版）⇒ 兩格一起等第一份社群投稿（`hero_intake.go`）。"
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
-  "field:models.heroBody": {
+  "enum:abilities.effects[]#chainLightning.amount.damageTier=極大": {
     "status": "landing",
-    "since": "2026-09-08",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "⭐ PR 1118 —— 標記一具模型是**可共用的英雄身體**（社群英雄鑄造用它挑底模）。⛔ 出貨 152 份零採用：官方模型是逐位英雄專屬的,⛔ 沒有「共用身體」這個概念。⭐ 與 `models.bodyVersion`／`champions.modelVersions` 同一族,一起等第一份社群投稿。"
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
-  "variant:abilities.effects[]#consumeStatus": {
+  "enum:abilities.effects[]#consumeStatus.shape=circle": {
     "status": "landing",
-    "since": "2026-09-08",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "⭐ PR 1118 —— **消耗狀態層數**的 effect kind（集氣放大招的下半：`statusCost` 是門檻,這一顆是真的扣掉）。⛔ 出貨 593 份零採用,理由與 `abilities.statusCost` 逐字相同：既有的集氣家族在 GGD 全部做成 `condition.status` + 分支,⛔ 沒有一支真的扣層。⭐ 第一份採用者是編輯器的 no-code 集氣積木（`tpl-event-passive`）。⚠️ 這一格與 `bricksComplete` 那條棘輪指向同一件事：機制在、編輯器表單還沒做。"
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
-  "variant:abilities.effects[]#spendHealth": {
+  "enum:abilities.effects[]#delayed.advance.dir=target": {
     "status": "landing",
-    "since": "2026-09-08",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "⭐ PR 1118 —— **以生命為代價**的 effect kind（`sim/effects/spendHealth.ts`,守衛見 `newKindShape.test.ts` 的第四類 SELF_ONLY_KINDS）。⛔ 出貨 593 份零採用,而零是誠實的：既有 421 支逐支從 JASS 翻過來,原作的「扣血施法」全部寫在 `SetUnitState(u, UNIT_STATE_LIFE, …)` 裡並被翻成 `damage{to:self}`（那是**傷害**,吃減傷與護盾）⇒ ⛔ 沒有一支該改成這一顆（改了就是改設計）。⭐ 第一份採用者是社群英雄（`spendHealth` 不吃減傷、有 `minimumHp` 底線,那是**代價**不是傷害）。"
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#dot.onCasterDeath=continue": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#evasion.applyTo=target": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#manaBarrier.shape=circle": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#manaBarrier.who=target": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#pull.destination=anchorRing": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#pull.destination=point": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#pull.side=allies": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#shield.onExisting=replace": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.effects[]#shield.onExisting=stack": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:abilities.template|0.onConflict=lastWins": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "enum:champions.modelVersions[].source.kind=alternate": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.appliedBy": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.condition": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.maxTargets": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.onMissing": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.radius": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.radiusTier": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#consumeStatus.side": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#delayed.advance.startDist": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#evasion.condition": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#evasion.dodgesTrueDamage": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#manaBarrier.condition": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#manaBarrier.maxTargets": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#manaBarrier.radius": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#manaBarrier.radiusTier": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#manaBarrier.side": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#pull.anchorCount": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#pull.anchorRadius": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#pull.condition": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#pull.getupTicks": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#pull.uncontrollable": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.attrRatios": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.conditionTier": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.damageTier": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.damageTierPerRank": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.mult": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.perRank": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.ratios": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.amount.slotRankRatios": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.condition": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.effects[]#spendHealth.pctCurrentHealth": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   }
 }

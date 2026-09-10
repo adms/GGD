@@ -2,7 +2,7 @@
   "id": "community-review-06-20260907.passive",
   "schema": "ability@1",
   "name": "〔圓滾滾的韌性〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "脫離戰鬥後逐步恢復少量生命；受擊即中斷。\n\n【尚未實作】這個被動的效果還在調整中，目前**不會發生任何事**。",
   "slot": "PASSIVE",
   "castType": "self",

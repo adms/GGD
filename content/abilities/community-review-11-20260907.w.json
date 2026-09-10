@@ -1,7 +1,7 @@
 {
   "id": "community-review-11-20260907.w",
   "name": "捕食者",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-11-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口吸收一個白名單敵方投射物，取消其後續命中並保存分析樣本。\n【待補機制】護盾不會吸收或刪除敵彈；需白名單投射物與樣本持有。",
   "slot": "W",
   "castType": "self",

@@ -10,7 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「入坑紀錄蓋個章！」\n貼上 root 定身 2 秒的入坑紀錄，小級物理傷害；可被淨化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -77,7 +77,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「英雄招募延時坑！」\n以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑{{radius}} 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -166,7 +166,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離 4 單位並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -263,7 +263,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

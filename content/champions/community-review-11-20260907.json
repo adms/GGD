@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-11-20260907.q",
       "name": "水刃",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】直線水刃，可穿過有限數量目標。\n【待補機制】需穿透人數上限及單彈命中去重。",
       "slot": "Q",
       "castType": "skillshot",
@@ -135,7 +135,7 @@
     "W": {
       "id": "community-review-11-20260907.w",
       "name": "捕食者",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-11-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口吸收一個白名單敵方投射物，取消其後續命中並保存分析樣本。\n【待補機制】護盾不會吸收或刪除敵彈；需白名單投射物與樣本持有。",
       "slot": "W",
       "castType": "self",
@@ -194,7 +194,7 @@
     "E": {
       "id": "community-review-11-20260907.e",
       "name": "擬態",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在人形與史萊姆形態間切換，改變普攻及移動表現，保留生命、資源與冷卻。\n【待補機制】需人形／史萊姆形態、普攻替換與生命冷卻保留。",
       "slot": "E",
       "castType": "self",
@@ -248,7 +248,7 @@
     "R": {
       "id": "community-review-11-20260907.r",
       "name": "黑炎",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】在指定區域產生有限脈衝的黑炎，結束後清理全部區域效果。\n【待補機制】固定 3 秒黑炎可作基本區域驗收；黑炎色覆寫。",
       "slot": "R",
       "castType": "ground",

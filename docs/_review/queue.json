@@ -1,16 +1,16 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1250,
-    "tier0": 896,
+    "assets": 1324,
+    "tier0": 970,
     "reviewed": 0,
     "pending": 354,
     "voice": {
-      "champions": 51,
+      "champions": 125,
       "status": "measurement-stale",
       "grayPairs": 0,
       "ladderRow": 8,
-      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／1275 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
+      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／7750 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
     }
   },
   "items": [
@@ -222,7 +222,7 @@
     {
       "id": "imported.heromusashimiyamoto",
       "kind": "model",
-      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
+      "hash": "5dfcfb7af8a48628cb5c1c1f5c33366931874b07",
       "risk": 39,
       "reasons": [
         "25 支上架技能引用（R/EX ×2 加權後 risk 39）",
@@ -1069,7 +1069,7 @@
     {
       "id": "imported.blackhole",
       "kind": "model",
-      "hash": "b544c9801e9d893f6f5c620121a2abbd2d06a252",
+      "hash": "f0b6854d0d069af7b37a0f3bbc7296f84b8ac181",
       "risk": 11,
       "reasons": [
         "7 支上架技能引用（R/EX ×2 加權後 risk 11）",
@@ -2106,7 +2106,7 @@
     {
       "id": "imported.aquaspikeversion2",
       "kind": "model",
-      "hash": "e84f55893e66327cf39c94195b2cd980fbf57c92",
+      "hash": "bc7d6a6e1eaa26ff8cf853801c8af5a4b9e1babe",
       "risk": 6,
       "reasons": [
         "3 支上架技能引用（R/EX ×2 加權後 risk 6）",
@@ -2121,7 +2121,7 @@
     {
       "id": "imported.darkraor",
       "kind": "model",
-      "hash": "833bc6279465e6f84fcf2e900c0194c585131ccc",
+      "hash": "09704b9a3f4d8ce5e8f35719dcd47c951ff4117e",
       "risk": 6,
       "reasons": [
         "4 支上架技能引用（R/EX ×2 加權後 risk 6）",
@@ -2137,7 +2137,7 @@
     {
       "id": "imported.netherstrike",
       "kind": "model",
-      "hash": "5a7e96a543ce86e662ae6377afa2270a76473073",
+      "hash": "9ec8ba924fb068cae27cf29c9f9cdc116bb37202",
       "risk": 6,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -2321,7 +2321,7 @@
     {
       "id": "imported.crescent",
       "kind": "model",
-      "hash": "8cac3950d533dccf25b368c5430f5673384433e7",
+      "hash": "130249470662f312c72ce51867d0441d65a48314",
       "risk": 5,
       "reasons": [
         "3 支上架技能引用（R/EX ×2 加權後 risk 5）",
@@ -2336,7 +2336,7 @@
     {
       "id": "imported.meteor",
       "kind": "model",
-      "hash": "6b86a5d592d7e65937ddbabec73c9d1a3460a411",
+      "hash": "d27afb9bf5e68191729c9cd0c96cc8f90493269e",
       "risk": 5,
       "reasons": [
         "3 支上架技能引用（R/EX ×2 加權後 risk 5）",
@@ -3422,7 +3422,7 @@
     {
       "id": "imported.awing",
       "kind": "model",
-      "hash": "736fe436102706e648860dedf129a438f1c98c3c",
+      "hash": "c77cc1876e020c0e28ed27c49a536893496e1ad1",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3434,7 +3434,7 @@
     {
       "id": "imported.bwing",
       "kind": "model",
-      "hash": "cd37ee74b608b1919e999619fe4e7cb059825d1a",
+      "hash": "291e71ed46cb66fb77d10baab0a2080d90ce3a9c",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3446,7 +3446,7 @@
     {
       "id": "imported.frostnova",
       "kind": "model",
-      "hash": "35837638ea025e9e82c04b36e990dd5dbfdabd9f",
+      "hash": "cf60c0bffde07d998f75140e32d6bf3226e700db",
       "risk": 4,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 4）",
@@ -3460,7 +3460,7 @@
     {
       "id": "imported.gx",
       "kind": "model",
-      "hash": "dba4317ac88ae9291622fd83e7b0abcfd37961f4",
+      "hash": "159caec4a5f7a767428da5c3491826e37459424a",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3472,7 +3472,7 @@
     {
       "id": "imported.gxhuge",
       "kind": "model",
-      "hash": "6e30c2518379b39fe32d260830978346b077eb53",
+      "hash": "12ce4a64f9158e0a62cb6995cd3697c85f398262",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3484,7 +3484,7 @@
     {
       "id": "imported.herocloudcyd",
       "kind": "model",
-      "hash": "6cab14652ddffa7b0d0f453b4bcf9fcf69ecf8ac",
+      "hash": "63cf3d0c3f83121ec39075912037033b891d8c87",
       "risk": 4,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 4）",
@@ -3498,7 +3498,7 @@
     {
       "id": "imported.heroshanawingsmall",
       "kind": "model",
-      "hash": "b0540132b53e0291a4fcf64055b1dff21d1be3ea",
+      "hash": "da652dd219eec7aee227dec457558847b93b350d",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3534,7 +3534,7 @@
     {
       "id": "imported.lasercannonfinalred",
       "kind": "model",
-      "hash": "4172aceb5207a82efbb90d41f27c41c23d18c791",
+      "hash": "e6810b9fa6f88c77aefb55300c48dcc8fcc69253",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3546,7 +3546,7 @@
     {
       "id": "imported.lightningnova",
       "kind": "model",
-      "hash": "c45f405b6c7fcafc69ff852dfb3b6ff644a8e97e",
+      "hash": "319cee14a94ea47ff8b5e3a319ccba3708dbf140",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",
@@ -3558,7 +3558,7 @@
     {
       "id": "imported.lightningtornado",
       "kind": "model",
-      "hash": "ede1b917e95f5777b9b787fbc22ac13c18444fc3",
+      "hash": "c6dfe6433b75ba97128ec8e2be6883b73661e121",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",
@@ -3570,7 +3570,7 @@
     {
       "id": "imported.monsoonbolttarget",
       "kind": "model",
-      "hash": "2f09646c0756d930de400a077a5faa18ba80031b",
+      "hash": "fc09f0fe150596cc66412d526c1113897a41f15c",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",
@@ -3582,7 +3582,7 @@
     {
       "id": "imported.sonicbreathstream",
       "kind": "model",
-      "hash": "bccb3a878209e6e976fb14600af61f6cbde5b03b",
+      "hash": "0f8a92af05891d28332c93ac6f2ce38056b245c3",
       "risk": 4,
       "reasons": [
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
@@ -3594,7 +3594,7 @@
     {
       "id": "imported.thunderclapcaster",
       "kind": "model",
-      "hash": "731bec6f4aaf1f589abec66d0d346c32396fe689",
+      "hash": "aa8829c19e9e971747e2e85ffd8c4719dce04b80",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",
@@ -4525,7 +4525,7 @@
     {
       "id": "imported.blackhole1",
       "kind": "model",
-      "hash": "d84a83892ccd8006c694b62df20e8cbafe51ca0c",
+      "hash": "9a28948c427423d5c672fac44cf9a863552a1920",
       "risk": 2,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4538,7 +4538,7 @@
     {
       "id": "imported.deathwave",
       "kind": "model",
-      "hash": "905873bd8e7e06ddfe9eb52cc7d3cb9b8011be25",
+      "hash": "b44421b946f54944fe69552acc0bb74ffb011e55",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4552,7 +4552,7 @@
     {
       "id": "imported.earthtornado2",
       "kind": "model",
-      "hash": "f26a37f1d5ecbe2c6d1b205fcebb2a0f493379ac",
+      "hash": "84306a7c6e6f7641b71c43a49d7eec0c3626ce01",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4566,7 +4566,7 @@
     {
       "id": "imported.fireblast",
       "kind": "model",
-      "hash": "bc9ffacfbe78bbc79ab76b43ffd59a7b3eea51f3",
+      "hash": "f6620b00f10514cfd594c7bfec0aa6d2af0348ab",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4580,7 +4580,7 @@
     {
       "id": "imported.grandorcaura",
       "kind": "model",
-      "hash": "f4b9f43ee85775a49702bbdbe74956853c7ffa88",
+      "hash": "6c835152c3a8d37d1c22adf9fa3cb03b33e1c17e",
       "risk": 2,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4593,7 +4593,7 @@
     {
       "id": "imported.herocloudstrife",
       "kind": "model",
-      "hash": "39259363a7adcd6bc0c578072a9ebbec413aecf5",
+      "hash": "35a45205c317d01846a1233e07eda117e0e6336f",
       "risk": 2,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4606,7 +4606,7 @@
     {
       "id": "imported.midchildernanohaaura",
       "kind": "model",
-      "hash": "b9e4914c793a27dfa4102ae1b696aeb8ccb0f242",
+      "hash": "dd8ccd2f57a66179cd10f9cabcbb69813e8b27af",
       "risk": 2,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4619,7 +4619,7 @@
     {
       "id": "imported.tectonicfury",
       "kind": "model",
-      "hash": "4be677e8d2b155245e7758c83055d41c8bffa041",
+      "hash": "85961e591a33093dff6d21814c4ebd9da90b219d",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -5224,7 +5224,7 @@
     {
       "id": "imported.oblivionaura",
       "kind": "model",
-      "hash": "2cb60a0e81321c019d6ca8d33d86eb39fdc5db62",
+      "hash": "25cccbac97cf75dd8ff57bcda92643133d8a0b87",
       "risk": 1,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 1）",

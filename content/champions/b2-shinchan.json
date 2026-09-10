@@ -4,13 +4,13 @@
    "castTimeSec": 0.467,
    "castType": "ground",
    "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
    ],
    "cooldownTier": "小",
-   "provenance": "w3x-import",
+   "provenance": "editor-json",
    "description": "「小白帶我換條路！」\n自己瞬移至合法落點，作為散步繞路的 GGD 改編。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
    "effects": [
     {
@@ -22,10 +22,10 @@
    ],
    "id": "b2-shinchan.e",
    "manaCost": [
-    0,
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0,
+    0.0
    ],
    "maxRank": 4,
    "name": "小白帶我換條路",
@@ -51,13 +51,13 @@
    "castTimeSec": 0.467,
    "castType": "targeted",
    "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
    ],
    "cooldownTier": "小",
-   "provenance": "w3x-import",
+   "provenance": "editor-json",
    "description": "「春日部接力棒快傳！」\n指定友軍取得 red-comet 與 35% 移速提升，持續 3 秒，真實改變跑動距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
    "effects": [
     {
@@ -70,10 +70,10 @@
    ],
    "id": "b2-shinchan.q",
    "manaCost": [
-    0,
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0,
+    0.0
    ],
    "maxRank": 4,
    "name": "春日部接力棒快傳",
@@ -114,12 +114,12 @@
    "castTimeSec": 0.833,
    "castType": "self",
    "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
    ],
    "cooldownTier": "大",
-   "provenance": "w3x-import",
+   "provenance": "editor-json",
    "description": "「全體一起玩鬼抓人！」\n周圍敵人受到極小傷害，並套用正式 confusion 出貨旗標；效果到期後恢復原行為。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
    "effects": [
     {
@@ -146,15 +146,15 @@
    ],
    "id": "b2-shinchan.r",
    "manaCost": [
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0
    ],
    "manaCostTier": "小",
    "maxRank": 3,
    "name": "全體一起玩鬼抓人",
    "radius": 3,
-   "range": 0,
+   "range": 0.0,
    "slot": "R",
    "targetsEnemies": true,
    "template": {
@@ -202,13 +202,13 @@
    "castTimeSec": 0.567,
    "castType": "targeted",
    "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
    ],
    "cooldownTier": "小",
-   "provenance": "w3x-import",
+   "provenance": "editor-json",
    "description": "「玩具散落請勿奔跑！」\n指定敵人被 root 定身 2.5 秒；玩具只是主動控制的童趣演出，不是隱藏陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
    "effects": [
     {
@@ -220,10 +220,10 @@
    ],
    "id": "b2-shinchan.w",
    "manaCost": [
-    0,
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0,
+    0.0
    ],
    "maxRank": 4,
    "name": "玩具散落請勿奔跑",

@@ -29,6 +29,7 @@
  * ⛔ 讀 `_legacy/` 不等於把它接回引擎 —— 這裡只是讀檔案,註冊表由
  * `COLLECTION_NAMES` 決定,那一份沒有變。
  */
+import { SKELETON_CHAMPION_IDS } from "./skillNormalize";
 import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -197,7 +198,10 @@ describe("hero-number parsing (champion-identity-hero-number)", () => {
     // 靜默跳過**,而且那不是三隻 —— 語料庫絕大多數英雄都出自這一次 w3x 匯入。
     const knownHere = CORPUS.filter((c) => authority.has(c.id));
     expect(checked).toBe(knownHere.length);
-    expect(knownHere.length).toBeGreaterThan(CORPUS.length * 0.9);
+    // ⭐ GH#1195（2026-09-11）：分母只算 w3x 命名空間（`godie-*`）—— 81 名社群／第二批／LoL 英雄
+    //   本來就沒有匯入器編號（provenance `editor-json`），把它們算進分母是**前提消失**，⛔ 不是回歸。
+    const W3X = CORPUS.filter((c) => c.id.startsWith("godie-"));
+    expect(knownHere.length).toBeGreaterThan(W3X.length * 0.9);
   });
 });
 
@@ -413,7 +417,12 @@ describe("numberless champions each stay distinct (champion-identity-no-number)"
   it("gives each an `id:` key of its own and never merges two of them", () => {
     cover("champion-identity-no-number");
     const found = CORPUS.filter((c) => heroNumberOf(c) === null).map((c) => c.id).sort();
-    expect(found).toEqual([...NUMBERLESS].sort());
+    // ⭐ GH#1195：無編號集合 = 那 4 名 godie ∪ **每一名非 godie 的英雄**（社群／第二批／LoL 沒有 xx-0N），
+    //   ⛔ 不再釘一份字面清單 —— 它會隨每一批上架而過期。「各自一個 id、不互相合併」的斷言不變。
+    //   ⚠️ 引擎骨架 sela／thorne 也不是 godie-*，⛔ 但它們**有**編號（骨架照原作格式）⇒ 用 SKELETON_CHAMPION_IDS 排除，
+    //   與 stamp_provenance.py／abilityProvenance.test.ts 同一條規則。
+    const NON_W3X = CORPUS.filter((c) => !c.id.startsWith("godie-") && !SKELETON_CHAMPION_IDS.has(c.id)).map((c) => c.id);
+    expect(found).toEqual([...NUMBERLESS, ...NON_W3X].sort());
 
     for (const id of NUMBERLESS) {
       expect(KEYS.get(id), `${id} is its own canonical`).toBe(id);

@@ -45,5 +45,7 @@
     "tier2": []
   },
   "vetoed": [],
-  "missingSurfaceFiles": []
+  "missingSurfaceFiles": [
+    "data/curation/whitelist.json"
+  ]
 }

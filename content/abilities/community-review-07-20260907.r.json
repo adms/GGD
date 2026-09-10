@@ -1,7 +1,7 @@
 {
   "id": "community-review-07-20260907.r",
   "name": "〔彈性殺陣〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
   "slot": "R",
   "castType": "ground",

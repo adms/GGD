@@ -56,46 +56,46 @@
     }
   },
   "population": {
-    "glbFiles": 460,
-    "animatedModels": 303,
+    "glbFiles": 508,
+    "animatedModels": 351,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 220,
-      "pct": 72.6
+      "models": 267,
+      "pct": 76.1
     },
     "cast": {
-      "models": 183,
-      "pct": 60.4
+      "models": 230,
+      "pct": 65.5
     },
     "celebrate": {
-      "models": 14,
-      "pct": 4.6
+      "models": 17,
+      "pct": 4.8
     },
     "death": {
-      "models": 244,
-      "pct": 80.5
+      "models": 290,
+      "pct": 82.6
     },
     "dodge": {
-      "models": 212,
-      "pct": 70
+      "models": 257,
+      "pct": 73.2
     },
     "guard": {
       "models": 6,
-      "pct": 2
+      "pct": 1.7
     },
     "hurt": {
-      "models": 25,
-      "pct": 8.3
+      "models": 33,
+      "pct": 9.4
     },
     "idle": {
-      "models": 282,
-      "pct": 93.1
+      "models": 330,
+      "pct": 94
     },
     "run": {
-      "models": 220,
-      "pct": 72.6
+      "models": 268,
+      "pct": 76.4
     }
   },
   "degradesTo": "idle",
@@ -117,6 +117,18 @@
       "guard"
     ],
     "content/assets/models/champions/blocky-undead.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/versions/2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/versions/b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810.glb": [
       "dodge",
       "guard"
     ],
@@ -1748,6 +1760,16 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/imported/versions/1c2440c732bffbef6fbed399d7727497d6887a9b211a78b0f3040d09cbb7466e.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/versions/5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/imported/war3mapimported-poweraura.glb": [
       "attack",
       "cast",
@@ -1842,6 +1864,20 @@
       "idle",
       "run"
     ],
+    "content/assets/models/ou99/ou99_287871.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_311294.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_313646.glb": [
+      "celebrate",
+      "guard"
+    ],
     "content/assets/models/ou99/ou99_453949.glb": [
       "celebrate",
       "guard",
@@ -1858,6 +1894,16 @@
       "hurt"
     ],
     "content/assets/models/ou99/ou99_456917.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_457123.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_457280.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -1909,6 +1955,11 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_468771.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_470087.glb": [
       "celebrate",
       "guard"
@@ -1924,6 +1975,11 @@
       "hurt"
     ],
     "content/assets/models/ou99/ou99_472038.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/ou99_472112.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -2003,7 +2059,187 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/ou99_497211.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/ou99_498214.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/09444fb17e1b1a8437c0bcb3e7ccecc3d61c1d86d2b33f039b5e0817ae4d9279.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/0e7b88a4f1e55e5244a6c1f027d2053a095be970844c47314a80c0ce170632ce.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/0eda0dfbeea623f4ddde82588d804dcb18acad3df71b6b61ef34100199c011d5.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/1437cbed6b585225333a57196de1001a85943ae0f5dd51b2d87d230032a66718.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/175251f6dadd320f762fcae4a0f2f84026f876a86f269cd16a7305fed1831cd3.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/1f135518b70aa26b008e59ec135e06140cfe445eadce2fe51ca8a1a5294372bb.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/22fc172a82450ed4845e7e65264cf571130da40f680113531a70098299f99904.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/2449b2d8464537bded968198bbd77611af9678f20113af1604428924c26b5d74.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/301cd3ea20249839f3ca0a21059a9683262e8d1ee219be8e3c61c17fe6a34ac8.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/31f65ed0a6b557b931511b2a61aa011f97937f49040fabc9697d77fa3d52be9a.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/40f5e40a243762d240f87d1979db0ec81ad150a470d6bbd69a6352617f7dd1ec.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/ou99/versions/4366a2eb1889e23caaadf474158a967c256fbbc706c9487cee9c01d58005de3f.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/4382e2d43746df99fc68fb36b6b466e2bac8b4abd5c94a679b3153946c6cdcc5.glb": [
+      "attack",
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/4bdc23a090527b2ac7e2bc6ebb779a0241b7a2c4764d39fd33268899d2cf3954.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/5f0ad53029f8788a437fe2410f322f35738fb5a8aba54d3c77f04c0f8d28b7ca.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/6ade7e35bef12b074f323bd743b68419baba4142ad760518e4c010d51870ff76.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/7bc4754a96f82e43ab84931f7d4e8ddf4f70be90cecc62bdfdfde79800bdbe28.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/7ea2f636ff9d180424d801226fba1cf960171ad603f8ed484362560cb97839de.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/bbaa448e0ffe310540583bec08b33c83f79ff4353847b4ced259dea51b6d4cf9.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/c83555308791d241e3c9fd47ef0d658316041769c7854307e182ebadf7688197.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/ou99/versions/cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/ou99/versions/e6e88168e26db99e0ab4276ee55b86808f1a2998e7f64ba415086159a6dc4db0.glb": [
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/edc48a694535b72bbec64c92f4e3c05a5fd8b882044ace0c6dcbcc4c96365f31.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/ef252f3a94524b1db2b7ffb6dfd972c4d32e70c7b4abd5f54bf25d57ab74da1b.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/f70116b571774a32bc2c92fc5d9e273228de6ec2277b31ff8554b5201d64ac8d.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/fba8d82b18a88930248d5d593191d685f23f919d1b59e7760826685feb844310.glb": [
       "celebrate",
       "guard",
       "hurt"

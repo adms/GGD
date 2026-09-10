@@ -7,7 +7,7 @@
     90.0
   ],
   "cooldownTier": "大",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "「全班留下來補課！」\n對自身周圍半徑{{radius}} 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {

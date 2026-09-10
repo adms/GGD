@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「結界收據請保留！」\n精靈給了一張結界收據：180 護盾 3 秒，spell-shield 標記 3 秒；標記不自帶免疫。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -102,7 +102,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「精靈把增益寄錯人！」\n客服選错收件人：替敵人增加 50 攻擊力，持續 3 秒，可被驅散；這是真實代價。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -178,7 +178,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「收據換一位代理客服！」\n交出結界收據才能叫來一名 4 秒的自己分身；生命／攻擊倍率欄位各 0.3，依正式屬性管線產生，不繼承主人當下增益；該來源最多 2 具，本體死亡消失。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -267,7 +267,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「請按一撤回贈品！」\n撤回最近一份敵方增益（buff pool）；然後定身 1 秒。沒有訂單只剩定身，不會憑空偷取攻擊力。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

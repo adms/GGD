@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「先停止施法讓我重現！」\n先凍結重現環境：敵人 magic-break 沉默 2 秒，能走能普攻；這不是 stun。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -73,7 +73,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「BUG-001截圖存證！」\n在敵人身上留下 camera-mark 4 秒（依施法者分開），本身不造成傷害、不取得全圖視野。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -135,7 +135,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「測試結束回收增益與魔力！」\n移除敵人最多 2 項增益；若仍有 magic-break，回復自己最大魔力 10% 並消耗該標記。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -233,7 +233,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「跳到有我截圖的當事人！」\n指定自己留下 camera-mark 的當事人，才瞬移到他前 1.5 單位；未標記目標不位移。跨槽不使用只認同技能來源的 markedUnit。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

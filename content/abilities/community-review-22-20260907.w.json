@@ -1,7 +1,7 @@
 {
   "id": "community-review-22-20260907.w",
   "name": "〔鞭繩牽制〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
   "slot": "W",
   "castType": "ground",

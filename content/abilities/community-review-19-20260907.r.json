@@ -1,7 +1,7 @@
 {
   "id": "community-review-19-20260907.r",
   "name": "Starburst Stream",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】16 段連擊，間隔 0.1 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】十六次依序發生的斬擊機會；每次重新檢查目標範圍，整招共享傷害預算。\n【待補機制】16 段已可配置；須證明每段重查距離、中斷後不再命中及總預算。",
   "slot": "R",
   "castType": "targeted",

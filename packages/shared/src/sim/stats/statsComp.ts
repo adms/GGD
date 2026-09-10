@@ -47,10 +47,31 @@ export interface StatsComp {
   capReached?: Set<Stat>;
 }
 
+/**
+ * 【再次施放】的執行期階段（GH#1187）—— 住在技能槽上，⛔ 不是全域表。
+ * 沒有這一格 = 不在後段。⭐ 全部是**絕對 tick**（硬性技術約束：到期用絕對 tick，不是遞減）。
+ */
+export interface RecastState {
+  /** 窗口結束的絕對 tick；`world.tick >= untilTick` ⇒ 階段清除。 */
+  untilTick: number;
+  /** 還可以按幾次後段。 */
+  chargesLeft: number;
+  /** 首段有沒有命中（`gate:"onHit"` 用；由傷害封包的 castInstance 歸因寫入）。 */
+  hit: boolean;
+  /** 首段的施放序號（castInstance.serial）—— 命中歸因只認這一次。 */
+  serial: number;
+  /** 首段命中的第一個受害者（後段「沿鉤進場」那一族要用；今天只記，不消費）。 */
+  anchor?: EntityId;
+  /** `cooldownAt:"end"` 時暫存的冷卻 tick 數，階段結束才寫進 cooldownRemainingTicks。 */
+  pendingCooldownTicks: number;
+}
+
 export interface AbilityInstance {
   abilityId: AbilityId;
   rank: number; // 0 = not learned
   cooldownRemainingTicks: number;
+  /** 【再次施放】階段；不在後段時**不存在**（⛔ 不是 null）。 */
+  recast?: RecastState;
 }
 
 /**
