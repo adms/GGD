@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:40:12+08:00",
-  "inputsSha256": "951904a5a7413be127083fd70f059c20445928e998c2fdbaf85729634eb30ab9",
+  "generatedAt": "2026-09-11T06:46:58+08:00",
+  "inputsSha256": "2ebd2c26b7b95106516cff0dc3eb2bcd5c51a8d494db260c2087918a0c5eaa7e",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -10266,7 +10266,7 @@
             "skeleton",
             "texture"
           ],
-          "publicationStatus": "local-only-awaiting-s3-upload",
+          "publicationStatus": "s3-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-runtime-and-visual-validation",
@@ -12923,14 +12923,15 @@
               "No .blend opened or embedded Python executed. No third-party mod program executed. No source animations present."
             ]
           },
-          "verification": "完整原包53,663,735 bytes與公開SHA吻合，59來源檔全部保留。28候選＝19身體變體＋4武器群＋1面具＋4貼圖；13個分離GLB完整Khronos驗證0錯誤0警告、貼圖SHA與來源一致、Assimp讀回通過。0動作／音訊；手型互斥、比例、材質、畫面、綁定仍待驗收。全場景直接轉檔有1144錯誤，明確保留為失敗中間檔，禁止成品取用。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
+          "verification": "完整原包53,663,735 bytes與公開SHA吻合，59來源檔全部保留。28候選＝19身體變體＋4武器群＋1面具＋4貼圖；13個分離GLB完整Khronos驗證0錯誤0警告、貼圖SHA與來源一致、Assimp讀回通過。0動作／音訊；手型互斥、比例、材質、畫面、綁定仍待驗收。全場景直接轉檔有1144錯誤，明確保留為失敗中間檔，禁止成品取用。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
             "bytes": 614839143,
             "sha256": "33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60",
-            "readbackVerified": false,
-            "status": "not-uploaded"
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           }
         },
         {
@@ -22014,7 +22015,7 @@
             "skeleton",
             "texture"
           ],
-          "publicationStatus": "local-only-awaiting-s3-upload",
+          "publicationStatus": "s3-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-runtime-and-visual-validation",
@@ -24671,14 +24672,15 @@
               "No .blend opened or embedded Python executed. No third-party mod program executed. No source animations present."
             ]
           },
-          "verification": "完整原包53,663,735 bytes與公開SHA吻合，59來源檔全部保留。28候選＝19身體變體＋4武器群＋1面具＋4貼圖；13個分離GLB完整Khronos驗證0錯誤0警告、貼圖SHA與來源一致、Assimp讀回通過。0動作／音訊；手型互斥、比例、材質、畫面、綁定仍待驗收。全場景直接轉檔有1144錯誤，明確保留為失敗中間檔，禁止成品取用。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
+          "verification": "完整原包53,663,735 bytes與公開SHA吻合，59來源檔全部保留。28候選＝19身體變體＋4武器群＋1面具＋4貼圖；13個分離GLB完整Khronos驗證0錯誤0警告、貼圖SHA與來源一致、Assimp讀回通過。0動作／音訊；手型互斥、比例、材質、畫面、綁定仍待驗收。全場景直接轉檔有1144錯誤，明確保留為失敗中間檔，禁止成品取用。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
             "bytes": 614839143,
             "sha256": "33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60",
-            "readbackVerified": false,
-            "status": "not-uploaded"
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           }
         },
         {
@@ -88118,7 +88120,7 @@
           "skeleton",
           "texture"
         ],
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-runtime-and-visual-validation",
@@ -90775,14 +90777,15 @@
             "No .blend opened or embedded Python executed. No third-party mod program executed. No source animations present."
           ]
         },
-        "verification": "完整原包53,663,735 bytes與公開SHA吻合，59來源檔全部保留。28候選＝19身體變體＋4武器群＋1面具＋4貼圖；13個分離GLB完整Khronos驗證0錯誤0警告、貼圖SHA與來源一致、Assimp讀回通過。0動作／音訊；手型互斥、比例、材質、畫面、綁定仍待驗收。全場景直接轉檔有1144錯誤，明確保留為失敗中間檔，禁止成品取用。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
+        "verification": "完整原包53,663,735 bytes與公開SHA吻合，59來源檔全部保留。28候選＝19身體變體＋4武器群＋1面具＋4貼圖；13個分離GLB完整Khronos驗證0錯誤0警告、貼圖SHA與來源一致、Assimp讀回通過。0動作／音訊；手型互斥、比例、材質、畫面、綁定仍待驗收。全場景直接轉檔有1144錯誤，明確保留為失敗中間檔，禁止成品取用。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-tales-of-rays/33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60.zip",
           "bytes": 614839143,
           "sha256": "33bfae1add887246abdb6b76d7b129c0bc8f2ff5d45267397b5a3926c66dfc60",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
