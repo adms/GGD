@@ -152,6 +152,7 @@ def main(argv=None, repo=None):
     if args.primary_source_backup and args.source_id != args.id:
         raise ValueError('Primary source backup requires identical --id and --source-id')
     if args.source_id:
+        by_path = {row['path']: row for row in expected}
         matches = [row for row in downloads.get('publicSources', []) + downloads.get('paidSources', []) if row['id'] == args.source_id]
         if len(matches) != 1:
             raise ValueError('Expected one existing source for supplemental delivery')
@@ -167,6 +168,17 @@ def main(argv=None, repo=None):
                 raise ValueError('Different primary backup already exists for source')
             source['backup'] = primary
             source['publicationStatus'] = 's3-readback-verified'
+            # A root snapshot can replace an old, narrower original-archive
+            # pending marker only when it actually carries that exact file.
+            # Keep a mismatched pending archive visible for later recovery.
+            pending = source.get('pendingBackup')
+            if pending and pending.get('localArchive'):
+                pending_path = Path(pending['localArchive']).resolve()
+                if pending_path.is_relative_to(source_root):
+                    member = pending_path.relative_to(source_root).as_posix()
+                    covered = by_path.get(member)
+                    if covered and (covered['sha256'], covered['bytes']) == (pending.get('sha256'), pending.get('bytes')):
+                        source.pop('pendingBackup')
         else:
             link = {key: value for key, value in entry.items() if key != 'files'}
             prior = [row for row in source.setdefault('supplementalDeliveries', [])
@@ -175,7 +187,6 @@ def main(argv=None, repo=None):
                 raise ValueError('Different source supplemental revision already exists')
             if not prior:
                 source['supplementalDeliveries'].append(link)
-        by_path = {row['path']: row for row in expected}
         for candidate in source.get('componentCandidates', []):
             local = Path(candidate['absolutePath']).resolve()
             if not local.is_relative_to(source_root):

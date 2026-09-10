@@ -36384,15 +36384,18 @@
         ],
         "note": "先補原骨架／body／外部依賴再轉換與驗收。保留 1 sequence＋5 montage 來源選項；目前不可作角色模型下拉成品或預設。"
       },
-      "publicationStatus": "local-only-awaiting-s3-upload",
-      "pendingBackup": {
-        "status": "not-uploaded",
-        "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
-        "bytes": 877392,
-        "sha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b",
-        "readbackVerified": false
-      },
-      "verifiedLocalDeliveryOnly": true
+      "publicationStatus": "s3-readback-verified",
+      "verifiedLocalDeliveryOnly": true,
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-sorcerer-popp-20260911-v1/30a94f22d9ecc9a55e38ab95c65202be979a62b2cf96d6bb22deab21a5957d00.tar.gz",
+        "bytes": 2430305,
+        "sha256": "30a94f22d9ecc9a55e38ab95c65202be979a62b2cf96d6bb22deab21a5957d00",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "s3ReadbackVerified": true
+      }
     },
     {
       "id": "kof-xv-mai-sfmlab-lordscrub-v1",
