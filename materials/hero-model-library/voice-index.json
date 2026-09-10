@@ -43075,16 +43075,19 @@
       "publicationStatus": "s3-readback-verified"
     },
     "public:parallel-ps-jumpforce-local-final3": {
-      "type": "zip",
-      "localArchive": "outputs/model-source-backups/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
-      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
-      "bytes": 872691517,
-      "sha256": "66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15",
-      "readbackVerified": false,
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f.tar.gz",
+      "bytes": 183860394,
+      "sha256": "0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "s3ReadbackVerified": true,
       "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
       "localUseAvailable": true,
-      "publicationStatus": "local-verified-s3-pending"
+      "publicationStatus": "s3-readback-verified"
     },
     "public:kof-xiv-mai-audio": {
       "type": "zip",
@@ -43352,11 +43355,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "3ca02995e2755645ac4b714aa1f87b5d8578fd7f8058b05359f7de50db4c3cd7"
+      "sha256": "fa9440c24cf6215b59ebd3470fc61f5500ecd1cb9af946ed22c892c254b0a3a9"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "cfb34d1575cd4cffe9f57740a823def65838f7a7533ca2549b7d2ebbed312acb"
+      "sha256": "5bcef5c66f99162f6e4e4b16e5887e63dcb2fa176a4f993adc8101075a9dcfaa"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",

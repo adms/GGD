@@ -60,12 +60,34 @@ def main():
         raise ValueError('Expected exactly one central source record')
     source = sources[0]
     if (source.get('backup') is not None or source.get('publicationStatus') not in {
-            'local-only-preparing-s3-backup', 'local-verified-s3-pending'}):
+            'local-only-preparing-s3-backup', 'local-verified-s3-pending',
+            'local-only-awaiting-s3-upload'}):
         raise ValueError('Source publication state changed; preserve for review')
-    if any(row['id'] == source_id for row in index.get('sources', [])) or any(row['id'] == source_id for row in index.get('pendingUploads', [])):
-        raise ValueError('Central archive record already exists or is pending')
+    if any(row['id'] == source_id for row in index.get('sources', [])):
+        raise ValueError('A published central archive record already exists')
     backup = {key: receipt[key] for key in ['s3Uri', 'bytes', 'sha256', 'archiveFormat', 'archiveMemberRoot', 'readbackVerified', 'fullGetVerified']}
     backup['s3ReadbackVerified'] = True
+    # Some older local ZIPs were created from the mutable shared intake root.
+    # Preserve those pending bytes for audit, but do not let their wider member
+    # list masquerade as this source's fixed delivery backup.
+    old_pending = source.get('pendingBackup')
+    if old_pending:
+        matches = [row for row in index.get('pendingUploads', [])
+                   if (row.get('id'), row.get('sha256')) == (source_id, old_pending.get('sha256'))]
+        if len(matches) != 1:
+            raise ValueError('Expected one preserved pending archive record')
+        old = matches[0]
+        if old.get('files') == expected:
+            raise ValueError('Existing pending archive unexpectedly duplicates the scoped delivery')
+        preserved = dict(old_pending, status='preserved-scope-conflict-not-primary',
+                         reason='archive member list exceeds this fixed source delivery; retained locally and unuploaded')
+        history = source.setdefault('preservedPendingBackups', [])
+        if not any(row.get('sha256') == preserved['sha256'] for row in history):
+            history.append(preserved)
+        old['scopeStatus'] = 'preserved-not-primary-source-backup'
+        old['scopeConflictReason'] = 'member list exceeds fixed delivery; retained without upload or deletion'
+        old['supersededByScopedArchive'] = receipt['s3Uri']
+        source.pop('pendingBackup')
     source['backup'] = backup
     source['publicationStatus'] = 's3-readback-verified'
     source['verification'] += ' 此固定交付與其 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；同根目錄的其他交付不在此備份範圍。'

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:08:26+08:00",
-  "inputsSha256": "37f5c4b854f9cc772e90fe92488810248edd7feb1de423cd2528f0eec092cb45",
+  "generatedAt": "2026-09-11T06:15:54+08:00",
+  "inputsSha256": "ee69673d3c8e260b0b5a04a72a86440461649ac231d56233a4e1e7939f17514e",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -78034,7 +78034,7 @@
         "assetKinds": [
           "audio"
         ],
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-standardization",
@@ -78229,14 +78229,27 @@
           "seconds": 5031.3526232993245,
           "confirmedVoiceCount": null
         },
-        "verification": "完整批次最後3包；2,271 OGG，來源原包 SHA/大小與安全解包通過、逐檔 SHA 重算、OGG 結構與分類抽樣 FFmpeg 解碼通過；尚未全檔解碼或逐段聽審。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
-          "bytes": 872691517,
-          "sha256": "66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+        "verification": "完整批次最後3包；2,271 OGG，來源原包 SHA/大小與安全解包通過、逐檔 SHA 重算、OGG 結構與分類抽樣 FFmpeg 解碼通過；尚未全檔解碼或逐段聽審。 此固定交付與其 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；同根目錄的其他交付不在此備份範圍。",
+        "preservedPendingBackups": [
+          {
+            "localArchive": "outputs/model-source-backups/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
+            "bytes": 872691517,
+            "sha256": "66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15",
+            "readbackVerified": false,
+            "status": "preserved-scope-conflict-not-primary",
+            "reason": "archive member list exceeds this fixed source delivery; retained locally and unuploaded"
+          }
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f.tar.gz",
+          "bytes": 183860394,
+          "sha256": "0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f",
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "s3ReadbackVerified": true
         }
       },
       {
