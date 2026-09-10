@@ -43,6 +43,21 @@
       "evidence": [
         "materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "後續完整 CI 顯示的四項追加阻擋已定向修復：逐檔 COPY 契約、兩份處理器 profile 指紋、18 筆到期 landing 如實改 debt；原日期與零採用事實保留，沒有把未完成記成完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/ops/clientContentImports.test.ts packages/shared/src/ops/shippedEditorProfileIsCurrent.test.ts packages/shared/src/content/import/twoProfilesAgree.test.ts packages/shared/src/content/fieldAdoption.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "62cad6f5c6d5e69d58b92f2a2349ee589f3d8d3a",
+      "evidence": [
+        "content/editor-target-profile.json",
+        "docker/edge.Dockerfile",
+        "packages/shared/src/content/fieldAdoption.exemptions.json",
+        "materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json"
+      ]
     }
   ],
   "asks": [
