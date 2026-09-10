@@ -50,6 +50,7 @@ describe("hero product condition editing", () => {
     const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
     const source = zHeroProject.parse(JSON.parse(readFileSync(new URL("../../../../packages/shared/testkit/fixtures/azazel-handoff.json", import.meta.url), "utf8")));
     let project = refineAzazelProject(source);
+    project.projectId = "fixture-azazel-form-e";
     project.presentation = defaultHeroPresentation();
     function Host() {
       const [value, setValue] = useState(project);
@@ -73,6 +74,7 @@ describe("hero product condition editing", () => {
     const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
     const source = zHeroProject.parse(JSON.parse(readFileSync(new URL("../../../../packages/shared/testkit/fixtures/azazel-handoff.json", import.meta.url), "utf8")));
     let project = refineAzazelProject(source);
+    project.projectId = "fixture-azazel-form-ex";
     project.presentation = defaultHeroPresentation(); // No model-worker IO in this form test.
     function Host() {
       const [value, setValue] = useState(project);

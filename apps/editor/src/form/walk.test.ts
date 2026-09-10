@@ -251,6 +251,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "screenShake",
         "spawnModelFx",
         "spawnProjectile",
+        "spawnThresholds",
         "spawnVfx",
         "spendHealth",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力

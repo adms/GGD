@@ -14,5 +14,7 @@ it("bundles every pickable document template plus the offline preview inputs", (
   const baseline = createHeroSimulationBaseline(new Map(bundledHeroCatalog.simulationDocuments));
   for (const collection of HERO_SIMULATION_COLLECTIONS) expect(baseline.counts[collection], collection).toBeGreaterThan(0);
   const bodies = new Set(bundledHeroCatalog.simulationDocuments.filter(([key]) => key.startsWith("champions/")).map(([, doc]) => doc.modelKey));
-  expect(bundledHeroCatalog.modelIds.every((id) => bodies.has(id))).toBe(true);
+  // Explicit model docs with heroBody:true are valid before a champion binds
+  // them. Every already-bound champion body still has to remain selectable.
+  expect([...bodies].every((id) => typeof id === "string" && bundledHeroCatalog.modelIds.includes(id))).toBe(true);
 });
