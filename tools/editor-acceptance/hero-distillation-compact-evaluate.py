@@ -227,16 +227,27 @@ def worker(directory, arm, token):
     with fp32_attention(mx, language):
         for hero in heroes:
             progress('hero', heroId=hero['heroId'])
-            result = generation.generate_hero(hero, p['datasetDirectory'], directory / 'source' / 'hero-distillation-compact-runtime-cli.mjs',
-                                              tokenizer, generation.g.mlx_stream_factory(model, processor), progress, emit)
-            target = result['target']
+            try:
+                result = generation.generate_hero(hero, p['datasetDirectory'], directory / 'source' / 'hero-distillation-compact-runtime-cli.mjs',
+                                                  tokenizer, generation.g.mlx_stream_factory(model, processor), progress, emit)
+                target = result['target']
+                assert target['format'] == 'hero-plan', 'ASSEMBLY_FORMAT_DRIFT'
+                result.update(status='complete')
+                completed.append({'heroId': hero['heroId'], 'status':'complete','targetSha256': result['targetSha256'], 'calls': result['calls'], 'humanRepairs': 0})
+            except Exception as error:
+                # Invalid JSON/selection is a failed outcome for this fixed
+                # hero, not a reason to silently shrink the arm denominator.
+                result={'heroId':hero['heroId'],'status':'failed','error':repr(error),'humanRepairs':0,'fullHeroE2EProven':False}
+                completed.append({'heroId':hero['heroId'],'status':'failed','error':repr(error),'humanRepairs':0})
             atomic(work / 'heroes' / (safe_name(hero['heroId']) + '.json'), result)
-            completed.append({'heroId': hero['heroId'], 'targetSha256': result['targetSha256'], 'calls': result['calls'], 'humanRepairs': 0})
             atomic(work / 'hero-index.json', completed)
-            assert target['format'] == 'hero-plan', 'ASSEMBLY_FORMAT_DRIFT'
-    assert len(calls) == len(heroes) * p['callsPerHero'] and len(completed) == len(heroes), 'INCOMPLETE_COMPACT_EVALUATION'
+    # A fixed public denominator is mandatory.  A failed bounded decision can
+    # legitimately consume fewer than seven calls, so never infer completeness
+    # from a fixed call count.
+    assert len(completed) == len(heroes), 'INCOMPLETE_COMPACT_EVALUATION'
+    successes = sum(row['status'] == 'complete' for row in completed)
     atomic(work / 'result.json', {'arm': arm, 'attemptedHeroes': len(completed), 'attemptedCalls': len(calls),
-                                   'completeHeroes': len(completed), 'humanRepairs': 0,
+                                   'completeHeroes': successes, 'failedHeroes':len(completed)-successes,'humanRepairs': 0,
                                    'modelPromoted': False, 'fullHeroE2EProven': False})
 
 

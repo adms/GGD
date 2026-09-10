@@ -39,6 +39,9 @@ export async function run(options:Record<string,string>){
     const row:any={heroId,engineRevision:revisionByHero.get(heroId),status:'structural-failure',humanRepairs:0,schemaCompilePassed:false,diskReloadCompileIdentical:false,fullHeroE2EProven:false,generationSha256:hash(bytes)};rows.push(row);
     try{
       assert.equal(generated.heroId,heroId,'GENERATED_HERO_ID_DRIFT');assert.equal(generated.humanRepairs,0,'HUMAN_REPAIR_NOT_ALLOWED');
+      if(generated.status!=='complete'){
+        row.status='generation-failed';row.error=String(generated.error||'COMPACT_GENERATION_FAILED');continue;
+      }
       assert.equal(generated.target?.format,'hero-plan','ASSEMBLY_OUTPUT_FORMAT');assert.equal(generated.target.plan.title,hero.heroName,'TARGET_HERO_NAME_DRIFT');
       const engine=await loader.loadEngine(row.engineRevision),output=materializeTarget(generated.target,{heroId,heroName:hero.heroName},engine,models),compiled=compileMaterialized(output,engine);
       const folder=path.join(out,heroId);fs.mkdirSync(folder);save(path.join(folder,'authoring.json'),output);
@@ -52,7 +55,7 @@ export async function run(options:Record<string,string>){
   const report={schema:'ggd-compact-generation-compile@1',arm,evaluationManifestSha256:hash(fs.readFileSync(path.join(evaluation,'manifest.json'))),
     publicHeroesSha256:manifest.publicHeroesSha256,modelBindingsSha256:hash(modelsBytes),scriptSha256:hash(fs.readFileSync(script)),
     adapterMaterializerSha256:hash(fs.readFileSync(new URL('./hero-distillation-adapter.mjs',import.meta.url))),engines:loader.evidence,
-    counts:{heroes:rows.length,structuralPassed:rows.filter(row=>row.schemaCompilePassed&&row.diskReloadCompileIdentical).length},
+    counts:{heroes:rows.length,generationCompleted:rows.filter(row=>row.status!=='generation-failed').length,generationFailed:rows.filter(row=>row.status==='generation-failed').length,structuralPassed:rows.filter(row=>row.schemaCompilePassed&&row.diskReloadCompileIdentical).length},
     scope:'Per-arm own compact decisions were assembled by script, materialized against the pinned engine, schema-checked, compiled, written to disk, reloaded and recompiled. No teacher answer was read by the evaluator. This excludes semantic fidelity, asset-byte closure, package admission, Editor import, selection into a match and gameplay behavior.',
     fullHeroE2EProven:false,modelPromoted:false,rows};save(path.join(out,'report.json'),report);return report;
 }
