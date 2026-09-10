@@ -72,10 +72,10 @@
    "lastError": null
   },
   "defeat": {
-   "text": "うぅ…くっ…",
+   "text": "（原檔）SSBB_Link_Smashed_Distant",
    "lang": "ja",
    "kana": "ウー クッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +88,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 35988,
+    "seconds": 2.169229,
     "lufs": null,
-    "hash": "c999375ee787e248a0e617fc227792b8b8972759be4866d2a0cc1aef405048f7",
-    "at": 1784972282914
+    "hash": "67f4b71c99fd10bd01385f1bc9fb554cefe4dbfa35923798e9c7b11a2e4dad4e",
+    "at": 1789067533291
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Smashed_Distant.wav"
   },
   "hurt": {
-   "text": "うあっ！",
+   "text": "（原檔）SSBB_Link_Hurt1",
    "lang": "ja",
    "kana": "ウアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +118,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 10493,
+    "seconds": 0.590476,
     "lufs": null,
-    "hash": "27ace69d1571e15e911eac3ce1df040fe6f517403467e93c9ad7e0aff100d6bf",
-    "at": 1784972290062
+    "hash": "8d89a793435af3639b9f6ece4a1f6f6998e4a62f9ead6173b23baec7b1b64644",
+    "at": 1789067533548
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Hurt1.wav"
   },
   "hurt-heavy": {
-   "text": "ぐあああっ…！",
+   "text": "（原檔）SSBB_Link_Smashed1",
    "lang": "ja",
    "kana": "グアアアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +148,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 15090,
+    "seconds": 0.884444,
     "lufs": null,
-    "hash": "23e5d3e2cc1e51a79dfa6c7098d7db3ce222a4b070d26d308506a98a266e93a4",
-    "at": 1784972291123
+    "hash": "f12631cf230cc02c484e5b6b283718d73c79aefd03c17eda11920fe2e8289dd7",
+    "at": 1789067533639
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Smashed1.wav"
   },
   "stun": {
    "text": "う、うぅ…？",
@@ -536,10 +539,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "ハッ！",
+   "text": "（原檔）SSBB_Link_Attack1",
    "lang": "ja",
    "kana": "ハッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +555,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 5059,
+    "seconds": 0.243175,
     "lufs": null,
-    "hash": "93b97c3aaa7f08818ffde6fe3322c5cb642ee896ae3435a8d073a2e867ec5eab",
-    "at": 1784972357284
+    "hash": "0fbf106d922e7a96a3a6f8b79634091ed963ee5cd2c0be083618eb8aeccbff21",
+    "at": 1789067533036
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Attack1.wav"
   },
   "attack-heavy": {
-   "text": "セイヤッ！",
+   "text": "（原檔）SSBB_Link_FinalSmash_Slash1",
    "lang": "ja",
    "kana": "セイヤッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,23 +585,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 9239,
-    "seconds": 0.52,
+    "bytes": 20524,
+    "seconds": 1.2122,
     "lufs": null,
-    "hash": "b37cd2da86313e749c0600bc80ab892991dae58f6aca2bf1898202ee34f88b11",
-    "at": 1784972357252
+    "hash": "5d26d447f60162b35b792e0425f4b13d0abb637118aaf0b00e2b930e08bb6bcc",
+    "at": 1789067532942
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_FinalSmash_Slash1.wav"
   },
   "crit": {
-   "text": "トアーッ！",
+   "text": "（原檔）SSBB_Link_FinalSmash_Slash2",
    "lang": "ja",
    "kana": "トアーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -610,23 +615,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 10493,
-    "seconds": 0.6,
+    "bytes": 22613,
+    "seconds": 1.338458,
     "lufs": null,
-    "hash": "ae42c0b30f5429b82b9b14e8e2755d3f46932c0aaa48617c9e97d4b70b6c5bdf",
-    "at": 1784972361134
+    "hash": "615918a6ef56d8d5b374011b9b6d92851e5feb8b577154a970fa00fb1521e3c2",
+    "at": 1789067533207
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_FinalSmash_Slash2.wav"
   },
   "block": {
-   "text": "ぐっ！",
+   "text": "（原檔）SSBB_Link_Shield",
    "lang": "ja",
    "kana": "グッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -639,23 +645,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 8403,
+    "seconds": 0.456508,
     "lufs": null,
-    "hash": "a8fa7f33d428f59dce8a64477cc70c5a936cd58021ada1736566f3e5c92b2330",
-    "at": 1784972370178
+    "hash": "c4092eb3289404c605e72e5b72f93a88579c929d250b9ac7fdfa95217e25e4e1",
+    "at": 1789067533121
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Shield.wav"
   },
   "dodge": {
-   "text": "トッ！",
+   "text": "（原檔）SSBB_Link_Dash_Start",
    "lang": "ja",
    "kana": "トッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -668,23 +675,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 4223,
+    "seconds": 0.192948,
     "lufs": null,
-    "hash": "214a9b6a744442d20ff569ba314123f73e025f5d506c23c5dc50d7476db70f6a",
-    "at": 1784972371258
+    "hash": "b4208f5a8b964d9636f64e22a13075d6d551ba9b721b390a88fe247f52550393",
+    "at": 1789067533465
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Dash_Start.wav"
   },
   "sprint": {
-   "text": "ハッ、ハッ、ハッ…！",
+   "text": "（原檔）SSBB_Link_Dash_Stop",
    "lang": "ja",
    "kana": "ハッ ハッ ハッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -697,23 +705,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 18434,
-    "seconds": 1.08,
+    "bytes": 5059,
+    "seconds": 0.257256,
     "lufs": null,
-    "hash": "51f1838a3dff25096b4ceeb0243b41e761d1197b411893d57862664ac11892f0",
-    "at": 1784972374087
+    "hash": "bb8b135411cc07771100faaa59cb8478168d8410541a34f3782f3d95eb2980a7",
+    "at": 1789067534266
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Dash_Stop.wav"
   },
   "jump": {
-   "text": "ホッ！",
+   "text": "（原檔）SSBB_Link_Jump",
    "lang": "ja",
    "kana": "ホッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +735,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
     "stub": false,
-    "bytes": 5059,
-    "seconds": 0.24,
+    "bytes": 5895,
+    "seconds": 0.290159,
     "lufs": null,
-    "hash": "996b616ff21220d62cbf69c0ec38e57afe9d96271987373502220e6a309e08bf",
-    "at": 1784972382569
+    "hash": "51b2d776c09e49150ff4155f8d23eedbe7d86703e85ee1ddbaf95930f49dd3ba",
+    "at": 1789067533905
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Jump.wav"
   },
   "respond.ok": {
    "text": "ンッ！",
@@ -1386,6 +1396,126 @@
    },
    "lastError": null,
    "kana": "ゼッコウザン"
+  },
+  "defeat.2": {
+   "text": "（原檔）SSBB_Link_Dizzy",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Dizzy.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.310476,
+    "lufs": null,
+    "hash": "0a3b43b0ac652d4abdba5045c6a0b0a0bd346bc7f91e0af8d1005c49e068a239",
+    "at": 1789067533380
+   }
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）SSBB_Link_Smashed2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Smashed2.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.324444,
+    "lufs": null,
+    "hash": "bcffe1781e386df425f6687840c9eb9f78a1ad7900d704645c7fcf7fe71db45f",
+    "at": 1789067533733
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）SSBB_Link_Hurt2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Hurt2.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.406984,
+    "lufs": null,
+    "hash": "ba73a4f03f57fe94f11b5fe461baef8f15f139101fb9ee4be145064ba3acb5e0",
+    "at": 1789067533822
+   }
+  },
+  "skill-name.e.2": {
+   "text": "（原檔）SSBB_Link_Bow_Pull",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_Bow_Pull.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.804558,
+    "lufs": null,
+    "hash": "965334e8883c3359b2270d2ffe32affb6fd5fc26dc6d2624bfb3a48209d22735",
+    "at": 1789067533996
+   }
+  },
+  "skill-name.q.2": {
+   "text": "（原檔）SSBB_Link_SwordSlash2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_SwordSlash2.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
+    "stub": false,
+    "bytes": 4641,
+    "seconds": 0.219184,
+    "lufs": null,
+    "hash": "9d3e82667932a09cbaa1a22543d4736d955fa50bedb50bdac94f883f60df6582",
+    "at": 1789067534085
+   }
+  },
+  "skill-name.w.2": {
+   "text": "（原檔）SSBB_Link_SpinAttack_Charge1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dayjo-ssbb-zelda-audio:SSBB_Link/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio/extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge1.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dayjo-ssbb-zelda-audio:SSBB_Link",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.321905,
+    "lufs": null,
+    "hash": "b1e7b180b62b2e79db635c276b379b57441b3ff89fd61a9502f3ccaade6ddd6f",
+    "at": 1789067534171
+   }
   }
  }
 }

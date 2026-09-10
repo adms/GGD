@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753683,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-04-20260907.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/community-review-04-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -26,23 +26,61 @@
      "error": null
     }
    ],
-   "text": "オラオラオラオラ！",
+   "text": "（原檔）voice_joke_1",
    "lang": "ja",
-   "kana": "オラ オラ オラ オラ",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0009-163_voice_joke_1.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 23449,
+    "seconds": 1.388844,
     "lufs": null,
-    "hash": "eeb44223a117e2cd7a9cc7013ef1d3b9df2ee316285836e7474672cee228b4c0",
-    "maxDb": -4.7,
-    "at": 1789043003844
+    "hash": "cbf7ad39d6d967fb1f312b88d5b70810a857f1d34c4b4c482b6b4b2b45184270",
+    "at": 1789067120726
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0006-163_voice_joke_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
+    "stub": false,
+    "bytes": 49363,
+    "seconds": 3.005533,
+    "lufs": null,
+    "hash": "88019e03b7b5b26598ecc6c1244d6f13ac365696d54d25ea77f8199eaf5a7756",
+    "at": 1789067120807
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）voice_joke_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0013-163_voice_joke_3.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
+    "stub": false,
+    "bytes": 30555,
+    "seconds": 1.841633,
+    "lufs": null,
+    "hash": "49c0b10d73b87a7d3e627c3c81abcd7f63f160369e56c5353e2886ffef98bb5e",
+    "at": 1789067120887
    },
    "lastError": null
   },
@@ -63,23 +101,33 @@
      "seconds": 1.04,
      "at": 1789040378387,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789060157829,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_q_1_1",
+   "text": "歐拉連打！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0018-163_voice_q_1_1.ogg",
+   "kana": "オウ ラツ レンダ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-04-20260907.q",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:163",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 55214,
-    "seconds": 3.391565,
+    "bytes": 17180,
+    "seconds": 1,
     "lufs": null,
-    "hash": "98c885425259c4c39602fa5b8a0f916decbfde6c417a62e631f6eeac5f686cdf",
-    "at": 1789041880245
+    "hash": "13f1d052f19c14a564d7d7d3ae2d6cf4392f579edef27172e33cbe5fef9644c5",
+    "maxDb": -2.7,
+    "at": 1789060157830
    },
    "lastError": null
   },
@@ -100,23 +148,33 @@
      "seconds": 1.28,
      "at": 1789040378504,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789060157959,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_w_1_1",
+   "text": "流星指刺！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0014-163_voice_w_1_1.ogg",
+   "kana": "リュウセイ ユビ トゲ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-04-20260907.w",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:163",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 22613,
-    "seconds": 1.342404,
+    "bytes": 18852,
+    "seconds": 1.12,
     "lufs": null,
-    "hash": "b38b58d245fd8567393a24a2de4a9c4da8ef72a6c2d4a53ffacba95a7323f662",
-    "at": 1789041880295
+    "hash": "17199090ef9e348d0de7b67b0802202fd431487b30382750799145c679722b82",
+    "maxDb": -3.5,
+    "at": 1789060157959
    },
    "lastError": null
   },
@@ -145,6 +203,14 @@
      "seconds": 0.72,
      "at": 1789042400525,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789060158088,
+     "error": null
     }
    ],
    "text": "替身護衛！",
@@ -154,16 +220,16 @@
    "origin": "ability-name:community-review-04-20260907.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 17598,
+    "seconds": 1.04,
     "lufs": null,
-    "hash": "5a7796c7bb81f989e483c5561e21789e62bdf205d2f6b99a4eb1442531d12225",
-    "maxDb": -3.1,
-    "at": 1789042400525
+    "hash": "e9907760c2644a371f291326b8aa1d8ed3b0e602359e0f13d7ecba4e4dd97fad",
+    "maxDb": -3.2,
+    "at": 1789060158088
    },
    "lastError": null
   },
@@ -184,23 +250,33 @@
      "seconds": 1.36,
      "at": 1789040378726,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.84,
+     "at": 1789060158217,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_dazhao_1",
+   "text": "白金之星・世界！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0024-163_voice_dazhao_1.ogg",
+   "kana": "シロガネ ユキ ホシ セカイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-04-20260907.r",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:163",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 40586,
-    "seconds": 2.471474,
+    "bytes": 30555,
+    "seconds": 1.84,
     "lufs": null,
-    "hash": "9013f16214932e703638006f85f10121b28df86d483fa6285b3af56d092ede83",
-    "at": 1789041880346
+    "hash": "631e3e092b2dfb7ed36657ea6321ea7c73196ef15adbe2f80e1b2942e74e9552",
+    "maxDb": -2.7,
+    "at": 1789060158217
    },
    "lastError": null
   },
@@ -221,23 +297,33 @@
      "seconds": 2,
      "at": 1789040378837,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1789060158346,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_dazhao_1",
+   "text": "歐拉終結拳！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0024-163_voice_dazhao_1.ogg",
+   "kana": "オウ ラツ シュウケツ コブシ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-04-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:163",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 40586,
-    "seconds": 2.471474,
+    "bytes": 29719,
+    "seconds": 1.8,
     "lufs": null,
-    "hash": "9013f16214932e703638006f85f10121b28df86d483fa6285b3af56d092ede83",
-    "at": 1789041880397
+    "hash": "04eca985f9699cfe4520e35e5ec6498e44c55598026d8c87f90ab1dfbacebf77",
+    "maxDb": -2.4,
+    "at": 1789060158346
    },
    "lastError": null
   },
@@ -250,6 +336,14 @@
      "seconds": 1.4,
      "at": 1789043003956,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789060158466,
+     "error": null
     }
    ],
    "text": "てめーはおれを怒らせた",
@@ -259,16 +353,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 23449,
-    "seconds": 1.4,
+    "bytes": 33062,
+    "seconds": 2,
     "lufs": null,
-    "hash": "1b39932fec908653a78281f4b7ec5a7c0884cbe852111195bf9ac4c26b930197",
-    "maxDb": -2.1,
-    "at": 1789043003956
+    "hash": "9c0a2068f25bafa6659b60f04a6e3b383af75e88668c97e7d2320de911f92945",
+    "maxDb": -4.3,
+    "at": 1789060158466
    },
    "lastError": null
   },
@@ -309,6 +403,26 @@
    },
    "lastError": null
   },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）voice_death_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0012-163_voice_death_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
+    "stub": false,
+    "bytes": 41004,
+    "seconds": 2.503401,
+    "lufs": null,
+    "hash": "8a00fb32482cbfa75e99d3d36dcd7fa7bb5d52b6b265d02a2fc344f2b71043a9",
+    "at": 1789067120968
+   },
+   "lastError": null
+  },
   "hurt": {
    "takes": [
     {
@@ -328,23 +442,41 @@
      "error": null
     }
    ],
-   "text": "うっ！",
+   "text": "（原檔）chr0340_ActVoice#64",
    "lang": "ja",
-   "kana": "ウッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#64.ogg",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 12164,
+    "seconds": 0.693537,
     "lufs": null,
-    "hash": "592e5daeead66b7cb101239ac58757f20af757025c62ed7917cbb6d0a0de0d31",
-    "maxDb": -2,
-    "at": 1789040379052
+    "hash": "67d88c3e375bf57d62e6429b10c74ab16425776d788bf95f0695df028ea6e37e",
+    "at": 1789058012662
+   },
+   "lastError": null
+  },
+  "hurt.2": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#192",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#192.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.689093,
+    "lufs": null,
+    "hash": "7fe52a77eee0e290241b5531d7710f093e20366fb68d598eae7a0a3e685d09ab",
+    "at": 1789067121049
    },
    "lastError": null
   },
@@ -367,23 +499,41 @@
      "error": null
     }
    ],
-   "text": "ぐああっ……！",
+   "text": "（原檔）chr0340_ActVoice#68",
    "lang": "ja",
-   "kana": "グアアッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#68.ogg",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 20524,
+    "seconds": 1.227415,
     "lufs": null,
-    "hash": "54b2c1032f3ad4dbfb35755ae4167600e24303a35011c07adaa205f2ce37ae6d",
-    "maxDb": -1.9,
-    "at": 1789040379158
+    "hash": "eecece1fda6b4a9581a43aa899898bc413e92be7ae1d23f54a736cb99c2371ff",
+    "at": 1789058012833
+   },
+   "lastError": null
+  },
+  "hurt-heavy.2": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#35",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#35.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.18898,
+    "lufs": null,
+    "hash": "8f3287250dd1bc5367514db19843ed3ff836c42ccda0eeed3e229da490786a3a",
+    "at": 1789067121127
    },
    "lastError": null
   },
@@ -398,27 +548,165 @@
      "error": null
     }
    ],
-   "text": "やれやれだぜ",
+   "text": "（原檔）voice_to_270_1",
    "lang": "ja",
-   "kana": "ヤレヤレ ダゼ",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0019-163_voice_to_270_1.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
     "stub": false,
-    "bytes": 19688,
-    "seconds": 1.16,
+    "bytes": 58976,
+    "seconds": 3.623764,
     "lufs": null,
-    "hash": "4ca2eec5504ffb4167068997dac8ba923270ba306d1e44a31ba46124a938f905",
-    "maxDb": -3.2,
-    "at": 1789043004068
+    "hash": "b96eafe692b363a3a0070ef005db7601e3f04569a001a2062a6dee19d82cd7d0",
+    "at": 1789067121201
    },
    "lastError": null
   },
-  "sprint": {
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#6",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#6.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 79456,
+    "seconds": 4.910907,
+    "lufs": null,
+    "hash": "c34e16358f87321509581f93c69aecaff39418aeccc2c20bb7e9dc2a9db6004d",
+    "at": 1789067121276
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#200",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#200.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 79456,
+    "seconds": 4.899615,
+    "lufs": null,
+    "hash": "2e6240a758496b7d52bf064aa48ea6bd6ff0578611a0835b55bb48826df1e95a",
+    "at": 1789067121353
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）voice_attack_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0021-163_voice_attack_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
+    "stub": false,
+    "bytes": 86979,
+    "seconds": 5.365261,
+    "lufs": null,
+    "hash": "062dfda86f1c7734f9d59cbba3e1a1c9ba91a2430e6539df6cc7e94bf7639225",
+    "at": 1789058013183
+   },
+   "lastError": null
+  },
+  "attack-light.2": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#177",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#177.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.589138,
+    "lufs": null,
+    "hash": "4d62937fc1ffe1faf0605ecce50b110c0e55b1e9cb332aa01133460a73fee1b1",
+    "at": 1789067121433
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）voice_attack_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0002-163_voice_attack_3.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:163",
+    "stub": false,
+    "bytes": 29719,
+    "seconds": 1.786485,
+    "lufs": null,
+    "hash": "36b24cf3c1e21bcce4145a2f1f702ba62dba682a063ed10e6df55757f0022b47",
+    "at": 1789058013373
+   },
+   "lastError": null
+  },
+  "attack-heavy.2": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#71",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#71.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.180113,
+    "lufs": null,
+    "hash": "7583493f59517bf643f2a04457a58db35517a7fb961d84ae4bdae02277607b5e",
+    "at": 1789067121510
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#128",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#128.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.584014,
+    "lufs": null,
+    "hash": "18ee85cd7290b977eb8a3494d27b8aa54d06dd825f8ac45f8eaee1d3971fd273",
+    "at": 1789048353577
+   },
+   "lastError": null
+  },
+  "respond.ok": {
    "takes": [],
    "text": "（原檔）voice_move_1",
    "lang": "ja",
@@ -434,47 +722,7 @@
     "seconds": 4.628027,
     "lufs": null,
     "hash": "a4d8419357d331eb47ddfe4480737696cd75336e2137777058c84688d479d2c4",
-    "at": 1789041880546
-   },
-   "lastError": null
-  },
-  "puzzled": {
-   "takes": [],
-   "text": "（原檔）voice_joke_1",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0009-163_voice_joke_1.ogg",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:163",
-    "stub": false,
-    "bytes": 23449,
-    "seconds": 1.388844,
-    "lufs": null,
-    "hash": "cbf7ad39d6d967fb1f312b88d5b70810a857f1d34c4b4c482b6b4b2b45184270",
-    "at": 1789041880598
-   },
-   "lastError": null
-  },
-  "charge": {
-   "takes": [],
-   "text": "（原檔）voice_move_3",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0008-163_voice_move_3.ogg",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:163",
-    "stub": false,
-    "bytes": 49363,
-    "seconds": 3.022948,
-    "lufs": null,
-    "hash": "31bfa6c2ea22e2c52626606f5851e561f5603a9961ba078faffb41353b58cb6b",
-    "at": 1789041880648
+    "at": 1789048353677
    },
    "lastError": null
   },
@@ -494,7 +742,7 @@
     "seconds": 3.850159,
     "lufs": null,
     "hash": "d766b82fb152f0a0351961ea895d436dff33996c144a9dd092c8b9ceb79329a5",
-    "at": 1789041880697
+    "at": 1789058013559
    },
    "lastError": null
   },
@@ -532,6 +780,26 @@
     "lufs": null,
     "hash": "d7d92d46870c89528d3db672960bf4443e7751c596ce4cd1e414aa1300a99151",
     "at": 1789041880746
+   },
+   "lastError": null
+  },
+  "kill-1.2": {
+   "takes": [],
+   "text": "（原檔）chr0340_ActVoice#141",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#141.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+    "stub": false,
+    "bytes": 20524,
+    "seconds": 1.227234,
+    "lufs": null,
+    "hash": "fec3e7f017bab86628109b40f014cff9dca625e2d0792c62e78af3f7a3200aeb",
+    "at": 1789067121583
    },
    "lastError": null
   }

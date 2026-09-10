@@ -43,10 +43,10 @@
    "lastError": null
   },
   "victory": {
-   "text": "勝利した。この剣に、敗北はない",
+   "text": "（原檔）VOICE_1944",
    "lang": "ja",
    "kana": "ショウリ シタ コノ ケンニ ハイボクワ ナイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,23 +59,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 43511,
-    "seconds": 2.64,
+    "bytes": 60648,
+    "seconds": 3.714014,
     "lufs": null,
-    "hash": "df3e5dc391576e6136fa3bd653340ed54e88fb9cc7e12785e7236df794398f31",
-    "at": 1784969917467
+    "hash": "42e2fb5933055b4395746f58e399f7b5bf7801503c619243a3dcc924b0974f09",
+    "at": 1789067529555
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1944.wav"
   },
   "defeat": {
-   "text": "私の敗北か……騎士として、認めよう",
+   "text": "（原檔）voice_death_2",
    "lang": "ja",
    "kana": "ワタシノ ハイボクカ キシ トシテ ミトメヨウ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +89,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:53",
     "stub": false,
-    "bytes": 42675,
-    "seconds": 2.6,
+    "bytes": 11328,
+    "seconds": 0.65161,
     "lufs": null,
-    "hash": "6ad509d949c3c0b9c14ee0c1011fad4bad990aa06e5a4302c37bb7fa8ca610f7",
-    "at": 1784969920627
+    "hash": "28d1e24edae1deaf14afe5fee8c36c367a8ecbf103db1acc59315ced9428bf96",
+    "at": 1789067528270
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:53/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/53/01-0012-53_voice_death_2.ogg"
   },
   "hurt": {
-   "text": "くっ！",
+   "text": "（原檔）VOICE_1927",
    "lang": "ja",
    "kana": "クッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +119,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 12164,
+    "seconds": 0.694671,
     "lufs": null,
-    "hash": "ee7b77f039eb49ee58e0aff2af7fb5bc027ead43957b1db1fd2faec33e0de269",
-    "at": 1784969919693
+    "hash": "171502223d9834775eab24c446f63e9a59ebb903b02fe3be0205113fbab99e7a",
+    "at": 1789067528359
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1927.wav"
   },
   "hurt-heavy": {
-   "text": "ぐうっ……この程度で……！",
+   "text": "（原檔）VOICE_1088",
    "lang": "ja",
    "kana": "グウッ コノ テイドデ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +149,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 18434,
-    "seconds": 1.08,
+    "bytes": 18016,
+    "seconds": 1.051338,
     "lufs": null,
-    "hash": "3c63f74c469a1541fc03b10070949ab1616d4174ef9e70db8c526fb7e4d3583e",
-    "at": 1784969934027
+    "hash": "94b517e5d5d394ce5c95c89122b3873887b267bbb196d1c90bfd1e130a1a67f1",
+    "at": 1789067528442
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1088.wav"
   },
   "stun": {
    "text": "うっ……意識が……",
@@ -449,10 +453,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "その程度か。出直すがいい",
+   "text": "（原檔）VOICE_1957",
    "lang": "ja",
    "kana": "ソノ テイドカ デナオスガ イイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +469,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 25539,
-    "seconds": 1.52,
+    "bytes": 95338,
+    "seconds": 5.888005,
     "lufs": null,
-    "hash": "4e8249e405f7ed5b1ae423d4323e9b4db697a5d2e0d3c61d21f8914967376e01",
-    "at": 1784969994797
+    "hash": "3d5baff5e42378d9f81a786aa41d90aa26c012b1fa83acf7a3cae046d65d7c21",
+    "at": 1789067529291
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1957.wav"
   },
   "curse": {
    "text": "なんという、不覚……！",
@@ -536,10 +541,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "はっ！",
+   "text": "（原檔）VOICE_0452",
    "lang": "ja",
    "kana": "ハッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +557,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 10493,
+    "seconds": 0.578662,
     "lufs": null,
-    "hash": "dd45ccd703a838e6a07b2350f85b263d280eed3cd1bb32e64c62ee44a22aa523",
-    "at": 1784970010510
+    "hash": "1c1c066bf8da54016617c6de4e443dc27011d02590d726cffbcf1e36bfb6eff5",
+    "at": 1789067528173
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_0452.wav"
   },
   "attack-heavy": {
-   "text": "はああっ！",
+   "text": "（原檔）VOICE_1081",
    "lang": "ja",
    "kana": "ハアアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +587,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 16344,
+    "seconds": 0.95068,
     "lufs": null,
-    "hash": "a76c31d0765a5d091b181efea0bc7331d71742bcd7da43f4d4bfd5b07ecf101a",
-    "at": 1784970023490
+    "hash": "8a5da8536d702c77a1a82a5318be7cc1af2bdb7eec5b08dee9afeb89bbff6238",
+    "at": 1789067528083
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1081.wav"
   },
   "crit": {
    "text": "これで、決める！",
@@ -710,10 +717,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ふっ！",
+   "text": "（原檔）VOICE_0451",
    "lang": "ja",
    "kana": "フッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +733,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 8821,
+    "seconds": 0.47127,
     "lufs": null,
-    "hash": "9cfd3d1f5eaa408d481c042a762f90e02a6d3424faf8a819fb2f50e83f6dd16f",
-    "at": 1784970041428
+    "hash": "730da3cc2da0500a456c68c87da07a5d156f6c518595c24616d3c12ed549233e",
+    "at": 1789067528706
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_0451.wav"
   },
   "respond.ok": {
    "text": "了解した。任せろ",
@@ -1277,9 +1285,9 @@
    "kana": "インビジブル エア"
   },
   "skill-name.e": {
-   "text": "約束與勝利之劍！",
+   "text": "（原檔）voice_dazhao_2",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1300,18 +1308,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:53",
     "stub": false,
-    "bytes": 13418,
-    "seconds": null,
+    "bytes": 56886,
+    "seconds": 3.490249,
     "lufs": null,
-    "hash": "bf7dc9094f2692b6b8f856ea37489dcb825d7824511b8558a808317e6653148c",
-    "at": 1784990834785
+    "hash": "b4a1da895d585085832a5d7bcc233770b062dde3d034690ee6e050559ad161c4",
+    "at": 1789067529015
    },
    "lastError": null,
-   "kana": "エクスカリバー"
+   "kana": "エクスカリバー",
+   "origin": "original:300heroes:53/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/53/01-0010-53_voice_dazhao_2.ogg"
   },
   "skill-name.r": {
    "text": "Avalon-永恆的理想鄉！",
@@ -1351,9 +1360,9 @@
    "kana": "アヴァロン"
   },
   "skill-name.ex": {
-   "text": "解放.約束勝利劍MAX！",
+   "text": "（原檔）VOICE_1083",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1374,18 +1383,179 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
     "stub": false,
-    "bytes": 36406,
-    "seconds": null,
+    "bytes": 41839,
+    "seconds": 2.544014,
     "lufs": null,
-    "hash": "5b2c5b8e2dfcaac0e7c61b8457f8b70b020d497e74b71e205f35f0c1fdfdb9f8",
-    "at": 1784990836795
+    "hash": "4464edaa8503316a583778a1225a8908a7b3fd21ee2e31b5907d5c818ee18b4e",
+    "at": 1789067529110
    },
    "lastError": null,
-   "kana": "カイホウ エクスカリバー マックス"
+   "kana": "カイホウ エクスカリバー マックス",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1083.wav"
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）VOICE_1915",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1915.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.029342,
+    "lufs": null,
+    "hash": "3d0f3aeefba1f703dafb9ef6fe1e106805403f2d2aee247dafb1d0e99ba65306",
+    "at": 1789067528532
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）VOICE_1091",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1091.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.678005,
+    "lufs": null,
+    "hash": "29f3ab0b35075d926362315464c49fa13eb095c7fb13b02d4ab807eefe4468e3",
+    "at": 1789067528617
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）VOICE_1935",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1935.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 96174,
+    "seconds": 5.934671,
+    "lufs": null,
+    "hash": "a5247c5b3ae2eda1497bac8b471b0589a811249259b07bdd4118965ec27f2ace",
+    "at": 1789067528794
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）VOICE_1938",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1938.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 95756,
+    "seconds": 5.926667,
+    "lufs": null,
+    "hash": "1431b4eb33cb8cd9c7bd36f7613582a41de9335041312c52e3606c975017c3cb",
+    "at": 1789067528892
+   }
+  },
+  "skill-name.ex.2": {
+   "text": "（原檔）VOICE_1084",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1084.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 33480,
+    "seconds": 2.021338,
+    "lufs": null,
+    "hash": "060fcc6a2e010466d8eb04a5eb98f0b32898dad5f4566ef5b11124c6531942c1",
+    "at": 1789067529204
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）VOICE_1100",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1100.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 92413,
+    "seconds": 5.716009,
+    "lufs": null,
+    "hash": "3cdcfccb7d3bdbf7d17508307362d159d16c11a549bc7ba8a01ea2eb5fc2b872",
+    "at": 1789067529375
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）VOICE_1939",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1939.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 89905,
+    "seconds": 5.548005,
+    "lufs": null,
+    "hash": "49e6d18384cab62d44865b420bbee7b423763b839b3dc63a965701824cc7ef91",
+    "at": 1789067529464
+   }
+  },
+  "victory.2": {
+   "text": "（原檔）VOICE_1308",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-saber:saber-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/extracted/saber_sounds/VOICE_1308.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-saber:saber-character-audio",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.505329,
+    "lufs": null,
+    "hash": "1436bcd63313c7c4d739bbfd4581526e2c40717973558928f018cb70c37cfe2d",
+    "at": 1789067529646
+   }
   }
  }
 }

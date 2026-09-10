@@ -4,43 +4,32 @@
   "resolverFingerprint": "21a5483cdc47",
   "totals": {
     "champions": 153,
-    "standIns": 17,
+    "standIns": 3,
     "failures": 0
   },
   "appearances": [
     {
       "championId": "b2-aladdin",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "ou99.473324",
+      "glbPath": "assets/models/ou99/ou99_473324.glb",
+      "modelDocDigest": "29708b8e7bd5",
       "scale": 1,
-      "collisionRadius": 0.6,
+      "collisionRadius": 0.55,
       "authoredYawOffsetDeg": null,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell one",
+        "death": "Death",
+        "hurt": "Stand"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -232,36 +221,25 @@
     {
       "championId": "b2-guts",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
+      "glbPath": "assets/models/ou99/versions/ea28614b3ec763bd20c205cb8b7e8600d7a7781a7ec12baebd5ad55e86ed2a6d.glb",
+      "modelDocDigest": "4464c49385bb",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -333,36 +311,25 @@
     {
       "championId": "b2-kaiji",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
+      "glbPath": "assets/models/ou99/versions/0ffce2b9f25b79753a9128d548a978de691985db46d4077d1466f880deececd3.glb",
+      "modelDocDigest": "cd425ec6efa2",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 2",
+        "cast": "attack 2",
+        "hurt": "stand",
         "death": "death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -374,36 +341,25 @@
     {
       "championId": "b2-keyaru",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "ou99.458777",
+      "glbPath": "assets/models/ou99/ou99_458777.glb",
+      "modelDocDigest": "8b8bcd4ba8b0",
       "scale": 1,
-      "collisionRadius": 0.6,
+      "collisionRadius": 0.55,
       "authoredYawOffsetDeg": null,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "death": "Death",
+        "hurt": "Stand"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -565,36 +521,25 @@
     {
       "championId": "b2-maomao",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
+      "glbPath": "assets/models/ou99/versions/95dfde82bc19ead9c4d1dd20441c176af0c398fd064055dfa703cb4f4fb1144d.glb",
+      "modelDocDigest": "05868c2f451c",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -737,36 +682,25 @@
     {
       "championId": "b2-naofumi",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
+      "glbPath": "assets/models/ou99/versions/250f873ccdd2a6111cdcd041cd94f9c054a0a598b76cabf5bbb3bbe85be0b160.glb",
+      "modelDocDigest": "5a61cb266ad3",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell",
+        "hurt": "Stand - 1",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -1018,36 +952,25 @@
     {
       "championId": "b2-shinchan",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
+      "glbPath": "assets/models/ou99/versions/a725f7fc1c46ee63f359f864b3f5c65472fa65d1d0d1d2e67371dd5a1995192f.glb",
+      "modelDocDigest": "4f04ecf73998",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
+        "idle": "Stand",
+        "run": "walk",
         "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
+        "cast": "attack",
+        "hurt": "Stand",
         "death": "death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -2830,36 +2753,25 @@
     {
       "championId": "godie-e00s",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
+      "glbPath": "assets/models/ou99/versions/33a0ce0c407d2989a7654208f72d79ecce4f05883f369b9e6ff8d3725c22f8eb.glb",
+      "modelDocDigest": "cb90e8b8718b",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 2",
+        "cast": "Spell Ten",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -3043,36 +2955,25 @@
     {
       "championId": "godie-e010",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
+      "glbPath": "assets/models/ou99/versions/33a0ce0c407d2989a7654208f72d79ecce4f05883f369b9e6ff8d3725c22f8eb.glb",
+      "modelDocDigest": "cb90e8b8718b",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 2",
+        "cast": "Spell Ten",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -3160,36 +3061,25 @@
     {
       "championId": "godie-efur",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
+      "glbPath": "assets/models/ou99/versions/dc848d012c84362c811f570a9a58b3cb2371264bb5bb8b2ccc66ec4ab6f36e74.glb",
+      "modelDocDigest": "bafb41763377",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -4144,36 +4034,25 @@
     {
       "championId": "godie-hapm",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+      "glbPath": "assets/models/ou99/versions/a92a451d7f8d542acb998150eb65b906b63a91191c399c866d112c2e1bb796b5.glb",
+      "modelDocDigest": "3cc07289d3ff",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell Slam",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -5608,36 +5487,25 @@
     {
       "championId": "godie-ogld",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
+      "glbPath": "assets/models/ou99/versions/9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727.glb",
+      "modelDocDigest": "49fb772ba523",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -5983,36 +5851,25 @@
     {
       "championId": "godie-u00k",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/blocky-mage.glb",
-      "modelDocDigest": "90b8a7ce5f18",
+      "modelKey": "version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa",
+      "glbPath": "assets/models/ou99/versions/e8b57b8054ce2589fe74e90273dbd39b4ae42d5490e119ee83015eff192ed4c7.glb",
+      "modelDocDigest": "c31721d6b6e8",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
+        "idle": "Stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell 1",
+        "hurt": "Stand",
         "death": "death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -6647,36 +6504,25 @@
     {
       "championId": "godie-udea",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
+      "glbPath": "assets/models/ou99/versions/3719a18cd861533c7acc56d1b1a7ff30ba7ee13cd90ec9caef28f4cec15e8879.glb",
+      "modelDocDigest": "9dc5d60a3220",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell 1",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",

@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "フシギバナァァ……",
+   "text": "（原檔）0030-vc_pfushigisou_appeal03",
    "lang": "ja",
    "kana": "フシギ バナァァ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,23 +30,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 19688,
-    "seconds": 1.16,
+    "bytes": 9657,
+    "seconds": 0.531043,
     "lufs": null,
-    "hash": "256fe91c739e6d45851af33424c23bb7c358a022391f6751fd0222c03acc100e",
-    "at": 1784973338734
+    "hash": "375d0ac0dc26a899d68a7356ef0a5ea07e435547eeb071bd4ab4e1c626e4c023",
+    "at": 1789067539007
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0030-vc_pfushigisou_appeal03.wav"
   },
   "victory": {
-   "text": "バナァァーッ！！",
+   "text": "（原檔）0016-vc_pfushigisou_damage_twinkle",
    "lang": "ja",
    "kana": "バナァァーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,23 +60,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 10493,
-    "seconds": 0.6,
+    "bytes": 27629,
+    "seconds": 1.65068,
     "lufs": null,
-    "hash": "904925eaf4a04d4dcbdc5bff3e353cf439763fd54f5e121a75911e5510ba7019",
-    "at": 1784973366820
+    "hash": "4e68527adaa943b67b28e1b41d448608e7bb089386024ff7ab4ab9005ed58e47",
+    "at": 1789067539921
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0016-vc_pfushigisou_damage_twinkle.wav"
   },
   "defeat": {
-   "text": "フシィ……ギ……",
+   "text": "（原檔）0036-vc_pfushigisou_knockout",
    "lang": "ja",
    "kana": "フシィ ギ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +90,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 46437,
+    "seconds": 2.826939,
     "lufs": null,
-    "hash": "4dc9094e5b4a0be946754b23f4e098648c3e50bff3bc6cc40c72776b0c8f3b82",
-    "at": 1784973372481
+    "hash": "72e95ef415fdd7cd34a8d04041f89457b669f572f7b971bd34b45451d9bc787a",
+    "at": 1789067538163
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0036-vc_pfushigisou_knockout.wav"
   },
   "hurt": {
-   "text": "ギッ！",
+   "text": "（原檔）0010-vc_pfushigisou_damage01",
    "lang": "ja",
    "kana": "ギッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +120,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 7149,
+    "seconds": 0.372902,
     "lufs": null,
-    "hash": "d2ac1ec59f6d2ab1ca788808dd6523f852e0c599ece888c31af66e0c8b9946b2",
-    "at": 1784973376808
+    "hash": "551a468f95d21c691f0ec48223643e66060210d0dd8dcb4819067ab5ed5dcaf6",
+    "at": 1789067538352
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0010-vc_pfushigisou_damage01.wav"
   },
   "hurt-heavy": {
-   "text": "ギィィ……バナァ……",
+   "text": "（原檔）0012-vc_pfushigisou_damagefly01",
    "lang": "ja",
    "kana": "ギィィ バナァ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +150,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 9239,
+    "seconds": 0.51576,
     "lufs": null,
-    "hash": "ec52f457ff21cf0a6d1dd549cd3aeb3d4d4d177bb82e1257a2620bfe539a822f",
-    "at": 1784973381069
+    "hash": "3505ef3e98952921f5ce6bcf35ba1c51e52477637cc2f37450f357324c3fb177",
+    "at": 1789067538440
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0012-vc_pfushigisou_damagefly01.wav"
   },
   "stun": {
    "text": "フシ……ギ……？",
@@ -449,10 +454,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "フシシシッ",
+   "text": "（原檔）0027-vc_pfushigisou_appeal02",
    "lang": "ja",
    "kana": "フシシシッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +470,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 4641,
+    "seconds": 0.211837,
     "lufs": null,
-    "hash": "5f5c371a0651609486eff72c6a212799d53f11cc2d78199a13b94bc264e50345",
-    "at": 1784973436125
+    "hash": "b62757eb2e5fa145c7175c450460e5fd6cbb8767cdadfa05abfc858f09202691",
+    "at": 1789067539604
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0027-vc_pfushigisou_appeal02.wav"
   },
   "curse": {
    "text": "ギィバナァァッ！！",
@@ -536,10 +542,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "バッ！",
+   "text": "（原檔）0001-vc_pfushigisou_attack01",
    "lang": "ja",
    "kana": "バッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +558,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 6313,
+    "seconds": 0.321814,
     "lufs": null,
-    "hash": "940b5ffee639cd9346fc7b3a2dc77600a043c7f5c547f56df8e3b0270733201f",
-    "at": 1784973449686
+    "hash": "c5aa40b0380ea0c5a89001b186ede22f4ea853d7caa5b1f596e87c60ef90cc82",
+    "at": 1789067538067
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0001-vc_pfushigisou_attack01.wav"
   },
   "attack-heavy": {
-   "text": "バナァッ！！",
+   "text": "（原檔）0002-vc_pfushigisou_attack02",
    "lang": "ja",
    "kana": "バナァッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +588,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 8821,
+    "seconds": 0.478027,
     "lufs": null,
-    "hash": "97d57756441b7340661c2338af0c8e946f694b7a1351beec743c8ae9d3bc9b19",
-    "at": 1784973451000
+    "hash": "567f46f2e75ea58d99a6ec2165fcdb1149c1b0c73c4facb5ebc445540d33c0a3",
+    "at": 1789067537957
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0002-vc_pfushigisou_attack02.wav"
   },
   "crit": {
    "text": "フシギバナァァッ！！",
@@ -652,10 +660,10 @@
    "lastError": null
   },
   "dodge": {
-   "text": "フフッ",
+   "text": "（原檔）0009-vc_pfushigisou_ottotto",
    "lang": "ja",
    "kana": "フフッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -668,17 +676,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 6313,
+    "seconds": 0.335533,
     "lufs": null,
-    "hash": "65e705a71679f675ca25d50892831b4acb3c3d6b899be799b34c3cf5622efc93",
-    "at": 1784973464423
+    "hash": "d9928e2264f66c6c6f49f111b27d48208a4fe317814e4b1e6316043c025c036a",
+    "at": 1789067538258
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0009-vc_pfushigisou_ottotto.wav"
   },
   "sprint": {
    "text": "バナバナバナッ！",
@@ -710,10 +719,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "フシッ！",
+   "text": "（原檔）0008-vc_pfushigisou_jump01",
    "lang": "ja",
    "kana": "フシッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +735,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 8821,
-    "seconds": 0.48,
+    "bytes": 6313,
+    "seconds": 0.316463,
     "lufs": null,
-    "hash": "975456db015a7ab47e7037098b6a6a4f7ec53de72cf26097ed7d2803a9da415e",
-    "at": 1784973477464
+    "hash": "10fd1e473e534dd93b836edfce6f47bf1a45d8b45da3da1b4e7644c54a5eed5a",
+    "at": 1789067538736
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0008-vc_pfushigisou_jump01.wav"
   },
   "respond.ok": {
    "text": "バナ！",
@@ -797,10 +807,10 @@
    "lastError": null
   },
   "puzzled": {
-   "text": "フシ？",
+   "text": "（原檔）0018-vc_pfushigisou_furafura",
    "lang": "ja",
    "kana": "フシ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -813,17 +823,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 30973,
+    "seconds": 1.871066,
     "lufs": null,
-    "hash": "1c026e755cdb67339c27e745db6fa5896bc61d929f5720c05e985df028bca4e1",
-    "at": 1784973491486
+    "hash": "9aa5319996a6f1f6c821990f73b1b30ad8f12e8c11f1ddec844ae5d44b88b33d",
+    "at": 1789067538918
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0018-vc_pfushigisou_furafura.wav"
   },
   "love": {
    "text": "バナァ……",
@@ -1029,10 +1040,10 @@
    "lastError": null
   },
   "kill-1": {
-   "text": "ギバナッ！",
+   "text": "（原檔）0035-vc_pfushigisou_win03",
    "lang": "ja",
    "kana": "ギバナッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1045,17 +1056,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 34316,
+    "seconds": 2.087868,
     "lufs": null,
-    "hash": "c371220b548275015985e439fbccc52f91e7140dcb8ad913f3f6c631f064f11b",
-    "at": 1784973530293
+    "hash": "76e80f9b5bea7715f233968ea7900979c6bed901c7bc65851c43eaa8c5a717d7",
+    "at": 1789067538826
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0035-vc_pfushigisou_win03.wav"
   },
   "kill-2": {
    "text": "バナバナッ！",
@@ -1203,9 +1215,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "飛葉快刀！",
+   "text": "（原檔）0023-vc_pfushigisou_special_N01",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,18 +1238,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 15090,
-    "seconds": null,
+    "bytes": 10911,
+    "seconds": 0.622358,
     "lufs": null,
-    "hash": "9a6c557816b9962a9c94374fa1ef3a6268d44c42fffcd8cd8d4488fe10955606",
-    "at": 1784990937009
+    "hash": "5e749086cd6c29ffccdf6feb5a96b387bdf1cce1722000b25a194e4c6e88ed1a",
+    "at": 1789067539430
    },
    "lastError": null,
-   "kana": "ハッパ カッター"
+   "kana": "ハッパ カッター",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0023-vc_pfushigisou_special_N01.wav"
   },
   "skill-name.w": {
    "text": "麻痺粉！",
@@ -1277,9 +1290,9 @@
    "kana": "シビレゴナ"
   },
   "skill-name.e": {
-   "text": "藤鞭！",
+   "text": "（原檔）0024-vc_pfushigisou_special_H01",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1300,23 +1313,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 16344,
-    "seconds": null,
+    "bytes": 7985,
+    "seconds": 0.433923,
     "lufs": null,
-    "hash": "49df25eeea8ecc2bbcda5b3aa7831978970a3f0bb04a2b31c157ba9a7c99fd5b",
-    "at": 1784990908957
+    "hash": "1e689488a888079613d8e753eb489c61602fa95ed1db65b96d4e5119fb5ab8b3",
+    "at": 1789067539304
    },
    "lastError": null,
-   "kana": "ツル ノ ムチ"
+   "kana": "ツル ノ ムチ",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0024-vc_pfushigisou_special_H01.wav"
   },
   "skill-name.r": {
-   "text": "陽光烈焰！",
+   "text": "（原檔）0026-vc_pfushigisou_final01",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1337,18 +1351,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
     "stub": false,
-    "bytes": 12582,
-    "seconds": null,
+    "bytes": 55632,
+    "seconds": 3.396984,
     "lufs": null,
-    "hash": "c0792154d028d8d4538b4f87459acf3307802fd93cffdcfcc7a0c9a90a3beaed",
-    "at": 1784990892927
+    "hash": "09e930e4532dfa6e4cca334cbea85108d508e85d9ca813e1ff8145e214f2db21",
+    "at": 1789067539516
    },
    "lastError": null,
-   "kana": "ソーラー ビーム"
+   "kana": "ソーラー ビーム",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0026-vc_pfushigisou_final01.wav"
   },
   "skill-name.ex": {
    "text": "超進化! 妙蛙花！",
@@ -1386,6 +1401,166 @@
    },
    "lastError": null,
    "kana": "メガシンカ フシギバナ"
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）0013-vc_pfushigisou_damagefly02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0013-vc_pfushigisou_damagefly02.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.657347,
+    "lufs": null,
+    "hash": "a36a9b292fc7e38a23b8b629a9bb5037a5ef5bab3d52aa7c6b2c367599169928",
+    "at": 1789067538535
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）0011-vc_pfushigisou_damage02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0011-vc_pfushigisou_damage02.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 7149,
+    "seconds": 0.390544,
+    "lufs": null,
+    "hash": "746c69e6b4a2e190a36f7cbb590eb61c623ec89c3d65ae205f5ab40214fbfea1",
+    "at": 1789067538641
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）0031-vc_pfushigisou_appeal03_02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0031-vc_pfushigisou_appeal03_02.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.433968,
+    "lufs": null,
+    "hash": "c2dff52c79ea5e873f6fbed10a2d60ea561669953fa1f4f383c40ede1ae285ab",
+    "at": 1789067539099
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）0032-vc_pfushigisou_appeal03_03",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0032-vc_pfushigisou_appeal03_03.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.807574,
+    "lufs": null,
+    "hash": "ec3e6e0a99df159cabf86f60b098e0bfe85a0cfe9f890624c36cddb13fa1b079",
+    "at": 1789067539202
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）0028-vc_pfushigisou_appeal02_02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0028-vc_pfushigisou_appeal02_02.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 7149,
+    "seconds": 0.385079,
+    "lufs": null,
+    "hash": "c5500c1a13af39fb10a90a1049a87062fae54d3cc964ff566df80786bd8624b2",
+    "at": 1789067539715
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）0029-vc_pfushigisou_appeal02_03",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0029-vc_pfushigisou_appeal02_03.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.665624,
+    "lufs": null,
+    "hash": "6d3c8071e90a6d8c140c4a0370c8cd796c28ab26f993f32a5994d29e864cb8d2",
+    "at": 1789067539823
+   }
+  },
+  "victory.2": {
+   "text": "（原檔）0033-vc_pfushigisou_win01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0033-vc_pfushigisou_win01.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.363288,
+    "lufs": null,
+    "hash": "a46f722eb9c26565a95d33f502ebd7a50710aef9c5e1768fdc4e1a26e4cfe032",
+    "at": 1789067540024
+   }
+  },
+  "victory.3": {
+   "text": "（原檔）0034-vc_pfushigisou_win02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbu-japanese:vc_pfushigisou/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/decoded-audio-nus3/057-vc_pfushigisou_c00/0034-vc_pfushigisou_win02.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbu-japanese:vc_pfushigisou",
+    "stub": false,
+    "bytes": 18016,
+    "seconds": 1.052676,
+    "lufs": null,
+    "hash": "87cec12da6807892460094475bb74615516e98e34c4bc4b94d3d6e6fcda75745",
+    "at": 1789067540140
+   }
   }
  }
 }

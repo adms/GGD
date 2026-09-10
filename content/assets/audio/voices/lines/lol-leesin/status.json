@@ -1,0 +1,273 @@
+{
+ "championId": "lol-leesin",
+ "reference": {
+  "sha256": null,
+  "sourceKind": "none",
+  "donor": null,
+  "note": "originals only — owner excluded this hero from synthesis (COMBAT_CASTING.json.excluded)",
+  "path": null
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [],
+   "text": "（原檔）f046bc/00195-1875226779",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00195-1875226779.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 97010,
+    "seconds": 5.983333,
+    "lufs": null,
+    "hash": "19a2220ed148ba6cd6b08d9251413a08b35853ccb839bbb163098cd5f92cfca0",
+    "at": 1789058022490
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）f046bc/00171-1551638179",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00171-1551638179.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 95756,
+    "seconds": 5.911474,
+    "lufs": null,
+    "hash": "4bcc250a2a6a0426e26d90bcd29a2acb23dfb2e98859022c854dbc367e9a2cf3",
+    "at": 1789058022575
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）f046bc/00002-32240076",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00002-32240076.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 95756,
+    "seconds": 5.906259,
+    "lufs": null,
+    "hash": "a92f2b5a9842ba1951f01da9591a07d5c423ca45adc08255f0a467a4f5fc5e49",
+    "at": 1789058022666
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [],
+   "text": "（原檔）f046bc/00072-629363452",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00072-629363452.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 86561,
+    "seconds": 5.333084,
+    "lufs": null,
+    "hash": "026e5494adf329b25ef4ada6c427d9f1be52ad65c9c3a889fcb43057626c08f2",
+    "at": 1789058022758
+   },
+   "lastError": null
+  },
+  "victory.2": {
+   "takes": [],
+   "text": "（原檔）f046bc/00206-1944986174",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00206-1944986174.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 85725,
+    "seconds": 5.293764,
+    "lufs": null,
+    "hash": "37c45de5102b33fea405840e5ea2042181c5abdf68d213ce639615f88a3e7b13",
+    "at": 1789058022847
+   },
+   "lastError": null
+  },
+  "victory.3": {
+   "takes": [],
+   "text": "（原檔）f046bc/00181-1669230622",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00181-1669230622.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 84889,
+    "seconds": 5.24585,
+    "lufs": null,
+    "hash": "30e61833b621839acb8f39fae58594f8866c526f8679e02b742c059ce2075f09",
+    "at": 1789058022944
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [],
+   "text": "（原檔）f046bc/00160-1457209495",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00160-1457209495.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 77784,
+    "seconds": 4.784376,
+    "lufs": null,
+    "hash": "68294aadb761a7943aa49a90d1f7ac0751dc6dc61160ddf480904227102c84e2",
+    "at": 1789058023034
+   },
+   "lastError": null
+  },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）f046bc/00125-1138446816",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00125-1138446816.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 76948,
+    "seconds": 4.735669,
+    "lufs": null,
+    "hash": "6ae1ff8bbe5beb5bde86f173ccf4b0f5349237142b4808616a8479cd4e36caa8",
+    "at": 1789058023122
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [],
+   "text": "（原檔）f046bc/00214-2046392973",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00214-2046392973.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 94920,
+    "seconds": 5.867188,
+    "lufs": null,
+    "hash": "068343e4430cd59e407502e58f25564b032edcdab64f2a75a6679769038f6772",
+    "at": 1789058023217
+   },
+   "lastError": null
+  },
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）f046bc/00180-1641348520",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00180-1641348520.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 94084,
+    "seconds": 5.816667,
+    "lufs": null,
+    "hash": "6517ce6faf7a61edfd9002b14edd36a24bae9b0b40467855e77cc6f1943b0383",
+    "at": 1789058023303
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）f046bc/00159-1455190140",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00159-1455190140.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 93666,
+    "seconds": 5.786463,
+    "lufs": null,
+    "hash": "dd6b1c71a00ada20a8a6ad538dfb6845d15e06df1a2c2f5a8bf0491c6aedeb52",
+    "at": 1789058023388
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [],
+   "text": "（原檔）f046bc/00190-1786588904",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00190-1786588904.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 91577,
+    "seconds": 5.661474,
+    "lufs": null,
+    "hash": "0d9d45966ac97d64eb5ed0f0b02b537e613a281b688172fde6e216bece2aee5a",
+    "at": 1789058023476
+   },
+   "lastError": null
+  },
+  "kill-1.2": {
+   "takes": [],
+   "text": "（原檔）f046bc/00053-503804987",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/f046bc3200e37b9a/00053-503804987.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav",
+    "stub": false,
+    "bytes": 55214,
+    "seconds": 3.391678,
+    "lufs": null,
+    "hash": "8253f19a70ead722e117ef8b73a9856af4c7c3083a941d922934e08c483577c7",
+    "at": 1789058023566
+   },
+   "lastError": null
+  }
+ }
+}

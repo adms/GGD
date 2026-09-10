@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "ピッカチュウ！",
+   "text": "（原檔）pikachu16.dsp",
    "lang": "ja",
    "kana": "ピッカ チュウ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,23 +30,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 13836,
-    "seconds": 0.8,
+    "bytes": 6731,
+    "seconds": 0.346599,
     "lufs": null,
-    "hash": "ada60baef015cfded9fe1834fd0174a528879bea77fb7897c7ffa3ef39cb8e7b",
-    "at": 1784977411794
+    "hash": "8bdd90fcd29edf6dd891585705bb26a1a7d1d197dcf690f024a109925ec02b7c",
+    "at": 1789067552882
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu16.dsp.wav"
   },
   "victory": {
-   "text": "ピカピカ！ピッカチュウ〜！",
+   "text": "（原檔）pikachu1b.dsp",
    "lang": "ja",
    "kana": "ピカ ピカ ピッカ チュウー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,17 +60,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.12,
+    "bytes": 5895,
+    "seconds": 0.30161,
     "lufs": null,
-    "hash": "b3c6fae2547f5ee96d3bc92c67f6af301db73a2fcecc7d3dbba1ca9fada9eb67",
-    "at": 1784977443164
+    "hash": "6007a921c04598f6ee889809015d6a647cc5716d4d9b09ad49ceff50e9097a31",
+    "at": 1789067554295
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu1b.dsp.wav"
   },
   "defeat": {
    "text": "ピカ…チュウ……",
@@ -101,10 +103,10 @@
    "lastError": null
   },
   "hurt": {
-   "text": "ピッ！",
+   "text": "（原檔）pikachu15.dsp",
    "lang": "ja",
    "kana": "ピッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +119,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 11746,
+    "seconds": 0.669955,
     "lufs": null,
-    "hash": "29342107e15bb9b50c733ada94ab24ab6d1a77fde583cee0a22424537eb0d385",
-    "at": 1784977457442
+    "hash": "e6542e3225e7a6b81d9f4246b8d770aaf4b6c403cca2abf4915a53c451011ec5",
+    "at": 1789067552204
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu15.dsp.wav"
   },
   "hurt-heavy": {
-   "text": "ピカァーッ…！",
+   "text": "（原檔）pikachu0c.dsp",
    "lang": "ja",
    "kana": "ピカァーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +149,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 13836,
-    "seconds": 0.8,
+    "bytes": 19688,
+    "seconds": 1.164921,
     "lufs": null,
-    "hash": "17110f57afec47f661b2f0a9d7b4eb8c87962cfa4b7d69122b15b0846212ff47",
-    "at": 1784977458697
+    "hash": "714ea1a145002ce8a44764b7ed3bb38c2d7c748d7b9e5a8cb14760170242fd7b",
+    "at": 1789067552291
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu0c.dsp.wav"
   },
   "stun": {
    "text": "ピ…ピカァ…？",
@@ -449,10 +453,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "ピッピカ〜、ピカピカ〜♪",
+   "text": "（原檔）pikachu1c.dsp",
    "lang": "ja",
    "kana": "ピッ ピカー ピカ ピカー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +469,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 24285,
-    "seconds": 1.44,
+    "bytes": 11746,
+    "seconds": 0.654127,
     "lufs": null,
-    "hash": "3c122637b61a8edddbb30ac043411a5ba08d8cb2fba8987e58c8ab7cb841aaa1",
-    "at": 1784977519759
+    "hash": "22abf8af611b063cb98c72c42199bb29f2b642579ad0d906d7a7b8a3872e8e4c",
+    "at": 1789067553936
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu1c.dsp.wav"
   },
   "curse": {
    "text": "ピカーッ！カッカッ！",
@@ -536,10 +541,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "ピカッ！",
+   "text": "（原檔）pikachu09.dsp",
    "lang": "ja",
    "kana": "ピカッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +557,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 9239,
-    "seconds": 0.52,
+    "bytes": 7985,
+    "seconds": 0.44161,
     "lufs": null,
-    "hash": "c86284ca6a7bd82a52bf288c40a07a8c775eea94eb221dd12425cc0defb41cba",
-    "at": 1784977534273
+    "hash": "8bc3e52e58649fea30986a73e69fb50cfabe1a5f1e11bd19d940c2b6c9df59f5",
+    "at": 1789067552127
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu09.dsp.wav"
   },
   "attack-heavy": {
-   "text": "ピカチュウーッ！",
+   "text": "（原檔）pikachu12.dsp",
    "lang": "ja",
    "kana": "ピカ チュウーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +587,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 17598,
-    "seconds": 1.04,
+    "bytes": 18852,
+    "seconds": 1.123265,
     "lufs": null,
-    "hash": "bd953a27496562f9e3cfbb1ad4ac1356d076da555a60f6608ea59d14e137b58b",
-    "at": 1784977536573
+    "hash": "3298f73733b27b14babf404b1eace255f88ac74713c13de2c45dca07cb3cf075",
+    "at": 1789067552039
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu12.dsp.wav"
   },
   "crit": {
    "text": "ピッカーッ！！",
@@ -710,10 +717,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ピッカ！",
+   "text": "（原檔）pikachu19.dsp",
    "lang": "ja",
    "kana": "ピッカ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +733,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 7985,
+    "seconds": 0.428322,
     "lufs": null,
-    "hash": "5e6f7057dc4c952ce93843340cc4a6ddd575e8fcb19db3212292eeba943e1f3f",
-    "at": 1784977564087
+    "hash": "58f6d3523cd5acda9f962c3d73a432f52c071aac4974f15047b658545cef54e5",
+    "at": 1789067552553
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu19.dsp.wav"
   },
   "respond.ok": {
    "text": "ピカピカ！",
@@ -1029,10 +1037,10 @@
    "lastError": null
   },
   "kill-1": {
-   "text": "ピカッ！チュウ！",
+   "text": "（原檔）pikachu23L.dsp",
    "lang": "ja",
    "kana": "ピカッ チュウ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1045,17 +1053,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 17598,
-    "seconds": 1.04,
+    "bytes": 17180,
+    "seconds": 1.013265,
     "lufs": null,
-    "hash": "325fcc3137123500b030da527229da087805caa43dd41e4c75c199bbf72f1f56",
-    "at": 1784977616337
+    "hash": "8fd33df109e37848780c80f6ffcded0ba91a55b13fcd0d0bd8aabd43daff0ad2",
+    "at": 1789067552633
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu23L.dsp.wav"
   },
   "kill-2": {
    "text": "ピカピカ！チュウ！",
@@ -1203,9 +1212,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "十萬伏特！",
+   "text": "（原檔）pikachu10.dsp",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,23 +1235,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 17598,
-    "seconds": null,
+    "bytes": 40168,
+    "seconds": 2.449909,
     "lufs": null,
-    "hash": "a6f428861d563e134e325269adbac06a5957137b52a2a4a7f76ea4b0feef41b7",
-    "at": 1784991039211
+    "hash": "abbe21c7dd900e1e4c6d76167cbc49d9e3b93a8d9a08537d29f9f2676e09fead",
+    "at": 1789067553482
    },
    "lastError": null,
-   "kana": "ジュウマン ボルト"
+   "kana": "ジュウマン ボルト",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu10.dsp.wav"
   },
   "skill-name.w": {
-   "text": "鋼鐵尾巴！",
+   "text": "（原檔）pikachu11.dsp",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1263,23 +1273,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 14672,
-    "seconds": null,
+    "bytes": 36824,
+    "seconds": 2.228073,
     "lufs": null,
-    "hash": "ffb90f8f444e6090a35ecdb0093b4831f1ba263b77af0de9cc73b06e56b5639d",
-    "at": 1784991013159
+    "hash": "d9fd485d9fb984b2ad419ca7e462ba6fde987cc95d2acc401373cf5afa937d2b",
+    "at": 1789067553766
    },
    "lastError": null,
-   "kana": "アイアン テール"
+   "kana": "アイアン テール",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu11.dsp.wav"
   },
   "skill-name.e": {
-   "text": "就決定是你了!小智！",
+   "text": "（原檔）pikachu18.dsp",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1300,23 +1311,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 24703,
-    "seconds": null,
+    "bytes": 26375,
+    "seconds": 1.584921,
     "lufs": null,
-    "hash": "b07f4094364e393b9cc5bf4b45797a29d1f7a8f326a4536608dadbb06157ea0d",
-    "at": 1784991017166
+    "hash": "d79950843c2bdbb1a0db8e12f1b963449ac98ca95c31a25edefe0ec90a709bd5",
+    "at": 1789067553150
    },
    "lastError": null,
-   "kana": "キミ ニ キメタ サトシ"
+   "kana": "キミ ニ キメタ サトシ",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu18.dsp.wav"
   },
   "skill-name.r": {
-   "text": "瘋狂皮卡丘！",
+   "text": "（原檔）pikachu04.dsp",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1337,23 +1349,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 18852,
-    "seconds": null,
+    "bytes": 22613,
+    "seconds": 1.348254,
     "lufs": null,
-    "hash": "c32f751d449a73dd1f82441bd2aa597680a53c83c8fd543e458cd6bd4fdfebc6",
-    "at": 1784991023181
+    "hash": "7a06aebece8eb903b4b82116b23cfe9ad666839f96ecf62f2e8a9a3754cabbee",
+    "at": 1789067553585
    },
    "lastError": null,
-   "kana": "クレイジー ピカチュウ"
+   "kana": "クレイジー ピカチュウ",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu04.dsp.wav"
   },
   "skill-name.ex": {
-   "text": "打雷絕招！",
+   "text": "（原檔）pikachu21.dsp",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1374,18 +1387,259 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
     "stub": false,
-    "bytes": 9239,
-    "seconds": null,
+    "bytes": 17598,
+    "seconds": 1.031633,
     "lufs": null,
-    "hash": "20f92ecc1baf862cd065d980372454bf6d4917779c5790e8dacf699b94acfd0d",
-    "at": 1784991019170
+    "hash": "02e22484eeb7e6119e22530a69593397541f7e59b8dfc409d704682a47f8ae00",
+    "at": 1789067553312
    },
    "lastError": null,
-   "kana": "カミナリ"
+   "kana": "カミナリ",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu21.dsp.wav"
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）pikachu1a.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu1a.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 19270,
+    "seconds": 1.13161,
+    "lufs": null,
+    "hash": "38498b465d04119afee726d972c09f77324d447e4171b834345a75a8a3d55024",
+    "at": 1789067552394
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）pikachu0a.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu0a.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.668277,
+    "lufs": null,
+    "hash": "7586ef53a9f7487aee82c569e3e5d4922e8d68d73be449b88ff7f0a38a24b06e",
+    "at": 1789067552473
+   }
+  },
+  "kill-1.2": {
+   "text": "（原檔）pikachu0b.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu0b.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 16344,
+    "seconds": 0.961633,
+    "lufs": null,
+    "hash": "dbc73296086fb222fec49f8a179e804b29a75f55951f115835cb723262c76a23",
+    "at": 1789067552713
+   }
+  },
+  "kill-1.3": {
+   "text": "（原檔）pikachu14.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu14.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.71161,
+    "lufs": null,
+    "hash": "bc4dc8fc792355bf2d37b709f3cb0ae4dadde6f0bd900e7138b8d9be4d86a2f9",
+    "at": 1789067552798
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）pikachu17.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu17.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.316576,
+    "lufs": null,
+    "hash": "622a2e92f5dc56b307b67e74db6579d0f7e7e03fc6cda4e5254102417ae192c5",
+    "at": 1789067552988
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）pikachu1f.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu1f.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 5895,
+    "seconds": 0.309955,
+    "lufs": null,
+    "hash": "eef34af00c0e3aaeeb0823654e2485edb5a68a3c303248f0a4981d0e8fb71288",
+    "at": 1789067553070
+   }
+  },
+  "skill-name.e.2": {
+   "text": "（原檔）pikachu06.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu06.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.524921,
+    "lufs": null,
+    "hash": "d5feb04624f23b4675f0f981667ac685439575991761c0043242620d2dffd051",
+    "at": 1789067553231
+   }
+  },
+  "skill-name.ex.2": {
+   "text": "（原檔）pikachu13.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu13.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1.014921,
+    "lufs": null,
+    "hash": "c8f9236e1067a368de333ceea6be3f51da283a34b944fe628bd6a5215f0fbf85",
+    "at": 1789067553398
+   }
+  },
+  "skill-name.r.2": {
+   "text": "（原檔）pikachu20.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu20.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 18016,
+    "seconds": 1.051565,
+    "lufs": null,
+    "hash": "ba8ab63f9f3df0546d5f7766e57f1d6f28a85f52546c279d4299992b6df92545",
+    "at": 1789067553683
+   }
+  },
+  "skill-name.w.2": {
+   "text": "（原檔）pikachu1eL.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu1eL.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 31391,
+    "seconds": 1.898277,
+    "lufs": null,
+    "hash": "ca40b0859553d7a5edc35cd770b7fe9187762f69721542d5bb33414295fdc133",
+    "at": 1789067553851
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）pikachu07.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu07.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.411565,
+    "lufs": null,
+    "hash": "26cf9067e0f0bc15de6195b087183635318f45ffeb3a030cf00bf46aac314123",
+    "at": 1789067554020
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）pikachu08.dsp",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-voice-ssbm-pikachu/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu/extracted/Pikachu/pikachu08.dsp.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-voice-ssbm-pikachu",
+    "stub": false,
+    "bytes": 7149,
+    "seconds": 0.37161,
+    "lufs": null,
+    "hash": "39c3e49beeacbbfeb5adc9f6072d4b3ef4218d0ff7de935f5b4a871bd6fe4d52",
+    "at": 1789067554111
+   }
   }
  }
 }

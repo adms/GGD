@@ -4,13 +4,13 @@
   "name": "白木老樹精 - 白木卡迪那",
   "role": "marksman",
   "attackType": "ranged",
-  "modelKey": "champ.sela",
+  "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
     "maxMana": 100,
     "manaRegen": 0.1,
-    "ad": 9.0,
+    "ad": 9,
     "ap": 0,
     "armor": 10,
     "mr": 28,
@@ -20,7 +20,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 12.0
+    "range": 12
   },
   "immobile": true,
   "growth": {
@@ -46,7 +46,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -395,9 +395,9 @@
   "passiveAbility": "godie-e010.passive",
   "icon": "assets/icons/champions/godie-e010.webp",
   "tint": [
-    1.0,
+    1,
     0.7843,
-    1.0
+    1
   ],
   "transform": {
     "role": "alternate",
@@ -408,8 +408,40 @@
       "rawcode": "A0O6",
       "name": "70-00 紮根",
       "cooldownSec": {
-        "1": 15.0
+        "1": 15
       }
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T18:20:40.416Z",
+      "source": {
+        "kind": "previous",
+        "character": "白木老樹精 - 白木卡迪那",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
+      "label": "ou99 白木卡迪那（本尊／相似造型）",
+      "sourceModelKey": "ou99.470225",
+      "modelSha256": "cb90e8b8718b4143720e617dc078675f3c82d6494dda3c29e885f00e6fe2dbc4",
+      "binarySha256": "33a0ce0c407d2989a7654208f72d79ecce4f05883f369b9e6ff8d3725c22f8eb",
+      "registeredAt": "2026-09-10T18:20:40.423Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "白木卡迪那",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-470225-1-1.html"
+      }
+    }
+  ]
 }

@@ -42,20 +42,20 @@ owner 技能模板群組 **⑨** 逐字：
 | 1 | 持續＋續效特效 | **178** | 139 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010・tpl-apply-status・tpl-buff-self・tpl-instant-blast・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（39 支還沒接） |
 | 2 | 持續 | **150** | 101 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-buff-self・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（49 支還沒接） |
 | 3 | （無時序形狀） | **126** | 81 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71・hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68・hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-area-strike・tpl-blink・tpl-blink-strike・tpl-heal・tpl-instant-blast・tpl-single-strike | ⛔ 逐支確認是**真的沒有**還是**沒實作**（見第 2 節差集） |
-| 4 | 續效特效 | **118** | 66 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-apply-status・tpl-area-strike・tpl-ground-nova・tpl-proxy-fanout・tpl-single-strike | 沿用（52 支還沒接） |
+| 4 | 續效特效 | **119** | 67 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-apply-status・tpl-area-strike・tpl-ground-nova・tpl-proxy-fanout・tpl-single-strike | 沿用（52 支還沒接） |
 | 5 | 持續＋續效特效＋路徑 | **40** | 31 | hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52・tpl-buff-self・tpl-leap-strike・tpl-line-strike・tpl-pull-throw・tpl-single-strike | 沿用（9 支還沒接） |
-| 6 | 續效特效＋路徑 | **38** | 36 | hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71・hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4・tpl-line-strike・tpl-projectile-strike・tpl-single-strike | 沿用（2 支還沒接） |
-| 7 | 等待＋迴圈＋續效特效＋多段＋路徑 | **30** | 27 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-line-sweep・tpl-traveling-wave | 沿用（3 支還沒接） |
-| 8 | 等待＋持續＋續效特效＋路徑 | **25** | 20 | hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368・tpl-charge-push・tpl-projectile-strike・tpl-teleport | 沿用（5 支還沒接） |
-| 9 | 等待＋續效特效＋路徑 | **14** | 13 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（1 支還沒接） |
-| 10 | 等待＋持續＋續效特效＋多段＋路徑 | **13** | 5 | tpl-area-strike・tpl-instant-blast・tpl-single-strike | 沿用（8 支還沒接） |
-| 11 | 路徑 | **12** | 7 | tpl-projectile-strike | 沿用（5 支還沒接） |
-| 12 | 迴圈＋持續＋續效特效＋多段 | **12** | 12 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990・tpl-area-strike・tpl-random-barrage | ✅ 全部接上了 |
-| 13 | 迴圈＋持續＋續效特效＋多段＋路徑 | **12** | 12 | hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c・tpl-lock-combo | ✅ 全部接上了 |
-| 14 | 迴圈＋持續＋多段 | **10** | 9 | hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d・hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990・tpl-area-strike・tpl-drain-leech | 沿用（1 支還沒接） |
-| 15 | 持續＋多段 | **9** | 6 | tpl-area-strike・tpl-summon-agent | 沿用（3 支還沒接） |
-| 16 | 持續＋續效特效＋多段＋路徑 | **8** | 7 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-projectile-strike・tpl-proxy-cast・tpl-summon-agent | 沿用（1 支還沒接） |
-| 17 | 迴圈＋續效特效＋多段 | **8** | 3 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（5 支還沒接） |
+| 6 | 續效特效＋路徑 | **37** | 35 | hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71・hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4・tpl-line-strike・tpl-projectile-strike・tpl-single-strike | 沿用（2 支還沒接） |
+| 7 | 等待＋持續＋續效特效＋路徑 | **32** | 27 | hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368・tpl-charge-push・tpl-projectile-strike・tpl-teleport | 沿用（5 支還沒接） |
+| 8 | 等待＋迴圈＋續效特效＋多段＋路徑 | **30** | 27 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-line-sweep・tpl-traveling-wave | 沿用（3 支還沒接） |
+| 9 | 等待＋持續＋續效特效＋多段＋路徑 | **13** | 5 | tpl-area-strike・tpl-instant-blast・tpl-single-strike | 沿用（8 支還沒接） |
+| 10 | 路徑 | **12** | 7 | tpl-projectile-strike | 沿用（5 支還沒接） |
+| 11 | 迴圈＋持續＋續效特效＋多段 | **12** | 12 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990・tpl-area-strike・tpl-random-barrage | ✅ 全部接上了 |
+| 12 | 迴圈＋持續＋續效特效＋多段＋路徑 | **12** | 12 | hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c・tpl-lock-combo | ✅ 全部接上了 |
+| 13 | 迴圈＋持續＋多段 | **10** | 9 | hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d・hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990・tpl-area-strike・tpl-drain-leech | 沿用（1 支還沒接） |
+| 14 | 持續＋多段 | **9** | 6 | tpl-area-strike・tpl-summon-agent | 沿用（3 支還沒接） |
+| 15 | 持續＋續效特效＋多段＋路徑 | **8** | 7 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-projectile-strike・tpl-proxy-cast・tpl-summon-agent | 沿用（1 支還沒接） |
+| 16 | 迴圈＋續效特效＋多段 | **8** | 3 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（5 支還沒接） |
+| 17 | 等待＋續效特效＋路徑 | **7** | 6 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（1 支還沒接） |
 | 18 | 迴圈＋持續 | **7** | 5 | tpl-periodic-field・tpl-single-strike | 沿用（2 支還沒接） |
 | 19 | 持續＋路徑 | **6** | 2 | hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8・hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52 | 沿用（4 支還沒接） |
 | 20 | 等待＋路徑 | **6** | 1 | tpl-single-strike | 沿用（5 支還沒接） |
@@ -95,10 +95,10 @@ owner 技能模板群組 **⑨** 逐字：
 |---|---:|---:|---:|---|
 | 等待 | 42 | 141 | **24** | 延遲結算／吟唱／飛行時間 —— 躲不躲得掉 |
 | 迴圈 | 110 | 142 | **50** | 每隔 T 秒重複 —— 排程與終止條件 |
-| 持續 | 169 | 522 | **26** | 有期間的狀態，到期自己收掉 |
+| 持續 | 169 | 529 | **26** | 有期間的狀態，到期自己收掉 |
 | 續效特效 | 22 | 538 | **0** | 特效自己的壽命／掛載／分層（⚠️ 宣稱側很弱，差集不計） |
 | 多段 | 18 | 156 | **8** | 一次施放拆成多下（連段／連鎖） |
-| 路徑 | 126 | 246 | **35** | 效果沿著空間移動 |
+| 路徑 | 126 | 245 | **35** | 效果沿著空間移動 |
 
 ⇒ ⭐ **最擋人的一條軸是「迴圈」，50 支技能的說明宣稱它而 JSON 裡沒有。**
 

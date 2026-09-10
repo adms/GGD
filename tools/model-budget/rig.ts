@@ -61,16 +61,26 @@ export function summariseRig(file: string): RigSummary {
  * carry weights on every skinned primitive, and actually have FEWER triangles
  * (a decimation that did nothing is not worth adopting).
  */
-export function checkRig(srcFile: string, candidateFile: string): RigCheck {
+/**
+ * ⭐ `tris` 這一條**逐 stage 不同**，⛔ 不是一個放諸四海的不變量：
+ *   · 減面（geometry）：面數**必須變少** —— 沒變少的候選不值得採用。
+ *   · 圖集（atlas）：面數**必須一模一樣** —— 圖集只搬貼圖與 UV，
+ *     ⛔ 它動到幾何就是錯的，而「變少」在這裡是**缺陷**，⛔ 不是成功。
+ * ⇒ 兩個 stage 共用同一個骨架檢查，但這一條要指名它期待哪一種。
+ */
+export type TrisExpectation = "fewer" | "same";
+
+export function checkRig(srcFile: string, candidateFile: string, tris: TrisExpectation = "fewer"): RigCheck {
   const before = summariseRig(srcFile);
   const after = summariseRig(candidateFile);
   const reasons: string[] = [];
+  if (tris === "same" && after.tris !== before.tris) reasons.push(`triangles changed (${before.tris}→${after.tris}) — an atlas must not touch geometry`);
   if (after.skins !== before.skins) reasons.push(`skin count ${before.skins}→${after.skins}`);
   if (after.joints !== before.joints) reasons.push(`joint count ${before.joints}→${after.joints}`);
   if (after.clips !== before.clips) reasons.push(`animation clip count ${before.clips}→${after.clips}`);
   if (after.channels !== before.channels) reasons.push(`animation channel count ${before.channels}→${after.channels}`);
   if (before.skinnedPrims > 0 && after.withWeights < after.skinnedPrims)
     reasons.push(`${after.skinnedPrims - after.withWeights} skinned primitive(s) lost WEIGHTS_0`);
-  if (after.tris >= before.tris) reasons.push(`triangles did not decrease (${before.tris}→${after.tris})`);
+  if (tris === "fewer" && after.tris >= before.tris) reasons.push(`triangles did not decrease (${before.tris}→${after.tris})`);
   return { ok: reasons.length === 0, reasons, before, after };
 }

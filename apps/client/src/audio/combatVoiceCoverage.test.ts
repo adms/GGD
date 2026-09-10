@@ -109,7 +109,50 @@ function ownPackIds(pack: ChampionVoicePack | null): Set<string> {
  * `starterChampions` until the clips exist is a one-line change and makes this
  * gap disappear. That is an owner call, not a test-author call.
  */
-const VOICE_GAP: readonly string[] = ["godie-e00s", "godie-ucrl"];
+const VOICE_GAP: readonly string[] = [
+  "godie-e00s",
+  // ⚠️ 2026-09-11: godie-ucrl STAYS. The owner adopted Jump Force Gon clips for it on the review page,
+  //   but this hero owns no pack — it borrows its counterpart's (godie-u034) through the form share, and
+  //   a pack of its own would END that borrowing (a champion that owns a pack is never lent one) and
+  //   silence every category the originals do not cover. Its clips are parked in S3 until a partial pack
+  //   can borrow the rest from its counterpart; the same holds for the other seven form-share halves.
+  "godie-ucrl",
+  // ── 2026-09-10: the 74 new heroes (b2-* / community-review-*) landed their combat
+  // packs (tools/voice-gen/src/build-combat-lines.mjs — Japanese-only synthesis over
+  // the hero's own reference, original game clips where the owner's index has them,
+  // and the owner's V3 catchphrases). Two honest holes remain, each with the owner's
+  // own words as the reason:
+  //   · b2-kisaragi — its only lines are Chinese (「永無休止。」「地獄就是不斷重複又重複。」)
+  //     and synthesis speaks Japanese only (owner 2026-09-10「我們合成不講中文 只講日文」);
+  //     it waits for Japanese text or an original clip. Its 9 derived clips exist.
+  // ⭐ 2026-09-11: the LOL 7 LEFT this list. Their voice files were found — Riot's own
+  // ja_JP champion WADs, decoded by the owner's asset workflow — so they now ship packs
+  // built from ORIGINAL clips only (owner 2026-09-10「LOL7個角色應該有自己語音檔 可以排除」
+  // excludes them from synthesis, ⛔ not from shipping). They are audible, so they are not
+  // a gap; they are incomplete, so they are pinned in ORIGINALS_ONLY below instead.
+  "b2-kisaragi",
+];
+
+/**
+ * Heroes the owner excluded from SYNTHESIS (`COMBAT_CASTING.json.excluded`): every clip
+ * they have is an original game recording, so a load-bearing category their bank never
+ * recorded can never be filled. They are audible (they must have a select clip, asserted
+ * above by their absence from VOICE_GAP) but incomplete — and the ONLY heroes allowed to
+ * be. ⛔ Not a hand-written list: it is read from the casting file, so adding an excluded
+ * hero there without clips still fails the silence assertion.
+ */
+const CASTING = JSON.parse(readFileSync(join(CONTENT, "assets/audio/voices/lines/COMBAT_CASTING.json"), "utf8")) as {
+  excluded?: Record<string, string>;
+};
+/** A pack with no reference can never be synthesised — every clip it will ever own is an original. */
+function isOriginalsOnly(id: string): boolean {
+  if (CASTING.excluded?.[id]) return true;
+  const status = join(CONTENT, `assets/audio/voices/lines/${id}/status.json`);
+  if (!existsSync(status)) return false;
+  const doc = JSON.parse(readFileSync(status, "utf8")) as { reference?: { sourceKind?: string } };
+  return (doc.reference?.sourceKind ?? "") === "none";
+}
+const ORIGINALS_ONLY: readonly string[] = ROSTER.filter((id) => !VOICE_GAP.includes(id) && isOriginalsOnly(id)).sort();
 
 /** The gap, rendered the way the failure message renders a silent champion. */
 function labelSilent(id: string): string {
@@ -149,12 +192,23 @@ describe("every first-open-roster champion has a combat voice", () => {
 
   it("gives every voiced champion the whole load-bearing category set, not just the click", () => {
     const gaps: string[] = [];
+    const partial: string[] = [];
     for (const id of ROSTER) {
       if (VOICE_GAP.includes(id)) continue; // registered above; asserted in full below
       const missing = COMBAT_CATEGORIES.filter((c) => packClips(PACK, id, c).length === 0);
-      if (missing.length > 0) gaps.push(`${id}: ${missing.join(", ")}`);
+      if (missing.length === 0) continue;
+      (ORIGINALS_ONLY.includes(id) ? partial : gaps).push(`${id}: ${missing.join(", ")}`);
     }
     expect(gaps, `combat categories missing:\n  ${gaps.join("\n  ")}`).toEqual([]);
+    // ⭐ The exemption is a RELATION, ⛔ not a free pass: every hero that uses it must be
+    // declared excluded from synthesis, and every declared one must actually be short of a
+    // category — a hero that fills up must leave ORIGINALS_ONLY (delete it from the casting
+    // file's `excluded`), or this goes red.
+    expect(
+      partial.map((line) => line.split(":")[0]).sort(),
+      `heroes shipping original clips only (owner-excluded from synthesis) must be exactly ` +
+        `COMBAT_CASTING.json.excluded:\n  ${partial.join("\n  ")}`,
+    ).toEqual([...ORIGINALS_ONLY]);
   });
 
   /**
@@ -268,12 +322,15 @@ describe("the form share, on the real content tree", () => {
       .filter((p) => ROSTER.includes(p.baseId) || ROSTER.includes(p.alternateId))
       .map((p) => (ROSTER.includes(p.baseId) ? p.baseId : p.alternateId))
       .sort(); // CHAMPION_FORM_PAIRS declaration order is not the roster's
+    // Only the FORM-PAIR half of the registered gap can appear here: since 2026-09-10 the
+    // gap also lists champions in no 變身 pair at all (b2-kisaragi, the LOL 7), and those
+    // are asserted by the first describe, not by this orphan-pair scan.
     expect(
       shipped,
       `these 變身 pairs have no clips on EITHER side yet are on the shipped roster, so the ` +
         `form share has no donor and the champion is mute in combat: ${shipped.join(", ")}. ` +
         `Only the registered VOICE_GAP may appear here.`,
-    ).toEqual([...VOICE_GAP].sort());
+    ).toEqual(VOICE_GAP.filter((id) => counterpartFormId(id) !== null).sort());
   });
 
   it("degrades for a champion in no form pair at all", () => {

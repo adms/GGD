@@ -70,9 +70,23 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
     exmap = JSON.parse(readFileSync(EX_MAP_PATH, "utf-8")) as ExMap;
   });
 
-  // champions in the loaded store that carry an exAbility
+  /**
+   * ⭐ GH#1211 —— **母體是 EX_MAP 認得的那些英雄**，⛔ 不是「註冊表裡全部的英雄」。
+   *
+   * ⚠️ 2026-09-10 上架 81 名新英雄（`b2-*` · `community-review-*` · `lol-*`）之後這一格開始說謊：
+   *   它們**照設計就有 EX 技能**，⛔ 而 `EX_MAP.json` 是 **w3x 原作的抽取結果**
+   *   —— 上面那段檔頭逐字寫著「it is evidence about the source map, not a roster file」。
+   *   ⇒ 拿註冊表全體去對一份**只描述原作**的表，⭐ 每多上架一名 GGD 原創英雄它就多錯一次（150 vs 68）。
+   *
+   * ⭐ 所以母體收斂成「EX_MAP 兩側任一側提到的英雄」——⛔ 這**不是放寬**：
+   *   原作那 68 名裡少一個、多一個，下面的 `toBe` 仍然當場紅。
+   */
+  const inExMap = (cid: string): boolean =>
+    exmap.heroes[cid] !== undefined || exmap.withoutEx.includes(cid);
+
+  // champions in the loaded store that carry an exAbility（⭐ 限 EX_MAP 的母體）
   const champsWithEx = (): ChampionId[] =>
-    Champions.ids().filter((id) => Champions.get(id).exAbility !== undefined);
+    Champions.ids().filter((id) => inExMap(id) && Champions.get(id).exAbility !== undefined);
 
   const isRegistered = (cid: string): boolean => Champions.tryGet(cid as ChampionId) !== undefined;
 
@@ -149,8 +163,10 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
 
   it("every EX ability is a valid single-rank slot-EX ability (ex-ability-doc-valid)", () => {
     cover("ex-ability-doc-valid");
+    // ⭐ GH#1211 —— **每一支 `.ex` 都要驗形狀**（那是這條測試的主體），
+    //   ⛔ 而「共有幾支」只能拿 EX_MAP 的母體去對（同上面那段：它只描述原作）。
     const exIds = Abilities.ids().filter((id) => id.endsWith(".ex"));
-    expect(exIds.length).toBe(liveExHeroes().length);
+    expect(exIds.filter((id) => inExMap(id.slice(0, -3))).length).toBe(liveExHeroes().length);
     const castTypes = new Set(["targeted", "skillshot", "ground", "self", "dash"]);
     for (const id of exIds) {
       const def = Abilities.get(id);

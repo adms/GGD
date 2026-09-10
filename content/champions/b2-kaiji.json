@@ -408,7 +408,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-kaiji",
-  "modelKey": "champ.thorne",
+  "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
   "name": "伊藤開司",
   "origin": "軟輔",
   "passiveAbility": "b2-kaiji.passive",
@@ -421,5 +421,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-kaiji.webp"
+  "icon": "assets/icons/champions/b2-kaiji.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T18:20:39.964Z",
+      "source": {
+        "kind": "previous",
+        "character": "伊藤開司",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
+      "label": "ou99 伊藤開司（本尊／相似造型）",
+      "sourceModelKey": "ou99.457710",
+      "modelSha256": "cd425ec6efa2e24e88a3ab32328770fc3d3d95f20fd2b68c12c244a4ffd4e18f",
+      "binarySha256": "0ffce2b9f25b79753a9128d548a978de691985db46d4077d1466f880deececd3",
+      "registeredAt": "2026-09-10T18:20:39.968Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "伊藤開司",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457710-1-1.html"
+      }
+    }
+  ]
 }

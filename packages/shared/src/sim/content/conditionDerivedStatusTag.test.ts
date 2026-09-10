@@ -162,6 +162,8 @@ const CC_PROBES: readonly { readonly label: string; readonly patch: StatusPatch 
   { label: "stun", patch: { stun: true } },
   { label: "root", patch: { root: true } },
   { label: "feared", patch: { feared: true } },
+  // ⭐ GH#1197 魅惑 —— 與 `feared` 同一列（`condition.ts` 的 `charmed` 推出 charm／uncontrollable／cc）。
+  { label: "charmed", patch: { charmed: true } },
   // ⭐ S8【繳械】—— 2026-08-10 加進推導表的第五個 cc 旗標。這一列是被**這條測試
   // 本身**要出來的：`condition.ts` 標了 `cc`，樣本數還是 4，所以它紅了並指名
   // 「推導表多了一個 cc 旗標，這裡卻沒有樣本」。它問的不是「有沒有這個欄位」，

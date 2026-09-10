@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "海賊王に、オレはなる!",
+   "text": "（原檔）voice_joke_1",
    "lang": "ja",
    "kana": "カイゾクオー ニ オレ ワ ナル",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,23 +30,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
     "stub": false,
-    "bytes": 31808,
-    "seconds": 1.92,
+    "bytes": 80710,
+    "seconds": 4.976327,
     "lufs": null,
-    "hash": "e9429a1a511c7e40f4a980830b5595043bee90feb15234b04cc87b2c782708f6",
-    "at": 1784979358049
+    "hash": "9a8f7572ca466106125dc8515734e671a22cb5052fc23e38a1b659d9b7e6bd1c",
+    "at": 1789067558008
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0014-48_voice_joke_1.ogg"
   },
   "victory": {
-   "text": "よっしゃー!勝ったぞー!",
+   "text": "（原檔）chr0060_ActVoice#2",
    "lang": "ja",
    "kana": "ヨッシャー カッタゾー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,23 +60,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 23031,
-    "seconds": 1.36,
+    "bytes": 31391,
+    "seconds": 1.884399,
     "lufs": null,
-    "hash": "fe2360a38ddd784d4b80d88d129d0843e1b1ed2240312ece47dc7449b3c23f74",
-    "at": 1784979386141
+    "hash": "d2470d604cf531d9aa55ca0cd0feed7907bc82a4119063cb634ad14088b784f0",
+    "at": 1789067559333
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#2.ogg"
   },
   "defeat": {
-   "text": "くそー!腹減った…もう一回だ!",
+   "text": "（原檔）voice_death_1",
    "lang": "ja",
    "kana": "クソー ハラ ヘッタ モー イッカイ ダ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +90,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
     "stub": false,
-    "bytes": 34316,
-    "seconds": 2.08,
+    "bytes": 46855,
+    "seconds": 2.869116,
     "lufs": null,
-    "hash": "bd534082a00703f8ad1063bc832998e0e4ef1304a030036ac47b1786fe233fc2",
-    "at": 1784979388776
+    "hash": "f91b20ecbf02640c860984b743cd073f41d11d895567c880871b94b84bfe7749",
+    "at": 1789067557059
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0011-48_voice_death_1.ogg"
   },
   "hurt": {
-   "text": "いてっ!",
+   "text": "（原檔）chr0060_ActVoice#43",
    "lang": "ja",
    "kana": "イテッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +120,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 12164,
+    "seconds": 0.699365,
     "lufs": null,
-    "hash": "c4e4009d8514d0808e094ca51a87a8efdd8cc5a1cb51fff5869f2bc79c6449c6",
-    "at": 1784979395448
+    "hash": "b7602c414994cac86488dbab1865afd4e0910a3e003f55a7283eaea8d4e813da",
+    "at": 1789067557573
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#43.ogg"
   },
   "hurt-heavy": {
-   "text": "いっててて…!",
+   "text": "（原檔）chr0060_ActVoice#148",
    "lang": "ja",
    "kana": "イッテテテ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +150,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 20524,
+    "seconds": 1.221519,
     "lufs": null,
-    "hash": "5ff4bd22fa6afcf71730f31e0cca9c8ef8747249afd3e4f61429830796c2e076",
-    "at": 1784979399548
+    "hash": "3f9a8f3dd37dc869de16ea91ad72842dd54ff1ad5aaa918650eea177e17fb5e1",
+    "at": 1789067557658
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#148.ogg"
   },
   "stun": {
    "text": "ほえ~…?",
@@ -449,10 +454,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "お前じゃ倒せねぇよ!",
+   "text": "（原檔）chr0060_ActVoice#213",
    "lang": "ja",
    "kana": "オマエ ジャ タオセネー ヨ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +470,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 20942,
-    "seconds": 1.24,
+    "bytes": 73604,
+    "seconds": 4.545034,
     "lufs": null,
-    "hash": "61c6e9b9328b24ba753c335031955dd1591b213d0ed9abf3855942f3f216536d",
-    "at": 1784979449493
+    "hash": "fe824b249f4376ae4be317b54305e27a6e523b78b08a085ec55df3603ad28cbf",
+    "at": 1789067559037
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#213.ogg"
   },
   "curse": {
    "text": "このやろー!ぶっ飛ばす!",
@@ -536,10 +542,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "おらっ!",
+   "text": "（原檔）voice_attack_1",
    "lang": "ja",
    "kana": "オラッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +558,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 61902,
+    "seconds": 3.789206,
     "lufs": null,
-    "hash": "120048892f185e5d8d0d5a556992d0b9b5ab08b1f299bbfd4fa570447c7e10ac",
-    "at": 1784979468241
+    "hash": "c7e89ff837e804166d92c4c168955fe0adb3bcf81fbc0d5f45ae0f8ba475efaf",
+    "at": 1789067556892
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0048-48_voice_attack_1.ogg"
   },
   "attack-heavy": {
-   "text": "うりゃあ!",
+   "text": "（原檔）voice_attack_2",
    "lang": "ja",
    "kana": "ウリャー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +588,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 41004,
+    "seconds": 2.491791,
     "lufs": null,
-    "hash": "a58ffee1509041a1e4a523de7187c5875a8f0b298fbb00336fe80a4c9e0e6181",
-    "at": 1784979468911
+    "hash": "eca79af4e67c313ed01500a8af333e343b5fe5544112363391cb2f59c7b627f0",
+    "at": 1789067556718
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0026-48_voice_attack_2.ogg"
   },
   "crit": {
    "text": "もらったぁ!",
@@ -710,10 +718,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ほっ!",
+   "text": "（原檔）chr0060_ActVoice#206",
    "lang": "ja",
    "kana": "ホッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,23 +734,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 5059,
-    "seconds": 0.24,
+    "bytes": 10493,
+    "seconds": 0.592109,
     "lufs": null,
-    "hash": "fd58369d2bb3f157a5f0b790061296f1a81db78a6138f52cad26946f1578af7d",
-    "at": 1784979499538
+    "hash": "5b1e282579102d1183efdf3d9ded5a11f66fcde7c4301a630c4e0e4401b60083",
+    "at": 1789067557923
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#206.ogg"
   },
   "respond.ok": {
-   "text": "おう!まかせろ!",
+   "text": "（原檔）voice_move_1",
    "lang": "ja",
    "kana": "オー マカセロ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -755,17 +764,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
     "stub": false,
-    "bytes": 13836,
-    "seconds": 0.8,
+    "bytes": 25957,
+    "seconds": 1.554286,
     "lufs": null,
-    "hash": "638644bee88a882a5236fccd885a33c24f29c8f56a2c6533452b084a089a348e",
-    "at": 1784979511155
+    "hash": "0fc9907620c65411546b77c6a122384917f386af3d36e95b89f107254ab8ea00",
+    "at": 1789067558460
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0017-48_voice_move_1.ogg"
   },
   "respond.no": {
    "text": "やだね!",
@@ -971,10 +981,10 @@
    "lastError": null
   },
   "free-move": {
-   "text": "好きにやろうぜ!",
+   "text": "（原檔）voice_move_2",
    "lang": "ja",
    "kana": "スキ ニ ヤロー ゼ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -987,17 +997,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
     "stub": false,
-    "bytes": 20942,
-    "seconds": 1.24,
+    "bytes": 58140,
+    "seconds": 3.571519,
     "lufs": null,
-    "hash": "6c30765da80f73c870179e319636bbd5fa17467725a5954eb31199f60b1bae1e",
-    "at": 1784979548703
+    "hash": "5a34c3b530b7e7f44b77bec710d85a5e9a60376458c2e3318f97c445cd0ce774",
+    "at": 1789067557487
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0056-48_voice_move_2.ogg"
   },
   "first-blood": {
    "text": "うおっしゃあ!一番乗りだー!!",
@@ -1203,9 +1214,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "伸縮自如的橡膠戰斧！",
+   "text": "（原檔）chr0060_ActVoice#103",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,23 +1237,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 20942,
-    "seconds": null,
+    "bytes": 43929,
+    "seconds": 2.671905,
     "lufs": null,
-    "hash": "0d7b64351800678b9a77167413122b92883f4a8f0d3e1039f3968effcebcb137",
-    "at": 1784991059249
+    "hash": "c3b9c4645a82afc645c75a50fdc2f148c421d2e34d65828f2569463072439054",
+    "at": 1789067558846
    },
    "lastError": null,
-   "kana": "ゴムゴム ノ オノ"
+   "kana": "ゴムゴム ノ オノ",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#103.ogg"
   },
   "skill-name.w": {
-   "text": "伸縮自如的橡膠火箭砲！",
+   "text": "（原檔）chr0060_ActVoice#112",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1263,23 +1275,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 20942,
-    "seconds": null,
+    "bytes": 46855,
+    "seconds": 2.863152,
     "lufs": null,
-    "hash": "4af8d82fa614493428a4824bba65035203b3e63537687b83eaaac1287ea12c63",
-    "at": 1784991059250
+    "hash": "d440d9770bc542db23683dc0d30824c4d82cabf48548c55cc0a93777ad0e442d",
+    "at": 1789067558942
    },
    "lastError": null,
-   "kana": "ゴムゴム ノ バズーカ"
+   "kana": "ゴムゴム ノ バズーカ",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#112.ogg"
   },
   "skill-name.e": {
-   "text": "伸縮自如的槍亂打！",
+   "text": "（原檔）chr0060_ActVoice#117",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1300,18 +1313,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 20106,
-    "seconds": null,
+    "bytes": 53542,
+    "seconds": 3.276667,
     "lufs": null,
-    "hash": "2f5a21d20dff6d7a8e771efcd92948e2b691f96cc74550be7d9043141e4947b6",
-    "at": 1784991061253
+    "hash": "0ae930134c6e0175ce92d5c10c56f0642c253df297a97b581ac523a2e8db4fb9",
+    "at": 1789067558549
    },
    "lastError": null,
-   "kana": "ゴムゴム ノ ガトリング"
+   "kana": "ゴムゴム ノ ガトリング",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#117.ogg"
   },
   "skill-name.r": {
    "text": "三檔.巨人迴旋彈！",
@@ -1351,9 +1365,9 @@
    "kana": "ギア サード ゴムゴム ノ ギガント ライフル"
   },
   "skill-name.ex": {
-   "text": "霸王色！",
+   "text": "（原檔）chr0060_ActVoice#199",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1374,18 +1388,359 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
     "stub": false,
-    "bytes": 13836,
-    "seconds": null,
+    "bytes": 19270,
+    "seconds": 1.140272,
     "lufs": null,
-    "hash": "424d7dc9da361c0cfb8872887645861fc776f227430e58751b201508856a23b6",
-    "at": 1784991065259
+    "hash": "9669137120a546f0728b40a16bec4e73948a8f90eee85f715e7ca92e4ab4fd4a",
+    "at": 1789067558753
    },
    "lastError": null,
-   "kana": "ハオウショク"
+   "kana": "ハオウショク",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#199.ogg"
+  },
+  "attack-heavy.2": {
+   "text": "（原檔）chr0060_ActVoice#70",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#70.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.119206,
+    "lufs": null,
+    "hash": "eb9d49d5541156b1cdcf376f4c22fb478101687fe7ab5e491267a708462bacfc",
+    "at": 1789067556803
+   }
+  },
+  "attack-light.2": {
+   "text": "（原檔）chr0060_ActVoice#85",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#85.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.599184,
+    "lufs": null,
+    "hash": "98cce10ced385c03e6f4a0dd7f97a033be8d9a2ff10af8b6615418b65390e5ed",
+    "at": 1789067556973
+   }
+  },
+  "defeat.2": {
+   "text": "（原檔）voice_death_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0041-48_voice_death_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
+    "stub": false,
+    "bytes": 44347,
+    "seconds": 2.712381,
+    "lufs": null,
+    "hash": "8ab652fdb00d2fc286cccb78a5e15185a40b2f98bd98b49c9d51162c9d12f7ad",
+    "at": 1789067557143
+   }
+  },
+  "defeat.3": {
+   "text": "（原檔）chr0060_ActVoice#214",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#214.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 84889,
+    "seconds": 5.23127,
+    "lufs": null,
+    "hash": "4d2b90695b70cdcc69aee5a705db8de77dbad201049b7b85f88ed8846842fb14",
+    "at": 1789067557231
+   }
+  },
+  "defeat.4": {
+   "text": "（原檔）chr0060_ActVoice#15",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#15.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 67335,
+    "seconds": 4.128685,
+    "lufs": null,
+    "hash": "09d18c11f9b2d26b075292ea9d92fd02454f24057f479fbcc78685aa67de4ca7",
+    "at": 1789067557316
+   }
+  },
+  "defeat.5": {
+   "text": "（原檔）chr0060_ActVoice#26",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#26.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 56886,
+    "seconds": 3.498571,
+    "lufs": null,
+    "hash": "b5ace1f82ec33e07c755bf29035b0d83905d631607d7d74ca7eef5a3cf70aa63",
+    "at": 1789067557403
+   }
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）chr0060_ActVoice#118",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#118.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 19270,
+    "seconds": 1.131746,
+    "lufs": null,
+    "hash": "2faeb3896d1bf9e42c4abb73f7d0b0457d2a6a6bc40021829e06b1429d7b6f81",
+    "at": 1789067557745
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）chr0060_ActVoice#90",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#90.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.699365,
+    "lufs": null,
+    "hash": "5e7f9dab062de813b3b275e47346f862fc9c9d0028d0c4e3e589851f13a9612e",
+    "at": 1789067557835
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:48/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/48/00-0022-48_voice_joke_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:48",
+    "stub": false,
+    "bytes": 36406,
+    "seconds": 2.195737,
+    "lufs": null,
+    "hash": "38a0cac18560e76a2818c7753860d60a0513a7fd2b8313090bfc1ab7f1b5d0f2",
+    "at": 1789067558099
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）chr0060_ActVoice#210",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#210.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 91995,
+    "seconds": 5.692517,
+    "lufs": null,
+    "hash": "9683f97e80017d62303abba7321a6492d148cefee23df1ca74d4702002ab97a4",
+    "at": 1789067558187
+   }
+  },
+  "quote.4": {
+   "text": "（原檔）chr0060_ActVoice#209",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#209.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 81128,
+    "seconds": 5.006281,
+    "lufs": null,
+    "hash": "a35f0c25863cae108553e725f55d549faec608e60f001d0cc264a4070b9f07ac",
+    "at": 1789067558276
+   }
+  },
+  "quote.5": {
+   "text": "（原檔）chr0060_ActVoice#217",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#217.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 79456,
+    "seconds": 4.898639,
+    "lufs": null,
+    "hash": "9f494f58d65efc1d9327d1de6bd55e5671f5671da2a4c5cf6e97fd5e01a9db7e",
+    "at": 1789067558369
+   }
+  },
+  "skill-name.e.2": {
+   "text": "（原檔）chr0060_ActVoice#119",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#119.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 53542,
+    "seconds": 3.276667,
+    "lufs": null,
+    "hash": "92f3689859e74c5010735aa56b858e1df30f38114b2c77a8a0c169ad6d30366b",
+    "at": 1789067558642
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）chr0060_ActVoice#6",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#6.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 65663,
+    "seconds": 4.027528,
+    "lufs": null,
+    "hash": "d4bc7be125233ad517d81db7adad4b6eb756f550bf989ca1c5aaf93e45c924b4",
+    "at": 1789067559149
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）chr0060_ActVoice#207",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#207.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 63155,
+    "seconds": 3.882132,
+    "lufs": null,
+    "hash": "d9cd970ec0c37c2c2f6ce4db66e6cc0a32e43b1ff5eb33f5c877ea554956b706",
+    "at": 1789067559244
+   }
+  },
+  "victory.2": {
+   "text": "（原檔）chr0060_ActVoice#12",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#12.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 29301,
+    "seconds": 1.766032,
+    "lufs": null,
+    "hash": "ead6de6ea25f52bae354172575506dcff53df146c0fe74a940533fc1375c7765",
+    "at": 1789067559430
+   }
+  },
+  "victory.3": {
+   "text": "（原檔）chr0060_ActVoice#16",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-luffy/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted/JForce_Luffy/chr0060_ActVoice/chr0060_ActVoice#16.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.403356,
+    "lufs": null,
+    "hash": "b2d7992ea1ef893fd916d01f26e91aad094b6c06802f2763cf031b69ee3ac172",
+    "at": 1789067559523
+   }
   }
  }
 }

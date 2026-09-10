@@ -1,0 +1,17 @@
+{
+ "id": "ou99.467258",
+ "schema": "model@1",
+ "glbPath": "assets/models/ou99/ou99_467258.glb",
+ "scale": 1.0,
+ "collisionRadius": 0.55,
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Walk",
+  "attack": "Attack",
+  "cast": "Attack",
+  "hurt": "Stand",
+  "death": "Death"
+ },
+ "heroBody": false,
+ "heroBodyNote": "⛔ **視覺不合格（量到的,⛔ 不是印象）**:2026-09-10 實拍 bbox 18.47×15.66×3.56,而角色本體的 Overhead 掛點只在 y=4.58 ⇒ 客戶端 `normalizedModelScale` 照**整份 bbox 高度**正規化（TARGET_HEIGHT 1.8 ÷ 15.66）⇒ 身體只畫到 **0.53u ≈ 一般英雄的 29%**。⚠️ 撐大 bbox 的是**永久可見的紫色斬擊拖尾** —— mdx 的 geoset 可見度動畫在轉檔時被丟棄,所以那段本來只在攻擊時出現的特效變成一直在。⭐ 同族的 ou99.463252 沒有這個問題（bbox 高 1.7）。"
+}

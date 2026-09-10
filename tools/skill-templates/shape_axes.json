@@ -212,6 +212,14 @@
       ],
       "minValue": 2,
       "why": "jumps:1 = 一發連鎖閃電沒有跳，就是一發單體"
+    },
+    "maxTotalJumps": {
+      "axes": [
+        "迴圈",
+        "多段"
+      ],
+      "minValue": 2,
+      "why": "同 jumps（它就是 jumps 的**跨鏈總上限**）：上限 1 = 這次施放只跳一次 ⇒ 退化成單體，沒有段也沒有節奏"
     }
   },
   "_byKindWhy": "同一個欄位名在不同 kind 語意不同的，逐 kind 定案。⛔ 這一格贏過 fields。",
@@ -220,7 +228,6 @@
       "持續",
       "續效特效"
     ],
-    "applyStatus.healingTakenMult": [],
     "applyStatus.lifestealMult": [],
     "applyStatus.regenMult": [],
     "applyStatus.sourceScope": [],
@@ -228,20 +235,12 @@
     "blink.to": [
       "路徑"
     ],
-    "chance.p": [],
-    "chainLightning.maxTotalJumps": [
-      "多段"
-    ],
     "chainLightning.revisit": [],
     "championForm.to": [],
     "comboStrikes.strikeReposition": [
       "多段"
     ],
-    "consumeStatus.onConsumed": [],
-    "damage.bankedBonus": [],
-    "damage.distanceScale": [
-      "路徑"
-    ],
+    "damage.distanceScale": [],
     "dash.mode": [
       "路徑"
     ],
@@ -255,16 +254,17 @@
     "delayed.targetMode": [
       "等待"
     ],
+    "dispel.order": [],
+    "dot.onCasterDeath": [
+      "持續"
+    ],
     "dot.stacking": [
       "迴圈"
     ],
-    "dot.onCasterDeath": [],
     "dot.tickOnApply": [
       "迴圈"
     ],
-    "dispel.order": [],
     "evasion.chance": [],
-    "evasion.dodgesAbilities": [],
     "floatingText.driftAngleDeg": [
       "路徑"
     ],
@@ -290,18 +290,20 @@
     "knockback.to": [
       "路徑"
     ],
-    "knockback.uncontrollable": [],
+    "knockback.uncontrollable": [
+      "持續"
+    ],
     "leap.mode": [
       "路徑"
     ],
-    "randomArea.who": [],
-    "recentCast.withinSec": [],
     "pull.destination": [
       "路徑"
     ],
     "pull.stopDistance": [
       "路徑"
     ],
+    "randomArea.who": [],
+    "recentCast.withinSec": [],
     "spawnModelFx.anchor": [],
     "spawnModelFx.clip": [
       "續效特效"
@@ -327,24 +329,18 @@
       "持續",
       "續效特效"
     ],
+    "status.appliedBy": [],
     "summon.body": [],
-    "summon.championId": [],
     "summon.damageMult": [],
     "summon.formation": [
       "路徑"
     ],
     "summon.hpMult": [],
-    "summon.maxAlive": [],
     "summon.onOwnerDeath": [],
     "summon.spread": [
       "路徑"
     ],
-    "summon.team": [],
-    "spendHealth.minimumHp": [],
-    "spendHealth.pctMaxHealth": [],
-    "spendMana.bankAs": [],
-    "status.appliedBy": [],
-    "shield.onExisting": []
+    "summon.team": []
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
   "topLevel": {
@@ -745,27 +741,27 @@
   },
   "_hookOnWhy": "⭐ 一個 hook 帶不帶時序軸，**由它的 `on` 決定**，⛔ 不是由「它是一個 hook」決定。判準只有一句：**這個 `on` 自己會不會重複發射？** · `onInterval` 由引擎每 tick 評估、`internalCooldown` 決定節奏（`schema/effects/_hook.ts` 逐字：「`onInterval` 更直接是**每秒 30 次**」）⇒ 它**就是**迴圈軸的定義（「同一件事重複發生：每隔 T 秒一次」）。 · 其餘 10 個是**事件**：發不發射由玩家/敵人做了什麼決定，hook 自己沒有節奏也沒有期間 ⇒ 無軸。⚠️ 重複的是**那個事件**（玩家一直普攻），⛔ 不是這支技能 —— 把 `onBasicAttack` 算成迴圈會讓全 repo 67 條 on-hit 被動全部變成「週期技能」。⛔ 這一格**不可以留空白**：`on` 落在表外 ⇒ 覆蓋閘非零（同 fields／byKind 的規矩），因為引擎加一個新的時序 hook 而沒有人做決定時，掃描器要**紅**，⛔ 不是安靜地把它算成沒有形狀。",
   "hookOn": {
-    "onAllyDamaged": [],
     "onInterval": [
       "迴圈"
     ],
     "onBasicAttack": [],
-    "onCrowdControlApplied": [],
-    "onCrowdControlReceived": [],
     "onDamageTaken": [],
     "onDamageDealt": [],
-    "onDashOrBlink": [],
     "onAbilityCast": [],
     "onAbilityHit": [],
-    "onHeal": [],
     "onKill": [],
     "onEvade": [],
     "onReflectSuccess": [],
-    "onShieldGained": [],
     "onStatusApplied": [],
     "onStunned": [],
-    "onUltimateCast": [],
-    "onUltimateHit": []
+    "onUltimateHit": [],
+    "onShieldGained": [],
+    "onAllyDamaged": [],
+    "onCrowdControlApplied": [],
+    "onCrowdControlReceived": [],
+    "onDashOrBlink": [],
+    "onHeal": [],
+    "onUltimateCast": []
   },
   "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
   "ignored": {
@@ -914,7 +910,18 @@
     "victimCondition": "圈內過濾條件",
     "vision": "隱形/真視授予（它的期間住在承載它的 source）",
     "whileForm": "「只在某個變身形態下生效」是一道**條件閘**，⛔ 不是時序 —— 它的期間是那個形態的期間，而形態自己由 championForm.durationSec 記帳",
-    "who": "落在誰身上"
+    "who": "落在誰身上",
+    "p": "機率（`chance.p`）—— ⭐ 它決定**發不發生**，⛔ 不是「發生時長什麼形狀」。反駁：哪天有一格機率**隨時間變**（每秒重擲），那是迴圈，移進 byKind。",
+    "onExisting": "已經有一層護盾時怎麼辦（疊加／取代／取大）⇒ **選誰**，⛔ 不是時序。期間住在 `duration`（已在 fields:持續）。",
+    "dodgesAbilities": "閃避吃不吃技能傷害 ⇒ **範圍**（打誰算），⛔ 不是形狀。",
+    "bankAs": "`spendMana` 燒掉的魔力存成哪一種資源 ⇒ **資源名**，⛔ 不是時序。",
+    "bankedBonus": "`damage` 讀存起來的那筆加成 ⇒ **純數值**。",
+    "minimumHp": "`spendHealth` 的下限（不會把自己燒死）⇒ **上下界**，⛔ 不是形狀。",
+    "pctMaxHealth": "燒的是最大生命的百分比 ⇒ **純數值**（同 `amount`）。",
+    "healingTakenMult": "受治療倍率 ⇒ **純倍率**；期間住在同一筆 status 的 `duration`。",
+    "maxAlive": "同時最多幾隻召喚物 ⇒ **上界**，⛔ 不是「幾段」也不是「多久一次」（那兩格是 `count`／`intervalSec`）。",
+    "championId": "召誰 ⇒ **身分**，⛔ 不是形狀。",
+    "onConsumed": "`consumeStatus` 消耗成功時跑的那一串 ⇒ ⭐ **子效果鏈**（`EFFECT_CHILD_CHAINS` 認得它），形狀由**那一串自己**的欄位決定，⛔ 不是由這一格。"
   },
   "_byKindNotes": {
     "spawnVfx.attach": "`at:\"bone\"` 的掛點名稱（hand,right / chest / weapon…）—— 它決定特效**貼在模型的哪裡**，⛔ 不決定技能的形狀（時序/範圍/多段/路徑一格都不動）。⭐ 與 `spawnModelFx.anchor` 完全同型（那一格也是空軸）。⭐ 可反駁：哪天出現「掛在不同骨頭 ⇒ 打到不同範圍」這種機制，它就變成一條軸。",

@@ -297,7 +297,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-shinchan",
-  "modelKey": "champ.thorne",
+  "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
   "name": "野原新之助",
   "origin": "軟輔",
   "passiveAbility": "b2-shinchan.passive",
@@ -310,5 +310,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-shinchan.webp"
+  "icon": "assets/icons/champions/b2-shinchan.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T18:20:40.277Z",
+      "source": {
+        "kind": "previous",
+        "character": "野原新之助",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
+      "label": "ou99 野原新之助（本尊／相似造型）",
+      "sourceModelKey": "ou99.457874",
+      "modelSha256": "4f04ecf73998222c6feef59eb0d46acb1a38f4846ac3b54f1110ceed334b1872",
+      "binarySha256": "a725f7fc1c46ee63f359f864b3f5c65472fa65d1d0d1d2e67371dd5a1995192f",
+      "registeredAt": "2026-09-10T18:20:40.281Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "野原新之助",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457874-1-1.html"
+      }
+    }
+  ]
 }

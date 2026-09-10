@@ -1,0 +1,16 @@
+{
+ "id": "ou99.464483",
+ "schema": "model@1",
+ "glbPath": "assets/models/ou99/ou99_464483.glb",
+ "scale": 1.0,
+ "collisionRadius": 0.55,
+ "clipMap": {
+  "idle": "Stand - 1",
+  "run": "Walk - 1",
+  "attack": "Attack - 1",
+  "cast": "Spell - 1",
+  "hurt": "Stand - 1",
+  "death": "Death - 1"
+ },
+ "heroBody": true
+}
