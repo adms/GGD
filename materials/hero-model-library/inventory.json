@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T07:15:54+08:00",
-  "inputsSha256": "8977e3ba0ec9a45ee7d1b4b8d1eb785af6aa05f8ae87f1cbcfb2211c734a2915",
+  "generatedAt": "2026-09-11T07:21:30+08:00",
+  "inputsSha256": "d527151b03ab6176bfe039b6f66a5bcaf0965a173134e1e53f35ecedd54fd98d",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -94262,20 +94262,21 @@
           ".wav"
         ],
         "recoveryOfSourceId": "local-lol-decoded-audio",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-audio-review",
           "selectionVerified": false
         },
-        "verification": "Sylas共用WAD的6個原生PCM16另存Float32，WEM data與舊PCM16相同且逐樣本往返一致，取樣率/frame/聲道核對；原WEM/舊PCM16/失敗報告全留。語言未核；新主檔另列，不重算先前14個恢復檔。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
+        "verification": "Sylas共用WAD的6個原生PCM16另存Float32，WEM data與舊PCM16相同且逐樣本往返一致，取樣率/frame/聲道核對；原WEM/舊PCM16/失敗報告全留。語言未核；新主檔另列，不重算先前14個恢復檔。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
           "bytes": 1446390,
           "sha256": "fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {

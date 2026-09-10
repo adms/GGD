@@ -43213,15 +43213,17 @@
     },
     "public:lol-local-native-pcm16-recovery-round19": {
       "type": "zip",
-      "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
-      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round19/fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d.zip",
       "bytes": 1446390,
       "sha256": "fbfe4e0a1a2cbeb626178fccbf0cc2528c17613c97d90dbc4aa4ba6cc06b255d",
-      "readbackVerified": false,
+      "archiveFormat": "zip",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
       "localRoot": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19",
       "localUseAvailable": true,
-      "publicationStatus": "local-verified-s3-pending"
+      "publicationStatus": "s3-readback-verified"
     },
     "public:kof-xv-iori-audio-float32-v1": {
       "type": "local-intake",
@@ -43361,11 +43363,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "283f8b303d47f9cbc939fa4b098ef57b3fe123f5926006004fa9fe591272477e"
+      "sha256": "e3e877e57d79aa832a3a9328c46032912e3778283103b1a94c17f3683f0f11f4"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "025d777e6be17d5e0cd5e3a682b646cfb4f23c51ef63e1ced5aaa46adb9fcc1c"
+      "sha256": "8116e75751ac0dc1de8b97f40104d302d03ce8f65e42682e55f4fcd5d02cb06a"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
