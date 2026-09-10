@@ -32,6 +32,14 @@
      "seconds": 2.16,
      "at": 1789042381147,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.84,
+     "at": 1789054870611,
+     "error": null
     }
    ],
    "text": "烏戈代班先派一位！",
@@ -41,16 +49,16 @@
    "origin": "ability-name:b2-aladdin.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 35570,
-    "seconds": 2.16,
+    "bytes": 30555,
+    "seconds": 1.84,
     "lufs": null,
-    "hash": "52313753cd80b99f7240da7d92810a9842943b09a16cdb4dc51905cf9e2ece25",
-    "maxDb": -3.6,
-    "at": 1789042381148
+    "hash": "7524ecede0ca2db059612ea9c6d1a0d07e2516e2f0a12ad39ea3305cfb70032a",
+    "maxDb": -3,
+    "at": 1789054870613
    },
    "lastError": null
   },
@@ -71,6 +79,14 @@
      "seconds": 2.08,
      "at": 1789042381260,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1789054870798,
+     "error": null
     }
    ],
    "text": "樂團加演再請一位！",
@@ -80,16 +96,16 @@
    "origin": "ability-name:b2-aladdin.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 34316,
-    "seconds": 2.08,
+    "bytes": 32644,
+    "seconds": 1.960249,
     "lufs": null,
-    "hash": "c55fa7dfc39343e78be73466364a1d28d4cc7639b40d6bf7e4dec852b991b29e",
+    "hash": "06bd796cb4430770e1742407ee181069c6f0e7169de29d32dca0c54e9511b39d",
     "maxDb": -1.9,
-    "at": 1789042381260
+    "at": 1789054870798
    },
    "lastError": null
   },
@@ -110,6 +126,14 @@
      "seconds": 2.12,
      "at": 1789042381370,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1789054870984,
+     "error": null
     }
    ],
    "text": "團員到齊才打節拍！",
@@ -119,16 +143,16 @@
    "origin": "ability-name:b2-aladdin.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 35152,
-    "seconds": 2.12,
+    "bytes": 41839,
+    "seconds": 2.56,
     "lufs": null,
-    "hash": "823b6ac82c90d44785f01bc1883db0120844a21dad1a07ac17bbf0ceb3abb1c5",
-    "maxDb": -3.4,
-    "at": 1789042381370
+    "hash": "e58ddb793792c5abc60c05f08b67b8b09073f66691569271479c0fd2a9c09435",
+    "maxDb": -2.9,
+    "at": 1789054870984
    },
    "lastError": null
   },
@@ -149,6 +173,14 @@
      "seconds": 1.84,
      "at": 1789042381485,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1789054871158,
+     "error": null
     }
    ],
    "text": "魔法音樂課吹整排！",
@@ -158,16 +190,16 @@
    "origin": "ability-name:b2-aladdin.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 30555,
-    "seconds": 1.84,
+    "bytes": 32644,
+    "seconds": 1.960249,
     "lufs": null,
-    "hash": "f1f34baf78c5e42f902135a7229a7303b6ff7f893977ad76c4fa6ef3f9113d62",
-    "maxDb": -2.6,
-    "at": 1789042381485
+    "hash": "15dfb8ca0f51351485bea1fc24ecf340c0d2937e536d21b8bce943b9e795d230",
+    "maxDb": -2.4,
+    "at": 1789054871158
    },
    "lastError": null
   },
@@ -188,6 +220,14 @@
      "seconds": 1.8,
      "at": 1789042381599,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.4,
+     "at": 1789054871332,
+     "error": null
     }
    ],
    "text": "暖風模式先照顧同學！",
@@ -197,16 +237,16 @@
    "origin": "ability-name:b2-aladdin.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 29719,
-    "seconds": 1.8,
+    "bytes": 39332,
+    "seconds": 2.4,
     "lufs": null,
-    "hash": "24c208fae7848ac6d8fbf8db27d17fa06fbc90a427e02156f5c0991e761f20c4",
-    "maxDb": -3.9,
-    "at": 1789042381599
+    "hash": "fc278138f4526da0f4595bec0d6a77f2a727fc0d788e71fb71e0fd97ea091858",
+    "maxDb": -1.9,
+    "at": 1789054871332
    },
    "lastError": null
   },
@@ -219,6 +259,14 @@
      "seconds": 1.88,
      "at": 1789042991382,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1789054871513,
+     "error": null
     }
    ],
    "text": "君に手をのばすんだ。何度でも",
@@ -228,16 +276,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 30973,
-    "seconds": 1.88,
+    "bytes": 32644,
+    "seconds": 1.960249,
     "lufs": null,
-    "hash": "b183329923746fe00c0c3b6b258a422b4c2c9e77ca0c26f6b0fd882d0be6b907",
-    "maxDb": -3.8,
-    "at": 1789042991383
+    "hash": "4f74861bf2320f8ef0c04d3fe1fde2158e506622fe61f87135eadfd24451ba7b",
+    "maxDb": -3.9,
+    "at": 1789054871513
    },
    "lastError": null
   },
@@ -250,6 +298,14 @@
      "seconds": 0.28,
      "at": 1789037069318,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054871695,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -259,16 +315,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "b0b0302c9203582167b045323fcc3f776f64d77f88af9d297b7dddd9974920a3",
+    "hash": "de8f50851f6acca2e6278b1f4fc1bf663b4a7a389393df33de61717e8a2d394d",
     "maxDb": -2,
-    "at": 1789037069318
+    "at": 1789054871695
    },
    "lastError": null
   },
@@ -281,6 +337,14 @@
      "seconds": 0.32,
      "at": 1789037069441,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054871878,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -290,16 +354,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6313,
     "seconds": 0.32,
     "lufs": null,
-    "hash": "9c2bdaa400f83929f461d9da2c52db1fc486dea322536edd314e995e8ff00700",
+    "hash": "f7a6652fe81c005aae2868f03630fa23e325bf17ebbccfc4f41fe81d8f37eed3",
     "maxDb": -2,
-    "at": 1789037069441
+    "at": 1789054871878
    },
    "lastError": null
   },
@@ -312,6 +376,14 @@
      "seconds": 0.6,
      "at": 1789037069562,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789054872063,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -321,16 +393,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 10493,
-    "seconds": 0.6,
+    "bytes": 12582,
+    "seconds": 0.72,
     "lufs": null,
-    "hash": "c24e5f2c6a4c3c658cecdc19e8087c62e9a8f716d58217d4846201df92005087",
-    "maxDb": -4.1,
-    "at": 1789037069562
+    "hash": "ace57fae3f36ce0d52a2d262a8aabb9fc29e6e6d42ed033a2bc5c764e1a5192e",
+    "maxDb": -4.4,
+    "at": 1789054872063
    },
    "lastError": null
   },
@@ -343,6 +415,14 @@
      "seconds": 1,
      "at": 1789042991524,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789054872246,
+     "error": null
     }
    ],
    "text": "ウーゴくん！",
@@ -352,16 +432,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 15090,
+    "seconds": 0.88,
     "lufs": null,
-    "hash": "c2a3a1075b928c570fc3ba2a346e0453b938e50b1c49fca4ed77961f78c8ee5b",
-    "maxDb": -4.7,
-    "at": 1789042991524
+    "hash": "4dbfb81e6c28cb968bdb998dad0c7ee71ae9f4528736359ce7864b1d463b2427",
+    "maxDb": -3.5,
+    "at": 1789054872246
    },
    "lastError": null
   },
@@ -374,6 +454,14 @@
      "seconds": 0.36,
      "at": 1789037069684,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789054872435,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -383,16 +471,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "520232893833e5bc6b9b93d1ca528cc193cdb3829103b761f61264319b293b7e",
+    "hash": "4f0ccff0afa6b1ca5c6a5ca80e838eb616c0831c362741a49086a1df9c3d6372",
     "maxDb": -2,
-    "at": 1789037069684
+    "at": 1789054872435
    },
    "lastError": null
   }

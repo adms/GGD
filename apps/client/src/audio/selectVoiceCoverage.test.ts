@@ -144,7 +144,13 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     //   `champion-voices.json` 的 key。⭐ 他們**沒有** w3x map quip（他們不是從那張圖來的）
     //   ⇒ `source: "none"` 是**真話**,⛔ 不是佔位 ⇒ 他們落在「只有呼名」這一階。
     //   ⚠️ 上面那條加總斷言同時在守：⛔ 不會有人靜靜地掉出所有階梯。
-    expect(byTier).toEqual({ authored: 13, generated: 52, name: 88 });
+    // ⭐ 2026-09-10（下午）：`name` 88 → **15**、`generated` 52 → **125**（+73）—— 74 名新英雄
+    //   的戰鬥語音包落地（build-combat-lines.mjs：原作遊戲語音的 taunt／owner V3 的口頭禪進了
+    //   select 池），只剩 b2-kisaragi（台詞是中文，合成只講日文）與 LOL 7（owner 排除）還在呼名那一階。
+    // ⭐ 2026-09-11：`generated` 125 → **132**、`name` 15 → **8** —— LOL 7 位的原作日文語音
+    //   （Riot ja_JP WAD，owner 的素材工作流解碼）落地成純原檔語音包 ⇒ 他們從「只有呼名」
+    //   升到「有語音包」那一階。剩下的 8 位沒有語音包，⛔ 也沒有 map quip。
+    expect(byTier).toEqual({ authored: 13, generated: 132, name: 8 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {
@@ -228,10 +234,20 @@ describe("the generated voice pack, as shipped today", () => {
     expect(PACK).not.toBeNull();
     // The voice-gen indexer folded the lines/ corpus in: 51 packed champions,
     // each with a non-empty synthesized select pool.
-    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(51);
-    for (const [id, entry] of Object.entries(PACK?.champions ?? {})) {
-      expect(entry.lines["select"]?.length, `${id} select pool`).toBeGreaterThan(0);
-    }
+    // 51 daemon packs (2026-07-25) + 74 combat-core packs for the new heroes (2026-09-10)
+    // + the LOL 7's original-clip packs (2026-09-11, Riot ja_JP WADs).
+    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(132);
+    // ⭐ 2026-09-10: one combat-core pack has NO select pool yet, and it is pinned both
+    // ways: b2-kisaragi's only lines are Chinese and synthesis speaks Japanese only
+    // (owner「我們合成不講中文 只講日文」), so its click falls to the name rung until the
+    // owner supplies Japanese text or an original clip. Anyone else missing a pool is a
+    // regression; kisaragi gaining one must be removed from here.
+    const SELECT_PENDING = ["b2-kisaragi"];
+    const noPool = Object.entries(PACK?.champions ?? {})
+      .filter(([, entry]) => (entry.lines["select"]?.length ?? 0) === 0)
+      .map(([id]) => id)
+      .sort();
+    expect(noPool, "pack entries with an empty select pool").toEqual(SELECT_PENDING);
 
     // Rung 2 now answers for exactly the packed heroes that have no authored
     // map-quip (authored wins over generated), and every such hero's clip is a
@@ -257,11 +273,11 @@ describe("the generated voice pack, as shipped today", () => {
     // the same resolver the player hears, so this stays an equality both ways
     // rather than a number someone has to keep in step.
     const packedNonAuthored = CHAMP_IDS.filter(
-      (id) => !authoredIds.has(id) && resolveVoicePackId(PACK, id) !== null,
+      (id) => !authoredIds.has(id) && !SELECT_PENDING.includes(id) && resolveVoicePackId(PACK, id) !== null,
     );
     expect(generated.sort()).toEqual(packedNonAuthored.sort());
     // 57 → 52 for the same reason as the tier table above: the 48 retired
     // champions left the measured roster on 2026-08-27, not the pack.
-    expect(generated.length).toBe(52);
+    expect(generated.length).toBe(132) // 2026-09-10: 52 + 73 new heroes whose select pool landed (b2-kisaragi pending, see SELECT_PENDING); + LOL 7（2026-09-11 原作日文包）
   });
 });

@@ -40,6 +40,14 @@
      "seconds": 0.92,
      "at": 1789042405629,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1789054984889,
+     "error": null
     }
    ],
    "text": "菸灰缸飛過去！",
@@ -49,16 +57,16 @@
    "origin": "ability-name:community-review-30-20260907.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 13836,
+    "seconds": 0.8,
     "lufs": null,
-    "hash": "3a3041c4a0955c2643e9e96f618100fc48ef909089ad9dd4c1a7b958aa7d1c5a",
+    "hash": "87e09e476c54db4babc93fbac5164564dafa1112aa878f6c0c7185fc6a84711a",
     "maxDb": -2,
-    "at": 1789042405629
+    "at": 1789054984889
    },
    "lastError": null
   },
@@ -87,6 +95,14 @@
      "seconds": 0.84,
      "at": 1789042405738,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1789054985069,
+     "error": null
     }
    ],
    "text": "煙霧瀰漫！",
@@ -96,16 +112,16 @@
    "origin": "ability-name:community-review-30-20260907.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.84,
+    "bytes": 18434,
+    "seconds": 1.08,
     "lufs": null,
-    "hash": "e194798a4a3e3227d13ac847ee8a0e439fa98f7e76c21ca0cd6d91e26300d617",
-    "maxDb": -5.6,
-    "at": 1789042405738
+    "hash": "a3e9af2d7dc8fe5a52ac0b348a95e5f04b64008f1d63f91aa829c2bc1916d4df",
+    "maxDb": -5.8,
+    "at": 1789054985069
    },
    "lastError": null
   },
@@ -134,6 +150,14 @@
      "seconds": 0.76,
      "at": 1789042405848,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.96,
+     "at": 1789054985252,
+     "error": null
     }
    ],
    "text": "先溜再說！",
@@ -143,16 +167,16 @@
    "origin": "ability-name:community-review-30-20260907.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 16344,
+    "seconds": 0.96,
     "lufs": null,
-    "hash": "4a33473f21f6ce6f3f6542f9bad823281b8af359b827b7026c1b2e82b303fbe9",
-    "maxDb": -3.2,
-    "at": 1789042405848
+    "hash": "f734f04f0c64d2c2195de8429d730720a354a7c54712900a529a3570828d1c7e",
+    "maxDb": -2,
+    "at": 1789054985253
    },
    "lastError": null
   },
@@ -181,6 +205,14 @@
      "seconds": 1.36,
      "at": 1789042405960,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1789054985443,
+     "error": null
     }
    ],
    "text": "房間大崩壞！",
@@ -190,16 +222,16 @@
    "origin": "ability-name:community-review-30-20260907.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 23031,
     "seconds": 1.36,
     "lufs": null,
-    "hash": "e8cea779fab84963f65e034e6e586b011c2b69146b1e5f49a0738712c2d24b2b",
-    "maxDb": -3.1,
-    "at": 1789042405960
+    "hash": "0d160d086f6609e665c5031ba61881e948987467571b1e8b826046d1df657a34",
+    "maxDb": -3.8,
+    "at": 1789054985443
    },
    "lastError": null
   },
@@ -228,6 +260,14 @@
      "seconds": 2.12,
      "at": 1789042406066,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.84,
+     "at": 1789054985626,
+     "error": null
     }
    ],
    "text": "今天真的不想動！",
@@ -237,16 +277,16 @@
    "origin": "ability-name:community-review-30-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 35152,
-    "seconds": 2.12,
+    "bytes": 30555,
+    "seconds": 1.84,
     "lufs": null,
-    "hash": "86768d7e322653ec165dd813075b2a9356a7eef08c38a180690858da4f3d62bf",
-    "maxDb": -2.1,
-    "at": 1789042406066
+    "hash": "2d77e789800ebf68c39d9ecad51b8f36c405cf0a1771aa57cc01c005c3a415a6",
+    "maxDb": -2,
+    "at": 1789054985626
    },
    "lastError": null
   },
@@ -259,6 +299,14 @@
      "seconds": 3,
      "at": 1789043012385,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1789054985816,
+     "error": null
     }
    ],
    "text": "ニャーはなんにも悪いことしてないのに…",
@@ -268,16 +316,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 48945,
-    "seconds": 3,
+    "bytes": 46437,
+    "seconds": 2.84,
     "lufs": null,
-    "hash": "26f3062bb4f97ca26c02f601890c14a107afb8c26db2db17cbe0ea2002659f94",
-    "maxDb": -2.4,
-    "at": 1789043012385
+    "hash": "c47abf312100c1eabe3b45826c54e2f98baad6c93e653d661559b9808d850023",
+    "maxDb": -3.9,
+    "at": 1789054985817
    },
    "lastError": null
   },
@@ -298,6 +346,14 @@
      "seconds": 0.36,
      "at": 1789040395771,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054986003,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -307,16 +363,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6731,
     "seconds": 0.36,
     "lufs": null,
-    "hash": "5dad5fea2ab986b5b6040ee1769fae87e0e0f495956fb184abafe8025c5e7c59",
-    "maxDb": -2,
-    "at": 1789040395771
+    "hash": "fb9d506c94f7ae7f6a663c24fd1b58dbc1ab5adaaa50c4850e82d63d4beb95cc",
+    "maxDb": -1.9,
+    "at": 1789054986003
    },
    "lastError": null
   },
@@ -337,6 +393,14 @@
      "seconds": 0.32,
      "at": 1789040395885,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054986188,
+     "error": null
     }
    ],
    "text": "きゃっ！",
@@ -346,16 +410,16 @@
    "origin": "grunt:female",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6313,
     "seconds": 0.32,
     "lufs": null,
-    "hash": "510362611f659e0716066e0286038ee82ce4dd430fe03ec0fba2123f5691abd9",
+    "hash": "822710629a959f7b2c4fffc2bd05468040a453e22a8bbd75e9675cb0f007156a",
     "maxDb": -2,
-    "at": 1789040395885
+    "at": 1789054986188
    },
    "lastError": null
   },
@@ -376,6 +440,14 @@
      "seconds": 0.64,
      "at": 1789040395997,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789054986380,
+     "error": null
     }
    ],
    "text": "ああっ……！",
@@ -385,16 +457,16 @@
    "origin": "grunt:female",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "9746533f525258a63ac01d1dc5ad0110436120504ead6828e200ee24b0bb5f75",
-    "maxDb": -2.6,
-    "at": 1789040395998
+    "hash": "f11d9402d6a3ac5d92a88753778ee1b4d60e13890ba70869f19c821b40b00b77",
+    "maxDb": -3.3,
+    "at": 1789054986380
    },
    "lastError": null
   },
@@ -407,6 +479,14 @@
      "seconds": 2,
      "at": 1789043012498,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.52,
+     "at": 1789054986571,
+     "error": null
     }
    ],
    "text": "ニャーはなんにも悪いことしてないのに…",
@@ -416,16 +496,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33062,
-    "seconds": 2,
+    "bytes": 57304,
+    "seconds": 3.52,
     "lufs": null,
-    "hash": "58d696b8679d82d35d5d86757b6a5ac168ed3b6225645327619ea793fdbac56d",
-    "maxDb": -4.1,
-    "at": 1789043012498
+    "hash": "e83174401540477a0eed58f2e26ffbe14e4a1d3b7860dda20b87cf2e70bbad09",
+    "maxDb": -4.7,
+    "at": 1789054986571
    },
    "lastError": null
   },
@@ -446,6 +526,14 @@
      "seconds": 0.44,
      "at": 1789040396107,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054986761,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -455,16 +543,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 5477,
+    "seconds": 0.28,
     "lufs": null,
-    "hash": "a718608110e6db7a7ee3b35cf4a14ef4b29e500a132294c7eacb6b22359e25a7",
-    "maxDb": -3.1,
-    "at": 1789040396107
+    "hash": "d2bb86cde3cbc1a345b3c829bfd85cc605fcc52816f35f97965290ac0ddf58e9",
+    "maxDb": -1.9,
+    "at": 1789054986761
    },
    "lastError": null
   }

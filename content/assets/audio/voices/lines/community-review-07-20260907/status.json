@@ -1,17 +1,17 @@
 {
  "championId": "community-review-07-20260907",
  "reference": {
-  "sha256": "869635091a91eca422582afb87f6843c95598ad9f2709da299a8638302063049",
+  "sha256": "97f0146be9479ee6c682f468f05f728f3c677f03ff00059da943a042c879915e",
   "seconds": 0,
   "sampleRate": 24000,
-  "source": "voice-reference-pipeline/approved/processed/godie-u00h.wav",
-  "sourceKind": "donor",
-  "donor": "godie-u00h",
+  "source": "voice-reference-pipeline/approved/processed/community-review-07-20260907.wav",
+  "sourceKind": "repo",
+  "donor": null,
   "licence": "",
   "licenceUrl": "",
-  "note": "donor casting (COMBAT_CASTING.json, voiceClass=male) — drop community-review-07-20260907.wav into approved/processed/ to switch to the hero's own take",
-  "addedAt": 1789035549620,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-u00h.wav"
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789048358809,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-07-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -24,25 +24,71 @@
      "seconds": 1.76,
      "at": 1789043004742,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789054958595,
+     "error": null
     }
    ],
-   "text": "今すぐキミを壊したい…♥",
+   "text": "（原檔）chr0330_ActVoice#14",
    "lang": "ja",
-   "kana": "イマスグ キミオ コワシタイ",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#14.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 29301,
-    "seconds": 1.76,
+    "bytes": 96174,
+    "seconds": 5.930862,
     "lufs": null,
-    "hash": "a502532b1065cc6364481efab9dd50ac345df1e254b273e9a376e163019b8774",
-    "maxDb": -3.5,
-    "at": 1789043004742
+    "hash": "3a7c1dc6b25aff3b20cd9a5441552492aee1a2921012bf0c080cd39272a95362",
+    "at": 1789058013762
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#19",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#19.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 95756,
+    "seconds": 5.929025,
+    "lufs": null,
+    "hash": "02d84560ff9961ae4a4f5e5f982e31666a53edebc5e417ddd9bb14a3e0e7d644",
+    "at": 1789058013858
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#18",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#18.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 94502,
+    "seconds": 5.838027,
+    "lufs": null,
+    "hash": "9f70dc6711385d1979f5bf0320b84c28e003dd9e93cb3ed2eede5a0de2fee679",
+    "at": 1789058013959
    },
    "lastError": null
   },
@@ -63,6 +109,14 @@
      "seconds": 1.24,
      "at": 1789042401144,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1789054958788,
+     "error": null
     }
    ],
    "text": "撲克牌連射！",
@@ -72,16 +126,16 @@
    "origin": "ability-name:community-review-07-20260907.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20942,
-    "seconds": 1.24,
+    "bytes": 24285,
+    "seconds": 1.44,
     "lufs": null,
-    "hash": "7c958bcdfd26e874e22572b39d38bf1b898ea835aec14a9bb27ffcae3cf5d45f",
-    "maxDb": -2.2,
-    "at": 1789042401144
+    "hash": "6deee02f12cdfcd99bf6315cd5e1f53e5624a35a8deceba4aeaf958efc63d556",
+    "maxDb": -1.9,
+    "at": 1789054958788
    },
    "lastError": null
   },
@@ -102,6 +156,14 @@
      "seconds": 1.72,
      "at": 1789042401247,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1789054958989,
+     "error": null
     }
    ],
    "text": "伸縮自在的愛！",
@@ -111,16 +173,16 @@
    "origin": "ability-name:community-review-07-20260907.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 28465,
-    "seconds": 1.72,
+    "bytes": 30973,
+    "seconds": 1.88,
     "lufs": null,
-    "hash": "aea97bd189837f04cf78a493c853be9a0bf73ca385ef3857f5c54e1eb20f41d5",
-    "maxDb": -2,
-    "at": 1789042401247
+    "hash": "3646af9bd2e01bd1d57925b9f1a4b6181e54406ccd2ff942c6ab79fa7f6419a3",
+    "maxDb": -2.3,
+    "at": 1789054958989
    },
    "lastError": null
   },
@@ -141,6 +203,14 @@
      "seconds": 0.96,
      "at": 1789042401350,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789054959198,
+     "error": null
     }
    ],
    "text": "收線！",
@@ -150,16 +220,16 @@
    "origin": "ability-name:community-review-07-20260907.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 16344,
-    "seconds": 0.96,
+    "bytes": 15926,
+    "seconds": 0.92,
     "lufs": null,
-    "hash": "d628728ec3ea6dcb29d364e7a9494be40e2317ecf29fa85957720fd3311e37b4",
-    "maxDb": -2.2,
-    "at": 1789042401350
+    "hash": "57029079cfa78d4c65c342d18df4cc6b7954437db6f2c95ae6456aa3ab765bd3",
+    "maxDb": -3.4,
+    "at": 1789054959198
    },
    "lastError": null
   },
@@ -180,6 +250,14 @@
      "seconds": 1.12,
      "at": 1789042401452,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1789054959393,
+     "error": null
     }
    ],
    "text": "彈性殺陣！",
@@ -189,16 +267,16 @@
    "origin": "ability-name:community-review-07-20260907.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.12,
+    "bytes": 22195,
+    "seconds": 1.32,
     "lufs": null,
-    "hash": "a1cf6ec49710ab5295d540932eb97da6f9132f1f0e747ff44995a661701fa0bc",
-    "maxDb": -2,
-    "at": 1789042401453
+    "hash": "285a2bbf60c033955141e2498eb677dcb26b42f1b0627fc02cfdbcfd40ce509e",
+    "maxDb": -1.9,
+    "at": 1789054959393
    },
    "lastError": null
   },
@@ -219,6 +297,14 @@
      "seconds": 1.16,
      "at": 1789042401555,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789054959587,
+     "error": null
     }
    ],
    "text": "輕薄的假象！",
@@ -228,16 +314,16 @@
    "origin": "ability-name:community-review-07-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 19688,
-    "seconds": 1.16,
+    "bytes": 20942,
+    "seconds": 1.24,
     "lufs": null,
-    "hash": "9ab9da5a8822a6aa0c57772ed95fcc68a67f1e9053b2c2a00dae9d1b6d6caba7",
-    "maxDb": -2,
-    "at": 1789042401555
+    "hash": "ad064ae29211f94c51ad626900fdbb8739d707b3d405a84b4d81d79ef984abea",
+    "maxDb": -1.9,
+    "at": 1789054959587
    },
    "lastError": null
   },
@@ -250,25 +336,71 @@
      "seconds": 1.36,
      "at": 1789043004854,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789054959778,
+     "error": null
     }
    ],
-   "text": "カンペキに勝つ♣だろ？ゴン♥",
+   "text": "（原檔）chr0330_ActVoice#205",
    "lang": "ja",
-   "kana": "カンペキニ カツ ダロ ゴン",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#205.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 23031,
-    "seconds": 1.36,
+    "bytes": 93666,
+    "seconds": 5.779116,
     "lufs": null,
-    "hash": "8bdb95dc13a6b6f9650c8ae55317f135e387f02fbee3bea423db7a28063b056a",
-    "maxDb": -2,
-    "at": 1789043004854
+    "hash": "79974a0dd0e47250f6ee3f9fbf31a048f060974e9022df04d0fd250609715697",
+    "at": 1789058014066
+   },
+   "lastError": null
+  },
+  "victory.2": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#17",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#17.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 84889,
+    "seconds": 5.236893,
+    "lufs": null,
+    "hash": "563b66fa873160ae31c735a1465da365db24fce6219da271145d7df0a271f691",
+    "at": 1789058014171
+   },
+   "lastError": null
+  },
+  "victory.3": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#12",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#12.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 48945,
+    "seconds": 2.979025,
+    "lufs": null,
+    "hash": "193f91fbca7ad1706d9625ce67f3be93c316b32a789b7dbf941f5546ab407bc7",
+    "at": 1789058014278
    },
    "lastError": null
   },
@@ -281,25 +413,31 @@
      "seconds": 0.4,
      "at": 1789037117805,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054959963,
+     "error": null
     }
    ],
-   "text": "ぐ……っ……",
+   "text": "（原檔）chr0330_ActVoice#21",
    "lang": "ja",
-   "kana": "グッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#21.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 39750,
+    "seconds": 2.41941,
     "lufs": null,
-    "hash": "4fbc03794876074914ba7e040f0e1021438520c1f224d019d1bec03bfc7134dc",
-    "maxDb": -1.9,
-    "at": 1789037117805
+    "hash": "649c1db702034186ffcef85ceb517e0129465174920c6818f4e2f1f46bd63167",
+    "at": 1789058014385
    },
    "lastError": null
   },
@@ -314,23 +452,41 @@
      "error": null
     }
    ],
-   "text": "うっ！",
+   "text": "（原檔）chr0330_ActVoice#162",
    "lang": "ja",
-   "kana": "ウッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#162.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 11746,
+    "seconds": 0.675533,
     "lufs": null,
-    "hash": "96f49cb0193f3734025454127d991b6229d3561afe00dfd5838d81e87c558bdd",
-    "maxDb": -1.9,
-    "at": 1789037117951
+    "hash": "27f66e7a1a4c56956e1c99e1f070587af1319251cbd7edae33d20efb4042a078",
+    "at": 1789048358140
+   },
+   "lastError": null
+  },
+  "hurt.2": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#60",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#60.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.66,
+    "lufs": null,
+    "hash": "d905fcf86df7b23aca9079be59567cf38f38293abf4a72eba19fe0f34068fdd1",
+    "at": 1789048358246
    },
    "lastError": null
   },
@@ -345,23 +501,41 @@
      "error": null
     }
    ],
-   "text": "ぐああっ……！",
+   "text": "（原檔）chr0330_ActVoice#173",
    "lang": "ja",
-   "kana": "グアアッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#173.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 21777,
+    "seconds": 1.285102,
     "lufs": null,
-    "hash": "aedaf3e67d232853de070ca3ca85e6682f44a446cbb329e683775b1b02d3d9a5",
-    "maxDb": -2,
-    "at": 1789037118094
+    "hash": "bdc1f70b67f55bc9504c61d61e69eda48f2476dcf221d57480067849a952db8b",
+    "at": 1789058014516
+   },
+   "lastError": null
+  },
+  "hurt-heavy.2": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#172",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#172.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24195,
+    "lufs": null,
+    "hash": "35948cf183221bb17073138ac2abdf99f4516379645d5b6f7828a4a935a48465",
+    "at": 1789058014623
    },
    "lastError": null
   },
@@ -374,25 +548,131 @@
      "seconds": 1,
      "at": 1789043004967,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789054960146,
+     "error": null
     }
    ],
-   "text": "そろそろ狩るか…♠",
+   "text": "（原檔）chr0330_ActVoice#202",
    "lang": "ja",
-   "kana": "ソロソロ カルカ",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#202.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 86143,
+    "seconds": 5.321769,
     "lufs": null,
-    "hash": "432679c7060cddcb78590278d9d3acfd62f773c98a91aac0c8b15ab66c736874",
-    "maxDb": -1.9,
-    "at": 1789043004967
+    "hash": "148e801257dfb3923d6fa5941902d5e988f5ad4ee98bd8d679e1f644f4cac691",
+    "at": 1789058014725
+   },
+   "lastError": null
+  },
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#26",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#26.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 84889,
+    "seconds": 5.244785,
+    "lufs": null,
+    "hash": "91fb4e62ecb5012692350eb100d29c991454e3ef8f3e08316b10952963c67829",
+    "at": 1789058014821
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#143",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#143.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 84471,
+    "seconds": 5.223787,
+    "lufs": null,
+    "hash": "e970c931260c56d2fd5f28588f21b5e62b6ea307d91b7677ef07cce46d97c4cc",
+    "at": 1789058014919
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#155",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#155.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.592109,
+    "lufs": null,
+    "hash": "df2f40652f4aff428eeb12a8a52caf7b5e35e0dc1967cb8c8fc772ae2b09ab19",
+    "at": 1789048358595
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#54",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#54.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.195782,
+    "lufs": null,
+    "hash": "067a24f29eeb4edbcefa43bc78908f6d70b4e96e520f64037ef251d8974ac542",
+    "at": 1789048358700
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）chr0330_ActVoice#159",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#159.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.585102,
+    "lufs": null,
+    "hash": "74781226dc31b08dc4f038de2a58a82035d511ecda7e09deb936eb6ed040af6b",
+    "at": 1789048358809
    },
    "lastError": null
   },
@@ -405,25 +685,31 @@
      "seconds": 0.28,
      "at": 1789037118238,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1789054960329,
+     "error": null
     }
    ],
-   "text": "はぁっ！",
+   "text": "（原檔）chr0330_ActVoice#78",
    "lang": "ja",
-   "kana": "ハァッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-hisoka/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#78.ogg",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 25539,
+    "seconds": 1.5361,
     "lufs": null,
-    "hash": "9192e63bf19a06251bef60881b1d7168aabb5d1bbb1f6e992890610721a45d3e",
-    "maxDb": -1.9,
-    "at": 1789037118238
+    "hash": "b20f3e483a31eeb67346f3e026db6270523293e095a4627140010051e5f22d9b",
+    "at": 1789058015023
    },
    "lastError": null
   }

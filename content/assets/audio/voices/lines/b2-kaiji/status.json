@@ -24,6 +24,14 @@
      "seconds": 0.64,
      "at": 1789042994512,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789054890810,
+     "error": null
     }
    ],
    "text": "ありがてえっ…！",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 15926,
+    "seconds": 0.92,
     "lufs": null,
-    "hash": "e9e445e73efd174f5201a58ed2a2c6f0dab5d08fa6457002ecec95744063f5ca",
-    "maxDb": -4.2,
-    "at": 1789042994512
+    "hash": "cc6d20b890fb9a05cdd2b4659cee790e8bb3bfd2672365f50393079154c1dd5c",
+    "maxDb": -4.9,
+    "at": 1789054890810
    },
    "lastError": null
   },
@@ -63,6 +71,14 @@
      "seconds": 2.24,
      "at": 1789042386791,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1789054891015,
+     "error": null
     }
    ],
    "text": "午餐錢全押這次！",
@@ -72,16 +88,16 @@
    "origin": "ability-name:b2-kaiji.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36824,
-    "seconds": 2.24,
+    "bytes": 36406,
+    "seconds": 2.2,
     "lufs": null,
-    "hash": "3c50f3cb6bfb1053895a0d13c30967e57bdd895d1f1b86ddadb6a3f3c4212308",
-    "maxDb": -2.4,
-    "at": 1789042386792
+    "hash": "4367636e275b740091571352ffe2a5454d8fb55a856565febb810b3836ac39c8",
+    "maxDb": -3.4,
+    "at": 1789054891015
    },
    "lastError": null
   },
@@ -102,6 +118,14 @@
      "seconds": 2.64,
      "at": 1789042386897,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789054891208,
+     "error": null
     }
    ],
    "text": "翻盤不是保證中獎！",
@@ -111,16 +135,16 @@
    "origin": "ability-name:b2-kaiji.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 43511,
-    "seconds": 2.64,
+    "bytes": 35152,
+    "seconds": 2.12,
     "lufs": null,
-    "hash": "275127f53dda0cd19156ad266a83eaa18505269398f27a9badfde437f358a1a6",
+    "hash": "e83181a9ee2f3eb9d3826a0d11ff6861869ff07a04932d50c04c0454c29b66aa",
     "maxDb": -2,
-    "at": 1789042386897
+    "at": 1789054891208
    },
    "lastError": null
   },
@@ -141,6 +165,14 @@
      "seconds": 1.24,
      "at": 1789042387003,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789054891399,
+     "error": null
     }
    ],
    "text": "不看牌先退桌！",
@@ -150,16 +182,16 @@
    "origin": "ability-name:b2-kaiji.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20942,
-    "seconds": 1.24,
+    "bytes": 17598,
+    "seconds": 1.04,
     "lufs": null,
-    "hash": "6e555e4fc84692cc897a6a50b64e0f19efaaaf112f7f2b8d865c596298352e9e",
-    "maxDb": -2,
-    "at": 1789042387003
+    "hash": "f26af69ad728bf52c8059fc39dbf4aff7c507e1113502e41cb12ffa432ecdfc6",
+    "maxDb": -3.2,
+    "at": 1789054891399
    },
    "lastError": null
   },
@@ -180,6 +212,14 @@
      "seconds": 1.56,
      "at": 1789042387107,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.76,
+     "at": 1789054891586,
+     "error": null
     }
    ],
    "text": "最後一把抽獎機！",
@@ -189,16 +229,16 @@
    "origin": "ability-name:b2-kaiji.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 29301,
+    "seconds": 1.76,
     "lufs": null,
-    "hash": "21244a2603fec5e687e2dcb0ed17e9c619d7f58b070db4dcd5f1ef544f1efd8c",
+    "hash": "1a8792fa633ba2e2b7adf94b9ea25a3030e13a3bfeccc9a8062802b58df09082",
     "maxDb": -1.9,
-    "at": 1789042387107
+    "at": 1789054891586
    },
    "lastError": null
   },
@@ -219,6 +259,14 @@
      "seconds": 2.28,
      "at": 1789042387215,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1789054891775,
+     "error": null
     }
    ],
    "text": "地下勞動急救包！",
@@ -228,16 +276,16 @@
    "origin": "ability-name:b2-kaiji.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 37660,
-    "seconds": 2.28,
+    "bytes": 32644,
+    "seconds": 1.960249,
     "lufs": null,
-    "hash": "26f1b8ad7d1c9e74030c952c2ddec1659dc78203f9f03c1be118eb9dee4bca0d",
+    "hash": "82cf41626ce5dd8bdd640d2c6ea8f05d0dc7889a32a9644b505de8b07c155251",
     "maxDb": -2,
-    "at": 1789042387215
+    "at": 1789054891775
    },
    "lastError": null
   },
@@ -250,6 +298,14 @@
      "seconds": 1.56,
      "at": 1789042994636,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789054891963,
+     "error": null
     }
    ],
    "text": "キンキンに冷えてやがるっ…！",
@@ -259,16 +315,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 24703,
+    "seconds": 1.48,
     "lufs": null,
-    "hash": "8bab6a22256eea8353f566627cebf1b50130626c06aa0a5d7b1d6348eeb50d5f",
-    "maxDb": -1.9,
-    "at": 1789042994636
+    "hash": "489b3b470217f0bd4263c64020137fb01c96a9e11cea499b8e22ac714c889796",
+    "maxDb": -3,
+    "at": 1789054891963
    },
    "lastError": null
   },
@@ -281,6 +337,14 @@
      "seconds": 0.36,
      "at": 1789037081323,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054892134,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -290,16 +354,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "b4113f2386953ae173cf8d27f4235f561220e6c4fb8082cb5e1a5564c51d6f48",
+    "hash": "617d611477cd8288e9aad18688cdea358be64bf5834879a8585ef2bceab7fb18",
     "maxDb": -2,
-    "at": 1789037081323
+    "at": 1789054892134
    },
    "lastError": null
   },
@@ -312,6 +376,14 @@
      "seconds": 0.32,
      "at": 1789037081490,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054892305,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -321,16 +393,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 5477,
+    "seconds": 0.28,
     "lufs": null,
-    "hash": "60ba5c624ef6d8915405fedb58bf3d5be3afedfcdb5e3b60fe914405d43e4771",
-    "maxDb": -2,
-    "at": 1789037081490
+    "hash": "726e6216d3911c74f671dc2ce9e3ab2c8d60528a6e0d5c58adec835ded63ccd3",
+    "maxDb": -1.9,
+    "at": 1789054892305
    },
    "lastError": null
   },
@@ -343,6 +415,14 @@
      "seconds": 0.88,
      "at": 1789037081637,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789054892480,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -352,16 +432,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 15090,
-    "seconds": 0.88,
+    "bytes": 13418,
+    "seconds": 0.76,
     "lufs": null,
-    "hash": "0ec96ae1b9280df8160f06f4c2f69304a4314d7de1cfb74416d08ab454f3c656",
-    "maxDb": -3.4,
-    "at": 1789037081637
+    "hash": "ce0809801ae15622e506525395f729aee909f1148285727abf16060eb98597a4",
+    "maxDb": -4.8,
+    "at": 1789054892480
    },
    "lastError": null
   },
@@ -374,6 +454,14 @@
      "seconds": 0.76,
      "at": 1789042994758,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789054892657,
+     "error": null
     }
    ],
    "text": "ざわ…ざわ…",
@@ -383,16 +471,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 15926,
+    "seconds": 0.92,
     "lufs": null,
-    "hash": "74aa62b51ba33d3fe6d4e9acdd65ee0c1b19f8b62347ed4780f97a5d97dc9717",
-    "maxDb": -4.4,
-    "at": 1789042994758
+    "hash": "dabd95d8a49a1bc6143c7fe4714b5abcce0bb69548be903935c56b94bcb35a8b",
+    "maxDb": -4,
+    "at": 1789054892657
    },
    "lastError": null
   },
@@ -405,6 +493,14 @@
      "seconds": 0.36,
      "at": 1789037081768,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054892835,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -414,16 +510,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "17424104da9beecac1096cd42f9e0eafb16dfe7ed0b9062553962dd76082a37a",
-    "maxDb": -2,
-    "at": 1789037081768
+    "hash": "9bdfcbb2dcba41d5715f0ed0a30fe46bdbabfd141b0fb7073fbd90d42a262cd5",
+    "maxDb": -1.9,
+    "at": 1789054892835
    },
    "lastError": null
   }

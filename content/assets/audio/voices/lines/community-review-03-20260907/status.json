@@ -24,25 +24,71 @@
      "seconds": 1.12,
      "at": 1789043003501,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1789054953935,
+     "error": null
     }
    ],
-   "text": "ごめんあそばせ！",
+   "text": "（原檔）v_022_mai_v_002",
    "lang": "ja",
-   "kana": "ゴメン アソバセ",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_002.wav",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.12,
+    "bytes": 97010,
+    "seconds": 5.999841,
     "lufs": null,
-    "hash": "7b4c8d5e9967c9d8e11b7d562318e38f823d8304bf50cf08454db6f7f2cbad54",
-    "maxDb": -2,
-    "at": 1789043003501
+    "hash": "b369a226613db3df7a9691644723be6122877b71582e963f68772d214c77d341",
+    "at": 1789058009669
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_005",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_005.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 88651,
+    "seconds": 5.463469,
+    "lufs": null,
+    "hash": "0d7adab47cb5b50eb98c249db88a940e470f2be362d264d5d7b745d4b552e655",
+    "at": 1789058009778
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_003",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_003.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 87815,
+    "seconds": 5.422698,
+    "lufs": null,
+    "hash": "6a200ac00238f140f94d2f8e39b62ea787f0e8c195f904b093ec01b9fd873b0d",
+    "at": 1789058009878
    },
    "lastError": null
   },
@@ -71,25 +117,51 @@
      "seconds": 0.8,
      "at": 1789042400009,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789054954167,
+     "error": null
     }
    ],
-   "text": "花蝶扇！",
+   "text": "（原檔）v_022_mai_402_1",
    "lang": "ja",
-   "kana": "カチョウセン",
-   "textSource": "derived",
-   "origin": "ability-name:community-review-03-20260907.q",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_402_1.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 13836,
-    "seconds": 0.8,
+    "bytes": 10911,
+    "seconds": 0.626689,
     "lufs": null,
-    "hash": "034cff445b2eef5642ffa6d3b6e1b520b07e9385610e2c2c64cd88fb8fa17cf6",
-    "maxDb": -2.2,
-    "at": 1789042400009
+    "hash": "82250507b4f0e86f502e85f93a00bada0d41f2ad36761f1487e8b4807cd036a4",
+    "at": 1789058009975
+   },
+   "lastError": null
+  },
+  "skill-name.q.2": {
+   "takes": [],
+   "text": "（原檔）984670352",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/984670352.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.709342,
+    "lufs": null,
+    "hash": "53115306c466ac16dbaa8465c63e3fda4980810f8349d054bb6ceebb4d452c42",
+    "at": 1789058010072
    },
    "lastError": null
   },
@@ -118,25 +190,31 @@
      "seconds": 0.96,
      "at": 1789042400111,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789054954401,
+     "error": null
     }
    ],
-   "text": "龍炎舞！",
+   "text": "（原檔）v_022_mai_401_1",
    "lang": "ja",
-   "kana": "リュウ エンブ",
-   "textSource": "derived",
-   "origin": "ability-name:community-review-03-20260907.w",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_401_1.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 16344,
-    "seconds": 0.96,
+    "bytes": 11746,
+    "seconds": 0.669093,
     "lufs": null,
-    "hash": "f43298e2ebc616609894999f1bbbdbe486ea1998f2071e0609239f56f2808ec1",
-    "maxDb": -5.9,
-    "at": 1789042400111
+    "hash": "40f9810d728775fc8c4b1301ca3b57b18e8f3b9053a7470a412136c039956fdc",
+    "at": 1789058010163
    },
    "lastError": null
   },
@@ -165,6 +243,14 @@
      "seconds": 1.2,
      "at": 1789042400216,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789054954620,
+     "error": null
     }
    ],
    "text": "必殺忍蜂！",
@@ -174,16 +260,16 @@
    "origin": "ability-name:community-review-03-20260907.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20106,
-    "seconds": 1.2,
+    "bytes": 20942,
+    "seconds": 1.24,
     "lufs": null,
-    "hash": "fd76c589f392900a0d552e4bf521080d0875c38dfd5a3469d65df4e4911f7cd6",
+    "hash": "eeefd45fd20e9a97591b64cbecc260213e65627a641bafccaf189fdcf0ac0b47",
     "maxDb": -2,
-    "at": 1789042400216
+    "at": 1789054954620
    },
    "lastError": null
   },
@@ -212,25 +298,51 @@
      "seconds": 1.6,
      "at": 1789042400319,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1789054954843,
+     "error": null
     }
    ],
-   "text": "超必殺忍蜂！",
+   "text": "（原檔）v_022_mai_501_1_1",
    "lang": "ja",
-   "kana": "チョウ ヒッサツ ニン ハチ",
-   "textSource": "derived",
-   "origin": "ability-name:community-review-03-20260907.r",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_501_1_1.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
     "bytes": 26793,
-    "seconds": 1.6,
+    "seconds": 1.611905,
     "lufs": null,
-    "hash": "4543a2371cc33829e102416f4853906921591df76adf7df1b9b0c64aaa07874f",
-    "maxDb": -2,
-    "at": 1789042400319
+    "hash": "c9c5824b1782205e4f2bad711c8c86cf1b2412e848c5383eb1b57577cc128eb1",
+    "at": 1789058010263
+   },
+   "lastError": null
+  },
+  "skill-name.r.2": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_501_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_501_3.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 31391,
+    "seconds": 1.885442,
+    "lufs": null,
+    "hash": "068cc3fc6b612b3fdb6373f155bc9986647c8f1ea983611baaa40c4e21d601eb",
+    "at": 1789058010361
    },
    "lastError": null
   },
@@ -259,25 +371,51 @@
      "seconds": 1.28,
      "at": 1789042400422,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1789054955034,
+     "error": null
     }
    ],
-   "text": "陽炎之舞！",
+   "text": "（原檔）v_022_mai_502_1",
    "lang": "ja",
-   "kana": "カゲロウ ユキ マイ",
-   "textSource": "derived",
-   "origin": "ability-name:community-review-03-20260907.ex",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_502_1.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 21359,
-    "seconds": 1.28,
+    "bytes": 15508,
+    "seconds": 0.901769,
     "lufs": null,
-    "hash": "73737ec2a3d8503e42cda03736fed11d04814daec29b789c129755e1671cebd6",
-    "maxDb": -2,
-    "at": 1789042400422
+    "hash": "cebfeb6ec5526a086f97f82e2a5b4e0adf232935e66a8a2a1a74bdf09b02733a",
+    "at": 1789058010454
+   },
+   "lastError": null
+  },
+  "skill-name.ex.2": {
+   "takes": [],
+   "text": "（原檔）579986331",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/579986331.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 15508,
+    "seconds": 0.911995,
+    "lufs": null,
+    "hash": "233ffe4f3e07f31fa94c458d49c1c1ad1f20d0b8f489753476362376c477014f",
+    "at": 1789058010550
    },
    "lastError": null
   },
@@ -290,25 +428,71 @@
      "seconds": 0.84,
      "at": 1789043003619,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1789054955219,
+     "error": null
     }
    ],
-   "text": "よっ！日本一！",
+   "text": "（原檔）v_022_mai_v_013",
    "lang": "ja",
-   "kana": "ヨッ ニッポンイチ",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_013.wav",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.84,
+    "bytes": 83635,
+    "seconds": 5.163084,
     "lufs": null,
-    "hash": "f38b0919ebb8952cc004cc5c047ba9a4c500ef1b193fefaccbed79568341f3c8",
-    "maxDb": -2,
-    "at": 1789043003619
+    "hash": "056279c13781ae546f6322c3398e21f2e407eafeadfa5e10344c0cbd2cae2e82",
+    "at": 1789058010645
+   },
+   "lastError": null
+  },
+  "victory.2": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_009",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_009.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 72351,
+    "seconds": 4.459592,
+    "lufs": null,
+    "hash": "b1656d8d02637fad9d9ad3803dfe88ea3d65a6fdf6259dc6d84ef3141e3e4b36",
+    "at": 1789058010742
+   },
+   "lastError": null
+  },
+  "victory.3": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_108_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_108_1.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.257642,
+    "lufs": null,
+    "hash": "0437c20d9745d1398eeb74614372100f469e4f84e70917dd9515e832611ed1bd",
+    "at": 1789058010840
    },
    "lastError": null
   },
@@ -329,25 +513,71 @@
      "seconds": 0.28,
      "at": 1789040377934,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054955411,
+     "error": null
     }
    ],
-   "text": "ぐ……っ……",
+   "text": "（原檔）v_022_mai_v_011",
    "lang": "ja",
-   "kana": "グッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_011.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 84053,
+    "seconds": 5.192744,
     "lufs": null,
-    "hash": "32f68ace9396dfec1dbd4369aac25c1e038a883dabe075f010e636cfc6023406",
-    "maxDb": -2.1,
-    "at": 1789040377935
+    "hash": "e7810517dc6ffeb6d1e48f4d4055a5ca19706b3d84721e623a50996a11e84563",
+    "at": 1789058010931
+   },
+   "lastError": null
+  },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_c_016",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_c_016.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 77366,
+    "seconds": 4.761927,
+    "lufs": null,
+    "hash": "ca83c89f418a91e27175e6438dba1a72325ffc702c492ea120990644b47f2adc",
+    "at": 1789058011027
+   },
+   "lastError": null
+  },
+  "defeat.3": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_c_008",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_c_008.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 74440,
+    "seconds": 4.588685,
+    "lufs": null,
+    "hash": "1eaa1430ab90a42717b56b4bf6dcd0fd7ecbf0761b78cc6e4062ca197f35103b",
+    "at": 1789058011125
    },
    "lastError": null
   },
@@ -370,23 +600,61 @@
      "error": null
     }
    ],
-   "text": "きゃっ！",
+   "text": "（原檔）v_022_mai_503_4",
    "lang": "ja",
-   "kana": "キャッ",
-   "textSource": "derived",
-   "origin": "grunt:female",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_503_4.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 10493,
+    "seconds": 0.57576,
     "lufs": null,
-    "hash": "5248c276b999502eb74c7eff89bdf84ece421e8daf61f6368b31b9e156b95051",
-    "maxDb": -1.9,
-    "at": 1789040378039
+    "hash": "9476d8802d15f0169e43393a3d4cf48ddc67682fa38c4f071a98def9ede7680f",
+    "at": 1789058011217
+   },
+   "lastError": null
+  },
+  "hurt.2": {
+   "takes": [],
+   "text": "（原檔）1_mai_106_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/1_mai_106_1.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.573628,
+    "lufs": null,
+    "hash": "219693e56842a0c292e94f25c3bad445b20f3ee51bde75d928566aacb4a67f5e",
+    "at": 1789058011309
+   },
+   "lastError": null
+  },
+  "hurt.3": {
+   "takes": [],
+   "text": "（原檔）1557046",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/1557046.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.686667,
+    "lufs": null,
+    "hash": "81d5d083e137adfbfa7224364641ee16cbf4141ce101353ae3d0d80d5774d26e",
+    "at": 1789058011396
    },
    "lastError": null
   },
@@ -409,23 +677,61 @@
      "error": null
     }
    ],
-   "text": "ああっ……！",
+   "text": "（原檔）v_022_mai_503_3",
    "lang": "ja",
-   "kana": "アアッ",
-   "textSource": "derived",
-   "origin": "grunt:female",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_503_3.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 19688,
+    "seconds": 1.168753,
     "lufs": null,
-    "hash": "1ffd5afb760a20a1230d2c97a352ba3a8f9c973b49274733069daff702afb8c7",
-    "maxDb": -2.4,
-    "at": 1789040378148
+    "hash": "38d8394f40f3aaf7eca8e5244a04866fa87bd946c8d59ba062d9200bfb573c68",
+    "at": 1789058011496
+   },
+   "lastError": null
+  },
+  "hurt-heavy.2": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_502_2_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_502_2_2.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 18016,
+    "seconds": 1.047619,
+    "lufs": null,
+    "hash": "49e9daa6658ab2d4aa86b00205d3ec21d02bfda8a18c1e72b3064b3eb9e0b173",
+    "at": 1789058011585
+   },
+   "lastError": null
+  },
+  "hurt-heavy.3": {
+   "takes": [],
+   "text": "（原檔）885595326",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/885595326.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1.009342,
+    "lufs": null,
+    "hash": "677bef1851c727e216d0427a1f8456c8f35b0c0842ad7515b2297fd46f71ba50",
+    "at": 1789058011673
    },
    "lastError": null
   },
@@ -438,25 +744,191 @@
      "seconds": 0.92,
      "at": 1789043003732,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789054955604,
+     "error": null
     }
    ],
-   "text": "花蝶扇！",
+   "text": "（原檔）v_022_mai_v_c_004",
    "lang": "ja",
-   "kana": "カチョウセン",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_c_004.wav",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 87397,
+    "seconds": 5.394286,
     "lufs": null,
-    "hash": "8c0d127b2467ebf8bb8fc3154a8098ec41050dda53cedaadbb1b2f27a0246dce",
-    "maxDb": -2,
-    "at": 1789043003732
+    "hash": "c6eb2355ea5255811c3dd2bb8aebc7d27a0a1bad635ffb17e61dac0da1bf443b",
+    "at": 1789058011763
+   },
+   "lastError": null
+  },
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_012",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_012.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 86561,
+    "seconds": 5.341247,
+    "lufs": null,
+    "hash": "d3b27d5cbd63b938a6679a0437dd6fb9b7555c32be843bb84344d22f22bf2a61",
+    "at": 1789058011858
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_v_020",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_020.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 84889,
+    "seconds": 5.232948,
+    "lufs": null,
+    "hash": "a8a05ac5f7bb0f87cd4f272de84c4b23d61699834fc146f207151c3630e80e9c",
+    "at": 1789058011951
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_008_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_008_1.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.563129,
+    "lufs": null,
+    "hash": "9b974e56d0b2d7ef66042edf94d680c947b57cfd6d55afe9a8d845131dc2450c",
+    "at": 1789058012042
+   },
+   "lastError": null
+  },
+  "attack-light.2": {
+   "takes": [],
+   "text": "（原檔）259793242",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/259793242.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.594671,
+    "lufs": null,
+    "hash": "c59f01b9219181f122ba773047b8a5cd34b1e2bacd8b77190713228c74f58b02",
+    "at": 1789058012132
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_303_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_303_1.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.730431,
+    "lufs": null,
+    "hash": "78bda2613ee61dd7f49a6fb0ce1b05cb4e90e1a928c03648dac274dec788a54c",
+    "at": 1789058012225
+   },
+   "lastError": null
+  },
+  "attack-heavy.2": {
+   "takes": [],
+   "text": "（原檔）34533024",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/34533024.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.885329,
+    "lufs": null,
+    "hash": "148aad64141e493c46bbac4bb31adc72d7938853070c74d16e930b5d1e7fa6c8",
+    "at": 1789058012311
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）v_022_mai_403_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_403_2.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.515624,
+    "lufs": null,
+    "hash": "f47a3919d4f1d4ef1d835132380e567552291ebafbf9160cb9c3867227d2dd95",
+    "at": 1789058012395
+   },
+   "lastError": null
+  },
+  "jump.2": {
+   "takes": [],
+   "text": "（原檔）896468988",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:kof-xv-mai-audio:XV_Mai-unclassified-audio/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/896468988.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.556009,
+    "lufs": null,
+    "hash": "f79d5e80131b87c0acd2d0fca90ef26639ccd43c5783a569e9f42f94df588857",
+    "at": 1789058012479
    },
    "lastError": null
   },
@@ -477,25 +949,31 @@
      "seconds": 0.28,
      "at": 1789040378253,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054955784,
+     "error": null
     }
    ],
-   "text": "はぁっ！",
+   "text": "（原檔）v_022_mai_v_c_018",
    "lang": "ja",
-   "kana": "ハァッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_c_018.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 68171,
+    "seconds": 4.191701,
     "lufs": null,
-    "hash": "f183d7717577184c6eab7a369a4008a3711cdefe30d8c870e89d8363d34203ad",
-    "maxDb": -2,
-    "at": 1789040378253
+    "hash": "c2027c94e87b13810abc074c8f60bff64a21035454db126d8caccfaff9f62db5",
+    "at": 1789058012567
    },
    "lastError": null
   }

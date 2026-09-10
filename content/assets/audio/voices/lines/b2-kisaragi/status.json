@@ -32,6 +32,14 @@
      "seconds": 2.44,
      "at": 1789042387861,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789054895665,
+     "error": null
     }
    ],
    "text": "逃票乘客請先集合！",
@@ -41,16 +49,16 @@
    "origin": "ability-name:b2-kisaragi.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 40168,
     "seconds": 2.44,
     "lufs": null,
-    "hash": "f07a52592ea878d75efe6d9690edef989b0735f435773e6e9abf421625cec1a2",
+    "hash": "108c2dbb2f6a0f49358b2e33ae3c5dac5a19451933c21cadafe20f91a157c385",
     "maxDb": -1.9,
-    "at": 1789042387861
+    "at": 1789054895665
    },
    "lastError": null
   },
@@ -71,6 +79,14 @@
      "seconds": 2,
      "at": 1789042387973,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789054895894,
+     "error": null
     }
    ],
    "text": "緊急煞車先拉手閘！",
@@ -80,16 +96,16 @@
    "origin": "ability-name:b2-kisaragi.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33062,
-    "seconds": 2,
+    "bytes": 24703,
+    "seconds": 1.48,
     "lufs": null,
-    "hash": "26fcac74f920cbcee250f2f7d09ee3dd013978be4818d774035e1a3934ddc6b6",
-    "maxDb": -3.8,
-    "at": 1789042387973
+    "hash": "24123b18fe75d856a000e9d8ca5204f8e832a5330dfb33aacb5516501ed3d728",
+    "maxDb": -2.1,
+    "at": 1789054895895
    },
    "lastError": null
   },
@@ -110,6 +126,14 @@
      "seconds": 1.52,
      "at": 1789042388083,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789054896132,
+     "error": null
     }
    ],
    "text": "解除手閘本車才出發！",
@@ -119,16 +143,16 @@
    "origin": "ability-name:b2-kisaragi.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25539,
-    "seconds": 1.52,
+    "bytes": 40168,
+    "seconds": 2.44,
     "lufs": null,
-    "hash": "277a636f8c19944ec8b4898b1de532c5905d4e9f2ef47a60e3665b44d9e27b33",
+    "hash": "50e5c17ec12f7d87d813af3e88e32b16c15a9fe4915afd1e21991561775cb0cc",
     "maxDb": -2,
-    "at": 1789042388083
+    "at": 1789054896132
    },
    "lastError": null
   },
@@ -149,6 +173,14 @@
      "seconds": 3.04,
      "at": 1789042388195,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4,
+     "at": 1789054896358,
+     "error": null
     }
    ],
    "text": "如月末班車・乘客全數迷途！",
@@ -158,16 +190,16 @@
    "origin": "ability-name:b2-kisaragi.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 49781,
-    "seconds": 3.04,
+    "bytes": 65245,
+    "seconds": 4,
     "lufs": null,
-    "hash": "18cefb1e8575838f0e9a55b9bbfa71cfef327616b7a6a72999a1d6b3bee34eb8",
-    "maxDb": -2.8,
-    "at": 1789042388195
+    "hash": "0d5f519eced3b3db4f3dedad5be0d2eef6db0bb6ea4524f6745cf10bb6ce1d5a",
+    "maxDb": -1.9,
+    "at": 1789054896358
    },
    "lastError": null
   },
@@ -188,6 +220,14 @@
      "seconds": 3.4,
      "at": 1789042388309,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.44,
+     "at": 1789054896594,
+     "error": null
     }
    ],
    "text": "車門即將關閉請勿探頭！",
@@ -197,16 +237,16 @@
    "origin": "ability-name:b2-kisaragi.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 55632,
-    "seconds": 3.4,
+    "bytes": 71933,
+    "seconds": 4.44,
     "lufs": null,
-    "hash": "f8067181fdbedabae471f35e3d857ec3685e87f1633bcdf50b83d33f2d22dabb",
-    "maxDb": -2.4,
-    "at": 1789042388310
+    "hash": "a606df378a69f7d4be1f878e91b6d94560af8b117a799010a1121b1aac569b1c",
+    "maxDb": -3.5,
+    "at": 1789054896595
    },
    "lastError": null
   },
@@ -219,6 +259,14 @@
      "seconds": 0.28,
      "at": 1789037083653,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054896827,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -228,16 +276,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 5477,
     "seconds": 0.28,
     "lufs": null,
-    "hash": "155f52c78b50e94a4ecac5a0be0b453d2d03992cb0893c9ea1ae3a1a88b650c0",
-    "maxDb": -2,
-    "at": 1789037083653
+    "hash": "6c099983d804099d80dfa6b3d2b8f73359815209a856e5f987618e52a20a3142",
+    "maxDb": -1.9,
+    "at": 1789054896827
    },
    "lastError": null
   },
@@ -250,6 +298,14 @@
      "seconds": 0.28,
      "at": 1789037083769,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054897059,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -259,16 +315,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 5477,
     "seconds": 0.28,
     "lufs": null,
-    "hash": "ff104a6545d3121d69a439b5f5838b6ff77cf1774911c8794412f09d8da71010",
+    "hash": "ac171980622be7e5d72903e207ac5adf9f1a18f621d9226fb289fd7db605570b",
     "maxDb": -1.9,
-    "at": 1789037083770
+    "at": 1789054897060
    },
    "lastError": null
   },
@@ -281,6 +337,14 @@
      "seconds": 0.680249,
      "at": 1789037083889,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789054897295,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -290,16 +354,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.680249,
+    "bytes": 13418,
+    "seconds": 0.76,
     "lufs": null,
-    "hash": "9cecd0bd8c9f381aa1767ed3e13855fdce2193daa8af4a48ba67d8210563f51b",
-    "maxDb": -3.7,
-    "at": 1789037083889
+    "hash": "a60051c327cd0ecc40764c40b9923f68c9aa42a15483b7870f5c09fef1d57751",
+    "maxDb": -5,
+    "at": 1789054897295
    },
    "lastError": null
   },
@@ -312,6 +376,14 @@
      "seconds": 0.28,
      "at": 1789037084010,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789054897527,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -321,16 +393,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "8040e35717d47b9a443b7030d1eb1334e1f5b81e8884d87d182e710bec2a0c8b",
-    "maxDb": -2,
-    "at": 1789037084010
+    "hash": "ddc58f6082ecbea9b36c2ff8fa4fe6d1d7111179f861c3398e09af655cb7b702",
+    "maxDb": -1.9,
+    "at": 1789054897527
    },
    "lastError": null
   }

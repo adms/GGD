@@ -24,6 +24,14 @@
      "seconds": 3.44,
      "at": 1789043012612,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.84,
+     "at": 1789054986960,
+     "error": null
     }
    ],
    "text": "こっちはもっと理不尽なクソゲーをクリアし続けてるんだ",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 56050,
-    "seconds": 3.44,
+    "bytes": 62319,
+    "seconds": 3.84,
     "lufs": null,
-    "hash": "9961f88b1b9aacda7a2728a9aeca7e00a47aa279a044c27d7e6759b63b114b86",
+    "hash": "b26eb4f30aedc144aa9104cf0fbf339b5bc5e2623e00e38c3108eba9b2e0c7f7",
     "maxDb": -1.9,
-    "at": 1789043012612
+    "at": 1789054986961
    },
    "lastError": null
   },
@@ -63,6 +71,14 @@
      "seconds": 0.92,
      "at": 1789042406170,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789054987152,
+     "error": null
     }
    ],
    "text": "Spiral Edge！",
@@ -72,16 +88,16 @@
    "origin": "ability-name:community-review-31-20260907.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 17180,
+    "seconds": 1,
     "lufs": null,
-    "hash": "ffd0f83e3a2e77f5a798b1aaba4549b6bfca31ce9728e3eb1ffc581a7eebb8da",
-    "maxDb": -1.9,
-    "at": 1789042406170
+    "hash": "e2f5ae10b75088e70848c3a977a8f62bba0bc686fcde4fda2d9340c6c96f4cf6",
+    "maxDb": -2.9,
+    "at": 1789054987152
    },
    "lastError": null
   },
@@ -102,6 +118,14 @@
      "seconds": 0.96,
      "at": 1789042406272,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789054987339,
+     "error": null
     }
    ],
    "text": "Slide Move！",
@@ -111,16 +135,16 @@
    "origin": "ability-name:community-review-31-20260907.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 16344,
-    "seconds": 0.96,
+    "bytes": 15090,
+    "seconds": 0.88,
     "lufs": null,
-    "hash": "4df401929fab5ddc4f6c32cdc946f12908339dbd6268f6ac8ea42165d789b405",
-    "maxDb": -2.5,
-    "at": 1789042406272
+    "hash": "15dd38a8da4c588a33ab546696ba2c0f0066241df4fb9dc7c5a7fefbfcdd8035",
+    "maxDb": -2.1,
+    "at": 1789054987339
    },
    "lastError": null
   },
@@ -141,6 +165,14 @@
      "seconds": 1.16,
      "at": 1789042406378,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789054987531,
+     "error": null
     }
    ],
    "text": "Repel Counter！",
@@ -150,16 +182,16 @@
    "origin": "ability-name:community-review-31-20260907.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 19688,
-    "seconds": 1.16,
+    "bytes": 18852,
+    "seconds": 1.12,
     "lufs": null,
-    "hash": "43b1005bbb8f917f0c830691af7c7bf0792907a5692d500a0c3ef675f6e08959",
+    "hash": "2eaefb803bc211781ad672e3722479a2b9af3fce1132364a923fe02d11b7844d",
     "maxDb": -2,
-    "at": 1789042406378
+    "at": 1789054987531
    },
    "lastError": null
   },
@@ -180,6 +212,14 @@
      "seconds": 0.52,
      "at": 1789042406481,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1789054987734,
+     "error": null
     }
    ],
    "text": "Accel！",
@@ -189,16 +229,16 @@
    "origin": "ability-name:community-review-31-20260907.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 9239,
-    "seconds": 0.52,
+    "bytes": 13836,
+    "seconds": 0.8,
     "lufs": null,
-    "hash": "66b6483545d12e84fd92b44cf08617b07e0047f7ffcdd4dc91b29994fc52e9ee",
-    "maxDb": -2,
-    "at": 1789042406481
+    "hash": "a6d53745f223565096c72eb3aaa5f3b60a7bd31acc8e37616a6cccec5546f64b",
+    "maxDb": -1.9,
+    "at": 1789054987734
    },
    "lastError": null
   },
@@ -219,6 +259,14 @@
      "seconds": 1.48,
      "at": 1789042406584,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789054987942,
+     "error": null
     }
    ],
    "text": "攻略完成！",
@@ -228,16 +276,16 @@
    "origin": "ability-name:community-review-31-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24703,
-    "seconds": 1.48,
+    "bytes": 21359,
+    "seconds": 1.28,
     "lufs": null,
-    "hash": "b728f36f76f0da13fccf8ebcbe2c0a884a432c104df79d6b9d28eb7bdc2e64f0",
+    "hash": "eff100b7289ffc61765dc37c080d579ccd5bb1478dfc2becfeaa00c68530887a",
     "maxDb": -2,
-    "at": 1789042406584
+    "at": 1789054987942
    },
    "lastError": null
   },
@@ -250,6 +298,14 @@
      "seconds": 3.2,
      "at": 1789043012730,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1789054988149,
+     "error": null
     }
    ],
    "text": "つーかシャンフロ、神ゲー。面白えじゃねえか",
@@ -259,16 +315,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 52288,
-    "seconds": 3.2,
+    "bytes": 41839,
+    "seconds": 2.56,
     "lufs": null,
-    "hash": "4bfa6f3ef58ed41181022a882f54b43d720dba8c3a51495a63fb476ee6d5d0b5",
-    "maxDb": -1.9,
-    "at": 1789043012730
+    "hash": "8b714771abfeddbeef8b323306e352b4bb5baaacc53e84980afac46ca79bc0e4",
+    "maxDb": -2,
+    "at": 1789054988149
    },
    "lastError": null
   },
@@ -281,6 +337,14 @@
      "seconds": 0.36,
      "at": 1789037143912,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054988350,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -290,16 +354,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "8457769c14466c5482c2fcf22624c94f36d256e7724838760af9874f344c33b5",
+    "hash": "802276cf8cc81d214cf47d1521752d67f027f3916d572e9e018b6114c5630fae",
     "maxDb": -2,
-    "at": 1789037143912
+    "at": 1789054988350
    },
    "lastError": null
   },
@@ -312,6 +376,14 @@
      "seconds": 0.28,
      "at": 1789037144024,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054988542,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -321,16 +393,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 5477,
     "seconds": 0.28,
     "lufs": null,
-    "hash": "941ac80bbfd89f4651fd30d4917c7981f3ee088280935325322afec295c0d096",
-    "maxDb": -1.9,
-    "at": 1789037144024
+    "hash": "06e4b62b843307eb8f867b35b4d4d3e31c573718fa42b2fc91901e3645d8c6a0",
+    "maxDb": -2,
+    "at": 1789054988542
    },
    "lastError": null
   },
@@ -343,6 +415,14 @@
      "seconds": 0.680249,
      "at": 1789037144137,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789054988733,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -352,16 +432,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.680249,
+    "bytes": 11328,
+    "seconds": 0.64,
     "lufs": null,
-    "hash": "f7d3e37877753d06c83bd80ce72ef588cdf87048a0dac4e8dcd09757839061c6",
-    "maxDb": -3.9,
-    "at": 1789037144137
+    "hash": "8e951c509522e03ae0e7f0bb29c921757add5fda99fa6ea90e382045e501ac22",
+    "maxDb": -4.4,
+    "at": 1789054988733
    },
    "lastError": null
   },
@@ -374,6 +454,14 @@
      "seconds": 2.2,
      "at": 1789043012844,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1789054988931,
+     "error": null
     }
    ],
    "text": "俺は、これを楽しんでるんだろうが！",
@@ -383,16 +471,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36406,
-    "seconds": 2.2,
+    "bytes": 32644,
+    "seconds": 1.960249,
     "lufs": null,
-    "hash": "b8356e02085ef786532d1a8bbeb8bd675cf870a7cfa685f46cfbed63038db163",
-    "maxDb": -2,
-    "at": 1789043012844
+    "hash": "99193d6af9a18d151e91ba4a08c1854c24a07be9e55d186a516062e7a4c776fd",
+    "maxDb": -1.9,
+    "at": 1789054988931
    },
    "lastError": null
   },
@@ -405,6 +493,14 @@
      "seconds": 0.32,
      "at": 1789037144249,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789054989132,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -414,16 +510,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "b5ca2c785ae367a79be0fc0e17c9001acb632c1a58e7b9952403d0641d9eb14e",
+    "hash": "2242621e252d96f1177d216afb0aaaeded13fdb3debcaedbb990d5a727c6dc76",
     "maxDb": -2,
-    "at": 1789037144249
+    "at": 1789054989132
    },
    "lastError": null
   }

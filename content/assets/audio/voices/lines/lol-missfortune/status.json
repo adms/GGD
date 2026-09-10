@@ -1,0 +1,413 @@
+{
+ "championId": "lol-missfortune",
+ "reference": {
+  "sha256": null,
+  "sourceKind": "none",
+  "donor": null,
+  "note": "originals only — owner excluded this hero from synthesis (COMBAT_CASTING.json.excluded)",
+  "path": null
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [],
+   "text": "（原檔）dfe023/00243-1755056024",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00243-1755056024.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 96592,
+    "seconds": 5.968889,
+    "lufs": null,
+    "hash": "ebb1e4177d78f55d6b79bf07b080858da68020538e4b01e536c3ed3c2c1c81fc",
+    "at": 1789058025604
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）dfe023/00110-660483869",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00110-660483869.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 94920,
+    "seconds": 5.853084,
+    "lufs": null,
+    "hash": "7baae0857f7846d9a2f056b44aeec0be63710dc2e17d7a5b42c390bff8faabc6",
+    "at": 1789058025699
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）dfe023/00188-1331655191",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00188-1331655191.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 94084,
+    "seconds": 5.813583,
+    "lufs": null,
+    "hash": "0f4804743717c3f3c470da67acc244285ed10d402977128dc1a35b54aa21becb",
+    "at": 1789058025792
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [],
+   "text": "（原檔）dfe023/00289-2040222152",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00289-2040222152.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 91159,
+    "seconds": 5.637642,
+    "lufs": null,
+    "hash": "d27cce065744ba4e3eb1149ea91c5490acf9fd5a5754f9ff433290f370d7a172",
+    "at": 1789058025888
+   },
+   "lastError": null
+  },
+  "victory.2": {
+   "takes": [],
+   "text": "（原檔）dfe023/00170-1171883945",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00170-1171883945.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 73604,
+    "seconds": 4.520249,
+    "lufs": null,
+    "hash": "14a4c836439130eb89c5e589201d74d17f07a0615ba075d31028713372f5b1d9",
+    "at": 1789058025984
+   },
+   "lastError": null
+  },
+  "victory.3": {
+   "takes": [],
+   "text": "（原檔）dfe023/00262-1895295014",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00262-1895295014.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 56886,
+    "seconds": 3.495601,
+    "lufs": null,
+    "hash": "be4b3f58c9c783ff96ac5394b899a13bb5c1e508948167fecba5f5541287abbd",
+    "at": 1789058026085
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [],
+   "text": "（原檔）dfe023/00013-44743934",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00013-44743934.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 89069,
+    "seconds": 5.497256,
+    "lufs": null,
+    "hash": "5a2e5ae37046c9637a41a5f9b66608e87af54a56c9f7420b4f269acc3c6d5991",
+    "at": 1789058026184
+   },
+   "lastError": null
+  },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）dfe023/00085-475692727",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00085-475692727.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 83217,
+    "seconds": 5.128254,
+    "lufs": null,
+    "hash": "6d7bce21578b05497efe23262c03c2f42fd754839bd0703f2444225cc787c30c",
+    "at": 1789058026279
+   },
+   "lastError": null
+  },
+  "defeat.3": {
+   "takes": [],
+   "text": "（原檔）dfe023/00257-1864818944",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00257-1864818944.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 83217,
+    "seconds": 5.121429,
+    "lufs": null,
+    "hash": "66934e8599040ad4b6a5d3c7a9c0a8b0019ae8435b7998a297a671c9e161c780",
+    "at": 1789058026373
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [],
+   "text": "（原檔）dfe023/00175-1206610475",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00175-1206610475.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.68932,
+    "lufs": null,
+    "hash": "aea20392ccdcd445e078a53e29379e5cc92142eded5111db819500670480abdd",
+    "at": 1789058026469
+   },
+   "lastError": null
+  },
+  "hurt.2": {
+   "takes": [],
+   "text": "（原檔）dfe023/00071-394948743",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00071-394948743.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 10911,
+    "seconds": 0.624853,
+    "lufs": null,
+    "hash": "92c1d10b901404d6a29370c530271983d32946fdf9cee27f255a1fbeed5d4a39",
+    "at": 1789058026567
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [],
+   "text": "（原檔）dfe023/00072-405050065",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00072-405050065.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.031293,
+    "lufs": null,
+    "hash": "c35b4516770138acf2f4b9e3085b54a198e1251bcd7cc4e3ae6e440bdb8442ae",
+    "at": 1789058026668
+   },
+   "lastError": null
+  },
+  "hurt-heavy.2": {
+   "takes": [],
+   "text": "（原檔）dfe023/00123-716600395",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00123-716600395.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 16762,
+    "seconds": 0.979184,
+    "lufs": null,
+    "hash": "6772eb2821ea469f8586d9d8fbc554f20250f8ca50bc8648d2e43bdf9b94fa5e",
+    "at": 1789058026764
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [],
+   "text": "（原檔）dfe023/00147-986620118",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00147-986620118.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 93666,
+    "seconds": 5.783311,
+    "lufs": null,
+    "hash": "5317ae8863da532603d932a64eb1fe50c9ff2c269ffeef71a80fbbad73b08aac",
+    "at": 1789058026862
+   },
+   "lastError": null
+  },
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）dfe023/00201-1421927930",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00201-1421927930.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 92831,
+    "seconds": 5.729864,
+    "lufs": null,
+    "hash": "16cdc8dba1c5301112225383caea30d25e25591d72808a8fbf263658d14faca0",
+    "at": 1789058026957
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）dfe023/00111-664546967",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00111-664546967.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 92831,
+    "seconds": 5.728889,
+    "lufs": null,
+    "hash": "386b0e55e1f77a7e936401013cfde4d5089f52d9d02613fd305b04b34857ad0e",
+    "at": 1789058027051
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）dfe023/00295-2139853312",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00295-2139853312.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.583741,
+    "lufs": null,
+    "hash": "77b16203f11f44bee557aecb6f1b3f06384aad02ce6632ce711566218dec8476",
+    "at": 1789058027147
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）dfe023/00237-1672849677",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00237-1672849677.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.923628,
+    "lufs": null,
+    "hash": "bb53a0813ff7add57819a90e9bed1527554fd9d30df7cb2df3e757663da59998",
+    "at": 1789058027242
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）dfe023/00279-1991419310",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00279-1991419310.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 8403,
+    "seconds": 0.464943,
+    "lufs": null,
+    "hash": "b8a1ba0d3851b15ef7ba5dd525757a7a922dc0d9e42f231e011805e37e978afd",
+    "at": 1789058027336
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [],
+   "text": "（原檔）dfe023/00119-693520566",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/dfe0238a8608d08f/00119-693520566.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav",
+    "stub": false,
+    "bytes": 54796,
+    "seconds": 3.36839,
+    "lufs": null,
+    "hash": "7315b4a09a7aa899623199920567c48532b4fc1647a65691c7033722faa95698",
+    "at": 1789058027429
+   },
+   "lastError": null
+  }
+ }
+}

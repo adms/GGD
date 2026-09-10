@@ -134,6 +134,11 @@ function main() {
   for (const [id, c] of Object.entries(casting?.champions ?? {})) {
     if (!rosterIds.has(id)) heroes.push({ championId: id, name: c.name ?? id, castBy: "COMBAT_CASTING.json" });
   }
+  // heroes that ship ORIGINAL clips only (owner-excluded from synthesis, e.g. the LOL 7)
+  const originals = existsSync(join(LINES_DIR, "COMBAT_ORIGINALS.json")) ? readJson(join(LINES_DIR, "COMBAT_ORIGINALS.json")) : null;
+  for (const id of Object.keys(originals?.champions ?? {})) {
+    if (!rosterIds.has(id) && !casting?.champions?.[id] && Object.keys(originals.champions[id]).length) heroes.push({ championId: id, name: id, castBy: "COMBAT_ORIGINALS.json" });
+  }
 
   for (const champ of heroes) {
     const id = champ.championId;
@@ -154,10 +159,16 @@ function main() {
     const problems = [];
     const missing = [];
     const clipByCat = {};
+    // ⭐ owner 2026-09-10「LOL7個角色應該有自己語音檔 可以排除」: a hero listed in
+    // COMBAT_CASTING.json.excluded is excluded from SYNTHESIS, so a required category it
+    // has no ORIGINAL for can never be filled — that is a declared partial pack, ⛔ not the
+    // corrupt half-drop this gate exists to catch. An mp3 that IS there and disagrees with
+    // status.json still fails for them exactly as for everyone else.
+    const originalsOnly = !!casting?.excluded?.[id];
     for (const cat of CANON) {
       const mp3 = join(dir, `${cat}.mp3`);
       const entry = statusLines[cat];
-      const required = REQUIRED.includes(cat);
+      const required = REQUIRED.includes(cat) && !originalsOnly;
       if (!existsSync(mp3)) {
         if (required) problems.push(`missing mp3 ${cat}`);
         else missing.push(cat);
@@ -193,7 +204,7 @@ function main() {
     if (problems.length > 0) {
       // A scripted hero with NOTHING rendered yet is "not ready" (skip, say so);
       // anything partially present is a corrupt drop and fails as before.
-      const rendered = REQUIRED.filter((cat) => existsSync(join(dir, `${cat}.mp3`))).length;
+      const rendered = CANON.filter((cat) => existsSync(join(dir, `${cat}.mp3`))).length;
       if (rendered === 0 && gateMode === "combat-core") {
         skipped++;
         console.warn(`[voice:index] skip ${id}: scripted but nothing rendered yet (run-combat-gen.mjs)`);

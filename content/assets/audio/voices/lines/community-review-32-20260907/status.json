@@ -24,6 +24,14 @@
      "seconds": 2.24,
      "at": 1789043012960,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789054989328,
+     "error": null
     }
    ],
    "text": "わしにはプライベートすら無いんかい！",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36824,
-    "seconds": 2.24,
+    "bytes": 38078,
+    "seconds": 2.32,
     "lufs": null,
-    "hash": "f58f26e8cf220d03e20005470e726e30e356101aac8a3b5ede9e3e64d7dbb06c",
+    "hash": "e6a401a2e7f3377ef0952036cdd830701a16c2c94ada0f73104aed880c2da254",
     "maxDb": -1.9,
-    "at": 1789043012960
+    "at": 1789054989328
    },
    "lastError": null
   },
@@ -63,6 +71,14 @@
      "seconds": 0.72,
      "at": 1789040396218,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789054989524,
+     "error": null
     }
    ],
    "text": "肩パンチ！",
@@ -72,16 +88,16 @@
    "origin": "ability-name:community-review-32-20260907.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 12164,
+    "seconds": 0.680249,
     "lufs": null,
-    "hash": "4d160463709523b13d0b0978e818aa1527da2827789e5a098f5c5422529740af",
-    "maxDb": -2,
-    "at": 1789040396218
+    "hash": "b9d05500fdeb46fa2f4d4d97829ff9b657058e5a680b24eb238cb9d2dfdcf6ad",
+    "maxDb": -1.9,
+    "at": 1789054989524
    },
    "lastError": null
   },
@@ -102,6 +118,14 @@
      "seconds": 1.56,
      "at": 1789040396327,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.6,
+     "at": 1789054989708,
+     "error": null
     }
    ],
    "text": "流精群（ホワイトレイン）！",
@@ -111,16 +135,16 @@
    "origin": "ability-name:community-review-32-20260907.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 26793,
+    "seconds": 1.6,
     "lufs": null,
-    "hash": "c91a11e7b41c6940689b65a0c4226658da29eda5bea157888a6b346fc02dd009",
-    "maxDb": -1.9,
-    "at": 1789040396327
+    "hash": "504508c70beddf3fb1948a78cae314c6ada0350bc7e4479bf84a52cf814ce044",
+    "maxDb": -3.1,
+    "at": 1789054989708
    },
    "lastError": null
   },
@@ -141,6 +165,14 @@
      "seconds": 0.84,
      "at": 1789040396441,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1789054989888,
+     "error": null
     }
    ],
    "text": "闇ぱんち！",
@@ -150,16 +182,16 @@
    "origin": "ability-name:community-review-32-20260907.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.84,
+    "bytes": 13836,
+    "seconds": 0.8,
     "lufs": null,
-    "hash": "1c3766a5999892dfdccda54463a8a04409a455c3bb4d08ed583ce249543a0f74",
-    "maxDb": -2,
-    "at": 1789040396442
+    "hash": "e1bb57e7a210d600f64f93b1bdc79241f6500661f82c1ec62663559268b67303",
+    "maxDb": -2.1,
+    "at": 1789054989888
    },
    "lastError": null
   },
@@ -188,6 +220,14 @@
      "seconds": 1.48,
      "at": 1789042406688,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1789054990074,
+     "error": null
     }
    ],
    "text": "THE END OF SON！",
@@ -197,16 +237,16 @@
    "origin": "ability-name:community-review-32-20260907.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24703,
-    "seconds": 1.48,
+    "bytes": 19688,
+    "seconds": 1.16,
     "lufs": null,
-    "hash": "25b3711af84039e44922e87ed325aed826943cbfaa9a00b72c9005be33ca1c64",
-    "maxDb": -1.9,
-    "at": 1789042406688
+    "hash": "6e14b1e883e08692ee02e3bd533f50db9e1e43f7a3453fa817e6ef01202bc941",
+    "maxDb": -2,
+    "at": 1789054990074
    },
    "lastError": null
   },
@@ -235,6 +275,14 @@
      "seconds": 2.2,
      "at": 1789042406792,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789054990264,
+     "error": null
     }
    ],
    "text": "THE END OF SON 終章！",
@@ -244,16 +292,16 @@
    "origin": "ability-name:community-review-32-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36406,
-    "seconds": 2.2,
+    "bytes": 28465,
+    "seconds": 1.72,
     "lufs": null,
-    "hash": "0657a5eadf6c793f125ba9f7e4188b911d5ff8b60d0368bea86962397ee6253f",
-    "maxDb": -2.8,
-    "at": 1789042406792
+    "hash": "7b77b3e38842716561eceec3e81a42a1cc29a8ac39b1c626ed5d7bf71a7849f3",
+    "maxDb": -2.1,
+    "at": 1789054990264
    },
    "lastError": null
   },
@@ -266,6 +314,14 @@
      "seconds": 2.36,
      "at": 1789043013080,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789054990461,
+     "error": null
     }
    ],
    "text": "完璧、悪魔なめとんなこいつ",
@@ -275,16 +331,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 38914,
-    "seconds": 2.36,
+    "bytes": 35152,
+    "seconds": 2.12,
     "lufs": null,
-    "hash": "392d4b0851933bb0df534693d829d03f2b75199e16c5fc1b2e3da28fc05aae5b",
-    "maxDb": -2,
-    "at": 1789043013080
+    "hash": "e91b9682a5579272aa3c11d923656e856f5a613eb19596cf0accdce78099b54f",
+    "maxDb": -3.5,
+    "at": 1789054990461
    },
    "lastError": null
   },
@@ -305,6 +361,14 @@
      "seconds": 0.28,
      "at": 1789040396794,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054990653,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -314,16 +378,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 5477,
     "seconds": 0.28,
     "lufs": null,
-    "hash": "a78fafd07a7be6aba85ad105ea206c9de44af21152ce0a23f0a6418487390df1",
-    "maxDb": -2,
-    "at": 1789040396794
+    "hash": "a8fb98b4f305a23fccc67c0c0c1cbcd78e771b828bec8959fe89926adfb07d62",
+    "maxDb": -1.9,
+    "at": 1789054990653
    },
    "lastError": null
   },
@@ -344,6 +408,14 @@
      "seconds": 0.28,
      "at": 1789040396909,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054990853,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -353,16 +425,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 5477,
     "seconds": 0.28,
     "lufs": null,
-    "hash": "97b11c95bb7be92a891a2006799bb03e8413b78522cfba36daf6755109a7c438",
-    "maxDb": -1.9,
-    "at": 1789040396909
+    "hash": "f18f933bbc64c77ba0bb8af2772f383bb3b58e7266a42808bf6ef6bb4fbf8d6a",
+    "maxDb": -2,
+    "at": 1789054990853
    },
    "lastError": null
   },
@@ -383,6 +455,14 @@
      "seconds": 0.72,
      "at": 1789040397020,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1789054991045,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -392,16 +472,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 10493,
+    "seconds": 0.6,
     "lufs": null,
-    "hash": "0f758f8d59dee68383e74cf9684a363c7d2fae3c73a67320a9734490db96c582",
-    "maxDb": -3.6,
-    "at": 1789040397020
+    "hash": "1e39f8be6163114970504202e3efda5bf8b90b8adc9434bf070bc64b37bb7e84",
+    "maxDb": -5.7,
+    "at": 1789054991045
    },
    "lastError": null
   },
@@ -414,6 +494,14 @@
      "seconds": 2.4,
      "at": 1789043013198,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789054991242,
+     "error": null
     }
    ],
    "text": "今日の生贄はなにかいな？",
@@ -423,16 +511,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 39332,
-    "seconds": 2.4,
+    "bytes": 33062,
+    "seconds": 2,
     "lufs": null,
-    "hash": "804cad86d723c7ad6cdb5684d959613199b6a1524110a6f186528b1e4aca9c82",
-    "maxDb": -2.1,
-    "at": 1789043013198
+    "hash": "a74d66ae970f46db2b5a7e21f2184d06181d07fbc2ce36cb926ae0d124001fbd",
+    "maxDb": -2.3,
+    "at": 1789054991243
    },
    "lastError": null
   },
@@ -453,6 +541,14 @@
      "seconds": 0.56,
      "at": 1789040397133,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054991434,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -462,16 +558,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "5be632bf55455e145f0990c01a9454aed99a805e9e9f246f6edc7ccd18128ffe",
-    "maxDb": -5.1,
-    "at": 1789040397133
+    "hash": "8460a8faa61113a11b99860b9579233cbfc0bb6ef1703601e7f9104b2d4cc548",
+    "maxDb": -2,
+    "at": 1789054991434
    },
    "lastError": null
   }

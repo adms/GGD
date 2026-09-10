@@ -24,6 +24,14 @@
      "seconds": 2.88,
      "at": 1789042996400,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.72,
+     "at": 1789054908155,
+     "error": null
     }
    ],
    "text": "好んで毒を食らうのは私ぐらいか",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 47273,
-    "seconds": 2.88,
+    "bytes": 44765,
+    "seconds": 2.72,
     "lufs": null,
-    "hash": "94dadf2c1fa1931ec2fe9a30d76eeb1cd475a6c20bdef4ee839330f20c2c7714",
-    "maxDb": -3.8,
-    "at": 1789042996400
+    "hash": "75894ea5c106c9c2c76ed76d70078ae3df86b6f346624699d0cbda0c4695ed7a",
+    "maxDb": -2.2,
+    "at": 1789054908155
    },
    "lastError": null
   },
@@ -63,6 +71,14 @@
      "seconds": 1.72,
      "at": 1789042390542,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789054908423,
+     "error": null
     }
    ],
    "text": "試藥員本人先簽到！",
@@ -72,16 +88,16 @@
    "origin": "ability-name:b2-maomao.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 28465,
-    "seconds": 1.72,
+    "bytes": 35152,
+    "seconds": 2.12,
     "lufs": null,
-    "hash": "286dc43f85600920bab9891fd153dca741dbf9dca6708f6d7314266c4f331996",
-    "maxDb": -3.7,
-    "at": 1789042390542
+    "hash": "8f37472c0d809943382620201bb681e9d2540a7eda9df78d8dbc66ae33180df3",
+    "maxDb": -2,
+    "at": 1789054908423
    },
    "lastError": null
   },
@@ -102,6 +118,14 @@
      "seconds": 3.52,
      "at": 1789042390682,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.24,
+     "at": 1789054908653,
+     "error": null
     }
    ],
    "text": "先解毒再喝急救包！",
@@ -111,16 +135,16 @@
    "origin": "ability-name:b2-maomao.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 57304,
-    "seconds": 3.52,
+    "bytes": 69007,
+    "seconds": 4.24,
     "lufs": null,
-    "hash": "ed84d64be5e49654efd5c57bb1e6285002eb50e34b28e697955e3cfd5a8f64c9",
-    "maxDb": -2,
-    "at": 1789042390683
+    "hash": "f90e35d13e6ee8550c09d3ac001078e8615989aefe4107be71be783c4c9e0f03",
+    "maxDb": -1.9,
+    "at": 1789054908653
    },
    "lastError": null
   },
@@ -141,6 +165,14 @@
      "seconds": 1.68,
      "at": 1789042390794,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789054908889,
+     "error": null
     }
    ],
    "text": "樣本採好了別打翻！",
@@ -150,16 +182,16 @@
    "origin": "ability-name:b2-maomao.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 28047,
-    "seconds": 1.68,
+    "bytes": 25957,
+    "seconds": 1.56,
     "lufs": null,
-    "hash": "098e3e399e38fa353b0cd4c7577f9ab15c5e3046e25b9d41fbca33327eb1eee5",
+    "hash": "8ca846aab85f7c48ca674cda514d3c63b10a658d5643a7d4506e5498588d8214",
     "maxDb": -3.6,
-    "at": 1789042390794
+    "at": 1789054908889
    },
    "lastError": null
   },
@@ -180,6 +212,14 @@
      "seconds": 2,
      "at": 1789042390903,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.96,
+     "at": 1789054909108,
+     "error": null
     }
    ],
    "text": "憑樣本換一張處方！",
@@ -189,16 +229,16 @@
    "origin": "ability-name:b2-maomao.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33062,
-    "seconds": 2,
+    "bytes": 48527,
+    "seconds": 2.96,
     "lufs": null,
-    "hash": "12399a33c0b748f09a85f3bfe723a8d3ae578804af0c44ca4164508454c7a576",
-    "maxDb": -2.5,
-    "at": 1789042390903
+    "hash": "0003bede9d2ae7b4a265be14dde650cd249ec8b00815507ccf04ed05d1a7526e",
+    "maxDb": -2,
+    "at": 1789054909108
    },
    "lastError": null
   },
@@ -219,6 +259,14 @@
      "seconds": 1.56,
      "at": 1789042391013,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1789054909318,
+     "error": null
     }
    ],
    "text": "受療打五折警示！",
@@ -228,16 +276,16 @@
    "origin": "ability-name:b2-maomao.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 24285,
+    "seconds": 1.44,
     "lufs": null,
-    "hash": "fb9f92364f60ba01dac7207e3ea6f7b03c04552ca7fd991a83f35e45cc04ceed",
-    "maxDb": -4.2,
-    "at": 1789042391013
+    "hash": "bc4b8a95500747d2122fddc9dbdf3c574c4c1a3fc0a783d59822f65fafd19775",
+    "maxDb": -3.2,
+    "at": 1789054909319
    },
    "lastError": null
   },
@@ -250,6 +298,14 @@
      "seconds": 1.48,
      "at": 1789042996513,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789054909550,
+     "error": null
     }
    ],
    "text": "毒だっつってんだろが！",
@@ -259,16 +315,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24703,
-    "seconds": 1.48,
+    "bytes": 25957,
+    "seconds": 1.56,
     "lufs": null,
-    "hash": "2aa4b16b1786e7e8d7d60a233812247fd2282c7aed170384cd4ce4e6dff8fb89",
-    "maxDb": -2,
-    "at": 1789042996513
+    "hash": "c62af7f6325e13cbd7ad10483a251c7c574b8fb11062d2e778a75f5c2be7ecc2",
+    "maxDb": -1.9,
+    "at": 1789054909550
    },
    "lastError": null
   },
@@ -281,6 +337,14 @@
      "seconds": 0.32,
      "at": 1789037088985,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054909780,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -290,16 +354,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 6731,
+    "seconds": 0.36,
     "lufs": null,
-    "hash": "36e3500a1dc98c2299c0e115ac671357852cbc6ef1775a902e7ccdcb9b8d0465",
-    "maxDb": -2,
-    "at": 1789037088985
+    "hash": "66666a1f5bdf6136dc40a96ac5fe11c600f78beb208edaa9f3669c990c764e80",
+    "maxDb": -1.9,
+    "at": 1789054909780
    },
    "lastError": null
   },
@@ -312,6 +376,14 @@
      "seconds": 0.28,
      "at": 1789037089119,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054909986,
+     "error": null
     }
    ],
    "text": "きゃっ！",
@@ -321,16 +393,16 @@
    "origin": "grunt:female",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "a4e62294625d6fe46c8ce1020ddb2ad90050abf221c0488bda3d12495d8fa6e9",
+    "hash": "03f940b4806529a778ec4982dd7dcd50ba2efcb733575b11e47d77d73c0b7f8a",
     "maxDb": -2,
-    "at": 1789037089119
+    "at": 1789054909986
    },
    "lastError": null
   },
@@ -343,6 +415,14 @@
      "seconds": 0.680249,
      "at": 1789037089252,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789054910196,
+     "error": null
     }
    ],
    "text": "ああっ……！",
@@ -352,16 +432,16 @@
    "origin": "grunt:female",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.680249,
+    "bytes": 11328,
+    "seconds": 0.64,
     "lufs": null,
-    "hash": "50dee5ecfd8d7156f29b58c5db46913dceb4fd35a1110073bf8c32d84401cf0e",
-    "maxDb": -4.6,
-    "at": 1789037089252
+    "hash": "c3f25419e0b9fc2e92bb61b47af5ccf60157d2945e932a41bc810039f86842d8",
+    "maxDb": -2,
+    "at": 1789054910196
    },
    "lastError": null
   },
@@ -374,6 +454,14 @@
      "seconds": 1.04,
      "at": 1789042996625,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789054910406,
+     "error": null
     }
    ],
    "text": "これ、毒です",
@@ -383,16 +471,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17598,
-    "seconds": 1.04,
+    "bytes": 15926,
+    "seconds": 0.92,
     "lufs": null,
-    "hash": "b6fbeade49962ac337ecfb0b656093ddbb954099bc1e9ca30204485108068dfe",
-    "maxDb": -2.2,
-    "at": 1789042996625
+    "hash": "7a156619d43548eff17b922a64c490ef469f96d706cd684bdbb46c901f2c2c69",
+    "maxDb": -1.9,
+    "at": 1789054910406
    },
    "lastError": null
   },
@@ -405,6 +493,14 @@
      "seconds": 0.32,
      "at": 1789037089383,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789054910629,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -414,16 +510,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "20f7c8de15b4764bc325a4129c367fa20182063d50111c9aaec2d7e4fad693cb",
+    "hash": "2b7d7bfe954f902892ce12877d53a1c7ace27916b8e62c8be7518d8c24a8e712",
     "maxDb": -2,
-    "at": 1789037089383
+    "at": 1789054910629
    },
    "lastError": null
   }

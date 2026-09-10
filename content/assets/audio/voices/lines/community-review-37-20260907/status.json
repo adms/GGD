@@ -24,6 +24,14 @@
      "seconds": 1.04,
      "at": 1789043014744,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789060175858,
+     "error": null
     }
    ],
    "text": "イヤ！イヤッ、ヤダーッ！",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17598,
-    "seconds": 1.04,
+    "bytes": 21359,
+    "seconds": 1.28,
     "lufs": null,
-    "hash": "074c7990c9cc531dd573049b0af44906e0b894f9ae9e62f8eb2b49597fdcd52d",
-    "maxDb": -4,
-    "at": 1789043014744
+    "hash": "6995ea5b84dd7d8e2813d6f9c974200045c745dd09338c2a4fbe409ed3d2e9b0",
+    "maxDb": -3.8,
+    "at": 1789060175858
    },
    "lastError": null
   },
@@ -55,23 +63,33 @@
      "seconds": 1.44,
      "at": 1789037149569,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1789060175975,
+     "error": null
     }
    ],
-   "text": "（原檔）tame_1",
+   "text": "討伐叉刺擊！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+   "kana": "トウバツ サ トゲ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-37-20260907.q",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.114558,
+    "bytes": 17180,
+    "seconds": 1,
     "lufs": null,
-    "hash": "6fb23c67c990b918839ef0a1708246ed2b5254abd26b3eb99703c6cf33064818",
-    "at": 1789041892471
+    "hash": "131140730ac5c41025f06b435ab9e976eeb074af5ee7ab10f206850d529ceb75",
+    "maxDb": -2,
+    "at": 1789060175975
    },
    "lastError": null
   },
@@ -84,23 +102,33 @@
      "seconds": 1.68,
      "at": 1789037149691,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789060176097,
+     "error": null
     }
    ],
-   "text": "（原檔）injured_1",
+   "text": "哇啊啊撤退！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_1.ogg",
+   "kana": "ア テッタイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-37-20260907.w",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.859138,
+    "bytes": 9239,
+    "seconds": 0.52,
     "lufs": null,
-    "hash": "1c3447ac46e2f6cbfeb10097426bf72fcd791d2d2fb7561b58446480a0825a67",
-    "at": 1789041892522
+    "hash": "fd1b60bcf495be97960e6b8211e87770d9557c386c8fb87427ed2b11bc7f05c0",
+    "maxDb": -2,
+    "at": 1789060176097
    },
    "lastError": null
   },
@@ -113,23 +141,33 @@
      "seconds": 1.36,
      "at": 1789037149819,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789060176229,
+     "error": null
     }
    ],
-   "text": "（原檔）tame_1",
+   "text": "點心時間！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+   "kana": "テンシン ジカン",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-37-20260907.e",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.114558,
+    "bytes": 17598,
+    "seconds": 1.04,
     "lufs": null,
-    "hash": "6fb23c67c990b918839ef0a1708246ed2b5254abd26b3eb99703c6cf33064818",
-    "at": 1789041892574
+    "hash": "8519a3f667f64ecd97cbb372e1ea168616442f88c3ce5ae239a0ebebb36d8547",
+    "maxDb": -4.8,
+    "at": 1789060176229
    },
    "lastError": null
   },
@@ -142,23 +180,33 @@
      "seconds": 1.960249,
      "at": 1789037149938,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789060176357,
+     "error": null
     }
    ],
-   "text": "（原檔）tame_1",
+   "text": "鼓起勇氣討伐！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/tame_1.ogg",
+   "kana": "ツヅミ キ ユウキ トウバツ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-37-20260907.r",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.114558,
+    "bytes": 33062,
+    "seconds": 2,
     "lufs": null,
-    "hash": "6fb23c67c990b918839ef0a1708246ed2b5254abd26b3eb99703c6cf33064818",
-    "at": 1789041892625
+    "hash": "a0ec1066f0a663470ecd3f60b4d39e9d0749baf97435d1c917a35aa0c0c1538b",
+    "maxDb": -3.8,
+    "at": 1789060176357
    },
    "lastError": null
   },
@@ -171,23 +219,33 @@
      "seconds": 1.04,
      "at": 1789037150052,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1789060176478,
+     "error": null
     }
    ],
-   "text": "（原檔）injured_2",
+   "text": "一起加油！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_2.ogg",
+   "kana": "カズキ カ アブラ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-37-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.859138,
+    "bytes": 22195,
+    "seconds": 1.32,
     "lufs": null,
-    "hash": "a63262bce876064b79222538f95130fbb42c261fa9b8b2c1973ae419a6760cca",
-    "at": 1789041892675
+    "hash": "f4e49328642a322aefdac05919da586db498cb00c565a7f3092747a3946b4b42",
+    "maxDb": -1.9,
+    "at": 1789060176478
    },
    "lastError": null
   },
@@ -200,6 +258,14 @@
      "seconds": 0.28,
      "at": 1789043014861,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789060176596,
+     "error": null
     }
    ],
    "text": "フ！",
@@ -209,16 +275,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "d19dcd1d781d99c0ee920650515dedf1e4b0d5d25c853d26a8567673411e2f9f",
-    "maxDb": -2,
-    "at": 1789043014861
+    "hash": "234ae519a8a6b47301be062508ec13f8099fcbec05582bbd705430153e70b942",
+    "maxDb": -1.9,
+    "at": 1789060176596
    },
    "lastError": null
   },
@@ -231,23 +297,33 @@
      "seconds": 0.32,
      "at": 1789037150162,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789060176713,
+     "error": null
     }
    ],
-   "text": "（原檔）injured_2",
+   "text": "ぐ……っ……",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_2.ogg",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.859138,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "a63262bce876064b79222538f95130fbb42c261fa9b8b2c1973ae419a6760cca",
-    "at": 1789041892723
+    "hash": "6123eb74dc416a430582d4ac9bb74bbb78bee86ae8a9641a06984e47217b2e15",
+    "maxDb": -2,
+    "at": 1789060176713
    },
    "lastError": null
   },
@@ -318,6 +394,14 @@
      "seconds": 0.6,
      "at": 1789043014976,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789060176830,
+     "error": null
     }
    ],
    "text": "わァ……ぁ……",
@@ -327,36 +411,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 10493,
-    "seconds": 0.6,
+    "bytes": 12164,
+    "seconds": 0.680249,
     "lufs": null,
-    "hash": "6bf26902407c3405906553e48832ed7e6c64a3aa616e285b22d29110cfb8eba7",
-    "maxDb": -3.7,
-    "at": 1789043014976
-   },
-   "lastError": null
-  },
-  "puzzled": {
-   "takes": [],
-   "text": "（原檔）injured_1",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:github-chiikawa:chiikawa/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/sounds/chiikawa/injured_1.ogg",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "github-chiikawa:chiikawa",
-    "stub": false,
-    "bytes": 14672,
-    "seconds": 0.859138,
-    "lufs": null,
-    "hash": "1c3447ac46e2f6cbfeb10097426bf72fcd791d2d2fb7561b58446480a0825a67",
-    "at": 1789041892920
+    "hash": "ed111a2ddb16dccc3b2af70171008f214236e0d2d68434fc59c512455ec26fba",
+    "maxDb": -4.5,
+    "at": 1789060176830
    },
    "lastError": null
   },

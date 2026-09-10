@@ -24,6 +24,14 @@
      "seconds": 3.44,
      "at": 1789042993136,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.32,
+     "at": 1789054883435,
+     "error": null
     }
    ],
    "text": "俺は世界を救わない。ゴブリンを殺すだけだ",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 56050,
-    "seconds": 3.44,
+    "bytes": 54378,
+    "seconds": 3.32,
     "lufs": null,
-    "hash": "061cb8d132fbf59172cf4450d24f58be98405a0c02adbb39813a69db2506e34e",
-    "maxDb": -2,
-    "at": 1789042993137
+    "hash": "c4c43e445dd80d26a61a2ee79bae1dc0d5813cfa31a2e11135d01aa704c954c2",
+    "maxDb": -1.9,
+    "at": 1789054883435
    },
    "lastError": null
   },
@@ -71,6 +79,14 @@
      "seconds": 1.92,
      "at": 1789042384633,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.76,
+     "at": 1789060152348,
+     "error": null
     }
    ],
    "text": "工地開工三次點名！",
@@ -80,16 +96,16 @@
    "origin": "ability-name:b2-goblin.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 31808,
-    "seconds": 1.92,
+    "bytes": 29301,
+    "seconds": 1.76,
     "lufs": null,
-    "hash": "d22c9c8076457920b1195410c492aa1d79655e76b8d7fa31b1e3583c9746820a",
-    "maxDb": -1.9,
-    "at": 1789042384633
+    "hash": "8f6c5e4397b8c81f49d8243db64622c28ab345dbcdb980f5a2b1813838938d45",
+    "maxDb": -2,
+    "at": 1789060152349
    },
    "lastError": null
   },
@@ -118,6 +134,14 @@
      "seconds": 1.88,
      "at": 1789042384739,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.92,
+     "at": 1789060152468,
+     "error": null
     }
    ],
    "text": "把客人拉進施工區！",
@@ -127,16 +151,16 @@
    "origin": "ability-name:b2-goblin.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 30973,
-    "seconds": 1.88,
+    "bytes": 31808,
+    "seconds": 1.92,
     "lufs": null,
-    "hash": "a67ac81962fc535c1a0f3d9976053b5551aeed191aa8abb22516dec7c0eef652",
+    "hash": "fcfd68035bf0e768a4d85080e49c70bd7a4969283a2ed46353573817226f152f",
     "maxDb": -2,
-    "at": 1789042384739
+    "at": 1789060152468
    },
    "lastError": null
   },
@@ -165,6 +189,14 @@
      "seconds": 1.52,
      "at": 1789042384845,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789060152587,
+     "error": null
     }
    ],
    "text": "工具箱灰塵遮眼！",
@@ -174,16 +206,16 @@
    "origin": "ability-name:b2-goblin.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25539,
-    "seconds": 1.52,
+    "bytes": 28465,
+    "seconds": 1.72,
     "lufs": null,
-    "hash": "3e58766e8b7251648d3e1225d300f0880980131338e3a7b10bfd85935b8b9b66",
-    "maxDb": -3.6,
-    "at": 1789042384845
+    "hash": "d80d17c74c99ba35903da201760c8fb4a639baacf98fce0fb8f0f96064fd5793",
+    "maxDb": -2.7,
+    "at": 1789060152587
    },
    "lastError": null
   },
@@ -212,6 +244,14 @@
      "seconds": 2.88,
      "at": 1789042384958,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3,
+     "at": 1789060152707,
+     "error": null
     }
    ],
    "text": "盲目亂闖請走緊急出口！",
@@ -221,16 +261,16 @@
    "origin": "ability-name:b2-goblin.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 47273,
-    "seconds": 2.88,
+    "bytes": 48945,
+    "seconds": 3,
     "lufs": null,
-    "hash": "84526c30dde4bc07075cc2d6b2c7f9ec6e344839e94e71980d676088f872a074",
-    "maxDb": -2,
-    "at": 1789042384958
+    "hash": "53689e123f539e028ee38c960a5f2463afc5fd7b41fab864e7b2bbb9ec60f5be",
+    "maxDb": -1.9,
+    "at": 1789060152707
    },
    "lastError": null
   },
@@ -259,6 +299,14 @@
      "seconds": 1.84,
      "at": 1789042385065,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1789060152826,
+     "error": null
     }
    ],
    "text": "裝備便宜保命要緊！",
@@ -268,16 +316,16 @@
    "origin": "ability-name:b2-goblin.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 30555,
-    "seconds": 1.84,
+    "bytes": 35570,
+    "seconds": 2.16,
     "lufs": null,
-    "hash": "7176b08920a6c929553d6a93920572ae2de363c5fd597ca1dc5cd34663e8146a",
-    "maxDb": -1.9,
-    "at": 1789042385065
+    "hash": "d2c8d7c15b7304be843862a160ea87d9666eb8be30d780e24927ea8d1bb18b81",
+    "maxDb": -2.7,
+    "at": 1789060152826
    },
    "lastError": null
   },
@@ -290,6 +338,14 @@
      "seconds": 2.08,
      "at": 1789042993265,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.32,
+     "at": 1789054883625,
+     "error": null
     }
    ],
    "text": "生かしておく理由など一つもない",
@@ -299,16 +355,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 34316,
-    "seconds": 2.08,
+    "bytes": 54378,
+    "seconds": 3.32,
     "lufs": null,
-    "hash": "e7d6d16ae6d57f6565a7898c01812d48e1f9cff7b88e6bf7bbc2bb1176a3858e",
-    "maxDb": -2.3,
-    "at": 1789042993265
+    "hash": "1b58cac3713b7e981bef39e0e50b0b31031e5395391ba007621c7144efc27e16",
+    "maxDb": -1.9,
+    "at": 1789054883625
    },
    "lastError": null
   },
@@ -329,6 +385,14 @@
      "seconds": 0.32,
      "at": 1789040359908,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789060152943,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -338,16 +402,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 5477,
+    "seconds": 0.28,
     "lufs": null,
-    "hash": "ce54d76a6487e7d9c3677d7f340bf6659b0fbeb1649d9b91de0ce9ee7e526799",
+    "hash": "666de327566c928aae37ac12cef531a249590e69e81c63fef82218401371e695",
     "maxDb": -2,
-    "at": 1789040359908
+    "at": 1789060152943
    },
    "lastError": null
   },
@@ -370,23 +434,41 @@
      "error": null
     }
    ],
-   "text": "うっ！",
+   "text": "（原檔）0011-vc_link_damage_twinkle",
    "lang": "ja",
-   "kana": "ウッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0011-vc_link_damage_twinkle.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 25121,
+    "seconds": 1.491156,
     "lufs": null,
-    "hash": "329d5b10d278e2f8ce00683572ff6115a5f54f06cd71a562d5ef99e814864120",
-    "maxDb": -1.9,
-    "at": 1789040360012
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789048337562
+   },
+   "lastError": null
+  },
+  "hurt.2": {
+   "takes": [],
+   "text": "（原檔）0012-vc_link_damage01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0012-vc_link_damage01.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789048337644
    },
    "lastError": null
   },
@@ -409,23 +491,41 @@
      "error": null
     }
    ],
-   "text": "ぐああっ……！",
+   "text": "（原檔）0014-vc_link_damagefly01",
    "lang": "ja",
-   "kana": "グアアッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0014-vc_link_damagefly01.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.680249,
+    "bytes": 25121,
+    "seconds": 1.491156,
     "lufs": null,
-    "hash": "1132150e129778a56f4b6a757717dfe4baf3a4bf6caf6f5c5ab82b3362dd43b1",
-    "maxDb": -3,
-    "at": 1789040360118
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789048337727
+   },
+   "lastError": null
+  },
+  "hurt-heavy.2": {
+   "takes": [],
+   "text": "（原檔）0015-vc_link_damagefly02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0015-vc_link_damagefly02.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789048337810
    },
    "lastError": null
   },
@@ -438,6 +538,14 @@
      "seconds": 0.92,
      "at": 1789042993388,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789054883814,
+     "error": null
     }
    ],
    "text": "ゴブリンだ",
@@ -447,16 +555,76 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 15090,
+    "seconds": 0.88,
     "lufs": null,
-    "hash": "3c675b04f6cec5571124560b1d3937de035cda748dfc8da4f03ab54bcf6f40c0",
-    "maxDb": -2.7,
-    "at": 1789042993388
+    "hash": "1582154a132aa544bf3a0d2c68764bd6eb66852f01ba35b89717e31d23f1e258",
+    "maxDb": -2,
+    "at": 1789054883814
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）0004-vc_link_attack04",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0004-vc_link_attack04.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789058003590
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）0005-vc_link_attack05",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0005-vc_link_attack05.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789058003686
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）0020-vc_link_jump01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0020-vc_link_jump01.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789048338148
    },
    "lastError": null
   },
@@ -479,23 +647,61 @@
      "error": null
     }
    ],
-   "text": "はぁっ！",
+   "text": "（原檔）0001-vc_link_attack01",
    "lang": "ja",
-   "kana": "ハァッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0001-vc_link_attack01.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 25121,
+    "seconds": 1.491156,
     "lufs": null,
-    "hash": "a4d3bf50552e211e9bf423efa4e531a72320b3c5a3b26ebd01d57124487bb2a3",
-    "maxDb": -1.9,
-    "at": 1789040360223
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789048338231
+   },
+   "lastError": null
+  },
+  "kill-1.2": {
+   "takes": [],
+   "text": "（原檔）0002-vc_link_attack02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0002-vc_link_attack02.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789058003783
+   },
+   "lastError": null
+  },
+  "kill-1.3": {
+   "takes": [],
+   "text": "（原檔）0003-vc_link_attack03",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0003-vc_link_attack03.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-community-goblin-slayer-ssbu",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.491156,
+    "lufs": null,
+    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "at": 1789058003876
    },
    "lastError": null
   }
