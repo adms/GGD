@@ -589,6 +589,12 @@ print(("OK" if ok else "BAD"), c.get("ok"), c.get("champions"), rp.get("ok"))
     #     ⇒ `ship-it.sh` 逐字印出「⚠️ 部署失敗（要 VPN／區網才連得到 mini）」——
     #     ⛔ 一句**指著完全錯誤方向**的訊息（網路是好的,壞的是離開碼）。
     #   ⚠️ 今天同型的第二次（`ticket-progress.sh` 的 `$STATE` 那一個是第一次）。
+    # ⭐ GH#1171 —— **部署帳本**：玩家公告的視窗要從「上一次部署」算，⛔ 不是「上一個 tag」
+    #   （2026-09-10：v0.43.4／v0.43.5 打了 tag 沒部署也沒公告 ⇒ v0.43.6 的視窗只剩 1 個 chore commit
+    #    ⇒ 81 名英雄上線發成「系統優化更新」）。追加式，⛔ 不覆蓋；ship-it.sh 的收尾 commit 會帶它。
+    local dep_desc; dep_desc=$(git -C "$REPO" describe --tags --always "$deploy_sha" 2>/dev/null || echo "$deploy_sha")
+    printf '%s\t%s\t%s\t%s\n' "$deploy_sha" "$dep_desc" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${HOST:-mini}" >> "$REPO/docs/_release/_deployed.tsv"
+    ok "已記進 docs/_release/_deployed.tsv（$dep_desc）—— 玩家公告的視窗從這裡算（GH#1171）"
     return 0
   else
     bad "⛔ 容器起來了但站沒有回應"
