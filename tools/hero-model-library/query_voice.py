@@ -18,6 +18,7 @@ def main():
     data=json.loads((ROOT/'voice-index.json').read_text());q=args.query.casefold()
     exact=[g for g in data['groups'] if q in [g['id'].casefold()]+[a.casefold() for a in g.get('aliasGroupIds',[])]]
     groups=exact or [g for g in data['groups'] if q in json.dumps([g['id'],g['name'],g['heroIds'],g.get('work',''),g.get('candidateCharactersFromDefinitionPrefix',[]),g.get('aliasGroupIds',[])],ensure_ascii=False).casefold()]
+    groups=sorted(groups,key=lambda g:(g.get('languagePreferenceRank',3),g['id']))
     leads=[s for s in data.get('audioSourceLeads',[]) if q in json.dumps(
         [s['id'],s['target'],s['heroIds']],ensure_ascii=False).casefold()]
     native=[s for s in data.get('nativeAudioSources',[]) if q in json.dumps(
@@ -26,11 +27,13 @@ def main():
     backup_ids.update(s['backupId'] for s in native)
     workspace=Path(data.get('localWorkspace',ROOT.parents[2]))
     result=dict(groups=groups,sourceLeads=leads,nativeAudioSources=native,backups={k:v for k,v in data['backups'].items() if k in backup_ids},
-                localWorkspace=str(workspace),localUseRequiresS3=False,synthesisContract=data['synthesisContract'])
+                localWorkspace=str(workspace),localUseRequiresS3=False,languagePreference=data.get('languagePreference',[]),synthesisContract=data['synthesisContract'])
     if args.files:
         path=ROOT/data['sourceFileManifest'];blob=path.read_bytes()
         assert hashlib.sha256(blob).hexdigest()==data['sourceFileManifestSha256'],'File manifest changed; rebuild voice index'
         result['files']=[r for line in blob.splitlines() if (r:=json.loads(line))['groupId'] in ids]
+        order={g['id']:i for i,g in enumerate(groups)}
+        result['files'].sort(key=lambda r:(order[r['groupId']],r['path']))
         for row in result['files']:row['absolutePath']=str(workspace/row['path'])
     for source in native:
         for row in source['files']:row['absolutePath']=str(workspace/row['path'])

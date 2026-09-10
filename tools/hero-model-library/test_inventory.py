@@ -13,7 +13,7 @@ DATA = REPO / 'materials/hero-model-library'
 class InventoryHandoff(unittest.TestCase):
     def test_audio_reserve_cannot_close_a_model_gap_even_when_paid(self):
         from source_links import plan_sources
-        for role in ['audio-supplement','animation-supplement','vfx-supplement','component-supplement']:
+        for role in ['audio-supplement','animation-supplement','vfx-supplement','component-supplement','texture-supplement']:
             with self.subTest(role=role):
                 source={'id':'supplement-only','heroIds':['hero'],'resourceRole':role,'acquisitionStatus':'downloaded-verified','purchaseDecision':'hold-purchase-review-acquired-source'}
                 data={'entries':[{'id':'owner-one','heroIds':['hero']}], 'publicSources':[], 'paidSources':[source]}

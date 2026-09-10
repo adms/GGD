@@ -10,7 +10,7 @@ def acquired_sources(data):
 def is_model_source(source):
     """Supplemental components must not satisfy a missing character model."""
     return source.get('resourceRole') not in {
-        'audio-supplement', 'animation-supplement', 'vfx-supplement', 'component-supplement'}
+        'audio-supplement', 'animation-supplement', 'vfx-supplement', 'component-supplement', 'texture-supplement'}
 
 
 def plan_sources(data, manifest, policy):
@@ -62,6 +62,7 @@ def render_sources(data, policy):
         '實際選用成品時依序完成：取得實檔 → 原始包與完整解包檔歸檔 → 角色／形態及來源 ID 對應 → 模型、貼圖、動作綁定與特效／音效／語音轉換 → 成品入庫 → 後台選項註冊與實際切換驗證 → 同批更新本盤點及 Git／S3 索引。尚未完成的步驟必須列為待辦；只有網址、只有備份、只有候選登記，都不能算完成上架。', '',
         '**語音也必須一起抓取。** 查找獨立音檔及包內音效庫，保留原始容器、全部音訊與不同語言／版本，轉換版另存並記錄角色、來源、原檔與轉換檔 SHA-256。對白、喊聲、音效與音樂分開分類；未聽審或事件對應未核實者標為待分類，不把音檔總數當成已確認語音數。已取得、已轉換、待角色／技能綁定與後台驗收分別記錄；包內沒有獨立音檔不等於沒有內嵌語音。', '',
         '**已驗證的本機音訊立即供其他工作流直接讀取，不等待 S3。** 語音索引提供本機絕對路徑及逐檔 SHA-256；S3 備份狀態獨立追蹤，未完成備份不阻擋找檔、聽審、轉錄與素材準備。這不等於音訊已完成正式遊戲綁定或合成品質驗收。', '',
+        '**語音優先日文，其次英文，再採其他語言；所有語言版本仍須保留。** LOL 等本機已有遊戲素材先擷取建檔，不重複下載。來源包語系及作者標示只作選用線索，逐段語言仍待聽審；缺少日／英語版就明列待補，不把未知語言改標成日文。', '',
         '角色語音共編入口：[角色語音索引.md](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/角色語音索引.md)。`voice-index.json` 提供角色、語言／聽審狀態及 S3 備份入口，`voice-files.jsonl` 保存逐檔路徑與 SHA-256，供合成工作流選取、轉錄與準備素材；不將未分類音效當成已確認角色語音。', '',
         '原始與半成品存 S3 `legacy/`、本機留副本；標準化成品一律進 Git 固定成品庫。程式、角色設定、版本清單、SHA-256 與文件也進 Git。來源包內缺少的動作、特效、音效或語音要明列缺口並持續補齊，不能據此遺漏已取得的其他素材。', '',
         '預設依下方第二守則；**預設順位只決定預選哪個，不能拿來刪減可選來源。** 平行工作流使用相同角色 ID、獨立來源 ID 與逐檔 SHA-256 共編，合併來源後重建盤點，保留其他工作流登記。', '',
@@ -69,6 +70,7 @@ def render_sources(data, policy):
         '**採用與 300 英雄相同的儲備方式：先整庫／整包取得並完整解包，建立可查詢的原始儲備，實際要用時再轉換。** 收錄不以目前需要的角色裁切；先保留原包、全部可取得檔案、來源版本與逐檔 SHA-256，登記已取得／未取得及解析缺口。儲備取得不要求所有角色立即轉換，尚未轉換者明列「儲備來源，按需轉換」，不能冒充後台可用成品；選用後再完成標準化、動作綁定與驗收，新增獨立下拉選項。', '',
         '**查找管道包含原作遊戲擷取、MOD 網站、Steam 與其他遊戲工作坊、遊戲資源論壇、社群論壇、作者公開倉庫與分享頁，以及已獲使用者授權的付費工作流交付。** 多路平行查找使用獨立來源 ID 與存放目錄，保留原始來源頁、下載連結及取得／受阻證據，再統一合併索引；所有工作流的成果都要歸檔。管道名稱不代替原作出處或第二守則的選用類別；MOD 移植的音訊仍記錄實際來源遊戲與語言版本。', '',
         '**不同世代、平台與作品來源全部擷取、歸檔及登記整合。** PSP、PS Vita、PS2／PS3、N64、GameCube、Wii、NS（Nintendo Switch）都在來源範圍。每個來源／世代／版本／配色保留獨立 ID、來源依據與 SHA-256，模型、貼圖、骨架、動作、特效、音效及語音分別追蹤。完成配對與驗收後各自列入角色後台下拉選單，讓使用者選用；新版優先也不能刪除舊版或其他作品的選項。', '',
+        '**KOF 3D 與《Fate/unlimited codes》PSP 版也列為獨立查找來源。** KOF XV、XIV、Maximum Impact 系列，以及 Fate 的各平台／版本，均保存完整可取得素材；按來源分工作流完成搜尋、擷取、分析、轉換與索引，再統一合併。骨架、動作、特效與語音分別驗證，貼圖包不冒充模型本體，尚未轉換的儲備仍須可查。', '',
         '機器規則：`download-sources.json → ingestionPolicy`。免費來源放 `publicSources`，論壇付費交付放 `paidSources`，兩者走同一角色候選與整合流程；逐筆 `backendIntegration.required=true`，待完成轉換與後台切換驗證才可改為完成。目前實際上架狀態必須另有成品版本與驗證收據。', '']
     lines += ['## 第二守則：預設模型選用順序', '',
         '**' + ' > '.join(policy['priorityLabels'][key] for key in policy['priority']) + '**', '',

@@ -15,6 +15,16 @@ REPO = Path(__file__).resolve().parents[2]
 OUT = REPO/'materials/hero-model-library'
 
 
+def language_rank(value):
+    """Rank an explicit language label without treating it as listening proof."""
+    value = str(value or '').casefold().replace('_', '-').strip()
+    if value in {'ja', 'ja-jp', 'jp', 'japanese', 'japanese (jp filename label)', '日文', '日語'}:
+        return 1
+    if value in {'en', 'en-us', 'en-gb', 'english', '英文', '英語'}:
+        return 2
+    return 3
+
+
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -170,6 +180,7 @@ def main():
         if native_files:
             native_audio.append(dict(id=source['id'],name=source['target'],heroIds=source['heroIds'],sourceUrl=source['url'],
                 backupId=sid,bankFileCount=native_bank_count,standaloneFileCount=len(native_files)-native_bank_count,files=native_files,confirmedVoiceCount=None,
+                extractionReports=source.get('extractionReports',[]),
                 status='native-banks-pending-decoding-and-listening',synthesisReady=False))
         if not audio:continue
         decoded_metadata={}
@@ -193,16 +204,17 @@ def main():
             elif source['id']=='hive-anime-team-survival':
                 part=dict(id=Path(member).stem,name='地圖音訊檔名／'+Path(member).stem,heroIds=[])
             key=source['id']+(':'+part['id'] if part else '')
-            g=group(key,part['name'] if part else source['target'],'公開來源',source['id'],
+            g=group(key,part['name'] if part else source['target'],'本機遊戲' if source.get('accessStatus')=='local-installed-game' else '公開來源',source['id'],
                 '來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認',ids=part['heroIds'] if part else source['heroIds'])
             g['sourceUrl']=source['url'];g['work']=source.get('sourceGame','見來源頁')
             if 'audioConversion' in source:g['conversion']=source['audioConversion']
             if part and part.get('bankAliases'):
                 g['bankAliases']=part['bankAliases']
                 g['aliasGroupIds']=part.get('aliasGroupIds',[])
-            if source.get('reportedLanguage'):
-                g['reportedLanguage']=source['reportedLanguage']
-                g['languageEvidence']='source-author description; per-clip listening not verified'
+            reported_language=(part or {}).get('reportedLanguage') or source.get('reportedLanguage')
+            if reported_language:
+                g['reportedLanguage']=reported_language
+                g['languageEvidence']=source.get('languageEvidence','source description or package label; per-clip listening not verified')
             decoded=decoded_metadata.get(member,{})
             if decoded:
                 assert decoded['sha256']==f['sha256'] and decoded['bytes']==f['bytes']
@@ -213,9 +225,13 @@ def main():
 
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
+    for g in groups.values():
+        g['languagePreferenceRank']=language_rank(g.get('reportedLanguage'))
+        g['languagePreferenceBasis']='reported-language-only; listening review still required'
 
     summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl',
         localWorkspace=str(ws),localUseRequiresS3=False,
+        languagePreference=['ja','en','other-or-unreviewed'],
         scope='All indexed 300/MBA audio and verified local public/paid source audio; S3 backup readiness is tracked separately. Not all files are character voices.',
         groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
         acquisitionPolicy=downloads['ingestionPolicy'],
@@ -232,6 +248,7 @@ def main():
     lines=['# 角色語音索引','',
         '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬讀 `voice-files.jsonl`。', '',
         '**本機已驗證音訊立即供其他工作流讀取，不等待 S3 備份。** `query_voice.py --files --json` 回傳每檔 `absolutePath`；`voice-index.json.localWorkspace` 加上逐檔 `path` 也可直接定位。S3 狀態另列，待聽審不妨礙找檔、播放、轉錄及準備素材。', '',
+        '**語音查找與選用優先順序：日文 → 英文 → 其他語言／待核。** 所有語言、版本仍完整保留。查詢按來源明列語言排序；作者或安裝包語系只算線索，不等於逐段聽審已確認。LOL 等已存在本機的素材先擷取建檔，不重複下載；缺少的日／英語版本另列補件。', '',
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
@@ -243,6 +260,7 @@ def main():
         '來源角色、GGD heroIds 與逐段說話者是三個不同欄位；未確認值保持 unknown。',
         '先聽審、轉錄、檢查語言與品質，再建立合成輸入清單；不要把音檔數當成語音數。',
         '本機驗證完成即可取用，不用等待 S3；逐檔查詢的 absolutePath 可直接讀取。',
+        '語音優先日文，其次英文；其他語言與版本全部保留。reportedLanguage 不是已確認逐段語言。',
         '本機 workspace：'+str(ws),
         '索引原始 path 相對於上述 workspace；使用 S3 時僅用 vibe-coding profile / ap-east-2。',
         'S3 位置、完整包 SHA-256 與分片順序見 voice-index.json.backups；逐檔 SHA-256 見 voice-files.jsonl。',
