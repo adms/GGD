@@ -58,6 +58,8 @@ def frozen_source(dataset):
     for name, expected in manifest['outputs'].items():
         assert digest(dataset / name) == expected, 'ACTION_DATASET_DRIFT:' + name
     report = read(dataset / 'projection-report.json')
+    action_protocol = report.get('actionProtocol', 'legacy@1')
+    assert action_protocol in ['legacy@1', 'scalar-leaves@1'], 'ACTION_PROTOCOL'
     source = Path(report['source']).resolve()
     source_manifest = read(source / 'manifest.json')
     assert source_manifest['schema'] == 'ggd-distillation-compact-frozen-data@1', 'COMPACT_SOURCE_REQUIRED'
@@ -70,6 +72,8 @@ def frozen_source(dataset):
 def public_heroes(dataset, split='dev'):
     """Reconstruct only model-visible inputs.  Teacher answers never escape."""
     dataset, manifest, source = frozen_source(dataset)
+    action_protocol = read(dataset / 'projection-report.json').get('actionProtocol', 'legacy@1')
+    assert action_protocol in ['legacy@1', 'scalar-leaves@1'], 'ACTION_PROTOCOL'
     rows = [row for row in read(dataset / 'examples.json') if row['split'] == split]
     grouped = {}
     for row in rows:
@@ -103,11 +107,11 @@ def public_heroes(dataset, split='dev'):
                 'decisionSpace': input_value['decisionSpace'], 'assetBinding': bindings[hero_id],
                 'identityMessages': identity['messages'][:2], 'selectionSystem': next(iter(selection_systems)),
                 'coreSystem': next(iter(core_systems)), 'actionSystem': next(iter(action_systems)),
-                'detailedCatalog': catalog}
+                'detailedCatalog': catalog, 'actionProtocol': action_protocol}
         # These are the exact keys enforced by generate_hero().  Serialising
         # this assert protects the teacher-answer boundary as the protocol grows.
         assert set(hero) == {'heroId', 'heroName', 'request', 'decisionSpace', 'assetBinding', 'identityMessages',
-                             'selectionSystem', 'coreSystem', 'actionSystem', 'detailedCatalog'}, 'PUBLIC_CASE_SHAPE'
+                             'selectionSystem', 'coreSystem', 'actionSystem', 'detailedCatalog', 'actionProtocol'}, 'PUBLIC_CASE_SHAPE'
         assert 'assistant' not in compact(hero), 'TEACHER_MESSAGE_LEAKED'
         heroes.append(hero)
     assert len(heroes) == manifest['counts'][split]['heroes'], 'PUBLIC_HERO_COUNT_DRIFT'

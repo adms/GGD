@@ -4,6 +4,7 @@ import {newActionState,applyAction,completeActionState} from './hero-distillatio
 import fs from 'node:fs';
 import path from 'node:path';
 import {assembleActionHero} from './hero-distillation-action-runtime.mjs';
+import {actionize} from './hero-distillation-action.mjs';
 
 test('runtime derives the next cursor from accepted shapes and rejects native fields',()=>{
   const grammar=['hooks','on','effects','kind','duration'],options={allowedKeys:grammar,maxArrayLength:4};let state=newActionState();
@@ -17,6 +18,7 @@ test('runtime derives the next cursor from accepted shapes and rejects native fi
   state=applyAction(state,{format:'forge-next-json-action@1',op:'value',value:4},options);
   assert.deepEqual(completeActionState(state),{hooks:[{on:'onDamage',effects:[{kind:'damage',duration:4}]}]});
   assert.throws(()=>applyAction(newActionState(),{format:'forge-next-json-action@1',op:'value',value:{instanceId:'bad'}},options),/ACTION_SCRIPT_FIELD/);
+  assert.throws(()=>applyAction(newActionState(),{format:'forge-next-json-action@1',op:'value',value:{kind:'damage'}},{...options,scalarValues:true}),/ACTION_VALUE_NOT_SCALAR/);
 });
 
 test('full teacher action trace assembles one complete six-slot HeroPlan without a teacher plan input',()=>{
@@ -30,4 +32,9 @@ test('full teacher action trace assembles one complete six-slot HeroPlan without
     productActions=Object.fromEntries(['PASSIVE','Q','W','E','R','EX'].map(slot=>{const n=slotCores[slot].productTemplates.length;return[slot,Array.from({length:n},(_,index)=>rows.filter(row=>row.stage===`action:${slot}:${index}`).map(answer))]}));
   const target=assembleActionHero({identity,slotSelections,slotCores,coreActions,productActions,decisionSpace:space,context:{heroId,heroName,request,assetBinding:assets[heroId],detailedCatalog:catalog}});
   assert.equal(target.format,'hero-plan');assert.equal(target.plan.title,heroName);assert.deepEqual(Object.keys(target.plan.slots).sort(),['E','EX','PASSIVE','Q','R','W']);
+  const replayAnswerList=answers=>{let state=newActionState();for(const answer of answers)state=applyAction(state,answer);return completeActionState(state);};
+  const scalarCoreActions=Object.fromEntries(['PASSIVE','Q','W','E','R','EX'].map(slot=>[slot,actionize(replayAnswerList(coreActions[slot])).map(item=>item.answer)]));
+  const scalarProductActions=Object.fromEntries(['PASSIVE','Q','W','E','R','EX'].map(slot=>[slot,productActions[slot].map(actions=>actionize(replayAnswerList(actions)).map(item=>item.answer))]));
+  const scalarTarget=assembleActionHero({identity,slotSelections,slotCores,coreActions:scalarCoreActions,productActions:scalarProductActions,decisionSpace:space,context:{heroId,heroName,request,assetBinding:assets[heroId],detailedCatalog:catalog},actionProtocol:'scalar-leaves@1'});
+  assert.deepEqual(scalarTarget,target);
 });

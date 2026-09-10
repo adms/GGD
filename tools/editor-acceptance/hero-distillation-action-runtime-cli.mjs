@@ -6,5 +6,5 @@ import {assembleActionHero} from './hero-distillation-action-runtime.mjs';
 
 const chunks=[];for await(const chunk of process.stdin)chunks.push(chunk);const value=JSON.parse(Buffer.concat(chunks).toString('utf8'));
 assert.equal(process.argv.length,3,'USAGE: assemble');assert.equal(process.argv[2],'assemble','UNKNOWN_MODE');
-const expected=['identity','slotSelections','slotCores','coreActions','productActions','decisionSpace','context'];assert.deepEqual(Object.keys(value).sort(),expected.sort(),'ACTION_ASSEMBLY_INPUT_KEYS');
+const expected=['identity','slotSelections','slotCores','coreActions','productActions','decisionSpace','context','actionProtocol'];assert.deepEqual(Object.keys(value).sort(),expected.sort(),'ACTION_ASSEMBLY_INPUT_KEYS');
 process.stdout.write(JSON.stringify(assembleActionHero(value))+'\n');

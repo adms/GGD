@@ -9,7 +9,7 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {SLOTS} from './hero-distillation-compact.mjs';
 
-const SCRIPT=fileURLToPath(import.meta.url),LIMIT=600;
+const SCRIPT=fileURLToPath(import.meta.url),LIMIT=600,MAX_ACTION_SEQUENCE=512;
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const compact=value=>JSON.stringify(value);
 const clone=value=>structuredClone(value);
@@ -21,7 +21,7 @@ export const SYSTEM={
   identity:'只決定英雄身分與出身屬性。不得生成原生 JSON、資產、ID 或未要求欄位；只輸出指定 JSON。',
   selection:'只決定一個技能槽的模板、效果、事件、條件與特效風格候選。不得生成參數或原生 JSON；只輸出指定 JSON。',
   core:'只決定一個技能槽的 product 模板順序。不得填名稱、參數、ID 或資產；只輸出指定 JSON。',
-  action:'只處理 script 提供的目前 frontier。輸出一個 `shape` 或 `value` action，不得指定 path、不得跳過 queue、不得生成 ID、資產或敘述。只輸出指定 JSON。'
+  action:'只處理 script 提供的目前 frontier。容器只能輸出 `shape`，葉節點只能輸出一個 scalar `value`（字串、數字、布林或 null）；不得在 value 內藏物件或陣列、不得指定 path、不得跳過 queue、不得生成 ID、資產或敘述。只輸出指定 JSON。'
 };
 
 function setAt(root,path,value){
@@ -34,8 +34,15 @@ function setAt(root,path,value){
 /** The path is retained only in the local trace. It is deliberately absent
  * from the assistant answer: at runtime it comes from the queue. */
 export function actionize(value,path=[]){
-  const small=actionAnswer('value',value);
-  if(compact(small).length<=LIMIT)return [{path,answer:small}];
+  // Do not let a small nested object bypass the frontier.  It made the old
+  // protocol nominally bounded while still asking the model to produce an
+  // arbitrary config subtree in one reply.  Every container is now owned by a
+  // deterministic shape action; only scalar leaves remain model values.
+  if(value===null||['string','number','boolean'].includes(typeof value)){
+    const small=actionAnswer('value',value);
+    assert(compact(small).length<=LIMIT,'ACTION_SCALAR_TOO_LARGE');
+    return [{path,answer:small}];
+  }
   if(Array.isArray(value))return [{path,answer:actionAnswer('shape',{kind:'array',length:value.length})},...value.flatMap((item,index)=>actionize(item,[...path,index]))];
   assert(value&&typeof value==='object','UNSPLITTABLE_ACTION_VALUE');
   const keys=Object.keys(value),shape=actionAnswer('shape',{kind:'object',keys});
@@ -113,7 +120,8 @@ export function actionizeCompact(source,out){
   const train=records.filter(row=>row.split==='train'),dev=records.filter(row=>row.split==='dev');assert(![...new Set(train.map(row=>row.groupId))].some(group=>new Set(dev.map(row=>row.groupId)).has(group)),'GROUP_LEAKAGE');assert(new Set(train.map(row=>row.heroId)).size===59&&new Set(dev.map(row=>row.heroId)).size===15,'HERO_SPLIT_CHANGED');
   for(const row of records)metrics.push({id:row.id,stage:row.stage,inputChars:row.messages[1].content.length,outputChars:row.messages[2].content.length});
   fs.mkdirSync(out,{recursive:true});const outputs={},save=(name,value,jsonl=false)=>{const text=jsonl?value.map(compact).join('\n')+'\n':JSON.stringify(value,null,2)+'\n';fs.writeFileSync(path.join(out,name),text,{flag:'wx'});outputs[name]=sha(text);};save('examples.json',records);save('train.jsonl',train,true);save('dev.jsonl',dev,true);save('metrics.json',metrics);
-  const counts={train:{tasks:train.length,heroes:new Set(train.map(row=>row.heroId)).size},dev:{tasks:dev.length,heroes:new Set(dev.map(row=>row.heroId)).size},all:{tasks:records.length,heroes:new Set(records.map(row=>row.heroId)).size}},report={schema:'ggd-action-forge-projection@1',source,sourceManifestSha256:sha(fs.readFileSync(path.join(source,'manifest.json'))),counts,outputLimitChars:LIMIT,maxOutputChars:Math.max(...metrics.map(row=>row.outputChars)),allTeacherConfigurationsReplayed:true,sequenceProtocol:'At runtime script exposes the depth-first frontier derived from accepted prior actions; teacher future paths are never an input. Semantic candidates are catalog-bounded; JSON field validity is fail-closed by the authoritative final schema/compiler.',noNewHeroes:true,noTeacherRepair:true,scriptSha256:sha(fs.readFileSync(SCRIPT))};save('projection-report.json',report);save('manifest.json',{schema:'ggd-distillation-action-frozen-data@1',counts,outputs,projectionReport:report,releaseQualified:false});return report;
+  const sequenceCounts=new Map();for(const row of records)if(row.stage.startsWith('core-action:')||row.stage.startsWith('action:')){const key=`${row.heroId}:${row.stage}`;sequenceCounts.set(key,(sequenceCounts.get(key)??0)+1);}const maxActionsPerSequence=Math.max(...sequenceCounts.values());assert(maxActionsPerSequence<=MAX_ACTION_SEQUENCE,'ACTION_SEQUENCE_LIMIT');
+  const counts={train:{tasks:train.length,heroes:new Set(train.map(row=>row.heroId)).size},dev:{tasks:dev.length,heroes:new Set(dev.map(row=>row.heroId)).size},all:{tasks:records.length,heroes:new Set(records.map(row=>row.heroId)).size}},report={schema:'ggd-action-forge-projection@1',source,sourceManifestSha256:sha(fs.readFileSync(path.join(source,'manifest.json'))),counts,actionProtocol:'scalar-leaves@1',outputLimitChars:LIMIT,maxOutputChars:Math.max(...metrics.map(row=>row.outputChars)),maxActionsPerSequence,maximumActionSequenceLimit:MAX_ACTION_SEQUENCE,allTeacherConfigurationsReplayed:true,sequenceProtocol:'At runtime script exposes the depth-first frontier derived from accepted prior actions. Every object and array is a script-owned shape action; every model value is one scalar leaf. Teacher future paths are never an input. Semantic candidates are catalog-bounded; JSON field validity is fail-closed by the authoritative final schema/compiler.',noNewHeroes:true,noTeacherRepair:true,scriptSha256:sha(fs.readFileSync(SCRIPT))};save('projection-report.json',report);save('manifest.json',{schema:'ggd-distillation-action-frozen-data@1',counts,outputs,projectionReport:report,releaseQualified:false});return report;
 }
 
 if(process.argv[1]&&path.resolve(process.argv[1])===SCRIPT){assert.equal(process.argv.length,4,'USAGE: COMPACT_SOURCE OUTPUT');console.log(JSON.stringify(actionizeCompact(process.argv[2],process.argv[3])));}

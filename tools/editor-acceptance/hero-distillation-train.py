@@ -144,6 +144,13 @@ def battery_authorization(path):
     return {'minBatteryPercent': 40}, {'sha256': digest(path), 'record': record}
 
 
+def base_files_from_receipt(receipt):
+    """Accept either immutable base-preflight or prior-run receipt spelling."""
+    files = receipt.get('files', receipt.get('baseFiles'))
+    assert isinstance(files, list) and files, 'BASE_FILE_RECEIPT_REQUIRED'
+    return files
+
+
 def prepare(args):
     out, data = args.out.resolve(), args.data.resolve()
     assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
@@ -154,6 +161,7 @@ def prepare(args):
     receipt = read(args.base_receipt)
     model_dir = Path(receipt['modelDirectory'])
     assert receipt['modelRevision'] == '200bb6db075e137a4deb08838865ac4ddb86292e'
+    base_files = base_files_from_receipt(receipt)
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(str(model_dir), local_files_only=True, trust_remote_code=False)
     examples = read(data / 'examples.json')
@@ -201,7 +209,12 @@ def prepare(args):
                   'boundaryPolicy':'original-public-boundary' if getattr(args,'cache_diagnostic',False) else 'global-query-block-aligned',
                   'maxLossDelta':0.02,'maxGradientRelativeL2':0.02,'source':'Public catalog/system prefix from TRAIN rows only; all memberships verified, no answers.',
                   'policy':'Frozen layers only, immutable host cache, exact prefix match, fresh suffix KV views. Trainable tail always recomputed.'},
-              'modelDirectory': str(model_dir), 'modelRevision': receipt['modelRevision'], 'baseFiles': receipt['files'],
+              # A prior training manifest already pins the same base files as
+              # ``baseFiles``; a standalone preflight receipt calls them
+              # ``files``.  Both are immutable verification receipts, so the
+              # preparation gate accepts either shape without rebuilding or
+              # weakening the file-hash check performed by the worker.
+              'modelDirectory': str(model_dir), 'modelRevision': receipt['modelRevision'], 'baseFiles': base_files,
               'minimumAvailableBytes': receipt['minimumAvailableBytes'], 'seed': 20260909,
               'epochs': 1, 'steps': len(train), 'batchSize': 1, 'learningRate': 2e-5,
               'numLayers': 2, 'loraParameters': {'rank': 8, 'scale': 8.0, 'dropout': 0.0, 'keys': ['self_attn.q_proj', 'self_attn.o_proj']},

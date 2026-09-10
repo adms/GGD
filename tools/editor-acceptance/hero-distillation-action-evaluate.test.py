@@ -24,7 +24,8 @@ class ActionEvaluateTest(unittest.TestCase):
             self.assertNotIn('"role":"assistant"', json.dumps(public, ensure_ascii=False, separators=(',', ':')))
             self.assertEqual(set(public['heroes'][0]), {'heroId', 'heroName', 'request', 'decisionSpace', 'assetBinding',
                                                         'identityMessages', 'selectionSystem', 'coreSystem', 'actionSystem',
-                                                        'detailedCatalog'})
+                                                        'detailedCatalog', 'actionProtocol'})
+            self.assertEqual(public['heroes'][0]['actionProtocol'], 'legacy@1')
 
 
 if __name__ == '__main__':

@@ -42,6 +42,14 @@ class GuardTests(unittest.TestCase):
                 trainer.atomic(file, {**record, **mutation})
                 with self.assertRaises(AssertionError): trainer.battery_authorization(file)
 
+    def test_base_receipt_accepts_preflight_or_prior_training_manifest(self):
+        files = [{'name': 'model.safetensors', 'bytes': 1, 'sha256': 'x'}]
+        self.assertEqual(trainer.base_files_from_receipt({'files': files}), files)
+        self.assertEqual(trainer.base_files_from_receipt({'baseFiles': files}), files)
+        for receipt in [{}, {'files': []}, {'baseFiles': 'wrong'}]:
+            with self.assertRaisesRegex(AssertionError, 'BASE_FILE_RECEIPT_REQUIRED'):
+                trainer.base_files_from_receipt(receipt)
+
     def test_each_full_probe_leg_starts_the_same_gradient_phase_guard(self):
         events=[];row={'id':'whole:HERO','totalTokens':29995}
         def progress(name,**fields):events.append({'phase':name,**fields})

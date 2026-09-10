@@ -13,6 +13,7 @@ from pathlib import Path
 
 SCRIPT = Path(__file__).resolve()
 SLOTS = ['PASSIVE', 'Q', 'W', 'E', 'R', 'EX']
+MAX_ACTION_SEQUENCE = 512
 SCRIPT_KEYS = {'instanceId', 'provenance', 'capabilityIds', 'directionOptionIds',
                'fallbackOptionIds', 'modelKey', 'championIcon', 'icon', 'sfxKey',
                'vfxKey', 'attach', 'replaces'}
@@ -75,7 +76,7 @@ def set_at(root, path, value):
     return root
 
 
-def apply_action(state, answer):
+def apply_action(state, answer, scalar_values=False):
     exact(answer, ['format', 'op', 'value'], 'ACTION_OUTPUT_KEYS')
     assert answer['format'] == 'forge-next-json-action@1', 'ACTION_FORMAT'
     queue = list(state['queue'])
@@ -83,6 +84,8 @@ def apply_action(state, answer):
     cursor = queue.pop(0)
     if answer['op'] == 'value':
         value = answer['value']
+        if scalar_values:
+            assert value is None or isinstance(value, (str, int, float, bool)), 'ACTION_VALUE_NOT_SCALAR'
         reject_native(value)
     else:
         assert answer['op'] == 'shape', 'ACTION_OPERATION'
@@ -136,11 +139,11 @@ def generate_one(case_id, stage, messages, tokenizer, stream_factory, progress):
             'jsonWrapper': parsed['wrapper'], 'jsonError': parsed['error'], 'attempts': 1, 'humanRepairs': 0}
 
 
-def action_sequence(case, slot, selection, core, product, tokenizer, stream_factory, progress, emit):
+def action_sequence(case, slot, selection, core, product, tokenizer, stream_factory, progress, emit, scalar_values=False):
     state = {'queue': [[]], 'root': None, 'accepted': 0}
     answers = []
     while state['queue']:
-        assert state['accepted'] < 256, 'ACTION_SEQUENCE_LIMIT'
+        assert state['accepted'] < MAX_ACTION_SEQUENCE, 'ACTION_SEQUENCE_LIMIT'
         cursor = state['queue'][0]
         payload = {'request': case['request'], 'identity': case['identity'], 'slot': slot, 'selection': selection,
                    'core': core, 'cursor': {'path': cursor, 'ordinal': state['accepted']},
@@ -153,7 +156,7 @@ def action_sequence(case, slot, selection, core, product, tokenizer, stream_fact
                               tokenizer, stream_factory, progress)
         emit(record)
         assert record['complete'] and record['jsonAccepted'], 'ACTION_INCOMPLETE_OR_INVALID_JSON'
-        state = apply_action(state, record['json'])
+        state = apply_action(state, record['json'], scalar_values=scalar_values)
         answers.append(record['json'])
     assert state['root'] is not None, 'ACTION_EMPTY_ROOT'
     return answers
@@ -169,7 +172,10 @@ def assemble(cli, payload):
 def generate_hero(case, cli, tokenizer, stream_factory, progress, emit):
     expected = {'heroId', 'heroName', 'request', 'decisionSpace', 'assetBinding', 'identityMessages',
                 'selectionSystem', 'coreSystem', 'actionSystem', 'detailedCatalog'}
-    assert set(case) == expected, 'ACTION_HERO_CASE_KEYS'
+    assert set(case) in [expected, expected | {'actionProtocol'}], 'ACTION_HERO_CASE_KEYS'
+    action_protocol = case.get('actionProtocol', 'legacy@1')
+    assert action_protocol in ['legacy@1', 'scalar-leaves@1'], 'ACTION_PROTOCOL'
+    scalar_values = action_protocol == 'scalar-leaves@1'
     identity_record = generate_one(case['heroId'] + ':identity', 'identity', case['identityMessages'], tokenizer, stream_factory, progress)
     emit(identity_record); assert identity_record['complete'] and identity_record['jsonAccepted'], 'ACTION_IDENTITY_INVALID'
     identity = identity_record['json']; exact(identity, ['format', 'identity'], 'ACTION_IDENTITY_KEYS'); assert identity['format'] == 'forge-identity@1', 'ACTION_IDENTITY_FORMAT'
@@ -192,12 +198,12 @@ def generate_hero(case, cli, tokenizer, stream_factory, progress, emit):
         emit(record); assert record['complete'] and record['jsonAccepted'], 'ACTION_CORE_INVALID:' + slot
         core = record['json']; exact(core, ['format', 'slot', 'productTemplates'], 'ACTION_CORE_KEYS'); assert core['format'] == 'forge-slot-core@1' and core['slot'] == slot and isinstance(core['productTemplates'], list) and core['productTemplates'], 'ACTION_CORE_FORMAT'
         cores[slot] = core
-        core_actions[slot] = action_sequence(case, slot, selection, core, None, tokenizer, stream_factory, progress, emit)
+        core_actions[slot] = action_sequence(case, slot, selection, core, None, tokenizer, stream_factory, progress, emit, scalar_values=scalar_values)
         product_actions[slot] = []
         for index, template_ref in enumerate(core['productTemplates']):
-            product_actions[slot].append(action_sequence(case, slot, selection, core, {'index': index, 'templateRef': template_ref}, tokenizer, stream_factory, progress, emit))
+            product_actions[slot].append(action_sequence(case, slot, selection, core, {'index': index, 'templateRef': template_ref}, tokenizer, stream_factory, progress, emit, scalar_values=scalar_values))
     target = assemble(cli, {'identity': identity, 'slotSelections': selections, 'slotCores': cores, 'coreActions': core_actions,
-                            'productActions': product_actions, 'decisionSpace': case['decisionSpace'],
+                            'productActions': product_actions, 'decisionSpace': case['decisionSpace'], 'actionProtocol': action_protocol,
                             'context': {'heroId': case['heroId'], 'heroName': case['heroName'], 'request': case['request'],
                                         'assetBinding': case['assetBinding'], 'detailedCatalog': case['detailedCatalog']}})
     return {'heroId': case['heroId'], 'target': target, 'targetSha256': sha(compact(target)), 'identity': identity,
