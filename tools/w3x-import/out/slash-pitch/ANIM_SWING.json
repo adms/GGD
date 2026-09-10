@@ -9,6 +9,246 @@
  },
  "note": "⛔ 刻意沒有產生日期 —— 有的話 --check 就只能模糊比對(GH#389)",
  "abilities": {
+  "b2-luckyman.w": {
+   "champion": "b2-luckyman",
+   "championName": "幸運超人",
+   "ability": "剛好拳頭在這裡",
+   "modelKey": "ou99.457594",
+   "clip": "spell one",
+   "blade": "hand right ref←chest ref",
+   "sweptDeg": 95.2,
+   "planarity": 1.0,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 23
+  },
+  "b2-matthias.w": {
+   "champion": "b2-matthias",
+   "championName": "馬提亞斯",
+   "ability": "用鉛筆也能劍術考試",
+   "modelKey": "ou99.465884",
+   "clip": "spell two",
+   "blade": "Hand Right Ref←Bip001 R Forearm",
+   "sweptDeg": 179.4,
+   "planarity": 0.999,
+   "pitchDeg": 19,
+   "attackClipPitchDeg": 14
+  },
+  "b2-noor.w": {
+   "champion": "b2-noor",
+   "championName": "諾爾",
+   "ability": "新人拿收據換急救",
+   "modelKey": "ou99.453949",
+   "clip": "Spell One",
+   "blade": "hand right Ref←JD-Bip001 R Hand72-QQ136183818",
+   "sweptDeg": 128.9,
+   "planarity": 0.99,
+   "pitchDeg": 35,
+   "attackClipPitchDeg": 33
+  },
+  "b2-orphen.r": {
+   "champion": "b2-orphen",
+   "championName": "歐菲",
+   "ability": "債主不用敲門",
+   "modelKey": "ou99.496452",
+   "clip": "spell",
+   "blade": "bone_weapon1←hand left ref",
+   "sweptDeg": 57.7,
+   "planarity": 0.997,
+   "pitchDeg": 82,
+   "attackClipPitchDeg": 18
+  },
+  "b2-shadow.ex": {
+   "champion": "b2-shadow",
+   "championName": "闇影",
+   "ability": "謝幕後閃到你背前",
+   "modelKey": "ou99.481732",
+   "clip": "Spell 2",
+   "blade": "Weapon Ref←Hand Right Ref",
+   "sweptDeg": 352.1,
+   "planarity": 0.978,
+   "pitchDeg": 3,
+   "attackClipPitchDeg": 11
+  },
+  "b2-touka.e": {
+   "champion": "b2-touka",
+   "championName": "托卡・史考特",
+   "ability": "入坑紀錄蓋個章",
+   "modelKey": "ou99.459257",
+   "clip": "spell two",
+   "blade": "Hand Right Ref←Bip001 R Forearm",
+   "sweptDeg": 179.6,
+   "planarity": 1.0,
+   "pitchDeg": 20,
+   "attackClipPitchDeg": 14
+  },
+  "community-review-02-20260907.e": {
+   "champion": "community-review-02-20260907",
+   "championName": "八神庵",
+   "ability": "百二十七式・葵花",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-02-20260907.ex": {
+   "champion": "community-review-02-20260907",
+   "championName": "八神庵",
+   "ability": "裏三百十六式・豺華",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-02-20260907.r": {
+   "champion": "community-review-02-20260907",
+   "championName": "八神庵",
+   "ability": "禁千二百十一式・八稚女",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-07-20260907.w": {
+   "champion": "community-review-07-20260907",
+   "championName": "西索",
+   "ability": "伸縮自在的愛",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-09-20260907.q": {
+   "champion": "community-review-09-20260907",
+   "championName": "赫蘿",
+   "ability": "〔狼牙警告〕",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-14-20260907.q": {
+   "champion": "community-review-14-20260907",
+   "championName": "殺老師",
+   "ability": "〔觸手批改〕",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-14-20260907.w": {
+   "champion": "community-review-14-20260907",
+   "championName": "殺老師",
+   "ability": "〔高速授課〕",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-15-20260907.q": {
+   "champion": "community-review-15-20260907",
+   "championName": "比利海靈頓",
+   "ability": "〔正面擒抱〕",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-22-20260907.q": {
+   "champion": "community-review-22-20260907",
+   "championName": "菜月昴",
+   "ability": "Shamac",
+   "modelKey": "champ.thorne",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
+  },
+  "community-review-33-20260907.e": {
+   "champion": "community-review-33-20260907",
+   "championName": "近衛刀太",
+   "ability": "〔踏地突進〕",
+   "modelKey": "ou99.470087",
+   "clip": "spell one",
+   "blade": "Right Hand Ref←Chest Ref",
+   "sweptDeg": 186.0,
+   "planarity": 0.95,
+   "pitchDeg": 43,
+   "attackClipPitchDeg": 29
+  },
+  "community-review-34-20260907.e": {
+   "champion": "community-review-34-20260907",
+   "championName": "高速婆婆",
+   "ability": "〔妖怪的咒印〕",
+   "modelKey": "ou99.458013",
+   "clip": "Spell",
+   "blade": "Hand Right Ref←Origin Ref",
+   "sweptDeg": 124.9,
+   "planarity": 0.835,
+   "pitchDeg": 52,
+   "attackClipPitchDeg": 58
+  },
+  "community-review-34-20260907.ex": {
+   "champion": "community-review-34-20260907",
+   "championName": "高速婆婆",
+   "ability": "〔百公里衝撞〕",
+   "modelKey": "ou99.458013",
+   "clip": "Spell",
+   "blade": "Hand Right Ref←Origin Ref",
+   "sweptDeg": 124.9,
+   "planarity": 0.835,
+   "pitchDeg": 52,
+   "attackClipPitchDeg": 58
+  },
+  "community-review-34-20260907.q": {
+   "champion": "community-review-34-20260907",
+   "championName": "高速婆婆",
+   "ability": "〔疾走爪擊〕",
+   "modelKey": "ou99.458013",
+   "clip": "Spell",
+   "blade": "Hand Right Ref←Origin Ref",
+   "sweptDeg": 124.9,
+   "planarity": 0.835,
+   "pitchDeg": 52,
+   "attackClipPitchDeg": 58
+  },
+  "community-review-36-20260907.e": {
+   "champion": "community-review-36-20260907",
+   "championName": "鬼畜王蘭斯",
+   "ability": "〔霸王突進〕",
+   "modelKey": "ou99.493578",
+   "clip": "Spell Four",
+   "blade": "hand right Ref←JD-QQ136183818Bip001 R Hand",
+   "sweptDeg": 109.9,
+   "planarity": 0.99,
+   "pitchDeg": 87,
+   "attackClipPitchDeg": 63
+  },
   "godie-e001.w": {
    "champion": "godie-e001",
    "championName": "蟬在叫人壞掉 - 龍宮禮奈",
@@ -383,6 +623,321 @@
   }
  },
  "unmeasured": {
+  "b2-albus.q": {
+   "champion": "b2-albus",
+   "ability": "世界紀錄第一刀",
+   "reason": "no-glb",
+   "detail": "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb"
+  },
+  "b2-bojji.w": {
+   "champion": "b2-bojji",
+   "ability": "王室搔癢暫停握刀",
+   "reason": "no-glb",
+   "detail": "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb"
+  },
+  "b2-elma.r": {
+   "champion": "b2-elma",
+   "ability": "照攻略抄的重擊",
+   "modelKey": "ou99.472038",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "b2-goblin.e": {
+   "champion": "b2-goblin",
+   "ability": "工具箱灰塵遮眼",
+   "reason": "no-glb",
+   "detail": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb"
+  },
+  "b2-ned.w": {
+   "champion": "b2-ned",
+   "ability": "不是舌頭是近身劍",
+   "modelKey": "ou99.456917",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "b2-popp.q": {
+   "champion": "b2-popp",
+   "ability": "先幫你預熱",
+   "reason": "no-glb",
+   "detail": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb"
+  },
+  "b2-rem.w": {
+   "champion": "b2-rem",
+   "ability": "鐵球拖把暫停你的普攻",
+   "reason": "no-glb",
+   "detail": "assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb"
+  },
+  "b2-rin.e": {
+   "champion": "b2-rin",
+   "ability": "八極拳催款專線",
+   "reason": "no-glb",
+   "detail": "assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb"
+  },
+  "b2-zenitsu.e": {
+   "champion": "b2-zenitsu",
+   "ability": "鼾聲大到握不住武器",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb"
+  },
+  "b2-zenitsu.w": {
+   "champion": "b2-zenitsu",
+   "ability": "雷之呼吸・補眠卡核銷",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb"
+  },
+  "community-review-03-20260907.e": {
+   "champion": "community-review-03-20260907",
+   "ability": "必殺忍蜂",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb"
+  },
+  "community-review-03-20260907.r": {
+   "champion": "community-review-03-20260907",
+   "ability": "超必殺忍蜂",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb"
+  },
+  "community-review-04-20260907.ex": {
+   "champion": "community-review-04-20260907",
+   "ability": "〔歐拉終結拳〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb"
+  },
+  "community-review-04-20260907.q": {
+   "champion": "community-review-04-20260907",
+   "ability": "歐拉連打",
+   "reason": "no-glb",
+   "detail": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb"
+  },
+  "community-review-04-20260907.r": {
+   "champion": "community-review-04-20260907",
+   "ability": "白金之星・世界",
+   "reason": "no-glb",
+   "detail": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb"
+  },
+  "community-review-06-20260907.ex": {
+   "champion": "community-review-06-20260907",
+   "ability": "複製能力",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb"
+  },
+  "community-review-08-20260907.ex": {
+   "champion": "community-review-08-20260907",
+   "ability": "〔立體機動・迴旋斬〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb"
+  },
+  "community-review-08-20260907.q": {
+   "champion": "community-review-08-20260907",
+   "ability": "〔雙刃斬擊〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb"
+  },
+  "community-review-10-20260907.q": {
+   "champion": "community-review-10-20260907",
+   "ability": "〔戰術射擊〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb"
+  },
+  "community-review-10-20260907.r": {
+   "champion": "community-review-10-20260907",
+   "ability": "絕對遵守的 Geass",
+   "reason": "no-glb",
+   "detail": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb"
+  },
+  "community-review-10-20260907.w": {
+   "champion": "community-review-10-20260907",
+   "ability": "〔集中火力〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb"
+  },
+  "community-review-12-20260907.e": {
+   "champion": "community-review-12-20260907",
+   "ability": "〔強化・踏步〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb"
+  },
+  "community-review-12-20260907.q": {
+   "champion": "community-review-12-20260907",
+   "ability": "干將・莫邪",
+   "reason": "no-glb",
+   "detail": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb"
+  },
+  "community-review-13-20260907.ex": {
+   "champion": "community-review-13-20260907",
+   "ability": "〔副武器應急射擊〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb"
+  },
+  "community-review-17-20260907.q": {
+   "champion": "community-review-17-20260907",
+   "ability": "心臟掌握",
+   "reason": "no-glb",
+   "detail": "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb"
+  },
+  "community-review-18-20260907.w": {
+   "champion": "community-review-18-20260907",
+   "ability": "天之鎖",
+   "reason": "no-glb",
+   "detail": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb"
+  },
+  "community-review-19-20260907.ex": {
+   "champion": "community-review-19-20260907",
+   "ability": "The Eclipse",
+   "reason": "no-glb",
+   "detail": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb"
+  },
+  "community-review-19-20260907.q": {
+   "champion": "community-review-19-20260907",
+   "ability": "〔雙劍交叉斬〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb"
+  },
+  "community-review-19-20260907.r": {
+   "champion": "community-review-19-20260907",
+   "ability": "Starburst Stream",
+   "reason": "no-glb",
+   "detail": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb"
+  },
+  "community-review-20-20260907.w": {
+   "champion": "community-review-20-20260907",
+   "ability": "〔連鎖放電〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb"
+  },
+  "community-review-23-20260907.ex": {
+   "champion": "community-review-23-20260907",
+   "ability": "〔吐槽也是武器〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb"
+  },
+  "community-review-25-20260907.e": {
+   "champion": "community-review-25-20260907",
+   "ability": "〔趕上特賣〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb"
+  },
+  "community-review-25-20260907.q": {
+   "champion": "community-review-25-20260907",
+   "ability": "普通拳",
+   "reason": "no-glb",
+   "detail": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb"
+  },
+  "community-review-25-20260907.w": {
+   "champion": "community-review-25-20260907",
+   "ability": "連續普通拳",
+   "reason": "no-glb",
+   "detail": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb"
+  },
+  "community-review-26-20260907.r": {
+   "champion": "community-review-26-20260907",
+   "ability": "〔真相只有一個〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb"
+  },
+  "community-review-26-20260907.w": {
+   "champion": "community-review-26-20260907",
+   "ability": "手錶型麻醉槍",
+   "reason": "no-glb",
+   "detail": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb"
+  },
+  "community-review-27-20260907.ex": {
+   "champion": "community-review-27-20260907",
+   "ability": "〔換牌：風與樹〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb"
+  },
+  "community-review-27-20260907.q": {
+   "champion": "community-review-27-20260907",
+   "ability": "風牌",
+   "reason": "no-glb",
+   "detail": "assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb"
+  },
+  "community-review-28-20260907.e": {
+   "champion": "community-review-28-20260907",
+   "ability": "〔逼近步〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb"
+  },
+  "community-review-28-20260907.ex": {
+   "champion": "community-review-28-20260907",
+   "ability": "〔狂劍追擊〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb"
+  },
+  "community-review-28-20260907.q": {
+   "champion": "community-review-28-20260907",
+   "ability": "〔猛進斬〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb"
+  },
+  "community-review-28-20260907.r": {
+   "champion": "community-review-28-20260907",
+   "ability": "光之太刀",
+   "reason": "no-glb",
+   "detail": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb"
+  },
+  "community-review-31-20260907.ex": {
+   "champion": "community-review-31-20260907",
+   "ability": "〔攻略完成〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb"
+  },
+  "community-review-31-20260907.q": {
+   "champion": "community-review-31-20260907",
+   "ability": "Spiral Edge",
+   "reason": "no-glb",
+   "detail": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb"
+  },
+  "community-review-32-20260907.ex": {
+   "champion": "community-review-32-20260907",
+   "ability": "THE END OF SON〔終章〕",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb"
+  },
+  "community-review-32-20260907.q": {
+   "champion": "community-review-32-20260907",
+   "ability": "肩パンチ",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb"
+  },
+  "community-review-32-20260907.r": {
+   "champion": "community-review-32-20260907",
+   "ability": "THE END OF SON",
+   "reason": "no-glb",
+   "detail": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb"
+  },
+  "community-review-37-20260907.q": {
+   "champion": "community-review-37-20260907",
+   "ability": "〔討伐叉刺擊〕",
+   "modelKey": "ou99.459617",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "community-review-37-20260907.r": {
+   "champion": "community-review-37-20260907",
+   "ability": "〔鼓起勇氣討伐〕",
+   "modelKey": "ou99.459617",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "community-review-37-20260907.w": {
+   "champion": "community-review-37-20260907",
+   "ability": "〔哇啊啊撤退〕",
+   "modelKey": "ou99.459617",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
   "godie-e00r.w": {
    "champion": "godie-e00r",
    "ability": "59-02 高週波短刀",
