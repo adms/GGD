@@ -23,5 +23,19 @@
     "ggd-mvp-ci-second-coord.txt": "64fb89488922182160bb6eb420facb43294dbb6e82bd52595d48a1064a723f2f"
   },
   "reusedValidation": "First branch focused tests/typecheck/Editor build for identical fixes, recorded in materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json. No new recording/replay or hero design work.",
-  "remaining": "New-head CI, real announcement rows, Main review/merge, production deployment and 81 authenticated publications; not complete."
+  "remaining": "New-head CI, real announcement rows, Main review/merge, production deployment and 81 authenticated publications; not complete.",
+  "followup": {
+    "firstHead": "649cc00325a0f9f1e433beb8028a32af8573e695",
+    "mergeCommit": "91cc6fc094ab2a2d1cb5afb776a24bed2c1c9072",
+    "sourceCommit": "62cad6f5c",
+    "firstIsAncestor": true,
+    "preservedProjectCount": 81,
+    "newCrossBranchSourceDifference": false,
+    "coordination": {
+      "exitCode": 0,
+      "packets": 33
+    },
+    "reusedFocusedTests": 18,
+    "remaining": "Real v0.42.26/v0.43.4 delivery records, new-head CI, Main review/merge and formal deployment/publication."
+  }
 }
