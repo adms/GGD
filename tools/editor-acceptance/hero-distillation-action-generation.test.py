@@ -1,5 +1,8 @@
 import importlib.util
+import hashlib
 import json
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -74,6 +77,34 @@ class ActionGenerationTest(unittest.TestCase):
         self.assertFalse(result['fullHeroE2EProven'])
         with self.assertRaises(StopIteration):
             next(values)
+        # The bounded action protocol must feed the real Main materializer and
+        # compiler without a teacher plan or repair step.  This is a fixture
+        # target only; it is not model-quality or gameplay evidence.
+        with tempfile.TemporaryDirectory() as temp:
+            evaluation = Path(temp) / 'evaluation'; arm = evaluation / 'base'
+            (arm / 'heroes').mkdir(parents=True)
+            public = {'schema': 'ggd-action-public-evaluation@1', 'split': 'fixture',
+                      'heroes': [{'heroId': hero_id, 'heroName': case['heroName'], 'decisionSpace': case['decisionSpace']}],
+                      'teacherAccess': 'fixture action output is not a model prompt'}
+            public_bytes = (json.dumps(public, ensure_ascii=False, separators=(',', ':')) + '\n').encode()
+            (evaluation / 'public-heroes.json').write_bytes(public_bytes)
+            (evaluation / 'manifest.json').write_text(json.dumps({'schema': 'ggd-action-protected-evaluation@1',
+                'modelDirectory': 'fixture', 'trainingDirectory': 'fixture', 'publicHeroesSha256': hashlib.sha256(public_bytes).hexdigest(),
+                'heroes': 1}) + '\n')
+            (arm / 'state.json').write_text(json.dumps({'status': 'completed', 'workerPid': None}) + '\n')
+            (arm / 'result.json').write_text(json.dumps({'attemptedHeroes': 1}) + '\n')
+            (arm / 'hero-index.json').write_text(json.dumps([{'heroId': hero_id, 'status': 'complete'}]) + '\n')
+            (arm / 'heroes' / (hero_id + '.json')).write_text(json.dumps({'heroId': hero_id, 'status': 'complete',
+                'target': result['target'], 'targetSha256': result['targetSha256']}) + '\n')
+            compiled = Path(temp) / 'compiled'
+            process = subprocess.run(['node', '--import', 'tsx', str(ROOT / 'tools/editor-acceptance/hero-distillation-action-compile.mts'),
+                '--evaluation', str(evaluation), '--models', str(root / 'hero74-model-bindings-v1'),
+                '--source-repo', str(ROOT), '--out', str(compiled), '--arm', 'base'], cwd=ROOT, text=True,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            report = json.loads((compiled / 'report.json').read_text())
+            self.assertEqual(report['counts']['primaryWholeHeroes'], 1)
+            self.assertEqual(report['counts']['structuralPassed'], 1)
 
 
 if __name__ == '__main__':
