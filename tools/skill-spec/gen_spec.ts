@@ -113,7 +113,10 @@ import {
 import { LIVE_RULES, LIVE_SUFFIX } from "../../packages/shared/src/content/renderAbilityText";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO = resolve(HERE, "../..");
+// ⭐ 2026-09-11：可用 GGD_REPO_ROOT 指到一棵**匯出的樹**（git archive）—— 讓產物能對 origin/main 重生成，
+//   ⛔ 而不是對一個併行 lane 正在改的工作區（CI contract 因 ggd-ability-prose.json 過期紅了一整天，
+//   而工作區那份重生成反映的是別人未推的內容）。預設不變；⚠️ 匯入的 schema／registry 仍來自本 repo。
+const REPO = process.env.GGD_REPO_ROOT ?? resolve(HERE, "../..");
 
 export const DEFAULT_OUT = join(REPO, "docs/技能標記機制與效果規則.md");
 /**
