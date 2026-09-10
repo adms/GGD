@@ -405,6 +405,7 @@
     "waveTable": {
       "eventIntervalSec": 20,
       "difficultyBase": 1.15,
+      "baseSpawnCount": 8,
       "events": [
         {
           "kind": "normal",

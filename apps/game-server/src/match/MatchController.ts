@@ -23,6 +23,7 @@ import {
   round11BossScale,
   round11EventsDue,
   pickRound11Event,
+  round11Difficulty,
   type Round11MobRulesPatch,
 } from "@ggd/shared/sim/round11Waves";
 import {
@@ -4510,8 +4511,68 @@ export class MatchController {
     while (this.round11EventsFired < due) {
       this.round11EventsFired++;
       const kind = pickRound11Event(wt.events, this.world.rng.next());
-      if (kind === "bombardment") this.startRound11Bombardment();
+      if (kind === null) continue; // ⭐ 權重全 0 ⇒ 這一波空過（⛔ 不是崩）
+      this.runRound11Event(kind, this.round11EventsFired);
     }
+  }
+
+  /**
+   * ⭐⭐ 跑一個波次事件（GH#1151 B / #924）。
+   *
+   * > owner 2026-09-01（逐字）：「這個殭屍組合⋯組合項目可以包含
+   * >  **殭屍 特殊殭屍 殭屍王** 的不同英雄組合 甚至加入**場景效果**」
+   * > owner 同一則，說了兩次：「**不要複雜化**」
+   *
+   * ⭐ 生怪那三種走的是**出貨的同兩扇門**（`spawnMob` / `summonMobBoss`）——
+   * ⛔ 不另外開一條生怪路徑（第二守則失敗形態⑤：被測的不是出貨的那個）。
+   * ⭐ 尤其王那扇門還管**每回合上限與回合延長**，繞過它就會生出一隻不算數的王。
+   *
+   * ⚠️⚠️ ⭐ 認不得的 `kind` **要出聲**（`round11EventUnhandled`），⛔ 不可以安靜地丟掉：
+   * `waveTable.events` 是**內容**（owner：「盡量彈性選項與數值」）⇒ 有人會打錯字，
+   * ⭐ 而一個安靜被丟掉的事件，看起來跟「那一格權重太低所以沒抽到」**一模一樣**。
+   * ⛔ fail-open 沒錯，**靜默**才是缺陷（第二守則）。
+   */
+  private runRound11Event(kind: string, waveIndex: number): void {
+    if (kind === "bombardment") {
+      this.startRound11Bombardment();
+      return;
+    }
+    const rules = this.world.mobRules;
+    // ⭐ 第十一回合是 royale ⇒ **一個 zone**,⭐ 而它的編號固定是 0（`royaleBout`）。
+    //   ⛔⛔ 這裡曾經寫成 `this.phase.round` —— 那會把整波怪生到一個**沒有人在的區**,
+    //   ⭐ 而畫面上看起來只是「這一波沒出怪」(⛔ 不像一個編號錯誤)。
+    const zone = this.activeZones()[0];
+    if (zone === undefined) return;
+    if (kind === "normal" || kind === "special") {
+      if (!rules) return;
+      // ⭐ 這一波生幾隻 ＝ 基數 × 難度成長（⛔ 不用 `Math.pow`：`round11Difficulty` 是連乘）。
+      //   ⚠️ ⭐ 上限仍然由 `maxAlivePerZone` 夾著(每 tick 由 `clampRound11AliveCap` 漸進放開)
+      //   ⇒ ⭐ 調大基數是讓「**補位變快**」,⛔ 不是讓場上變多。
+      const wt2 = this.rules.round11.waveTable;
+      const n = Math.round(wt2.baseSpawnCount * round11Difficulty(wt2.difficultyBase, waveIndex));
+      for (let i = 0; i < n; i++) {
+        if (mobsAliveInZone(this.world, zone) >= rules.maxAlivePerZone) break;
+        spawnMob(this.world, zone, rules, this.world.tick, i, kind);
+      }
+      return;
+    }
+    if (kind === "boss") {
+      if (!rules) return;
+      // ⚠️ 王要一個「召喚者」—— ⭐ 拿場上第一個活著的英雄（⛔ 王的門要它算歸屬）。
+      let summoner: EntityId | null = null;
+      for (const [, seat] of this.seats) {
+        if (seat.entityId === null) continue;
+        if (this.world.health.get(seat.entityId)?.alive) {
+          summoner = seat.entityId;
+          break;
+        }
+      }
+      if (summoner === null) return; // ⛔ 場上沒有活人 ⇒ 不召王
+      summonMobBoss(this.world, zone, rules, summoner, this.world.tick, this.world.tick + waveIndex);
+      return;
+    }
+    // ⛔⛔ 認不得 —— ⭐ **出聲**，⛔ 不安靜丟掉。
+    this.world.emit("round11EventUnhandled", { kind, waveIndex });
   }
 
   /**

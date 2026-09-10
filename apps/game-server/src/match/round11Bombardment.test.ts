@@ -34,7 +34,7 @@ const rules = (over: Partial<ArenaRules["round11"]["bombardment"]> = {}): ArenaR
     spawnRampSec: 0,
     deadPlayersControlBoss: false, // ⭐ 這一支只問轟炸,⛔ 不要換邊一起動
     // ⭐ 波次表只留轟炸 ⇒ 排程一到就是它（⛔ 不靠運氣抽中）。
-    waveTable: { eventIntervalSec: 2, difficultyBase: 1, events: [{ kind: "bombardment", weight: 1 }] },
+    waveTable: { eventIntervalSec: 2, difficultyBase: 1, baseSpawnCount: 0, events: [{ kind: "bombardment", weight: 1 }] },
     bombardment: {
       enabled: true,
       telegraphSec: TELEGRAPH,

@@ -144,6 +144,20 @@ const zWaveTable = z
           .strict(),
       )
       .max(32),
+    /**
+     * ⭐ 一個「殭屍組合」事件生幾隻（⭐ 再乘 `difficultyBase` 的第 N 次方）。
+     * ⚠️ ⭐ 這一格是**我挑的**（owner 只說「難度指數增加」與「⛔ 不要複雜化」）——
+     * ⇒ 照常設指令做成一格可以一鍵轉回去的旋鈕，⛔ 不是寫死在程式裡。
+     */
+    baseSpawnCount: z
+      .number()
+      .int()
+      .min(0)
+      .max(200)
+      .describe(
+        "@zh 第十一回合 · 一個波次事件生幾隻（成長前的基數）\n" +
+          "@note 抽到「殭屍」或「特殊殭屍」時一次生幾隻，⭐ 再乘上難度成長（出貨 {{出貨值}}）。⚠️ 實際生成量仍然被**場上存活上限**夾著，所以調大它是讓「補位變快」，⛔ 不是讓場上變多。調 0 ＝ 波次事件不再生怪（只剩場景效果）。",
+      ),
   })
   .strict();
 
@@ -347,6 +361,7 @@ export const SHIPPED_ROUND11: Round11Config = {
   waveTable: {
     eventIntervalSec: 20,
     difficultyBase: 1.15,
+    baseSpawnCount: 8,
     events: [
       { kind: "normal", weight: 60 },
       { kind: "special", weight: 25 },

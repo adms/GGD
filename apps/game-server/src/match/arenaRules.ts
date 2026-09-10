@@ -110,6 +110,8 @@ export interface ArenaRules {
     readonly waveTable: {
       readonly eventIntervalSec: number;
       readonly difficultyBase: number;
+      /** ⭐ 一個波次事件生幾隻（成長前的基數）—— 消費端 `MatchController.runRound11Event`。 */
+      readonly baseSpawnCount: number;
       readonly events: readonly { readonly kind: string; readonly weight: number }[];
     };
     /** ⭐ 王強度那三格（#1151 D）——消費端 `sim/round11Waves.round11BossScale`。 */
@@ -332,7 +334,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     bannerText: "",
     maxAliveZombies: 0,
     spawnRampSec: 0,
-    waveTable: { eventIntervalSec: 0, difficultyBase: 1, events: [] },
+    waveTable: { eventIntervalSec: 0, difficultyBase: 1, baseSpawnCount: 0, events: [] },
     bossStrengthMult: 1,
     bossScaleFloor: 1,
     bossScaleCeil: 1,
@@ -522,6 +524,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       waveTable: {
         eventIntervalSec: doc.round11?.waveTable?.eventIntervalSec ?? 0,
         difficultyBase: doc.round11?.waveTable?.difficultyBase ?? 1,
+        baseSpawnCount: doc.round11?.waveTable?.baseSpawnCount ?? 0,
         events: doc.round11?.waveTable?.events ?? [],
       },
       // ⭐ 王強度 —— fallback 是「⛔ 不成長」：`mult 1` ＋ `floor/ceil 1`。

@@ -45,7 +45,7 @@ const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
     bannerText: "第十一回合",
     maxAliveZombies: 0,
     spawnRampSec: 0,
-    waveTable: { eventIntervalSec: 0, difficultyBase: 1, events: [] },
+    waveTable: { eventIntervalSec: 0, difficultyBase: 1, baseSpawnCount: 0, events: [] },
     bossStrengthMult: 1,
     bossScaleFloor: 1,
     bossScaleCeil: 1,
@@ -129,7 +129,7 @@ describe("第十一回合的世界（GH#1151 A 第 2 條）", () => {
 });
 
 describe("第十一回合的生怪（GH#1151 B）", () => {
-  const WAVES = { eventIntervalSec: 1, difficultyBase: 1.15, events: [{ kind: "normal", weight: 100 }] };
+  const WAVES = { eventIntervalSec: 1, difficultyBase: 1.15, baseSpawnCount: 0, events: [{ kind: "normal", weight: 100 }] };
 
   it("⭐ `waveTable` 真的變成 `MobRules`，⛔ 而其他回合不受影響", () => {
     const ctl = new MatchController(
@@ -176,7 +176,7 @@ describe("第十一回合的生怪（GH#1151 B）", () => {
 });
 
 describe("第十一回合的王強度（GH#1151 D）", () => {
-  const WAVES = { eventIntervalSec: 0.2, difficultyBase: 1.15, events: [{ kind: "normal", weight: 100 }] };
+  const WAVES = { eventIntervalSec: 0.2, difficultyBase: 1.15, baseSpawnCount: 0, events: [{ kind: "normal", weight: 100 }] };
 
   it("⭐⭐ 依**累計已生成**成長 —— ⛔ 而清場**不會**讓它變回去", () => {
     const ctl = new MatchController(
@@ -219,7 +219,7 @@ describe("第十一回合的王強度（GH#1151 D）", () => {
 });
 
 describe("第十一回合的一次性獎勵帳本（GH#1151 C）", () => {
-  const WAVES = { eventIntervalSec: 0.2, difficultyBase: 1.15, events: [{ kind: "normal", weight: 100 }] };
+  const WAVES = { eventIntervalSec: 0.2, difficultyBase: 1.15, baseSpawnCount: 0, events: [{ kind: "normal", weight: 100 }] };
 
   it("⭐ 進場時**清空** —— ⛔ 上一回合的帳本不可以讓這一回合領不到", () => {
     const ctl = new MatchController(
