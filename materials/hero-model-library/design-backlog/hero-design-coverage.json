@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-10T19:18:07.067809+00:00",
+  "generatedAt": "2026-09-10T20:06:36.304208+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
-  "revision": "b5fd4fd0bbd5f10cdf37692408d1c2980f49f301",
+  "revision": "b4369aad3c3dde9a497315362988094233ffa67a",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "6c32824f2fee5cd797773b9686d785da207586209f2c9f2f4015947d3edb97a1",
-      "bytes": 4583606
+      "sha256": "fbf7b4903e3795030d5c19c51f78d3c928d83bd350f0fc12c743e46f67580c7d",
+      "bytes": 4986560
     },
     {
       "path": "package.json",
@@ -14522,8 +14522,8 @@
     }
   ],
   "sourceReport": {
-    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/palworld-material-integration-20260911/hero-design-coverage-full.json",
-    "sha256": "83856a54e81ac83ee250c2ed374b6df2993a988149484c892a52b58868762745"
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/hero-design-coverage-final.json",
+    "sha256": "6f2901c945fa14903b93459efaeab45af3ee0ac840de6d9f26ebe8cdb96f274e"
   },
   "heroes": [
     {

@@ -5853,11 +5853,159 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
+    },
+    {
+      "id": "dai-shinteo-v2-sword-handheld-256-v1",
+      "sourceId": "patreon-shinteo-dai-daz-v2",
+      "nameZh": "達伊之劍（手持獨立元件）",
+      "characterName": "小呆／達伊",
+      "originalName": "Sword of Dai",
+      "workZh": "勇者鬥惡龍 達伊的大冒險",
+      "sourceUrl": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+      "author": "Shinteo",
+      "sourceClass": "community-mod-adaptation",
+      "sourceGame": "JUMP FORCE folder-labelled Daz adaptation; original-game extraction fidelity unverified",
+      "sourceVersion": "Shinteo Daz V2 / 2022-05-20",
+      "platform": "Daz Studio G8M/G8.1M adaptation; prop geometry has no body dependency",
+      "resourceRole": "weapon-prop",
+      "assetKinds": [
+        "model-component",
+        "weapon",
+        "texture"
+      ],
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/handheld/component.glb",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/handheld/component.glb",
+      "bytes": 732280,
+      "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
+      "gitPath": "content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
+      "s3Uri": null,
+      "sourceArchiveSha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [
+        "godie-nbbc"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "fullCharacterBodyCount": 0,
+      "triangles": 1854,
+      "drawPrimitives": 2,
+      "embeddedImages": 7,
+      "textureMaxEdge": 256,
+      "readiness": "accepted-weapon-prop-pending-hero-attachment",
+      "limitations": [
+        "Daz Iray layered gloss is represented using supported glTF PBR + KHR_materials_specular; exact source shader parity remains unverified.",
+        "Source has no explicit normals; source Smooth Angle is used to reconstruct normals. Tangent-space normal parity still requires an independent Daz render comparison.",
+        "Native pivot and metric scale preserved; fitting/attaching to a GGD character has not been performed.",
+        "No full character body, humanoid skeleton, native animation, VFX, audio, hero binding or default model included."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/delivery.json",
+        "bytes": 8344,
+        "sha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/acceptance.json",
+        "bytes": 2322,
+        "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
+        "bytes": 9517,
+        "sha256": "e055e6ff82a9c0c2fb3791a4633ce18a68e28b0b7f8d19e07586ee43e13d1c5d"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
+        "bytes": 4673,
+        "sha256": "178435cf6f396a6b2c5dc3ec109eec66534ee3bb92124530d679f09adc3e8c5e"
+      },
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb"
+    },
+    {
+      "id": "dai-shinteo-v2-sword-back-256-v1",
+      "sourceId": "patreon-shinteo-dai-daz-v2",
+      "nameZh": "達伊之劍（背劍獨立元件）",
+      "characterName": "小呆／達伊",
+      "originalName": "Sword of Dai Back",
+      "workZh": "勇者鬥惡龍 達伊的大冒險",
+      "sourceUrl": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+      "author": "Shinteo",
+      "sourceClass": "community-mod-adaptation",
+      "sourceGame": "JUMP FORCE folder-labelled Daz adaptation; original-game extraction fidelity unverified",
+      "sourceVersion": "Shinteo Daz V2 / 2022-05-20",
+      "platform": "Daz Studio G8M/G8.1M adaptation; prop geometry has no body dependency",
+      "resourceRole": "weapon-prop",
+      "assetKinds": [
+        "model-component",
+        "weapon",
+        "texture"
+      ],
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/back/component.glb",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/back/component.glb",
+      "bytes": 732224,
+      "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
+      "gitPath": "content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
+      "s3Uri": null,
+      "sourceArchiveSha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [
+        "godie-nbbc"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "fullCharacterBodyCount": 0,
+      "triangles": 1854,
+      "drawPrimitives": 2,
+      "embeddedImages": 7,
+      "textureMaxEdge": 256,
+      "readiness": "accepted-weapon-prop-pending-hero-attachment",
+      "limitations": [
+        "Daz Iray layered gloss is represented using supported glTF PBR + KHR_materials_specular; exact source shader parity remains unverified.",
+        "Source has no explicit normals; source Smooth Angle is used to reconstruct normals. Tangent-space normal parity still requires an independent Daz render comparison.",
+        "Native pivot and metric scale preserved; fitting/attaching to a GGD character has not been performed.",
+        "No full character body, humanoid skeleton, native animation, VFX, audio, hero binding or default model included."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/delivery.json",
+        "bytes": 8344,
+        "sha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/acceptance.json",
+        "bytes": 2322,
+        "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-validation.json",
+        "bytes": 9505,
+        "sha256": "0bd61eabad6556a2f2df918a3f728b062da07935267e37a6018556cf5374c6ba"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
+        "bytes": 4632,
+        "sha256": "e792be2a42dcd1df3da59acdf6a510002352335bd84b2376aec432dc9dd074cb"
+      },
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb"
     }
   ],
-  "modelComponentCount": 3,
+  "modelComponentCount": 5,
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "be9fbf0fea2e046f3950497762754861910a346df9a87c2e9bac646ad7f9f1b5"
+    "sha256": "1a2fae75ab06179ea6cc99dd0ec6de035a0962f0fd0918bee54e8e2cbe43cf4a"
+  },
+  "modelComponentSourceIndex": {
+    "gitPath": "materials/hero-model-library/download-sources.json",
+    "sha256": "4ac64aaf6cc28eb4d56e03cbb6c85c11a81587c6413e61813de380e79d2026c6"
   }
 }

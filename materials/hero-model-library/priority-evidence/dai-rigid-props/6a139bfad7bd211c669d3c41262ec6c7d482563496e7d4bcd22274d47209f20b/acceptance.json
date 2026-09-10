@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-weapon-component-acceptance@1",
+  "deliverySha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b",
+  "components": [
+    {
+      "id": "dai-shinteo-v2-sword-handheld-256-v1",
+      "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
+      "accepted": true,
+      "scope": "independent-weapon-prop"
+    },
+    {
+      "id": "dai-shinteo-v2-sword-back-256-v1",
+      "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
+      "accepted": true,
+      "scope": "independent-weapon-prop"
+    }
+  ],
+  "reviewedBy": "Codex parent integration visual review",
+  "observations": [
+    "Handheld front and back show complete blade, guard, grip and red details.",
+    "Back face-a shows complete sword; the isometric screenshot crops the tip slightly, so completeness is judged from face-a and source geometry validation.",
+    "Accepted only as independent weapon props at source pivot/scale. No full body, character attachment, original Daz shader parity, native animations, runtime option or deployment accepted."
+  ],
+  "proofs": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/evidence/webgl-handheld-256-r2/face-a.png",
+      "sha256": "e1aee010ff83cfed150ff24be3cc1668e8f99f432a9aca8c324fe2ac11f65f5e"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/evidence/webgl-handheld-256-r2/face-b.png",
+      "sha256": "6787da6fe1b879721775729306b0e28996095330c8dd11ec3fb6a312693c7139"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/evidence/webgl-back-256/face-a.png",
+      "sha256": "f83ac85eb7088c7a6b109c6b0cb4df4956faa7b30d0cc1b0a19e51c25d050011"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/evidence/webgl-back-256/isometric.png",
+      "sha256": "98b942b2216b7fe242b2d1dafe40d915fd984ec812bf65efd6d66beb1186c061"
+    }
+  ]
+}

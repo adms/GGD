@@ -12362,7 +12362,7 @@
     },
     {
       "id": "parallel-ps-jumpforce-audio:JForce_Dai",
-      "name": "Dai / 達伊",
+      "name": "小呆／達伊 / Dai",
       "library": "公開來源",
       "sourceId": "parallel-ps-jumpforce-audio",
       "heroIds": [],
@@ -41882,6 +41882,258 @@
       "categoryCounts": {
         "sound-effect": 6
       }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
+      "name": "卡爾瑟斯 / Karthus.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:karthus",
+        "lol-karthus"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 225,
+      "bytes": 311303080,
+      "knownDurationSeconds": 1102.4895918367351,
+      "durationMeasuredFiles": 225,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 225
+      }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-leesin-ja-jp-16-18-8159717",
+      "name": "李星 / LeeSin.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:leesin",
+        "lol-leesin"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1069,
+      "bytes": 1603331104,
+      "knownDurationSeconds": 4757.531111111111,
+      "durationMeasuredFiles": 1069,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1069
+      }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-lux-ja-jp-16-18-8159717",
+      "name": "拉克絲 / Lux.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:lux",
+        "lol-lux"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1142,
+      "bytes": 954512456,
+      "knownDurationSeconds": 3473.1046712018183,
+      "durationMeasuredFiles": 1142,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1142
+      }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-missfortune-ja-jp-16-18-8159717",
+      "name": "好運姐 / MissFortune.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:missfortune",
+        "lol-missfortune"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 695,
+      "bytes": 563086756,
+      "knownDurationSeconds": 2130.2731972789097,
+      "durationMeasuredFiles": 695,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 695
+      }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-warwick-ja-jp-16-18-8159717",
+      "name": "沃維克 / Warwick.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:warwick",
+        "lol-warwick"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 531,
+      "bytes": 648887568,
+      "knownDurationSeconds": 1848.2423303571418,
+      "durationMeasuredFiles": 531,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 531
+      }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717",
+      "name": "齊勒斯 / Xerath.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:xerath",
+        "lol-xerath"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 223,
+      "bytes": 261625636,
+      "knownDurationSeconds": 1060.2127210884355,
+      "durationMeasuredFiles": 223,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 223
+      }
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717:lol-yasuo-ja-jp-16-18-8159717",
+      "name": "犽宿 / Yasuo.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "heroIds": [
+        "example:yasuo",
+        "lol-yasuo"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1042,
+      "bytes": 1087126480,
+      "knownDurationSeconds": 4239.575510204076,
+      "durationMeasuredFiles": 1042,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-project-seven-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1042
+      }
     }
   ],
   "backups": {
@@ -42524,16 +42776,30 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:lol-project-seven-ja-jp-16.18.8159717": {
+      "type": "tar-gzip",
+      "localArchive": "GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/lol-project-seven-scoped-16.18.8159717.tar.gz",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.tar.gz",
+      "bytes": 5895452534,
+      "sha256": "8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc",
+      "readbackVerified": false,
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+      "localUseAvailable": true,
+      "publicationStatus": "local-verified-s3-pending"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "69b2fc18ce61295727bf40a8b34d6d46cafdc925f3505e29a6aa7b3e852a6609"
+      "sha256": "4ac64aaf6cc28eb4d56e03cbb6c85c11a81587c6413e61813de380e79d2026c6"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "d306d5fba4bb474057d6f19b9ec9b22e6f99043020002afbf9fd1e3515f02736"
+      "sha256": "26cbd70f0c18492b9939cb20f665c04c4633c6f00fdd530f52d9032187cdf82f"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -42898,6 +43164,14 @@
     {
       "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/audio-index.json",
       "sha256": "da05773ac9b055ab640aa0587b39b9f859450ed5a4f64e0ee2251115df19b3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z-project-seven.json",
+      "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z-project-seven.json",
+      "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
@@ -93499,15 +93773,19 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 969,
-    "audioFiles": 278994,
-    "bytes": 132954450061,
+    "groups": 976,
+    "audioFiles": 283921,
+    "bytes": 138384323141,
+    "sourceFileRelationshipRows": 283921,
+    "uniqueLocalPaths": 283473,
+    "uniqueSha256Payloads": 251608,
+    "uniqueLocalPathBytes": 137811394425,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "a14cee2613236d164da513a783d90e630161ae9c200fa070128072563b21f995",
-  "uncompressedFileManifestSha256": "4053c358e4eaec54a591ef3e2a18ce6d5fd617dd96d96913f21dbec78def03fa"
+  "sourceFileManifestSha256": "eda4aafeefcd5f4ef529e7c53ffac13e03ea445becf1179e81a5ce37185df966",
+  "uncompressedFileManifestSha256": "f0b4fbc23e9b1d2297603b0a8e28b1bd781f812faefca887fbc9e787f9c2ca3b"
 }

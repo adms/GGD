@@ -122,6 +122,48 @@ def primary_audio(archived, declared=None, formats=None):
     return [f for f in selected if Path(f['path']).suffix.lower() in allowed]
 
 
+def primary_audio_relationships(files):
+    """One path can retain multiple source groups without shadowing an old alias."""
+    result = {}
+    for row in files:
+        key = (row['path'], row['groupId'])
+        previous = result.get(key)
+        if previous is not None and (previous['sha256'], previous['bytes']) != (row['sha256'], row['bytes']):
+            raise ValueError('Conflicting audio bytes for path/group: ' + repr(key))
+        result.setdefault(key, row)
+    return result
+
+
+def verify_prefetch_alias(row, primary_by_relationship):
+    """Require the exact original group and content, not another source's copy."""
+    key = (row['path'], row['groupId'])
+    target = primary_by_relationship.get(key)
+    if target is None:
+        raise ValueError('Prefetch alias has no primary path/group: ' + repr(key))
+    if (target['sha256'], target['bytes']) != (row['sha256'], row['bytes']):
+        raise ValueError('Prefetch alias bytes differ from primary path/group: ' + repr(key))
+    if not all(row.get(field) is True for field in (
+        'byteExactPrefixVerified', 'completeRiffLengthVerified', 'alreadyCountedPrimaryAudio'
+    )):
+        raise ValueError('Prefetch alias lacks complete verification: ' + repr(key))
+    return target
+
+
+def audio_file_counts(files):
+    """Preserve provenance-row totals while separately counting local files."""
+    paths = {}
+    for row in files:
+        payload = (row['sha256'], row['bytes'])
+        previous = paths.get(row['path'])
+        if previous is not None and previous != payload:
+            raise ValueError('Conflicting indexed content for local audio path: ' + row['path'])
+        paths[row['path']] = payload
+    return dict(audioFiles=len(files), bytes=sum(row['bytes'] for row in files),
+                sourceFileRelationshipRows=len(files), uniqueLocalPaths=len(paths),
+                uniqueSha256Payloads=len({row['sha256'] for row in files}),
+                uniqueLocalPathBytes=sum(payload[1] for payload in paths.values()))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=REPO.parent)
@@ -373,7 +415,7 @@ def main():
                 if field in (part or {}):g[field]=part[field]
 
     prefetch_aliases=[]
-    primary_by_path={f['path']:f for f in files}
+    primary_by_relationship=primary_audio_relationships(files)
     for source in downloads.get('publicSources',[])+downloads.get('paidSources',[]):
         spec=source.get('audioPrefetchResolution')
         if not spec:continue
@@ -381,9 +423,7 @@ def main():
         assert path.is_relative_to(OUT.resolve()) and sha(path)==spec['reportSha256']
         resolution=read(path);assert resolution['sourceId']==source['id'] and resolution['newAudioFiles']==0
         for row in resolution['records']:
-            target=primary_by_path[row['path']]
-            assert (target['sha256'],target['bytes'],target['groupId'])==(row['sha256'],row['bytes'],row['groupId'])
-            assert row['byteExactPrefixVerified'] and row['completeRiffLengthVerified'] and row['alreadyCountedPrimaryAudio']
+            verify_prefetch_alias(row,primary_by_relationship)
             prefetch_aliases.append(row)
 
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
@@ -395,6 +435,7 @@ def main():
     for f in files:categories[f['groupId']][f['category']]+=1
     for key,g in groups.items():g['categoryCounts']=dict(categories[key])
 
+    counts=audio_file_counts(files)
     summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl.gz',
         sourceFileEncoding='gzip',localUncompressedFileManifest='voice-files.jsonl',
         localWorkspace=str(ws),localUseRequiresS3=False,
@@ -406,7 +447,7 @@ def main():
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
             convertedAudioMustKeepSourceHash=True,generatedAudioMustBeLabeledSynthetic=True),
-        summary=dict(groups=len(groups),audioFiles=len(files),bytes=sum(f['bytes'] for f in files),
+        summary=dict(groups=len(groups),**counts,
             missingOrSizeChanged=sum(not f['localSizeVerified'] for f in files),
             confirmedVoiceCount=None,synthesisReadyGroups=0,
             alternateFormatFiles=sum(len(s['files']) for s in alternate_audio),prefetchAliases=len(prefetch_aliases)))
@@ -424,7 +465,8 @@ def main():
         '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
         'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
         f'LoL 已核對 {len(prefetch_aliases)} 個 BNK 預載片段，逐位元組前綴與 RIFF 完整長度均對應同角色 WPK 的完整音訊。`prefetchAliases` 指向已計入的主要 WAV、完整 WEM 及原片段；查詢回傳三者本機路徑。原片段與失敗報告保留，不補零、不改 RIFF 標頭，也不另算新音訊。', '',
-        f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
+        f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{counts["sourceFileRelationshipRows"]:,} 筆來源與檔案關係、{counts["uniqueLocalPaths"]:,} 個不同本機檔案路徑、{counts["uniqueSha256Payloads"]:,} 份不同 SHA-256 內容**。不同本機路徑的檔案大小合計 {counts["uniqueLocalPathBytes"]:,} bytes。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；以上均**不是已確認角色語音數**。同一路徑可保留原來源及指定角色子集的多筆關係，不能把新增來源關係當成新增音檔。', '',
+        '相容欄位 `summary.audioFiles` 與 `summary.bytes` 仍依逐列來源關係加總；去重取檔請使用 `uniqueLocalPaths`／`uniqueLocalPathBytes`，內容去重數見 `uniqueSha256Payloads`。這些數字只涵蓋主要可播放音訊清單，原始容器、舊備份及診斷 PCM16 仍另外保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
         '原始及待聽審音訊存 S3 `legacy/` 並全留本機；索引、SHA-256、轉錄設定與程式進 Git，驗收成品依第三守則進 Git。這份索引不改變 `legacy/` 的人工指定用途規則；其他工作流不得將整個備份自動匯入正式遊戲。', '',
@@ -443,7 +485,7 @@ def main():
         '逐檔例：python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json',
         '保留原檔；新產出的音訊、逐字稿與合成設定另存，附 source hash、來源角色與 synthetic 標記。',
         '```','', '## 角色與來源分組','',
-        '| 角色／資源組 | 來源 ID／GGD 對應 | 可播放檔數 | 語音判定 | 取檔入口 |','|---|---|---:|---|---|']
+        '| 角色／資源組 | 來源 ID／GGD 對應 | 本組檔案關係數 | 語音判定 | 取檔入口 |','|---|---|---:|---|---|']
     for g in groups.values():
         ids='、'.join(g['heroIds']) or '未綁 GGD ID／共用'
         status=('含合成播報的混合來源；排除語音輸入' if g.get('sourceContainsSynthetic') is True else

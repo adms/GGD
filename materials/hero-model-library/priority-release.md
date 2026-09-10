@@ -2,6 +2,10 @@
 
 **Main 優先合併 81 名（37＋37＋7）**：逐角色成品與缺口請讀 [81英雄優先合併清單.md](81英雄優先合併清單.md)，程序讀 [priority-81-handoff.json](priority-81-handoff.json)。所有角色仍列於 [全角色模型盤點.md](全角色模型盤點.md)。
 
+最新批次新增達伊兩件獨立劍元件，並把既有七名 LOL 的 4,927 個 WAV 納入中央語音索引。兩件劍具有各自的完整幾何、貼圖、Git SHA 路徑及驗收收據，尚未配適英雄；來源為 Shinteo 社群 Daz 改作，不是 Infinity Strash 原生模型。中央 `modelComponents` 現有帕魯三件與武器兩件，共五件；不併入完整英雄可切換版本數。七名音訊新增 4,927 筆來源關係，但 448 路徑已有舊來源，所以新增可查詢路徑為 4,479 個。固定逐檔 SHA 和本機路徑可立即供聽審；沒有新增遊戲音訊、原生動作或特效成品。[本批範圍、限制及證據](priority-evidence/seven-audio-dai-20260911/README.md)。
+
+本批備份按中央 `public-source-files.json` 分為已完整讀回的 `sources` 與待讀回的 `pendingUploads`；音訊封存上傳成功尚不代表完成 S3 驗證。原始材料、中間階段、工具與依賴全部保留本機，完整讀回後以相同來源及 SHA 補收據，不覆蓋原始來源或其他版本。
+
 帕魯材質批次新增空渦龍、枯星龍、搗蛋貓三份 256px Git 模型元件，中央入口為 `current-resources.json → modelComponents`。本批七個材質版本與原有十五個來源／修正版全部保留，共二十二版；四份轉換備份的 433 個成員已與本機保存的完整 S3 讀回檔逐檔核對。空渦龍元件有 29 條動作條目／28 種不同內容，搗蛋貓 33 條；枯星龍元件只有 Idle／Walk，完整 58 條目版仍為儲備。尚未建立三角色的 GGD 英雄定義、六態綁定或後台選項；本批新增音效、語音與特效成品均為零。模型與三份可檢視的預覽見 [帕魯索引](palworld/帕魯三角色素材索引.md) 及 [預覽核對](priority-evidence/palworld-materials/preview-verification.json)。
 
 此批亦防止兩種誤發布：轉換整合須通過固定模型與現行契約雜湊驗證，中央索引發布檢查須核對實際 Git blob，不能只因本機有檔而通過。二十七項針對性測試及六项索引／成品檢查通過；全專案三項要求檢查仍有失敗，精確命令、日誌雜湊與原因見 [本批驗證](priority-evidence/palworld-materials/validation.json)。
@@ -16,7 +20,7 @@
 
 合併另外修復 JPEG 縮圖後 MIME 不符，以及移除零長動畫後可能選错片段；既有 36 項相關測試通過；另修復 ffmpeg PNG 縮圖的 0:1 像素比例，兩個真實縮圖回歸案例驗證修正前失败、修正後通過，RGB 像素不變。固定來源索引同步 Main 已正規化模型，原取得 SHA 仍釘選至原 Git commit，沒有重寫原始收據或凍結版本。
 
-發布完整檢查以 [本批驗證](priority-evidence/palworld-materials/validation.json) 為準；[前批驗證](priority-evidence/dai-vearn-20260911/validation.json) 及歷史日誌保留，不代表目前全部通過。這是 **分支交付**，尚待 Main 審查合併與部署。
+發布完整檢查以 [最新批次驗證](priority-evidence/seven-audio-dai-20260911/validation.json) 為準；[帕魯批次](priority-evidence/palworld-materials/validation.json)、[達伊前批驗證](priority-evidence/dai-vearn-20260911/validation.json) 及歷史日誌保留，不代表目前全部通過。這是 **分支交付**，尚待 Main 審查合併與部署。
 
 本工作流負責轉換、驗收、版本及中央索引；來源工作流負責取得與初步分析，Main 負責審查合併及部署。成品、程式、設定、索引和文件進 Git；原始與半成品進 S3 `legacy/`，本機全保留。未做 S3 讀回的原包仍為待備份，不以本次 Git 推送宣稱完成。
 

@@ -1,0 +1,7 @@
+{
+  "observedAt": "2026-09-10T19:59:39.994541+00:00",
+  "phase": "uploaded-full-get-in-progress",
+  "putObjectCompleted": true,
+  "fullGetVerified": false,
+  "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
+}

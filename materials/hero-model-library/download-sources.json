@@ -5548,7 +5548,7 @@
         },
         {
           "id": "JForce_Dai",
-          "name": "Dai / 達伊",
+          "name": "小呆／達伊 / Dai",
           "heroIds": [],
           "pathPrefixes": [
             "extracted/JForce_Dai/"
@@ -40606,7 +40606,701 @@
         "sourceFiles": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/archive-manifest.json",
         "audio": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/dai/audio-index.json"
       },
-      "verification": "117 原始檔 CRC 全通過；2 個 Daz 人物預設、14 DSF 服裝／頭髮／武器部件、35 JPG 貼圖、22 PNG 預覽。缺 Genesis 8／8.1 男性人體基底，完整獨立本體0；動作、音訊、獨立特效均0。135 檔封存完整 GET 與逐檔 SHA 全通過。"
+      "verification": "117 原始檔 CRC 全通過；2 個 Daz 人物預設、14 DSF 服裝／頭髮／武器部件、35 JPG 貼圖、22 PNG 預覽。缺 Genesis 8／8.1 男性人體基底，完整獨立本體0；動作、音訊、獨立特效均0。135 檔封存完整 GET 與逐檔 SHA 全通過。",
+      "componentCandidates": [
+        {
+          "id": "dai-shinteo-v2-sword-handheld-256-v1",
+          "sourceId": "patreon-shinteo-dai-daz-v2",
+          "nameZh": "達伊之劍（手持獨立元件）",
+          "characterName": "小呆／達伊",
+          "originalName": "Sword of Dai",
+          "workZh": "勇者鬥惡龍 達伊的大冒險",
+          "sourceUrl": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+          "author": "Shinteo",
+          "sourceClass": "community-mod-adaptation",
+          "sourceGame": "JUMP FORCE folder-labelled Daz adaptation; original-game extraction fidelity unverified",
+          "sourceVersion": "Shinteo Daz V2 / 2022-05-20",
+          "platform": "Daz Studio G8M/G8.1M adaptation; prop geometry has no body dependency",
+          "resourceRole": "weapon-prop",
+          "assetKinds": [
+            "model-component",
+            "weapon",
+            "texture"
+          ],
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/handheld/component.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/handheld/component.glb",
+          "bytes": 732280,
+          "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
+          "gitPath": "content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
+          "s3Uri": null,
+          "sourceArchiveSha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [
+            "godie-nbbc"
+          ],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "fullCharacterBodyCount": 0,
+          "triangles": 1854,
+          "drawPrimitives": 2,
+          "embeddedImages": 7,
+          "textureMaxEdge": 256,
+          "readiness": "accepted-weapon-prop-pending-hero-attachment",
+          "limitations": [
+            "Daz Iray layered gloss is represented using supported glTF PBR + KHR_materials_specular; exact source shader parity remains unverified.",
+            "Source has no explicit normals; source Smooth Angle is used to reconstruct normals. Tangent-space normal parity still requires an independent Daz render comparison.",
+            "Native pivot and metric scale preserved; fitting/attaching to a GGD character has not been performed.",
+            "No full character body, humanoid skeleton, native animation, VFX, audio, hero binding or default model included."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/delivery.json",
+            "bytes": 8344,
+            "sha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/acceptance.json",
+            "bytes": 2322,
+            "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
+            "bytes": 9517,
+            "sha256": "e055e6ff82a9c0c2fb3791a4633ce18a68e28b0b7f8d19e07586ee43e13d1c5d"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
+            "bytes": 4673,
+            "sha256": "178435cf6f396a6b2c5dc3ec109eec66534ee3bb92124530d679f09adc3e8c5e"
+          }
+        },
+        {
+          "id": "dai-shinteo-v2-sword-back-256-v1",
+          "sourceId": "patreon-shinteo-dai-daz-v2",
+          "nameZh": "達伊之劍（背劍獨立元件）",
+          "characterName": "小呆／達伊",
+          "originalName": "Sword of Dai Back",
+          "workZh": "勇者鬥惡龍 達伊的大冒險",
+          "sourceUrl": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+          "author": "Shinteo",
+          "sourceClass": "community-mod-adaptation",
+          "sourceGame": "JUMP FORCE folder-labelled Daz adaptation; original-game extraction fidelity unverified",
+          "sourceVersion": "Shinteo Daz V2 / 2022-05-20",
+          "platform": "Daz Studio G8M/G8.1M adaptation; prop geometry has no body dependency",
+          "resourceRole": "weapon-prop",
+          "assetKinds": [
+            "model-component",
+            "weapon",
+            "texture"
+          ],
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/back/component.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/back/component.glb",
+          "bytes": 732224,
+          "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
+          "gitPath": "content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
+          "s3Uri": null,
+          "sourceArchiveSha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [
+            "godie-nbbc"
+          ],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "fullCharacterBodyCount": 0,
+          "triangles": 1854,
+          "drawPrimitives": 2,
+          "embeddedImages": 7,
+          "textureMaxEdge": 256,
+          "readiness": "accepted-weapon-prop-pending-hero-attachment",
+          "limitations": [
+            "Daz Iray layered gloss is represented using supported glTF PBR + KHR_materials_specular; exact source shader parity remains unverified.",
+            "Source has no explicit normals; source Smooth Angle is used to reconstruct normals. Tangent-space normal parity still requires an independent Daz render comparison.",
+            "Native pivot and metric scale preserved; fitting/attaching to a GGD character has not been performed.",
+            "No full character body, humanoid skeleton, native animation, VFX, audio, hero binding or default model included."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/delivery.json",
+            "bytes": 8344,
+            "sha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/acceptance.json",
+            "bytes": 2322,
+            "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-validation.json",
+            "bytes": 9505,
+            "sha256": "0bd61eabad6556a2f2df918a3f728b062da07935267e37a6018556cf5374c6ba"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
+            "bytes": 4632,
+            "sha256": "e792be2a42dcd1df3da59acdf6a510002352335bd84b2376aec432dc9dd074cb"
+          }
+        }
+      ],
+      "pendingSupplementalDeliveries": [
+        {
+          "id": "dai-rigid-props-20260911-v1",
+          "sourceId": "patreon-shinteo-dai-daz-v2",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/7542bc73c498ee968320584729f4125cc2d05da786a0a74bab20810abe1423ef/source.tar.gz",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/dai-rigid-props-20260911-v1/1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5.tar.gz",
+          "bytes": 149943607,
+          "sha256": "1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5",
+          "fileCount": 185,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": false,
+          "fullReadbackVerified": false,
+          "s3ReadbackVerified": false,
+          "localArchiveReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/7542bc73c498ee968320584729f4125cc2d05da786a0a74bab20810abe1423ef/manifest.json",
+          "manifestSha256": "d79a4a1ef3dd745db94726461ddb035215116be1bd366db095e4340ad7eeca97",
+          "s3Use": "backup-only-not-runtime-entry",
+          "publicationStatus": "remote-full-readback-pending"
+        }
+      ]
+    },
+    {
+      "id": "lol-project-seven-ja-jp-16.18.8159717",
+      "target": "LOL 專案指定七名官方日文音訊／16.18.8159717（既有本機儲備整合）",
+      "heroIds": [
+        "example:karthus",
+        "lol-karthus",
+        "example:leesin",
+        "lol-leesin",
+        "example:lux",
+        "lol-lux",
+        "example:missfortune",
+        "lol-missfortune",
+        "example:warwick",
+        "lol-warwick",
+        "example:xerath",
+        "lol-xerath",
+        "example:yasuo",
+        "lol-yasuo"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "uploader": "Riot Games; official public patch CDN",
+      "author": "Riot Games; official public patch CDN",
+      "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+      "purchaseDecision": "no-purchase-existing-local-audio",
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+      "sourceGame": "League of Legends",
+      "sourceWork": "英雄聯盟 League of Legends",
+      "platform": "macOS / Windows shared official content release",
+      "selectionClass": "canonical-game",
+      "sourceClass": "canonical-game",
+      "discoveryChannel": "official-public-patch-cdn",
+      "assetKinds": [
+        "audio",
+        "voice-candidate",
+        "sound-effect-candidate"
+      ],
+      "audioFileIndex": {
+        "reportPath": "deliveries/local-audio-delivery-20260910T142545872117Z-project-seven.json",
+        "reportSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda"
+      },
+      "audioGroups": [
+        {
+          "id": "lol-karthus-ja-jp-16-18-8159717",
+          "name": "卡爾瑟斯 / Karthus.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:karthus",
+            "lol-karthus"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/Karthus.ja_JP/wav/"
+          ],
+          "nativeId": "Karthus.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 225,
+          "filesWithSamplesAboveUnity": 51
+        },
+        {
+          "id": "lol-leesin-ja-jp-16-18-8159717",
+          "name": "李星 / LeeSin.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:leesin",
+            "lol-leesin"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/LeeSin.ja_JP/wav/"
+          ],
+          "nativeId": "LeeSin.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 1069,
+          "filesWithSamplesAboveUnity": 399
+        },
+        {
+          "id": "lol-lux-ja-jp-16-18-8159717",
+          "name": "拉克絲 / Lux.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:lux",
+            "lol-lux"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/Lux.ja_JP/wav/"
+          ],
+          "nativeId": "Lux.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 1142,
+          "filesWithSamplesAboveUnity": 689
+        },
+        {
+          "id": "lol-missfortune-ja-jp-16-18-8159717",
+          "name": "好運姐 / MissFortune.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:missfortune",
+            "lol-missfortune"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/MissFortune.ja_JP/wav/"
+          ],
+          "nativeId": "MissFortune.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 695,
+          "filesWithSamplesAboveUnity": 248
+        },
+        {
+          "id": "lol-warwick-ja-jp-16-18-8159717",
+          "name": "沃維克 / Warwick.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:warwick",
+            "lol-warwick"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/Warwick.ja_JP/wav/"
+          ],
+          "nativeId": "Warwick.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 531,
+          "filesWithSamplesAboveUnity": 194
+        },
+        {
+          "id": "lol-xerath-ja-jp-16-18-8159717",
+          "name": "齊勒斯 / Xerath.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:xerath",
+            "lol-xerath"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/Xerath.ja_JP/wav/"
+          ],
+          "nativeId": "Xerath.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 223,
+          "filesWithSamplesAboveUnity": 78
+        },
+        {
+          "id": "lol-yasuo-ja-jp-16-18-8159717",
+          "name": "犽宿 / Yasuo.ja_JP / 官方日文來源包（逐段待聽審）",
+          "heroIds": [
+            "example:yasuo",
+            "lol-yasuo"
+          ],
+          "pathPrefixes": [
+            "audio/decoded/Yasuo.ja_JP/wav/"
+          ],
+          "nativeId": "Yasuo.ja_JP",
+          "sourceWork": "英雄聯盟 League of Legends",
+          "reportedLanguage": "ja_JP",
+          "audioCategory": "unclassified",
+          "sourceIsSynthetic": false,
+          "languageVerified": false,
+          "speakerVerified": false,
+          "eventBindingsVerified": false,
+          "synthesisReady": false,
+          "pcmWavCount": 1042,
+          "filesWithSamplesAboveUnity": 605
+        }
+      ],
+      "audioAcquisition": {
+        "completeWads": 7,
+        "completeAudioWads": 7,
+        "nonAudioWads": 0,
+        "pcmWavCount": 4927,
+        "audioSeconds": 18611.429133078203,
+        "audioBytes": 5429873080,
+        "nativeWemFiles": 4927,
+        "nativeBanks": 113,
+        "filesWithSamplesAboveUnity": 2264,
+        "confirmedVoiceCount": null,
+        "synthesisReadyGroups": 0,
+        "exactPcm16Recoveries": 0,
+        "packagesWithUnresolvedErrors": 0
+      },
+      "audioCategory": "unclassified",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot 官方 release manifest 明列 ja_JP；逐段語言、說話者、戰鬥事件仍待聽審核實。",
+      "sourceIsSynthetic": false,
+      "patchVersion": "16.18.8159717+branch.releases-16-18.content.release.cpuarch.any.platform.macos-windows",
+      "releaseId": "7CAC3C60C863BF12",
+      "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+      "publicationStatus": "local-verified-s3-pending",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-audio-review",
+        "heroIds": [
+          "example:karthus",
+          "lol-karthus",
+          "example:leesin",
+          "lol-leesin",
+          "example:lux",
+          "lol-lux",
+          "example:missfortune",
+          "lol-missfortune",
+          "example:warwick",
+          "lol-warwick",
+          "example:xerath",
+          "lol-xerath",
+          "example:yasuo",
+          "lol-yasuo"
+        ],
+        "release": null,
+        "selectionVerified": false
+      },
+      "sourceRelationship": {
+        "retainsSourceId": "lol-riot-ja-jp-16.18.8159717",
+        "relation": "project-seven-subset-delivery-from-shared-local-intake",
+        "countsAsNewAcquisition": false,
+        "centralPreviouslyIndexedMatchingAudioPaths": 448,
+        "additionalUniqueCentralAudioPaths": 4479,
+        "duplicateSharedPathsRemainProvenanceRecords": true
+      },
+      "sourceContainers": [
+        {
+          "nativeId": "Karthus.ja_JP",
+          "sourceWad": "original-wads/Karthus.ja_JP.wad.client",
+          "bytes": 11550735,
+          "sha256": "2df91dd179c3ef23221b443319bfda4ff6472c003df10ec1bdc6f2fdea4fcdb2",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Karthus.ja_JP/extraction.json",
+          "extractionReportSha256": "149d5b3c91b523efc16d09599eee84cd03d7be39008f8351e3c5b02479093774",
+          "decodingReport": "audio/decoded/Karthus.ja_JP/decoding.json",
+          "decodingReportSha256": "b02b3bdf8d551cbccfd4ff4b49c5d8ea28eac28420f5e362d2817a83f4267c31",
+          "nativeAudioBanks": 9,
+          "wemFiles": 225,
+          "pcmWavCount": 225,
+          "audioSeconds": 1102.4895918367351,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "LeeSin.ja_JP",
+          "sourceWad": "original-wads/LeeSin.ja_JP.wad.client",
+          "bytes": 51174709,
+          "sha256": "8d76a9b90e941135a59b2ff9c3a805cc73580b1e6d8e7ba17e24120292257ef3",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/LeeSin.ja_JP/extraction.json",
+          "extractionReportSha256": "7bdf6cbc113e6ec1092bc61cb081bd60e667c8a322b7555ca7cc4eb172e35d33",
+          "decodingReport": "audio/decoded/LeeSin.ja_JP/decoding.json",
+          "decodingReportSha256": "a4e9e2836131cdd755919e756c8cfb792f45a44e93e1105fc80ec319b85bf2de",
+          "nativeAudioBanks": 24,
+          "wemFiles": 1069,
+          "pcmWavCount": 1069,
+          "audioSeconds": 4757.531111111111,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Lux.ja_JP",
+          "sourceWad": "original-wads/Lux.ja_JP.wad.client",
+          "bytes": 35695778,
+          "sha256": "4c40d659dc32937835aeabd0dd10e7b08660430a5b2304b92fa54f96387f2ca9",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Lux.ja_JP/extraction.json",
+          "extractionReportSha256": "8d2a5d7088ee91a46fa81a505e9b9a400d7dcea96d28e11799fd82714bffbc5a",
+          "decodingReport": "audio/decoded/Lux.ja_JP/decoding.json",
+          "decodingReportSha256": "843a718ad7d990bba98ed7c45aba60b70a92d34e18537d9bc3078150de24e8f1",
+          "nativeAudioBanks": 18,
+          "wemFiles": 1142,
+          "pcmWavCount": 1142,
+          "audioSeconds": 3473.1046712018183,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "MissFortune.ja_JP",
+          "sourceWad": "original-wads/MissFortune.ja_JP.wad.client",
+          "bytes": 20707176,
+          "sha256": "00377249616a0f1021c4d56eee9ab2ed214fb88138c82ed0ffc55fc03f5a6da6",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/MissFortune.ja_JP/extraction.json",
+          "extractionReportSha256": "05bb1b20bcc4db54f4c7792c064fc21359611831ab104c856c73e79324618e12",
+          "decodingReport": "audio/decoded/MissFortune.ja_JP/decoding.json",
+          "decodingReportSha256": "37d2978d15d40cb947e46a037af7f797a04e9ae2b1531913e505d2913ff66488",
+          "nativeAudioBanks": 15,
+          "wemFiles": 695,
+          "pcmWavCount": 695,
+          "audioSeconds": 2130.2731972789097,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Warwick.ja_JP",
+          "sourceWad": "original-wads/Warwick.ja_JP.wad.client",
+          "bytes": 36972913,
+          "sha256": "ddcd7b2eb8dcc3ddc3018112e40fbbaee6454c84d390c35d34e745bf01c15817",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Warwick.ja_JP/extraction.json",
+          "extractionReportSha256": "08700815f6becfd0993891d22f42fffda03d14257e81087fde1086b93c470273",
+          "decodingReport": "audio/decoded/Warwick.ja_JP/decoding.json",
+          "decodingReportSha256": "dbc113bb17b8d1875e8c2894c6a3472eb5c4d2055159eab3d51caeca4d078e7d",
+          "nativeAudioBanks": 15,
+          "wemFiles": 531,
+          "pcmWavCount": 531,
+          "audioSeconds": 1848.2423303571418,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Xerath.ja_JP",
+          "sourceWad": "original-wads/Xerath.ja_JP.wad.client",
+          "bytes": 12506045,
+          "sha256": "bde0ced1ff6858fd410767ad792a2bb532e49bff04c880936aed4c8fff483efb",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Xerath.ja_JP/extraction.json",
+          "extractionReportSha256": "b3d547b68126932f44abbb09e25c88e16997e412387771378987c50c67b8b4db",
+          "decodingReport": "audio/decoded/Xerath.ja_JP/decoding.json",
+          "decodingReportSha256": "a81f3148862f31f51ef167e9f1261f7a1636635bbc1c92e66649c1bd3df31ab3",
+          "nativeAudioBanks": 8,
+          "wemFiles": 223,
+          "pcmWavCount": 223,
+          "audioSeconds": 1060.2127210884355,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Yasuo.ja_JP",
+          "sourceWad": "original-wads/Yasuo.ja_JP.wad.client",
+          "bytes": 45240469,
+          "sha256": "3f3a63baac496f2ae63a3e0b83a081654da7385f8e82044a36e3377f01f697e0",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Yasuo.ja_JP/extraction.json",
+          "extractionReportSha256": "47cb1e1e6378aaa59ba309bfd84c2b313f4d218e551beb818ba46599250da6f5",
+          "decodingReport": "audio/decoded/Yasuo.ja_JP/decoding.json",
+          "decodingReportSha256": "626d8e84218351d0b48a1dbb6ca4e09818777f5154a98ee7fa6b76dcccbaf682",
+          "nativeAudioBanks": 24,
+          "wemFiles": 1042,
+          "pcmWavCount": 1042,
+          "audioSeconds": 4239.575510204076,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        }
+      ],
+      "allSourceFilesManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+        "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
+        "rowsProperty": "allFiles",
+        "fileCount": 15690,
+        "bytes": 6504344529
+      },
+      "backupStatus": {
+        "scopedS3ReadbackVerified": false,
+        "state": "local-scoped-archive-verified-s3-pending",
+        "archiveFileCount": 15691,
+        "localArchiveReadbackVerified": true,
+        "manifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/manifest.json",
+        "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
+        "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
+        "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
+        "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
+        "uploadObservation": {
+          "observedAt": "2026-09-10T19:59:39.994541+00:00",
+          "phase": "uploaded-full-get-in-progress",
+          "putObjectCompleted": true,
+          "fullGetVerified": false,
+          "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
+        }
+      },
+      "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+      "limitations": [
+        "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
+        "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
+        "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
+        "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
+        "English not acquired in this scoped delivery."
+      ],
+      "files": [
+        {
+          "path": "original-wads/Karthus.ja_JP.wad.client",
+          "sha256": "2df91dd179c3ef23221b443319bfda4ff6472c003df10ec1bdc6f2fdea4fcdb2",
+          "bytes": 11550735,
+          "nativeId": "Karthus.ja_JP",
+          "kind": "original-wad"
+        },
+        {
+          "path": "original-wads/LeeSin.ja_JP.wad.client",
+          "sha256": "8d76a9b90e941135a59b2ff9c3a805cc73580b1e6d8e7ba17e24120292257ef3",
+          "bytes": 51174709,
+          "nativeId": "LeeSin.ja_JP",
+          "kind": "original-wad"
+        },
+        {
+          "path": "original-wads/Lux.ja_JP.wad.client",
+          "sha256": "4c40d659dc32937835aeabd0dd10e7b08660430a5b2304b92fa54f96387f2ca9",
+          "bytes": 35695778,
+          "nativeId": "Lux.ja_JP",
+          "kind": "original-wad"
+        },
+        {
+          "path": "original-wads/MissFortune.ja_JP.wad.client",
+          "sha256": "00377249616a0f1021c4d56eee9ab2ed214fb88138c82ed0ffc55fc03f5a6da6",
+          "bytes": 20707176,
+          "nativeId": "MissFortune.ja_JP",
+          "kind": "original-wad"
+        },
+        {
+          "path": "original-wads/Warwick.ja_JP.wad.client",
+          "sha256": "ddcd7b2eb8dcc3ddc3018112e40fbbaee6454c84d390c35d34e745bf01c15817",
+          "bytes": 36972913,
+          "nativeId": "Warwick.ja_JP",
+          "kind": "original-wad"
+        },
+        {
+          "path": "original-wads/Xerath.ja_JP.wad.client",
+          "sha256": "bde0ced1ff6858fd410767ad792a2bb532e49bff04c880936aed4c8fff483efb",
+          "bytes": 12506045,
+          "nativeId": "Xerath.ja_JP",
+          "kind": "original-wad"
+        },
+        {
+          "path": "original-wads/Yasuo.ja_JP.wad.client",
+          "sha256": "3f3a63baac496f2ae63a3e0b83a081654da7385f8e82044a36e3377f01f697e0",
+          "bytes": 45240469,
+          "nativeId": "Yasuo.ja_JP",
+          "kind": "original-wad"
+        }
+      ],
+      "pendingBackup": {
+        "localArchive": "GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/lol-project-seven-scoped-16.18.8159717.tar.gz",
+        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.tar.gz",
+        "bytes": 5895452534,
+        "sha256": "8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": false,
+        "s3ReadbackVerified": false,
+        "localArchiveReadbackVerified": true,
+        "status": "local-archive-readback-verified-s3-pending"
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -41742,6 +42436,98 @@
         "巴蘭",
         "バラン"
       ]
+    },
+    {
+      "id": "parallel-dai-vearn-local-followup-02-20260911",
+      "target": "小呆／達伊與巴恩前後形態：本機來源及公開附件續查",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c",
+        "godie-ubal"
+      ],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02",
+      "sourceReport": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02/source-report.json",
+      "sourceReportSha256": "ff92e8818f07a9e176cb0aea2bb1b380813bc33611aefb5bb59ca7a4c4fb101e",
+      "verification": "本輪未找到可用目標 Steam 安裝/原生包；兩個新附件為付費雕像，未購買；模型/動作/音訊新增0。研究資料含備份程式已完整S3 Get核對。",
+      "modelCandidates": [],
+      "audioFileIndex": [],
+      "sourceKind": "research-only",
+      "acquisitionStatus": "research-only-no-asset-package",
+      "acquiredAssetPayloadCount": 0,
+      "defaultEligible": false,
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/dai-vearn-local-followup-02/4de0cb5cbe22f7603b1a2a06bebf7222a7281f1851b76a20847e1f42446799cf.tar.gz",
+        "sha256": "4de0cb5cbe22f7603b1a2a06bebf7222a7281f1851b76a20847e1f42446799cf",
+        "bytes": 8106,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "parallel-dai-vearn-local-followup-02",
+        "verified": true,
+        "fullGetAndEveryFileVerified": true,
+        "inventoryUri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/dai-vearn-local-followup-02/4de0cb5cbe22f7603b1a2a06bebf7222a7281f1851b76a20847e1f42446799cf.files.json",
+        "inventorySha256": "a99af6d5a80e52e918ff713a395d4515197f5756020e4e5b3b674ac6b2546e8b",
+        "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-vearn-local-followup-02-20260911/s3-backup-receipt.json",
+        "receiptSha256": "5ef04e6212f4cf06ba6d956961b50f94cb43ecda8da6242a0438260db2b670a2"
+      },
+      "url": "https://cults3d.com/en/3d-model/game/fly-dragon-quest-version-original-en-pose-de-lucha",
+      "sourceRoutes": [
+        {
+          "id": "franky3dworld-fly-dai-2025",
+          "character": "小呆／達伊",
+          "author": "Franky3DWorld",
+          "urls": [
+            "https://cults3d.com/en/3d-model/game/fly-dragon-quest-version-original-en-pose-de-lucha",
+            "https://franky3dworld.com"
+          ],
+          "advertisedAttachment": "Fly Figura.zip: Fly figura.stl + info.txt",
+          "observedPrice": "US$3.50",
+          "published": "2025-09-02",
+          "status": "not-acquired-paid-sculpt",
+          "evidence": "Cults author listing provides a single posed printable figure. Author advertises one rotating free catalog item daily on own website, but nothing establishes Dai is currently free. Normal website open returned HTTP400 Timeout fetching; bounded round stopped, no bypass/account/purchase. No rig, animation, sound or texture package verified."
+        },
+        {
+          "id": "cgtrader-vearn-5504550",
+          "character": "巴恩大魔王，形態未驗",
+          "author": "billkaketo",
+          "url": "https://www.cgtrader.com/3d-print-models/art/sculpture/vearn-dragon-quest-the-adventure-of-dai-3d-print",
+          "advertisedAttachment": "STL 147MB",
+          "observedPrice": "US$11.00",
+          "published": "2024-09-03",
+          "status": "not-acquired-paid-sculpt",
+          "evidence": "Actual public product page states model5504550, STL and purchase price. Similar title/date to previously inspected DuongKhuong/Cults listing, so no independent asset/version asserted without bytes. No purchase or download. Not original-game rig/motion evidence."
+        }
+      ],
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02",
+      "sourceWork": "勇者鬥惡龍 達伊的大冒險／神龍之謎（Dragon Quest: The Adventure of Dai）",
+      "sourceGame": "Infinity Strash priority research; community sculpt leads separately identified",
+      "platform": "mixed-leads-not-acquired",
+      "downloadUrl": null,
+      "automaticEligible": false,
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "assetKinds": [],
+      "format": "研究 JSON 與來源證據；未取得模型素材包",
+      "accessStatus": "research-only-paid-sculpt-not-acquired",
+      "publicationStatus": "s3-legacy-research-only-full-get-verified",
+      "purchaseDecision": "no-purchase",
+      "modelCount": 0,
+      "audioCount": 0,
+      "nativeAnimationCount": 0,
+      "standaloneVfxCount": 0,
+      "files": [],
+      "ownerEntryIds": [],
+      "gitSourceReportPath": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/followup-02/source-report.json",
+      "gitBackupReceiptPath": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/followup-02/s3-backup-receipt.json",
+      "notAliases": [
+        "Baran",
+        "巴蘭",
+        "バラン"
+      ],
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "selectionVerified": false,
+        "note": "僅研究線索；沒有模型素材，不登記可選模型。"
+      }
     }
   ],
   "ingestionPolicy": {
