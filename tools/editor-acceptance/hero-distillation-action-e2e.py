@@ -23,6 +23,22 @@ FILES = [SCRIPT.name, 'hero-distillation-action-compile.mts', 'hero-distillation
 
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def read(path): return json.loads(Path(path).read_text())
+
+
+def node_binary(value=None):
+    """Resolve Node before writing an E2E receipt.
+
+    Protected launch environments may intentionally use a short PATH even
+    though the local desktop's Node is installed in /usr/local/bin.  A caller
+    may provide an absolute path; otherwise retain the ordinary PATH lookup
+    and then use only this known local fallback.  This is a deterministic
+    runtime preflight, not a dependency installer or PATH mutation.
+    """
+    candidate = Path(value).resolve() if value else Path(shutil.which('node') or '/usr/local/bin/node').resolve()
+    assert candidate.is_file() and os.access(candidate, os.X_OK), 'NODE_REQUIRED:' + str(candidate)
+    return str(candidate)
+
+
 def write(path, value):
     path = Path(path); temporary = path.with_name(path.name + '.tmp')
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n'); temporary.replace(path)
@@ -62,7 +78,7 @@ def run(options, execute=command):
     assert source == REPO.resolve(), 'SOURCE_REPO_MUST_BE_CURRENT_RESEARCH_CHECKOUT'
     assert all(path.is_dir() for path in [evaluation, models, dependencies, source, *roots]), 'INPUT_DIRECTORY_MISSING'
     p = action_manifest(evaluation)
-    node = shutil.which('node'); assert node, 'NODE_REQUIRED'
+    node = node_binary(options.get('node_binary'))
     out.mkdir(parents=True); (out / 'source').mkdir()
     sources = {name: digest(SCRIPT if name == SCRIPT.name else SCRIPT.with_name(name)) for name in FILES}
     for name in FILES: shutil.copyfile(SCRIPT if name == SCRIPT.name else SCRIPT.with_name(name), out / 'source' / name)
@@ -131,5 +147,6 @@ def run(options, execute=command):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ['evaluation', 'models', 'dependencies', 'source_repo', 'api_dependencies', 'out']: parser.add_argument('--' + name.replace('_', '-'), required=True, dest=name)
+    parser.add_argument('--node-binary', dest='node_binary')
     parser.add_argument('--asset-root', action='append', required=True, dest='asset_roots')
     print(json.dumps(run(vars(parser.parse_args())), ensure_ascii=False))

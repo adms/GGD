@@ -41,6 +41,13 @@ def command(argv, log):
         raise RuntimeError(f'WORKFLOW_STEP_EXIT:{completed.returncode}; log={log}')
 
 
+def node_binary(value=None):
+    """Preflight an explicit, executable Node before any model work starts."""
+    candidate = Path(value).resolve() if value else Path(shutil.which('node') or '/usr/local/bin/node').resolve()
+    assert candidate.is_file() and candidate.stat().st_mode & 0o111, 'NODE_REQUIRED:' + str(candidate)
+    return str(candidate)
+
+
 def checked_directory(value, label):
     path = Path(value).resolve()
     assert path.is_dir(), f'{label}_DIRECTORY_MISSING'
@@ -55,6 +62,7 @@ def run(options, execute=command):
     api_dependencies = checked_directory(options['api_dependencies'], 'API_DEPENDENCIES')
     source = checked_directory(options['source_repo'], 'SOURCE_REPO')
     roots = [checked_directory(value, 'ASSET_ROOT') for value in options['asset_roots']]
+    node = node_binary(options.get('node_binary'))
     evaluation, e2e_out = Path(options['evaluation']).resolve(), Path(options['e2e_out']).resolve()
     assert not evaluation.exists() and not e2e_out.exists(), 'REFUSE_OVERWRITE_OR_RETRY'
     assert source == SCRIPT.parents[2].resolve(), 'SOURCE_REPO_MUST_BE_CURRENT_RESEARCH_CHECKOUT'
@@ -73,6 +81,7 @@ def run(options, execute=command):
         'evaluationDirectory': str(evaluation), 'e2eDirectory': str(e2e_out),
         'modelBindingsDirectory': str(models), 'dependenciesDirectory': str(dependencies),
         'apiDependenciesDirectory': str(api_dependencies), 'assetRoots': list(map(str, roots)),
+        'nodeBinary': node,
         'fixedSteps': ['prepare', 'base', 'lora', 'compile-package-import-readback'],
         'automaticRetry': False, 'humanRepairsAllowed': False,
         'modelPromoted': False, 'fullHeroE2EProven': False,
@@ -98,7 +107,7 @@ def run(options, execute=command):
             step(arm, [sys.executable, str(EVALUATE), 'run', '--run', str(evaluation), '--arm', arm])
         e2e_argv = [sys.executable, str(E2E), '--evaluation', str(evaluation), '--models', str(models),
                     '--dependencies', str(dependencies), '--api-dependencies', str(api_dependencies),
-                    '--source-repo', str(source), '--out', str(e2e_out)]
+                    '--source-repo', str(source), '--out', str(e2e_out), '--node-binary', node]
         for root in roots:
             e2e_argv.extend(['--asset-root', str(root)])
         step('compile-package-import-readback', e2e_argv)
@@ -121,4 +130,5 @@ if __name__ == '__main__':
                  'source_repo', 'e2e_out']:
         parser.add_argument('--' + name.replace('_', '-'), required=True, dest=name)
     parser.add_argument('--asset-root', action='append', required=True, dest='asset_roots')
+    parser.add_argument('--node-binary', dest='node_binary')
     print(json.dumps(run(vars(parser.parse_args())), ensure_ascii=False))
