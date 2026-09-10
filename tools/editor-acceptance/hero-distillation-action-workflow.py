@@ -109,8 +109,8 @@ def run(options, execute=command):
         e2e_argv = [sys.executable, str(E2E), '--evaluation', str(evaluation), '--models', str(models),
                     '--dependencies', str(dependencies), '--api-dependencies', str(api_dependencies),
                     '--source-repo', str(source), '--out', str(e2e_out), '--node-binary', node]
-        for root in roots:
-            e2e_argv.extend(['--asset-root', str(root)])
+        for asset_root in roots:
+            e2e_argv.extend(['--asset-root', str(asset_root)])
         step('compile-package-import-readback', e2e_argv)
         report_out = root / (e2e_out.name + '-report.html')
         assert not report_out.exists(), 'REPORT_REFUSE_OVERWRITE'

@@ -1,0 +1,49 @@
+{
+  "schema": "ggd-training-admission-record@1",
+  "date": "2026-09-10",
+  "runDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/hero74-action-v4-power-v1",
+  "manifestSha256": "cc34d0e00805fa3c80b51257ae6d34c131011ee4797d9b7f5179b9d5c07f30c3",
+  "probeResultSha256": "cb88d0860425a257fd01c53fa400bbf572cea3ee4abe76b801626ed7305bba6b",
+  "trainingSourceCommit": "59650d8b1",
+  "trainingSourceExecution": "Immutable source snapshot inside this run; no patching the running trainer.",
+  "previousRunPreserved": "hero74-action-v4-sampling3m",
+  "restartBasis": "User approved implementing parameterized power-aware checkpoint/resume and continued the full training goal. Fresh single-epoch run uses the same frozen action-v4 data and recipe; the old adapter-only checkpoint cannot restore optimizer/RNG state.",
+  "train": {"heroes": 59, "tasks": 12480, "tokens": 8657927, "completionTokens": 353654},
+  "internalDev": {"heroes": 15, "tasks": 3917, "tokens": 2834587, "unseenGeneralizationEvidence": false},
+  "maxSequenceTokens": 2570,
+  "epochs": 1,
+  "trainingWallLimitSeconds": 57600,
+  "chargingWaitCountsAgainstWallLimit": true,
+  "probe": {
+    "completed": true,
+    "actualExtremeSequencesPassed": 8,
+    "fitsTimeBudget": true,
+    "fitsStepBudget": true,
+    "estimatedUpperEpochSeconds": 45416.81888256938,
+    "peakMetalBytes": 14672580248,
+    "estimateIsPromise": false
+  },
+  "powerPolicy": {"hardStopPercent": 20, "pauseBelowPercent": 30, "fullSpeedResumePercent": 70, "sampleIntervalSeconds": 180},
+  "handoff": {
+    "directorySuffix": "-handoff",
+    "entry": "tools/editor-acceptance/hero-distillation-action-handoff.py",
+    "pollSeconds": 60,
+    "sequence": ["terminal-full-epoch-and-adapter-hash-gate", "base", "lora", "compile-package-import-readback", "render-evidence-report"],
+    "automaticRetry": false,
+    "parallelGpuWorkers": false,
+    "chargingPauseIsTerminal": false
+  },
+  "integrationFixes": [
+    "Charging/starting states wait on a live process rather than prematurely failing the evaluation handoff.",
+    "Handoff uses actual full-epoch/checkpoint/roundtrip verifier; trainer result has phase/steps, not status=completed.",
+    "Evaluation inherits resource sample interval; two-second liveness checks no longer read battery each time.",
+    "Report output remains beside the evaluation directory, not inside the final asset root."
+  ],
+  "integrationCpuTestsPassed": 8,
+  "trainingFinished": false,
+  "adapterPromoted": false,
+  "fullModelPauseResumeParityProven": false,
+  "gameplayProven": false,
+  "cloudGpuUsd": 0,
+  "scope": "Immutable admission snapshot only. Live run receipts determine later progress; probe and dev-before are not optimizer updates or model-quality evidence."
+}

@@ -196,6 +196,7 @@ def prepare(training, dataset, out):
                  'baseFiles': train['baseFiles'], 'adapterDirectory': str(adapter),
                  'adapterSha256': t.digest(adapter / 'adapters.safetensors'), 'adapterTensorKeys': receipt['tensorKeys'],
                  'guard': train['guard'], 'minimumAvailableBytes': train['minimumAvailableBytes'],
+                 'resourceSampleIntervalSeconds': train.get('resourceSampleIntervalSeconds', 180),
                  'metalLimitGiB': train['metalLimitGiB'], 'callsPerHero': 'variable bounded action sequence',
                  'attemptsPerCall': 1, 'fullHeroE2EProven': False})
     atomic(out / 'manifest.json', base)
@@ -325,6 +326,9 @@ def supervise(directory, arm):
     assert 'trainingDirectory' in p, 'UNBOUND_EVALUATION'
     assert not work.exists(), 'REFUSE_RESTART_OR_OVERWRITE'
     start = t.resources(); assert start['acPower'] and start['availableBytes'] >= p['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
+    interval = p.get('resourceSampleIntervalSeconds', 180)
+    assert type(interval) in (int, float) and 1 <= interval <= 3600, 'INVALID_RESOURCE_SAMPLE_INTERVAL'
+    sample, sampled_at = start, time.monotonic()
     assert not t.violation(start, start, p['guard']), 'RESOURCE_GUARD'
     token, child, locked, created = uuid.uuid4().hex, None, False, False
     state = {'status': 'starting', 'pid': os.getpid(), 'workerPid': None, 'arm': arm, 'startedAt': time.time(),
@@ -340,7 +344,11 @@ def supervise(directory, arm):
             child = subprocess.Popen([sys.executable, str(SCRIPT), 'worker', '--run', str(directory), '--arm', arm, '--token', token], stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             state.update(status='running', workerPid=child.pid); atomic(work / 'state.json', state)
             while child.poll() is None:
-                time.sleep(2); sample = t.resources(); trace.write(compact(sample) + '\n'); trace.flush(); reason = t.violation(start, sample, p['guard'])
+                time.sleep(2)
+                if time.monotonic() - sampled_at >= interval:
+                    sample = t.resources(); sampled_at = time.monotonic()
+                    trace.write(compact(sample) + '\n'); trace.flush()
+                reason = t.violation(start, sample, p['guard'])
                 if (work / 'STOP').exists(): reason = 'USER_STOP'
                 if time.time() - state['startedAt'] > p.get('secondsMaximumPerArm', 7200): reason = 'RUN_TIME_LIMIT'
                 if (work / 'worker-progress.json').exists():

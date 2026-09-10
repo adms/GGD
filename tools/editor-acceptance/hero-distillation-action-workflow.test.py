@@ -34,7 +34,9 @@ class ActionWorkflowTest(unittest.TestCase):
             self.assertEqual(['base', 'lora'], [calls[1][0][-1], calls[2][0][-1]])
             self.assertTrue(calls[3][0][1].endswith('hero-distillation-action-e2e.py'))
             self.assertTrue(calls[4][0][1].endswith('hero-distillation-action-report.py'))
-            self.assertTrue(result['reportPath'].endswith('e2e-report.html'))
+            expected_report = str(root.resolve() / 'e2e-report.html')
+            self.assertEqual(result['reportPath'], expected_report)
+            self.assertEqual(calls[4][0][-1], expected_report)
             receipt = Path(result['workflowDirectory']) / 'state.json'
             self.assertEqual('completed', json.loads(receipt.read_text())['status'])
             self.assertFalse(json.loads((receipt.parent / 'manifest.json').read_text())['automaticRetry'])

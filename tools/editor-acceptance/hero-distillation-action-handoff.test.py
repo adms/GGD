@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import os
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,8 +27,12 @@ class ActionHandoffTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root, options = Path(temporary), None
             options = self.options(root)
-            (options['run'] / 'train' / 'state.json').write_text(json.dumps({'status': 'completed'}))
-            (options['run'] / 'train' / 'result.json').write_text(json.dumps({'status': 'completed'}))
+            (options['run'] / 'train' / 'state.json').write_text(json.dumps({'status': 'completed', 'workerPid': None}))
+            (options['run'] / 'manifest.json').write_text(json.dumps({'steps': 3}))
+            checkpoint = options['run'] / 'train' / 'checkpoint-0003'; checkpoint.mkdir()
+            adapter = checkpoint / 'adapters.safetensors'; adapter.write_bytes(b'fixture')
+            (options['run'] / 'train' / 'result.json').write_text(json.dumps({'phase': 'train', 'steps': 3,
+                'uniqueTrainingTasks': 3, 'checkpoint': {'path': checkpoint.name, 'sha256': handoff.evaluation.t.digest(adapter)}}))
             (options['run'] / 'train' / 'adapter-roundtrip.json').write_text(json.dumps({'passed': True}))
             calls = []
             class Done: returncode = 0
@@ -46,6 +52,17 @@ class ActionHandoffTest(unittest.TestCase):
             result = handoff.run(options, execute=lambda *args, **kwargs: self.fail('must not execute'))
             self.assertEqual('stopped-or-failed', result['status'])
             self.assertEqual('TRAINING_NOT_COMPLETED', result['reason'])
+
+    def test_live_charging_pause_is_not_terminal(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            options = self.options(Path(temporary))
+            path = options['run'] / 'train' / 'state.json'
+            for status in ('starting', 'paused-charging', 'running'):
+                path.write_text(json.dumps({'status': status, 'pid': os.getpid(), 'workerPid': None}))
+                self.assertIsNone(handoff.terminal_training(options['run']))
+            with patch.object(handoff, 'live', return_value=False):
+                with self.assertRaisesRegex(AssertionError, 'WITHOUT_LIVE_PROCESS'):
+                    handoff.terminal_training(options['run'])
 
 
 if __name__ == '__main__':

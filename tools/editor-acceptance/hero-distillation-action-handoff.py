@@ -7,6 +7,7 @@ once; any other terminal state is recorded and fails closed.  It neither
 retries training nor changes datasets, checkpoints, prompts, or GPU limits.
 """
 import argparse
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -17,6 +18,8 @@ import time
 
 SCRIPT = Path(__file__).resolve()
 WORKFLOW = SCRIPT.with_name('hero-distillation-action-workflow.py')
+SPEC = importlib.util.spec_from_file_location('handoff_evaluation', SCRIPT.with_name('hero-distillation-action-evaluate.py'))
+evaluation = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(evaluation)
 
 
 def write(path, value):
@@ -44,7 +47,7 @@ def terminal_training(run):
     state_path = Path(run) / 'train' / 'state.json'
     assert state_path.is_file(), 'TRAINING_STATE_MISSING'
     state = read(state_path)
-    if state.get('status') != 'running':
+    if state.get('status') not in ('starting', 'running', 'paused-charging'):
         return state
     worker = state.get('workerPid')
     supervisor = state.get('pid')
@@ -83,13 +86,9 @@ def run(options, execute=subprocess.run, sleeper=time.sleep):
         if training.get('status') != 'completed':
             state.update(status='stopped-or-failed', reason='TRAINING_NOT_COMPLETED')
             return state
-        result_path = Path(options['run']) / 'train' / 'result.json'
-        roundtrip_path = Path(options['run']) / 'train' / 'adapter-roundtrip.json'
-        assert result_path.is_file(), 'TRAINING_RESULT_MISSING'
-        assert roundtrip_path.is_file(), 'ADAPTER_ROUNDTRIP_MISSING'
-        result, roundtrip = read(result_path), read(roundtrip_path)
-        assert result.get('status') == 'completed', 'TRAINING_RESULT_NOT_COMPLETED'
-        assert roundtrip.get('passed') is True, 'ADAPTER_ROUNDTRIP_NOT_PASSED'
+        # The real trainer writes phase/steps/checkpoint, not result.status.
+        # Reuse the actual evaluation gate, including final-epoch and byte hash checks.
+        evaluation.final_checkpoint(options['run'])
         argv = workflow_argv(options)
         state.update(status='running-evaluation', workflowCommand=argv, evaluationStartedAt=time.time())
         write(output / 'state.json', state)
