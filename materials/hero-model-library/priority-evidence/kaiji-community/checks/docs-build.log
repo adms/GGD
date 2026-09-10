@@ -1,0 +1,75 @@
+
+> ggd@0.0.0 contract:numbers /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh contract:numbers contract:numbers:raw
+
+🔓 隔離區:解鎖 465 份（追蹤 1438,缺 0）
+
+> ggd@0.0.0 contract:numbers:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/editor-contract/gen_contract_numbers.py
+
+✓ 寫入 技能編輯器引擎須知 20260811.md — contract-caps(replaced), contract-ap-damage(replaced), contract-range(replaced), contract-normalized(replaced), contract-bands(replaced), contract-tiers(replaced), contract-effects(replaced), contract-sharding(replaced)
+🔒 隔離區:上鎖 465 份（追蹤 1438,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: contract:numbers 完成（產物已重新上鎖）
+
+> ggd@0.0.0 docs:readme /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh docs:readme docs:readme:raw
+
+🔓 隔離區:解鎖 465 份（追蹤 1438,缺 0）
+
+> ggd@0.0.0 docs:readme:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/reference/gen_readme_lists.py
+
+contentVersion cv_258401b6b5a6
+  README:roster      130 open rows  (replaced)
+  README:abilities   779 open rows  (replaced)
+  README:items       130 open rows  (replaced)
+  README:grail        60 open rows  (replaced)
+  README:mechanics    92 open rows  (replaced)
+  README:arenas       13 open rows  (replaced)
+  README:combat-env   39 open rows  (replaced)
+  README:stat-bands  110 open rows  (replaced)
+  README:tiers        15 open rows  (replaced)
+  docs/reference/roster.md   (wrote)
+  docs/reference/abilities.md (wrote)
+  docs/reference/items.md    (wrote)
+  docs/reference/grail-wishes.md (wrote)
+  docs/reference/mechanics.md (wrote)
+wrote README.md — 2806 lines, 243096 bytes (237.4 KB)
+🔒 隔離區:上鎖 465 份（追蹤 1438,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: docs:readme 完成（產物已重新上鎖）
+
+> ggd@0.0.0 clipdeg:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh clipdeg:build clipdeg:build:raw
+
+🔓 隔離區:解鎖 465 份（追蹤 1438,缺 0）
+
+> ggd@0.0.0 clipdeg:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/clip-degradation/gen.ts
+
+✓ 寫入 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/docs/editor-contract/ggd-clip-degradation.json
+🔒 隔離區:上鎖 465 份（追蹤 1438,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: clipdeg:build 完成（產物已重新上鎖）
+
+> ggd@0.0.0 receipt:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh receipt:build receipt:build:raw
+
+🔓 隔離區:解鎖 465 份（追蹤 1438,缺 0）
+
+> ggd@0.0.0 receipt:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/presentation-receipt/gen.ts
+
+✓ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/docs/editor-contract/ggd-presentation-receipt.json
+🔒 隔離區:上鎖 465 份（追蹤 1438,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: receipt:build 完成（產物已重新上鎖）
+
+> ggd@0.0.0 handback:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh handback:build handback:build:raw
+
+🔓 隔離區:解鎖 465 份（追蹤 1438,缺 0）
+
+> ggd@0.0.0 handback:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/main-handback/gen.ts
+
+✓ 寫入 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/docs/editor-contract/ggd-main-handback.json
+🔒 隔離區:上鎖 465 份（追蹤 1438,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: handback:build 完成（產物已重新上鎖）

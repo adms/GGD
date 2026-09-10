@@ -1,0 +1,23 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+
+ ✓ apps/content-api/src/modelVersions.test.ts (10 tests) 10226ms
+   ✓ retained hero model versions > retains paid delivery aliases of identical bytes as independent selectable versions 2318ms
+   ✓ retained hero model versions > retains unapproved high-tier proxies for manual selection while automatic mode uses approved candidates 1554ms
+   ✓ retained hero model versions > defaults to the new frozen body, retains old bytes/bindings, and rolls both ways after the import source is deleted 1132ms
+   ✓ retained hero model versions > prioritizes 300 > MBA > original > W3X and preserves manual choices across imports 1951ms
+   ✓ retained hero model versions > rejects stale and simultaneous selections without losing a version 583ms
+   ✓ retained hero model versions > blocks direct replacement, history removal, frozen-model edits/deletes, and pre-version backup restore 788ms
+   ✓ retained hero model versions > rejects incomplete bindings and missing original files before publishing anything 351ms
+   ✓ retained hero model versions > detects damaged retained bytes and refuses to activate them 670ms
+   ✓ retained hero model versions > shared loading rejects dangling selection and duplicate version keys 605ms
+ ✓ packages/shared/src/content/modelUpload/heroModel.test.ts (5 tests) 448ms
+ ✓ apps/content-api/src/resizeImage.node.test.ts (2 tests) 685ms
+   ✓ real ffmpeg texture resizing > keeps square pixels and image proportions for 512x512 -> 256x256 401ms
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
+   Start at  01:07:32
+   Duration  20.02s (transform 3.76s, setup 0ms, collect 6.40s, tests 11.36s, environment 0ms, prepare 341ms)
+
