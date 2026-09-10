@@ -49,11 +49,16 @@ function sandbox(): string {
   cpSync(join(REPO, "tools/tts-gen/src"), join(root, "tools/tts-gen/src"), { recursive: true });
   cpSync(join(REPO, "content/champions"), join(root, "content/champions"), { recursive: true });
   cpSync(join(REPO, "content/_legacy/champions"), join(root, "content/_legacy/champions"), { recursive: true });
-  mkdirSync(join(root, "content/assets/audio/voices/quotes"), { recursive: true });
+  cpSync(
+    join(REPO, "content/assets/audio/voices/quotes"),
+    join(root, "content/assets/audio/voices/quotes"),
+    { recursive: true },
+  );
   return root;
 }
 
-const run = (root: string) => spawnSync("node", [GEN], { cwd: root, encoding: "utf8" });
+const run = (root: string, args: string[] = [], env: NodeJS.ProcessEnv = process.env) =>
+  spawnSync(process.execPath, [GEN, ...args], { cwd: root, encoding: "utf8", env });
 const patch = (root: string, from: string, to: string) => {
   const p = join(root, GEN);
   const src = readFileSync(p, "utf8");
@@ -62,6 +67,13 @@ const patch = (root: string, from: string, to: string) => {
 };
 
 describe("名言產生器 join 出貨 roster (champ-quotes-generator-runs)", () => {
+  it("`--check` 不因 CI／sandbox 沒有 macOS `say` 聲音而誤報 stale", () => {
+    const root = sandbox();
+    const r = run(root, ["--check"], { ...process.env, PATH: "/nonexistent" });
+    expect(r.status, `${r.stdout}\n${r.stderr}`).toBe(0);
+    expect(r.stdout).toMatch(/2 products up to date/);
+  });
+
   it("⭐ 出貨 roster ⇒ EXIT 0，而涵蓋率是**算出來的**且自洽", () => {
     const root = sandbox();
     const r = run(root);

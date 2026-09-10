@@ -75,6 +75,7 @@ const REPO = path.resolve(HERE, "../../..");
 const CONTENT = path.join(REPO, "content");
 const QUOTES_DIR = "assets/audio/voices/quotes";
 const TTS_MANIFEST = "_tts-quotes.json";
+const CHECK = process.argv.includes("--check");
 
 /** Pack-wide pacing + loudness — matched to the names pack so all VO sits level. */
 const RATE = 185;
@@ -364,6 +365,31 @@ function listInstalledVoices() {
  */
 function resolveMaleVoice() {
   const intended = MALE_VOICE_PREFS[0];
+  // `--check` verifies whether authored roster/quote data would change the
+  // committed products. Voice availability belongs to the machine that
+  // rendered those products: Linux CI and sandboxed macOS cannot reproduce a
+  // host's `say` inventory, so probing here made an untouched product stale.
+  // Reuse the recorded casting only when it is still one of today's allowed
+  // preferences; a removed preference therefore still makes the check fail.
+  if (CHECK) {
+    try {
+      const recorded = JSON.parse(
+        fs.readFileSync(path.join(CONTENT, QUOTES_DIR, "quotes.json"), "utf8"),
+      )?.voice;
+      const voice = typeof recorded?.male === "string" ? recorded.male : "";
+      const baseVoice = voice.replace(/ \(Enhanced\)$/i, "");
+      if (
+        voice &&
+        MALE_VOICE_PREFS.some((pref) => pref.toLowerCase() === baseVoice.toLowerCase()) &&
+        typeof recorded?.maleInstalled === "boolean"
+      ) {
+        return { voice, installed: recorded.maleInstalled };
+      }
+    } catch {
+      // Missing/invalid products fall through to normal resolution and are
+      // reported by the output comparison below.
+    }
+  }
   if (process.platform !== "darwin") return { voice: intended, installed: false };
   if (spawnSync("which", ["say"], { encoding: "utf8" }).status !== 0) {
     return { voice: intended, installed: false };
@@ -730,7 +756,6 @@ fs.mkdirSync(path.join(CONTENT, QUOTES_DIR), { recursive: true });
  * ⭐ 名單長了 7 名、82 名補了呼名 —— 這一支的產物**當場過期**，
  * ⛔ 而在這一格出現之前 `skills:check` 裡沒有任何東西在問後者。
  */
-const CHECK = process.argv.includes("--check");
 const outputs = [
   [path.join(CONTENT, QUOTES_DIR, "quotes.json"), `${JSON.stringify(manifest, null, 2)}\n`],
   [path.join(CONTENT, QUOTES_DIR, TTS_MANIFEST), `${JSON.stringify(ttsLines, null, 2)}\n`],
