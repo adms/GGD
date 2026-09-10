@@ -69,7 +69,7 @@ an empty / `none.mdl` art field is dropped before it becomes an entry, and shows
 instead as the ability having no `art` for that slot. Both statuses stay reachable
 through `summonedUnits[]`, where an invisible carrier is a meaningful answer.
 
-## 4. The honest scoreboard — all 421 GGD ability docs
+## 4. The honest scoreboard — all 907 GGD ability docs
 
 | state | docs | meaning |
 |---|---:|---|
@@ -79,11 +79,11 @@ through `summonedUnits[]`, where an invisible carrier is a meaningful answer.
 | `INFERRED_ART` | **1** | art reached only through an inferred attribution |
 | `CONFIRMED_NEGATIVE` | **99** | **an answer, not a gap** — no w3a override, no inherited stock art, no buff art, no summoned unit, no JASS art call. The original draws nothing. Faithful = `vfxKey: null` |
 | `SYNTHETIC_NO_SOURCE_IN_MAP` | **0** | the GGD doc is named `none` with an empty description and no rawcode — a slot the importer minted for a hero whose `uhab` is empty. **The map contains no such ability** |
-| `HAND_AUTHORED_NOT_FROM_THE_MAP` | **8** | `sela.*` / `thorne.*` — the repo's own demo champions, written by hand. They never came from the w3x, so there is nothing to be faithful *to* |
+| `HAND_AUTHORED_NOT_FROM_THE_MAP` | **494** | `sela.*` / `thorne.*` — the repo's own demo champions, written by hand. They never came from the w3x, so there is nothing to be faithful *to* |
 | `UNRESOLVED_NO_RAWCODE` | **7** | a real-looking doc that no bridge method could tie to a w3a record |
-| | **421** | |
+| | **907** | |
 
-Rolled up: **306 of 421 docs (73%) now have CONFIRMED original art**; **99 more are
+Rolled up: **306 of 907 docs (34%) now have CONFIRMED original art**; **99 more are
 CONFIRMED-NEGATIVE** — the faithful action there is to set `vfxKey` to null, not to
 pick a nicer particle. Only **7** docs are genuinely unresolved:
   - `godie-zombieking.passive` — 殭屍王 - leap吸血

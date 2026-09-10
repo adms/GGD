@@ -2,21 +2,21 @@
  "schema": "vfx-bindings-scoreboard@1",
  "summary": {
   "universe": {
-   "ggdAbilityDocs": 421,
+   "ggdAbilityDocs": 907,
    "w3aAbilityRecords": 1538,
    "w3aCustomAbilities": 1359,
    "w3aStockOriginalsTouchedByTheMap": 179,
    "abilitiesInMergedIndex": 1538,
-   "note": "the owner's '662 abilities' = content/abilities/*.json minus _index.json. Verified: 421. The w3a side is larger (1538) because the map also edits stock originals in place and defines runtime-only abilities (orbs, dummy carriers) that no GGD doc represents."
+   "note": "the owner's '662 abilities' = content/abilities/*.json minus _index.json. Verified: 907. The w3a side is larger (1538) because the map also edits stock originals in place and defines runtime-only abilities (orbs, dummy carriers) that no GGD doc represents."
   },
   "ggdDocCoverage": {
+   "HAND_AUTHORED_NOT_FROM_THE_MAP": 494,
    "CONFIRMED_ART": 210,
    "CONFIRMED_NEGATIVE": 99,
    "CONFIRMED_ART_AND_PARAMS": 78,
    "CONFIRMED_ART_INFERRED_PARAMS": 18,
    "INFERRED_ART": 1,
-   "UNRESOLVED_NO_RAWCODE": 7,
-   "HAND_AUTHORED_NOT_FROM_THE_MAP": 8
+   "UNRESOLVED_NO_RAWCODE": 7
   },
   "abilityCoverage": {
    "artConfirmed": 965,

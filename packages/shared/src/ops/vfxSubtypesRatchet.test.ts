@@ -57,7 +57,7 @@ const SUBTYPE_DIR = join(ROOT, "content/vfx-subtypes");
  * ≥5 支 29。⚠️ 票文寫的是 178/68（技能數 422）—— 差一支，⭐ 這裡用**重量到**的。
  * ⚠️ 2026-09-06 重量：仍是 69 —— 子模組動的是 vfx-script 那一層，⛔ 技能↔特效 key 的引用一格沒變。
  */
-const EXCLUSIVE_VFX_BASELINE = 69;
+const EXCLUSIVE_VFX_BASELINE = 60;
 /**
  * ⭐ 量到的（2026-09-06）：10 支 vfx-script，**8 支**改成 `call`（4 顆子模組各 2 個呼叫端），
  * 剩 2 支零 call：`godie-hart.r`（12 段，沒有 ≥2 呼叫端的重複）、`godie-udea.r`（1 段 screenShake）。
