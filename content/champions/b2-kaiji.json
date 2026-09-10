@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「不看牌先退桌！」\n消耗全部 nen-banked 存款標記，取得 210 點全傷害護盾 3 秒；提前退桌會失去後續讀取存款的機會。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -108,7 +108,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「午餐錢全押這次！」\n額外支付自身當前魔力 35%，實付數由現有 nen-banked 存款標記保留 4 秒；不建立金幣或自訂籌碼。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -179,7 +179,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「最後一把抽獎機！」\n等機率抽到兩種有限結果之一：150 點護盾 3 秒，或回復最大魔力 15%。種子決定結果，不保證中大獎。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -298,7 +298,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「翻盤不是保證中獎！」\n造成極小魔法傷害，並讀取 nen-banked 實付存款追加有限傷害，上限 180；存款不足時不會憑空取得滿額。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

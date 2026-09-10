@@ -1,7 +1,7 @@
 {
   "id": "community-review-30-20260907.q",
   "name": "〔菸灰缸飛過去〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】投擲道具，落地造成一次小範圍傷害。\n【待補機制】菸灰缸道具拋物線未綁；落地一次傷害可測。",
   "slot": "Q",
   "castType": "ground",

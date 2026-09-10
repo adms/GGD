@@ -50,7 +50,7 @@
     "Q": {
       "id": "lol-yasuo.q",
       "name": "斬風",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "朝前方斬出四段窄風刃，以本遊戲線段判定命中。",
       "slot": "Q",
       "castType": "skillshot",
@@ -122,7 +122,7 @@
     "W": {
       "id": "lol-yasuo.w",
       "name": "迎風架勢",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。",
       "slot": "W",
       "castType": "self",
@@ -181,7 +181,7 @@
     "E": {
       "id": "lol-yasuo.e",
       "name": "踏風進擊",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。",
       "slot": "E",
       "castType": "ground",
@@ -259,7 +259,7 @@
     "R": {
       "id": "lol-yasuo.r",
       "name": "天際斷章",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。",
       "slot": "R",
       "castType": "targeted",

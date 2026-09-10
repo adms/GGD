@@ -1,7 +1,7 @@
 {
   "id": "community-review-24-20260907.q",
   "name": "落雷",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】指定小區域的延遲電擊。\n【待補機制】短起手落點電擊對應基礎版。",
   "slot": "Q",
   "castType": "ground",

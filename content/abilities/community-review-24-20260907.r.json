@@ -1,7 +1,7 @@
 {
   "id": "community-review-24-20260907.r",
   "name": "神速・疾風迅雷",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：as +20%、極小級移速。\n【目標設計】短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。\n【待補機制】目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。",
   "slot": "R",
   "castType": "self",

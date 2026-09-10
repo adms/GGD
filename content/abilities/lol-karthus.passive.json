@@ -1,7 +1,7 @@
 {
   "id": "lol-karthus.passive",
   "name": "未竟尾聲",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施法。",
   "slot": "PASSIVE",
   "innateKind": "passive",

@@ -50,7 +50,7 @@
     "Q": {
       "id": "lol-xerath.q",
       "name": "星牢光路",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "吟唱後向前產生四段奧術打擊，使用大級距施放距離。",
       "slot": "Q",
       "castType": "skillshot",
@@ -122,7 +122,7 @@
     "W": {
       "id": "lol-xerath.w",
       "name": "星核墜落",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "在指定區域引爆小級魔法傷害。",
       "slot": "W",
       "castType": "ground",
@@ -176,7 +176,7 @@
     "E": {
       "id": "lol-xerath.e",
       "name": "奧能拘束",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "對指定敵人造成傷害並暈眩 0.8 秒，不按飛行距離延長。",
       "slot": "E",
       "castType": "targeted",
@@ -234,7 +234,7 @@
     "R": {
       "id": "lol-xerath.r",
       "name": "星牢轟擊",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。",
       "slot": "R",
       "castType": "ground",

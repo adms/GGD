@@ -69,11 +69,6 @@
     },
     "rows": [
       {
-        "id": "b2-kaiji",
-        "kind": "pending-source",
-        "why": "全角色模型盤點中伊藤開司仍為原有 Thorne 模型；其他工作流交付審核 current-priority-other-workflow-audit.json 尚未找到他的可用新模型。"
-      },
-      {
         "id": "b2-maple-alt-9769eb88b85b",
         "kind": "alternate-inherits-base",
         "why": "transform.role = alternate，counterpart b2-maple **已有真模型** community.body.449bf321…；⛔ 玩家在選角畫面選不到變身態"

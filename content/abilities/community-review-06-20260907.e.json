@@ -1,7 +1,7 @@
 {
   "id": "community-review-06-20260907.e",
   "name": "石頭",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":160,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-06-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】變為石頭，短暫大幅減傷且無法移動；結束後恢復原狀。\n【待補機制】需石頭形態、禁移動與禁施法，護盾不足以代表變石。",
   "slot": "E",
   "castType": "self",

@@ -3,7 +3,7 @@
   "cooldown": [
     0
   ],
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "「重現工單才可報魔力！」\n施放 E 重現工單後回復自己最大魔力 4%，每 3 秒一次；明確綁 E 施法事件，不把 magic-break 標記冒稱通用硬控事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-haga.passive",

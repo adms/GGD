@@ -1,7 +1,7 @@
 {
   "id": "community-review-34-20260907.w",
   "name": "〔急轉彎〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】快速改變方向，降低當前加速層數以換取操作能力。\n【待補機制】需急轉向與消耗加速層，不能單純低跳。",
   "slot": "W",
   "castType": "ground",

@@ -2,7 +2,7 @@
   "id": "community-review-12-20260907.passive",
   "schema": "ability@1",
   "name": "〔武器解析〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "近戰交鋒累積解析層數，降低下一次投影的資源消耗；有最低消耗限制。",
   "slot": "PASSIVE",
   "castType": "self",

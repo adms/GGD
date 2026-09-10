@@ -10,7 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「太高了我先繞過去！」\n短距合法瞬移換站位；被動只在真正閃避時回血，位移本身不算閃避。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -57,7 +57,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「王子縮成迷你問號！」\n縮身 1.8 秒，提高普通攻擊迴避機會，仍受正式機率上限限制；不閃技能與真傷，不是保證無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -118,7 +118,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「笑穴變成原地罰站！」\n消耗敵人的 numbness，轉為 root 定身 1.8 秒並小級打擊；沒繳械就只打一下。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -213,7 +213,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「王室搔癢暫停握刀！」\n王室搔癢小級物理打擊；附加 numbness 繳械 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

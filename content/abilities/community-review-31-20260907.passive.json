@@ -2,7 +2,7 @@
   "id": "community-review-31-20260907.passive",
   "schema": "ability@1",
   "name": "〔糞作獵人的讀招〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。",
   "slot": "PASSIVE",
   "castType": "self",

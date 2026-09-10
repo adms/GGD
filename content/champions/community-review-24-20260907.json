@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-24-20260907.q",
       "name": "落雷",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】指定小區域的延遲電擊。\n【待補機制】短起手落點電擊對應基礎版。",
       "slot": "Q",
       "castType": "ground",
@@ -104,7 +104,7 @@
     "W": {
       "id": "community-review-24-20260907.w",
       "name": "肢曲",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離側移並留下殘像；只有有效迴避才觸發後續反擊資源。\n【待補機制】需貼地肢曲殘像與有效閃避事件。",
       "slot": "W",
       "castType": "ground",
@@ -171,7 +171,7 @@
     "E": {
       "id": "community-review-24-20260907.e",
       "name": "電光石火",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】持續消耗電力提高移動速度，關閉或電力耗盡時停止。\n【待補機制】目前固定 3 秒加速；需開關及持續扣電。",
       "slot": "E",
       "castType": "self",
@@ -225,7 +225,7 @@
     "R": {
       "id": "community-review-24-20260907.r",
       "name": "神速・疾風迅雷",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：as +20%、極小級移速。\n【目標設計】短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。\n【待補機制】目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。",
       "slot": "R",
       "castType": "self",

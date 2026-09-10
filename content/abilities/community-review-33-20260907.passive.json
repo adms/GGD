@@ -2,7 +2,7 @@
   "id": "community-review-33-20260907.passive",
   "schema": "ability@1",
   "name": "〔不死者再生〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "受到傷害後延遲恢復部分損失生命；再次受擊延後恢復，且有每段時間上限。\n\n【尚未實作】這個被動的效果還在調整中，目前**不會發生任何事**。",
   "slot": "PASSIVE",
   "castType": "self",

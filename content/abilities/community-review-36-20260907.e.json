@@ -1,7 +1,7 @@
 {
   "id": "community-review-36-20260907.e",
   "name": "〔霸王突進〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向指定方向突進 350 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線衝鋒，命中後停止。\n【待補機制】需命中第一人後停止。",
   "slot": "E",
   "castType": "ground",

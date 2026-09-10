@@ -2,7 +2,7 @@
   "id": "community-review-02-20260907.passive",
   "schema": "ability@1",
   "name": "〔八神之炎〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。",
   "slot": "PASSIVE",
   "castType": "self",

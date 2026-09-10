@@ -1,7 +1,7 @@
 {
   "id": "community-review-05-20260907.w",
   "name": "Metal Blade",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出金屬刀刃，可選擇射擊方向，消耗武器能源。\n【待補機制】Metal Blade 的方向與刀刃模型待補。",
   "slot": "W",
   "castType": "skillshot",

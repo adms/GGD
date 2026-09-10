@@ -1,7 +1,7 @@
 {
   "id": "community-review-31-20260907.q",
   "name": "Spiral Edge",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。\n【待補機制】需螺旋刃動畫與反擊後目標追加條件。",
   "slot": "Q",
   "castType": "targeted",

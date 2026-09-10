@@ -50,7 +50,7 @@
     "Q": {
       "id": "lol-leesin.q",
       "name": "聽雷探手",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "以中級距射程攻擊指定敵人；不會自動開啟第二段位移。",
       "slot": "Q",
       "castType": "targeted",
@@ -101,7 +101,7 @@
     "W": {
       "id": "lol-leesin.w",
       "name": "定心護體",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "獲得 3 秒護盾與 20% 攻速加成。",
       "slot": "W",
       "castType": "self",
@@ -172,7 +172,7 @@
     "E": {
       "id": "lol-leesin.e",
       "name": "震地迴響",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "在指定近處引爆小級物理傷害，保留可瞄準的落點。",
       "slot": "E",
       "castType": "ground",
@@ -226,7 +226,7 @@
     "R": {
       "id": "lol-leesin.r",
       "name": "斷陣踢",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "短距進身後打擊並向前推開敵人，不附帶無敵或全場追蹤。",
       "slot": "R",
       "castType": "ground",

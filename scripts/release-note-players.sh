@@ -34,8 +34,25 @@ while [ $# -gt 0 ]; do
 done
 
 # 上一個 tag（⛔ 不是 HEAD~N —— 那會因為 commit 密度而漂）
-[ -n "$SINCE" ] || SINCE=$(git tag --sort=-v:refname | sed -n '2p')
 NOW=${UNTIL:-$(git describe --tags --abbrev=0 2>/dev/null || echo HEAD)}
+# ⭐ GH#1171 —— 視窗起點 = **上一次部署**（docs/_release/_deployed.tsv 最後一列），⛔ 不是上一個 tag。
+#   2026-09-10：v0.43.4／v0.43.5 打了 tag 沒部署也沒公告 ⇒ v0.43.6 的視窗只剩 1 個 chore commit
+#   ⇒ 81 名英雄上線發成「系統優化更新」。帳本沒有、或那個 sha 不在本機／不是 NOW 的祖先 ⇒ 退回上一個 tag 並**喊**。
+#   純函式：announceWindowSinceDeploy.test.ts 真的跑它。
+resolve_since() {
+  local ledger="${GGD_DEPLOYED_LEDGER:-docs/_release/_deployed.tsv}" last
+  if [ -s "$ledger" ]; then
+    last=$(tail -1 "$ledger" | cut -f1)
+    if [ -n "$last" ] && git cat-file -e "${last}^{commit}" 2>/dev/null && git merge-base --is-ancestor "$last" "${NOW:-HEAD}" 2>/dev/null; then
+      echo "$last"; return 0
+    fi
+    echo "⚠️ _deployed.tsv 最後一列 ${last:0:9} 不在本機或不是 ${NOW:-HEAD} 的祖先 ⇒ 退回上一個 tag（⛔ 視窗可能太窄，公告會漏）" >&2
+  else
+    echo "⚠️ 沒有 ${ledger}（還沒用新版 mini-deploy 部署過）⇒ 退回上一個 tag（⛔ 視窗可能太窄，公告會漏）" >&2
+  fi
+  git tag --sort=-v:refname | sed -n '2p'
+}
+[ -n "$SINCE" ] || SINCE=$(resolve_since)
 [ -n "$SINCE" ] || { echo "⛔ 找不到上一個 tag，用 --since <tag>" >&2; exit 2; }
 
 echo "🎮 玩家公告草稿：$SINCE → $NOW"
@@ -112,7 +129,10 @@ PLAYER_SCOPES='client|render|ui|sim|economy|hero|community|editor|icons|forge|ga
 SHIPPED=$(git log --format='%s' "${SINCE}..${NOW}" 2>/dev/null \
   | grep -E "^(feat|fix)\((${PLAYER_SCOPES})\)" || true)
 SHIPPED_N=$(printf '%s' "$SHIPPED" | grep -c . || true)
+_TOTAL=$(printf '%s\n' $CLOSED | grep -c . || true); _I=0
 for N in $CLOSED; do
+  # ⭐ GH#1162 —— 這個迴圈對每一張票打一次 gh（1–2 秒）⇒ 300 張就是 5–10 分鐘，⛔ 而它一句話都不印
+  _I=$((_I+1)); [ $((_I % 25)) -eq 0 ] && echo "   …玩家公告：讀第 ${_I}/${_TOTAL} 張票（gh issue view）" >&2
   # ⭐ title＋comments **一次**撈完（在此之前每張票打 2–3 次 gh：50 張 58 秒）
   # ⭐ `GGD_PLAYERNOTE_CACHE=<dir>` —— **補發專用**的唯讀快取（GH#1152）。
   #   ⚠️ 為什麼需要它：這一段對**每一張候選票**打一次 `gh issue view`（約 1–2 秒）。

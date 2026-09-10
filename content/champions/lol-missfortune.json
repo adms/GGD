@@ -50,7 +50,7 @@
     "Q": {
       "id": "lol-missfortune.q",
       "name": "回聲雙響",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。",
       "slot": "Q",
       "castType": "targeted",
@@ -116,7 +116,7 @@
     "W": {
       "id": "lol-missfortune.w",
       "name": "揚帆快步",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "獲得 3 秒極小級移速加成與 20% 攻速加成。",
       "slot": "W",
       "castType": "self",
@@ -180,7 +180,7 @@
     "E": {
       "id": "lol-missfortune.e",
       "name": "緋帆彈雨",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。",
       "slot": "E",
       "castType": "ground",
@@ -249,7 +249,7 @@
     "R": {
       "id": "lol-missfortune.r",
       "name": "扇港齊射",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "向指定區域連續投下六發物理彈幕，散布及命中區域均有界。",
       "slot": "R",
       "castType": "ground",

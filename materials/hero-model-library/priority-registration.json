@@ -54,7 +54,7 @@
       },
       "after": {
         "championId": "community-review-01-20260907",
-        "expectedHash": "sha256:86157c014e1ce129f609c205cb9a66f6646fd44a65bb1b88c168b4ed31e1d8ea",
+        "expectedHash": "sha256:7e4171abb85d4b9540673317754a39916e8e85dc9f8ae9e0f19471e25c27c1fd",
         "activeModelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
         "versions": [
           {
@@ -107,9 +107,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-02-20260907",
-        "expectedHash": "sha256:43eb6882aa523ef47f399576d7b5917d7f058ae9831290faa242fa35de10945e",
+        "expectedHash": "sha256:0d32a7cdf6ef6debef974ba0f38e30f23e82b3c9f2898af6c01356d6c6e71f17",
         "activeModelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:22:16.192Z",
+            "source": {
+              "kind": "previous",
+              "character": "八神庵",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.a89b32319ef8148b84d78d6db012d6dad16c406291505f5e",
+            "label": "ou99 八神庵（本尊）",
+            "sourceModelKey": "ou99.313646",
+            "modelSha256": "7a2a1a8b24dc9a874be5afe6edb752dd106f539fd8c3e3991bd5ecd344d688f4",
+            "binarySha256": "40f5e40a243762d240f87d1979db0ec81ad150a470d6bbd69a6352617f7dd1ec",
+            "registeredAt": "2026-09-10T11:22:16.279Z",
+            "source": {
+              "kind": "exact",
+              "character": "八神庵",
+              "work": "拳皇 THE KING OF FIGHTERS",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-313646-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.cc18457fd9e72014081ff16a6a34789f34e394d45844a8e5",
             "label": "原上線模型",
@@ -168,7 +198,7 @@
       },
       "after": {
         "championId": "community-review-02-20260907",
-        "expectedHash": "sha256:0d32a7cdf6ef6debef974ba0f38e30f23e82b3c9f2898af6c01356d6c6e71f17",
+        "expectedHash": "sha256:a986b133e2b74bfd7616a062955a8cfaa853048eb456240fb78633f6dbb8c783",
         "activeModelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
         "versions": [
           {
@@ -331,7 +361,7 @@
       },
       "after": {
         "championId": "community-review-03-20260907",
-        "expectedHash": "sha256:87ade0dcf6242962271baae41b51c75d58099028e6131728b6de6a9c2e233ecd",
+        "expectedHash": "sha256:02182e3ad391cdd2e49da3b30536624b4ea6e369cccd151fdce77daa122830b9",
         "activeModelKey": "version.body.4460b40eae91d19d1895469c9eaf0d6bd1e4fb3766b1b350",
         "versions": [
           {
@@ -444,7 +474,7 @@
       },
       "after": {
         "championId": "community-review-04-20260907",
-        "expectedHash": "sha256:d5ccba65c0e6dc6eec1255a4c028bd4115132bf7f947f3a2be5286a2e7830f53",
+        "expectedHash": "sha256:780445020e2a6eb6128b308052210f7b76f5691d790ca3581ece0b274952c182",
         "activeModelKey": "version.body.e47f9a11483e936f6ae4796e32f51853b1a2ad1c0599cc75",
         "versions": [
           {
@@ -497,9 +527,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-05-20260907",
-        "expectedHash": "sha256:1b50eb3756d19c0c9a4e3c9975e6afcd98ef91c2ffdf78bd40c6781ffe0c9352",
+        "expectedHash": "sha256:a15cf57f9a9289a980690b35010742e87fdb336ad89636695dd0768f7734872e",
         "activeModelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:22:42.001Z",
+            "source": {
+              "kind": "previous",
+              "character": "洛克人",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.29236b04b74aab09f6a72a3b70e82d3a49f4b308fddae01a",
+            "label": "ou99 洛克人 X（本尊）",
+            "sourceModelKey": "ou99.287871",
+            "modelSha256": "788fada3ffb7873319e3f36a761f47ba15dcd565aad50cd4cdc73f481e4f2a3b",
+            "binarySha256": "0eda0dfbeea623f4ddde82588d804dcb18acad3df71b6b61ef34100199c011d5",
+            "registeredAt": "2026-09-10T11:22:42.004Z",
+            "source": {
+              "kind": "exact",
+              "character": "洛克人 X",
+              "work": "洛克人 X 系列",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-287871-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.ca49559d6f92e4001caa12f9f4b9a84d02aa7b155d4476f7",
             "label": "原上線模型",
@@ -558,7 +618,7 @@
       },
       "after": {
         "championId": "community-review-05-20260907",
-        "expectedHash": "sha256:a15cf57f9a9289a980690b35010742e87fdb336ad89636695dd0768f7734872e",
+        "expectedHash": "sha256:28ad0ca643846285c0450f816447c934a1b557c9a247703ac873d09d80260170",
         "activeModelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
         "versions": [
           {
@@ -721,7 +781,7 @@
       },
       "after": {
         "championId": "community-review-06-20260907",
-        "expectedHash": "sha256:f09739252eec239ecc9d7ff4cec9aa2b12074e8e852849a89162ad96fff140d2",
+        "expectedHash": "sha256:8b28b23897cf7ed1521d0b1acf5ee894e2d8ddb4b3a680b6b5309c77b2377f70",
         "activeModelKey": "version.body.6484c748978551f4419a5e982a3e6814f8fca9b9ff276939",
         "versions": [
           {
@@ -793,9 +853,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-07-20260907",
-        "expectedHash": "sha256:b643145e6957c8e6727a432f88c8a557c732d1eb8ce56f593898846d0b1b8941",
+        "expectedHash": "sha256:4e18824190b769d92bf6f5d0cd1bb67433b242df656028ce13c6b00b63a71b1b",
         "activeModelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:48:42.528Z",
+            "source": {
+              "kind": "previous",
+              "character": "西索",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
+            "label": "ou99 西索（本尊·減面版）",
+            "sourceModelKey": "ou99.497211",
+            "modelSha256": "c671fb3ba1d83f9bf97c7f10292d5311c43ba949ba49beda8f0e006eaac8287a",
+            "binarySha256": "7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b",
+            "registeredAt": "2026-09-10T11:48:42.545Z",
+            "source": {
+              "kind": "exact",
+              "character": "西索",
+              "work": "獵人 HUNTER×HUNTER",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-497211-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.6fb9f6d8bbe5c0bbc7bd7f373a3b8591e3e27b7111d68b3b",
             "label": "原上線模型",
@@ -854,7 +944,7 @@
       },
       "after": {
         "championId": "community-review-07-20260907",
-        "expectedHash": "sha256:4e18824190b769d92bf6f5d0cd1bb67433b242df656028ce13c6b00b63a71b1b",
+        "expectedHash": "sha256:d65ae739b5b9eeed5466323473db6b3527d07dde1105c001955f17a5cd5261f8",
         "activeModelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
         "versions": [
           {
@@ -997,7 +1087,7 @@
       },
       "after": {
         "championId": "community-review-08-20260907",
-        "expectedHash": "sha256:701e8d88953fca18f853c2a7aa6c8a46bca48db7f8743f2bf78bdcb1e9eb5189",
+        "expectedHash": "sha256:21ec92a4a18d4c884d29b0a1859c64a1a3e3a902768d12e15bc1b44ae41b9e44",
         "activeModelKey": "version.body.66097b65102bec44b3d65cc9e524ba10b3e175261680a998",
         "versions": [
           {
@@ -1050,9 +1140,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-09-20260907",
-        "expectedHash": "sha256:aea50b8095866917ba28fdabbadce878e7aa92827c765c6776791b0659c42d06",
+        "expectedHash": "sha256:b892262a84db31f7c0d8c77e13620cfe4aa5d5ba17b8c3462bc899091c5ef6a2",
         "activeModelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
         "versions": [
+          {
+            "modelKey": "version.body.7658e69c9564dbc14ca7ff12e6113e02678c8dcd0bb8e2c1",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.468771",
+            "modelSha256": "7cf5891c1f6a178aef974eb6a5b27570099b4f1bfb96081571e97fd64558e477",
+            "binarySha256": "0e7b88a4f1e55e5244a6c1f027d2053a095be970844c47314a80c0ce170632ce",
+            "registeredAt": "2026-09-10T11:23:02.253Z",
+            "source": {
+              "kind": "previous",
+              "character": "赫蘿",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.468771.json"
+            }
+          },
+          {
+            "modelKey": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
+            "label": "ou99 貼文 #468771（相似造型）",
+            "sourceModelKey": "ou99.468771",
+            "modelSha256": "d0e0a843e7e6f81d12d9bd16b01f59d6f4a35be9028414a6190592641d7a65f1",
+            "binarySha256": "0e7b88a4f1e55e5244a6c1f027d2053a095be970844c47314a80c0ce170632ce",
+            "registeredAt": "2026-09-10T11:23:02.263Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "赫蘿",
+              "work": "ou99 貼文 #468771",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-468771-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.9323d45f0296a46d95b7cb5ea6085878e851f37cd3311541",
             "label": "原上線模型",
@@ -1111,7 +1231,7 @@
       },
       "after": {
         "championId": "community-review-09-20260907",
-        "expectedHash": "sha256:b892262a84db31f7c0d8c77e13620cfe4aa5d5ba17b8c3462bc899091c5ef6a2",
+        "expectedHash": "sha256:889950cf9e2c3a2d0c33cafdc6d83f7fe76549d9c34849737a17c6d3cb3f0ffd",
         "activeModelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
         "versions": [
           {
@@ -1254,7 +1374,7 @@
       },
       "after": {
         "championId": "community-review-10-20260907",
-        "expectedHash": "sha256:82411c85f794b4618f9450de850f065bbcab18ca1ad80aa2a783f7111251dc4c",
+        "expectedHash": "sha256:3246e3070bac6b7f3fb49194e1c5db73ec248ea69f6e532ecfa58e78bff249c5",
         "activeModelKey": "version.body.1017c2855b9daf1ffefdf0a6285253a6cfee673a8329b94b",
         "versions": [
           {
@@ -1307,9 +1427,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-11-20260907",
-        "expectedHash": "sha256:a5ce782e5b24e7f54ea526af0dbe888baac538a5957b371cd2c5a70bfe22ee79",
+        "expectedHash": "sha256:cf39d31377eaab692a4e6b10398c9dad88dbf2ccb0bd7daa044b5b7539952588",
         "activeModelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
         "versions": [
+          {
+            "modelKey": "version.body.1d22559edc8a7be9b96c3a1bc452fff1f678b1ec80eabc46",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.457280",
+            "modelSha256": "829ccb5c50fc98008e021f4737441d06787390a8b81ec7a6aecd526daaf2b2e4",
+            "binarySha256": "31f65ed0a6b557b931511b2a61aa011f97937f49040fabc9697d77fa3d52be9a",
+            "registeredAt": "2026-09-10T11:23:23.296Z",
+            "source": {
+              "kind": "previous",
+              "character": "利姆路",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.457280.json"
+            }
+          },
+          {
+            "modelKey": "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473",
+            "label": "ou99 利姆路（史萊姆形態）（本尊）",
+            "sourceModelKey": "ou99.457280",
+            "modelSha256": "d5ee0c47f2d148f21aec30f24b6b9b3b80ddcc8e8e88cdd7cf536391c3e53246",
+            "binarySha256": "31f65ed0a6b557b931511b2a61aa011f97937f49040fabc9697d77fa3d52be9a",
+            "registeredAt": "2026-09-10T11:23:23.309Z",
+            "source": {
+              "kind": "exact",
+              "character": "利姆路（史萊姆形態）",
+              "work": "關於我轉生變成史萊姆這檔事",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-457280-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.9dc018e902d47bae413635f604c326742a8dcfba4fe52a56",
             "label": "原上線模型",
@@ -1368,7 +1518,7 @@
       },
       "after": {
         "championId": "community-review-11-20260907",
-        "expectedHash": "sha256:cf39d31377eaab692a4e6b10398c9dad88dbf2ccb0bd7daa044b5b7539952588",
+        "expectedHash": "sha256:6dcece1e9ac7f8216fc4d506acf75dcb1bbaaceb96ccfffa49d6ca08e4fad22e",
         "activeModelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
         "versions": [
           {
@@ -1511,7 +1661,7 @@
       },
       "after": {
         "championId": "community-review-12-20260907",
-        "expectedHash": "sha256:2857886bf8aefbe8cd56412f71da28a32d16a759aa508de83dcc92e15ea3fc35",
+        "expectedHash": "sha256:7aa40d230bfec24296d3e4b70df2c6db5781bbf508de048df6bc31cc432f1085",
         "activeModelKey": "version.body.317bd7b51ce0d64c24ebd79093f3aea10399eaaeec9186ec",
         "versions": [
           {
@@ -1605,7 +1755,7 @@
       },
       "after": {
         "championId": "community-review-13-20260907",
-        "expectedHash": "sha256:c3f9e03a7da994e9f8e7441960f439e1e105cc4f5cf3f2b971a5f177489e4585",
+        "expectedHash": "sha256:20a8ce40d113282684608f83e17392a207977849ec051e2ae20c295edf80990b",
         "activeModelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
         "versions": [
           {
@@ -1658,9 +1808,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-14-20260907",
-        "expectedHash": "sha256:a67cb274e1bf085519467b7f08ab29b6b88cddb01efa55fd58d445e9e095c7a1",
+        "expectedHash": "sha256:f0d35efc523e875cac9ff01411dd1fb5fd42d4f627731e3a05287f1dca59442b",
         "activeModelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
         "versions": [
+          {
+            "modelKey": "version.body.1be30180aed1be22caaf1c8cae83ffc2e8e44b0f21e4600e",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.472112",
+            "modelSha256": "ced661885438afc9b8e4be81eb2e56200339429609500dd3532857c1f9643b6e",
+            "binarySha256": "5f0ad53029f8788a437fe2410f322f35738fb5a8aba54d3c77f04c0f8d28b7ca",
+            "registeredAt": "2026-09-10T11:24:47.864Z",
+            "source": {
+              "kind": "previous",
+              "character": "殺老師",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.472112.json"
+            }
+          },
+          {
+            "modelKey": "version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1",
+            "label": "ou99「笑脸人法神搞怪人」（相似造型）",
+            "sourceModelKey": "ou99.472112",
+            "modelSha256": "75754c057e772e4bcb8e3a06311aa931fc94cab3beb0470adf6ae7361aa1f5a1",
+            "binarySha256": "5f0ad53029f8788a437fe2410f322f35738fb5a8aba54d3c77f04c0f8d28b7ca",
+            "registeredAt": "2026-09-10T11:24:47.871Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "殺老師",
+              "work": "笑脸人法神搞怪人",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-472112-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.28f1ec9f19e95808015c6545b9fc1ce938dad71499e82c1f",
             "label": "原上線模型",
@@ -1719,7 +1899,7 @@
       },
       "after": {
         "championId": "community-review-14-20260907",
-        "expectedHash": "sha256:f0d35efc523e875cac9ff01411dd1fb5fd42d4f627731e3a05287f1dca59442b",
+        "expectedHash": "sha256:67c6b21d89579ddfb72df9d0e370a5e030b8b4582420e03e2550748332d12870",
         "activeModelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
         "versions": [
           {
@@ -1821,9 +2001,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-15-20260907",
-        "expectedHash": "sha256:90837adf8bf27f0d31fdc5c9f59db2f119fa12e4263ebd8723999eb13889ed16",
+        "expectedHash": "sha256:883a02ed37adabf96a765a4b951d80a6fcc371f25a0a48828d5454d6f7234a8e",
         "activeModelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
         "versions": [
+          {
+            "modelKey": "version.body.1014b88114b4a3aad2dcab3a7554583dac7499d569b63ead",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.457123",
+            "modelSha256": "167cc0ac727ff3adc93973edf168185284ca749ff92901fa5b11472c44f7f57e",
+            "binarySha256": "440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7",
+            "registeredAt": "2026-09-10T11:25:10.235Z",
+            "source": {
+              "kind": "previous",
+              "character": "比利海靈頓",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.457123.json"
+            }
+          },
+          {
+            "modelKey": "version.body.c574cdb9cfe55750d8acef037f8463288a5078a121e5db71",
+            "label": "ou99 比利·海靈頓（本尊）",
+            "sourceModelKey": "ou99.457123",
+            "modelSha256": "8e9b11e3143bcf11b294a91379c1cb2a1f62045cbcda1e445e3cd37f76bd0bdd",
+            "binarySha256": "440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7",
+            "registeredAt": "2026-09-10T11:25:10.241Z",
+            "source": {
+              "kind": "exact",
+              "character": "比利·海靈頓",
+              "work": "Gachimuchi 二次創作",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-457123-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.b4ff5a804c418807cf914810d3a45d9989f1c847069f7aec",
             "label": "原上線模型",
@@ -1882,7 +2092,7 @@
       },
       "after": {
         "championId": "community-review-15-20260907",
-        "expectedHash": "sha256:883a02ed37adabf96a765a4b951d80a6fcc371f25a0a48828d5454d6f7234a8e",
+        "expectedHash": "sha256:0ff3e919a2ff3e6b8770a815a685bffa652cd9822e1b71090c3b8c06c06d3a12",
         "activeModelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
         "versions": [
           {
@@ -2025,7 +2235,7 @@
       },
       "after": {
         "championId": "community-review-16-20260907",
-        "expectedHash": "sha256:c09834c33af3d1f5d5e90adc04715365248cc33254434344ce2f1b96e9994f33",
+        "expectedHash": "sha256:6a79a54b9a238a476be075afa24fe2f3e72fea78ef13c3b28e3e66b8cf7f4bca",
         "activeModelKey": "version.body.c50b439503acbc0286d34aa863de3b5b60f040647b3e3fe5",
         "versions": [
           {
@@ -2119,7 +2329,7 @@
       },
       "after": {
         "championId": "community-review-17-20260907",
-        "expectedHash": "sha256:199c7be529fb691d1a2dce00bd7696a1cc9c25bfb9d1e8be3b08d5650c07d3de",
+        "expectedHash": "sha256:8d7e5e6eaad4cfbaafb4b2212e963dbdc174c0406e2348273c7e0e8a9e193134",
         "activeModelKey": "version.body.a7b05cda23ed28ef09c8cc70fdb6331f78fe40521d48c953",
         "versions": [
           {
@@ -2213,7 +2423,7 @@
       },
       "after": {
         "championId": "community-review-18-20260907",
-        "expectedHash": "sha256:28e4a501ec31d90e054db03ba89cfc808c39b5488d1e1790d1ac058adc78f7eb",
+        "expectedHash": "sha256:0f3407e38f32b6815c6a24e4df4106e3d28f44741bc0109de027196a130f0c27",
         "activeModelKey": "version.body.19497fdc652b511ec9848c31dc8709e35a78e1b6e1ef0e44",
         "versions": [
           {
@@ -2307,7 +2517,7 @@
       },
       "after": {
         "championId": "community-review-19-20260907",
-        "expectedHash": "sha256:563f496c7485b1a0d15d2d177b64a236a25aeee0a40d7e3c5bd1f74d909d0ac7",
+        "expectedHash": "sha256:7a89e5bf2272906a4e01739d2fe279b9655f786bbf109e58272af8252b155fea",
         "activeModelKey": "version.body.6a8f96e74f75181f0076b272622cf3fe83404a51f17149fa",
         "versions": [
           {
@@ -2401,7 +2611,7 @@
       },
       "after": {
         "championId": "community-review-20-20260907",
-        "expectedHash": "sha256:cbe502336bb3ae83286b7d7f9750cb1ffcb68ef051e2ff6c5b16ea8b4f62bede",
+        "expectedHash": "sha256:d64769073c11e8951ae393379f745e08bff0b9768ca896a20e251904edc8e4ac",
         "activeModelKey": "version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502",
         "versions": [
           {
@@ -2495,7 +2705,7 @@
       },
       "after": {
         "championId": "community-review-21-20260907",
-        "expectedHash": "sha256:8c97339c9c5f844813e2d672c7dbe3d6e3b19926ffa6d8aa82c126b367c773eb",
+        "expectedHash": "sha256:de603f3aeeb7a32063b2c2317ade8ac2bfe3b5f1e911e68e2bec3b1cee5f5296",
         "activeModelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
         "versions": [
           {
@@ -2548,9 +2758,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-22-20260907",
-        "expectedHash": "sha256:a4159cb609034e050e2c2b4b23275aced5ed41e30fe262b7e1b0969a8b93e7e8",
+        "expectedHash": "sha256:c6724aaf81babcd168b616fa1b414c2f20e662bca912ce25b5428991e93033d7",
         "activeModelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:25:32.159Z",
+            "source": {
+              "kind": "previous",
+              "character": "菜月昴",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
+            "label": "ou99 貼文 #311294（相似造型）",
+            "sourceModelKey": "ou99.311294",
+            "modelSha256": "7ee5a5282234dd3ba048321d84e10333603a387ffa32927a95797cb408582e6e",
+            "binarySha256": "bbaa448e0ffe310540583bec08b33c83f79ff4353847b4ced259dea51b6d4cf9",
+            "registeredAt": "2026-09-10T11:25:32.174Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "菜月昴",
+              "work": "ou99 貼文 #311294",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-311294-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.cc688f0c9acfeab9c68254e817d2ed85a6447f9b093bd3db",
             "label": "原上線模型",
@@ -2609,7 +2849,7 @@
       },
       "after": {
         "championId": "community-review-22-20260907",
-        "expectedHash": "sha256:c6724aaf81babcd168b616fa1b414c2f20e662bca912ce25b5428991e93033d7",
+        "expectedHash": "sha256:7ede9811389bc124710605f3ca9484e3ce2d7e652ae72bc648311f9c25cc0916",
         "activeModelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
         "versions": [
           {
@@ -2771,7 +3011,7 @@
       },
       "after": {
         "championId": "community-review-23-20260907",
-        "expectedHash": "sha256:9e9c7933434c3ab29e2c7a459f5c6f3501d4a7f70808bd389e486a49ad3450e4",
+        "expectedHash": "sha256:c216f65231e9dd1979ae3e829457d38ead2c030cabe0e569f67af242d4e77d49",
         "activeModelKey": "version.body.64f3795c6a5e90dbf5a8b78fe190d56cf81effb852f353fd",
         "versions": [
           {
@@ -2883,7 +3123,7 @@
       },
       "after": {
         "championId": "community-review-24-20260907",
-        "expectedHash": "sha256:7e38f90d02f56df833290e22588464153792bf4d827ad2bdbc187587c325e80c",
+        "expectedHash": "sha256:e898203dab732714488db53f158389af84eb5de9502e6d665687b2deb6c1240c",
         "activeModelKey": "version.body.7f075191d8d759a8475e66b421de085eb1fcf8926a175681",
         "versions": [
           {
@@ -2977,7 +3217,7 @@
       },
       "after": {
         "championId": "community-review-25-20260907",
-        "expectedHash": "sha256:059d80697a1192e251b2bf1bfb1743eb051bef18fc435c9e347b5758d73f9a26",
+        "expectedHash": "sha256:f9b0380cf02d6424a3c031cd0295ee2d6ee5b20a434de0c4f1c1684cebc08b2e",
         "activeModelKey": "version.body.93f9bee80c870645e52e6c71f731c3bf56dd3c9f0757fc76",
         "versions": [
           {
@@ -3071,7 +3311,7 @@
       },
       "after": {
         "championId": "community-review-26-20260907",
-        "expectedHash": "sha256:6bbb7c69305972339bfd434b5ee3f447b6c61e64323f0df0182a8a9436ca2a0f",
+        "expectedHash": "sha256:62acbea39d0d86ae6244cff8707a8b689339749b62fff23502ffff3e74698c74",
         "activeModelKey": "version.body.d3d930c84f9423094ffdca11a0b5ea4fa2c39638cea939ab",
         "versions": [
           {
@@ -3165,7 +3405,7 @@
       },
       "after": {
         "championId": "community-review-27-20260907",
-        "expectedHash": "sha256:e2d6499733a2f5a8c2d3c8ac754b08ce9b49a8127023980f845c3075b5e83dc7",
+        "expectedHash": "sha256:d9a4f8a1dc84ed834d4701f83525ce1e0cd3808b9c55539d145011e5784a81c4",
         "activeModelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
         "versions": [
           {
@@ -3259,7 +3499,7 @@
       },
       "after": {
         "championId": "community-review-28-20260907",
-        "expectedHash": "sha256:a2987a3a0e811005282a6063e0e5640796b3970fc54ca0f1d84399ce4a6b8183",
+        "expectedHash": "sha256:0ff2e43e8668a50e37de3ab35efba9bd3594159252424ec3efa75e60df814127",
         "activeModelKey": "version.body.1de4f7fe358ffb265236f5cbcd16e3b6cf4289ff48c9c429",
         "versions": [
           {
@@ -3353,7 +3593,7 @@
       },
       "after": {
         "championId": "community-review-29-20260907",
-        "expectedHash": "sha256:8a32e8b4106de45f287009166d4d0182e18bea218e0721599fe56fe7c9604487",
+        "expectedHash": "sha256:6289715b1c45b9521ff6cee9deacf2626c12626edf1198c632955a4802141a65",
         "activeModelKey": "version.body.ba1886127e7f2741f4e6763d243777cb7e34b38d28d02bd4",
         "versions": [
           {
@@ -3406,9 +3646,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-30-20260907",
-        "expectedHash": "sha256:bd83d1a0fbd6316097032b3fd9e219291cb6d19bd3b8440ea9321a2b6ce8b1a2",
+        "expectedHash": "sha256:02732da39ddd183a45c3be9c491ed83084f12e9862b626b8b0368d52e2302675",
         "activeModelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
         "versions": [
+          {
+            "modelKey": "version.body.66347ee0e95b4a1960dd0b58b17e50bedd726e4dddea3a67",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.498214",
+            "modelSha256": "fe8af673566f33fdd934f3bb84e4fe4ada6c88e34e4ee059add42d1885c1ea01",
+            "binarySha256": "5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1",
+            "registeredAt": "2026-09-10T11:34:55.356Z",
+            "source": {
+              "kind": "previous",
+              "character": "尼古貓貓",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.498214.json"
+            }
+          },
+          {
+            "modelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
+            "label": "ou99 「可爱娃娃」（相似造型）",
+            "sourceModelKey": "ou99.498214",
+            "modelSha256": "2993434fc651dd87df6ee418d5fa18d9c7a57f6c47d2a775ac3ad02100613d16",
+            "binarySha256": "5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1",
+            "registeredAt": "2026-09-10T11:34:55.362Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "尼古貓貓",
+              "work": "可爱娃娃",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-498214-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.d0dd376d8dc09d756500861ccc7c4ddb9e797aeca35c3b0c",
             "label": "原上線模型",
@@ -3467,7 +3737,7 @@
       },
       "after": {
         "championId": "community-review-30-20260907",
-        "expectedHash": "sha256:02732da39ddd183a45c3be9c491ed83084f12e9862b626b8b0368d52e2302675",
+        "expectedHash": "sha256:60851934f19484c8108656b516a319d3b1431ec05586c8980aae0fa998a7bfab",
         "activeModelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
         "versions": [
           {
@@ -3630,7 +3900,7 @@
       },
       "after": {
         "championId": "community-review-31-20260907",
-        "expectedHash": "sha256:e7f785771f9235deecbe696fa889773fd22964d903d8592892d8fa05a26113ae",
+        "expectedHash": "sha256:a9cf85c35e6dc93f3ce2c267648b6e7d30fb33039aa14b07053f244fca546f39",
         "activeModelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
         "versions": [
           {
@@ -3763,7 +4033,7 @@
       },
       "after": {
         "championId": "community-review-32-20260907",
-        "expectedHash": "sha256:6a288693a12e478eaef807d83f7a70c789aa0b5efce26c56e3f4c735ee96aeef",
+        "expectedHash": "sha256:af04d0f7adae80cb3eacc82b234dd284d2e2a0b997dd0ac8dde28e58e07dff84",
         "activeModelKey": "version.body.a22a6e40793b280739b186768ad8a8a32b303806d27577cc",
         "versions": [
           {
@@ -3835,9 +4105,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-33-20260907",
-        "expectedHash": "sha256:e0bbc862ca93fa1a2325dd0b1b021b2ec4fc4258a325c226774d3e01e85fcb5f",
+        "expectedHash": "sha256:f17b340b6f8da6e09db38fdf6d67573bf8b4fcfe1eff963b0742b4f0722b77ba",
         "activeModelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
         "versions": [
+          {
+            "modelKey": "version.body.b15e95129206cf24ecb45592c44a25647a332db0ec8009f8",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.470087",
+            "modelSha256": "32aa1af9b31de22fb4b12a7c36d505fd517536f5171540225afac2779d9f57c2",
+            "binarySha256": "2449b2d8464537bded968198bbd77611af9678f20113af1604428924c26b5d74",
+            "registeredAt": "2026-09-10T11:35:34.333Z",
+            "source": {
+              "kind": "previous",
+              "character": "近衛刀太",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.470087.json"
+            }
+          },
+          {
+            "modelKey": "version.body.621e928d6f5f58a8b7fc18bde58c8e0b189843fd36202b2f",
+            "label": "ou99 「蓝瞳靓仔版远野志贵」（相似造型）",
+            "sourceModelKey": "ou99.470087",
+            "modelSha256": "f9ef79e632aff269deac7ea5f9b5b421c9dcdbb9d7d463cc2c60d952c506db41",
+            "binarySha256": "2449b2d8464537bded968198bbd77611af9678f20113af1604428924c26b5d74",
+            "registeredAt": "2026-09-10T11:35:34.346Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "UQHOLDER 近衛刀太",
+              "work": "蓝瞳靓仔版远野志贵",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-470087-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.b0f51f214cce617a5b9046a281f70626b9ddbee8cccd1375",
             "label": "原上線模型",
@@ -3896,7 +4196,7 @@
       },
       "after": {
         "championId": "community-review-33-20260907",
-        "expectedHash": "sha256:f17b340b6f8da6e09db38fdf6d67573bf8b4fcfe1eff963b0742b4f0722b77ba",
+        "expectedHash": "sha256:c8634b28bcfaeac537a8fdb8aecb06a8c2271d4327a86001a0057f959e763c54",
         "activeModelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
         "versions": [
           {
@@ -3999,9 +4299,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-34-20260907",
-        "expectedHash": "sha256:d85d23775bee36353dbf2d5e93b4fece2bbc1a23740822edf8648323840703a6",
+        "expectedHash": "sha256:2a5469c3cbc1b079955d2218b91977806bd513e67b2476cc94fea18a8e124f75",
         "activeModelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:36:44.946Z",
+            "source": {
+              "kind": "previous",
+              "character": "高速婆婆",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.1c6835b90c39d1d3b1c6457a89d8fe0599cc6b5d09be22a1",
+            "label": "ou99 「人妖喜乐」（相似造型）",
+            "sourceModelKey": "ou99.458013",
+            "modelSha256": "b1c300254abadbef906fb18b66bf47967653d1ecca3d5903eb03a0dcd3b429d5",
+            "binarySha256": "175251f6dadd320f762fcae4a0f2f84026f876a86f269cd16a7305fed1831cd3",
+            "registeredAt": "2026-09-10T11:36:44.990Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "膽大黨 高速婆婆",
+              "work": "人妖喜乐",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-458013-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.1d73432509e2559827f926fb9990eb87166ce602e260127e",
             "label": "原上線模型",
@@ -4078,7 +4408,7 @@
       },
       "after": {
         "championId": "community-review-34-20260907",
-        "expectedHash": "sha256:2a5469c3cbc1b079955d2218b91977806bd513e67b2476cc94fea18a8e124f75",
+        "expectedHash": "sha256:3411395d517d0cd9e0c091136454d6b1f037bc7ae1edc65ea75816f34632f5e4",
         "activeModelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
         "versions": [
           {
@@ -4239,7 +4569,7 @@
       },
       "after": {
         "championId": "community-review-35-20260907",
-        "expectedHash": "sha256:09ba1052e8f5cedfb204f7d8834f670874ee4d36047c79e332c3e34f645b6dfd",
+        "expectedHash": "sha256:e1375e729ad7b4376c0cf4d377b04ff43f22005b754aa8bbce93ddd984faa365",
         "activeModelKey": "version.body.2f9f563af47ff08c5b5a7e3e34658d24ce59718cc568379c",
         "versions": [
           {
@@ -4292,9 +4622,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-36-20260907",
-        "expectedHash": "sha256:9125442a6e94a581abe940ff80756e7f7be30bd6d2af1497a3cad74c71eeb27c",
+        "expectedHash": "sha256:af3296c24e3146fdaede59db8906c55468d372383394d6b238c85cb42cecb3a8",
         "activeModelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:45:25.544Z",
+            "source": {
+              "kind": "previous",
+              "character": "鬼畜王蘭斯",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.3139ca177291a0bdad27850cbc7aaa17b65f07f2f6775272",
+            "label": "ou99 「篮球小男孩」（相似造型）",
+            "sourceModelKey": "ou99.493578",
+            "modelSha256": "d2136011a00bbaf235dca674ba054176d7892e6e8fd5a6ef57100b456ad640ca",
+            "binarySha256": "f70116b571774a32bc2c92fc5d9e273228de6ec2277b31ff8554b5201d64ac8d",
+            "registeredAt": "2026-09-10T11:45:25.579Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "鬼畜王蘭斯",
+              "work": "篮球小男孩",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-493578-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.d52431a966e687856f7333a254356b015ab2dd88e61fe768",
             "label": "原上線模型",
@@ -4353,7 +4713,7 @@
       },
       "after": {
         "championId": "community-review-36-20260907",
-        "expectedHash": "sha256:af3296c24e3146fdaede59db8906c55468d372383394d6b238c85cb42cecb3a8",
+        "expectedHash": "sha256:3feb6457cbf0a967029a2b3a4153bf242b0c8a270680a2234e701d671d28a36f",
         "activeModelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
         "versions": [
           {
@@ -4455,9 +4815,39 @@
       "failed": [],
       "before": {
         "championId": "community-review-37-20260907",
-        "expectedHash": "sha256:8d8f0b31d0de854b4c09e2dfbb1d961fff26b98fa51f84e998b5b004fb9ba64e",
+        "expectedHash": "sha256:79a035f0f0c992ed9fedf95350a84c7e8d350f36d232d30ca86c4e575c0106ab",
         "activeModelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:39:18.863Z",
+            "source": {
+              "kind": "previous",
+              "character": "吉伊卡哇",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
+            "label": "ou99 「可爱小宠物chii吉伊」（相似造型）",
+            "sourceModelKey": "ou99.459617",
+            "modelSha256": "7ab0c5e7ba541cf2f14b05d4bbcb0c190e213a9801dbfa0f3e10529deb6ea243",
+            "binarySha256": "4382e2d43746df99fc68fb36b6b466e2bac8b4abd5c94a679b3153946c6cdcc5",
+            "registeredAt": "2026-09-10T11:39:18.885Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "吉伊卡哇",
+              "work": "可爱小宠物chii吉伊",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-459617-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.a011af79ef5884f8ced07c1f0d367d90d5b046aee2eb24c8",
             "label": "原上線模型",
@@ -4516,7 +4906,7 @@
       },
       "after": {
         "championId": "community-review-37-20260907",
-        "expectedHash": "sha256:79a035f0f0c992ed9fedf95350a84c7e8d350f36d232d30ca86c4e575c0106ab",
+        "expectedHash": "sha256:44ff91f01d1307373ab0b9cda07696c12ac2b892a5b588371f552c0ab04030e0",
         "activeModelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
         "versions": [
           {
@@ -4679,7 +5069,7 @@
       },
       "after": {
         "championId": "b2-popp",
-        "expectedHash": "sha256:fed2e8316cd7293dc4190dd55a07720036016beba83b59eedeb32ff77a9d771f",
+        "expectedHash": "sha256:7d3b3d22c2e97b08b46c1dfb64e69c11856a779e05ee491a1bb4e009371289d1",
         "activeModelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
         "versions": [
           {
@@ -4792,7 +5182,7 @@
       },
       "after": {
         "championId": "b2-rem",
-        "expectedHash": "sha256:2da802349874d91e480321974e515520b78b64d4b3bea9984f7f045027f06ad9",
+        "expectedHash": "sha256:e0cf9f7ea6981b8dac5c2ca04dd26b938c3c90fdbc33d84eee0b4f32ad2cf5f6",
         "activeModelKey": "version.body.712d51b72d6746b5e62dd98a095c148ec269187477f8e040",
         "versions": [
           {
@@ -4886,7 +5276,7 @@
       },
       "after": {
         "championId": "b2-zenitsu",
-        "expectedHash": "sha256:17e506163a221fa2e5489032843b01a141cc6b869aa0630901a41a1d16f1a3d0",
+        "expectedHash": "sha256:c72b363326fcbfcf0f111d5d6e744453f4df49d877e04ac33a06aa17b5eec5b0",
         "activeModelKey": "version.body.80d9331a8e1ba0ea4afa42aefa76dc1c3b11b0d0bf1ceb4c",
         "versions": [
           {
@@ -4980,7 +5370,7 @@
       },
       "after": {
         "championId": "b2-rin",
-        "expectedHash": "sha256:159f24b9a36e539c8d76538f450ecb35da895addfb38995eb1b8120bdbf1dd69",
+        "expectedHash": "sha256:f49eb05748fef677dec196252b2b0631d1d5f5c0b644cbd9f5b191c00516ec86",
         "activeModelKey": "version.body.24dff69da9f04e6b1cb5fe28affe1d1df196a9f352259aed",
         "versions": [
           {
@@ -5033,9 +5423,39 @@
       "failed": [],
       "before": {
         "championId": "b2-uncle",
-        "expectedHash": "sha256:a1222036ef02e6525380316e4c6a2c33e983cbb8329298d7cb19227b637420eb",
+        "expectedHash": "sha256:6b56ee7e09844319400446fdcd843823f251690b8fac32cbd21a48fb20e6abcf",
         "activeModelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
         "versions": [
+          {
+            "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.sela",
+            "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+            "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+            "registeredAt": "2026-09-10T11:34:06.219Z",
+            "source": {
+              "kind": "previous",
+              "character": "異世界舅舅",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.sela.json"
+            }
+          },
+          {
+            "modelKey": "version.body.7135f29cae6eb26851a90d407801e0b7dc27671ca3b08909",
+            "label": "ou99 「光刀女剑二次元」（相似造型）",
+            "sourceModelKey": "ou99.454482",
+            "modelSha256": "97d0b41905a5f7450da7d129a9e93a82fbacdee9396e4d44e5ea536def213370",
+            "binarySha256": "edc48a694535b72bbec64c92f4e3c05a5fd8b882044ace0c6dcbcc4c96365f31",
+            "registeredAt": "2026-09-10T11:34:06.260Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "異世界舅舅",
+              "work": "光刀女剑二次元",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-454482-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.287ebb2bdd01052cd0faf8a27dafd0e9fe63623172b35bb9",
             "label": "原上線模型",
@@ -5094,7 +5514,7 @@
       },
       "after": {
         "championId": "b2-uncle",
-        "expectedHash": "sha256:6b56ee7e09844319400446fdcd843823f251690b8fac32cbd21a48fb20e6abcf",
+        "expectedHash": "sha256:acadfe9292a388b45ff067c8d37e4a6a6ea1478f931559f3ecb6b870e45b746d",
         "activeModelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
         "versions": [
           {
@@ -5196,9 +5616,39 @@
       "failed": [],
       "before": {
         "championId": "b2-boxxo",
-        "expectedHash": "sha256:241accff55a66613722b3aa1d77c73e71d3de8c49d04dad34caa96f3efc41e17",
+        "expectedHash": "sha256:f6f21568ad6e5c4ab6781583b37286c9cb6bd39bf2c4e97223862abe28500906",
         "activeModelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
         "versions": [
+          {
+            "modelKey": "version.body.06d16d67ecdfa30538206289955afffc2d1f525a57292fd7",
+            "label": "原上線模型",
+            "sourceModelKey": "ou99.491448",
+            "modelSha256": "c0ec050b947093881dec3dd08ac9f383b4f3513ec868b47ccf837a45985a0297",
+            "binarySha256": "606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba",
+            "registeredAt": "2026-09-10T11:44:41.531Z",
+            "source": {
+              "kind": "previous",
+              "character": "阿箱＋拉蜜絲",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/ou99.491448.json"
+            }
+          },
+          {
+            "modelKey": "version.body.115a4c5a7e643388bd988c1caab582482f6d1175616a0437",
+            "label": "ou99 「逃亡的盗墓女孩」（相似造型）",
+            "sourceModelKey": "ou99.491448",
+            "modelSha256": "a5cbadee403f7b25be54f3ffe71d9af21688668212366919d1251c75b599c8e7",
+            "binarySha256": "606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba",
+            "registeredAt": "2026-09-10T11:44:41.538Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "轉生成自動販賣機 阿箱＋拉蜜絲",
+              "work": "逃亡的盗墓女孩",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-491448-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
             "label": "原上線模型",
@@ -5257,7 +5707,7 @@
       },
       "after": {
         "championId": "b2-boxxo",
-        "expectedHash": "sha256:f6f21568ad6e5c4ab6781583b37286c9cb6bd39bf2c4e97223862abe28500906",
+        "expectedHash": "sha256:45758d537bf23453a3773926cf77537a2782634ff09ed96a40a81407f1f183b9",
         "activeModelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
         "versions": [
           {
@@ -5359,9 +5809,39 @@
       "failed": [],
       "before": {
         "championId": "b2-shadow",
-        "expectedHash": "sha256:7f139f5a789c5efa55fd74668077d9a480750f2f1855f76bd3aee3ed3885d0eb",
+        "expectedHash": "sha256:e51868a1bc28f072e505c2a30e831af9d4e60f9f4178c8fbdf0ae1101958af44",
         "activeModelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:31:45.936Z",
+            "source": {
+              "kind": "previous",
+              "character": "闇影",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.fefbd90d0746bfe2b0ec1eaa34346fd20f90fe551bb57f07",
+            "label": "ou99 「202511z13」（相似造型）",
+            "sourceModelKey": "ou99.481732",
+            "modelSha256": "2d4e74a09c300aec89621355d80a9608e4b51ce198a2f53d722bdf66512839b3",
+            "binarySha256": "ef252f3a94524b1db2b7ffb6dfd972c4d32e70c7b4abd5f54bf25d57ab74da1b",
+            "registeredAt": "2026-09-10T11:31:45.944Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "我想成為影之強者",
+              "work": "202511z13",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-481732-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
             "label": "原上線模型",
@@ -5420,7 +5900,7 @@
       },
       "after": {
         "championId": "b2-shadow",
-        "expectedHash": "sha256:e51868a1bc28f072e505c2a30e831af9d4e60f9f4178c8fbdf0ae1101958af44",
+        "expectedHash": "sha256:854b9863643793deac87b43e337cff02b94c7dcb92c2c08ffa8e5b92f38d160a",
         "activeModelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
         "versions": [
           {
@@ -5583,7 +6063,7 @@
       },
       "after": {
         "championId": "b2-bojji",
-        "expectedHash": "sha256:9ffaddf880803599e03f83d64ab73b87c974d2637f0d7ca0ac5db61fc95ef2d4",
+        "expectedHash": "sha256:8a757ae8c53e067d99dbdb00c1b14665e22561b852a7540c847606daba4e0bc1",
         "activeModelKey": "version.body.f8868cbb08e0ca359ebd1dcfb1b9cd5392235511ddf457a0",
         "versions": [
           {
@@ -5716,7 +6196,7 @@
       },
       "after": {
         "championId": "b2-maomao",
-        "expectedHash": "sha256:615f074f6c6f82550df16584a52f22c1161aa0d25d6d51bff292562ac43a18a6",
+        "expectedHash": "sha256:fab282f63944198c4f303671efe3730a759a2e5552aaa86067982d358f62af3e",
         "activeModelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
         "versions": [
           {
@@ -5788,9 +6268,39 @@
       "failed": [],
       "before": {
         "championId": "b2-elma",
-        "expectedHash": "sha256:a479efebc8bb9fdc7446b634e7d6b589e9b2b4547afb25013ce7cab3aa8ba952",
+        "expectedHash": "sha256:976931a0b6348b233154819222a20ab99dba0fdf4dc13fe353696b2cbd88cc7e",
         "activeModelKey": "version.body.d01b869b45b264aa7f43b3025a8c47363003290c792df741",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:25:54.097Z",
+            "source": {
+              "kind": "previous",
+              "character": "艾爾瑪",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
+            "label": "ou99 「圣洁化身戚小姐」（相似造型）",
+            "sourceModelKey": "ou99.472038",
+            "modelSha256": "fe630ba66638552287f570a460a32c2f9ecd1d54fb388c3d4515cb0f2d376873",
+            "binarySha256": "1437cbed6b585225333a57196de1001a85943ae0f5dd51b2d87d230032a66718",
+            "registeredAt": "2026-09-10T11:25:54.118Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "重騎士以遊戲知識開無雙 艾爾瑪",
+              "work": "圣洁化身戚小姐",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-472038-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
             "label": "原上線模型",
@@ -5849,7 +6359,7 @@
       },
       "after": {
         "championId": "b2-elma",
-        "expectedHash": "sha256:976931a0b6348b233154819222a20ab99dba0fdf4dc13fe353696b2cbd88cc7e",
+        "expectedHash": "sha256:80fd536b1b595fea8dee793040d837323f138922b4e0f8a43f9cc35fd84da02d",
         "activeModelKey": "version.body.d01b869b45b264aa7f43b3025a8c47363003290c792df741",
         "versions": [
           {
@@ -6012,7 +6522,7 @@
       },
       "after": {
         "championId": "b2-albus",
-        "expectedHash": "sha256:84eaa2cc0f0fbf039508e71443abbc916a42988c7f0c7b089946ab9707ef8b0f",
+        "expectedHash": "sha256:dd933e5993525231cd4258d5e97137fdd6dd4a0dd05dc2ca4a2d07f90dfbe8b5",
         "activeModelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
         "versions": [
           {
@@ -6145,7 +6655,7 @@
       },
       "after": {
         "championId": "b2-goblin",
-        "expectedHash": "sha256:993e5826bfb263becc3c8b50ccefb19ba0896e834bbb0ceb151b11fa88d13141",
+        "expectedHash": "sha256:ca7a206ae21a9e10b69490b4f6de13e65f0037cffeb4e1b4ae53b64c9cf666ae",
         "activeModelKey": "version.body.d10ee74c106dbc6ed7c08168720ecfade61d528aaadfbc46",
         "versions": [
           {
@@ -6258,7 +6768,7 @@
       },
       "after": {
         "championId": "b2-maple",
-        "expectedHash": "sha256:9c7f99ca71c8cdff5f6740bfa96a9c816326f2a5c465f238296b70717353c5ac",
+        "expectedHash": "sha256:9fc934b2d76d508970d8cfb4dc3ab19971cd40bd15c84928f686df0cb83efa26",
         "activeModelKey": "version.body.516a9ba13596bee68805d424a072ff349c62ab532e8b0070",
         "versions": [
           {
@@ -6391,7 +6901,7 @@
       },
       "after": {
         "championId": "b2-naofumi",
-        "expectedHash": "sha256:3ff33c4fee647fd79b8cee9fc26c2ec55a9354951c8b6aeef092f0874773ff89",
+        "expectedHash": "sha256:217a72401978a7abb3ffd045d484c948d89c18b0516e601a570df4e4b835730a",
         "activeModelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
         "versions": [
           {
@@ -6481,9 +6991,39 @@
       "failed": [],
       "before": {
         "championId": "b2-makoto",
-        "expectedHash": "sha256:1894f19c250869af4ffba4dd88332d57a741181f02edc5dcb3dd195775b214b3",
+        "expectedHash": "sha256:0ff2e3361dc3ac05ab00e49ce0f8806c234bbac2d3b30df8e91b5045547fec68",
         "activeModelKey": "version.body.1658fe832754e7719e19011038369d9578f2143d59828350",
         "versions": [
+          {
+            "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.sela",
+            "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+            "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+            "registeredAt": "2026-09-10T11:28:56.421Z",
+            "source": {
+              "kind": "previous",
+              "character": "深澄真",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.sela.json"
+            }
+          },
+          {
+            "modelKey": "version.body.ff6d8255b711b5b0e69f13845edc2413aa1f3e40575fadd3",
+            "label": "ou99 「女刺客双见凛」（相似造型）",
+            "sourceModelKey": "ou99.478642",
+            "modelSha256": "49a3c6d7245afd483262a54cb42c96df838db076ce5c4f630032c4b874555d06",
+            "binarySha256": "1f135518b70aa26b008e59ec135e06140cfe445eadce2fe51ca8a1a5294372bb",
+            "registeredAt": "2026-09-10T11:28:56.430Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "月光下的異世界之旅 深澄真",
+              "work": "女刺客双见凛",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-478642-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.2a48a5721683702b023cb8e50666a3bf1cd1980d5d4d6380",
             "label": "原上線模型",
@@ -6542,7 +7082,7 @@
       },
       "after": {
         "championId": "b2-makoto",
-        "expectedHash": "sha256:0ff2e3361dc3ac05ab00e49ce0f8806c234bbac2d3b30df8e91b5045547fec68",
+        "expectedHash": "sha256:e9b3b99f1f24fe28331ad1f28fd22fa535da405e5393039575aec78b32c767cc",
         "activeModelKey": "version.body.1658fe832754e7719e19011038369d9578f2143d59828350",
         "versions": [
           {
@@ -6645,9 +7185,39 @@
       "failed": [],
       "before": {
         "championId": "b2-noor",
-        "expectedHash": "sha256:61e3622c4e240827155681ea0021c4a511a418aa39fbafa4ca87ffb74bc44a41",
+        "expectedHash": "sha256:de8ed9b61975d117980c56b8df6a84d893922b5b2163e073976a53cd2b2fa889",
         "activeModelKey": "version.body.697b1d6e6689c28e722161e3789cbc77a49bde86c9ad461b",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:30:07.074Z",
+            "source": {
+              "kind": "previous",
+              "character": "諾爾",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.64d007d7082b6fb9e2ac7f3f0a77a91134edb89657b5fc81",
+            "label": "ou99 「狂刀风衣男」（相似造型）",
+            "sourceModelKey": "ou99.453949",
+            "modelSha256": "b624b6ec551427bd0a3e4be02c29cc6109ba1396d089a9b960617920eccca066",
+            "binarySha256": "09444fb17e1b1a8437c0bcb3e7ccecc3d61c1d86d2b33f039b5e0817ae4d9279",
+            "registeredAt": "2026-09-10T11:30:07.092Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "我要招架一切 諾爾",
+              "work": "狂刀风衣男",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-453949-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.b0b4c425eb1938b605494fe7d38a3e812ac1792cf0fee765",
             "label": "原上線模型",
@@ -6724,7 +7294,7 @@
       },
       "after": {
         "championId": "b2-noor",
-        "expectedHash": "sha256:de8ed9b61975d117980c56b8df6a84d893922b5b2163e073976a53cd2b2fa889",
+        "expectedHash": "sha256:026bfd85128cc030adbada157b067c893f4c92c0e503dbfcfa20dca5de435b3d",
         "activeModelKey": "version.body.697b1d6e6689c28e722161e3789cbc77a49bde86c9ad461b",
         "versions": [
           {
@@ -6844,9 +7414,39 @@
       "failed": [],
       "before": {
         "championId": "b2-touka",
-        "expectedHash": "sha256:58eeb37c66d2f7c9afdb3957dd9e8d3797c92e79b737277d03d7863c72ae5ab5",
+        "expectedHash": "sha256:c261828f0c764c4faf6f5146c4bc785548afdbbaeebdada1775f4b3f3f872634",
         "activeModelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:33:24.843Z",
+            "source": {
+              "kind": "previous",
+              "character": "托卡・史考特",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
+            "label": "ou99 「白西装七夜志贵」（相似造型）",
+            "sourceModelKey": "ou99.459257",
+            "modelSha256": "16e858afd2ce2548d90a97a2fb79ad9aeca1ab9e2bc4e3dcf1be26260fb44a35",
+            "binarySha256": "c83555308791d241e3c9fd47ef0d658316041769c7854307e182ebadf7688197",
+            "registeredAt": "2026-09-10T11:33:24.879Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "勇者死了 托卡・史考特",
+              "work": "白西装七夜志贵",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-459257-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
             "label": "原上線模型",
@@ -6905,7 +7505,7 @@
       },
       "after": {
         "championId": "b2-touka",
-        "expectedHash": "sha256:c261828f0c764c4faf6f5146c4bc785548afdbbaeebdada1775f4b3f3f872634",
+        "expectedHash": "sha256:12fd8f4f408ea657014c5922c3aadaa3f31d77f49cb37c4bec968fc507d58207",
         "activeModelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
         "versions": [
           {
@@ -7009,9 +7609,39 @@
       "failed": [],
       "before": {
         "championId": "b2-haga",
-        "expectedHash": "sha256:5c93de8223b76af6ed01c3346285f9585138b2e3b7c40d64552138839f97b108",
+        "expectedHash": "sha256:861d4b07a283919e8b6fb3227df430ad633fdc2a35ea5a107393450610a2be8e",
         "activeModelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:26:42.205Z",
+            "source": {
+              "kind": "previous",
+              "character": "羽賀",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
+            "label": "ou99 「海星动画人」（相似造型）",
+            "sourceModelKey": "ou99.495015",
+            "modelSha256": "6f1c598c22c3027aa587d888e1b2a5533b847b7b497cc5c9a9cb79cfff0fd2c5",
+            "binarySha256": "cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724",
+            "registeredAt": "2026-09-10T11:26:42.209Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "這個世界漏洞百出 羽賀",
+              "work": "海星动画人",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-495015-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.2226d94021dd15a4fb18d9e3f3793f1f20f546b4d88f403b",
             "label": "原上線模型",
@@ -7088,7 +7718,7 @@
       },
       "after": {
         "championId": "b2-haga",
-        "expectedHash": "sha256:861d4b07a283919e8b6fb3227df430ad633fdc2a35ea5a107393450610a2be8e",
+        "expectedHash": "sha256:85b5fc893ddd4393e58c315686b9c3f4c0ee125b638b541e73c669f09c4f66d8",
         "activeModelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
         "versions": [
           {
@@ -7288,7 +7918,7 @@
       },
       "after": {
         "championId": "b2-guts",
-        "expectedHash": "sha256:c0f248fd829a52938e2b28c8ebea2eceaddfd4018f2edaa2e45f1280f901334b",
+        "expectedHash": "sha256:e82a558eb4a80ca663e2f953f6e0c150370c732f957ac47ff45b84a7d454ecff",
         "activeModelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
         "versions": [
           {
@@ -7439,7 +8069,7 @@
       },
       "after": {
         "championId": "b2-keyaru",
-        "expectedHash": "sha256:098a6b202dbf662f958caeb19ea5ddc1e29004f9b666edcb82b322a086d85beb",
+        "expectedHash": "sha256:9192dd35f7451a58bd616e011a33cb78d1b3759964f9060a09ab195fa07aa535",
         "activeModelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
         "versions": [
           {
@@ -7511,9 +8141,39 @@
       "failed": [],
       "before": {
         "championId": "b2-kaede",
-        "expectedHash": "sha256:a7a2805ec00ccfa691fe46fa99fe86a17326f0864655ead9f14b85d9b4c7bf35",
+        "expectedHash": "sha256:1b92a7d2ecb671baf2f2ab9cbe12f3f8f5fac5775c81afe7d2b19ae286e9bf2c",
         "activeModelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
         "versions": [
+          {
+            "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.sela",
+            "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+            "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+            "registeredAt": "2026-09-10T11:27:06.280Z",
+            "source": {
+              "kind": "previous",
+              "character": "楓",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.sela.json"
+            }
+          },
+          {
+            "modelKey": "version.body.12d315398cde2fe6298c11f3889201a0ca9077c01e320907",
+            "label": "ou99 「绯红女剑校服女」（相似造型）",
+            "sourceModelKey": "ou99.474258",
+            "modelSha256": "8b09d7ebd3f6163c9ce48b7513f4e6d0478df826b7974358ec6f6ae3a1b55099",
+            "binarySha256": "4bdc23a090527b2ac7e2bc6ebb779a0241b7a2c4764d39fd33268899d2cf3954",
+            "registeredAt": "2026-09-10T11:27:06.289Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "異世界転移魔法剣士 楓",
+              "work": "绯红女剑校服女",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-474258-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.dcb2b25b905cfeca7bcf4acd0184171db8a4948ee58c0af1",
             "label": "原上線模型",
@@ -7572,7 +8232,7 @@
       },
       "after": {
         "championId": "b2-kaede",
-        "expectedHash": "sha256:1b92a7d2ecb671baf2f2ab9cbe12f3f8f5fac5775c81afe7d2b19ae286e9bf2c",
+        "expectedHash": "sha256:9fd7976eb7a974a208401bb4ae8144df76b17037510ecf6e2252b18f5940676a",
         "activeModelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
         "versions": [
           {
@@ -7674,9 +8334,39 @@
       "failed": [],
       "before": {
         "championId": "b2-matthias",
-        "expectedHash": "sha256:d073f12c5075fcd55275b9353a8138af01b589b8bd493f94f7ba918d677c8eb2",
+        "expectedHash": "sha256:93575f6d260600f418515702790f818bad23a476fca71813f6264fd540b372ff",
         "activeModelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
         "versions": [
+          {
+            "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.sela",
+            "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+            "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+            "registeredAt": "2026-09-10T11:29:18.304Z",
+            "source": {
+              "kind": "previous",
+              "character": "馬提亞斯",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.sela.json"
+            }
+          },
+          {
+            "modelKey": "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
+            "label": "ou99 「休闲西装版七夜智贵」（相似造型）",
+            "sourceModelKey": "ou99.465884",
+            "modelSha256": "88f75746516d1e9f30d081614acb22359827b44244b04175201428bd2ff7e4c0",
+            "binarySha256": "d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c",
+            "registeredAt": "2026-09-10T11:29:18.317Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "失格紋的最強賢者 馬提亞斯",
+              "work": "休闲西装版七夜智贵",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-465884-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.eb4aebd7df2667ce6fb86153e5104ca3c06cf94902932195",
             "label": "原上線模型",
@@ -7735,7 +8425,7 @@
       },
       "after": {
         "championId": "b2-matthias",
-        "expectedHash": "sha256:93575f6d260600f418515702790f818bad23a476fca71813f6264fd540b372ff",
+        "expectedHash": "sha256:08a42dda4a56628d7ffeaeeb11a998d721eaa3ed71131f1694afcf5f51f16e43",
         "activeModelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
         "versions": [
           {
@@ -7838,9 +8528,39 @@
       "failed": [],
       "before": {
         "championId": "b2-sinbad",
-        "expectedHash": "sha256:9cb9233cfc77ea420646f82f0a76e70a6a063fb6f10dd26837ee65c27abf7f0e",
+        "expectedHash": "sha256:c307682da2d8a9aa3f3b4d845749470345d289118b72dfdb004eb85b8b511c53",
         "activeModelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:32:36.721Z",
+            "source": {
+              "kind": "previous",
+              "character": "辛巴達",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.50475cd0a71c5c569d77fe67d9450a189662424ade9a6933",
+            "label": "ou99 「遥远救世主拳皇」（相似造型）",
+            "sourceModelKey": "ou99.491497",
+            "modelSha256": "ea955b4c803ac4f4bdc3c20c10a929a410061afac8f3df68b302d335cf902fce",
+            "binarySha256": "88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492",
+            "registeredAt": "2026-09-10T11:32:36.802Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "魔笛 MAGI 辛巴達",
+              "work": "遥远救世主拳皇",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-491497-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.2edcd3ab07695536fe0c8086ebe02a9a1a3d67a464a0c31d",
             "label": "原上線模型",
@@ -7917,7 +8637,7 @@
       },
       "after": {
         "championId": "b2-sinbad",
-        "expectedHash": "sha256:c307682da2d8a9aa3f3b4d845749470345d289118b72dfdb004eb85b8b511c53",
+        "expectedHash": "sha256:53590453835c57d91015568b65d5cf5dda51e66c152ff8403d6c41bcf43feab1",
         "activeModelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
         "versions": [
           {
@@ -8078,7 +8798,7 @@
       },
       "after": {
         "championId": "b2-kumoko",
-        "expectedHash": "sha256:2b80a8219328ea29803ce7b1f771bb12c16c552503027e8dbf3802b0ce164c04",
+        "expectedHash": "sha256:13c627d65a8987e0af8038b2e4aed8aa63571fe9634f9ef518a07e93d09ef6bb",
         "activeModelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
         "versions": [
           {
@@ -8192,7 +8912,7 @@
       },
       "after": {
         "championId": "b2-yogiri",
-        "expectedHash": "sha256:3ef64fec38c449d1831fc0269375447d2e611a51c94b8c6035297a6013aba5e5",
+        "expectedHash": "sha256:3ebaaa812c5981300de7e6936e2766c17621c1c0726b9edfd48ab646af6db43e",
         "activeModelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
         "versions": [
           {
@@ -8265,67 +8985,6 @@
       ],
       "failed": [],
       "before": {
-        "championId": "b2-kaiji",
-        "expectedHash": "sha256:43a79a2ba72caf79453822ca55584388b5e82ee874b22e86fc82316b749bed7f",
-        "activeModelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
-        "versions": [
-          {
-            "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
-            "label": "原上線模型",
-            "sourceModelKey": "champ.thorne",
-            "modelSha256": "610dacead69977b19ac9af6a94725eea4cfcebc13753eb5cbe73359aafa7fadd",
-            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-            "registeredAt": "2026-09-10T14:45:41.128Z",
-            "source": {
-              "kind": "previous",
-              "character": "伊藤開司",
-              "work": "原上線內容",
-              "library": "GGD",
-              "reference": "models/champ.thorne.json",
-              "tier": "original"
-            }
-          },
-          {
-            "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
-            "label": "坂本",
-            "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
-            "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
-            "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
-            "registeredAt": "2026-09-10T14:45:41.149Z",
-            "source": {
-              "kind": "style-proxy",
-              "character": "坂本",
-              "work": "在下坂本，有何貴幹？",
-              "library": "300heroes",
-              "reference": "300heroes:62413511bf6cb6a428c2821a",
-              "tier": "300heroes",
-              "selectionClass": "similar-proxy"
-            },
-            "automaticEligible": false
-          },
-          {
-            "modelKey": "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
-            "label": "黑",
-            "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
-            "modelSha256": "19a11cad685e66a964e94f48cbd425339c98bbd93ca741f6c91d0596ca081020",
-            "binarySha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
-            "registeredAt": "2026-09-10T14:45:41.199Z",
-            "source": {
-              "kind": "style-proxy",
-              "character": "黑",
-              "work": "DARKER THAN BLACK－黑之契約者",
-              "library": "300heroes",
-              "reference": "300heroes:3d7222e80131dc1b4fa7c782",
-              "tier": "300heroes",
-              "selectionClass": "similar-proxy"
-            },
-            "automaticEligible": false
-          }
-        ],
-        "selectionMode": "automatic",
-        "preferredModelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82"
-      },
-      "after": {
         "championId": "b2-kaiji",
         "expectedHash": "sha256:b732d5307e2dd20623b383a5fc24dc04d9baea3261b814f8b8f3505f3d475709",
         "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
@@ -8404,7 +9063,86 @@
         "selectionMode": "automatic",
         "preferredModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f"
       },
-      "status": "registered-readback-verified"
+      "after": {
+        "championId": "b2-kaiji",
+        "expectedHash": "sha256:82c1a0ac7d9674d6f777255a75be8f9a00fa06cc8c9899b72a5281de3b6269c5",
+        "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+        "versions": [
+          {
+            "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "610dacead69977b19ac9af6a94725eea4cfcebc13753eb5cbe73359aafa7fadd",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T14:45:41.128Z",
+            "source": {
+              "kind": "previous",
+              "character": "伊藤開司",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json",
+              "tier": "original"
+            }
+          },
+          {
+            "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+            "label": "坂本",
+            "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+            "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+            "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "registeredAt": "2026-09-10T14:45:41.149Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "坂本",
+              "work": "在下坂本，有何貴幹？",
+              "library": "300heroes",
+              "reference": "300heroes:62413511bf6cb6a428c2821a",
+              "tier": "300heroes",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
+            "label": "黑",
+            "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+            "modelSha256": "19a11cad685e66a964e94f48cbd425339c98bbd93ca741f6c91d0596ca081020",
+            "binarySha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+            "registeredAt": "2026-09-10T14:45:41.199Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "黑",
+              "work": "DARKER THAN BLACK－黑之契約者",
+              "library": "300heroes",
+              "reference": "300heroes:3d7222e80131dc1b4fa7c782",
+              "tier": "300heroes",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+            "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+            "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+            "modelSha256": "a2997a1e64f65dafd12709fce65bdec07b4eafa30aa519e9d28a68a9f4527481",
+            "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+            "registeredAt": "2026-09-10T17:03:36.321Z",
+            "source": {
+              "kind": "exact",
+              "character": "伊藤開司",
+              "work": "賭博默示錄",
+              "library": "Lethal Company MOD／holya",
+              "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+              "tier": "original",
+              "selectionClass": "community-mod"
+            },
+            "automaticEligible": true
+          }
+        ],
+        "selectionMode": "automatic",
+        "preferredModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f"
+      },
+      "status": "merged-readback-verified"
     },
     {
       "heroId": "b2-fushi",
@@ -8417,9 +9155,39 @@
       "failed": [],
       "before": {
         "championId": "b2-fushi",
-        "expectedHash": "sha256:27edc50cb8beda2ab5d60ff4780cda71a15114d3f96dd08de019d14455df1c00",
+        "expectedHash": "sha256:39df8094ff423737d94617e65069380214347077a64f587b86f08c83a2b9d9c6",
         "activeModelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:26:17.488Z",
+            "source": {
+              "kind": "previous",
+              "character": "不死",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
+            "label": "ou99 「天使可爱小女孩派蒙」（相似造型）",
+            "sourceModelKey": "ou99.467227",
+            "modelSha256": "374117ff9d298ea883002a4baf83f6e77f9d670e5370161685bb82097a1b239e",
+            "binarySha256": "e6e88168e26db99e0ab4276ee55b86808f1a2998e7f64ba415086159a6dc4db0",
+            "registeredAt": "2026-09-10T11:26:17.495Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "致不滅的你 不死",
+              "work": "天使可爱小女孩派蒙",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-467227-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.dca02a145aeb23ef6fc2d02e14c45d70322d0f7617cec679",
             "label": "原上線模型",
@@ -8478,7 +9246,7 @@
       },
       "after": {
         "championId": "b2-fushi",
-        "expectedHash": "sha256:39df8094ff423737d94617e65069380214347077a64f587b86f08c83a2b9d9c6",
+        "expectedHash": "sha256:c4712e462af8abe0dd518fb6d2fa1f547051e7a8841f9b4d6fbf4423530ece04",
         "activeModelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
         "versions": [
           {
@@ -8580,9 +9348,39 @@
       "failed": [],
       "before": {
         "championId": "b2-orphen",
-        "expectedHash": "sha256:930abaf9cd272ef7bf0038cc1b19960878492737d2c889186d3447dbac19419d",
+        "expectedHash": "sha256:a02cf425672992ccc7d264bfd6fd5b3cfb1c6b95458518376385aa73d13fb0bd",
         "activeModelKey": "version.body.5abf9ec53fc14ad4e39811385acbce35771cecb10869d810",
         "versions": [
+          {
+            "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.sela",
+            "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+            "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+            "registeredAt": "2026-09-10T11:31:10.500Z",
+            "source": {
+              "kind": "previous",
+              "character": "歐菲",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.sela.json"
+            }
+          },
+          {
+            "modelKey": "version.body.22bdbf148e368f65a812201d250e439c5d431676c638bf9e",
+            "label": "ou99 「甲贺忍蛙」（相似造型）",
+            "sourceModelKey": "ou99.496452",
+            "modelSha256": "cf34d862a6d5fb16589f851d24f5ed34a1059695678364725d005c2327b227d7",
+            "binarySha256": "22fc172a82450ed4845e7e65264cf571130da40f680113531a70098299f99904",
+            "registeredAt": "2026-09-10T11:31:10.525Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "魔術士歐菲",
+              "work": "甲贺忍蛙",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-496452-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
             "label": "原上線模型",
@@ -8641,7 +9439,7 @@
       },
       "after": {
         "championId": "b2-orphen",
-        "expectedHash": "sha256:a02cf425672992ccc7d264bfd6fd5b3cfb1c6b95458518376385aa73d13fb0bd",
+        "expectedHash": "sha256:b73f674ab88d19ef13d4f2c0d16e54e659a43a24055d71775f96b436c49aece9",
         "activeModelKey": "version.body.5abf9ec53fc14ad4e39811385acbce35771cecb10869d810",
         "versions": [
           {
@@ -8744,9 +9542,39 @@
       "failed": [],
       "before": {
         "championId": "b2-klaus",
-        "expectedHash": "sha256:0d4ab9068148fdc28a4a198588395a448f7f3f2dfe2796ff599b88c23c2af086",
+        "expectedHash": "sha256:7bfbe82477b3cee17a2af9c22024b95cf5d9644afad102e9ac17373c292bded1",
         "activeModelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:28:01.012Z",
+            "source": {
+              "kind": "previous",
+              "character": "克勞斯",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556",
+            "label": "ou99 「银发动漫正装男」（相似造型）",
+            "sourceModelKey": "ou99.487487-7yzc0mtk",
+            "modelSha256": "c3989d0ee034dda9b4d979da5f16f61d9d2579700d27410b528f10bcc5e11de7",
+            "binarySha256": "4366a2eb1889e23caaadf474158a967c256fbbc706c9487cee9c01d58005de3f",
+            "registeredAt": "2026-09-10T11:28:01.018Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+              "work": "银发动漫正装男",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-487487-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.06f84bffd4849686b5a832e8e458fc52bc01c585cf25c062",
             "label": "原上線模型",
@@ -8823,7 +9651,7 @@
       },
       "after": {
         "championId": "b2-klaus",
-        "expectedHash": "sha256:7bfbe82477b3cee17a2af9c22024b95cf5d9644afad102e9ac17373c292bded1",
+        "expectedHash": "sha256:4a26cf20f3f590c1fb9d1db69b7325732ad338e7dd226c4314a71d61f122f74c",
         "activeModelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
         "versions": [
           {
@@ -8985,7 +9813,7 @@
       },
       "after": {
         "championId": "b2-takopi",
-        "expectedHash": "sha256:25b81d06a3fcfd460b46ba77bed34c6c2837eeb327cc80e19695fd5c2a57bc98",
+        "expectedHash": "sha256:53161388c55c7899023f0234b776d0eee4342c971194399f9a632bd3dc783d98",
         "activeModelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
         "versions": [
           {
@@ -9039,9 +9867,39 @@
       "failed": [],
       "before": {
         "championId": "b2-luckyman",
-        "expectedHash": "sha256:aef5283b18d44dc1a07975869b887a593bed70988b2a1d9d4fac700b579cfe5e",
+        "expectedHash": "sha256:2e7ed917aec28d2c7732f13f62ea76d62ac12d32e055590a7d603dc2469b6e5c",
         "activeModelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:28:34.894Z",
+            "source": {
+              "kind": "previous",
+              "character": "幸運超人",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
+            "label": "ou99 「雷欧·凹凸曼无披风版」（相似造型）",
+            "sourceModelKey": "ou99.457594",
+            "modelSha256": "7d1b86c75f172fbf91495623f0039ef283171ede221d47839860fa8ed6821be2",
+            "binarySha256": "301cd3ea20249839f3ca0a21059a9683262e8d1ee219be8e3c61c17fe6a34ac8",
+            "registeredAt": "2026-09-10T11:28:34.897Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "幸運超人",
+              "work": "雷欧·凹凸曼无披风版",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-457594-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.09c536c10feffc8537a2fad2d376fd18aef6885a0b7ef472",
             "label": "原上線模型",
@@ -9100,7 +9958,7 @@
       },
       "after": {
         "championId": "b2-luckyman",
-        "expectedHash": "sha256:2e7ed917aec28d2c7732f13f62ea76d62ac12d32e055590a7d603dc2469b6e5c",
+        "expectedHash": "sha256:e509d2f80433d561b4fb3ea60628ecf00713b9bacfb287e40354b791437902a1",
         "activeModelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
         "versions": [
           {
@@ -9263,7 +10121,7 @@
       },
       "after": {
         "championId": "b2-misery",
-        "expectedHash": "sha256:cf3208b67cc04428e5b8f3a686619fa088a58a45e0f0fc34660bc7a542fc6b51",
+        "expectedHash": "sha256:fd359cac48a48d434b7b76ae66e817532fefa00a82d9e95f8b05f5059ebaddac",
         "activeModelKey": "version.body.d4cffd536c8d484810c76b5cc47bb397cff677f25bc95200",
         "versions": [
           {
@@ -9335,9 +10193,39 @@
       "failed": [],
       "before": {
         "championId": "b2-nube",
-        "expectedHash": "sha256:e3e3bfbb561952706362fbb4d4ee9432029aa561cced1525cbb1448792d3a78c",
+        "expectedHash": "sha256:caa39bbbe96435959c8ebc2cb258afc500b0bff68831699e4cc696a8d09840ef",
         "activeModelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:30:34.341Z",
+            "source": {
+              "kind": "previous",
+              "character": "鵺野鳴介",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.8edb328689a62ca31c36c2c1f5d880366ecd1d05a805d552",
+            "label": "ou99 「中洲队潇洒哥」（相似造型）",
+            "sourceModelKey": "ou99.487484",
+            "modelSha256": "3e301cd45769c9082c5659459ba6e1eb82128ac0fcefbc1612473e032d57e124",
+            "binarySha256": "7ea2f636ff9d180424d801226fba1cf960171ad603f8ed484362560cb97839de",
+            "registeredAt": "2026-09-10T11:30:34.346Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "靈異教師神眉 鵺野鳴介",
+              "work": "中洲队潇洒哥",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-487484-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.04ac799e4dec3187128088349514230154549edad278c191",
             "label": "原上線模型",
@@ -9396,7 +10284,7 @@
       },
       "after": {
         "championId": "b2-nube",
-        "expectedHash": "sha256:caa39bbbe96435959c8ebc2cb258afc500b0bff68831699e4cc696a8d09840ef",
+        "expectedHash": "sha256:65f912adf0d4c621360ef61a83030f3bdaaf802a044b3a6d065fe0002c272718",
         "activeModelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
         "versions": [
           {
@@ -9578,7 +10466,7 @@
       },
       "after": {
         "championId": "b2-shinchan",
-        "expectedHash": "sha256:6b276e600249188f843fb7f6e8e43df7ea78205596136381b83e99615f89b271",
+        "expectedHash": "sha256:fddcc6b12256c57d89882a82d484ffba88fc578b678fb4a1daae799859584c27",
         "activeModelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
         "versions": [
           {
@@ -9729,7 +10617,7 @@
       },
       "after": {
         "championId": "b2-aladdin",
-        "expectedHash": "sha256:7f769b08bbb84ab702faee881ea814c84d727c241c1d49aea93df4023307db2e",
+        "expectedHash": "sha256:e240d625c79b6424cd4f7c342f1be4819c4f8c1b6026bbcf04517952ab6ee6a9",
         "activeModelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
         "versions": [
           {
@@ -9801,9 +10689,39 @@
       "failed": [],
       "before": {
         "championId": "b2-ned",
-        "expectedHash": "sha256:0bf8db6521c4e9d43ab472ddf4a316ebd8424fee5a16553bd5cd6ec6d21cb57e",
+        "expectedHash": "sha256:d8c2ba191687c14b444bf6b66cfda06f44314565293d52bf3153faa7be17113b",
         "activeModelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
         "versions": [
+          {
+            "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T11:29:41.873Z",
+            "source": {
+              "kind": "previous",
+              "character": "青蛙劍士 Ned",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json"
+            }
+          },
+          {
+            "modelKey": "version.body.db80a14d14fe5bf724271e3fc298b87ed497bb61f27a564b",
+            "label": "ou99 「蛤蟆蘸酱柯松剑客」（相似造型）",
+            "sourceModelKey": "ou99.456917",
+            "modelSha256": "a1b67c7ade45980865bcac8db61d1c154a49ec17d82234e5a94e0457cff937eb",
+            "binarySha256": "6ade7e35bef12b074f323bd743b68419baba4142ad760518e4c010d51870ff76",
+            "registeredAt": "2026-09-10T11:29:41.878Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "AVARTH 青蛙劍士 Ned",
+              "work": "蛤蟆蘸酱柯松剑客",
+              "library": "ou99 偶久網",
+              "reference": "https://www.ou99.com/thread-456917-1-1.html"
+            }
+          },
           {
             "modelKey": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
             "label": "原上線模型",
@@ -9862,7 +10780,7 @@
       },
       "after": {
         "championId": "b2-ned",
-        "expectedHash": "sha256:d8c2ba191687c14b444bf6b66cfda06f44314565293d52bf3153faa7be17113b",
+        "expectedHash": "sha256:8d8c0307270d3a4930223907ae1796aa7513d375a1dea882e4b4b9f702834cb0",
         "activeModelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
         "versions": [
           {
@@ -10005,7 +10923,7 @@
       },
       "after": {
         "championId": "b2-kisaragi",
-        "expectedHash": "sha256:ac6843b182edab1d56fc350a3ff35bc9bedcd184c277596faf8712a7bb82e414",
+        "expectedHash": "sha256:1e0b46d584302e22e7a9cdae06d994bbb85e6b623c9ed1b8560e544718e0cc12",
         "activeModelKey": "version.body.39c18a9b1921088ab533c174a64f6ae0bf908933d72ed3ea",
         "versions": [
           {
@@ -10119,7 +11037,7 @@
       },
       "after": {
         "championId": "lol-karthus",
-        "expectedHash": "sha256:6e51bea47b3f010b1f35bec166b1ad0f6ef075a89c3da49c7220090254bdf1fc",
+        "expectedHash": "sha256:63f46d68fac21dae61b45f43769e3f62a632419d782ded986ce2fa55da6cb55e",
         "activeModelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
         "versions": [
           {
@@ -10233,7 +11151,7 @@
       },
       "after": {
         "championId": "lol-leesin",
-        "expectedHash": "sha256:c923ffb7fc6dd4f679502734bdd1fba0c997ab978cbc80e59d20f47d1ce3ae56",
+        "expectedHash": "sha256:56a3cb8653106746d89d0a9b21c8036f23d0441eee2b280bcbdb86ddfab5a2c7",
         "activeModelKey": "version.body.c69dcf0c70845d97d8fbd2e60822783f13136a9969d7cfcf",
         "versions": [
           {
@@ -10348,7 +11266,7 @@
       },
       "after": {
         "championId": "lol-lux",
-        "expectedHash": "sha256:27ed1b963d2b0bf0b64d7681edd270083aa9510f60f3c051faad0d3bf1496356",
+        "expectedHash": "sha256:b7b21cb5817f22dce091e151592e386b553734822c7d18231609819868a5c172",
         "activeModelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
         "versions": [
           {
@@ -10481,7 +11399,7 @@
       },
       "after": {
         "championId": "lol-missfortune",
-        "expectedHash": "sha256:3e3c51862d4e6d08338c052c91851ec2db91bf9d4fd56df827a9b38c36893b88",
+        "expectedHash": "sha256:776db8b931cbe2de971029627a862d54419ae7ea599639ad8188ec0cc19041b7",
         "activeModelKey": "version.body.1ad5f12b5d0bb1dd56fa32dc62c0b3e276b535ede1416373",
         "versions": [
           {
@@ -10595,7 +11513,7 @@
       },
       "after": {
         "championId": "lol-warwick",
-        "expectedHash": "sha256:e70ad8fbe1e5eeba1c827b830e0921e9f478cfe43247b5261e69a510a005cd6c",
+        "expectedHash": "sha256:d47df3e3bd4ee3ce5636441f532bf4393b903824cde43232af81335105c30033",
         "activeModelKey": "version.body.b2b6844ed06e05009309d104f46f9c3245ddf636af2023d5",
         "versions": [
           {
@@ -10710,7 +11628,7 @@
       },
       "after": {
         "championId": "lol-xerath",
-        "expectedHash": "sha256:23f5db5cb7ec95323f97f2e57849459fd9858c65050ee4c0aec80ba99caface4",
+        "expectedHash": "sha256:7d5727ceca8d3ccc682435ce72f79132b40d274bee73dbf33235a96cc444a8ac",
         "activeModelKey": "version.body.cf0570347305b3e13535d2b411bc17a0f9964f818c308554",
         "versions": [
           {
@@ -10824,7 +11742,7 @@
       },
       "after": {
         "championId": "lol-yasuo",
-        "expectedHash": "sha256:45714406311c432ec565eae3581fa3a4486e1cf6fc03384fa03c8e1d3965fcf1",
+        "expectedHash": "sha256:da7587d7474c7f2b4f283ea98d2182bda2a3787fe9522ff082c7abb8cb9c92d0",
         "activeModelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
         "versions": [
           {

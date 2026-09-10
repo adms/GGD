@@ -50,7 +50,7 @@
     "Q": {
       "id": "lol-karthus.q",
       "name": "暮點",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "短暫吟唱後，在指定區域引爆小級魔法傷害。",
       "slot": "Q",
       "castType": "ground",
@@ -104,7 +104,7 @@
     "W": {
       "id": "lol-karthus.w",
       "name": "亡途繫縛",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。",
       "slot": "W",
       "castType": "targeted",
@@ -162,7 +162,7 @@
     "E": {
       "id": "lol-karthus.e",
       "name": "荒蕪迴音",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "以自身為中心維持 3 秒傷害領域，每秒傷害一次。",
       "slot": "E",
       "castType": "self",
@@ -229,7 +229,7 @@
     "R": {
       "id": "lol-karthus.r",
       "name": "暮鐘終曲",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。",
       "slot": "R",
       "castType": "ground",

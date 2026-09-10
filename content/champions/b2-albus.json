@@ -10,7 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「這裡有捷徑！」\n走有限合法捷徑；先走捷徑的 4 秒內可使用 R 的急救分支。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -57,7 +57,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「世界紀錄第一刀！」\n小級斬擊，這段速通照常支付魔力與冷卻。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -110,7 +110,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「走捷徑才趕得上急救！」\n隊友得到 100 護盾 2 秒；最近 4 秒用過 E，額外回復 200。這是趕到現場急救，不是讀檔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -224,7 +224,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「已花冷卻才准跳段！」\n攻略跳段：縮短自己 Q 剩餘冷卻 1.5 秒，不碰其他技能或隊友；沒用過 Q 就沒有收益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

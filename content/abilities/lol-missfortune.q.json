@@ -1,7 +1,7 @@
 {
   "id": "lol-missfortune.q",
   "name": "回聲雙響",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。",
   "slot": "Q",
   "castType": "targeted",

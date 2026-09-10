@@ -10,7 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「本店定點營業範圍！」\n以起手命中中心（沒有命中則施法點）固定半徑{{radius}}，每 0.5 秒重選最多 4 名敵人，共三次 slow40 減速 40% 持續 2 秒；沒有全圖界域。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -102,7 +102,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「試射前客人請後退！」\n產品展示先請客人後退：推離指定敵人 3 單位，不造成傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -166,7 +166,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「慢客人請停止抱怨！」\n中級集中魔法；消耗已在營業範圍沾到的 slow40，才追加沉默 1.2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -261,7 +261,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「站遠一點商品才夠痛！」\n弓術定點單射，小級物理傷害，{{range}}距離 到 8 由 0.5 倍線性提高到 1.5 倍，超過按上限；真實距離決定輸出。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

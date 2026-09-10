@@ -1,7 +1,7 @@
 {
   "id": "community-review-12-20260907.r",
   "name": "無限劍製",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】展開有期限的劍域，強化 W 並在固定節奏追加投影劍；領域不改寫地圖邊界。\n【待補機制】目前領域傷害；需領域内 W 強化、投影劍生成與退出還原。",
   "slot": "R",
   "castType": "ground",

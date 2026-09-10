@@ -17,7 +17,13 @@ TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS �
 # ⭐ webhook 住 docker/.env（⛔ 不進 git）—— 這裡載它，⛔ 不讓呼叫端記得 `set -a`
 [ -f docker/.env ] && { set -a; . docker/.env; set +a; }
 
-step() { printf '\n\033[1m══ %s\033[0m\n' "$*"; }
+# ⭐ GH#1162 —— 每一步結束要印一行，⛔ 一個沒有結束訊息的步驟，卡住與完成長得一模一樣
+#   （2026-09-10：N 步卡 4 分鐘 0% CPU，最後一行讀起來像「它在等我寫」）。
+_STEP=""
+step() { [ -n "$_STEP" ] && printf '   ⇒ 「%s」結束，進到下一步\n' "$_STEP"; _STEP="$*"; printf '\n\033[1m══ %s\033[0m\n' "$*"; }
+# ⭐ GH#1162 —— 每一步有 deadline。macOS 沒有 timeout(1)，用 perl 的 alarm：逾時 ⇒ 子行程被 SIGALRM 殺掉、回非零。
+deadline() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+GGD_STEP_DEADLINE_SEC="${GGD_STEP_DEADLINE_SEC:-600}"
 FAIL=""
 
 step "1/4  版號 ＋ push"
@@ -57,7 +63,7 @@ else
       #
       # ⭐ 這裡呼叫的是**預覽**（⛔ 沒有 `--post`）⇒ 不會多發一則公告。
       printf '\n## 🎮 玩家看得到的\n\n'
-      bash scripts/release-note-players.sh 2>/dev/null | sed -n '/^- /p' | head -20
+      deadline "$GGD_STEP_DEADLINE_SEC" bash scripts/release-note-players.sh 2>/dev/null | sed -n '/^- /p' | head -20
   } > "$_DRAFT"
   echo "   ⭐ 草稿已生成：${_DRAFT}（$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null) 個 commit）"
   echo "   ⇒ 填完理由再跑：gh release create $TAG --title … --notes-file $_DRAFT"
@@ -69,7 +75,7 @@ step "3/4  玩家 Discord 公告"
 if [ -z "${GGD_DISCORD_WEBHOOK:-}" ]; then
   echo "⚠️ 沒設 GGD_DISCORD_WEBHOOK ⇒ **沒發**（⛔ 這不是「沒有玩家可見的改動」）"
   FAIL="${FAIL}discord "
-elif bash scripts/release-note-players.sh --post; then
+elif deadline "$GGD_STEP_DEADLINE_SEC" bash scripts/release-note-players.sh --post; then
   :
 else
   echo "⚠️ 玩家公告沒發出去（見上）"
@@ -88,7 +94,7 @@ step "3.5/4  收尾 commit（公告帳本 ＋ 戰情板版號）"
 bash scripts/genrun.sh board:build >/dev/null 2>&1 || echo "⚠️ board:build 失敗（戰情板版號那一格會過期）"
 # ⭐ board:build 會在 docs/legacy/_overwrites/ 留底＋記帳 ⇒ docs/legacy-index.md 也跟著過期（legacyIndexFresh 在 CI 紅，v0.39.4 量到）
 bash scripts/genrun.sh legacyindex:build >/dev/null 2>&1 || echo "⚠️ legacyindex:build 失敗（legacy 索引會過期）"
-WRAP_PATHS="docs/_release/_announced.tsv docs/_release/ggd-board.html docs/legacy-index.md docs/legacy/_overwrites/_ledger.tsv"
+WRAP_PATHS="docs/_release/_announced.tsv docs/_release/_deployed.tsv docs/_release/ggd-board.html docs/legacy-index.md docs/legacy/_overwrites/_ledger.tsv"
 if ! git diff --quiet -- $WRAP_PATHS; then
   printf 'chore(release): 🧾 %s 收尾 —— 公告帳本 ＋ 戰情板版號（ship-it 3.5）\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n' "$TAG" > "$TMPD/ship-wrap-${TAG}.txt"
   if git commit -q -F "$TMPD/ship-wrap-${TAG}.txt" -- $WRAP_PATHS \

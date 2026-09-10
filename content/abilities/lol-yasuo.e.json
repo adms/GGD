@@ -1,7 +1,7 @@
 {
   "id": "lol-yasuo.e",
   "name": "踏風進擊",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。",
   "slot": "E",
   "castType": "ground",

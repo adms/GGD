@@ -1,7 +1,7 @@
 {
   "id": "community-review-18-20260907.q",
   "name": "王之財寶",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】開啟三個門，依序發射武器。\n【待補機制】目前三發落點打擊；需三門武器投射物及門的掛點。",
   "slot": "Q",
   "castType": "ground",

@@ -1,7 +1,7 @@
 {
   "id": "lol-yasuo.ex",
   "name": "旋風縛步",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "將蓄風招式獨立為 EX，對指定敵人造成物理傷害並鎖足 0.8 秒。",
   "slot": "EX",
   "castType": "targeted",

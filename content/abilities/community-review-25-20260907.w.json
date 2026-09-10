@@ -1,7 +1,7 @@
 {
   "id": "community-review-25-20260907.w",
   "name": "連續普通拳",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】5 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】多段拳擊，整招使用固定傷害預算。\n【待補機制】需要整招總傷害預算；目前每段各自級距。",
   "slot": "W",
   "castType": "targeted",

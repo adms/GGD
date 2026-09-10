@@ -10,7 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「八極拳催款專線！」\n八極拳小級物理打擊並給 magic-break 3 秒標記；此標記不自帶減魔抗，重點是記錄催款對象。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -75,7 +75,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「寶石預付款已扣款！」\n寶石預付款：另外支付 120 魔力，按實際支付量存入既有 nen-banked 4 秒；不足只能存實際扣掉的量。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -156,7 +156,7 @@
         90.0
       ],
       "cooldownTier": "大",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「刷爆卡才准退款！」\n中級定向魔法；目標有催款標記，消耗它並回復自身最大魔力 12%，同時讓對方沉默 1 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -261,7 +261,7 @@
         45.0
       ],
       "cooldownTier": "小",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "「刷卡成功請簽名！」\n小級寶石打擊，追加 nen-banked 實際儲量的 1 倍（上限 180）；擊發後清空存量並退最大魔力 1% 手續費，不能同一顆寶石無限報帳。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {

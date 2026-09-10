@@ -2,7 +2,7 @@
   "id": "community-review-21-20260907.passive",
   "schema": "ability@1",
   "name": "〔希望的連結〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
   "slot": "PASSIVE",
   "castType": "self",

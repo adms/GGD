@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-32-20260907.q",
       "name": "肩パンチ",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。\n【待補機制】肩膀拳需小幅擊退与一本正經起手，当前只是單擊。",
       "slot": "Q",
       "castType": "targeted",
@@ -101,7 +101,7 @@
     "W": {
       "id": "community-review-32-20260907.w",
       "name": "流精群（ホワイトレイン）",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.45 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】指定區域落下三波白色魔力雨。每波對同一目標最多命中一次；以白色光點、漫畫速度線及誇張表情演出。\n【待補機制】三波白色雨可作時序預覽；每波同目標一次與白點落下造型須驗收。",
       "slot": "W",
       "castType": "ground",
@@ -162,7 +162,7 @@
     "E": {
       "id": "community-review-32-20260907.e",
       "name": "闇ぱんち",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-32-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。「闇人格向敵人反擊」為 GGD 改編，不改寫原作招式使用者。\n【待補機制】護盾不代表闇人格反擊；需第一個近身受擊成功事件及一次出拳。",
       "slot": "E",
       "castType": "self",
@@ -221,7 +221,7 @@
     "R": {
       "id": "community-review-32-20260907.r",
       "name": "THE END OF SON",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。\n【待補機制】需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。",
       "slot": "R",
       "castType": "targeted",

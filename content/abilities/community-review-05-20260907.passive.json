@@ -2,7 +2,7 @@
   "id": "community-review-05-20260907.passive",
   "schema": "ability@1",
   "name": "〔武器能源管理〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "特殊武器共用有限能源；能源隨時間恢復，切換武器不補滿。",
   "slot": "PASSIVE",
   "castType": "self",

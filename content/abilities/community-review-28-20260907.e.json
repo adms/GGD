@@ -1,7 +1,7 @@
 {
   "id": "community-review-28-20260907.e",
   "name": "〔逼近步〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近，保留可被攔截的路徑。\n【待補機制】此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
   "slot": "E",
   "castType": "ground",

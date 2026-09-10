@@ -1,7 +1,7 @@
 {
   "id": "community-review-15-20260907.w",
   "name": "〔肌肉防線〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】拖拉指定目標後向前投擲 200 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】消耗氣勢提高短期防禦，無氣勢時仍有較弱效果。\n【待補機制】雙人摔角動作、抓取免疫與同步挂點須驗收。",
   "slot": "W",
   "castType": "ground",

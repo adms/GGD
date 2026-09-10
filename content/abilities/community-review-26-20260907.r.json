@@ -1,7 +1,7 @@
 {
   "id": "community-review-26-20260907.r",
   "name": "〔真相只有一個〕",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":2,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】消耗目標線索，揭示其當前位置並施加短效弱點標記；不揭露對決外或未授權資訊。\n【待補機制】目前緩速；需消耗線索、弱點標記及合法位置揭示。",
   "slot": "R",
   "castType": "targeted",

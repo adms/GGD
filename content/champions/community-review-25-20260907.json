@@ -50,7 +50,7 @@
     "Q": {
       "id": "community-review-25-20260907.q",
       "name": "普通拳",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短距離單次重拳。\n【待補機制】普通拳仍走標準傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -101,7 +101,7 @@
     "W": {
       "id": "community-review-25-20260907.w",
       "name": "連續普通拳",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】5 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】多段拳擊，整招使用固定傷害預算。\n【待補機制】需要整招總傷害預算；目前每段各自級距。",
       "slot": "W",
       "castType": "targeted",
@@ -182,7 +182,7 @@
     "E": {
       "id": "community-review-25-20260907.e",
       "name": "〔趕上特賣〕",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線快速移動，碰撞後停止。\n【待補機制】碰撞安全需場景驗收。",
       "slot": "E",
       "castType": "ground",
@@ -260,7 +260,7 @@
     "R": {
       "id": "community-review-25-20260907.r",
       "name": "認真系列・認真一拳",
-      "provenance": "w3x-import",
+      "provenance": "editor-json",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】長起手後的高傷害衝擊波，具有明顯方向與閃避窗口。\n【待補機制】四段衝擊波不等於單拳總結算；需高單擊預算與較長起手。",
       "slot": "R",
       "castType": "skillshot",

@@ -1,7 +1,7 @@
 {
   "id": "community-review-32-20260907.w",
   "name": "流精群（ホワイトレイン）",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.45 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】指定區域落下三波白色魔力雨。每波對同一目標最多命中一次；以白色光點、漫畫速度線及誇張表情演出。\n【待補機制】三波白色雨可作時序預覽；每波同目標一次與白點落下造型須驗收。",
   "slot": "W",
   "castType": "ground",

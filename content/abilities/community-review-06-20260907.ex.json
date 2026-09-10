@@ -2,7 +2,7 @@
   "id": "community-review-06-20260907.ex",
   "schema": "ability@1",
   "name": "複製能力",
-  "provenance": "w3x-import",
+  "provenance": "editor-json",
   "description": "從最近成功吸入的英雄取得一個核准的 Q 技能版本，替換自己的 Q，限時或用盡次數後還原。首批白名單：八神庵闇拂、不知火舞花蝶扇、御坂美琴電擊之槍。其他目標明確顯示不可複製。",
   "slot": "EX",
   "castType": "targeted",
