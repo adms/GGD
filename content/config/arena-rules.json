@@ -390,6 +390,11 @@
     "bossScaleFloor": 1,
     "bossScaleCeil": 8,
     "deadPlayersControlBoss": true,
+    "possession": {
+      "escapeWindowSec": 10,
+      "telegraphRadius": 6,
+      "inheritBossAugments": true
+    },
     "bombardment": {
       "enabled": true,
       "telegraphSec": 10,

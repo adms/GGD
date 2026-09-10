@@ -131,6 +131,15 @@ export interface ArenaRules {
     /** ⭐ 陣亡玩家改控自己的殭屍王（#1151 E）。 */
     readonly deadPlayersControlBoss: boolean;
     /**
+     * ⭐ 換邊的三格（#1151 E / GH#922）——消費端 `sim/round11Possession`。
+     * ⚠️ ⭐ 與上面那一格分開：那是「開不開」,這三格是「開著的時候長什麼樣」。
+     */
+    readonly possession: {
+      readonly escapeWindowSec: number;
+      readonly telegraphRadius: number;
+      readonly inheritBossAugments: boolean;
+    };
+    /**
      * ⭐ 計分（#1151 G）——消費端 `sim/round11Scoring.round11Score`。
      * ⚠️⭐ `scoreMultiplier` 在 `round11Score()` **裡面**就乘完了 ——
      * ⛔ 呼叫端只要「加進總分」，⭐ 於是票警告的「總分與本回合分數混用而
@@ -329,6 +338,8 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     bossScaleCeil: 1,
     bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
     deadPlayersControlBoss: false,
+    // ⭐ 逃跑窗 0 ＋ 不繼承增幅 ＝ 逐位元惰性(⛔ 沒有開關被預設打開)。
+    possession: { escapeWindowSec: 0, telegraphRadius: 1, inheritBossAugments: false },
     scoring: { survivalWeight: 0, scoreMultiplier: 1, minContributionForFullSurvival: 0 },
   },
   ultUnlockRound: null,
@@ -526,6 +537,11 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
         crowdBias: doc.round11?.bombardment?.crowdBias ?? 0,
       },
       deadPlayersControlBoss: doc.round11?.deadPlayersControlBoss ?? false,
+      possession: {
+        escapeWindowSec: doc.round11?.possession?.escapeWindowSec ?? 0,
+        telegraphRadius: doc.round11?.possession?.telegraphRadius ?? 1,
+        inheritBossAugments: doc.round11?.possession?.inheritBossAugments ?? false,
+      },
       // ⭐ 計分 —— fallback 是「⛔ 不影響勝負」：倍率 1、全看戰鬥貢獻、不折扣。
       scoring: {
         survivalWeight: doc.round11?.scoring?.survivalWeight ?? 0,

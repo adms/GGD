@@ -23,6 +23,45 @@
 import { z } from "zod";
 
 /** ⭐ BR 大轟炸（GH#923）—— 極大範圍 · 紅圈倒數 · 真傷佔比。 */
+/**
+ * ⭐ 換邊操作殭屍王的三格（GH#922）—— 票文逐字點名「**三個住處**：
+ * 10 秒逃跑窗 · 預警圈半徑 · 繼承哪些增幅」。
+ * ⚠️ ⭐ 這三格與 `deadPlayersControlBoss` **刻意分開**：那一格是「開不開」，
+ * 這三格是「開著的時候長什麼樣」——⛔ 混成一格就沒辦法只調手感。
+ */
+const zPossession = z
+  .object({
+    /** ⭐ 原地生成後，活人可以跑的秒數（票文：**倒數 10 秒**）。 */
+    escapeWindowSec: z
+      .number()
+      .min(0)
+      .max(60)
+      .describe(
+        "@zh 第十一回合 · 換邊 · 原地生成後的逃跑窗（秒）\n" +
+          "@note 三支王**原地生成**，這幾秒內牠們⛔ 不能攻擊，活著的人可以跑（出貨 {{出貨值}}）。調 0＝隊友在你屍體旁邊當場被咬，那是無法反應的懲罰；調長＝所有人早就走遠了，於是換邊只是換一個鏡頭。",
+      ),
+    /** ⚠️ 腐爛預警圈的半徑（格）—— 票文寫「腐爛生成的動畫圈圈」，⭐ 而那需要一個數字。 */
+    telegraphRadius: z
+      .number()
+      .min(1)
+      .max(30)
+      .describe(
+        "@zh 第十一回合 · 換邊 · 腐爛預警圈的半徑（格）\n" +
+          "@note 票文寫的是「腐爛生成的動畫圈圈」，而那需要一個數字（出貨 {{出貨值}}）。它畫的是**這裡即將生出一支王**，所以要大到跑開之前就看得見；調太小＝看到的時候已經在圈裡了。",
+      ),
+    /**
+     * ⭐ 票文：「所有能力寶具都繼承以外，**額外增加殭屍王所有增幅及機制**」。
+     * ⛔ 關掉 ＝ 只繼承英雄自己那一套（一具很脆的王）。
+     */
+    inheritBossAugments: z
+      .boolean()
+      .describe(
+        "@zh 第十一回合 · 換邊 · 額外繼承殭屍王的增幅與機制\n" +
+          "@note 開著＝那具王除了保有英雄自己的能力與寶具，**再加上**殭屍王的全套增幅與機制（票文原話）。⛔ 關掉＝只帶英雄那一套，於是換邊之後是一具打不動人的空殼 —— 這一格是「換邊好不好玩」的主要旋鈕。",
+      ),
+  })
+  .strict();
+
 const zBombardment = z
   .object({
     enabled: z
@@ -262,6 +301,8 @@ export const zRound11Config = z
         "@zh 第十一回合 · 陣亡的玩家換邊操作殭屍王\n" +
           "@note 開著＝死掉的人不離場，改成操作王去追活著的隊友（GH#922）。⛔ 關掉＝死了就是旁觀，回到今天的行為。⚠️ 這是一個**體驗決策**不是數值：開著時最後一名玩家會發現自己在被前隊友追殺，那是刻意的。",
       ),
+    /** ⭐ 換邊的三格（GH#922）—— ⛔ 與上面那一格分開：那是「開不開」,這是「長什麼樣」。 */
+    possession: zPossession,
     /** ⭐ BR 大轟炸（GH#923）。 */
     bombardment: zBombardment,
     /** ⭐ 波次組合表（GH#924）。 */
@@ -291,6 +332,11 @@ export const SHIPPED_ROUND11: Round11Config = {
   bossScaleFloor: 1,
   bossScaleCeil: 8,
   deadPlayersControlBoss: true,
+  possession: {
+    escapeWindowSec: 10,
+    telegraphRadius: 6,
+    inheritBossAugments: true,
+  },
   bombardment: {
     enabled: true,
     telegraphSec: 10,

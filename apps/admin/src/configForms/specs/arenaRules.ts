@@ -102,7 +102,7 @@ export const ARENA_RULES_SPEC: ConfigDocSpec<"arenaTuning"> = {
     "⚠️ 同一份文件還有三頁在編別的區塊：**殭屍波系統**（mobWaves）、**傳說武器三選一**（三選一規則／撞卡裁決／寶具貨架／劣勢權重）、**對戰設定**（卡片張數）。下面的欄位刻意**不重複**那三頁的任何一格 —— 同一個數字兩個輸入框，改了哪一個會贏是操作者猜不出來的。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/arena-rules.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
     "⚠️ **一個機制整塊缺席時（`overflow` / `gacha`）這一頁不畫它** —— 那兩塊在出貨文件裡不存在（＝機制關著），而通用引擎只寫你改過的那幾格，半塊送出去會讓整份 arena-rules 被 Zod 退回，於是**整份內容載入失敗、退回骨架英雄**（2026-08-02 那次線上事故的形狀）。要打開它們請走「內容管理」貼整塊 JSON。",
-    "⛔⛔ **第十一回合（`round11`）那 21 格今天是一副骨架** —— 出貨 `enabled: false`，而 sim 那一半（生怪、大轟炸、換邊操作王、計分）**還沒接**（GH#919–#925）。⚠️ 打開總開關**不會發生任何事**，⛔ 它今天不是「開了就能玩」的開關。⭐ 這一塊與 `overflow` / `gacha` **不同**：它在出貨文件裡是**完整存在**的，所以這一頁畫得出來也存得回去，⛔ 不會送出半塊文件。",
+    "⛔⛔ **第十一回合（`round11`）那 24 格今天是一副骨架** —— 出貨 `enabled: false`，而 sim 那一半（生怪、大轟炸、換邊操作王、計分）**還沒接**（GH#919–#925）。⚠️ 打開總開關**不會發生任何事**，⛔ 它今天不是「開了就能玩」的開關。⭐ 這一塊與 `overflow` / `gacha` **不同**：它在出貨文件裡是**完整存在**的，所以這一頁畫得出來也存得回去，⛔ 不會送出半塊文件。",
   ],
   consumer:
     "apps/game-server/src/match/arenaRules.ts 的 resolveArenaRules() → rulesFromDoc()，再由 MatchController 在 tick 0 之前轉成 ticks 灌進 SimWorld（flowerRules / reviveRules / guardianRules / coinRules / weaponShelfOpen / ultGateOverride）",
@@ -114,9 +114,9 @@ export const ARENA_RULES_SPEC: ConfigDocSpec<"arenaTuning"> = {
     // ── 🧟 第十一回合・生存模式（GH#919–#925）──────────────────────────────
     // ⛔⛔ 這一族的**總開關出貨是關的**，而 sim 那一半還沒做 —— 見上面 intro 的
     // 最後一段。標籤是**必要**的：`configForms.test.ts` 的雙向斷言（少寫紅、
-    // 多寫也紅）從 schema 走出來，而 schema 已經有這 21 格了。少了它們，這一頁
+    // 多寫也紅）從 schema 走出來，而 schema 已經有這 24 格了。少了它們，這一頁
     // 會**安靜地少畫 21 個旋鈕**，而畫面上不會有任何錯誤（那正是這條守衛在擋的）。
-    // ⭐ GH#1001 —— 這 21 格的人話住在 `arenaRules.round11.ts` 的 `@zh` / `@note`，
+    // ⭐ GH#1001 —— 這 24 格的人話住在 `arenaRules.round11.ts` 的 `@zh` / `@note`，
     // 由 `schemaToForm()` 推導；⛔ 這裡不再打第二份（2026-09-05 那一晚手打的 21 格
     // 是修 CI 紅的排程結果，⛔ 不是設計）。順序＝Zod 的宣告順序，與手打時逐格相同。
     // ⚠️ 上下界一律住 Zod（round11 每一格都有上界），推導出來的標籤不帶 `max`。

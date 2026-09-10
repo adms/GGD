@@ -20,7 +20,13 @@
  */
 
 /** 一次性事件的種類 —— ⭐ 加一種就在這裡加一個字面值。 */
-export type Round11ClaimKind = "drop" | "reroll" | "revive" | "legendaryBreak";
+export type Round11ClaimKind =
+  | "drop"
+  | "reroll"
+  | "revive"
+  | "legendaryBreak"
+  /** ⭐ 換邊操作殭屍王(GH#922)——⛔ 一個座位只轉一次(「重生第二具」的入口之一)。 */
+  | "possession";
 
 /**
  * ⭐ 一次性帳本。⛔ 不持有時間、⛔ 不持有玩家 —— 它只記「哪些 key 用過了」。
