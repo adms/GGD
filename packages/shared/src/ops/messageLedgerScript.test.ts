@@ -129,3 +129,21 @@ describe("逐則對票 scripts/message-ledger.sh", () => {
     expect(strict.status, "逃生口 GGD_LEDGER_STRICT_TODAY=1 要能把今天拉回硬檢查").toBe(1);
   });
 });
+
+// ⭐ GH#1163 —— build 沒指定 --date 也要補**昨天**（`--check` 硬檢查的正是昨天）。
+//   夾具用真實的「昨天」日期：昨天的帳本少一列、存檔裡有那一則；transcript 目錄空 ⇒ 走存檔那條。
+describe("GH#1163 build 補昨天", () => {
+  it("★ 沒指定 --date ⇒ 昨天的帳本也被補上那一列（⛔ 舊寫法只做今天）", () => {
+    // ⭐ 跟腳本用**同一個時鐘**：它用本地時間 `date -v-1d +%F`（⛔ 不是 UTC 的 toISOString —— 第一版就這樣差了一天）
+    const y = spawnSync("bash", ["-c", "date -v-1d +%F 2>/dev/null || date -d yesterday +%F"], { encoding: "utf8" }).stdout.trim();
+    const dir = mkdtempSync(join(tmpdir(), "ggd-msgledger-y-"));
+    writeFileSync(join(dir, `${y}.md`), LEDGER.replaceAll(DAY, y));
+    writeFileSync(join(dir, `ledger-source_temp_${y.replaceAll("-", "")}.md`), ARCHIVE);
+    const r = spawnSync("bash", [join(REPO, "scripts/message-ledger.sh")], {
+      cwd: REPO, encoding: "utf8", env: { ...process.env, GGD_LEDGER_DIR: dir, GGD_TRANSCRIPT_DIR: dir },
+    });
+    expect(r.status, r.stdout + r.stderr).toBe(0);
+    const after = readFileSync(join(dir, `${y}.md`), "utf8");
+    expect(after).toContain("| 10:30 |");   // 昨天那一則被補進「逐則對票」表
+  });
+});

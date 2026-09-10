@@ -55,6 +55,19 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
+# ⭐ GH#1163 —— **build 只做今天，而 `--check` 硬檢查的是昨天** ⇒ 錯誤訊息叫人「跑 msgledger:build 補上」，
+#   照做了昨天那三則仍然漏著（形態⑨第三變形：修法指令治不好它指出的病）。
+#   ⇒ 沒指定 `--date`、也不是 `--check`／`--find-time` 的 build，先對**昨天**跑一次（明確 `--date`），再做今天。
+#   ⛔ 不動 python 那一段的縮排；用 `exec` 之前的一次遞迴。GGD_LEDGER_NO_YESTERDAY=1 可關（測試／單日重跑）。
+case " $* " in
+  *" --check "*|*" --date "*|*" --find-time "*) ;;
+  *)
+    if [ "${GGD_LEDGER_NO_YESTERDAY:-0}" != 1 ]; then
+      _yday=$(date -v-1d +%F 2>/dev/null || date -d yesterday +%F)
+      GGD_LEDGER_NO_YESTERDAY=1 bash "$0" --date "$_yday" "$@" || true
+    fi;;
+esac
+
 exec python3 - "$@" <<'PY'
 import json, os, re, sys, glob, datetime
 from pathlib import Path
@@ -229,7 +242,7 @@ def report(day: str, missing, bad, prefix: str = "⛔") -> None:
 
 
 HOWTO = (
-    "→ 漏列：跑 `pnpm msgledger:build` 補上\n"
+    "→ 漏列：跑 `pnpm msgledger:build` 補上（⭐ 它會補**昨天＋今天**；更早的日子用 --date）\n"
     "→ 未對票：`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> '<票號 或 — 理由>'`\n"
     f"   （⛔ 不要手動 chmod、⛔ 不要直接編那份 444 的帳本；對不到票就寫 `— <為什麼不需要開票>`，"
     f"⛔ 不要留空也不要留 {LT.UNMAPPED}）")
