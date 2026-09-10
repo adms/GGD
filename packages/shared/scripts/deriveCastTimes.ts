@@ -302,6 +302,20 @@ for (const d of all) {
   if (/\n {4}"params": \{/.test(next) && /\n {6}"castTimeSec": /.test(next)) {
     next = patchKey(next, 6, "castTimeSec", want ?? 0);
   }
+  // ⭐⭐ GH#1222（2026-09-11）—— **第三個載體**：`template.cards[].params.castTimeSec`。
+  //
+  // ⚠️ 上面那一段（2026-08-13）只認得 `template.params` 這個**舊形狀**。
+  //   2026-09-10 上架的 81 名新英雄走的是**卡片式模板**（`template.cards[]`，每張卡自己一組 params）
+  //   ⇒ 頂層蓋對了、卡片裡那一份還是 0.1，⭐ 而模板展開仍然是它贏
+  //   ⇒ `castTimeCoverage` 逐支喊「內容 0.1 != 公式 0.467」——**193 支**。
+  //
+  // ⭐ 這是同一個病的第三次：一份資料兩個住處，而寫入端只認得其中一種寫法。
+  //   ⛔ 修法不是放寬那條閘（它抓對了），是讓寫入端**認得今天的形狀**。
+  //   ⚠️ 卡片是陣列 ⇒ 縮排是 8（`template` 2 → `cards` 4 → 元素 6 → `params` 8 的鍵在 10）
+  //   ⇒ 逐一取代，⛔ 不能用 `patchKey`（它只換第一個命中）。
+  if (want !== undefined) {
+    next = next.replace(/(\n {10}"castTimeSec": )[^,\n]+/g, `$1${want}`);
+  }
   if (next !== raw) {
     writeProduct(p, next);
     abilityFiles++;
