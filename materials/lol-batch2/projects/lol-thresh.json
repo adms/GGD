@@ -1,0 +1,870 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "lol-thresh",
+  "revision": 1,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "瑟雷西",
+    "concept": "設計草案，尚未完成上架驗收。鉤鎖控距、燈籠救援與區域封鎖\n\n概念來源：LoL 瑟雷西\nhttps://www.leagueoflegends.com/zh-tw/champions/thresh/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。\n• Q：PENDING MAIN：需要命中解鎖、目標綁定、失效/死亡處理與自願追入；不等同必中突進或自動追入。 原單段params只為技術候選，不授權作最終替代。\n• W：重大簡化：施法者指定隊友，沒有隊友點燈選擇；本候選不附盾，不能描述有護盾。\n• E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。\n• R：重大簡化：沒有五面牆、穿牆破壞或單牆觸發；只是一圈施放時控制。\n• EX：不召喚不可通行的燈籠物件。\n\n採用所選 GGD 模型與特效。",
+    "moveNames": {
+      "PASSIVE": "靈魂饗宴",
+      "Q": "死亡宣告",
+      "W": "鬼影燈籠",
+      "E": "懾魂掃蕩",
+      "R": "惡靈領域",
+      "EX": "本燈拒載"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "lol-thresh.concept",
+    "title": "瑟雷西",
+    "summary": "設計草案，尚未完成上架驗收。鉤鎖控距、燈籠救援與區域封鎖\n\n概念來源：LoL 瑟雷西\nhttps://www.leagueoflegends.com/zh-tw/champions/thresh/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。\n• Q：PENDING MAIN：需要命中解鎖、目標綁定、失效/死亡處理與自願追入；不等同必中突進或自動追入。 原單段params只為技術候選，不授權作最終替代。\n• W：重大簡化：施法者指定隊友，沒有隊友點燈選擇；本候選不附盾，不能描述有護盾。\n• E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。\n• R：重大簡化：沒有五面牆、穿牆破壞或單牆觸發；只是一圈施放時控制。\n• EX：不召喚不可通行的燈籠物件。\n\n採用所選 GGD 模型與特效。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "軟輔",
+    "archetype": "fighter",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 40
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458": {
+        "id": "tpl-teleport",
+        "schema": "template@1",
+        "name": "瞬移貼身",
+        "description": "把身體搬到別的地方 —— ⛔ 但它**不是**無條件穿牆的真瞬移。展開出來的是 `kind:\"leap\"`（弧高 0、最短 2 tick，`templates/expand.ts` 的 teleport 家族），⛔ 不是 `blink`，也不授予飛行。【空中】飛行途中每 tick 不做碰撞、不吃地形。【落點】起跳前就先經 `resolveLandingPoint(mode:\"leap\")` → `resolveDisplacementEnd` 用 `world.wallBlock` 結算（出貨 `content/config/displacement-tiers.json`：enabled、leap:\"clamp\"、flightExempt:true、pillarsBlock:false）：① 一般（非飛行）角色的落點被**截在牆前**這一側（graybox 牆只有 2 單位厚，「終點不在牆裡」不等於「在牆的這一邊」）；② 只有 `flightExempt` **且**被位移的那具身體本來就 `flightIgnoresObstacles`（走路就穿得過牆的飛行狀態）才豁免牆體 —— 問的是被搬的人，不是施法者；③ 場地**邊界**與落點合法性照樣截斷，柱子不算牆。⇒ 「空中不碰撞」與「能穿到牆另一邊」是兩件事（GH#1044）。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡；`inPlace`＋`dragToCaster`，只拉到施法者腳邊，不回血不回魔）。傷害是**可選**的落地傷害（`onLand`，半徑 `arriveRadius`），抵達點才結算。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+        "family": "teleport",
+        "status": "enabled",
+        "params": {
+          "destination": {
+            "type": "enum",
+            "default": "targetUnit",
+            "values": [
+              "targetUnit",
+              "castPoint",
+              "rallyToCaster"
+            ]
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 5,
+            "unit": "s"
+          },
+          "travelSec": {
+            "type": "number",
+            "default": 0.067,
+            "min": 0.067,
+            "max": 1,
+            "unit": "s"
+          },
+          "arriveRadius": {
+            "type": "number",
+            "default": 150,
+            "min": 50,
+            "max": 900,
+            "unit": "wc3u"
+          },
+          "damage": {
+            "type": "scaling",
+            "optional": true
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [
+          "leap"
+        ],
+        "gapScore": 7,
+        "exemplar": {
+          "skill": "17-03 空破圓斬",
+          "jass": "A07M"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "靈魂饗宴",
+        "purpose": "擊殺敵人獲得有上限的護甲與魔攻成長。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "thresh-passive-1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onKill",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "permanent": true,
+                        "permanentScope": "match",
+                        "modifiers": [
+                          {
+                            "stat": "armor",
+                            "op": "flat",
+                            "value": 1
+                          },
+                          {
+                            "stat": "ap",
+                            "op": "flat",
+                            "value": 1
+                          }
+                        ],
+                        "stackKey": "lol-thresh.souls",
+                        "maxStacks": 20
+                      }
+                    ],
+                    "target": "self",
+                    "victim": "enemy"
+                  }
+                ]
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "死亡宣告",
+        "purpose": "直線鉤命中後傷害、鎖足並短拉近。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "大",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "thresh-q-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.2,
+                "radius": 2.5,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "spawnProjectile",
+                    "projectileId": "imported.bolt",
+                    "onHit": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-thresh.hook",
+                        "duration": 1.2,
+                        "sourceScope": "caster",
+                        "root": true
+                      },
+                      {
+                        "kind": "knockback",
+                        "distance": 1.5,
+                        "speed": 12,
+                        "from": "pull",
+                        "subtractGap": false,
+                        "launchHeight": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "鬼影燈籠",
+        "purpose": "指定一位隊友直接拉到自己腳邊。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "thresh-w-1",
+            "template": {
+              "ref": "tpl-teleport",
+              "params": {
+                "destination": "rallyToCaster",
+                "travelSec": 0.2,
+                "arriveRadius": 150,
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "懾魂掃蕩",
+        "purpose": "向面向掃鏈，傷害並把命中者沿揮擊方向推移。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "thresh-e-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.2,
+                "radius": 2.5,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageLine",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    },
+                    "length": 4,
+                    "width": 2.5,
+                    "aim": "facing",
+                    "fromCaster": true,
+                    "includeOrigin": true,
+                    "onHitTargets": [
+                      {
+                        "kind": "knockback",
+                        "distance": 1.5,
+                        "speed": 12,
+                        "from": "facing",
+                        "subtractGap": false,
+                        "launchHeight": 0
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-thresh.flay-slow",
+                        "duration": 1,
+                        "sourceScope": "caster",
+                        "moveSpeedMult": 0.7
+                      }
+                    ]
+                  }
+                ]
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "惡靈領域",
+        "purpose": "自身周圍一次重緩速與傷害，阻擋追近。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "thresh-r-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.2,
+                "radius": 2.5,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "中"
+                    },
+                    "radius": 3,
+                    "includeOrigin": true,
+                    "onHitTargets": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-thresh.box",
+                        "duration": 2,
+                        "sourceScope": "caster",
+                        "moveSpeedMult": 0.3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "本燈拒載",
+        "purpose": "把貼身敵人向外推，給隊友清出上車位置。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "thresh-ex-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.2,
+                "radius": 2.5,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    },
+                    "radius": 2,
+                    "includeOrigin": true,
+                    "onHitTargets": [
+                      {
+                        "kind": "knockback",
+                        "distance": 2,
+                        "speed": 12,
+                        "from": "caster",
+                        "subtractGap": false,
+                        "launchHeight": 0
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-thresh.rejected",
+                        "duration": 1,
+                        "sourceScope": "caster",
+                        "moveSpeedMult": 0.6
+                      }
+                    ]
+                  }
+                ]
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.ef3ab2e0012ef6267e1203b6b76161ecff30551c37740c1c",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "lol-thresh.q",
+          "schema": "vfx-script@1",
+          "abilityId": "lol-thresh.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "死亡宣告",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "lol-thresh.w",
+          "schema": "vfx-script@1",
+          "abilityId": "lol-thresh.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "鬼影燈籠",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "lol-thresh.e",
+          "schema": "vfx-script@1",
+          "abilityId": "lol-thresh.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "懾魂掃蕩",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "lol-thresh.r",
+          "schema": "vfx-script@1",
+          "abilityId": "lol-thresh.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "惡靈領域",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            },
+            {
+              "call": {
+                "subtype": "sub.forward-twin-blast",
+                "params": {
+                  "trigger": "castEffect",
+                  "anchor": "target",
+                  "offsetForwardU": 0,
+                  "burstLifeSec": 0.8
+                }
+              }
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "lol-thresh.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "lol-thresh.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "本燈拒載",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

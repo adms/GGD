@@ -1,0 +1,17 @@
+{
+  "id": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "fiddlesticks_idle1",
+    "run": "fiddlesticks_run",
+    "attack": "fiddlesticks_attack1_a",
+    "cast": "fiddlesticks_spell1",
+    "hurt": "fiddlesticks_idle1",
+    "death": "fiddlesticks_death_v2"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

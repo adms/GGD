@@ -1,0 +1,885 @@
+{
+  "schema": "ggd-local-draft@1",
+  "key": "hero/lol-malphite",
+  "kind": "hero",
+  "revision": 1,
+  "payload": {
+    "project": {
+      "schema": "ggd-hero-project@2",
+      "projectId": "lol-malphite",
+      "revision": 1,
+      "sourceLock": {
+        "canonicalId": null,
+        "versionId": null
+      },
+      "brief": {
+        "name": "墨菲特",
+        "concept": "設計草案，尚未完成上架驗收。岩盾換血、減攻速與落點擊飛坦克\n\n概念來源：LoL 墨菲特\nhttps://www.leagueoflegends.com/zh-tw/champions/malphite/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：需驗證護盾完全吸收的命中是否仍重設受擊計時；未驗前不宣称正典回盾完整。\n• Q：固定加減速，不按目標原速逐量偷取。\n• W：首下普攻重置與護盾期間三倍護甲未加入。\n• E：本草案先用傷害級距，不另抄護甲換算數字。\n• R：共通牆前落點規則仍在；未額外授予無敵/全程不可阻擋。\n• EX：不是牆體，不擋路、不改碰撞。\n\n採用所選 GGD 模型與特效。",
+        "moveNames": {
+          "PASSIVE": "花崗岩護盾",
+          "Q": "地震碎片",
+          "W": "震雷之擊",
+          "E": "大地震顫",
+          "R": "勢不可擋",
+          "EX": "此處禁止停車"
+        }
+      },
+      "sections": {
+        "identity": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "attributes": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "skills": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "mechanics": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "presentation": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "validation": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "package": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        }
+      },
+      "acceptedPlan": {
+        "schema": "ggd-hero-plan@2",
+        "planId": "lol-malphite.concept",
+        "title": "墨菲特",
+        "summary": "設計草案，尚未完成上架驗收。岩盾換血、減攻速與落點擊飛坦克\n\n概念來源：LoL 墨菲特\nhttps://www.leagueoflegends.com/zh-tw/champions/malphite/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：需驗證護盾完全吸收的命中是否仍重設受擊計時；未驗前不宣称正典回盾完整。\n• Q：固定加減速，不按目標原速逐量偷取。\n• W：首下普攻重置與護盾期間三倍護甲未加入。\n• E：本草案先用傷害級距，不另抄護甲換算數字。\n• R：共通牆前落點規則仍在；未額外授予無敵/全程不可阻擋。\n• EX：不是牆體，不擋路、不改碰撞。\n\n採用所選 GGD 模型與特效。",
+        "sourceLock": {
+          "canonicalId": null,
+          "versionId": null
+        },
+        "origin": "坦克",
+        "archetype": "tank",
+        "attackType": "melee",
+        "budget": {
+          "power": 50,
+          "complexity": 40
+        },
+        "statOverrides": {},
+        "templateVersions": {
+          "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+            "id": "tpl-event-passive",
+            "schema": "template@1",
+            "name": "自訂事件被動",
+            "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+            "family": "event-passive",
+            "status": "enabled",
+            "params": {
+              "hooks": {
+                "type": "hooks",
+                "default": [
+                  {
+                    "on": "onBasicAttack",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "極小"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              }
+            },
+            "requires": [
+              "hooks",
+              "conditions"
+            ],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+              "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+            }
+          },
+          "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+            "id": "tpl-effect-sequence",
+            "schema": "template@1",
+            "name": "自訂效果序列",
+            "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+            "family": "effect-sequence",
+            "status": "enabled",
+            "params": {
+              "castType": {
+                "type": "enum",
+                "default": "targeted",
+                "values": [
+                  "targeted",
+                  "self",
+                  "ground",
+                  "skillshot"
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "castTimeSec": {
+                "type": "number",
+                "default": 0,
+                "min": 0,
+                "max": 10,
+                "unit": "s",
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "radius": {
+                "type": "number",
+                "default": 2,
+                "min": 0,
+                "max": 40,
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "side": {
+                "type": "enum",
+                "default": "enemies",
+                "values": [
+                  "enemies",
+                  "allies"
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "effects": {
+                "type": "effects",
+                "default": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              }
+            },
+            "requires": [
+              "hooks",
+              "conditions"
+            ],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+              "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+            }
+          }
+        },
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "name": "花崗岩護盾",
+            "purpose": "六秒未受傷後回充最大生命10%護盾。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json"
+            },
+            "products": [
+              {
+                "instanceId": "malphite-passive-1",
+                "template": {
+                  "ref": "tpl-event-passive",
+                  "params": {
+                    "hooks": [
+                      {
+                        "on": "onDamageTaken",
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-malphite.recent-damage",
+                            "duration": 6,
+                            "sourceScope": "caster",
+                            "applyTo": "self"
+                          }
+                        ],
+                        "target": "self"
+                      },
+                      {
+                        "on": "onInterval",
+                        "effects": [
+                          {
+                            "kind": "shield",
+                            "amount": {
+                              "flat": 0,
+                              "ratios": [
+                                {
+                                  "stat": "maxHealth",
+                                  "coeff": 0.1
+                                }
+                              ]
+                            },
+                            "duration": 7,
+                            "stackKey": "lol-malphite.granite",
+                            "onExisting": "keepLarger",
+                            "absorbs": "all"
+                          }
+                        ],
+                        "target": "self",
+                        "internalCooldown": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "lol-malphite.recent-damage",
+                            "appliedBy": "self"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 0,
+              "manaCost": 0,
+              "range": 0
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "Q": {
+            "slot": "Q",
+            "name": "地震碎片",
+            "purpose": "指定敵人受傷減速，自己獲得短加速。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "malphite-q-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "targeted",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-malphite.shard-slow",
+                        "duration": 3,
+                        "sourceScope": "caster",
+                        "moveSpeedMult": 0.75
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "duration": 3,
+                        "modifiers": [
+                          {
+                            "stat": "ms",
+                            "op": "pctAdd",
+                            "msBonusTier": "極小"
+                          }
+                        ],
+                        "statusId": "lol-malphite.shard-speed",
+                        "stackKey": "lol-malphite.shard-speed",
+                        "maxStacks": 1
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "W": {
+            "slot": "W",
+            "name": "震雷之擊",
+            "purpose": "四秒強化普攻，附帶前方震波。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "malphite-w-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "self",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "duration": 4,
+                        "modifiers": [
+                          {
+                            "stat": "armor",
+                            "op": "pctAdd",
+                            "value": 0.1
+                          }
+                        ],
+                        "statusId": "lol-malphite.thunder",
+                        "stackKey": "lol-malphite.thunder",
+                        "maxStacks": 1,
+                        "hooks": [
+                          {
+                            "on": "onBasicAttack",
+                            "effects": [
+                              {
+                                "kind": "damageLine",
+                                "damageType": "physical",
+                                "amount": {
+                                  "damageTier": "極小"
+                                },
+                                "length": 3,
+                                "width": 2,
+                                "aim": "facing",
+                                "fromCaster": true,
+                                "includeOrigin": true
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "E": {
+            "slot": "E",
+            "name": "大地震顫",
+            "purpose": "周圍魔法震擊並降低攻速。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "malphite-e-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "self",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "damageArea",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "小"
+                        },
+                        "radius": 2.5,
+                        "includeOrigin": true,
+                        "onHitTargets": [
+                          {
+                            "kind": "applyBuff",
+                            "duration": 2,
+                            "modifiers": [
+                              {
+                                "stat": "as",
+                                "op": "pctAdd",
+                                "value": -0.25
+                              }
+                            ],
+                            "statusId": "lol-malphite.slam-as",
+                            "stackKey": "lol-malphite.slam-as",
+                            "maxStacks": 1,
+                            "sourceScope": "caster",
+                            "dispellable": true,
+                            "polarity": "debuff"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "R": {
+            "slot": "R",
+            "name": "勢不可擋",
+            "purpose": "高速衝到指定落點，著地傷害並擊飛周邊。",
+            "maxRank": 3,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "大",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "malphite-r-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "ground",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "leap",
+                        "applyTo": "self",
+                        "mode": "toPoint",
+                        "apexHeight": 0,
+                        "durationSec": 0.2,
+                        "landRadius": 2.5,
+                        "onLand": [
+                          {
+                            "kind": "damage",
+                            "damageType": "magic",
+                            "amount": {
+                              "damageTier": "中"
+                            }
+                          },
+                          {
+                            "kind": "knockback",
+                            "distance": 0.2,
+                            "speed": 12,
+                            "from": "caster",
+                            "subtractGap": false,
+                            "launchHeight": 1.2
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "EX": {
+            "slot": "EX",
+            "name": "此處禁止停車",
+            "purpose": "原地三秒提高雙抗，但自己也不能移動。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "malphite-ex-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "self",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "duration": 3,
+                        "modifiers": [
+                          {
+                            "stat": "armor",
+                            "op": "pctAdd",
+                            "value": 0.35
+                          },
+                          {
+                            "stat": "mr",
+                            "op": "pctAdd",
+                            "value": 0.35
+                          }
+                        ],
+                        "statusId": "lol-malphite.parking",
+                        "stackKey": "lol-malphite.parking",
+                        "maxStacks": 1
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-malphite.parking-root",
+                        "duration": 3,
+                        "sourceScope": "caster",
+                        "applyTo": "self",
+                        "root": true
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          }
+        }
+      },
+      "presentation": {
+        "schema": "ggd-hero-presentation@1",
+        "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+        "championIcon": null,
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": null,
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "Q": {
+            "slot": "Q",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-malphite.q",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-malphite.q",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "地震碎片",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "W": {
+            "slot": "W",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-malphite.w",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-malphite.w",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "震雷之擊",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "E": {
+            "slot": "E",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-malphite.e",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-malphite.e",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "大地震顫",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "R": {
+            "slot": "R",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-malphite.r",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-malphite.r",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "勢不可擋",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                },
+                {
+                  "call": {
+                    "subtype": "sub.forward-twin-blast",
+                    "params": {
+                      "trigger": "castEffect",
+                      "anchor": "target",
+                      "offsetForwardU": 0,
+                      "burstLifeSec": 0.8
+                    }
+                  }
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "EX": {
+            "slot": "EX",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-malphite.ex",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-malphite.ex",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "此處禁止停車",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          }
+        },
+        "assetLocks": []
+      },
+      "validationState": {
+        "identity": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "attributes": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "skills": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "mechanics": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "presentation": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "validation": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "package": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        }
+      },
+      "receipts": []
+    },
+    "rawInputs": {},
+    "mode": "visual",
+    "origin": "坦克"
+  },
+  "updatedAt": 0,
+  "token": "91abd00a94d42415797f0890a889100293318025862ad960231e7c75895e48c0"
+}

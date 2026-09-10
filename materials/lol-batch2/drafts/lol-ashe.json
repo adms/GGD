@@ -1,0 +1,926 @@
+{
+  "schema": "ggd-local-draft@1",
+  "key": "hero/lol-ashe",
+  "kind": "hero",
+  "revision": 1,
+  "payload": {
+    "project": {
+      "schema": "ggd-hero-project@2",
+      "projectId": "lol-ashe",
+      "revision": 1,
+      "sourceLock": {
+        "canonicalId": null,
+        "versionId": null
+      },
+      "brief": {
+        "name": "艾希",
+        "concept": "設計草案，尚未完成上架驗收。普攻黏人、四層專注與遠距先手\n\n概念來源：LoL 艾希\nhttps://www.leagueoflegends.com/zh-tw/champions/ashe/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：暴擊轉為更強緩速未重寫共通暴擊規則。\n• Q：強化一發仍是一次普攻，沒有五箭重新觸發on-hit。\n• W：錐形多箭簡化為一次短寬直帶；同敵只計一發。\n• R：用既有非穿透 imported.bolt 代理冰箭；固定1.2秒暈眩，非全圖，也未只碰英雄。\n• EX：保鮮箱只提供盾與鎖足，沒有無敵。\n• E：本地圖全圖可見，依 Owner 指示改為飛鷹送件的延遲區域繳械；不提供額外視野，不造成傷害。\n\n採用所選 GGD 模型與特效。",
+        "moveNames": {
+          "PASSIVE": "冰霜射擊",
+          "Q": "專注射擊",
+          "W": "萬箭齊發",
+          "E": "鷹擊長空：強制簽收",
+          "R": "魔法水晶箭",
+          "EX": "冷凍保存"
+        }
+      },
+      "sections": {
+        "identity": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "attributes": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "skills": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "mechanics": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "presentation": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "validation": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "package": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        }
+      },
+      "acceptedPlan": {
+        "schema": "ggd-hero-plan@2",
+        "planId": "lol-ashe.concept",
+        "title": "艾希",
+        "summary": "設計草案，尚未完成上架驗收。普攻黏人、四層專注與遠距先手\n\n概念來源：LoL 艾希\nhttps://www.leagueoflegends.com/zh-tw/champions/ashe/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：暴擊轉為更強緩速未重寫共通暴擊規則。\n• Q：強化一發仍是一次普攻，沒有五箭重新觸發on-hit。\n• W：錐形多箭簡化為一次短寬直帶；同敵只計一發。\n• R：用既有非穿透 imported.bolt 代理冰箭；固定1.2秒暈眩，非全圖，也未只碰英雄。\n• EX：保鮮箱只提供盾與鎖足，沒有無敵。\n• E：本地圖全圖可見，依 Owner 指示改為飛鷹送件的延遲區域繳械；不提供額外視野，不造成傷害。\n\n採用所選 GGD 模型與特效。",
+        "sourceLock": {
+          "canonicalId": null,
+          "versionId": null
+        },
+        "origin": "射手",
+        "archetype": "marksman",
+        "attackType": "ranged",
+        "budget": {
+          "power": 50,
+          "complexity": 40
+        },
+        "statOverrides": {},
+        "templateVersions": {
+          "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+            "id": "tpl-event-passive",
+            "schema": "template@1",
+            "name": "自訂事件被動",
+            "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+            "family": "event-passive",
+            "status": "enabled",
+            "params": {
+              "hooks": {
+                "type": "hooks",
+                "default": [
+                  {
+                    "on": "onBasicAttack",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "極小"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              }
+            },
+            "requires": [
+              "hooks",
+              "conditions"
+            ],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+              "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+            }
+          },
+          "sha256:3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1bd60879cbecd89756": {
+            "id": "tpl-spend-resource",
+            "schema": "template@1",
+            "name": "消耗資源施放",
+            "description": "**要求 N 層資源才放得出來，放了就扣掉**（`condition.status.minStacks` 要求 ＋ `consumeStatus.count` 扣除）。⭐ 與累積側的 `tpl-charge-resource` 是**一對**。⚠️ ⭐ 為什麼要求與扣除是**兩個**節點：`condition` 決定「這一發打不打得出來」,`consumeStatus` 決定「打出來之後扣幾層」—— ⛔ 合成一格就表達不了「消耗全部」與「消耗固定三層」的差別。⭐ GH#1132 AC④ 逐字要的「**合法消耗**」由 `consumeStatus` 本人保證：扣得到 ⇒ 跑 `onConsumed`；層數不足 ⇒ 跑 `onMissing`（省略 ＝ 什麼都不發生）。⚠️ ⭐ 而「要幾層」與「扣幾層」是**同一格**（`minStacks`）—— ⛔ 不開兩格表達一個事實。⚠️ ⭐ `missingText`：層數不足時冒一行字 —— ⭐ 那是 exemplar 逐字要求的「缺少黑魔導時**顯示使用條件**」，⛔ 而 `onMissing` 省略就是「按下去什麼都沒發生」。",
+            "family": "spend-resource",
+            "status": "enabled",
+            "params": {
+              "statusId": {
+                "type": "docRef",
+                "default": "aban-x-mark",
+                "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。"
+              },
+              "minStacks": {
+                "type": "number",
+                "default": 3,
+                "min": 1,
+                "max": 99,
+                "origin": "census: 武藤遊戲逐字「上限**三層**，供 EX 消耗」⇒ 要求 3、扣 3。⭐ 而這一格**同時**是「要幾層」與「扣幾層」—— ⛔ 第〇·四守則：那是**同一個事實**。⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格,⭐ 而它們表達的是同一個數字 ——`paramsSchemaFor` 的閘當場抓到：擾動 `spend` **不會改變展開結果** ⇒ 那是一格死參數。⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計,那時候才是把它拆開的理由。"
+              },
+              "effects": {
+                "type": "effects",
+                "default": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  }
+                ],
+                "origin": "census: 武藤遊戲 EX 逐字「射出強化**直線魔法**」⇒ 預設放一顆最小的魔法傷害,⭐ 讓這一族**展得開**（`templateStatusIsHonest` 要求宣告 enabled 的每一份都真的展得開）。⛔ 它只是預設 —— 每一支要填自己真正打的東西。"
+              },
+              "castType": {
+                "type": "enum",
+                "default": "self",
+                "values": [
+                  "self",
+                  "ground",
+                  "targeted"
+                ],
+                "origin": "census: 出貨 `damageArea` 主體那一族的同名槽用同一組值（`tpl-area-strike`）—— ⛔ 不另立一份值域。"
+              },
+              "castTimeSec": {
+                "type": "number",
+                "min": 0,
+                "max": 5,
+                "unit": "s",
+                "optional": true,
+                "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它）。"
+              },
+              "missingText": {
+                "type": "text",
+                "default": "資源不足",
+                "origin": "census: 武藤遊戲 EX 逐字「**缺少黑魔導時顯示使用條件**」⇒ ⭐ 層數不足時要**告訴玩家**，⛔ 不是按下去什麼都沒發生（第一·五守則：說了但不會發生）。⭐ 而 `consumeStatus.onMissing` 就是那個住處（schema 逐字：「層數不足時執行；省略則不產生後續效果」）。⭐ 預設用最短的一句 —— 每一支要填自己的（「缺少黑魔導」／「電力不足」／「線索不足」）。⚠️ ⭐ 型別是 `text` **⛔ 不是 `docRef`** —— 我第一版寫了 `docRef`,而它驗的是**文件編號**格式 ⇒「資源不足」四個中文字當場被拒。"
+              }
+            },
+            "requires": [],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GH#1132：武藤遊戲〔黑・魔・導〕—— 逐字「**消耗布局**，由存活的黑魔導射出強化直線魔法」",
+              "jass": "⛔ 無 JASS 對照 —— 社群英雄的原設計（第〇·六守則第 1 層）"
+            }
+          },
+          "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+            "id": "tpl-effect-sequence",
+            "schema": "template@1",
+            "name": "自訂效果序列",
+            "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+            "family": "effect-sequence",
+            "status": "enabled",
+            "params": {
+              "castType": {
+                "type": "enum",
+                "default": "targeted",
+                "values": [
+                  "targeted",
+                  "self",
+                  "ground",
+                  "skillshot"
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "castTimeSec": {
+                "type": "number",
+                "default": 0,
+                "min": 0,
+                "max": 10,
+                "unit": "s",
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "radius": {
+                "type": "number",
+                "default": 2,
+                "min": 0,
+                "max": 40,
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "side": {
+                "type": "enum",
+                "default": "enemies",
+                "values": [
+                  "enemies",
+                  "allies"
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "effects": {
+                "type": "effects",
+                "default": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              }
+            },
+            "requires": [
+              "hooks",
+              "conditions"
+            ],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+              "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+            }
+          }
+        },
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "name": "冰霜射擊",
+            "purpose": "普攻減速；攻擊已帶自身霜痕的目標追加傷害，並累积最多四層專注。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json"
+            },
+            "products": [
+              {
+                "instanceId": "ashe-passive-1",
+                "template": {
+                  "ref": "tpl-event-passive",
+                  "params": {
+                    "hooks": [
+                      {
+                        "on": "onBasicAttack",
+                        "effects": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小"
+                            },
+                            "condition": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "lol-ashe.frost",
+                              "appliedBy": "self"
+                            }
+                          },
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-ashe.frost",
+                            "duration": 2,
+                            "sourceScope": "caster",
+                            "moveSpeedMult": 0.8
+                          },
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-ashe.focus",
+                            "duration": 4,
+                            "sourceScope": "caster",
+                            "applyTo": "self",
+                            "stacks": 1,
+                            "condition": {
+                              "not": {
+                                "kind": "status",
+                                "subject": "self",
+                                "statusId": "lol-ashe.focus",
+                                "appliedBy": "self",
+                                "minStacks": 4
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 0,
+              "manaCost": 0,
+              "range": 0
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "Q": {
+            "slot": "Q",
+            "name": "專注射擊",
+            "purpose": "消耗四層專注，四秒加攻速並每次普攻追加小額傷害。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "ashe-q-1",
+                "template": {
+                  "ref": "tpl-spend-resource",
+                  "params": {
+                    "statusId": "lol-ashe.focus",
+                    "minStacks": 4,
+                    "castType": "self",
+                    "castTimeSec": 0,
+                    "missingText": "先普攻累積四層專注",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "duration": 4,
+                        "modifiers": [
+                          {
+                            "stat": "as",
+                            "op": "pctAdd",
+                            "value": 0.4
+                          }
+                        ],
+                        "statusId": "lol-ashe.focus-active",
+                        "stackKey": "lol-ashe.focus-active",
+                        "maxStacks": 1,
+                        "hooks": [
+                          {
+                            "on": "onBasicAttack",
+                            "effects": [
+                              {
+                                "kind": "damage",
+                                "damageType": "physical",
+                                "amount": {
+                                  "damageTier": "極小"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1bd60879cbecd89756"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "W": {
+            "slot": "W",
+            "name": "萬箭齊發",
+            "purpose": "朝面向射出短寬箭幕，傷害並施加霜痕緩速。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "ashe-w-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "skillshot",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "damageLine",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        },
+                        "length": 7,
+                        "width": 3,
+                        "aim": "facing",
+                        "fromCaster": true,
+                        "includeOrigin": true,
+                        "onHitTargets": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-ashe.frost",
+                            "duration": 2,
+                            "sourceScope": "caster",
+                            "moveSpeedMult": 0.8
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "E": {
+            "slot": "E",
+            "name": "鷹擊長空：強制簽收",
+            "purpose": "指定區域出現送件預警，0.7 秒後使仍在區域內的敵人繳械 0.8 秒，不能普攻但仍可移動與施法。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "大",
+              "cooldownTier": "中",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "ashe-e-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "ground",
+                    "castTimeSec": 0.1,
+                    "radius": 2,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "delayed",
+                        "shape": "circle",
+                        "radius": 2,
+                        "side": "enemies",
+                        "delaySec": 0.7,
+                        "targetMode": "reresolve",
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-ashe.delivery-signature",
+                            "duration": 0.8,
+                            "sourceScope": "caster",
+                            "applyTo": "target",
+                            "disarmed": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "R": {
+            "slot": "R",
+            "name": "魔法水晶箭",
+            "purpose": "發射會碰撞的直線冰箭，主目標暈眩，周圍緩速。",
+            "maxRank": 3,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "大",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "ashe-r-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "skillshot",
+                    "castTimeSec": 0.5,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "spawnProjectile",
+                        "projectileId": "imported.bolt",
+                        "onHit": [
+                          {
+                            "kind": "damage",
+                            "damageType": "magic",
+                            "amount": {
+                              "damageTier": "中"
+                            }
+                          },
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-ashe.arrow-stun",
+                            "duration": 1.2,
+                            "sourceScope": "caster",
+                            "stun": true
+                          },
+                          {
+                            "kind": "damageArea",
+                            "damageType": "magic",
+                            "amount": {
+                              "damageTier": "極小"
+                            },
+                            "radius": 2,
+                            "includeOrigin": true,
+                            "onHitTargets": [
+                              {
+                                "kind": "applyStatus",
+                                "statusId": "lol-ashe.arrow-slow",
+                                "duration": 1.5,
+                                "sourceScope": "caster",
+                                "moveSpeedMult": 0.65
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "EX": {
+            "slot": "EX",
+            "name": "冷凍保存",
+            "purpose": "兩秒護盾保鮮；前0.6秒自己鎖足。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "ashe-ex-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "self",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 180,
+                          "ratios": []
+                        },
+                        "duration": 2,
+                        "stackKey": "lol-ashe.freezer",
+                        "onExisting": "keepLarger",
+                        "absorbs": "all"
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-ashe.freezer-root",
+                        "duration": 0.6,
+                        "sourceScope": "caster",
+                        "applyTo": "self",
+                        "root": true
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          }
+        }
+      },
+      "presentation": {
+        "schema": "ggd-hero-presentation@1",
+        "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+        "championIcon": null,
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": null,
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "Q": {
+            "slot": "Q",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-ashe.q",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-ashe.q",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "專注射擊",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "W": {
+            "slot": "W",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-ashe.w",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-ashe.w",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "萬箭齊發",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "E": {
+            "slot": "E",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-ashe.e",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-ashe.e",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "鷹擊長空：強制簽收",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "R": {
+            "slot": "R",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-ashe.r",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-ashe.r",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "魔法水晶箭",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                },
+                {
+                  "call": {
+                    "subtype": "sub.forward-twin-blast",
+                    "params": {
+                      "trigger": "castEffect",
+                      "anchor": "target",
+                      "offsetForwardU": 0,
+                      "burstLifeSec": 0.8
+                    }
+                  }
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "EX": {
+            "slot": "EX",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-ashe.ex",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-ashe.ex",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "冷凍保存",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          }
+        },
+        "assetLocks": []
+      },
+      "validationState": {
+        "identity": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "attributes": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "skills": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "mechanics": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "presentation": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "validation": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "package": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        }
+      },
+      "receipts": []
+    },
+    "rawInputs": {},
+    "mode": "visual",
+    "origin": "射手"
+  },
+  "updatedAt": 0,
+  "token": "cfbfb44dd39d2b4f1c18e674020a822de9aebbbb3c2606fd02fa5510f09be104"
+}

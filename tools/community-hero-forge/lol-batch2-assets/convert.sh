@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+pids=()
+(/tool/lol2gltf skn2gltf -m /work/extracted/sett/assets/characters/sett/skins/base/sett.skn -s /work/extracted/sett/assets/characters/sett/skins/base/sett.skl -g /work/converted/sett.glb -a /work/selected-native-animations/sett --materials Sett_Base_Mat Joke Wolverine --textures /work/extracted/sett/assets/characters/sett/skins/base/sett_base_tx_cm.dds /work/extracted/sett/assets/characters/sett/skins/base/sett_base_mom_tx_cm.dds /work/extracted/sett/assets/characters/sett/skins/base/sett_base_wolverine_tx_cm.dds > /work/logs/sett-convert.log 2>&1 && echo sett:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base.skn -s /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base.skl -g /work/converted/fiddlesticks.glb -a /work/selected-native-animations/fiddlesticks --materials Weapon Body Lantern Tongue L_Demon_Arm R_Demon_Arm --textures /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_weapon_tx_cm.dds /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds /work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds > /work/logs/fiddlesticks-convert.log 2>&1 && echo fiddlesticks:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/ornn/assets/characters/ornn/skins/base/ornn.skn -s /work/extracted/ornn/assets/characters/ornn/skins/base/ornn.skl -g /work/converted/ornn.glb -a /work/selected-native-animations/ornn --materials Ornn_Base_Mat Ornn_Base_Anvil_Mat Ornn_Base_Hammer_Mat Ornn_Base_Sword_Mat Ornn_Base_Bucket_Mat Ornn_Base_Poro_Mat --textures /work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_tx_cm.dds /work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_tx_cm.dds /work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_tx_cm.dds /work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_swordbarrel_tx_cm.dds /work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_swordbarrel_tx_cm.dds /work/extracted/ornn/assets/characters/ornn/skins/base/poro_2016_tx_cm.dds > /work/logs/ornn-convert.log 2>&1 && echo ornn:converted) &
+pids+=("$!")
+for pid in "${pids[@]}"; do wait "$pid"; done
+pids=()
+(/tool/lol2gltf skn2gltf -m /work/extracted/chogath/assets/characters/chogath/skins/base/chogath.skn -s /work/extracted/chogath/assets/characters/chogath/skins/base/chogath.skl -g /work/converted/chogath.glb -a /work/selected-native-animations/chogath --materials riotRig:lambert4 --textures /work/extracted/chogath/assets/characters/chogath/skins/base/greenterror.dds > /work/logs/chogath-convert.log 2>&1 && echo chogath:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/ashe/assets/characters/ashe/skins/base/ashe.skn -s /work/extracted/ashe/assets/characters/ashe/skins/base/ashe.skl -g /work/converted/ashe.glb -a /work/selected-native-animations/ashe --materials ashe_base_2011_MD_lambert2SG1 --textures /work/extracted/ashe/assets/characters/ashe/skins/base/ashe_base_2011_tx_cm.dds > /work/logs/ashe-convert.log 2>&1 && echo ashe:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/blitzcrank.skn -s /work/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/blitzcrank.skl -g /work/converted/blitzcrank.glb -a /work/selected-native-animations/blitzcrank --materials riotRig:MAT_blitzcrank --textures /work/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/steamgolem.dds > /work/logs/blitzcrank-convert.log 2>&1 && echo blitzcrank:converted) &
+pids+=("$!")
+for pid in "${pids[@]}"; do wait "$pid"; done
+pids=()
+(/tool/lol2gltf skn2gltf -m /work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base.skn -s /work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base.skl -g /work/converted/ahri.glb -a /work/selected-native-animations/ahri --materials Body Eyes Tails Tail_Large --textures /work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tx_cm.dds /work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tx_cm.dds /work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tails_tx_cm.dds /work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tails_tx_cm.dds > /work/logs/ahri-convert.log 2>&1 && echo ahri:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/thresh/assets/characters/thresh/skins/base/thresh.skn -s /work/extracted/thresh/assets/characters/thresh/skins/base/thresh.skl -g /work/converted/thresh.glb -a /work/selected-native-animations/thresh --materials ChainWarden_Base_Mesh_Material10 --textures /work/extracted/thresh/assets/characters/thresh/skins/base/thresh_base_tx_cm.dds > /work/logs/thresh-convert.log 2>&1 && echo thresh:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/velkoz/assets/characters/velkoz/skins/base/velkoz_base.skn -s /work/extracted/velkoz/assets/characters/velkoz/skins/base/velkoz_base.skl -g /work/converted/velkoz.glb -a /work/selected-native-animations/velkoz --materials Velkoz_MAT --textures /work/extracted/velkoz/assets/characters/velkoz/skins/base/velkoz_base.dds > /work/logs/velkoz-convert.log 2>&1 && echo velkoz:converted) &
+pids+=("$!")
+for pid in "${pids[@]}"; do wait "$pid"; done
+pids=()
+(/tool/lol2gltf skn2gltf -m /work/extracted/malphite/assets/characters/malphite/skins/base/malphite.skn -s /work/extracted/malphite/assets/characters/malphite/skins/base/malphite.skl -g /work/converted/malphite.glb -a /work/selected-native-animations/malphite --materials MAT_malphite --textures /work/extracted/malphite/assets/characters/malphite/skins/base/malphite.dds > /work/logs/malphite-convert.log 2>&1 && echo malphite:converted) &
+pids+=("$!")
+(/tool/lol2gltf skn2gltf -m /work/extracted/garen/assets/characters/garen/skins/base/garen.skn -s /work/extracted/garen/assets/characters/garen/skins/base/garen.skl -g /work/converted/garen.glb -a /work/selected-native-animations/garen --materials Garen_Base_Mat --textures /work/extracted/garen/assets/characters/garen/skins/base/garen_base_tx_cm.dds > /work/logs/garen-convert.log 2>&1 && echo garen:converted) &
+pids+=("$!")
+for pid in "${pids[@]}"; do wait "$pid"; done
+pids=()
