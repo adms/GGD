@@ -11,10 +11,30 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop community-review-11-20260907.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549635,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-o00k.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/godie-o00k.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
+  "quote": {
+   "takes": [],
+   "text": "（原檔）505624353",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/505624353.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "thunderstore-rimuru-ror2",
+    "stub": false,
+    "bytes": 60230,
+    "seconds": 3.704762,
+    "lufs": null,
+    "hash": "817dcdc32054cde438da433122b9837cc9b8c1e8e14fac8d0028e177fc140af4",
+    "at": 1789058015470
+   },
+   "lastError": null
+  },
   "skill-name.q": {
    "takes": [
     {
@@ -32,6 +52,14 @@
      "seconds": 0.64,
      "at": 1789042402710,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789054964268,
+     "error": null
     }
    ],
    "text": "水刃！",
@@ -41,16 +69,16 @@
    "origin": "ability-name:community-review-11-20260907.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 12164,
+    "seconds": 0.680249,
     "lufs": null,
-    "hash": "4b4f6330a164517b1b38d73461ef27d428a65929b13d6884f4afa2aff7bf0aff",
-    "maxDb": -4.2,
-    "at": 1789042402710
+    "hash": "3101bc444f0e6af0701ec67320f504b2ab685f905c7e76194114677541698e9d",
+    "maxDb": -2,
+    "at": 1789054964268
    },
    "lastError": null
   },
@@ -71,6 +99,14 @@
      "seconds": 1,
      "at": 1789042402813,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789054964449,
+     "error": null
     }
    ],
    "text": "捕食者！",
@@ -80,16 +116,16 @@
    "origin": "ability-name:community-review-11-20260907.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 15926,
+    "seconds": 0.92,
     "lufs": null,
-    "hash": "44e2aaa4e90f10061a133db6849548c3c553150514fd7567317fc4c23942c744",
-    "maxDb": -5.2,
-    "at": 1789042402813
+    "hash": "653a4dcc0cd5a56b448dc0dd7bcdd6adb461348487d0751bddd47867acd0f192",
+    "maxDb": -4.6,
+    "at": 1789054964449
    },
    "lastError": null
   },
@@ -110,6 +146,14 @@
      "seconds": 0.4,
      "at": 1789042402915,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1789054964629,
+     "error": null
     }
    ],
    "text": "擬態！",
@@ -119,16 +163,16 @@
    "origin": "ability-name:community-review-11-20260907.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 8821,
+    "seconds": 0.48,
     "lufs": null,
-    "hash": "6ef3ee0323c1228ea97dc5a7eb40eb71820e6e1225a4f24bcaaa246bbb64e28f",
-    "maxDb": -1.9,
-    "at": 1789042402915
+    "hash": "b474515c57056584d4c0ecae872f7817e48f8d8c11ae205f45b8a48dadc50049",
+    "maxDb": -3.1,
+    "at": 1789054964629
    },
    "lastError": null
   },
@@ -149,6 +193,14 @@
      "seconds": 1,
      "at": 1789042403017,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789054964804,
+     "error": null
     }
    ],
    "text": "黑炎！",
@@ -158,16 +210,16 @@
    "origin": "ability-name:community-review-11-20260907.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 15090,
+    "seconds": 0.88,
     "lufs": null,
-    "hash": "1412dffc17071a4d1af329899f2cdaee28fd47b3b12bcac2a8d26290b60ed703",
-    "maxDb": -4.7,
-    "at": 1789042403017
+    "hash": "2ab5add40d8b6596f7d277c3acb73b95fdefdda48cc37c9c4d592faeeb3fbb27",
+    "maxDb": -5.3,
+    "at": 1789054964804
    },
    "lastError": null
   },
@@ -188,25 +240,31 @@
      "seconds": 2.72,
      "at": 1789042403119,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.4,
+     "at": 1789054964995,
+     "error": null
     }
    ],
-   "text": "解析完成・能力再現！",
+   "text": "（原檔）1001475546",
    "lang": "ja",
-   "kana": "カイセキ カンセイ ノウリョク サイゲン",
-   "textSource": "derived",
-   "origin": "ability-name:community-review-11-20260907.ex",
+   "textSource": "original",
+   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/1001475546.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "thunderstore-rimuru-ror2",
     "stub": false,
-    "bytes": 44765,
-    "seconds": 2.72,
+    "bytes": 18852,
+    "seconds": 1.102109,
     "lufs": null,
-    "hash": "fee73eb25d5fd9410ef1650db72c7514b4429d672bbdae720d750fbd3521c4f3",
-    "maxDb": -2,
-    "at": 1789042403119
+    "hash": "5cb844eceb29e01c096dbd11b47ffbdcabfe14a997fcea690ced7549fdb9c2b3",
+    "at": 1789058015566
    },
    "lastError": null
   },
@@ -219,6 +277,14 @@
      "seconds": 2.04,
      "at": 1789043006095,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1789054965176,
+     "error": null
     }
    ],
    "text": "はじめまして、俺はスライムのリムル",
@@ -228,16 +294,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33898,
-    "seconds": 2.04,
+    "bytes": 40168,
+    "seconds": 2.44,
     "lufs": null,
-    "hash": "bc773aa8022af0b1ee87a7e7c2518a1ecef7eb7eb147b5bc47e58c44c4cbbc3a",
-    "maxDb": -2.7,
-    "at": 1789043006095
+    "hash": "439c529ed4af8474a43767538ac01bec73d3a9c9a1f21322544c0b502302a5df",
+    "maxDb": -1.9,
+    "at": 1789054965176
    },
    "lastError": null
   },
@@ -250,6 +316,14 @@
      "seconds": 0.32,
      "at": 1789037122552,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054965367,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -259,16 +333,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 6731,
+    "seconds": 0.36,
     "lufs": null,
-    "hash": "9728daa72e760cfa34a09cb8b93ab767a7d692a1c7e6bc7134c985931d736f03",
-    "maxDb": -2,
-    "at": 1789037122552
+    "hash": "e520e4f8e195f09c87b6a68f062f45b46fe38ad7d7579ad860f681b187714b98",
+    "maxDb": -1.9,
+    "at": 1789054965367
    },
    "lastError": null
   },
@@ -281,25 +355,31 @@
      "seconds": 0.28,
      "at": 1789037122677,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054965548,
+     "error": null
     }
    ],
-   "text": "きゃっ！",
+   "text": "（原檔）675434901",
    "lang": "ja",
-   "kana": "キャッ",
-   "textSource": "derived",
-   "origin": "grunt:female",
+   "textSource": "original",
+   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/675434901.wav",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "thunderstore-rimuru-ror2",
     "stub": false,
     "bytes": 5477,
     "seconds": 0.28,
     "lufs": null,
     "hash": "b320fa12d8c2d971232d907315dddf42e999df38147a013d62b276e9d718b11a",
-    "maxDb": -2,
-    "at": 1789037122677
+    "at": 1789058015660
    },
    "lastError": null
   },
@@ -312,25 +392,31 @@
      "seconds": 0.52,
      "at": 1789037122797,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1789054965720,
+     "error": null
     }
    ],
-   "text": "ああっ……！",
+   "text": "（原檔）105924093",
    "lang": "ja",
-   "kana": "アアッ",
-   "textSource": "derived",
-   "origin": "grunt:female",
+   "textSource": "original",
+   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/105924093.wav",
    "state": "generated",
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "thunderstore-rimuru-ror2",
     "stub": false,
     "bytes": 9239,
     "seconds": 0.52,
     "lufs": null,
     "hash": "1c7ce3b0aef3d328b73efb0ea1085b456410f5d7659b139cb64cd313fa92a0c0",
-    "maxDb": -2,
-    "at": 1789037122797
+    "at": 1789058015855
    },
    "lastError": null
   },
@@ -343,6 +429,14 @@
      "seconds": 1.44,
      "at": 1789043006210,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1789054965895,
+     "error": null
     }
    ],
    "text": "悪いスライムじゃないよ！",
@@ -352,16 +446,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24285,
-    "seconds": 1.44,
+    "bytes": 22195,
+    "seconds": 1.32,
     "lufs": null,
-    "hash": "d7c9beba9ab949c3db0832384820112256bd4a8393df1b29d656e4aff71894c2",
-    "maxDb": -3.2,
-    "at": 1789043006210
+    "hash": "dcc020fe5a6f4ba61b89edee46c16a24d64b3eacb0418cc94049fb009319d93c",
+    "maxDb": -3.5,
+    "at": 1789054965895
    },
    "lastError": null
   },
@@ -374,6 +468,14 @@
      "seconds": 0.32,
      "at": 1789037122917,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054966073,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -383,16 +485,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 5477,
+    "seconds": 0.28,
     "lufs": null,
-    "hash": "8103c2ed89e86982c8d520ba78cedb589cce7d9c54946deae5708f248e95e7e3",
-    "maxDb": -2.1,
-    "at": 1789037122917
+    "hash": "a1ec14ce3ab5ce2dbff655e9d4ed984eb4147d10eb38a45bc5f3e2709f2d57aa",
+    "maxDb": -1.9,
+    "at": 1789054966073
    },
    "lastError": null
   }

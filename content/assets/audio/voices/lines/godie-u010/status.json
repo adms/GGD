@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "邪眼の力を、なめるなよ。",
+   "text": "（原檔）chr1160_ActVoice#205",
    "lang": "ja",
    "kana": "ジャガン ノ チカラ オ ナメル ナ ヨ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,23 +30,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 35152,
-    "seconds": 2.12,
+    "bytes": 97010,
+    "seconds": 5.996916,
     "lufs": null,
-    "hash": "a1b555c72870080802413b86fc59fd380cda410d66746c322e5ecb95d8f1f2ae",
-    "at": 1784979837821
+    "hash": "1c98c3b4a9e5d97debb6412ed7d6d1696a84831039be77c7b4895ac4f8c4af27",
+    "at": 1789067560532
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#205.ogg"
   },
   "victory": {
-   "text": "フン、当然の結果だ。",
+   "text": "（原檔）chr1160_ActVoice#204",
    "lang": "ja",
    "kana": "フン トーゼン ノ ケッカ ダ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,17 +60,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 68589,
+    "seconds": 4.214943,
     "lufs": null,
-    "hash": "a1440ea7bdb116393e42cec3f88f9814be69f83ef0275f4ac45ba58e1ec9ebc8",
-    "at": 1784979870218
+    "hash": "8d7cc257fad40c46bd67a65f1cc065b01fb0cd258660e0c5eb37a292a899fec3",
+    "at": 1789067561781
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#204.ogg"
   },
   "defeat": {
    "text": "クッ…この俺が…油断したか。",
@@ -101,10 +103,10 @@
    "lastError": null
   },
   "hurt": {
-   "text": "チッ。",
+   "text": "（原檔）chr1160_ActVoice#69",
    "lang": "ja",
    "kana": "チッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +119,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 12164,
+    "seconds": 0.696349,
     "lufs": null,
-    "hash": "ce87c5dd993d811d4485fac050559a73e140a04ee5c983a446e4e6e60019ea81",
-    "at": 1784979883878
+    "hash": "b3a4bb1c5c188f41ac62c1fa03717e76a5f40b9227df2b3c348995a7056cbdb2",
+    "at": 1789067559799
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#69.ogg"
   },
   "hurt-heavy": {
-   "text": "ぐあっ…おのれ…。",
+   "text": "（原檔）chr1160_ActVoice#220",
    "lang": "ja",
    "kana": "グアッ オノレ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +149,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 13836,
-    "seconds": 0.8,
+    "bytes": 18852,
+    "seconds": 1.115805,
     "lufs": null,
-    "hash": "c0edf1491097e25e49578f38d670548191e426e60acaa481b4cd1a017cc76c34",
-    "at": 1784979884773
+    "hash": "950b1cd4238ff13788886b18f00ca87c385f107f04eb6e4d1d149027c2c7bbbe",
+    "at": 1789067559892
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#220.ogg"
   },
   "stun": {
    "text": "な…に…。",
@@ -449,10 +453,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "くだらん。出直してこい。",
+   "text": "（原檔）chr1160_ActVoice#114",
    "lang": "ja",
    "kana": "クダラン デナオシテ コイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +469,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 24285,
-    "seconds": 1.44,
+    "bytes": 83635,
+    "seconds": 5.152948,
     "lufs": null,
-    "hash": "3d897cba552f96d9badf5e956ba89fcb35c43193aeec9a1529fad71f3baf274f",
-    "at": 1784979948981
+    "hash": "66d4d97d181daa17ace181fc2488386da8e0f47ff9d841af767a933ed32f5591",
+    "at": 1789067561452
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#114.ogg"
   },
   "curse": {
    "text": "愚図が…!",
@@ -536,10 +541,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "シッ!",
+   "text": "（原檔）chr1160_ActVoice#126",
    "lang": "ja",
    "kana": "シッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +557,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 10493,
+    "seconds": 0.587483,
     "lufs": null,
-    "hash": "38bdeb892c487f7861fe548b9cea12865add2e9b4179fbb348221817cbaf33fe",
-    "at": 1784979968896
+    "hash": "744d5d0514143d6ccd7cf411c4c1fc5a9ed4663c311d7758ef5d1cbc4e2a4565",
+    "at": 1789067559707
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#126.ogg"
   },
   "attack-heavy": {
-   "text": "ハアッ!",
+   "text": "（原檔）chr1160_ActVoice#54",
    "lang": "ja",
    "kana": "ハーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +587,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 18016,
+    "seconds": 1.054762,
     "lufs": null,
-    "hash": "1fb5a6407ddbbfbc40090619fd6807d44d24cf95896ac936439214e36113250d",
-    "at": 1784979971177
+    "hash": "a5de755d527698f00b89bbcbd921ce5f3f5f247178387e1bcf94f86d20997b30",
+    "at": 1789067559617
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#54.ogg"
   },
   "crit": {
    "text": "斬り捨てる!",
@@ -710,10 +717,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "フッ。",
+   "text": "（原檔）chr1160_ActVoice#29",
    "lang": "ja",
    "kana": "フッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +733,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 10075,
+    "seconds": 0.573764,
     "lufs": null,
-    "hash": "0e12b56d73809cc6761cc9b505bcf5f901d449bec48c163834fb9f577b3cbad5",
-    "at": 1784979999238
+    "hash": "2b61609564246a1f242d12b078b7b81433b03d88e6351bae218d93c4606b6300",
+    "at": 1789067560167
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#29.ogg"
   },
   "respond.ok": {
    "text": "いいだろう。",
@@ -1029,10 +1037,10 @@
    "lastError": null
   },
   "kill-1": {
-   "text": "一匹。",
+   "text": "（原檔）chr1160_ActVoice#9",
    "lang": "ja",
    "kana": "イッピキ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1045,17 +1053,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 57722,
+    "seconds": 3.532426,
     "lufs": null,
-    "hash": "56d3b89825edb864756f68215a5046c96721308d425cca350cfb47cccc867747",
-    "at": 1784980057229
+    "hash": "d99a2c74918aab8f17910e572476b0492215cbafd93d1c434691d860e156ef59",
+    "at": 1789067560252
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#9.ogg"
   },
   "kill-2": {
    "text": "二匹目…他愛ない。",
@@ -1203,9 +1212,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "邪王炎殺劍！",
+   "text": "（原檔）chr1160_ActVoice#92",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,23 +1235,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 17180,
-    "seconds": null,
+    "bytes": 27629,
+    "seconds": 1.656122,
     "lufs": null,
-    "hash": "4895d592278b72b4bb73f3659f51ee60b45bbe3fd92a66fac06c94ba00575ce2",
-    "at": 1784991097317
+    "hash": "d67404b1d758c706e5044b89c2c4b7316cefdb649f9215f26cadb71e7301b53b",
+    "at": 1789067561139
    },
    "lastError": null,
-   "kana": "ジャオウ エンサツ ケン"
+   "kana": "ジャオウ エンサツ ケン",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#92.ogg"
   },
   "skill-name.w": {
-   "text": "邪王炎殺煉獄焦！",
+   "text": "（原檔）chr1160_ActVoice#85",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1263,23 +1273,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 27211,
-    "seconds": null,
+    "bytes": 37242,
+    "seconds": 2.263628,
     "lufs": null,
-    "hash": "b8d3fd4fb41bd798f65a82fbe22640756b4c958f5931fe9d7d9e9f17a00eb4ab",
-    "at": 1784991071269
+    "hash": "78f02f882048f0475ddb788e9e185f8f7a2f0b9797ab695af6bae2ebacd140b4",
+    "at": 1789067561339
    },
    "lastError": null,
-   "kana": "ジャオウ エンサツ レンゴク ショウ"
+   "kana": "ジャオウ エンサツ レンゴク ショウ",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#85.ogg"
   },
   "skill-name.e": {
-   "text": "邪王炎殺黑龍波！",
+   "text": "（原檔）chr1160_ActVoice#117",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1300,18 +1311,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
     "stub": false,
-    "bytes": 30973,
-    "seconds": null,
+    "bytes": 57304,
+    "seconds": 3.502902,
     "lufs": null,
-    "hash": "78767a226638e79d6f6b493c151ea3bea36a1b52dc2b84d26d9dd42d0f0d1c03",
-    "at": 1784991075280
+    "hash": "1dfab3c1a5dabd29eff99cecdc28da6d65fbe8a1db3521b1208f13aa3f813e79",
+    "at": 1789067560924
    },
    "lastError": null,
-   "kana": "ジャオウ エンサツ コクリュウハ"
+   "kana": "ジャオウ エンサツ コクリュウハ",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#117.ogg"
   },
   "skill-name.r": {
    "text": "黑龍波吸收！",
@@ -1386,6 +1398,226 @@
    },
    "lastError": null,
    "kana": "キュウキョク ボウソウ コクリュウハ"
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）chr1160_ActVoice#65",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#65.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 18016,
+    "seconds": 1.055782,
+    "lufs": null,
+    "hash": "fced66a0292f65ebd4ea7bb3eaf2215dbe37d5b725d90e639902e7ba74c981ae",
+    "at": 1789067559985
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）chr1160_ActVoice#112",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#112.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.691859,
+    "lufs": null,
+    "hash": "78a96a481664a109e7be3b320ab66cc4ef6825da54c5446ccb2443483458e6e7",
+    "at": 1789067560075
+   }
+  },
+  "kill-1.2": {
+   "text": "（原檔）chr1160_ActVoice#207",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#207.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 36406,
+    "seconds": 2.217166,
+    "lufs": null,
+    "hash": "c03436ea863b016c5e4dc2231e407f01c4125fe1383d59bc95f9db0397477b38",
+    "at": 1789067560341
+   }
+  },
+  "kill-1.3": {
+   "text": "（原檔）chr1160_ActVoice#121",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#121.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.318209,
+    "lufs": null,
+    "hash": "c5c7cc963982e5c93a2cdd17c1b8ba8b48b9d502196757715acededfb44d2b3c",
+    "at": 1789067560430
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）chr1160_ActVoice#208",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#208.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 85725,
+    "seconds": 5.284717,
+    "lufs": null,
+    "hash": "816c621ecde738c2fdac6384c3e3bed9b5f4bccc07d291d7609bdafe20c32f76",
+    "at": 1789067560703
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）chr1160_ActVoice#212",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#212.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 84053,
+    "seconds": 5.182245,
+    "lufs": null,
+    "hash": "38fcc0c0ad8a8933f16be058b1fd11701d6b51525177aac930bc8aa241619936",
+    "at": 1789067560822
+   }
+  },
+  "skill-name.e.2": {
+   "text": "（原檔）chr1160_ActVoice#107",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#107.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 35152,
+    "seconds": 2.138231,
+    "lufs": null,
+    "hash": "874ba6c50fa8049201e597de866d0939c51f85cae0b20fdc6e40fd82f4f9cd54",
+    "at": 1789067561029
+   }
+  },
+  "skill-name.q.2": {
+   "text": "（原檔）chr1160_ActVoice#95",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#95.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 34734,
+    "seconds": 2.109184,
+    "lufs": null,
+    "hash": "e01f39dbbd72180544b34edfc418df9ae1c7f8482b5893ce2dbca5e1e9b94a18",
+    "at": 1789067561228
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）chr1160_ActVoice#16",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#16.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 79038,
+    "seconds": 4.881202,
+    "lufs": null,
+    "hash": "dc70f92bb5452f93830945ef1958a19e1df3a83277a61b798660d3ec981b921a",
+    "at": 1789067561549
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）chr1160_ActVoice#209",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#209.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 74440,
+    "seconds": 4.588435,
+    "lufs": null,
+    "hash": "5bdd94bce5115a6a3966d445c8c36bd989f3f37e5198f54cf25a06c3540146dc",
+    "at": 1789067561634
+   }
+  },
+  "victory.2": {
+   "text": "（原檔）chr1160_ActVoice#200",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-hiei/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted/JForce_Hiei/chr1160_ActVoice/chr1160_ActVoice#200.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+    "stub": false,
+    "bytes": 36824,
+    "seconds": 2.241111,
+    "lufs": null,
+    "hash": "4b51f32cc9292e7df2a328a5c88839d34cdce64e56d21d7197005c8332962df5",
+    "at": 1789067561865
+   }
   }
  }
 }

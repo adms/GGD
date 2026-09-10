@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "オッス！オラ悟空！",
+   "text": "（原檔）chr0000_ActVoice#213",
    "lang": "ja",
    "kana": "オッス オラ ゴクウ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,23 +30,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 18434,
-    "seconds": 1.08,
+    "bytes": 91159,
+    "seconds": 5.631429,
     "lufs": null,
-    "hash": "98fa8f19e59fc2b7fb7481c8f75297d0349b6e2f0021fd7863ae025bf2f10dbb",
-    "at": 1784976936569
+    "hash": "a1dfdb6db8e7f9df2d29cfd975e8507f0a7ac3d12be460941dfd40255da40431",
+    "at": 1789067550865
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#213.ogg"
   },
   "victory": {
-   "text": "やったぞ！おめぇら、すっげぇ強かったな！",
+   "text": "（原檔）chr0000_ActVoice#206",
    "lang": "ja",
    "kana": "ヤッタゾ オメェラ スッゲェ ツヨカッタナ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,23 +60,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 48527,
-    "seconds": 2.96,
+    "bytes": 85307,
+    "seconds": 5.275238,
     "lufs": null,
-    "hash": "23cdb5221667b2c9f1899d1bf2217da5b2336008fd4f1fe0083e20b195e31197",
-    "at": 1784976969162
+    "hash": "abf6d1dcc8a11dae2b1e1cdfcee4a18dc2de5cf5179c4fc2da6b321c8556307b",
+    "at": 1789067551777
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#206.ogg"
   },
   "defeat": {
-   "text": "くぅ〜、負けちまった…次は負けねぇかんな！",
+   "text": "（原檔）chr0000_ActVoice#21",
    "lang": "ja",
    "kana": "クゥー マケチマッタ ツギワ マケネェ カンナ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +90,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 53542,
-    "seconds": 3.28,
+    "bytes": 40586,
+    "seconds": 2.468413,
     "lufs": null,
-    "hash": "67775e27f05a5b9bcb4d9e814a2d77b49eea663be592c821d9b520a17e4c1c71",
-    "at": 1784976972371
+    "hash": "6c36af23dd74a49bb40ee28bdecb9649e836d55d5b0839a1067a4f4b9868ac69",
+    "at": 1789067550141
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#21.ogg"
   },
   "hurt": {
-   "text": "うっ！",
+   "text": "（原檔）chr0000_ActVoice#41",
    "lang": "ja",
    "kana": "ウッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +120,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 12164,
+    "seconds": 0.698186,
     "lufs": null,
-    "hash": "bd160ff8b88f3de1a829281f96c7364810fc2090ed913460286894da9538207f",
-    "at": 1784976971956
+    "hash": "85c0c208388357a9cdb4c2bb8fcfc62e5109371039762e2504185b1a180c3604",
+    "at": 1789067550415
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#41.ogg"
   },
   "hurt-heavy": {
-   "text": "ぐあぁっ…いってぇ…！",
+   "text": "（原檔）chr0000_ActVoice#141",
    "lang": "ja",
    "kana": "グアァッ イッテェ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +150,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.84,
+    "bytes": 21777,
+    "seconds": 1.287007,
     "lufs": null,
-    "hash": "d1af1a1d9df54370d0571b1d0101287307b6a15f7f859d2e63fb3e3e25a9861a",
-    "at": 1784976983829
+    "hash": "11e848989ff47ae96c0da943bcfbe5db29683db3a069fab6d79e771ae7c5805a",
+    "at": 1789067550501
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#141.ogg"
   },
   "stun": {
    "text": "う〜…目が回るぞ…",
@@ -449,10 +454,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "おめぇ、それで全力か？",
+   "text": "（原檔）chr0000_ActVoice#204",
    "lang": "ja",
    "kana": "オメェ ソレデ ゼンリョク カ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +470,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 35570,
-    "seconds": 2.16,
+    "bytes": 87815,
+    "seconds": 5.410658,
     "lufs": null,
-    "hash": "5076ef4ac86a71238b2bcf167cfabbef06a893e0c03e3f2573af9ef3dbdc274e",
-    "at": 1784977037396
+    "hash": "0a5cceb322ef068830becb56c0c60d4a6835a61e6909753b9280ff89f5c8a68e",
+    "at": 1789067551505
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#204.ogg"
   },
   "curse": {
    "text": "このやろ〜！本気で行くぞ！",
@@ -536,10 +542,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "たあっ！",
+   "text": "（原檔）chr0000_ActVoice#54",
    "lang": "ja",
    "kana": "タアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +558,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 10493,
+    "seconds": 0.596871,
     "lufs": null,
-    "hash": "6f942903a2638cfbc15ab26967262a5444e4935bfd146cdf7cf41a1a4a374880",
-    "at": 1784977052196
+    "hash": "0c63335b5abebbbbc7cc4c2fdafdd6ba9984c167f89e560bb37357647899c1fa",
+    "at": 1789067550028
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#54.ogg"
   },
   "attack-heavy": {
-   "text": "だあっ！",
+   "text": "（原檔）chr0000_ActVoice#151",
    "lang": "ja",
    "kana": "ダアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +588,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 10493,
-    "seconds": 0.6,
+    "bytes": 19688,
+    "seconds": 1.170091,
     "lufs": null,
-    "hash": "5eb43253d6f593ec77f798dd4f765096e4d299e9bb6d282c946b43bf7811cc27",
-    "at": 1784977059460
+    "hash": "91d3b0760e736284faf331543b3237fb7a86737f0f921ab1e3acaf9cca50c784",
+    "at": 1789067549939
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#151.ogg"
   },
   "crit": {
    "text": "もらったぁ！",
@@ -710,10 +718,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ほっ！",
+   "text": "（原檔）chr0000_ActVoice#80",
    "lang": "ja",
    "kana": "ホッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +734,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 5059,
-    "seconds": 0.24,
+    "bytes": 10493,
+    "seconds": 0.59381,
     "lufs": null,
-    "hash": "ff597887b264157bf3005af52f230c2dcdf0f3bb3e5d3f08549d01ee0ec55579",
-    "at": 1784977081138
+    "hash": "e3ef23eb09d4433d8d474ea9bff7827d22d7ed28cba77008a1a3ca58ccc8b25f",
+    "at": 1789067550774
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#80.ogg"
   },
   "respond.ok": {
    "text": "おう、任せとけ！",
@@ -1203,9 +1212,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "界王拳！",
+   "text": "（原檔）chr0000_ActVoice#103",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,18 +1235,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 16344,
-    "seconds": null,
+    "bytes": 14672,
+    "seconds": 0.837937,
     "lufs": null,
-    "hash": "9936e7e330bdb01a7b7fd130ea70ad42843903b5d88114f270ef464b78bf8040",
-    "at": 1784991005137
+    "hash": "dc1b683af4ac8a64ceae814fbb72c5ca9ff1e834abaea7321f618ddb790b029d",
+    "at": 1789067551156
    },
    "lastError": null,
-   "kana": "カイオウケン"
+   "kana": "カイオウケン",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#103.ogg"
   },
   "skill-name.w": {
    "text": "瞬間移動！",
@@ -1314,9 +1324,9 @@
    "kana": "スーパー サイヤジン"
   },
   "skill-name.r": {
-   "text": "龜派氣功！",
+   "text": "（原檔）chr0000_ActVoice#97",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1337,18 +1347,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
     "stub": false,
-    "bytes": 14672,
-    "seconds": null,
+    "bytes": 15508,
+    "seconds": 0.904921,
     "lufs": null,
-    "hash": "fb832737fde6e75c060438b48e9b40f87cad094cc64ba5817f7202c4f7e23fb6",
-    "at": 1784991011151
+    "hash": "b4cbcfba3b654007caf925117c224160f1e986812fd63285a80da7891da57b27",
+    "at": 1789067551335
    },
    "lastError": null,
-   "kana": "カメハメハ"
+   "kana": "カメハメハ",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#97.ogg"
   },
   "skill-name.ex": {
    "text": "十倍龜派氣功！",
@@ -1386,6 +1397,226 @@
    },
    "lastError": null,
    "kana": "ジュウバイ カメハメハ"
+  },
+  "defeat.2": {
+   "text": "（原檔）chr0000_ActVoice#2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 37242,
+    "seconds": 2.263515,
+    "lufs": null,
+    "hash": "f3500ce3f53a290464abf9f28ab7d1dc24137780749fa359f8d1a0ac8627fa87",
+    "at": 1789067550235
+   }
+  },
+  "defeat.3": {
+   "text": "（原檔）chr0000_ActVoice#180",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#180.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 35988,
+    "seconds": 2.193673,
+    "lufs": null,
+    "hash": "15931a1b9442a3b24f0c7d2487fe0e2901506e96387105752f2db32608e0d08d",
+    "at": 1789067550324
+   }
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）chr0000_ActVoice#45",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#45.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.247846,
+    "lufs": null,
+    "hash": "684c38408854272d3a94b508f91dbff7d141e99f6ad889785d36e165e5db3532",
+    "at": 1789067550594
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）chr0000_ActVoice#217",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#217.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.686304,
+    "lufs": null,
+    "hash": "a0247f5e7ef11b9eb0e3f2e842418e41de93a179bc653a751fb841ce93b3adeb",
+    "at": 1789067550682
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）chr0000_ActVoice#214",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#214.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 89487,
+    "seconds": 5.529252,
+    "lufs": null,
+    "hash": "e59046e70f7c852de881d0887e21fe8549330cba6b89b754fe156d9c4ad30a9b",
+    "at": 1789067550975
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）chr0000_ActVoice#6",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#6.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 87815,
+    "seconds": 5.417007,
+    "lufs": null,
+    "hash": "0f8a9b05c9cd0004f61698fc9e73c6b8108ec857ac50c94624a43cad135c78d3",
+    "at": 1789067551067
+   }
+  },
+  "skill-name.q.2": {
+   "text": "（原檔）chr0000_ActVoice#109",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#109.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 14672,
+    "seconds": 0.841043,
+    "lufs": null,
+    "hash": "abe12c6fd9dca7a963dac3fd61e250ba9c3ee04ed0a8b50ee6f9c2fb2082e837",
+    "at": 1789067551245
+   }
+  },
+  "skill-name.r.2": {
+   "text": "（原檔）chr0000_ActVoice#99",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#99.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 16762,
+    "seconds": 0.972472,
+    "lufs": null,
+    "hash": "3a2943aeae34257c398959f1380dd2696e86cc4618e5c6c4b8a6f32b8519e470",
+    "at": 1789067551419
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）chr0000_ActVoice#216",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#216.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 85725,
+    "seconds": 5.293016,
+    "lufs": null,
+    "hash": "dd398873440346d9888b3661897976cf26b6be48399ba3fcb16160c193ccd280",
+    "at": 1789067551593
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）chr0000_ActVoice#215",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#215.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 85307,
+    "seconds": 5.251701,
+    "lufs": null,
+    "hash": "bc312c50f057cf140ed67699ff53305795339dee9bc89091866e374319b5a7b2",
+    "at": 1789067551685
+   }
+  },
+  "victory.2": {
+   "text": "（原檔）chr0000_ActVoice#20",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-goku/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted/JForce_Goku/chr0000_ActVoice/chr0000_ActVoice#20.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+    "stub": false,
+    "bytes": 20524,
+    "seconds": 1.218435,
+    "lufs": null,
+    "hash": "d5279818d8b5b3ef65ade9b3383c78f875b54183eb46ca69e5732fdfa9684181",
+    "at": 1789067551869
+   }
   }
  }
 }

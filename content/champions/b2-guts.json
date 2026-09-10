@@ -360,7 +360,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-guts",
-  "modelKey": "champ.thorne",
+  "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
   "name": "凱茲",
   "origin": "狂戰",
   "passiveAbility": "b2-guts.passive",
@@ -373,5 +373,37 @@
     "R"
   ],
   "tags": [],
-  "icon": "assets/icons/champions/b2-guts.webp"
+  "icon": "assets/icons/champions/b2-guts.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T18:20:39.862Z",
+      "source": {
+        "kind": "previous",
+        "character": "凱茲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
+      "label": "ou99 凱茲（本尊／相似造型）",
+      "sourceModelKey": "ou99.460977",
+      "modelSha256": "4464c49385bb0435b87073a331ba985b14b5421e77609e4ccea34906f1005d0a",
+      "binarySha256": "ea28614b3ec763bd20c205cb8b7e8600d7a7781a7ec12baebd5ad55e86ed2a6d",
+      "registeredAt": "2026-09-10T18:20:39.881Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "凱茲",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-460977-1-1.html"
+      }
+    }
+  ]
 }

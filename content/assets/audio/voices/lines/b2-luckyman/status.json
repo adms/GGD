@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753625,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-luckyman.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/b2-luckyman.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,6 +40,14 @@
      "seconds": 2.52,
      "at": 1789042389477,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789054903208,
+     "error": null
     }
    ],
    "text": "剛好香蕉皮滑了一下！",
@@ -49,16 +57,16 @@
    "origin": "ability-name:b2-luckyman.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 41422,
-    "seconds": 2.52,
+    "bytes": 38914,
+    "seconds": 2.36,
     "lufs": null,
-    "hash": "2d1ef8961d41b1833aa91c6e38af681817a800ff32eec1285b231dd4eeb45d6c",
-    "maxDb": -1.9,
-    "at": 1789042389477
+    "hash": "59ce1db664d6efa72b81a4a88a32265ec8b49a083e4d75358d619c4324204dde",
+    "maxDb": -3.2,
+    "at": 1789054903209
    },
    "lastError": null
   },
@@ -87,6 +95,14 @@
      "seconds": 2.04,
      "at": 1789042389591,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789054903443,
+     "error": null
     }
    ],
    "text": "剛好拳頭在這裡！",
@@ -96,16 +112,16 @@
    "origin": "ability-name:b2-luckyman.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33898,
-    "seconds": 2.04,
+    "bytes": 24703,
+    "seconds": 1.48,
     "lufs": null,
-    "hash": "5d942a9ba6cd3c87ecd96f35332fd8b56090c09f6dcfbcea26c201ed0980d8fd",
-    "maxDb": -2.2,
-    "at": 1789042389591
+    "hash": "2538ce5b10573e11ef270a6b856c9f550ce0fb26f0feda42b0b99eca8ac392cc",
+    "maxDb": -1.9,
+    "at": 1789054903443
    },
    "lastError": null
   },
@@ -134,6 +150,14 @@
      "seconds": 2.2,
      "at": 1789042389696,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1789054903679,
+     "error": null
     }
    ],
    "text": "剛好有張技能保單！",
@@ -143,16 +167,16 @@
    "origin": "ability-name:b2-luckyman.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36406,
-    "seconds": 2.2,
+    "bytes": 29719,
+    "seconds": 1.8,
     "lufs": null,
-    "hash": "32113a3429ee59b0c68b2ade97faad12c973c027404ac9147f435b9a0741aec2",
-    "maxDb": -2,
-    "at": 1789042389696
+    "hash": "c819e12cc3ceaaee65ff2a7f265af55f497293c086e29ebb63e7572a2991839c",
+    "maxDb": -1.9,
+    "at": 1789054903679
    },
    "lastError": null
   },
@@ -181,6 +205,14 @@
      "seconds": 2.36,
      "at": 1789042389804,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1789054903919,
+     "error": null
     }
    ],
    "text": "剛好天上掉贈品！",
@@ -190,16 +222,16 @@
    "origin": "ability-name:b2-luckyman.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 38914,
-    "seconds": 2.36,
+    "bytes": 36406,
+    "seconds": 2.2,
     "lufs": null,
-    "hash": "bfd8b0549e298155a302ce39f36505e5f69472c36846940a8a2f1437d60267b8",
-    "maxDb": -3.4,
-    "at": 1789042389804
+    "hash": "f2a6694b117825040c10d9a9a10ca1656c935c2650c4afc83197b3fa57bd2023",
+    "maxDb": -4.1,
+    "at": 1789054903919
    },
    "lastError": null
   },
@@ -228,6 +260,14 @@
      "seconds": 2.16,
      "at": 1789042389907,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1789054904161,
+     "error": null
     }
    ],
    "text": "沒那麼幸運先搭便車！",
@@ -237,16 +277,16 @@
    "origin": "ability-name:b2-luckyman.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 35570,
-    "seconds": 2.16,
+    "bytes": 36406,
+    "seconds": 2.2,
     "lufs": null,
-    "hash": "bf573a3fbddd26ed9e375c5607fe51f56cde76c792056a622a37690a11afd121",
-    "maxDb": -2.8,
-    "at": 1789042389907
+    "hash": "11f1d9e4ae1f9c800c6b8e6fac4add8029c90f9d3d8dd26b109b75a955f24bc3",
+    "maxDb": -2,
+    "at": 1789054904162
    },
    "lastError": null
   },
@@ -259,6 +299,14 @@
      "seconds": 1.48,
      "at": 1789042995945,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1789054904399,
+     "error": null
     }
    ],
    "text": "ラッキー、クッキー、ラッキーマン！",
@@ -268,16 +316,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24703,
-    "seconds": 1.48,
+    "bytes": 22195,
+    "seconds": 1.32,
     "lufs": null,
-    "hash": "b8a4c89373ab47fc06311864fce0f16cf261d53d027719b2bb5a40d5e3297da0",
+    "hash": "0972b2bb35fe20d3c37eb8b3e4eeefd0caf8da6761195013fd69ab9002a5f897",
     "maxDb": -2,
-    "at": 1789042995946
+    "at": 1789054904399
    },
    "lastError": null
   },
@@ -298,6 +346,14 @@
      "seconds": 0.36,
      "at": 1789040363953,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054904641,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -307,16 +363,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6731,
     "seconds": 0.36,
     "lufs": null,
-    "hash": "4b28824d4c109c8c02001e8bdb7a177773d5e1a95ed03d2c9d95bd610b3837ea",
+    "hash": "3a8de51d23e53fcbdaf8a44aa8bf12347e486f13b88bd4a6c4be9156b08ade42",
     "maxDb": -1.9,
-    "at": 1789040363953
+    "at": 1789054904641
    },
    "lastError": null
   },
@@ -337,6 +393,14 @@
      "seconds": 0.28,
      "at": 1789040364062,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789054904867,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -346,16 +410,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "8fd0bc41506b973c6a21ce6b7429ada627082be42ae20c01acb3955c30fb3864",
-    "maxDb": -1.9,
-    "at": 1789040364062
+    "hash": "e481ce3a2d13587a8966bdcf361281425d3936eae103d24d8319d4936f18a128",
+    "maxDb": -2.7,
+    "at": 1789054904867
    },
    "lastError": null
   },
@@ -376,6 +440,14 @@
      "seconds": 0.52,
      "at": 1789040364166,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789054905103,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -385,16 +457,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 9239,
     "seconds": 0.52,
     "lufs": null,
-    "hash": "73821a54b21c71fbe6c3951edbe089f4c42aad33f39c77ce7d3560793a000ab1",
-    "maxDb": -4,
-    "at": 1789040364166
+    "hash": "cfbc321ae64cef033a3187fb9943ec2fc011c3e494af57af0eabb97f43846222",
+    "maxDb": -3.2,
+    "at": 1789054905103
    },
    "lastError": null
   },
@@ -407,6 +479,14 @@
      "seconds": 1.44,
      "at": 1789042996061,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1789054905327,
+     "error": null
     }
    ],
    "text": "ラッキー、クッキー、ラッキーマン！",
@@ -416,16 +496,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24285,
-    "seconds": 1.44,
+    "bytes": 36406,
+    "seconds": 2.2,
     "lufs": null,
-    "hash": "a68701f5bd9bbb4ae57225d0d4ebcad3adda1be006aa258be3984a7dbb9e7bf7",
+    "hash": "e8fc950683afe43074943b7f0729232a3bd4c2372560fd5f860253a9d5af7fa5",
     "maxDb": -2,
-    "at": 1789042996061
+    "at": 1789054905327
    },
    "lastError": null
   },
@@ -446,6 +526,14 @@
      "seconds": 0.24,
      "at": 1789040364273,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789054905544,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -455,16 +543,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5059,
-    "seconds": 0.24,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "8b5d2c65eeb88dc1979d795bb8b0a7d7ea7d33c54955bb0cca3ba7a047bc0b65",
+    "hash": "ed3044e78d05cb3e5666d28df992c516edcb093c344dbc47a4b56b4af9f85b49",
     "maxDb": -2,
-    "at": 1789040364273
+    "at": 1789054905544
    },
    "lastError": null
   }

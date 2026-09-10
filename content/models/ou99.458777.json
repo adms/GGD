@@ -12,6 +12,5 @@
     "death": "Death",
     "hurt": "Stand"
   },
-  "heroBody": false,
-  "heroBodyNote": "⛔ 7 個 draw call(上限 6)。7 張不同貼圖 ⇒ 同上。"
+  "heroBody": true
 }

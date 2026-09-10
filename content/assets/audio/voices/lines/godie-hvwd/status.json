@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "犬夜叉…おまえは私と共に、地獄へ落ちるのだ",
+   "text": "（原檔）voice_joke_1",
    "lang": "ja",
    "kana": "イヌヤシャ オマエ ワ ワタシ ト トモ ニ ジゴク エ オチル ノ ダ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,17 +30,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:35",
     "stub": false,
-    "bytes": 58558,
-    "seconds": 3.6,
+    "bytes": 38496,
+    "seconds": 2.337959,
     "lufs": null,
-    "hash": "635a02e54709e4c11e02a3f8ef6521c2be1f7f69e29850a9b2ba57c2787c1678",
-    "at": 1784975115506
+    "hash": "94a532428573c02bb15ea7dae9111a11306585708a54f204c8a55db7f8edcfeb",
+    "at": 1789067545077
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:35/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/35/01-0002-35_voice_joke_1.ogg"
   },
   "victory": {
    "text": "勝敗は決した。…去れ",
@@ -72,10 +73,10 @@
    "lastError": null
   },
   "defeat": {
-   "text": "これも…定めか…",
+   "text": "（原檔）voice_death_1",
    "lang": "ja",
    "kana": "コレ モ サダメ カ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,17 +89,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:35",
     "stub": false,
-    "bytes": 16344,
-    "seconds": 0.96,
+    "bytes": 29719,
+    "seconds": 1.78068,
     "lufs": null,
-    "hash": "8b951b7460e2a32064fe99776d75040c8890aa171f849c46f4295f166f873c91",
-    "at": 1784975151736
+    "hash": "9b33ca0bd7de2e1413ecb6c5e8bd3a5ee058d3e5eaaf549f9cb2dab22cc067f5",
+    "at": 1789067544830
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:35/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/35/01-0003-35_voice_death_1.ogg"
   },
   "hurt": {
    "text": "くっ",
@@ -739,10 +741,10 @@
    "lastError": null
   },
   "respond.ok": {
-   "text": "よかろう",
+   "text": "（原檔）voice_move_1",
    "lang": "ja",
    "kana": "ヨカロウ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -755,17 +757,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:35",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 21777,
+    "seconds": 1.304671,
     "lufs": null,
-    "hash": "85e6701426cc334dc1ba19e583a6eb639b636427646afe005766af92f2575d1f",
-    "at": 1784975261517
+    "hash": "c3a9e762d21b02ede2b1ab7d59811a739ddb24c5fe7c0795e17040913d86e33f",
+    "at": 1789067545264
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:35/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/35/01-0007-35_voice_move_1.ogg"
   },
   "respond.no": {
    "text": "断る",
@@ -971,10 +974,10 @@
    "lastError": null
   },
   "free-move": {
-   "text": "各々、好きに動くがいい",
+   "text": "（原檔）voice_move_2",
    "lang": "ja",
    "kana": "オノオノ スキ ニ ウゴク ガ イイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -987,17 +990,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:35",
     "stub": false,
-    "bytes": 32644,
-    "seconds": 1.960249,
+    "bytes": 42675,
+    "seconds": 2.607891,
     "lufs": null,
-    "hash": "4968abeed8bd9c1e727cd98006857e6c03fa0bcbe4196567ce7084585c59d96b",
-    "at": 1784975307979
+    "hash": "738ff927798f7c2a641fa67dd8dc863c4f9afa6f8376fa0ba80dcf6af6339509",
+    "at": 1789067544997
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:35/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/35/01-0009-35_voice_move_2.ogg"
   },
   "first-blood": {
    "text": "初矢は、私がもらった",
@@ -1394,6 +1398,46 @@
    },
    "lastError": null,
    "kana": "ジンツウガン"
+  },
+  "defeat.2": {
+   "text": "（原檔）voice_death_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:35/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/35/01-0005-35_voice_death_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:35",
+    "stub": false,
+    "bytes": 70679,
+    "seconds": 4.360998,
+    "lufs": null,
+    "hash": "6b5eaaa05339f96255f92070c33fbf92e56eda0463144abdbb3153093b036c08",
+    "at": 1789067544911
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:35/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/35/01-0010-35_voice_joke_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:35",
+    "stub": false,
+    "bytes": 42675,
+    "seconds": 2.590476,
+    "lufs": null,
+    "hash": "fa2d09a981b024225c66e6678e28e287558b427fa8280fa63b8ae9441b3dbf9a",
+    "at": 1789067545167
+   }
   }
  }
 }

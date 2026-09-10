@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753649,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-orphen.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/b2-orphen.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,6 +40,14 @@
      "seconds": 1.68,
      "at": 1789042394312,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1789054927292,
+     "error": null
     }
    ],
    "text": "我放出的光之催繳函！",
@@ -49,16 +57,16 @@
    "origin": "ability-name:b2-orphen.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 28047,
-    "seconds": 1.68,
+    "bytes": 37660,
+    "seconds": 2.28,
     "lufs": null,
-    "hash": "e050b24b7bcd10944bda49dd3aca746f518a7c8730e1af026bd7e735e8068cc6",
-    "maxDb": -2.3,
-    "at": 1789042394312
+    "hash": "ed905315a615303004826bf3688a27ea0ff5c79b78328be7d4e7d4f9ac504f9f",
+    "maxDb": -2,
+    "at": 1789054927292
    },
    "lastError": null
   },
@@ -87,6 +95,14 @@
      "seconds": 2.84,
      "at": 1789042394417,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789054927505,
+     "error": null
     }
    ],
    "text": "利息可以再寄一次！",
@@ -96,16 +112,16 @@
    "origin": "ability-name:b2-orphen.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 46437,
-    "seconds": 2.84,
+    "bytes": 28465,
+    "seconds": 1.72,
     "lufs": null,
-    "hash": "65e5d024154a14da9d6e2f74d592f2132ebb2523ac5aade24936fa1b4a04805d",
+    "hash": "42cb7f49d7d6204a76a52911f2c2936a5bafef93a7b881967a1c4371fdbde343",
     "maxDb": -2,
-    "at": 1789042394417
+    "at": 1789054927505
    },
    "lastError": null
   },
@@ -134,6 +150,14 @@
      "seconds": 1.4,
      "at": 1789042394521,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1789054927721,
+     "error": null
     }
    ],
    "text": "債務人請勿插話！",
@@ -143,16 +167,16 @@
    "origin": "ability-name:b2-orphen.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 23449,
-    "seconds": 1.4,
+    "bytes": 29719,
+    "seconds": 1.8,
     "lufs": null,
-    "hash": "590907bccfca3698ce1b795c8753ff7a6330837dc23a2d6851ac704b1ce3f00a",
-    "maxDb": -2.4,
-    "at": 1789042394521
+    "hash": "2edbad6df26a5a2b579d8c1e1a963df1d7961a308d23c95808c63ba6d2949914",
+    "maxDb": -1.9,
+    "at": 1789054927721
    },
    "lastError": null
   },
@@ -181,6 +205,14 @@
      "seconds": 1.2,
      "at": 1789042394624,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1789054927934,
+     "error": null
     }
    ],
    "text": "債主不用敲門！",
@@ -190,16 +222,16 @@
    "origin": "ability-name:b2-orphen.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20106,
-    "seconds": 1.2,
+    "bytes": 19688,
+    "seconds": 1.16,
     "lufs": null,
-    "hash": "0ccda2732cc285a4bea28bd3975f118b3ab891c9fbd2473bc9e621a2d916f738",
-    "maxDb": -2.7,
-    "at": 1789042394624
+    "hash": "f321a8c5583f4bc548ecc0db34cfb6a3ae6da15b04acaa75c42e873eb55e27e1",
+    "maxDb": -2.6,
+    "at": 1789054927935
    },
    "lastError": null
   },
@@ -228,6 +260,14 @@
      "seconds": 2.08,
      "at": 1789042394730,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1789054928151,
+     "error": null
     }
    ],
    "text": "這筆急救算借你的！",
@@ -237,16 +277,16 @@
    "origin": "ability-name:b2-orphen.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 34316,
-    "seconds": 2.08,
+    "bytes": 37660,
+    "seconds": 2.28,
     "lufs": null,
-    "hash": "dcb1160a127318adb3af8572456ed1c54f621e903d05d16af1ae541dcfea9ce2",
-    "maxDb": -3.2,
-    "at": 1789042394731
+    "hash": "6e14e4e828ce1432f321751dc6cf23339217e5c73ee99cf8c444442076020d74",
+    "maxDb": -1.9,
+    "at": 1789054928152
    },
    "lastError": null
   },
@@ -259,6 +299,14 @@
      "seconds": 1.960249,
      "at": 1789042998928,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1789054928373,
+     "error": null
     }
    ],
    "text": "我は放つ光の白刃！",
@@ -268,16 +316,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 32644,
-    "seconds": 1.960249,
+    "bytes": 34316,
+    "seconds": 2.08,
     "lufs": null,
-    "hash": "ce1d52ecaac02f4f5a69901a032105c5b3f2fd1f9d56f1ad189f4be479b39ffe",
+    "hash": "28fb790731e7bc518fc0b41c28d17182cc7b94e08ca2ccee6b82721bb5be3261",
     "maxDb": -2,
-    "at": 1789042998928
+    "at": 1789054928374
    },
    "lastError": null
   },
@@ -298,6 +346,14 @@
      "seconds": 0.32,
      "at": 1789040366872,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054928585,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -307,16 +363,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6313,
     "seconds": 0.32,
     "lufs": null,
-    "hash": "ba41af948743fb1a9962b29c72ab5b4d5dfc05b678abe592c857d7d7fca0b35c",
-    "maxDb": -2,
-    "at": 1789040366872
+    "hash": "f7f9f6880b704cf45a1b2f7b2e7899d798600fa8d8a29a7af9309d29ed787445",
+    "maxDb": -1.9,
+    "at": 1789054928585
    },
    "lastError": null
   },
@@ -337,6 +393,14 @@
      "seconds": 0.28,
      "at": 1789040366979,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789054928800,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -346,16 +410,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "ff5ec695e75cbde0fcf4b5c4543ab0d2efccb82662cf11d1730caf62681e8add",
+    "hash": "0988ea3424173566d7763d6eefe4cfa5915a56d1d8b84c274443a4b3f0e9026d",
     "maxDb": -2,
-    "at": 1789040366979
+    "at": 1789054928800
    },
    "lastError": null
   },
@@ -376,6 +440,14 @@
      "seconds": 0.64,
      "at": 1789040367089,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789054929017,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -385,16 +457,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 13418,
+    "seconds": 0.76,
     "lufs": null,
-    "hash": "8b28bf758bc41fdb56d4528cfcd0db826fdbc45ef2c9e5aa495e8057971e3f34",
-    "maxDb": -3.3,
-    "at": 1789040367089
+    "hash": "ddcd14f6d14812a2cc05689e94bc0f8683c76d711295d1dcb9c9041347211ce6",
+    "maxDb": -3.4,
+    "at": 1789054929017
    },
    "lastError": null
   },
@@ -407,6 +479,14 @@
      "seconds": 2.04,
      "at": 1789042999044,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1789054929226,
+     "error": null
     }
    ],
    "text": "我は放つ光の白刃！",
@@ -416,16 +496,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33898,
-    "seconds": 2.04,
+    "bytes": 30973,
+    "seconds": 1.88,
     "lufs": null,
-    "hash": "12a1155c2f206929e0670e52d26debf3e14f33400b90c0efdf3fba34d0586645",
+    "hash": "f1507d16cc0838cae5ac448154279d0d48e688f8ff738265d1632ce2c90f988a",
     "maxDb": -2,
-    "at": 1789042999044
+    "at": 1789054929226
    },
    "lastError": null
   },
@@ -446,6 +526,14 @@
      "seconds": 0.32,
      "at": 1789040367204,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789054929448,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -455,16 +543,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "7c5915519aae47ba243228f21d10e455a40996899827c041861359b8451a324d",
-    "maxDb": -2,
-    "at": 1789040367205
+    "hash": "81fc86fc7f12a1239a85a252e4b75523c42a304fddb1dafae0901473af1f5b2f",
+    "maxDb": -1.9,
+    "at": 1789054929448
    },
    "lastError": null
   }

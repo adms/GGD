@@ -1,15 +1,16 @@
 {
-  "id": "ou99.497211",
-  "schema": "model@1",
-  "glbPath": "assets/models/ou99/ou99_497211.glb",
-  "scale": 1.0,
-  "collisionRadius": 0.55,
-  "clipMap": {
-    "idle": "stand",
-    "run": "walk",
-    "attack": "attack",
-    "cast": "spell one",
-    "death": "death",
-    "hurt": "stand"
-  }
+ "id": "ou99.497211",
+ "schema": "model@1",
+ "glbPath": "assets/models/ou99/ou99_497211.glb",
+ "scale": 1.0,
+ "collisionRadius": 0.55,
+ "clipMap": {
+  "idle": "stand",
+  "run": "walk",
+  "attack": "attack",
+  "cast": "spell one",
+  "death": "death",
+  "hurt": "stand"
+ },
+ "heroBody": true
 }

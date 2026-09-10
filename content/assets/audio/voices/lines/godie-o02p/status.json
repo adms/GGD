@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "電子の歌姫、初音ミク、起動したよ♪",
+   "text": "（原檔）miku4",
    "lang": "ja",
    "kana": "デンシノ ウタヒメ ハツネ ミク キドウ シタヨ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,17 +30,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "hive-anime-team-survival:miku4",
     "stub": false,
-    "bytes": 46437,
-    "seconds": 2.84,
+    "bytes": 78620,
+    "seconds": 4.846712,
     "lufs": null,
-    "hash": "0e5f1f3e76dc3a80cab4d52858566e06ef6b0637735b6ef57efef8e67f4c7dc4",
-    "at": 1784977176838
+    "hash": "a3acc20aa891a254eef4c3eec5eac652cdb5bf53f02280ad15b250108de0879d",
+    "at": 1789067551955
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:hive-anime-team-survival:miku4/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/extracted/war3mapImported/miku4.mp3"
   },
   "victory": {
    "text": "勝利のアンコール、みんなで歌お♪",

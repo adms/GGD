@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "おまえなんか、お菓子になっちゃえ〜！",
+   "text": "（原檔）chr1030_ActVoice#202",
    "lang": "ja",
    "kana": "オマエ ナンカ オカシ ニ ナッチャエー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,23 +30,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 33062,
-    "seconds": 2,
+    "bytes": 93248,
+    "seconds": 5.771905,
     "lufs": null,
-    "hash": "9a548655b725643d8806b32751b7d341da0927ba851b5ddf0273a213480ca14e",
-    "at": 1784974664914
+    "hash": "175232ef628edb9dbb89e8b04dfabca45105b85ece9461461dcb6e124afbc3f5",
+    "at": 1789067542697
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#202.ogg"
   },
   "victory": {
-   "text": "ブウのかち〜！みんな、おかしにしちゃうぞ〜",
+   "text": "（原檔）chr1030_ActVoice#8",
    "lang": "ja",
    "kana": "ブウ ノ カチー ミンナ オカシ ニ シチャウ ゾー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -59,23 +60,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 40586,
-    "seconds": 2.48,
+    "bytes": 57722,
+    "seconds": 3.547234,
     "lufs": null,
-    "hash": "85dd04c76b3e2d9f7d277434fd4d274d60a7cf450f92005ae17508af4213a4f3",
-    "at": 1784974694762
+    "hash": "19df854cee46f678b4217a44c243db8273378cb238db5cf00b06813432d80cca",
+    "at": 1789067543638
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#8.ogg"
   },
   "defeat": {
-   "text": "ブウ、まけた…？ムカムカする…ムカムカするぞー！",
+   "text": "（原檔）chr1030_ActVoice#4",
    "lang": "ja",
    "kana": "ブウ マケタ ムカムカ スル ムカムカ スル ゾー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +90,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 70261,
-    "seconds": 4.32,
+    "bytes": 53124,
+    "seconds": 3.258141,
     "lufs": null,
-    "hash": "05dc8fd7dac47a69c3aac4f0cb0b078e68381959ec4e78d41b1da532b4861b99",
-    "at": 1784974702843
+    "hash": "926ca66f2d7880ad2e09cfb2cb59ada5f80e0fbf562c5846eff6982bd5bd37e1",
+    "at": 1789067541964
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#4.ogg"
   },
   "hurt": {
-   "text": "いたっ",
+   "text": "（原檔）chr1030_ActVoice#45",
    "lang": "ja",
    "kana": "イタッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +120,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 11746,
+    "seconds": 0.669433,
     "lufs": null,
-    "hash": "38c268865ef205822bd1c0462cb1bd99377a6431419efb976dcffed93d69681a",
-    "at": 1784974698702
+    "hash": "f05ad99a4b2faa1c05bafa4ab8c6091206314acfce939b2541647577129a71b4",
+    "at": 1789067542145
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#45.ogg"
   },
   "hurt-heavy": {
-   "text": "いたいー！いたいの、きらい！",
+   "text": "（原檔）chr1030_ActVoice#37",
    "lang": "ja",
    "kana": "イタイー イタイ ノ キライ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +150,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
     "bytes": 21359,
-    "seconds": 1.28,
+    "seconds": 1.256054,
     "lufs": null,
-    "hash": "c45c3eaa5dd0ca23b35e0df82c20251191ceb0947f8bdaeeb7da931b4b18c103",
-    "at": 1784974709367
+    "hash": "d81a2f8a7a2ac0c25634e4980f0c88b4b983c0ba0cc253a1a091943406b06aea",
+    "at": 1789067542241
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#37.ogg"
   },
   "stun": {
    "text": "あうー…めが、ぐるぐる〜",
@@ -449,10 +454,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "おまえ、よわい！おやつにもならない！",
+   "text": "（原檔）chr1030_ActVoice#211",
    "lang": "ja",
    "kana": "オマエ ヨワイ オヤツ ニモ ナラナイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +470,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 35570,
-    "seconds": 2.16,
+    "bytes": 66499,
+    "seconds": 4.095896,
     "lufs": null,
-    "hash": "f6acbb7c831d375b851437abd2c21f488b54eecaaf616924fb88212211ac8fc3",
-    "at": 1784974763198
+    "hash": "7dd159d422298ca2effc629b3733fd1c23d01c547caa39a3e22f8a7c6dd5fb49",
+    "at": 1789067543371
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#211.ogg"
   },
   "curse": {
    "text": "ブウ、おこったぞー！ゆげ出ちゃうぞー！",
@@ -536,10 +542,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "えいっ",
+   "text": "（原檔）chr1030_ActVoice#75",
    "lang": "ja",
    "kana": "エイッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +558,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 10493,
+    "seconds": 0.582426,
     "lufs": null,
-    "hash": "196fc937a26afea47081d4d63264a0bfb252dfdd51a79f849b77d83190774ae2",
-    "at": 1784974776935
+    "hash": "d1655143232d427d82b84dc1b47dc2b7491f852e6df1750cffe147dd3fba33d3",
+    "at": 1789067541868
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#75.ogg"
   },
   "attack-heavy": {
-   "text": "ていやーっ！",
+   "text": "（原檔）chr1030_ActVoice#40",
    "lang": "ja",
    "kana": "テイヤーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +588,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 12582,
-    "seconds": 0.72,
+    "bytes": 20106,
+    "seconds": 1.198753,
     "lufs": null,
-    "hash": "dc1b5910e96cbce1024daef743974cc81b6cd44b053c140aed83786cc43eb6bf",
-    "at": 1784974787119
+    "hash": "4f05cc85177f7301361daed89a4d0c96991afc258156cc30105a5284166bcfdd",
+    "at": 1789067541772
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#40.ogg"
   },
   "crit": {
    "text": "つぶれちゃえー！",
@@ -710,10 +718,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ぽよん！",
+   "text": "（原檔）chr1030_ActVoice#155",
    "lang": "ja",
    "kana": "ポヨン",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +734,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 10075,
+    "seconds": 0.573855,
     "lufs": null,
-    "hash": "43370aa5c0b8995aec215aa59f25cd7edd5021108a615dbe181cfeebf2c835c9",
-    "at": 1784974806391
+    "hash": "6215e72905c4e50af7630fdd6459f635ddc9d5f62f4fdf3e8dcb09007c1c168d",
+    "at": 1789067542518
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#155.ogg"
   },
   "respond.ok": {
    "text": "いいよ〜",
@@ -1029,10 +1038,10 @@
    "lastError": null
   },
   "kill-1": {
-   "text": "ひとつ、ぺろり！",
+   "text": "（原檔）chr1030_ActVoice#85",
    "lang": "ja",
    "kana": "ヒトツ ペロリ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1045,17 +1054,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 17598,
-    "seconds": 1.04,
+    "bytes": 23449,
+    "seconds": 1.40873,
     "lufs": null,
-    "hash": "f6c2fea1d662da9839796568c8ca69f7ddda377d2b5f92e9b812b303192f4db6",
-    "at": 1784974863795
+    "hash": "3fb5f870f883111428277614a85e2f9298506a2a94e129daee4bd3699622257b",
+    "at": 1789067542605
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#85.ogg"
   },
   "kill-2": {
    "text": "ふたつめ！おかわり！",
@@ -1203,9 +1213,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "吃掉你！",
+   "text": "（原檔）chr1030_ActVoice#102",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,23 +1236,24 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 13836,
-    "seconds": null,
+    "bytes": 22195,
+    "seconds": 1.318322,
     "lufs": null,
-    "hash": "b7d1e39e9aa7716be28f377c4505c8dbfadc5b8365c26aa875a157699e7f9408",
-    "at": 1784990955041
+    "hash": "05d1685ccf257b993fc09b3b50f2df4b2fee181a1f45e1ddfcee6cbca6a46caf",
+    "at": 1789067542981
    },
    "lastError": null,
-   "kana": "タベチャウゾ"
+   "kana": "タベチャウゾ",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#102.ogg"
   },
   "skill-name.w": {
-   "text": "把你變成餅乾！",
+   "text": "（原檔）chr1030_ActVoice#90",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1263,18 +1274,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
     "stub": false,
-    "bytes": 18852,
-    "seconds": null,
+    "bytes": 27629,
+    "seconds": 1.64678,
     "lufs": null,
-    "hash": "aa20ef5a0deac0d14904e8d0f42583e6a032b132ff3fc2247fb07ce8f5adad74",
-    "at": 1784990959048
+    "hash": "6993f914cc4cac608eb51fe09553a5401a75fb2ac6a39d5eefe22d9d11b66b83",
+    "at": 1789067543159
    },
    "lastError": null,
-   "kana": "オカシ ニ ナッチャエ"
+   "kana": "オカシ ニ ナッチャエ",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#90.ogg"
   },
   "skill-name.e": {
    "text": "分身！",
@@ -1394,6 +1406,186 @@
    },
    "lastError": null,
    "kana": "ジュンスイ マジン ブウ"
+  },
+  "defeat.2": {
+   "text": "（原檔）chr1030_ActVoice#17",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#17.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.708209,
+    "lufs": null,
+    "hash": "350a40c580986a0b6d0cd9aa7c03e53f4ce213037717f465e9c15b4279ae2e41",
+    "at": 1789067542055
+   }
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）chr1030_ActVoice#23",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#23.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.255374,
+    "lufs": null,
+    "hash": "1c645465be88a1c0045fbf65a6c1f43e93a06a4dd4d53a82a220a26cd66abd1b",
+    "at": 1789067542334
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）chr1030_ActVoice#163",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#163.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.65941,
+    "lufs": null,
+    "hash": "e2525b78a924791fc41ef67e7950e0630c89e1cd867a8e0b70aead0177822dfe",
+    "at": 1789067542428
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）chr1030_ActVoice#195",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#195.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 89069,
+    "seconds": 5.492971,
+    "lufs": null,
+    "hash": "7ef89dcdfe07b81480fd5d182d7b66e6e06c2131b945f331b47c4798a8c5dcdd",
+    "at": 1789067542788
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）chr1030_ActVoice#196",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#196.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 86979,
+    "seconds": 5.377438,
+    "lufs": null,
+    "hash": "48eca5af24c1035af2a0252a4528045f76b553635527962f1e4107861fc78864",
+    "at": 1789067542887
+   }
+  },
+  "skill-name.q.2": {
+   "text": "（原檔）chr1030_ActVoice#95",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#95.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.117483,
+    "lufs": null,
+    "hash": "fcf2a2495dcabdf531ff44c4f09317f250fe8dd00f46efb35098ff4fb67b6dab",
+    "at": 1789067543071
+   }
+  },
+  "skill-name.w.2": {
+   "text": "（原檔）chr1030_ActVoice#97",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#97.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 27211,
+    "seconds": 1.620884,
+    "lufs": null,
+    "hash": "c343b7348add7402946f5c929caf7b7b643826f91d6cf45941e22a132464afe7",
+    "at": 1789067543257
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）chr1030_ActVoice#206",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#206.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 64827,
+    "seconds": 3.993605,
+    "lufs": null,
+    "hash": "9771195b173bde4f217e869ab87d1ec9475ca350ce82a224c01142c83bafa1e4",
+    "at": 1789067543464
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）chr1030_ActVoice#198",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted/JForce_Majin Buu/chr1030_ActVoice/chr1030_ActVoice#198.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+    "stub": false,
+    "bytes": 61484,
+    "seconds": 3.770295,
+    "lufs": null,
+    "hash": "d61f35d8d013b7497ac93a6d9838e21d9bea3e87422e082a66fe4f2e20bff7bd",
+    "at": 1789067543554
+   }
   }
  }
 }
