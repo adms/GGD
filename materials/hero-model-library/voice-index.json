@@ -42960,15 +42960,17 @@
     },
     "public:parallel-community-goblin-slayer-ssbu": {
       "type": "zip",
-      "localArchive": "outputs/model-source-backups/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
-      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
       "bytes": 29562674,
       "sha256": "608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1",
-      "readbackVerified": false,
+      "archiveFormat": "zip",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
       "localRoot": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu",
       "localUseAvailable": true,
-      "publicationStatus": "local-verified-s3-pending"
+      "publicationStatus": "s3-readback-verified"
     },
     "public:parallel-ps-jumpforce-local-second10": {
       "type": "tar-gzip",
@@ -43357,11 +43359,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "f09f5c6cc6c377c151f715453b09c654c6687e6eaec6892092629bc226923ecf"
+      "sha256": "b14081ec477876cc0eb7d8ba5272d157774fca690ff0e2c153454f5d9a5112d0"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "5bcef5c66f99162f6e4e4b16e5887e63dcb2fa176a4f993adc8101075a9dcfaa"
+      "sha256": "790f9b2c353dcdce923c0bd9d9dc69d321379d5d5add8792b77178050f4bad64"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",

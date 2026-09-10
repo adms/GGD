@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:24:18+08:00",
-  "inputsSha256": "98ca165cada78b5ae9b2cb32dc470b973660066a138ba55eb953e8b566e56442",
+  "generatedAt": "2026-09-11T06:32:24+08:00",
+  "inputsSha256": "6a15ff78c13a6f607640771ca2f86b11fea7aa504b30a5a0f176611593808c71",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -43156,7 +43156,7 @@
             "extractedManifestPath": "extracted-files.jsonl",
             "extractedManifestSha256": "3fa94fd0e557711264b2a8ab83f893d807c9b645210076f0fdb8a2925264ece4"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload",
+          "publicationStatus": "s3-readback-verified",
           "reuseTerms": "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.",
           "reuseChecklist": {
             "yes": [
@@ -43224,14 +43224,15 @@
             "confirmedVoiceCount": null,
             "synthesisReady": false
           },
-          "verification": "原包及本體網格／7 貼圖／6 UI 貼圖已取得，缺少模型描述引用的骨架、材質與動作。34 個音訊串流已完整解碼為 WAV，僅 2 組不同 WAV 內容；保留全部事件映射，不能當作 34 句不同語音。現有手動指定加工模型保持預設。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
+          "verification": "原包及本體網格／7 貼圖／6 UI 貼圖已取得，缺少模型描述引用的骨架、材質與動作。34 個音訊串流已完整解碼為 WAV，僅 2 組不同 WAV 內容；保留全部事件映射，不能當作 34 句不同語音。現有手動指定加工模型保持預設。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
             "bytes": 29562674,
             "sha256": "608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1",
-            "readbackVerified": false,
-            "status": "not-uploaded"
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           }
         }
       ],
@@ -69433,7 +69434,7 @@
           "extractedManifestPath": "extracted-files.jsonl",
           "extractedManifestSha256": "3fa94fd0e557711264b2a8ab83f893d807c9b645210076f0fdb8a2925264ece4"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "reuseTerms": "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.",
         "reuseChecklist": {
           "yes": [
@@ -69501,14 +69502,15 @@
           "confirmedVoiceCount": null,
           "synthesisReady": false
         },
-        "verification": "原包及本體網格／7 貼圖／6 UI 貼圖已取得，缺少模型描述引用的骨架、材質與動作。34 個音訊串流已完整解碼為 WAV，僅 2 組不同 WAV 內容；保留全部事件映射，不能當作 34 句不同語音。現有手動指定加工模型保持預設。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
+        "verification": "原包及本體網格／7 貼圖／6 UI 貼圖已取得，缺少模型描述引用的骨架、材質與動作。34 個音訊串流已完整解碼為 WAV，僅 2 組不同 WAV 內容；保留全部事件映射，不能當作 34 句不同語音。現有手動指定加工模型保持預設。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-goblin-slayer-ssbu/608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1.zip",
           "bytes": 29562674,
           "sha256": "608d6fcd7f434d57df0f3763d3e6924ae4f79e3b96c05563f4a720a48542bbb1",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
