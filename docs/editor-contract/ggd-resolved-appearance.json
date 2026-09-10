@@ -4,7 +4,7 @@
   "resolverFingerprint": "21a5483cdc47",
   "totals": {
     "champions": 153,
-    "standIns": 3,
+    "standIns": 2,
     "failures": 0
   },
   "appearances": [
@@ -253,7 +253,7 @@
       "schema": "resolved-appearance@1",
       "modelKey": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
       "glbPath": "assets/models/ou99/versions/cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724.glb",
-      "modelDocDigest": "6f1c598c22c3",
+      "modelDocDigest": "ea246f9449e8",
       "scale": 1,
       "collisionRadius": 0.55,
       "authoredYawOffsetDeg": 0,
@@ -581,36 +581,25 @@
     {
       "championId": "b2-maple-alt-9769eb88b85b",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+      "modelDocDigest": "dc76687a877a",
       "scale": 1,
       "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -684,7 +673,7 @@
       "schema": "resolved-appearance@1",
       "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
       "glbPath": "assets/models/ou99/versions/250f873ccdd2a6111cdcd041cd94f9c054a0a598b76cabf5bbb3bbe85be0b160.glb",
-      "modelDocDigest": "5a61cb266ad3",
+      "modelDocDigest": "0fa5d6d2ce5b",
       "scale": 1,
       "collisionRadius": 0.55,
       "authoredYawOffsetDeg": 0,

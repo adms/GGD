@@ -266,10 +266,10 @@
           "damageType": "magic",
           "amount": {
             "damageTierPerRank": [
-              "極小",
-              "極小",
               "小",
-              "小"
+              "小",
+              "中",
+              "中"
             ]
           },
           "length": 11,
