@@ -1,0 +1,586 @@
+{
+ "schema": "ggd-model-decimation-ledger@1",
+ "generatedAt": "2026-09-10",
+ "owner原話": "超過一萬面 減面到 8000以下 並且要通過檢驗 通過以後原始檔一樣保留只是放到S3 只有正式採用才放到git",
+ "tool": "npx tsx tools/model-budget/optimize.ts <glb> --role champion --geometry --tris-target 8000 --tex-edge 1024 --apply",
+ "note": "--tex-edge 1024 讓貼圖階段成為 no-op ⇒ 這一批**只動幾何**,零貼圖改動(實測 VRAM 前後相等)。",
+ "量尺": {
+  "頁面": "apps/client/public/ou99-model-shots.html (three.js, 512x512, 背景 #15151a)",
+  "定義": "距離背景色 (0x15,0x15,0x1a) 的歐氏距離 > 24 的像素數",
+  "校準": {
+   "已知有": "ou99_496905.glb → 37,873 (>2000) ✅",
+   "已知沒有": "不存在的路徑 → 0 ✅",
+   "可重複": "再載一次已知有 → 37,873(相同) ✅",
+   "⛔校準時抓到的量尺缺陷": "__load 的**錯誤路徑不會重繪** ⇒ 直接讀 canvas 會讀到**上一顆模型的那一幀**(第一版量到 37,873 而正確答案是 0)。修法:讀像素前先呼叫 __shot() 強制 renderer.render()。"
+  },
+  "門檻": "|Δ亮像素| < 5% 且肉眼是同一個角色"
+ },
+ "驗證": {
+  "model_intake": "17/17 相對來源**零新問題**(來源自己的既有債照舊:doraemon-cat 22 draws、dragon2 佔位貼圖)",
+  "⛔model_intake的離開碼不是閘": "實測餵 200KB 亂數 ⇒ 印「⛔ 讀不開：不是 GLB」但**離開碼仍是 0**。⇒ 要讀「⛔ 有問題 N」那一行,⛔ 不要讀 $?。",
+  "rig": "17/17 skins/joints/clips/channels 前後相同(優化器內建拒絕機制,0 rejected)"
+ },
+ "totals": {
+  "scanned": 17,
+  "adopted": 14,
+  "notAdopted": 3,
+  "trisBefore": 249845,
+  "trisAfterAdopted": 161704,
+  "bytesSavedAdopted": 7730748
+ },
+ "s3": {
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "prefix": "model-decimation/20260910/originals",
+  "manifest": "_originals.sha256",
+  "status": "uploaded",
+  "count": 17
+ },
+ "models": [
+  {
+   "id": "imported.doraemon-cat",
+   "path": "content/assets/models/imported/doraemon-cat.glb",
+   "before": {
+    "tris": 19681,
+    "draws": 22,
+    "bytes": 4395976,
+    "joints": 93,
+    "clips": 36,
+    "channels": 150
+   },
+   "after": {
+    "tris": 7864,
+    "draws": 22,
+    "bytes": 3576192,
+    "joints": 93,
+    "clips": 36,
+    "channels": 150
+   },
+   "ratio": 0.4,
+   "rigOk": true,
+   "litPixelBefore": 37873,
+   "litPixelAfter": 37766,
+   "litPixelDelta": -0.28,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -0.28% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/imported/doraemon-cat.glb",
+   "originalSha256": "5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/imported/doraemon-cat.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.496905",
+   "path": "content/assets/models/ou99/ou99_496905.glb",
+   "before": {
+    "tris": 19681,
+    "draws": 3,
+    "bytes": 4406260,
+    "joints": 93,
+    "clips": 36,
+    "channels": 150
+   },
+   "after": {
+    "tris": 7958,
+    "draws": 3,
+    "bytes": 3664804,
+    "joints": 93,
+    "clips": 36,
+    "channels": 150
+   },
+   "ratio": 0.404,
+   "rigOk": true,
+   "litPixelBefore": 37873,
+   "litPixelAfter": 33977,
+   "litPixelDelta": -10.29,
+   "intakeNewFindings": 0,
+   "verdict": "not-adopted",
+   "why": "亮像素 -10.29% ⛔ 超過 5% 門檻,且**肉眼確認**：角色本體完好,但**紅色披風**從一整片塌成一條細片。⭐ 而它與預算無關 —— errorBound 0.001(11,938 面,仍遠高於 8,000)就已經掉到 34,238(-9.6%) ⇒ 這顆的披風是薄片,meshopt 的 weld+simplify 第一刀就吃掉它。⭐ 同一個角色的另一份匯出 imported.doraemon-cat(22 個 primitive)減到 7,864 面只掉 0.28% ——⇒ 出路在內容側(讓 godie-n00b 走 doraemon-cat 那一脈),⛔ 不是再調參數。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_496905.glb",
+   "originalSha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_496905.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": null,
+   "path": "content/assets/models/menu/dragon2.glb",
+   "before": {
+    "tris": 19542,
+    "draws": 1,
+    "bytes": 4349884,
+    "joints": 220,
+    "clips": 1,
+    "channels": 412
+   },
+   "after": {
+    "tris": 7999,
+    "draws": 1,
+    "bytes": 3967984,
+    "joints": 220,
+    "clips": 1,
+    "channels": 412
+   },
+   "ratio": 0.409,
+   "rigOk": true,
+   "litPixelBefore": 0,
+   "litPixelAfter": 0,
+   "litPixelDelta": null,
+   "intakeNewFindings": 0,
+   "verdict": "not-adopted",
+   "why": "視覺 A/B **無法判定** —— 這顆在實拍台上「減面前」就渲不出任何像素 (litA=0)。原因：材質只有 KHR_materials_pbrSpecularGlossiness + alphaMode:MASK 且核心 pbrMetallicRoughness 沒有 baseColorTexture ⇒ three.js 的 GLTFLoader 不再支援該擴充,整顆被 alphaTest 切掉。⛔ 量不到「之前」就量不到「差異」⇒ 依驗收條件不採用。⭐ 候選檔仍在 optimized-out(7999/8000 面,rig ok,intake 無新問題),要採用需先換一台 Babylon(遊戲實際用的載入器) 的實拍台把 litA>0 量出來。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/menu/dragon2.glb",
+   "originalSha256": "7efc54b5db0d622bd9b8565d85489db2aee536180d5e10ef31137cd6b19ac13c",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/menu/dragon2.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.456546",
+   "path": "content/assets/models/ou99/ou99_456546.glb",
+   "before": {
+    "tris": 17942,
+    "draws": 3,
+    "bytes": 2094700,
+    "joints": 36,
+    "clips": 18,
+    "channels": 38
+   },
+   "after": {
+    "tris": 7999,
+    "draws": 3,
+    "bytes": 1662596,
+    "joints": 36,
+    "clips": 18,
+    "channels": 38
+   },
+   "ratio": 0.446,
+   "rigOk": true,
+   "litPixelBefore": 19220,
+   "litPixelAfter": 19219,
+   "litPixelDelta": -0.01,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -0.01% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_456546.glb",
+   "originalSha256": "248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_456546.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.459617",
+   "path": "content/assets/models/ou99/ou99_459617.glb",
+   "before": {
+    "tris": 17216,
+    "draws": 2,
+    "bytes": 1346692,
+    "joints": 28,
+    "clips": 4,
+    "channels": 42
+   },
+   "after": {
+    "tris": 7995,
+    "draws": 2,
+    "bytes": 553968,
+    "joints": 28,
+    "clips": 4,
+    "channels": 42
+   },
+   "ratio": 0.464,
+   "rigOk": true,
+   "litPixelBefore": 27821,
+   "litPixelAfter": 27822,
+   "litPixelDelta": 0.0,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 +0.00% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_459617.glb",
+   "originalSha256": "4382e2d43746df99fc68fb36b6b466e2bac8b4abd5c94a679b3153946c6cdcc5",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_459617.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.491448",
+   "path": "content/assets/models/ou99/ou99_491448.glb",
+   "before": {
+    "tris": 16643,
+    "draws": 6,
+    "bytes": 1356452,
+    "joints": 62,
+    "clips": 14,
+    "channels": 56
+   },
+   "after": {
+    "tris": 7963,
+    "draws": 6,
+    "bytes": 836104,
+    "joints": 62,
+    "clips": 14,
+    "channels": 56
+   },
+   "ratio": 0.478,
+   "rigOk": true,
+   "litPixelBefore": 18426,
+   "litPixelAfter": 17994,
+   "litPixelDelta": -2.34,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -2.34% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_491448.glb",
+   "originalSha256": "606eff5a7b188acb6969deaf0da09ee347eee7745157bfdf53c84e017762e2ba",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_491448.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.472038",
+   "path": "content/assets/models/ou99/ou99_472038.glb",
+   "before": {
+    "tris": 16328,
+    "draws": 5,
+    "bytes": 4184964,
+    "joints": 114,
+    "clips": 7,
+    "channels": 333
+   },
+   "after": {
+    "tris": 7995,
+    "draws": 5,
+    "bytes": 3698416,
+    "joints": 114,
+    "clips": 7,
+    "channels": 333
+   },
+   "ratio": 0.49,
+   "rigOk": true,
+   "litPixelBefore": 12923,
+   "litPixelAfter": 12609,
+   "litPixelDelta": -2.43,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -2.43% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_472038.glb",
+   "originalSha256": "1437cbed6b585225333a57196de1001a85943ae0f5dd51b2d87d230032a66718",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_472038.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.497211",
+   "path": "content/assets/models/ou99/ou99_497211.glb",
+   "before": {
+    "tris": 15989,
+    "draws": 5,
+    "bytes": 3670752,
+    "joints": 74,
+    "clips": 17,
+    "channels": 82
+   },
+   "after": {
+    "tris": 7970,
+    "draws": 5,
+    "bytes": 3375440,
+    "joints": 74,
+    "clips": 17,
+    "channels": 82
+   },
+   "ratio": 0.498,
+   "rigOk": true,
+   "litPixelBefore": 15674,
+   "litPixelAfter": 15505,
+   "litPixelDelta": -1.08,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -1.08% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_497211.glb",
+   "originalSha256": "7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_497211.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.453949",
+   "path": "content/assets/models/ou99/ou99_453949.glb",
+   "before": {
+    "tris": 13968,
+    "draws": 5,
+    "bytes": 3545892,
+    "joints": 61,
+    "clips": 9,
+    "channels": 61
+   },
+   "after": {
+    "tris": 7987,
+    "draws": 5,
+    "bytes": 2663164,
+    "joints": 61,
+    "clips": 9,
+    "channels": 61
+   },
+   "ratio": 0.572,
+   "rigOk": true,
+   "litPixelBefore": 9086,
+   "litPixelAfter": 9160,
+   "litPixelDelta": 0.81,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 +0.81% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_453949.glb",
+   "originalSha256": "09444fb17e1b1a8437c0bcb3e7ccecc3d61c1d86d2b33f039b5e0817ae4d9279",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_453949.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.498214",
+   "path": "content/assets/models/ou99/ou99_498214.glb",
+   "before": {
+    "tris": 13132,
+    "draws": 1,
+    "bytes": 1158444,
+    "joints": 31,
+    "clips": 9,
+    "channels": 23
+   },
+   "after": {
+    "tris": 7997,
+    "draws": 1,
+    "bytes": 910988,
+    "joints": 31,
+    "clips": 9,
+    "channels": 23
+   },
+   "ratio": 0.609,
+   "rigOk": true,
+   "litPixelBefore": 27939,
+   "litPixelAfter": 27727,
+   "litPixelDelta": -0.76,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -0.76% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_498214.glb",
+   "originalSha256": "5abd413f72e1e3966993ca16d943bc4df5ce71593fdf87a2363dc114034e30d1",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_498214.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.472035",
+   "path": "content/assets/models/ou99/ou99_472035.glb",
+   "before": {
+    "tris": 12942,
+    "draws": 5,
+    "bytes": 3850772,
+    "joints": 39,
+    "clips": 8,
+    "channels": 26
+   },
+   "after": {
+    "tris": 7985,
+    "draws": 5,
+    "bytes": 2096040,
+    "joints": 39,
+    "clips": 8,
+    "channels": 26
+   },
+   "ratio": 0.617,
+   "rigOk": true,
+   "litPixelBefore": 23878,
+   "litPixelAfter": 23212,
+   "litPixelDelta": -2.79,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -2.79% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_472035.glb",
+   "originalSha256": "963f1639053bdc3b43c2935320f08b13aae3b718ece117d69e8f05f0ed4c3069",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_472035.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.467227",
+   "path": "content/assets/models/ou99/ou99_467227.glb",
+   "before": {
+    "tris": 12778,
+    "draws": 4,
+    "bytes": 1389936,
+    "joints": 61,
+    "clips": 4,
+    "channels": 56
+   },
+   "after": {
+    "tris": 7997,
+    "draws": 4,
+    "bytes": 1181300,
+    "joints": 61,
+    "clips": 4,
+    "channels": 56
+   },
+   "ratio": 0.626,
+   "rigOk": true,
+   "litPixelBefore": 18471,
+   "litPixelAfter": 18560,
+   "litPixelDelta": 0.48,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 +0.48% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_467227.glb",
+   "originalSha256": "e6e88168e26db99e0ab4276ee55b86808f1a2998e7f64ba415086159a6dc4db0",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_467227.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.481732",
+   "path": "content/assets/models/ou99/ou99_481732.glb",
+   "before": {
+    "tris": 12171,
+    "draws": 4,
+    "bytes": 1373100,
+    "joints": 76,
+    "clips": 16,
+    "channels": 79
+   },
+   "after": {
+    "tris": 7992,
+    "draws": 4,
+    "bytes": 1063932,
+    "joints": 76,
+    "clips": 16,
+    "channels": 79
+   },
+   "ratio": 0.657,
+   "rigOk": true,
+   "litPixelBefore": 23319,
+   "litPixelAfter": 24373,
+   "litPixelDelta": 4.52,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 +4.52% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_481732.glb",
+   "originalSha256": "ef252f3a94524b1db2b7ffb6dfd972c4d32e70c7b4abd5f54bf25d57ab74da1b",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_481732.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": null,
+   "path": "content/assets/models/menu/dragon2-mid.glb",
+   "before": {
+    "tris": 10748,
+    "draws": 1,
+    "bytes": 3935912,
+    "joints": 220,
+    "clips": 1,
+    "channels": 412
+   },
+   "after": {
+    "tris": 8000,
+    "draws": 1,
+    "bytes": 3759388,
+    "joints": 220,
+    "clips": 1,
+    "channels": 412
+   },
+   "ratio": 0.744,
+   "rigOk": true,
+   "litPixelBefore": 0,
+   "litPixelAfter": 0,
+   "litPixelDelta": null,
+   "intakeNewFindings": 0,
+   "verdict": "not-adopted",
+   "why": "視覺 A/B **無法判定** —— 這顆在實拍台上「減面前」就渲不出任何像素 (litA=0)。原因：材質只有 KHR_materials_pbrSpecularGlossiness + alphaMode:MASK 且核心 pbrMetallicRoughness 沒有 baseColorTexture ⇒ three.js 的 GLTFLoader 不再支援該擴充,整顆被 alphaTest 切掉。⛔ 量不到「之前」就量不到「差異」⇒ 依驗收條件不採用。⭐ 候選檔仍在 optimized-out(7999/8000 面,rig ok,intake 無新問題),要採用需先換一台 Babylon(遊戲實際用的載入器) 的實拍台把 litA>0 量出來。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/menu/dragon2-mid.glb",
+   "originalSha256": "283868020acfc0fecb28bc4c0f975b19be80d14cd304830e02b82950bf08eff9",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/menu/dragon2-mid.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.491497",
+   "path": "content/assets/models/ou99/ou99_491497.glb",
+   "before": {
+    "tris": 10558,
+    "draws": 1,
+    "bytes": 3990568,
+    "joints": 140,
+    "clips": 13,
+    "channels": 257
+   },
+   "after": {
+    "tris": 7994,
+    "draws": 1,
+    "bytes": 3243992,
+    "joints": 140,
+    "clips": 13,
+    "channels": 257
+   },
+   "ratio": 0.757,
+   "rigOk": true,
+   "litPixelBefore": 26342,
+   "litPixelAfter": 26149,
+   "litPixelDelta": -0.73,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -0.73% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_491497.glb",
+   "originalSha256": "88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_491497.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.487191",
+   "path": "content/assets/models/ou99/ou99_487191.glb",
+   "before": {
+    "tris": 10416,
+    "draws": 6,
+    "bytes": 2254088,
+    "joints": 66,
+    "clips": 8,
+    "channels": 66
+   },
+   "after": {
+    "tris": 7997,
+    "draws": 6,
+    "bytes": 2124200,
+    "joints": 66,
+    "clips": 8,
+    "channels": 66
+   },
+   "ratio": 0.768,
+   "rigOk": true,
+   "litPixelBefore": 7304,
+   "litPixelAfter": 7161,
+   "litPixelDelta": -1.96,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 -1.96% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_487191.glb",
+   "originalSha256": "e0c42b9053c74c7e768826069df020a85ebc55b3a836b1f23225799905f91d09",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_487191.glb",
+   "s3Status": "uploaded"
+  },
+  {
+   "id": "ou99.496452",
+   "path": "content/assets/models/ou99/ou99_496452.glb",
+   "before": {
+    "tris": 10110,
+    "draws": 2,
+    "bytes": 1152876,
+    "joints": 44,
+    "clips": 8,
+    "channels": 36
+   },
+   "after": {
+    "tris": 7998,
+    "draws": 2,
+    "bytes": 1048132,
+    "joints": 44,
+    "clips": 8,
+    "channels": 36
+   },
+   "ratio": 0.791,
+   "rigOk": true,
+   "litPixelBefore": 22241,
+   "litPixelAfter": 22265,
+   "litPixelDelta": 0.11,
+   "intakeNewFindings": 0,
+   "verdict": "adopted",
+   "why": "亮像素 +0.11% (<5%),肉眼同一個角色;rig 骨架/關節/片段/通道不變;model_intake 相對來源零新問題。",
+   "candidate": "tools/model-budget/optimized-out/assets/models/ou99/ou99_496452.glb",
+   "originalSha256": "22fc172a82450ed4845e7e65264cf571130da40f680113531a70098299f99904",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260910/originals/assets/models/ou99/ou99_496452.glb",
+   "s3Status": "uploaded"
+  }
+ ]
+}
