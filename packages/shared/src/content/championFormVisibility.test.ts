@@ -124,9 +124,22 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   // 不是「有人畫了 form-visuals」。⚠️ 這一格由下面「the ledger is exact」把關：
   // 12 的變身若哪天重新接上入口，它會立刻要求把這個 id 放回來。
   "godie-h02u", // 92 草泥馬 臥草
+  // ⭐ GH#1217（2026-09-11）—— 梅普露變身態原本穿 `champ.thorne`（**一個陌生人的骨架**）。
+  //   照 owner 2026-08-23 的常設指令自己判斷：改成**沿用本體的身體**，
+  //   ⭐ 判準是「穿自己的身體嚴格優於穿一個陌生人的骨架」，⛔ 不是「她變身後長這樣」。
+  //   ⚠️ 代價就是這一筆美術債：**變身在身體這一軸上看不出來**。
+  //   ⭐ 還債的方式是給她一顆專屬模型（#1154 英雄外觀商店）或加演出，⛔ 不是換回骨架。
+  "b2-maple-alt-9769eb88b85b",
+  // ⭐ GH#1211 —— 傑・富力士（`godie-ucrl`）的變身與本體共用一顆 mesh。
+  //   ⚠️ 這是**既有**的債（⛔ 不是這一輪造成的）：v0.43.4 把她從佔位骨架換成同角色
+  //   另一張卡的模型時，變身那一半沒有跟著給第二顆 ⇒ 玩家看到數值變了而畫面沒變。
+  "godie-u034",
   "godie-h02r", // 90 妙蛙花
   "godie-h020", // 04 莉娜因巴斯
-  "godie-n01g", // 42 依文潔琳
+  // ⭐ GH#1211（2026-09-11）—— 42 依文潔琳**已經看得見了**（ou99 模型批次給了她自己的身體）
+  //   ⇒ 帳本上這一列被下面「the ledger is exact」逐字要求刪掉：
+  //   「these ids are on ART_DEBT but are already visible — delete them from the list」。
+  // "godie-n01g", // 42 依文潔琳 —— 債還完了
   "godie-n01c", // 08 勇者小呆 龍魔人
   "godie-o030", // 30 臭作 變態紳士
   "godie-u00o", // 76 魯夫 二檔
@@ -321,7 +334,11 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
     // above — which is the whole point of measuring the mesh rather than
     // counting how many docs carry the effect.
     const byBase = new Map(reachableTransforms().map((r) => [r.baseId, r]));
-    for (const base of ["godie-nsjs", "godie-umal", "godie-ofar", "godie-ucrl"]) {
+    // ⭐ GH#1211（2026-09-11）—— `godie-ucrl`（傑・富力士）從這一組**移出去**了：
+    //   v0.43.4 把她從佔位骨架換成 `imported.herobiggon`，⛔ 而變身態 `godie-u034` 也是同一顆
+    //   ⇒ 今天兩邊 mesh 相同（實查），這一條的前提消失了（第〇·六守則）。
+    //   ⭐ 它現在住 ART_DEBT，而債還完的那天上面那條「the ledger is exact」會叫我把它搬回來。
+    for (const base of ["godie-nsjs", "godie-umal", "godie-ofar"]) {
       const r = byBase.get(base);
       expect(r, `${base} is reachable`).toBeDefined();
       expect(r!.sameMesh, `${base} swaps to a different mesh`).toBe(false);
