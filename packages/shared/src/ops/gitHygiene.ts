@@ -27,10 +27,15 @@ export function isFinishedAssetPath(path: string): boolean {
 
 export function treeBlobs(rev = "HEAD"): Array<{ bytes: number; path: string }> {
   const out = execFileSync("git", ["ls-tree", "-r", "-l", rev], { cwd: REPO_ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-  return out.split("\n").filter(Boolean).map((l) => {
-    const [meta, path] = l.split("\t", 2);
-    return { bytes: Number(meta.split(/\s+/)[3]), path };
-  });
+  const rows: Array<{ bytes: number; path: string }> = [];
+  for (const l of out.split("\n")) {
+    if (!l) continue;
+    const tab = l.indexOf("\t");
+    if (tab < 0) continue;
+    const meta = l.slice(0, tab); const path = l.slice(tab + 1);
+    rows.push({ bytes: Number(meta.split(/\s+/)[3] ?? 0), path });
+  }
+  return rows;
 }
 
 export function measureHygiene(rev = "HEAD") {
