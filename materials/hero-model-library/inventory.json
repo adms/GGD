@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:32:24+08:00",
-  "inputsSha256": "6a15ff78c13a6f607640771ca2f86b11fea7aa504b30a5a0f176611593808c71",
+  "generatedAt": "2026-09-11T06:40:12+08:00",
+  "inputsSha256": "951904a5a7413be127083fd70f059c20445928e998c2fdbaf85729634eb30ab9",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -30995,7 +30995,7 @@
             "extractedManifestPath": "extracted-files.jsonl",
             "extractedManifestSha256": "a80581f68fe82cddbceb01cfa35335014e142ad586b81ce510bc064867da2009"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload",
+          "publicationStatus": "s3-readback-verified",
           "reuseTerms": "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.",
           "reuseChecklist": {
             "yes": [
@@ -31055,14 +31055,15 @@
             ],
             "selectionVerified": false
           },
-          "verification": "完整大傑 MultiVersus MOD 原包及 PAK 已取得，作者 MD5／SHA 通過；來源署名 JUMP FORCE 模型。PAK v4 索引 SHA1 通過、42 條目、索引未加密，但內部模型、骨架、動作、音訊尚未解析，不能算本體驗收通過。",
-          "pendingBackup": {
-            "localArchive": "outputs/model-source-backups/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
+          "verification": "完整大傑 MultiVersus MOD 原包及 PAK 已取得，作者 MD5／SHA 通過；來源署名 JUMP FORCE 模型。PAK v4 索引 SHA1 通過、42 條目、索引未加密，但內部模型、骨架、動作、音訊尚未解析，不能算本體驗收通過。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
             "bytes": 17434220,
             "sha256": "d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95",
-            "readbackVerified": false,
-            "status": "not-uploaded"
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           }
         }
       ],
@@ -69322,7 +69323,7 @@
           "extractedManifestPath": "extracted-files.jsonl",
           "extractedManifestSha256": "a80581f68fe82cddbceb01cfa35335014e142ad586b81ce510bc064867da2009"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "reuseTerms": "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.",
         "reuseChecklist": {
           "yes": [
@@ -69382,14 +69383,15 @@
           ],
           "selectionVerified": false
         },
-        "verification": "完整大傑 MultiVersus MOD 原包及 PAK 已取得，作者 MD5／SHA 通過；來源署名 JUMP FORCE 模型。PAK v4 索引 SHA1 通過、42 條目、索引未加密，但內部模型、骨架、動作、音訊尚未解析，不能算本體驗收通過。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
+        "verification": "完整大傑 MultiVersus MOD 原包及 PAK 已取得，作者 MD5／SHA 通過；來源署名 JUMP FORCE 模型。PAK v4 索引 SHA1 通過、42 條目、索引未加密，但內部模型、骨架、動作、音訊尚未解析，不能算本體驗收通過。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
           "bytes": 17434220,
           "sha256": "d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
@@ -93210,20 +93212,21 @@
           }
         ],
         "sourceLicense": "Uploader-declared CC BY-NC-ND 4.0; license metadata unverified",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-material-and-rest-pose-review",
           "selectionVerified": false
         },
-        "verification": "完整57,581,887-byte原始Blend與作者SHA相同；15原始packed textures逐檔保留，2個左右瀏海GLB各94,274三角形、258 joints、18材質、最多5權重。原972骨節Rigify與3個單幀pose保留在原檔；0 gameplay動畫/音訊。GLB結構可讀，但瀏海alpha/材質及靴面反光與原檔不同，外觀尚未驗收，不自動使用。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/kof-open3dlab-ash-xv/fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-open3dlab-ash-xv/fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce.zip",
+        "verification": "完整57,581,887-byte原始Blend與作者SHA相同；15原始packed textures逐檔保留，2個左右瀏海GLB各94,274三角形、258 joints、18材質、最多5權重。原972骨節Rigify與3個單幀pose保留在原檔；0 gameplay動畫/音訊。GLB結構可讀，但瀏海alpha/材質及靴面反光與原檔不同，外觀尚未驗收，不自動使用。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-open3dlab-ash-xv/fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce.zip",
           "bytes": 215081296,
           "sha256": "fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
@@ -93693,7 +93696,7 @@
         "resourceRole": "character-model-collection",
         "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
         "selectionClass": "community-mod",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-runtime-and-visual-validation",
@@ -93785,14 +93788,15 @@
           "path": "motion-index.json",
           "sha256": "11454596ee563409cf9434aa814630978bd6d5c2a52fc117b6d8f7c6145c3c3e"
         },
-        "verification": "完整MOD原包與3D本體已取得；22原骨節、GLB蒙皮17個有權重joints、4貼圖。191來源sequence展開349項，其中336時間變化動作、9單幀/4多幀靜態pose；按原MDL每段FPS、loop与全量RLE樣本核對，1745 CPU蒙皮frame通過，3段實際渲染已檢查。動作是Sven/GoldSrc MOD，非Fate原生；Khronos0錯誤0警告。尺度、事件/controllers/root motion及GGD切換未驗收。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
+        "verification": "完整MOD原包與3D本體已取得；22原骨節、GLB蒙皮17個有權重joints、4貼圖。191來源sequence展開349項，其中336時間變化動作、9單幀/4多幀靜態pose；按原MDL每段FPS、loop与全量RLE樣本核對，1745 CPU蒙皮frame通過，3段實際渲染已檢查。動作是Sven/GoldSrc MOD，非Fate原生；Khronos0錯誤0警告。尺度、事件/controllers/root motion及GGD切換未驗收。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
           "bytes": 8828637,
           "sha256": "a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
@@ -93811,7 +93815,7 @@
         "resourceRole": "character-model-collection",
         "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
         "selectionClass": "community-mod",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-runtime-and-visual-validation",
@@ -93963,14 +93967,15 @@
         "primaryAudioFormats": [
           ".wav"
         ],
-        "verification": "完整原包、4來源服裝輸出全留；相同SHA分成P1/P2兩個候選，57骨節、0動畫。15 PCM WAV完整解碼/長度/SHA通過，原作者標為角色聲音，語言及逐段說話者待核。兩GLB完整Khronos0錯誤0警告，原PSP/PS2平台未證明，MOD重綁與toon材質限制保留；GGD未驗收。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
+        "verification": "完整原包、4來源服裝輸出全留；相同SHA分成P1/P2兩個候選，57骨節、0動畫。15 PCM WAV完整解碼/長度/SHA通過，原作者標為角色聲音，語言及逐段說話者待核。兩GLB完整Khronos0錯誤0警告，原PSP/PS2平台未證明，MOD重綁與toon材質限制保留；GGD未驗收。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
           "bytes": 3979145,
           "sha256": "45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
