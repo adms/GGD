@@ -135,5 +135,14 @@
   },
   "approvedDerivativePriority": "manual",
   "manualSelectionOverridesAutomatic": true,
-  "sourceTierPreserved": true
+  "sourceTierPreserved": true,
+  "sameClassPriority": {
+    "field": "sourceGameReleasedAt",
+    "order": "descending",
+    "unknownDates": "after-verified-dates",
+    "evidenceField": "sourceGameReleaseReference",
+    "useUploadOrRegistrationDateAsGameDate": false,
+    "preserveAllAlternatives": true,
+    "manualSelectionStillWins": true
+  }
 }

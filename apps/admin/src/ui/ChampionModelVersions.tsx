@@ -78,11 +78,12 @@ export function ChampionModelVersions(props: {
       {version && <div style={{ color: TEXT_DIM, fontSize: 12 }}>
         素材角色：{version.source.character} · 作品：{version.source.work} · 素材庫：{version.source.library}<br />
         來源：{version.source.reference}<br />
+        {version.source.sourceGame && <>來源遊戲：{version.source.sourceGame} · {version.source.sourcePlatform ?? "平台待核"} · 發售日：{version.source.sourceGameReleasedAt ?? "待核"}<br /></>}
         保存時間：{new Date(version.registeredAt).toLocaleString()}
       </div>}
       {model && <details><summary>檢視此版模型與動作綁定</summary><pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere", fontSize: 12 }}>{JSON.stringify({ 模型: model.glbPath, 尺寸: model.scale, 朝向角度: model.yawOffsetDeg, 動作: model.clipMap }, null, 2)}</pre></details>}
       <Btn disabled={locked || !version || (selected === state?.activeModelKey && state?.selectionMode === "manual")} onClick={() => state && void apply({ action: "activate", modelKey: selected, expectedHash: state.expectedHash })}>套用選取版本</Btn>
-      <div style={{ color: TEXT_DIM, fontSize: 12 }}>預設順序：{MODEL_SELECTION_ORDER.map((key) => MODEL_SELECTION_LABELS[key]).join(" ＞ ")}。原著模型指原作遊戲直接擷取，300／MBA 維持各自順位。僅套用核准的預設候選；現在為{state?.selectionMode === "manual" ? "手動選用" : "自動選用"}。</div>
+      <div style={{ color: TEXT_DIM, fontSize: 12 }}>預設順序：{MODEL_SELECTION_ORDER.map((key) => MODEL_SELECTION_LABELS[key]).join(" ＞ ")}。同級按來源遊戲發售日由新到舊，日期待核者排後；不同世代與作品全部保留供手選。原著模型指原作遊戲直接擷取，300／MBA 維持各自順位。僅套用核准的預設候選；現在為{state?.selectionMode === "manual" ? "手動選用" : "自動選用"}。</div>
       <Btn disabled={locked || !state?.versions.length || (state.selectionMode === "automatic" && state.activeModelKey === state.preferredModelKey)} onClick={() => state && void apply({ action: "automatic", expectedHash: state.expectedHash })}>恢復依順位自動選用</Btn>
       {props.allowRegister !== false && <details><summary>新增已匯入的模型版本</summary>
         <fieldset disabled={locked} style={{ border: 0, padding: "10px 0", display: "grid", gap: 8 }}>
@@ -93,9 +94,10 @@ export function ChampionModelVersions(props: {
           <label>預設順位<select aria-label="模型來源順位" style={inputStyle} value={source.selectionClass ?? source.tier} onChange={(e) => setSource({ ...source, selectionClass: e.target.value as ModelVersionSource["selectionClass"] })}>{MODEL_SELECTION_ORDER.map((key) => <option key={key} value={key}>{MODEL_SELECTION_LABELS[key]}</option>)}</select></label>
           <label>角色對應<select aria-label="模型角色對應" style={inputStyle} value={source.kind} onChange={(e) => setSource({ ...source, kind: e.target.value as ModelVersionSource["kind"] })}>{(["exact", "alternate", "style-proxy"] as const).map((kind) => <option key={kind} value={kind}>{KIND_LABELS[kind]}</option>)}</select></label>
           {([ ["character", "素材角色"], ["work", "原作／作品"], ["library", "素材庫"], ["reference", "來源依據"] ] as const).map(([key, title]) => <label key={key}>{title}<input aria-label={title} maxLength={key === "reference" ? 1000 : 120} style={inputStyle} value={source[key]} onChange={(e) => setSource({ ...source, [key]: e.target.value })} /></label>)}
-          <Btn disabled={locked || !sourceModelKey.trim() || !label.trim() || Object.values(source).some((value) => !value?.trim())} onClick={() => state && void apply({ action: "register", expectedHash: state.expectedHash, sourceModelKey, label, source })}>新增模型選項</Btn>
+          {([ ["sourceGame", "來源遊戲（選填）"], ["sourcePlatform", "平台（選填）"], ["sourceGameReleasedAt", "作品發售日（查核後填寫）"], ["sourceGameReleaseReference", "發售日依據"] ] as const).map(([key, title]) => <label key={key}>{title}<input aria-label={title} type={key === "sourceGameReleasedAt" ? "date" : "text"} maxLength={key === "sourceGameReleaseReference" ? 1000 : key === "sourcePlatform" ? 80 : 160} style={inputStyle} value={source[key] ?? ""} onChange={(e) => { const next = {...source}; if (e.target.value) next[key] = e.target.value; else delete next[key]; setSource(next); }} /></label>)}
+          <Btn disabled={locked || !sourceModelKey.trim() || !label.trim() || Object.values(source).some((value) => !value?.trim()) || Boolean(source.sourceGameReleasedAt && !source.sourceGameReleaseReference)} onClick={() => state && void apply({ action: "register", expectedHash: state.expectedHash, sourceModelKey, label, source })}>新增模型選項</Btn>
         </fieldset>
-        <p style={{ color: TEXT_DIM, fontSize: 12 }}>請先完成模型與動作的畫面驗收。新增時會保存目前版本；自動模式依來源順位選用，手動模式保留目前選擇。</p>
+        <p style={{ color: TEXT_DIM, fontSize: 12 }}>請先完成模型與動作的畫面驗收。新增時會保存目前版本；自動模式依來源順位及作品發售日選用，手動模式保留目前選擇。</p>
       </details>}
       {props.dirty && <div>請先儲存或放棄英雄的其他修改，再切換模型。</div>}
       {error && <div role="alert" style={{ color: DANGER }}>{error}<Btn small disabled={props.disabled} onClick={() => void api.modelVersions.read(championId).then((r) => { if (alive.current) { setState(r.state); setSelected(r.state?.activeModelKey ?? ""); setError(r.error); } })}>重新載入版本</Btn></div>}

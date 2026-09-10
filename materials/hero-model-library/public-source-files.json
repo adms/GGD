@@ -112560,6 +112560,2326 @@
       ],
       "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-rimuru-ror2/382473ed2a20f9ad06f2e854eb808ea770998336352aa24746d472951896ccb9.zip",
       "readbackVerified": true
+    },
+    {
+      "id": "dayjo-ssbb-zelda-audio",
+      "bytes": 33253784,
+      "sha256": "cabcf313053304369d1728314f8872c94e86b159c66a8dfa7c73f9b325f29efe",
+      "contentKind": "complete-intake",
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 206556,
+          "sha256": "4b0046f4a3ba2fbce2b9ab20acf75eb20d976a04b965b1a2ac0efcd4d7b5f272"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Announcer_Ganondorf.wav",
+          "bytes": 36640,
+          "sha256": "bbb7e24a97064ee3fc11ea95b3f18d8162997c3e8ba0bca95e2fad318a71652d"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Announcer_Link.wav",
+          "bytes": 20316,
+          "sha256": "fbe6988b695b72f4774ddd8a79fcfbdeb802e343c23368240dd8c1cd28e4d7cc"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Announcer_Sheik.wav",
+          "bytes": 21772,
+          "sha256": "7296f98012b9a235d3922b7a0724f07fa76567e7cc198fa5e785e7ecc8a832df"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Announcer_ToonLink.wav",
+          "bytes": 29724,
+          "sha256": "4c193535fff0b3ba1a28ddaffeb28d6a91ef68d1590b8c64128caf7080f2970c"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Announcer_Zelda.wav",
+          "bytes": 30452,
+          "sha256": "e848f2481237241bc3249c5050c295574f149a70ffdfe34cae91be87a877f8af"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Wiimote_Ganondorf.wav",
+          "bytes": 15332,
+          "sha256": "8139e90af1726966bb2cfb110f1550a058cae321fda14ebb458dd2b6d9b614b0"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Wiimote_Link.wav",
+          "bytes": 17068,
+          "sha256": "331a98ad27933721e17ba70dbf8d145e83245569a680bde6f7fea01964388507"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Wiimote_ToonLink.wav",
+          "bytes": 18188,
+          "sha256": "29df0822f4047b17d8071cf86324ec515fc3d8176c381a05ecb756838c663fbf"
+        },
+        {
+          "path": "extracted/SSBB_Announcer/SSBB_Wiimote_ZeldaSheik.wav",
+          "bytes": 21744,
+          "sha256": "0bd7fa40e381bcc0ecf9e235f024ff8298128a869ad58e066f15e6f90c58d12d"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Dizzy.wav",
+          "bytes": 61560,
+          "sha256": "5343e27f8e0d5cee6971676e9982de0c702e03905a380ba26fcb5b3f0644e1cc"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_FootstoolJump.wav",
+          "bytes": 6456,
+          "sha256": "69bb6f524f230c00ab6778442962bab76b03209727253cbac3c6ff36271ae14d"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Grab.wav",
+          "bytes": 5616,
+          "sha256": "3d434eb5a61840d90cfe67cdce9c3d0a4927804514810568c015f9026911788e"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Grab_Release.wav",
+          "bytes": 6730,
+          "sha256": "638c15f8f0d4c19899857c0291099335fd06311dec4f83623a343d34756561cb"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Chain.wav",
+          "bytes": 16088,
+          "sha256": "f283f956cdba9b2eabbfe9ff675915479c884eca17541a79f98aeef832176f4f"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_DinsFire.wav",
+          "bytes": 17516,
+          "sha256": "2234f08aa1126aa373a5033781ad5387b91c8a5bc9eee876e1279ed5ffcdbec5"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Kick1.wav",
+          "bytes": 20316,
+          "sha256": "ee45e233e14fac22a723e36edfea2ffed8076f2e07d676cbffbdf06bb906a6da"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Kick2.wav",
+          "bytes": 39776,
+          "sha256": "2fa349d51e14f85dc70c4bca29d0a8f24bb6322f024aa2c79d9c49bb30d63f34"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Kick3.wav",
+          "bytes": 40364,
+          "sha256": "d2f38c4380a33aa3aab16d3d8cd2977cf988c19d22de1b10f5dcd054315d97c2"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Magic1.wav",
+          "bytes": 24936,
+          "sha256": "3b829f742b2b66c303420b9b7965ab83da709f46843493ba6ab600337f421f16"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Magic2.wav",
+          "bytes": 29052,
+          "sha256": "500e83651317358f2c4e9da07f76818471555f128878c0c9918eba0ac2e8ea62"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Magic3.wav",
+          "bytes": 36164,
+          "sha256": "54e314f73ccdc183f5e1293ebe0ad2d92c68e141e28c71e4c632c1aaa5062144"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Magic4.wav",
+          "bytes": 72312,
+          "sha256": "01052661dc8ac68d472b10c44f22cf2683f20663e64d8c0c5bf75ba210a5bfd1"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Punch1.wav",
+          "bytes": 18972,
+          "sha256": "1cb3c7684f91a17f88eff924e189a0b22a08a3a5376b3e6b7df4b5677229e9c0"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Punch2.wav",
+          "bytes": 30060,
+          "sha256": "d2b0b66f21e25dc329f1abd7268bc83e4436ab93ae9615221d8a3e9503e59429"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Punch3.wav",
+          "bytes": 47588,
+          "sha256": "d9dcee562d43a2cc6a4c58c8a663c45302abd80680e43ab6f4973cc8621a82e4"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Sword1.wav",
+          "bytes": 16312,
+          "sha256": "84f43c53bd75e96b8e3290ebe4b564d4d322ad1cdc60e2fe2e1e061e44c126b0"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Sword2.wav",
+          "bytes": 26196,
+          "sha256": "250d608b913648cd641adf8a6f946f6da5d7b5671f4ea491eb46c7f1118a9c54"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Hit_Sword3.wav",
+          "bytes": 29472,
+          "sha256": "bf59cce7bd9e9c56d38612b139b86329e74ddd9bfd1183e64d1f1b916eddb5a9"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_KnockDown1.wav",
+          "bytes": 7884,
+          "sha256": "6fe63186ac41b91e4d9a5f98018ef9f034a65ac74173616f0eaa0c4b53063a94"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_KnockDown2.wav",
+          "bytes": 9984,
+          "sha256": "d04322da543a1e0dd5c970c021df9affa07d78671ddfaecf1642605d9d763bf8"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Launch1.wav",
+          "bytes": 44564,
+          "sha256": "923a8c44dd5001e03b48d1c74653eca357ca1b7da9e8a2b7617a657b5860e746"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Launch2.wav",
+          "bytes": 56828,
+          "sha256": "eca593ba0e911b61b6d23274bb948fee47ef4cbb61f1835afdf2aefc050a60f4"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Launch3.wav",
+          "bytes": 83904,
+          "sha256": "09420d9a8e96d4894c2d9442030e9496cebf39167bb8f91018f8ed99ca47235d"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_OffScreen.wav",
+          "bytes": 24432,
+          "sha256": "7e997c5f1833036f3d1ef1e228f47322b8c5463f09651526904133da1c04606e"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Shield_Break.wav",
+          "bytes": 36052,
+          "sha256": "c52eb9efe1e93634ed5dd10f531dc6d7c3bb61895d328c9fbabde224b6d31a7e"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Shield_Off.wav",
+          "bytes": 2060,
+          "sha256": "af84b0b81e28a4439bc3045eddc1630fa2cf7e58dfccaa58121dea8be57d9247"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Shield_On.wav",
+          "bytes": 5588,
+          "sha256": "9da8465c51d7a90e09a5cfd2db22eec838013f95171f3c4f689f3b26a5c19a8a"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Smash_Setup.wav",
+          "bytes": 31992,
+          "sha256": "2c0767066ec8f43127026c31a57d34cf353893b9995182159d6d7f2e2cdbd421"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Smashed.wav",
+          "bytes": 92780,
+          "sha256": "1add56e2d9b887f534bdd42ed463d898897292be055dbb8df87de27923bbc827"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Smashed_Distant.wav",
+          "bytes": 47700,
+          "sha256": "ca0f161944ed3bbc4d9b79fdbb73024b313835641761412ac274d47e5aaf1b84"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Trip_Fall.wav",
+          "bytes": 14268,
+          "sha256": "e46d0be656d07ed27fb13d35af69775d1c301c87e39b5ab98ad0fe631e79e22a"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Trip_Slip.wav",
+          "bytes": 3404,
+          "sha256": "7dadf8d783e718645f7444263324e3e7a2a7d749ce1a0e77fdb08d9112629c91"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Water_Drown.wav",
+          "bytes": 38236,
+          "sha256": "6d53bdbdf59833fd7b801d780f51e6af8df0f50b0c1361295dbe338614ddc2a6"
+        },
+        {
+          "path": "extracted/SSBB_Common/SSBB_Water_Splash.wav",
+          "bytes": 30704,
+          "sha256": "d4e3c0ff815c9e74d0bec963fd513fad345adda81a670b813c185f1ec3f43175"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_CrowdJP_Ganondorf.wav",
+          "bytes": 43360,
+          "sha256": "cc847b6c06cdbcc42cfa0dd34e8b0c02d36d05093b52e6a0517ccef8c19c0df2"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_CrowdJP_Link.wav",
+          "bytes": 46692,
+          "sha256": "e9ff92b016313a987ed8e880a04f7b5b0c332d02f78a53c21a66ab81f2a88bfe"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_CrowdJP_Sheik.wav",
+          "bytes": 44816,
+          "sha256": "94867d57a6d2ad67a2bc4e6ddb6e417844f979a79e514024378b4dc6036dbf08"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_CrowdJP_ToonLink.wav",
+          "bytes": 24964,
+          "sha256": "75fd216398749dc45f1dd37b191969e5b7edf760e0e2266e425f315d193c15e9"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_CrowdJP_Zelda.wav",
+          "bytes": 23312,
+          "sha256": "63a9a9f742deebc15e7ce0e6df147e2a5f79795a913d64ea2766bf23fa11bcbf"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Applaud1.wav",
+          "bytes": 126576,
+          "sha256": "9519c3e73854ff26443d971d2faaf68330f1a4a099aef03eac2a5e6c122a22fd"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Applaud2.wav",
+          "bytes": 126324,
+          "sha256": "be7e02abb810d9d914e902fe62aae97459c5cf578e311129e4d03f22146edd43"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Applaud3.wav",
+          "bytes": 119492,
+          "sha256": "1a8c4bcaf9b8ef44773fbfbdae3cfb4f50768409bf7a757f3781ced4dcad3ed3"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Cheer1.wav",
+          "bytes": 89756,
+          "sha256": "9c22b702cb38199c63b50ec2c246134ce13721f4951b9b53ab624e340333f0ac"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Cheer2.wav",
+          "bytes": 100480,
+          "sha256": "64945e573fe919bb9bcdeb838a9aaa28f9c229a71c050146070f2aee47925ae7"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Cheer3.wav",
+          "bytes": 109132,
+          "sha256": "af6bd63b0746c8de00e0a752a81296b5fe7a6d6b610004198996e26fbc1e7e2f"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Ganondorf.wav",
+          "bytes": 44088,
+          "sha256": "e2508f3add444ad1bc2b1aba6921580b678526a2703d2b1413c79482588321d6"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Gasp1.wav",
+          "bytes": 45460,
+          "sha256": "f158bcf0d1428851428a76a408ffb3ebe927142d693196d051c343e356482ef6"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Gasp2.wav",
+          "bytes": 46804,
+          "sha256": "909164aa13059c06cac3245c02418645426e1f3615811b105f870bb7c2a336ef"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Gasp3.wav",
+          "bytes": 44228,
+          "sha256": "2058a34fe59071726fd664915d128d9bc1c664b20c3ed56386a81d9e2cb1b9f1"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Link.wav",
+          "bytes": 53356,
+          "sha256": "58a473d3f54edc15d9653aa001db7c1ff02158b604bdae491bf4ec75afdd5526"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Sheik.wav",
+          "bytes": 34484,
+          "sha256": "aec9f1f0b510883bf03388147fc2d976ced77acf1c637bab91cff114b9260fe7"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_SuddenDeath.wav",
+          "bytes": 87964,
+          "sha256": "52d4547622d76eda906ab9b648595fbd02d6fa2aa1ef49d242b2babfee00ac5d"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_ToonLink.wav",
+          "bytes": 32272,
+          "sha256": "4353fb1d5ce15b81b495c0a470015daac373e220d8479feec5a7711db3c56b58"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Upset.wav",
+          "bytes": 56744,
+          "sha256": "ebd716c1400722baf24cc6b7ba2a47e47f3c51b0906e679a9695290adf86c0ce"
+        },
+        {
+          "path": "extracted/SSBB_Crowd/SSBB_Crowd_Zelda.wav",
+          "bytes": 32748,
+          "sha256": "a3a66f41d739d064e7aa6cdee6ac98351395a378615ceae24e75f98e6cd164aa"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bomb_Blow.wav",
+          "bytes": 78864,
+          "sha256": "05d54c7e2ad2994e5b98027f028ebefaa772153265ed9ae941370184d5a6c7d5"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bomb_Land.wav",
+          "bytes": 37060,
+          "sha256": "e19d087dcb9c1c2d7e80680dab7bd08eb8340f69c02b66321accad60b53443ff"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bridge_Collapse.wav",
+          "bytes": 113276,
+          "sha256": "055e4cac2e496e62e3208face9f0e3b1bb7f953e16ca9948295dfba623a53722"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bridge_Fixed.wav",
+          "bytes": 153288,
+          "sha256": "8784526959cfae4d0d6dd7e8c2c3a42cf75b3530c98a81cfc784af3a94a67497"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bridge_Portal.wav",
+          "bytes": 205844,
+          "sha256": "c08993104294fe95871d1b3f1b1f232a22d78cb4eb38ca8e9ed66967f2b2135e"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bridge_Transport.wav",
+          "bytes": 143124,
+          "sha256": "9be2df6a5fa4813543232714d0565f34101d11e5c64fff64a097e243e3f3ce0b"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Bulblin_Hit.wav",
+          "bytes": 34344,
+          "sha256": "11cb1da386c19f6cec562b62b8c4b83a4e4ccfcbc887539081700e0c41eef975"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_KingBulblin_Hit1.wav",
+          "bytes": 62484,
+          "sha256": "8c66c67c8a048e2a8650fa62d35f0cef37e3039d56fdaac6fcfd28e17a18a28a"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_KingBulblin_Hit2.wav",
+          "bytes": 61308,
+          "sha256": "b84f0ce0b22720d8d8e088cde762a292393a058e33818e0f62753944474db613"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_KingBulblin_Horn.wav",
+          "bytes": 152616,
+          "sha256": "8c12bd649cdd1aa9a8fd0bbe39b20b1e9fe1beb662cee102d112aadba80cfc7b"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_KingBulblin_ThrowBomb.wav",
+          "bytes": 20008,
+          "sha256": "d5a3a9b665e1f34f1faf012700e3217db1f4d2eda6665633c2c713d5e2bbdfcd"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_LordBullbo_Gallop1.wav",
+          "bytes": 29304,
+          "sha256": "83acc49b8f3e0164060b752115c1b55f6d7671e2f608f26e4e79fd87f1d8edd2"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_LordBullbo_Gallop2.wav",
+          "bytes": 34764,
+          "sha256": "b262fa90593735a51c3dc1191e31fa4777db5b4d756f8e7d1cc1f6f1632af1b1"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_LordBullbo_Gallop3.wav",
+          "bytes": 27764,
+          "sha256": "2560d5ea37d8148618da656ee89dcba3e79120d8b513db5e34815b52fa73fee0"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_LordBullbo_Grunt1.wav",
+          "bytes": 73404,
+          "sha256": "3f11ff25f947cb4b62a23784159ce946ac91c5a8c0c4fc0b3a8c85c21a5b8136"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_LordBullbo_Grunt2.wav",
+          "bytes": 133828,
+          "sha256": "c59c52d489381ffd940ccbb42a592a6f98225bbe67e224dce62daf514d92db03"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_LordBullbo_Grunt3.wav",
+          "bytes": 131112,
+          "sha256": "50a1d5c7a6945494ccbad636daa7a428265b5e4d0ca874ff863079da483977a4"
+        },
+        {
+          "path": "extracted/SSBB_Eldin/SSBB_Eldin_Rumble.wav",
+          "bytes": 235888,
+          "sha256": "dec52b98f71ea215f534ce09334a95817b1a29843657c1fc7c3f99b74bf3587d"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Attack1.wav",
+          "bytes": 16592,
+          "sha256": "2116a20bca70b8bb91318b811d3a76e2217ca08e98be44d0919140f59e3685e6"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Attack2.wav",
+          "bytes": 9144,
+          "sha256": "00333e049463e239490194be67aca94beec518260f0ba5546f7fd32647ac8b3d"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Attack3.wav",
+          "bytes": 20596,
+          "sha256": "ec20eb722997bc9aadf8bc7353adc1299e8397dc44cf492d025f20b3033a34b5"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Attack4.wav",
+          "bytes": 10824,
+          "sha256": "1710d26bb8a7f9923f1044e081452c8a2a0d6b0e237dad4339e35fd770d4caa4"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_AxeKick_Explosion.wav",
+          "bytes": 90344,
+          "sha256": "4d4e48ba10cfb2940c78807656f7aaa0227910b801995fe04a99cf5140e9ad5d"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Crouch.wav",
+          "bytes": 13064,
+          "sha256": "b8a6a4cbc77fa385fb86a8987308ab83f8ff7aa4654187559c615b695d686954"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_DarkDive_Grab.wav",
+          "bytes": 24292,
+          "sha256": "dcfc1765268f08ade30ed519513e5457e581725590d316fe52f472879bc7fb7c"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_DarkDive_Miss.wav",
+          "bytes": 44704,
+          "sha256": "f7ddb84f3adcba5b380d7cb913b4bda170312b918638464e3e7432c29e58b934"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_DarkDive_Rise.wav",
+          "bytes": 82588,
+          "sha256": "a6f19b6fdab373be8b48949a77317f81df6acc2d1399c728295b180cd1d9475f"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_DarkDive_Throw.wav",
+          "bytes": 28968,
+          "sha256": "ed9a52b033d9d32c559c1f1acf161bd5e22afc123f23fbadffda369a07c750d0"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Dash_Start.wav",
+          "bytes": 29472,
+          "sha256": "a9ceae2df6a3cf45714fbdc148a7b9f60472d71fdc8e39c7017804305a6a0ded"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Dash_Stop.wav",
+          "bytes": 8444,
+          "sha256": "24373f8fc296679399ce3c1e4ec07ea4736772d0645a8fcfbb64a9f29f4b857f"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Dizzy.wav",
+          "bytes": 36136,
+          "sha256": "8711a08f4e3ef7b02e60e5ac82de050fbab1a30fb846c0975054074a907e1b0a"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Entrance.wav",
+          "bytes": 190472,
+          "sha256": "e9cf227db4a6ba436240d3c498bd899c1678ed834412b778dc3cb4e6ee8673e3"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FinalSmash_Dash.wav",
+          "bytes": 74328,
+          "sha256": "2157995c4f32f3de07c604e83503e6194458691317868cf22c1b7fd751888dd2"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FinalSmash_Pound.wav",
+          "bytes": 49212,
+          "sha256": "32a82ad7d6fae094787b9397fe3ebcbce3d72df2c8bb0c0aec673e3353ee2ba7"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FinalSmash_Transform.wav",
+          "bytes": 270356,
+          "sha256": "5b86d5abe62f2bdd8fb6e8820465921ac1c3da0f743d67df0dd35616bad33b02"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FlameChoke_Grab.wav",
+          "bytes": 21632,
+          "sha256": "0ec0571321751b6e97059a825bc82fef60667813432ab877027ca5b78be1161e"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FlameChoke_Lift.wav",
+          "bytes": 7408,
+          "sha256": "5e66b3821c1e21ff780b6651f3ee7f48d8da16fb4809e9a9b1cdc50968507801"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FlameChoke_Rush.wav",
+          "bytes": 79760,
+          "sha256": "d97f62b0520df7bd163ba31d57ef2591bdda91a7d25bc440cf04e041bafda8af"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FlameChoke_Slam.wav",
+          "bytes": 7184,
+          "sha256": "cb686b34f9849212007dc6a7e3de62c4ee448aec57cc3cefe8cdf480dc1611e4"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FlameChoke_Slam_Sound.wav",
+          "bytes": 71584,
+          "sha256": "11b1d318afa55687ca024241134efd5779398bbb9eeed1b777c06a9830fe31c7"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_FlameChoke_WindUp.wav",
+          "bytes": 52628,
+          "sha256": "cabb2b5aa564be29b216a0028b7f57c651be32c50af622771aba5927a2530fc3"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Hurt1.wav",
+          "bytes": 12056,
+          "sha256": "7dc4b1159e25ab5df404adbfe5bebbcba703370cc8da2c3ace86e7beb2f80524"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Hurt2.wav",
+          "bytes": 10264,
+          "sha256": "4928c332058cb1c47334c0dbd5adc93a7bf4886725841d23dfbd2d2388afa14a"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Jump.wav",
+          "bytes": 3656,
+          "sha256": "cd2b0dc565ce49c4604b305c202f8eee84efa62e7da9fde045603e6cdb2152a4"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Jump1.wav",
+          "bytes": 50052,
+          "sha256": "87953ffc1502c8b4b76fed54adf2dc9762a4ca9fc1309757c07b051b9d71eca1"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Jump2.wav",
+          "bytes": 38712,
+          "sha256": "1aa6de6c1d500e5927a9043565e0fc6ecaa45b5ad0e946d2f2617b98aad35893"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Land1.wav",
+          "bytes": 19000,
+          "sha256": "de0a5704ca964e01d853fe24ffe629465f50c018e863c30555dde8b2dbc2eec9"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Land2.wav",
+          "bytes": 26952,
+          "sha256": "8860e91ccf0b9cbad19f0bb42e6ace36f10a0c96ac7beaf077954d8a2060b6d6"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Ledge_Grab.wav",
+          "bytes": 7688,
+          "sha256": "6734376aef5ced0f1e3b351fc853284d2102e23487b1febd3d8743e7a6d1dec1"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Ledge_Near.wav",
+          "bytes": 11160,
+          "sha256": "2001f9945607d14a25078193f0984c7c831bc8d31a37b8830909e31f1ea72a3b"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Sleepy.wav",
+          "bytes": 57360,
+          "sha256": "c71ac2d14061f4d6a7ecb90a2a972beb0156794cb0af2aef0509697a8bb4b43a"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Smash_Down.wav",
+          "bytes": 23368,
+          "sha256": "635ad271d2ec45c4bba6b335f7fef942191e930e09694ee40b6f18d28d6f707f"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Smash_Side.wav",
+          "bytes": 10600,
+          "sha256": "2d394a8cf643d18e073557e7d1de07d02c7822568fe094eaf6ea8b76b3753b35"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Smash_Up.wav",
+          "bytes": 26140,
+          "sha256": "820349075819fc13800f8cc468237ad967a25054d9c3c38d277600b0ac8aa9a2"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Smashed1.wav",
+          "bytes": 59040,
+          "sha256": "66a4b17dbc6c01dd2f2b57b49d6d1451d9652105debfcdb00df36642503bfc96"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Smashed2.wav",
+          "bytes": 43724,
+          "sha256": "5a74fbcb5260249d7959cffe12250b600f66bcb03f1fbae716c11a0257c3fae1"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Smashed_Distant.wav",
+          "bytes": 56100,
+          "sha256": "282a0c83b671b476225c3d429cb3614d742316c406ab2cbc625a583380f59987"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_StandUp.wav",
+          "bytes": 12700,
+          "sha256": "9700d73867505cc3c53c8735b81607fc930522297dc4d18fbacb7cbaca684428"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Step_Fast1.wav",
+          "bytes": 33812,
+          "sha256": "54e87293ed56cc1250df317c588ec50a23960d77a585c49d6e35a41f0bcb94f3"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Step_Fast2.wav",
+          "bytes": 35828,
+          "sha256": "1dfc8e2d2de33ab36c8defd87a86dca791d40326e276515e0655dc44ce95815f"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Step_Slow1.wav",
+          "bytes": 28772,
+          "sha256": "92b75c1f9acef9b0a3b83b132b35c7231f86b756695612a6e7e4389c05169226"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Step_Slow2.wav",
+          "bytes": 30480,
+          "sha256": "dd32814daca6fbaf55ef5f8627f8625e124f19cc09809571d6c6dfe7c080d4e8"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Strike1.wav",
+          "bytes": 22220,
+          "sha256": "077866b54d5295658bd3648af39d7bd58e22633bb394cd3a2217ad7cc8569092"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Strike2.wav",
+          "bytes": 26980,
+          "sha256": "a1aed2d2ecca0d7345d1512adeb9d8a4635e61916867f2b520b8549daf3eadcb"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Strike3.wav",
+          "bytes": 34512,
+          "sha256": "a9f0c3cade2c9cd1bd08bf143cf6847b3c3b0c16ab92a36e0ff3e40fa4cc98c4"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Strike4.wav",
+          "bytes": 32636,
+          "sha256": "750d0975774234e17acc779c5e3aee389bcf3c367b03d389728b314d515c24ac"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Surface.wav",
+          "bytes": 12476,
+          "sha256": "c4cad8d14496872002d743fb3ebd4a463231bb05263680a6e89bd4f680183a38"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Taunt_Fist_Laugh.wav",
+          "bytes": 9172,
+          "sha256": "73fe9dffee4395f1eb564fbf06c7eea5c738f605eec0d412c6fee64769f6ad0a"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Taunt_Fist_Smack.wav",
+          "bytes": 4636,
+          "sha256": "a966c443f9dc84f768d537535875646a9c916a6e9710d3d6971cc3fc164aa680"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Taunt_Spin_Laugh.wav",
+          "bytes": 29528,
+          "sha256": "ae3e062ca13744b0ea5a8758a6e59a61f3df760423bbbe4dffd1e3c3178fe39b"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Taunt_Sword_Draw.wav",
+          "bytes": 29724,
+          "sha256": "469fa564da4512bd68144e85e842500de4356cfe227309432bbd4f0b38115016"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Taunt_Sword_Grunt.wav",
+          "bytes": 11440,
+          "sha256": "9875a01676722d574bebd796de3b7bc6da45e42f7d70931823959a3c1ece17cb"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Taunt_Sword_Sheath.wav",
+          "bytes": 29668,
+          "sha256": "4d9b36bb6168685e0c73ac7ebe078975d12555cd9ead9aef8a0889e1d4a2d28a"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Victory1.wav",
+          "bytes": 67860,
+          "sha256": "7839a4c3c658fe63ecbc980d6e9b482936375a1edca9de0da5e7be86fd6aeb4c"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Victory2.wav",
+          "bytes": 26140,
+          "sha256": "9269d5ed66744f052ecba539f1679dc05a4b93a9c1a8205bf20abfd4463843ee"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_Victory3.wav",
+          "bytes": 20596,
+          "sha256": "ec20eb722997bc9aadf8bc7353adc1299e8397dc44cf492d025f20b3033a34b5"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WarlockPunch1.wav",
+          "bytes": 37228,
+          "sha256": "44f5aa08e164071929de9305e9df83969e10f0ffba6cc45847b8f60a2ee47f8f"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WarlockPunch1_Sound.wav",
+          "bytes": 122264,
+          "sha256": "9c602fe71c5c7c59df53848063d67bb97e9958b5f47acf4535644d929aff34f2"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WarlockPunch2.wav",
+          "bytes": 31208,
+          "sha256": "ddaef7dab3a2d85836540d4d5be66eaf726c58afff9d2be500ed63a4c204fa40"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WarlockPunch2_Sound.wav",
+          "bytes": 121620,
+          "sha256": "49a87aedbe79af988579db223f6357d0d18475c6beb4e8862bbe5a1a8a96d5a1"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WizardsFoot.wav",
+          "bytes": 27428,
+          "sha256": "7703f0441f9ed60d4957bddb4ab5f94d2395aa17c08ea3ab4781b6bb6a6e4ec4"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WizardsFoot_Dive_Land.wav",
+          "bytes": 84520,
+          "sha256": "f44b05dbf281943b866d1e95a0d39d92d8477c90f2ba9ecfb42ff8dae9959c52"
+        },
+        {
+          "path": "extracted/SSBB_Ganondorf/SSBB_Ganondorf_WizardsFoot_Sound.wav",
+          "bytes": 114704,
+          "sha256": "9c0fe00a577682af4f7c3a1d35181be46e09e7990677edfdc495f3f9aaa9e397"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_BunnyHood_Dash.wav",
+          "bytes": 16732,
+          "sha256": "f037f5ce368504fd762da6a06f5984d5668ec451cd193f6c1843432fbcf0252a"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_BunnyHood_Jump1.wav",
+          "bytes": 16732,
+          "sha256": "c0de489df176f7f5ad2cb37b213c55ab5b21ab7e55c7ed01771eb19f3e3756c2"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_BunnyHood_Jump2.wav",
+          "bytes": 16732,
+          "sha256": "9ef4c73925574c8f7a03b5521951e477ebff4f8be0467543d633e91f016fb1bb"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_BunnyHood_Turn.wav",
+          "bytes": 15724,
+          "sha256": "aec00ad30e26b37c0f36af0291b43bc7e7151d940a526239aa652dbf30b7db37"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_BunnyHood_Wear.wav",
+          "bytes": 6932,
+          "sha256": "c2feddb15d4d7efbb0e014885352d1b7a48dc95283ed8b0e1f98166d7011165d"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_CD.wav",
+          "bytes": 28996,
+          "sha256": "4afed8062784e97fe4b11dc3fafe56d7fdbb9f0fe0eed01e18db3b316babc8c0"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_CD_Land.wav",
+          "bytes": 4636,
+          "sha256": "33fb85dc372c5aecf900cadc17b0dbda94ee37c6ad05c990c11320e8eacc9613"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_HeartContainer.wav",
+          "bytes": 20204,
+          "sha256": "0b1617fa5ac20df003947f83f20ca3747a00bc3c91cecd868993fcb50a043a99"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_HeartContainer_Land.wav",
+          "bytes": 16496,
+          "sha256": "d52da3fe6b8839ce6fbdfe8ecd05dc5d691f2690eceaf4fd3e2c65650efbfcad"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_Item_Grab.wav",
+          "bytes": 3712,
+          "sha256": "b253a0ac1858909812486cd0987d53e6bac35a702bdcce971abdc1cd5379a0da"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_Item_Land.wav",
+          "bytes": 2228,
+          "sha256": "ed531faee24432d00ec12e74b305b73b037196b5abfefaf75942c11dedefaa07"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_Item_Throw.wav",
+          "bytes": 7324,
+          "sha256": "1adcaa5a86fd9a45e44027d586c04a029160f9b974c88577ae7cd66bca1275da"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_Item_Vanish.wav",
+          "bytes": 2004,
+          "sha256": "ba5e943115764bd9746bbdfef010d086d99d552728f4f479655f884b22137137"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_SmashBall_Hit.wav",
+          "bytes": 11244,
+          "sha256": "dc219c7832b7341e2286e3e2e34fe74fd82cac9ff55d6424fd375452c2cfc121"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_SmashBall_Obtain.wav",
+          "bytes": 33280,
+          "sha256": "6ff10aaaa546518b80b3aa9db3d5018d7ccc5172ab8060070912f3f61d459d08"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_Sticker.wav",
+          "bytes": 19784,
+          "sha256": "bb9aeeb7ab72460838230aef7c7c8373b6e5fe944efdb971951f7dc0171447e0"
+        },
+        {
+          "path": "extracted/SSBB_Items/SSBB_Trophy.wav",
+          "bytes": 40280,
+          "sha256": "4a860f88928677942b945b58650ddb5db1081531f3b1cd28b082abff6ee2714b"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Arrow_Miss.wav",
+          "bytes": 20624,
+          "sha256": "d6559c59eed032593fed93c4f0c04a778da98b88a16d22fe6350b3e370e83fa0"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Attack1.wav",
+          "bytes": 10768,
+          "sha256": "80b7d5d972b34807264e0d255860b4d78bf25af331967bc32301b1d1a3d99b4b"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Attack2.wav",
+          "bytes": 12140,
+          "sha256": "47011d01bb818706da7f6b2920e18581691968505db35665b61396b1508fa19f"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Attack3.wav",
+          "bytes": 11160,
+          "sha256": "3fec9e36e53dfb6dfa713897eb188e10324a05bb8c08e373c56da96184f0287f"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Attack4.wav",
+          "bytes": 25104,
+          "sha256": "5c6afb432787490cc05adf4db0b6eae96dd1589379cfa6bc744f8db3f0402fd3"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Bomb_Blow.wav",
+          "bytes": 23172,
+          "sha256": "7a56d4b20500ad17063606c97d1becc6393b4a4d00000f29d391f9cafb95529e"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Bomb_Pull.wav",
+          "bytes": 4888,
+          "sha256": "b773dcb12ea027bdc5cfb1f644a0328c886614a84f34f4ed3e884b4a5539ba4d"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Bow_Pull.wav",
+          "bytes": 51536,
+          "sha256": "4471849b61f8f789fe4dc44fa3dd27ff608bdbcf37a0fee8e1fa4c66ac065ff0"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Bow_Pulled.wav",
+          "bytes": 41568,
+          "sha256": "20ba40d2726b76ddc820ef48b648da14c5c90028a582a20b42a254cadd8b134d"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Bow_Shoot.wav",
+          "bytes": 20260,
+          "sha256": "a9575ca88e4bfe3dc6b9aa01edb40dff16d2633343c59edb94930bac1fdf358b"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Bow_Wait.wav",
+          "bytes": 5112,
+          "sha256": "ce257e0e353e135d48ab0e0d6a576c40f4c0c2f883b6c2fd235f519da8f726fb"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Crouch.wav",
+          "bytes": 5644,
+          "sha256": "2188ae3f2b0496f06172e5b7233430d5f1aa14acfc70fc386515f013e0ada89a"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Dash_Start.wav",
+          "bytes": 12392,
+          "sha256": "c2f7b24e4e3671f708f6e6d31f2831999bd20ba09623daae6a4fb5d945878da2"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Dash_Stop.wav",
+          "bytes": 16508,
+          "sha256": "10d82a3b4358c1412ad69f5fdbc0f4e965c00ec02e49137b831b533a8757b4a2"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Dizzy.wav",
+          "bytes": 57836,
+          "sha256": "f2cc8875dc74877d4ff5f019749d0556a264d483baa33cbad9f5ad591313d24d"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_DownwardThrust_Miss.wav",
+          "bytes": 45768,
+          "sha256": "9ad971d9334d7514db4a11d5a073ad61b6845c1e7b2793d7869adcff2a4dabad"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Entrance_Draw.wav",
+          "bytes": 48344,
+          "sha256": "e165ead88a2b5514707db45c0fc5b8cfd08271f7fa0c7970f62635d45318104d"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_FinalSmash_Slash1.wav",
+          "bytes": 128536,
+          "sha256": "9f933b6b2422703c63ed1841fe016f4653048a1b0db5a1661790e840b8f39129"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_FinalSmash_Slash2.wav",
+          "bytes": 128536,
+          "sha256": "37d9a19e133b141089a8e3e2c717611447ccda353a99538ebebb79b8943618a9"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Catch.wav",
+          "bytes": 13008,
+          "sha256": "d4e03045aaa05a0a76af2c8c9c53535f2cee34d900e8e96b92604cbbb57a4a43"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly1.wav",
+          "bytes": 63576,
+          "sha256": "e172d58fbd835f8b24c8d0e837bb62ad0cbed6d617277e3bbeb7c6bb6d0b84a8"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly10.wav",
+          "bytes": 50468,
+          "sha256": "7e5c92e0786d217d7cbf30f6c670fd6a4c60e17a23ece0e2938f24dd759fbe90"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly2.wav",
+          "bytes": 63576,
+          "sha256": "df2f7538f1a07041f2cd724d7c5f9f8747183c0fa20f713d9711c9ce891c305a"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly3.wav",
+          "bytes": 63576,
+          "sha256": "b8a9eec258fe98e43d9823bf02514e6488e323ad6baa9f684199eb9f928b6dff"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly4.wav",
+          "bytes": 63576,
+          "sha256": "8bf49fcec5d731ff621f33a8000db9a96a9eaa89ff2473fc56677a7b76d8990a"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly5.wav",
+          "bytes": 63576,
+          "sha256": "cb9df2ddbbba59f67751d967bc9a01234215eedc86c4b5792184c6a807fcd83f"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly6.wav",
+          "bytes": 60706,
+          "sha256": "61f9aadcca839429c8a5046decfbfcb3c302a41532d5b250400b396dde752650"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly7.wav",
+          "bytes": 57966,
+          "sha256": "67177b5249174288a9e99f795ee9dd032bc059913a06aeac20c2cd80ad828a80"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly8.wav",
+          "bytes": 55350,
+          "sha256": "589fa91e0990fb475fffaf81f11c6524b1b92cf4067977a01576d9a5605cc850"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Fly9.wav",
+          "bytes": 52852,
+          "sha256": "156c93e23376174853a15313e3228c61bd633d40eeef8af5c1ea426eb32ddfe5"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_GaleBoomerang_Throw.wav",
+          "bytes": 19476,
+          "sha256": "0bbb88d80acad37981241ecd38ff35ed1bba9a34b80207094a7ee14978a5f687"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Hookshot.wav",
+          "bytes": 16788,
+          "sha256": "b2bfa9f81a90e2c7e775df8a32fb03db6c7233106ff23520ca2e100cd87d1ed5"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Hookshot_Retract.wav",
+          "bytes": 3796,
+          "sha256": "aa964ca66c46c21e810c6ad79b433dbcf75c121e9e10c2f71846f310a7ccff5d"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Hurt1.wav",
+          "bytes": 26084,
+          "sha256": "1814639b71a0a7cd94bd7260097f324b623a8b274a80c5a4a96e16c8aee4a014"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Hurt2.wav",
+          "bytes": 17992,
+          "sha256": "a5ca48bb8e9fc436eae3e1632475d00bb93d389f6487841d79de52f17e45f1b1"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Jump.wav",
+          "bytes": 12840,
+          "sha256": "5aca1768bf1129da4d438ea3e9b54d79e58c4e6a5c8d04e586c7ef796dd8904a"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Jump1.wav",
+          "bytes": 20596,
+          "sha256": "f27dc2bdabb10b5ce1f8e38e30adcd10ff4bb56bcfe130dd1a2389c9d61c9cf6"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Jump2.wav",
+          "bytes": 15500,
+          "sha256": "cb28b4b552cfb3e9447c56b52cbda3f83401f4b4067b48c5e3fefbeef5e07d31"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Land1.wav",
+          "bytes": 10040,
+          "sha256": "4a26fedbc6fc4019f711040cd8d4b9e1f5512f74953909da74984fda013c519f"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Land2.wav",
+          "bytes": 17040,
+          "sha256": "0ca5af80c799af98bb656d2fab15945f8eccfb588a3d8e917954f9d282742cf6"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Ledge_Grab.wav",
+          "bytes": 15780,
+          "sha256": "4279a44cb98168c383525ac9b9541cc3c7cf358c38556c789379d5bc5f143935"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Ledge_Near.wav",
+          "bytes": 10768,
+          "sha256": "7ee0693152e915ba7657f3b0e56141829af88059aa7723ee1a6b91d4fb881f57"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Shield.wav",
+          "bytes": 20176,
+          "sha256": "b3b15a0c3176f6479e97f31f4fa9f2c33c9cc19565a6db32a43bd1ff2f1933bc"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Sleepy.wav",
+          "bytes": 35716,
+          "sha256": "da483d44906ec5f0c79764ce8caa44a0403d5321b9f8dd36e4b9bf69635bacfd"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smash_Down.wav",
+          "bytes": 34204,
+          "sha256": "ea159a529bdd648bff0582b39b0473f91f7ad58a814ed4d8693ea41f6b7dc65f"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smash_Side1.wav",
+          "bytes": 5364,
+          "sha256": "405928c0da29f694d479046ead69f805eff47ad5b5d98968da725539be2f6684"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smash_Side2.wav",
+          "bytes": 26336,
+          "sha256": "366e30070573a19250e89276a666399c5ea1ce5a99fb93ce7759439386e42bcc"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smash_Up.wav",
+          "bytes": 39496,
+          "sha256": "32339d75aba86215bfeb663dc50c740e9a429f3fe51c04d16654707877b4300e"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smashed1.wav",
+          "bytes": 39048,
+          "sha256": "66ca5765123aa8e6eb00b0d63b1a066153cdaefff4a87bab2c83e7d418b53e6c"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smashed2.wav",
+          "bytes": 14352,
+          "sha256": "9b7ea4e7c6e04bfb182bd3cb98b34a4a19ab9ed7f261520dc49cbc9b5598c493"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Smashed_Distant.wav",
+          "bytes": 95692,
+          "sha256": "2e40f70262e7235d177c7e60794b95704ddf380205e968845a801365032e55e5"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack.wav",
+          "bytes": 36696,
+          "sha256": "4c6d6cd789866ef6e1700e237a3296bcc3fd2090fab9620ff3411090039fc0b1"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge1.wav",
+          "bytes": 14240,
+          "sha256": "088b5e73d95865796f4afc58e4e0469d76478e2f0c5a163b12ea77781bdb9eeb"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge2.wav",
+          "bytes": 13060,
+          "sha256": "19d458cb4cec04a3954ba57a403081f10fcb0209588ccb28a06e053b0223ec4a"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge3.wav",
+          "bytes": 11980,
+          "sha256": "2583e17c4f5f08af752071ab6bff40b44301992fa320959c79ff2f7f8e763c60"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge4.wav",
+          "bytes": 10990,
+          "sha256": "aa6538af32fc38c4398f5c40a0ea014a3a0110254e1b7cb201407683ed520444"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge5.wav",
+          "bytes": 10082,
+          "sha256": "1f73489f3fe6ee512bc253232e93500a567f2a648668cc93f11713f58b20fe08"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Charge6.wav",
+          "bytes": 9382,
+          "sha256": "6445aab0eeb244fc5ae44b919394d97275e63623c78b841fc59c91010f13b4f7"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Clang.wav",
+          "bytes": 66964,
+          "sha256": "43c3f81d2d49405061cdd7624a9e59969ae3e26b514a5c16c12903bf621b67f3"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin1.wav",
+          "bytes": 43612,
+          "sha256": "4cd939ee7997e67309b3157b6116328ddccace7a5fde7b3c64eda0ad7332d414"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin2.wav",
+          "bytes": 43612,
+          "sha256": "3a03b396bb549674ee4527de0a42a747d67670d941dc49c7d0d2db2366940fea"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin3.wav",
+          "bytes": 43612,
+          "sha256": "8fb15563d796f66f9dd66f09ea1aed3ea7c68921538117eab96427e48a76a018"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin4.wav",
+          "bytes": 43612,
+          "sha256": "a3021bffaa79df2c329ff72eeab5ec41aeeabd9f296cf9a15cc461e14e2fb621"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin5.wav",
+          "bytes": 43612,
+          "sha256": "dd8d7eb22fa60b94bad22bd99b06faeb917eebf9aa24784f347d649faf275f8f"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin6.wav",
+          "bytes": 43612,
+          "sha256": "691b80944a1133f3f5b528fdca9a36cee6894c076d6cb917fa3d4906e22308bf"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SpinAttack_Spin7.wav",
+          "bytes": 39996,
+          "sha256": "38e0eb1f634d0e7c49af0290c7370f5e8cca20b3a62eed394f58f6a081c99498"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_StandUp.wav",
+          "bytes": 5588,
+          "sha256": "3f9f2b1b4cc5012f4d690507cd1af54f3c1e012cd945b7c01d3a16d96b750555"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Step_Fast1.wav",
+          "bytes": 5084,
+          "sha256": "f0af7619352af25d10742b2588346b037fcfe8737e972763b45514daaafdcf89"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Step_Fast2.wav",
+          "bytes": 5644,
+          "sha256": "516807da41ea3f2f249a70b95a181f1d5ec3df10b5ef4f9177c9287e0ab74921"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Step_Slow1.wav",
+          "bytes": 5140,
+          "sha256": "3fcc56112a65168db541b9cf1e3d9d1d507efff81313e164d791eb92813db731"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Step_Slow2.wav",
+          "bytes": 5728,
+          "sha256": "b50770e16c5c56b8410a08d8149dd92c0b677e6ef155da30e4dfbede16a86fac"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Surface.wav",
+          "bytes": 23060,
+          "sha256": "6642672bdd5f3c753663cd3f0ef8876600de3a0920780fba722aab2b60bec9db"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SwordSlash1.wav",
+          "bytes": 14492,
+          "sha256": "220050b3e39bf9309e2e7abb33cdaf02e864a63cf9483433d7a00fbb7b09638e"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SwordSlash2.wav",
+          "bytes": 14072,
+          "sha256": "c153016c1dc62ef550bde09a526a1629f6314262ae45fca35ab97f1fe1f97cd4"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SwordSlash3.wav",
+          "bytes": 15612,
+          "sha256": "8811cf74407614cf43ecdf98f1b4ae61fe5ba5522904566ed703382ceddcaf9b"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_SwordSlash4.wav",
+          "bytes": 14716,
+          "sha256": "4d4075bc0b8526c3f1f813cab864f875a099605f24fabc5a2cd6a47452e65901"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Taunt_Fairy.wav",
+          "bytes": 48596,
+          "sha256": "c2a1d9fa9654f93e5e2c258e64c39d24eec837925e2571a9a3e8aa8f73d2a414"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Taunt_Sheath.wav",
+          "bytes": 29668,
+          "sha256": "4d9b36bb6168685e0c73ac7ebe078975d12555cd9ead9aef8a0889e1d4a2d28a"
+        },
+        {
+          "path": "extracted/SSBB_Link/SSBB_Link_Taunt_SwordClang.wav",
+          "bytes": 22416,
+          "sha256": "ea7aa38025283bd020f090fb5df73203220a01e67abe72c3742d69230928799a"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Cannonball_Fire1.wav",
+          "bytes": 78948,
+          "sha256": "f56f0fc12c7fda20d7e24b983b4fc7c9c659d3b6be56f969aa31407e56b97254"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Cannonball_Fire2.wav",
+          "bytes": 78948,
+          "sha256": "b3aba396599db3e9658d40be6f4dd0a3d72fffe0b3d5a915175d71ade7eed0f7"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Cannonball_Hit1.wav",
+          "bytes": 72620,
+          "sha256": "ef6cf91d2187c1fe6aa51ee8a34a1efccac540e2bd139daae3e85b19bde58087"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Cannonball_Hit2.wav",
+          "bytes": 72620,
+          "sha256": "09b35d81c5a0470e4ec36bb100dcae09fe5ce54369396961fddbd11ab0066cd2"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Cannonball_Splash1.wav",
+          "bytes": 153176,
+          "sha256": "afc63d9ed96173fd6c182b7705cb4756154f6705bacc08fb7bcfca665269969d"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Cannonball_Splash2.wav",
+          "bytes": 153176,
+          "sha256": "b0bf48c8d73a742be5c6b61fe6b734434734141d74c8a77b6889caec018d08ac"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Catapult_Away.wav",
+          "bytes": 47084,
+          "sha256": "5f1eb1ff42c525c21698207bfcea2f49b1e47dec19d74362bbf7c93e953fdaca"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Catapult_Chambre.wav",
+          "bytes": 41092,
+          "sha256": "ac468da15a9e29fe5c29c7388c84a52eb7d0060e496f34880a6e4fe00cfc506b"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Catapult_Crank.wav",
+          "bytes": 84072,
+          "sha256": "1b3e1e59d80e6b69944b767acb07a93c647c4289c7e69936e27f8b2fbc58256a"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Catapult_Fling.wav",
+          "bytes": 40532,
+          "sha256": "f3132f1f524cafc4dd30374879c8cf9da215a5168ffa3c9658956034cb59ac49"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Catapult_Set.wav",
+          "bytes": 47084,
+          "sha256": "b0ab0746c75b771ed0efd9216c69e11529f4841ecdc75525e5c7fbb1dc6fe5bd"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Collision.wav",
+          "bytes": 257616,
+          "sha256": "5abcdbe8956a77bd601fc73992869cb6683895c9f4673e5bc6aada52952ea28e"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Emerge1.wav",
+          "bytes": 239136,
+          "sha256": "b8fb10774e9d05e54b674f5ef64c585df40ca19f46bd13358f670006b878b7d6"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Emerge2.wav",
+          "bytes": 159784,
+          "sha256": "1e6e86f7e2d05217c855cdba0dc60e2020e0c9bbf79e8e42feb961657232ae68"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Fall.wav",
+          "bytes": 132624,
+          "sha256": "52ff0ed04091948247245db8d962c3286dcfe2fc8a36dd3899c765067acbcb48"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Float.wav",
+          "bytes": 223540,
+          "sha256": "26cc21ec278b4782c84cb0dc716a8c0fbc3c42dc33d4c3003ffefcf8ecfb631b"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Land.wav",
+          "bytes": 301996,
+          "sha256": "bfb179c8d4e985700db25d17b1f5fdcc7aa8830cfab830976f4bd98c69d7dcab"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Rain.wav",
+          "bytes": 173420,
+          "sha256": "c110b717d3c6185fa6d449c2b3c6f14cc0b65f54911cc1a85ae7b8943c87ec33"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Rise.wav",
+          "bytes": 436928,
+          "sha256": "20669c7403c03532696e21200a0aedc1a65c96c145a6cdccd0a6a11e045b4911"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Sink.wav",
+          "bytes": 256720,
+          "sha256": "e1e24a190e35c609072c8c06ebe6fd5b822a3aa2e87ab3689f9aeb7ff906ce1b"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Thunder.wav",
+          "bytes": 356652,
+          "sha256": "baca371f9d2b191f06e2c414b8f6ec869ef9b9a084d2f2fdae57ad28b3bb36b9"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Twister.wav",
+          "bytes": 294380,
+          "sha256": "ba653734e7a31d7d34b6faa55feb8681b912a462164898c5569ffd378622b36b"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Warning.wav",
+          "bytes": 50024,
+          "sha256": "d4cee0d03f5fb9df2093faf76c70056bab6fcd3224fe4875bcf587e0c1c28413"
+        },
+        {
+          "path": "extracted/SSBB_PirateShip/SSBB_PirateShip_Water.wav",
+          "bytes": 387900,
+          "sha256": "3fed60336426cce3edb84b181b11a6f8f654fae300e9d22abad5ca4c70c54f2d"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Attack1.wav",
+          "bytes": 6484,
+          "sha256": "fd0dfb149f56b6d48294385239e51ddf4ff28d8e0dd470bf288a46be6648a8a7"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Attack2.wav",
+          "bytes": 7408,
+          "sha256": "5d8b25748ba84d12ce230a7d51890b01051bad75c555b9c4c8ba81748baa8c88"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Attack3.wav",
+          "bytes": 9732,
+          "sha256": "7cdc8892cc269f311bd7b55e5f2ebb9bbcd863d8e04dde21573d0a64932d5e66"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Attack4.wav",
+          "bytes": 7436,
+          "sha256": "aa8bd7202ae7683a8f9d3012c4ba64232b69b0c3f8936e91a70e9100f5d66069"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Chain_Move_Back.wav",
+          "bytes": 9760,
+          "sha256": "ad71c9564b164efba8417f9bbf9c199841ac1f82b84595ca929abbf79e872d2f"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Chain_Move_Front.wav",
+          "bytes": 10628,
+          "sha256": "5b93c0b2e84d5809f1afd175df6135eab0a183284d22b8ca315c51cf3530081e"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Chain_Move_Land.wav",
+          "bytes": 18440,
+          "sha256": "e0a7396f458d9db9a792f9cf19cd6c3a62726b6c4cd0d94e60f3f0d48db5885a"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Chain_Retract.wav",
+          "bytes": 18384,
+          "sha256": "17bcc74e8a10fa16318c4e652a26f82debd01f5cb8f3256a6fa2abaa1e7d94fc"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Chain_Whip.wav",
+          "bytes": 19448,
+          "sha256": "279ee9694bab099adb1d39e595a72fb9278a44438f5daa178be75b532a24c0f4"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Chain_WindUp.wav",
+          "bytes": 6904,
+          "sha256": "c981cbb00695cb20f0b22790078e53ec04c64517f0b69ab18826b53cd37853ce"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Crouch.wav",
+          "bytes": 3824,
+          "sha256": "fe1ce97e8a42b9f4cf1d10557a461c629f3341cd726a6cc05543da1ff193cf75"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_DashAttack_Sound.wav",
+          "bytes": 14324,
+          "sha256": "82ded230da737cdaae336368cb6a7281e3eefc75014c5e445309af114d364db5"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Dash_Start.wav",
+          "bytes": 25104,
+          "sha256": "8c28834d4435d637e4804f1f7c331aca0dd23448867161f88d429b1c98c453ec"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Dash_Stop.wav",
+          "bytes": 6512,
+          "sha256": "bc93d36b96c0d7111d5cd54b1e0a2d758fe68778182839689bf237ee84d3f3ce"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_DivingKick_Miss.wav",
+          "bytes": 16256,
+          "sha256": "dd04fae0242c455732f93764f999d6747239ea80ccfa82354c1290292686787a"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Dizzy.wav",
+          "bytes": 21268,
+          "sha256": "54d4933234f37612145cffe4d68c714521faac7a26b88a9f8bb04427e1dcbed6"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Dodge.wav",
+          "bytes": 14828,
+          "sha256": "c9283e1814f94b0446bd4a8faa915a89c19033f64e1a14810d7ed1a42b588001"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Entrance.wav",
+          "bytes": 56604,
+          "sha256": "60649646559c68cd4e84f48e567c455a1b41df3b1a2176e8eacb18395490f548"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_FinalSmash_Pull.wav",
+          "bytes": 14100,
+          "sha256": "cb195d4f6e0ce06589e79779d7806f0aa16123e4c9b814f6d543ce43ccac69f0"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_FinalSmash_Shoot.wav",
+          "bytes": 7772,
+          "sha256": "9a86ec0a3c1feb6962bacdaea5357482f0bd62d5c4fafcc76e10a2160edbe801"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Hurt1.wav",
+          "bytes": 5532,
+          "sha256": "9ed2106e2c857cb74504dce682c72482946afc7ab589e3073055512f55b32b4d"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Hurt2.wav",
+          "bytes": 12784,
+          "sha256": "d2d13c1cf185d3a63311b173b70f37261b83163e5140a2db67c14bd8e520f238"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Jump.wav",
+          "bytes": 6148,
+          "sha256": "3769fee50039cf16ff20070f91261059fb2c6ba500c5ef04f94f06c24989f668"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Jump1.wav",
+          "bytes": 26308,
+          "sha256": "daea85c8240ca485b6030d76f59da55ddea8959f25cdead18b287beb5a513292"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Jump2.wav",
+          "bytes": 22276,
+          "sha256": "92dd474ee2ed90466512a56ee8cb10f12a5cebb276161479287c8663faf8fa29"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Jump_Flip.wav",
+          "bytes": 3992,
+          "sha256": "1b3f1f5abdec19f6b03581e3a23b80c6f46c30304ebaf9441f445dade16a47fa"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Land1.wav",
+          "bytes": 10488,
+          "sha256": "b1746a95bd48c5a23406cf61835de2331e379d9a4a3047cd8b3fbe4770a3f394"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Land2.wav",
+          "bytes": 12028,
+          "sha256": "3a2eddb957026f46fe2219ee4fee101907abd6c9406f1bb3ea392bb4ef345a7a"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Ledge_Grab.wav",
+          "bytes": 6876,
+          "sha256": "14e16f1d9fbe465d7ff9f4dedeb058459e5c1ac673e7c7536dc6ab5c9abe3220"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Ledge_Near.wav",
+          "bytes": 5868,
+          "sha256": "91d64b7e89e2b8cf20af60249c46064f4166e3c09d2b06faa2f104f0bd00ff34"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Lift.wav",
+          "bytes": 10404,
+          "sha256": "a071454f68405bbeb1e950241edf76b34d57711d225fde3761c3cb1ad4bed4ca"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_NeedleStorm_Prepare.wav",
+          "bytes": 9088,
+          "sha256": "35cf4b0cb5e425b965fd1a26c7c4a070963f53f810b99032b45f31cc6c91da38"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_NeedleStorm_Throw.wav",
+          "bytes": 2816,
+          "sha256": "b995210fbe01beeb8b1a3285b20894437936955c301e56cb75fe7ae614f8cc17"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Sleepy.wav",
+          "bytes": 33056,
+          "sha256": "9e2dc26feaa85214a6efdb1bbfae4ff67ba73606c369f1d1c55212b1a1254b90"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smash_Down.wav",
+          "bytes": 8472,
+          "sha256": "a694209e87781d9f385bb5a147df88b15adc63512bb6a7eda376031cee0f4a42"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smash_Side.wav",
+          "bytes": 7296,
+          "sha256": "8465b9d9e9b98e3c5cf6fcdc0c50a9e533dffd4144084125dd33718e316e7128"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smash_Up.wav",
+          "bytes": 9480,
+          "sha256": "b863967947a5afe72564fa6259c87b0941c9dc1a0fb99b643dace02876a1ee8c"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smash_Up_Noise.wav",
+          "bytes": 39076,
+          "sha256": "d9fb20ff24fd6c2f68a694ee91ee546f5e7d384e9e180a41a535d444446da9e0"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smashed1.wav",
+          "bytes": 8584,
+          "sha256": "05a4af376f52d990cc6b4ef40c52eecc1361e476aa458fba193907f9647e9617"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smashed2.wav",
+          "bytes": 22192,
+          "sha256": "0c8ae83a816903b495c1c4ad9a525e260b5ab170b129878f1b74a48aabe47f26"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Smashed_Distant.wav",
+          "bytes": 85528,
+          "sha256": "aaf5535b370c9f7a3c65b659ef55d07460d449b026d5e34e1e75d66935774ffb"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_StandUp.wav",
+          "bytes": 3824,
+          "sha256": "bb6d39b146a86447bb59f98d0551f38da6330cf78960a3b6b3f4f44753ed07ea"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Step_Fast1.wav",
+          "bytes": 2228,
+          "sha256": "6d17456096d1260eb9a45d7660b97f7d23e20fa20f66cbb23a5da7c5809c7e62"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Step_Fast2.wav",
+          "bytes": 2368,
+          "sha256": "58d09091a003867e24c53b99b97eeaa43e699bd15e05d35b66daedc722b5c9bb"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Step_Slow1.wav",
+          "bytes": 1360,
+          "sha256": "0409f96a6fdc80e17426c86e64baa1985c5c2ea83e4bf5cfdab07b9a1cdf69ea"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Step_Slow2.wav",
+          "bytes": 1444,
+          "sha256": "bae95aa92dd378c2fb5b029aaa1a5cd739796fbcaec126d1d0b8f06135218720"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Strike1.wav",
+          "bytes": 7464,
+          "sha256": "e88aff959656f41780e59f9f0a23b096fb8c3c88873621c54cb3066fef619ef5"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Strike1A.wav",
+          "bytes": 7464,
+          "sha256": "26ed730666297390a4e674c6e28d862b314460128512f0b092bb8c0f07f8f797"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Strike1B.wav",
+          "bytes": 7464,
+          "sha256": "9041df04b4e1882c363e546ba4001b37eadf4eb6eb649ee3c72ee0ab71222768"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Strike2.wav",
+          "bytes": 11916,
+          "sha256": "89498c5ca4baced52cd2a6c6bed5189a47bea393a9085d47c396a77d09073b6a"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Strike3.wav",
+          "bytes": 12560,
+          "sha256": "bbd9d6b37223d443f706e0e071e316780dfb40bcbfe4bbff0d74eaf6e5ff7c36"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Surface.wav",
+          "bytes": 9676,
+          "sha256": "ee2d6a98cd3e11a95454b640c8b380464537872cfa95512e7f28e66102546e87"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Taunt_Handstand.wav",
+          "bytes": 4300,
+          "sha256": "6f95fac94d89d24a505bafaa21c84de363b87033dc4c14b80966fc22d9af2a19"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Taunt_Pose.wav",
+          "bytes": 9872,
+          "sha256": "8c45611ffde61357584ac9c9ca805015329fe8620264ded0239d5d6b57fdb277"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Vanish_Disappear.wav",
+          "bytes": 25188,
+          "sha256": "464bef4f6fb94651e8acf071f38fa1b5b5d04d36101a8c7133d558c23c6db4bd"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Vanish_Prepare.wav",
+          "bytes": 29304,
+          "sha256": "2765c0b54c8d610c18ecf7f3bb67f9281cd9eb8611a8e1febcf8c1a50e6d1df7"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Vanish_Reappear.wav",
+          "bytes": 30424,
+          "sha256": "2bc6f4d1727eab769c3232b9fbdc31c8192f5aa4f364350be57496db8ed7e3b0"
+        },
+        {
+          "path": "extracted/SSBB_Sheik/SSBB_Sheik_Victory.wav",
+          "bytes": 20904,
+          "sha256": "631259b7fe1bb00d67f6765165f4992ecb594c6a1b28a45b26417a9eeec6dfc4"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_AssistTrophy_Open.wav",
+          "bytes": 65116,
+          "sha256": "6fa0c8bd63e5e762c7dda65f649238d2214cee170761b6996f8670935fbfc42d"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_AssistTrophy_Vanish.wav",
+          "bytes": 25608,
+          "sha256": "ad407e6634760c82c5b6f4cc30a1063dd63ab0719fa260c02ca54a81563b1a8f"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Appear.wav",
+          "bytes": 27764,
+          "sha256": "2ea5c005c2206f19acb37489043058e1f567a2d83ffa947a0cebe5a06fe9eb93"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Balloons.wav",
+          "bytes": 31824,
+          "sha256": "bbdbcd30d853dbe4aa3e5bbe3904b06f736738cedaca4403b131745de7c5550b"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Balloons_FlyAway.wav",
+          "bytes": 48792,
+          "sha256": "609fa32cb49d2d0a9724884f7273b5ee71f3e99a32d38c8e786f7575b3f3b764"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Finished.wav",
+          "bytes": 53664,
+          "sha256": "46b24c397063e14a758d76c300899faa736dc6e03035ec148bef7d72e3eb635f"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Flowers.wav",
+          "bytes": 135448,
+          "sha256": "6d563d57f36d5376ed903a67f28daf702c62eefc39ceb53aa75cd2f5c3870cd8"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Flowers_Zoom.wav",
+          "bytes": 11188,
+          "sha256": "0fec1876512b16fac9f7d5df5e3fcf6984d345eae68586e9a3fd849f601c46f6"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Give_Bananas.wav",
+          "bytes": 46636,
+          "sha256": "37954480450c90700b63fa58df597d729eddb501346621ecde5aad14a12ff8ae"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Give_Curry.wav",
+          "bytes": 36528,
+          "sha256": "5b3bb3968e4b02244a8c9ad8fcaf88b58ee1ae3fb0312f32e9e1b333eab4d03d"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_Give_Hammers.wav",
+          "bytes": 30116,
+          "sha256": "3b7c08f96e74638e27f3c8f23afca23928d56d0522939bf9b61fbc5679ac7c0c"
+        },
+        {
+          "path": "extracted/SSBB_Tingle/SSBB_Tingle_KoolooLimpah.wav",
+          "bytes": 81776,
+          "sha256": "0f9a747ccc822800818a43ff0025a461608bba5c0da1ced320510bf41a98d043"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Attack1.wav",
+          "bytes": 10404,
+          "sha256": "babfab96ba69fbf8f8cffe3750b361157b339227c452c078ba0ca621b1f8cb2c"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Attack2.wav",
+          "bytes": 10880,
+          "sha256": "438d281be67c9114ac76eaa28fc8912f88704cb6aced9df4ccab0e1bb97cb288"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Attack3.wav",
+          "bytes": 18804,
+          "sha256": "ae8dff362a6eb161801829b79c0c4885f583ed7d45dd7f6424c318cd9e472295"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Attack4.wav",
+          "bytes": 11496,
+          "sha256": "69983b0236fde76911342f8ddf1ebffc043fda582c604d4b7b316c283e42dcc3"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly1.wav",
+          "bytes": 27684,
+          "sha256": "6063b529b70b19f8c2d7a39fa0eec400390bef5d1a71de53951a5dff5dab052c"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly2.wav",
+          "bytes": 27418,
+          "sha256": "adfbad3ed403832345af9be799d95e8e2377e3057825b2ddc7843fb5153ab233"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly3.wav",
+          "bytes": 27158,
+          "sha256": "28919081f4f27b864506a9650f9462c73e25a616597a6394c70f7adff6553f0b"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly4.wav",
+          "bytes": 26898,
+          "sha256": "de410ff8b34dd5d53bf268570a9167a206bac2a650446959fd41bf152e83caa3"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly5.wav",
+          "bytes": 26640,
+          "sha256": "e975fd515fc4bf20e2fdbafa3698df6ce940d6c45a5799578966bbf4d3579fab"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly6.wav",
+          "bytes": 26386,
+          "sha256": "6672c3add70191e6858fd3b2ce7c6a4ac7dee9b604d1b2fb610e10e3ee68bcb6"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly7.wav",
+          "bytes": 26140,
+          "sha256": "febb7a2764e0103f0a377026e53447fe7ec4a951a8153f544d18a37d1b7170b2"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Fly8.wav",
+          "bytes": 25882,
+          "sha256": "facccfbf344627ef0b6eb0c38dcd0f2ac93583f5a0d26334cb2897e2d2e14311"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Boomerang_Throw.wav",
+          "bytes": 22388,
+          "sha256": "8e0f9b8b49f58d66172d4443262caaefa4588207ac680397be4f3a918674eaf1"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Bow_Shoot.wav",
+          "bytes": 21072,
+          "sha256": "48b160209612daf413ace972eec230d7e4aa78c25574abaa2b1c38f8777de2b1"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Dizzy.wav",
+          "bytes": 31656,
+          "sha256": "29b93ab1299c83bd254a03d02b4cda8c27b48240a6f55a547cd661f7e059d385"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Entrance_Bomb.wav",
+          "bytes": 16872,
+          "sha256": "9a448b756ecf7586672c70cd4368c2ccd1fe7fe6d2d27548a0fcd5e2e150ca86"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_FinalSmash_Shout1.wav",
+          "bytes": 3488,
+          "sha256": "a49a91ddfe15e627ac60a26c3263f13d52ad41444ab09bf0c8b2f136cbaef1b8"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_FinalSmash_Shout2.wav",
+          "bytes": 31712,
+          "sha256": "23137c66ea5df7c23a7117c4e763471e653e6ae3baad5759b1b220a33292d224"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_FinalSmash_Slash1.wav",
+          "bytes": 55344,
+          "sha256": "00f9cb2c692016806cdbe64e7b8a6f0eac71685bca0cde45c1d957b81a1d25a7"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_FinalSmash_Slash2.wav",
+          "bytes": 55344,
+          "sha256": "772183569877c0e2db6903db2db75ac41c3239b3ac28a75302248ff0d4ce17df"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Hurt1.wav",
+          "bytes": 7072,
+          "sha256": "19255efd49b5f726580d04bd805d0c8551710dd19c02c383757c8bc3b90dc8c3"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Hurt2.wav",
+          "bytes": 5476,
+          "sha256": "91b419d38b9a2ef3443f7062ac4c2fb4c5967191be8ce5dc42aeaad918b6b583"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Jump.wav",
+          "bytes": 6064,
+          "sha256": "08b63a02754d307e61dd55f081380820eebe1a4d5d38905aabf89f191bb3f720"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Ledge_Grab.wav",
+          "bytes": 13064,
+          "sha256": "cc82b359563b90e7fd7608c215432e9f1bdd1293888f5daeb214c4393e0ff5c9"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Ledge_Near.wav",
+          "bytes": 16396,
+          "sha256": "5e592fd7b7b0115d2b79d592c2c7035d844bed3f3be17a11a80cd0d2b6fcb53d"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Lift.wav",
+          "bytes": 22360,
+          "sha256": "07345aa44422cdb831429e6a7504a089615e904948c84f5c84fa40f65982024a"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Sleepy.wav",
+          "bytes": 137804,
+          "sha256": "05a4a901f6dd8be91b869ca0eaaeb7297f2bf0c940238d53416e614a5a28bc1b"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Smash_Down.wav",
+          "bytes": 22500,
+          "sha256": "01a860fa1ccfbf6cc35782a95a5a5597ca9bc27cba5878d283d6c453ab321ece"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Smash_Side.wav",
+          "bytes": 30032,
+          "sha256": "d8717f7a1a02330f2c4b6d2ba5440164c98be86808947a80726b8efce5bfc6ae"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Smash_Up.wav",
+          "bytes": 31712,
+          "sha256": "75f068d97f45f723600133087c96399b79a477f059155c0e13d15c27280976ce"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Smashed1.wav",
+          "bytes": 18216,
+          "sha256": "736b382450fc2ae0ad0809013d91889ec02db00352a10b778f4399d0eb50d2c3"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Smashed2.wav",
+          "bytes": 14240,
+          "sha256": "2578960f9932d5243c20331d74215a4b2144e90072a527c440cfbff672ca54b0"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Smashed_Distant.wav",
+          "bytes": 75168,
+          "sha256": "85184725403aa104adbc2bc87e03fb09bddf8dc432ffe17b08100b8ae9beb786"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_SpinAttack.wav",
+          "bytes": 26504,
+          "sha256": "69af22c2abd9b50f8703803b991d117874591d0c5c2bde80413c336f662f5963"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Step_Fast1.wav",
+          "bytes": 4104,
+          "sha256": "42bb6d0e17ee35a0275dfc1555656aa22b6dd593e83df70f0a2d2de6cb0a1e16"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Step_Fast2.wav",
+          "bytes": 4580,
+          "sha256": "1eca52e0b38c01f513da93656ea09df3b405cabe0f81ad101523f6f352a75cac"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Step_Slow1.wav",
+          "bytes": 4244,
+          "sha256": "e723cccc4dd917a01174693ad8ad664ad5d722ffc1f9bdf15e3c58e33cf765b1"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Step_Slow2.wav",
+          "bytes": 5112,
+          "sha256": "12e15120779869c557a150654b083ad7076370c58c11d49a49121ce6d02fe614"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Surface.wav",
+          "bytes": 38124,
+          "sha256": "aea4364d35acd005dc739ca95817c95ab506e5afc746a8dbcfb2b0d2d129d095"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_SwordSlash1.wav",
+          "bytes": 8920,
+          "sha256": "6771b5f0e8d37693c0892372128778d6ec17c7859ca2512a4e170eac28bd89be"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_SwordSlash2.wav",
+          "bytes": 8724,
+          "sha256": "81083db03879c62444896f066030d8668ec83014dd8fde26507e91ffeb4490bb"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_SwordSlash3.wav",
+          "bytes": 9788,
+          "sha256": "e93cb1b3bffd15e9627108fc6465d06e5bd0c74e20d66294d1f660ad64ff9866"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_SwordSlash4.wav",
+          "bytes": 11440,
+          "sha256": "0f54848adbe2299777d8780565cc9dbfb457ab90fc5a76c6b272ba2e67acbdf6"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Taunt_Crazy1.wav",
+          "bytes": 29808,
+          "sha256": "2f20dc84f9fb3eb7aa8195bdf890a55bff0ba34c9fc049355976186f95797d60"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Taunt_Crazy2.wav",
+          "bytes": 32104,
+          "sha256": "e2c1b5e189646e7ab9c24a597b2fbe58daa6a33d39a02efe90165f42068ee2e7"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Taunt_WindWaker.wav",
+          "bytes": 62036,
+          "sha256": "8198bb284dd4367d19b1056f310797f9efa060fe2a700e96b46d94dd1c386b6f"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Victory1_Catch.wav",
+          "bytes": 6400,
+          "sha256": "a6025020cb1ef5ce42b9ba396ab1b9a8a6ec87798dea4d895b0a1fcdc2bd4f47"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Victory1_Pig.wav",
+          "bytes": 38684,
+          "sha256": "9cd0813d887cc8bcbf51f5bc10a02c621a519520e1e6c5bd2bb8588083b47d5d"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Victory2_Miss.wav",
+          "bytes": 8192,
+          "sha256": "b85a72e544e8141197cea186567ecb3b47eb91b8084be551cf05223c1693b8bd"
+        },
+        {
+          "path": "extracted/SSBB_ToonLink/SSBB_ToonLink_Victory2_Moan.wav",
+          "bytes": 44004,
+          "sha256": "4373de33bc508af4014359f401d7cba2efd3b4763ecf85b779432406db781f96"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_ZeldaSheik_Transform.wav",
+          "bytes": 59768,
+          "sha256": "62d830b998a40e1c2e1a93a31a8d3ce02d3616a46c3b35d775b4db0692a606c4"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_ZeldaSheik_Transform_Begin.wav",
+          "bytes": 78976,
+          "sha256": "0454953ad6e1f4f5e07107b4060913f7ae9649172ec21f70674b3a0611385358"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_ZeldaSheik_Transform_Finish.wav",
+          "bytes": 56604,
+          "sha256": "607619667f1e04a656a8916fee0aa253028456e996ccac0c08e97ecbd8febf50"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Attack1.wav",
+          "bytes": 6316,
+          "sha256": "74ee00d7765c594be09591cd612486ef0b868c692bfa6b77ebbeb03dbd347aa4"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Attack2.wav",
+          "bytes": 4552,
+          "sha256": "9c393c95a9ca414dfc94988a7b0c2f3b487146a78448e399cc577e00109dc50b"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Attack3.wav",
+          "bytes": 7996,
+          "sha256": "7d7c5877fa7b4f88b26c3a582ea7a05c7878a9fa3a6379733cc562c612a988ba"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Attack4.wav",
+          "bytes": 7044,
+          "sha256": "93de0a076d369f41097adc91ed26b32f2d6621aa073de64f5a33e2608ba30bbc"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Crouch.wav",
+          "bytes": 10572,
+          "sha256": "4208f8ef60214d7cef8af97694a762ddc54c812dc14fe7b2697e01439a1183bf"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Dash_Start.wav",
+          "bytes": 12084,
+          "sha256": "d63088ff9a0e30fabdc6899f3133476381e156c084089c6f71082d645d6898df"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Dash_Stop.wav",
+          "bytes": 16312,
+          "sha256": "e03fe4f286035eadac0ae7dfe4eab8b7377708de160a8a343df455c554d4e2e3"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_DinsFire1.wav",
+          "bytes": 25608,
+          "sha256": "a1cc03281313d828cfc17ad5e033e9d478e64f05e3c0b55dfe1c0e12588c6522"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_DinsFire2.wav",
+          "bytes": 25608,
+          "sha256": "26fbc63de79b6a5d834ef930a2037aa07be2ef05bcebfb82c6a0b8675fbd45d6"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Dizzy.wav",
+          "bytes": 21492,
+          "sha256": "91e9ffdfb26c5a688ac24cc56350106da94954971d9194038aaec49ebb900732"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Entrance1.wav",
+          "bytes": 41428,
+          "sha256": "f77867adf527964231d3bc4a86ddc60e0958bb4ed153ffaa43ac58eeb5a24594"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Entrance2.wav",
+          "bytes": 51872,
+          "sha256": "fa0c956481036f7c49e08bdad8da968e3330805460ef1e63ced97d4ea266e9c2"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_FaroresWind_Disappear.wav",
+          "bytes": 77996,
+          "sha256": "d8d8e9517eb09548b4ea7b6482876dd19645e122831b242b173279b369cfca0d"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_FaroresWind_Reappear.wav",
+          "bytes": 50612,
+          "sha256": "8ddafd1a4f23e7a9c759a2aa9f9ee0698a64ac493c0570fbab49be7996457944"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_FinalSmash_Pull.wav",
+          "bytes": 14212,
+          "sha256": "129abad052dd2b6f2c409c41797216a286cfe9136f8c923e95d7ffbeae37f9ad"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_FinalSmash_Pull_Sound.wav",
+          "bytes": 43612,
+          "sha256": "8a8dcaac0eb794cb3bd561a36fd3a56c3978993a15eefddc586ae24487c8a672"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_FinalSmash_Shoot.wav",
+          "bytes": 6624,
+          "sha256": "2e4a0f2b574437f9c118fda36deae1aeb28e40bd0584598fe69a3b054391285a"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_FinalSmash_Shoot_Sound.wav",
+          "bytes": 54868,
+          "sha256": "33156727b33ca4a7b314ce26f0c9208e369930a39b782d160e2f610cfd81021f"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Grab.wav",
+          "bytes": 14576,
+          "sha256": "6cb33fa6753a11c85e6be327c8c7bd07cbe830ca77eb530878d72a4b5d322850"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Grab_Hold.wav",
+          "bytes": 33924,
+          "sha256": "0cc7626243c020dbf42e38177b9f0c4ebe6b0a1b26762d3d444459dc246d59ea"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Hurt1.wav",
+          "bytes": 3712,
+          "sha256": "34f5c7a5ba13288e507047246d841481fa76ec73a832092438873145d48cddd5"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Hurt2.wav",
+          "bytes": 3096,
+          "sha256": "db37c71018b03bbb2f6b8deedfef0d9b9df9e0f1c7b2870b0cda8d6e4927e6cf"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Jump.wav",
+          "bytes": 10404,
+          "sha256": "fd973aa41a32bea0c99f575a75bac320e731b499574f7f87de7474c9608560bf"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Jump1.wav",
+          "bytes": 26056,
+          "sha256": "0599b27b3d8b2602ecb3d109ca1640e276315ddf1a3f2f1f729dc6745e66b039"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Jump2.wav",
+          "bytes": 18104,
+          "sha256": "d828a535cab9ba373157bca6e1a0bac6d84b3b9d3a586e1bcaff00bd8870e62f"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Jump2_Spin.wav",
+          "bytes": 10600,
+          "sha256": "d2587252f3b754653bce522639e29546257019b94f8e0a787fe0b502a0ab0c56"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Land1.wav",
+          "bytes": 8304,
+          "sha256": "897544af1f21a5293abe54ee53d38bacadf0e5578ec2523893f099a65921d049"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Land2.wav",
+          "bytes": 10684,
+          "sha256": "25db741a9fa8cb562c9bd83e7bdaea0aae0c77e0c6696d4e1c9227f5e97b1445"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Ledge_Grab.wav",
+          "bytes": 5616,
+          "sha256": "b7eb9a66cdf2ac602fefb91a352218d4f3ee4696745c37437f28d121b91a82ad"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Ledge_Near.wav",
+          "bytes": 16900,
+          "sha256": "e10d41afa39a5a9ded1c5b733fbfbd8b85ada463ff4e696678e4673299ab62a7"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Lift_Surface.wav",
+          "bytes": 6428,
+          "sha256": "f0f93b8eba227a5a17e50420e8c5050d05df261007abf85b0d119360f9e34172"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Magic1.wav",
+          "bytes": 29304,
+          "sha256": "f2c49260416613900e1443cd2dfc866a47b6a1bdc79d8b334012f5eaf01cc9f0"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Magic2.wav",
+          "bytes": 28408,
+          "sha256": "8452d5a7d5e0b1626d58e62b8b8d802ca24dc83aabb4c15ac103bf2ff8adebcc"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Magic3.wav",
+          "bytes": 28716,
+          "sha256": "8900b005025b8b7abb22d492065c7557c0395259253b0c96ef2481d7addd656e"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Magic4.wav",
+          "bytes": 32244,
+          "sha256": "83b621fb0adeb1fdc16c29668ab11404c8c61050c55c41d9c82e3d12661c3025"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Magic5.wav",
+          "bytes": 36416,
+          "sha256": "6144510846dc88f45aafc6dcbcb1738aa7b26c4c3712b2a50f41a8ae2382134d"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Magic6.wav",
+          "bytes": 34904,
+          "sha256": "37819b05370a934b4cc369061e0461b3da4da74d9033f73346863013e237eaba"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_NayrusLove.wav",
+          "bytes": 10488,
+          "sha256": "44171f36f1cc77f10a23ad72b575e2aaa93cf60a9692588faef73a28e58946b0"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_NayrusLove_Sound.wav",
+          "bytes": 46664,
+          "sha256": "1ceaa29d3078953405b3c3b4ed7be91b5115ac80a9309a5f5b029bc000581793"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Shoes1.wav",
+          "bytes": 3432,
+          "sha256": "1c53c7c27021f7899fdce0a16de13eab49ab0bd656f1b8672f07711ba5c0dc29"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Shoes2.wav",
+          "bytes": 3432,
+          "sha256": "d6b9da8f7f10b94466fe4e84d590c9dc90747b2ec69cb41b3224a35139deeae3"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Sleepy.wav",
+          "bytes": 54168,
+          "sha256": "4334addd26a277ce697bc2d0dfb68574b865b7f99d7cdc2276231e78f0069718"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Smash_Down.wav",
+          "bytes": 9284,
+          "sha256": "ba05f25ad7536b559e331f12cd2da2b10dc296caa82ac7f0de9ba58861e36d67"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Smash_Side.wav",
+          "bytes": 7632,
+          "sha256": "77bba14b5ca833362b50097acd9f86890f31fff120950aa0e0b67134585d2af2"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Smash_Up.wav",
+          "bytes": 10908,
+          "sha256": "664d2098d7d6f3f19b32ad39634ebe2cd7f6898880c33edd2d732279149ca59f"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Smashed1.wav",
+          "bytes": 24124,
+          "sha256": "79ea2cd7b4955cb2ffeb03f2a421552358703d456fd39c562cdb720a630133cf"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Smashed2.wav",
+          "bytes": 26056,
+          "sha256": "3051b350675a513ba1357bb0b160d65180480b7ff61648d326be96792d0a3cac"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Smashed_Distant.wav",
+          "bytes": 86396,
+          "sha256": "86bcfc72a9cec98831f0bec605849a6a3f77924f13e95e05212102718f2d4bab"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_StandUp.wav",
+          "bytes": 6008,
+          "sha256": "952dfecc2075142ffcadff234b0a3a92b47e776af8006faf2f2653427f1d0b4c"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Step_Fast1.wav",
+          "bytes": 2312,
+          "sha256": "64e25fa837e8375a978dd1d96d495256a4f7de138ef1d01f13ed8eb3ad35b0dd"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Step_Fast2.wav",
+          "bytes": 2592,
+          "sha256": "04a982c816d3770f9b1e6218be0aa48d4ca7eb7b84f3d530586be168d804bb89"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Step_Slow1.wav",
+          "bytes": 1976,
+          "sha256": "54122af92c7ee0636d443e9d2cec9333119ca12467ee8cdee8bbcb38408dba2c"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Step_Slow2.wav",
+          "bytes": 2228,
+          "sha256": "33fa8c769922e133d8f5a415ee594686079df36996cfd3cb94ab30a88d8fd363"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Strike1.wav",
+          "bytes": 14576,
+          "sha256": "6cb33fa6753a11c85e6be327c8c7bd07cbe830ca77eb530878d72a4b5d322850"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Strike2.wav",
+          "bytes": 16312,
+          "sha256": "7431c7febebf9669f3d2c74c0de16d24dfaad90053ee2ae5b19e238b4d38961e"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Strike3.wav",
+          "bytes": 24712,
+          "sha256": "732bf2181d98876d0cea84a9043ca4b606c33dbebecc6df645b3fdd5f3a7c64a"
+        },
+        {
+          "path": "extracted/SSBB_Zelda/SSBB_Zelda_Strike4.wav",
+          "bytes": 29802,
+          "sha256": "d2a836076960042da63c9132624114c37da57087034fa55fd7411e6ff6711af0"
+        },
+        {
+          "path": "original/SSBB_Announcer.zip",
+          "bytes": 178751,
+          "sha256": "6312433aceb3005e0ffcf7101d87314b97f82f955c0790a8b1abc75f63e5e4e3"
+        },
+        {
+          "path": "original/SSBB_Common.zip",
+          "bytes": 983889,
+          "sha256": "699cc8c29aeae0eee1e11d0c2691bb27736529aec30248f71a71211b274885d9"
+        },
+        {
+          "path": "original/SSBB_Crowd.zip",
+          "bytes": 1212236,
+          "sha256": "0dc9f47d569b1221959cde9fdff3fdaa1d201675d56d62475c84f773d9bb9cdf"
+        },
+        {
+          "path": "original/SSBB_Eldin.zip",
+          "bytes": 1507905,
+          "sha256": "53da4618305aee6bad735e3afa0eb8b40630eafa1e3af5699248d5c44c24a1ca"
+        },
+        {
+          "path": "original/SSBB_Ganondorf.zip",
+          "bytes": 2575799,
+          "sha256": "e4d5a3c6947e115e3f8de24f8697032d8002c4093dbff81d98ae6d92c3062fd6"
+        },
+        {
+          "path": "original/SSBB_Items.zip",
+          "bytes": 239770,
+          "sha256": "666ed40dfe64610695c6f054dec6f0b6ad1f5cf4416e0bfaac789ad060d7232d"
+        },
+        {
+          "path": "original/SSBB_Link.zip",
+          "bytes": 2275653,
+          "sha256": "6cab1c15e2ae3e33b6d2ebcf4ad07d91701fc564570928919185434b50c64363"
+        },
+        {
+          "path": "original/SSBB_PirateShip.zip",
+          "bytes": 3819366,
+          "sha256": "9be1402773ea064300c8ba7246c53b9a86c2823d95ecea9463e61c27295f2d31"
+        },
+        {
+          "path": "original/SSBB_Sheik.zip",
+          "bytes": 784907,
+          "sha256": "f36fa4743eb822a925e7665909146131365fc0f12a0c1cf269bea54a7a51cfb0"
+        },
+        {
+          "path": "original/SSBB_Tingle.zip",
+          "bytes": 554917,
+          "sha256": "a75d1a02d9f98a665c4dba3adb205b5fcfc82204cede1928f55b3cc25f2c8934"
+        },
+        {
+          "path": "original/SSBB_ToonLink.zip",
+          "bytes": 1177289,
+          "sha256": "162f44724345f5c44b1343a7a64037607f366d5e0f13036f99e83209edd6708b"
+        },
+        {
+          "path": "original/SSBB_Zelda.zip",
+          "bytes": 1320531,
+          "sha256": "7261d40558105b1ebab5b0fac42308684617effa58b8c68537b068f65a92c598"
+        },
+        {
+          "path": "source-index.js",
+          "bytes": 35202,
+          "sha256": "f3072d4de957ae728ea50a97801acde02445e7921b385128f1ce525e71bbe433"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/dayjo-ssbb-zelda-audio/cabcf313053304369d1728314f8872c94e86b159c66a8dfa7c73f9b325f29efe.zip",
+      "readbackVerified": true
     }
   ],
   "pendingUploads": []

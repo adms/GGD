@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/httpx"
@@ -28,10 +29,11 @@ type retainedModel struct {
 	BinarySHA256      string `json:"binarySha256"`
 	AutomaticEligible *bool  `json:"automaticEligible,omitempty"`
 	Source            struct {
-		Kind           string `json:"kind"`
-		Tier           string `json:"tier"`
-		Library        string `json:"library"`
-		SelectionClass string `json:"selectionClass"`
+		Kind                 string `json:"kind"`
+		Tier                 string `json:"tier"`
+		Library              string `json:"library"`
+		SelectionClass       string `json:"selectionClass"`
+		SourceGameReleasedAt string `json:"sourceGameReleasedAt"`
 	} `json:"source"`
 }
 
@@ -94,6 +96,14 @@ func modelSelectionRank(v retainedModel) int {
 	}
 	return 5 + modelTier(v)
 }
+
+func modelGameReleaseDate(v retainedModel) string {
+	date := v.Source.SourceGameReleasedAt
+	if _, err := time.Parse("2006-01-02", date); err != nil {
+		return ""
+	}
+	return date
+}
 func (s *Service) modelSelectionDoc(o Overlay, collection, id string) (json.RawMessage, error) {
 	k := key(collection, id)
 	if o.Deleted[k] {
@@ -130,12 +140,15 @@ func selectionState(id string, raw json.RawMessage) (ModelSelectionState, []reta
 	}
 	preferred := doc.ModelKey
 	best := 9
+	bestRelease := ""
 	for _, v := range versions {
 		if !modelAutomaticEligible(v) {
 			continue
 		}
-		if rank := modelSelectionRank(v); rank <= best {
+		release := modelGameReleaseDate(v)
+		if rank := modelSelectionRank(v); rank < best || (rank == best && release >= bestRelease) {
 			best = rank
+			bestRelease = release
 			preferred = v.ModelKey
 		}
 	}

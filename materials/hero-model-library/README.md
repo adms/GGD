@@ -4,6 +4,7 @@
 
 | 檔案 | 用途 |
 |---|---|
+| [角色語音索引.md](角色語音索引.md) | 全角色音訊儲備分組、S3 取檔索引、逐檔 SHA-256 與合成素材查詢 |
 | [全角色模型盤點.md](全角色模型盤點.md) | 人閱讀：81 名新角色與既有角色、預設、候選及下載安排 |
 | [inventory.json](inventory.json) | 程序讀取：同份盤點的角色 ID、modelKey、Git／S3 路徑與取得狀態 |
 | [download-sources.json](download-sources.json) | 可共編：下載網址、改造備註、免費／論壇付費交付及每筆必要的後台整合追蹤 |

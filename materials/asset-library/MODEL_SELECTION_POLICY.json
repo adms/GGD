@@ -1,0 +1,82 @@
+{
+  "schema": "ggd-model-selection-policy@1",
+  "authority": "user_instruction",
+  "user_rule": "手動指定模型 > 原著模型 > MOD社群修改 > 相似模型貼圖修改 > 相似模型 > 300英雄 > MBA > 原版 > 借用 W3X 選用",
+  "priority": [
+    {
+      "rank": 1,
+      "source": "manual",
+      "label": "手動指定模型"
+    },
+    {
+      "rank": 2,
+      "source": "canonical-game",
+      "label": "原著模型"
+    },
+    {
+      "rank": 3,
+      "source": "community-mod",
+      "label": "MOD社群修改"
+    },
+    {
+      "rank": 4,
+      "source": "retextured-proxy",
+      "label": "相似模型貼圖修改"
+    },
+    {
+      "rank": 5,
+      "source": "similar-proxy",
+      "label": "相似模型"
+    },
+    {
+      "rank": 6,
+      "source": "300heroes",
+      "label": "300英雄"
+    },
+    {
+      "rank": 7,
+      "source": "mba",
+      "label": "MBA"
+    },
+    {
+      "rank": 8,
+      "source": "original",
+      "label": "原版"
+    },
+    {
+      "rank": 9,
+      "source": "w3x",
+      "label": "借用 W3X 選用"
+    }
+  ],
+  "application": "整庫儲備不按目前角色需求裁切；需要使用時才配對及轉換。預設依九級順序，同級按來源遊戲發售日由新到舊，舊版仍可手選。",
+  "availability": "較高順位缺模型或尚不能完成轉換綁定時，記錄缺口並保留較低順位可用版本。",
+  "provenance": "保留本尊、不同形態、相似外觀代理的既有標記。",
+  "publication": "此為選用政策；不代表模型已轉換、重綁或替換上架。",
+  "canonical_game_definition": "原作遊戲直接擷取；300／MBA 仍按第 6／7 位，不因角色本尊改列第 2 位。",
+  "git_policy": "materials/hero-model-library/default-policy.json",
+  "same_class_priority": {
+    "field": "sourceGameReleasedAt",
+    "order": "descending",
+    "unknownDates": "after-verified-dates",
+    "evidenceField": "sourceGameReleaseReference",
+    "useUploadOrRegistrationDateAsGameDate": false,
+    "preserveAllAlternatives": true,
+    "manualSelectionStillWins": true
+  },
+  "reserve_policy": {
+    "acquisitionUnit": "complete-library-or-published-package",
+    "clipAcquisitionToCurrentHeroNeeds": false,
+    "conversionMode": "on-demand",
+    "unconvertedStatus": "reserved-pending-conversion",
+    "reserveIsRuntimeReady": false,
+    "retainOriginalPackageAndCompleteExtraction": true,
+    "keepPerFileHashes": true,
+    "rawStorage": "S3 legacy with full local copies",
+    "finishedStorage": "Git with local copies",
+    "sourceQueryAvailableBeforeConversion": true
+  },
+  "filter_acquisition_by_roster": false,
+  "preserve_all_generations_platforms_games_and_variants": true,
+  "source_inventory_path": "materials/hero-model-library/download-sources.json"
+}

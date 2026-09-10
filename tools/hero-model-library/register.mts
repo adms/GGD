@@ -1,4 +1,4 @@
-import { defaultEligible, selectionSource, selectionRank } from './default-policy.mts';
+import { defaultEligible, selectionSource, compareSelection } from './default-policy.mts';
 import { contentSha256 } from '../../packages/shared/src/content/import/jcs';
 import { spliceMembers } from "../../packages/shared/src/content/editModel";
 /** Apply validated library choices, preserving existing bytes, versions and manual overrides. */
@@ -33,7 +33,7 @@ for(const hero of manifest.heroes){
  if(!existsSync(join(root,'champions',hero.id+'.json'))){result.status='hero-not-in-target-catalog';continue;}
  try{
   // Import lower tiers first; automatic mode still always chooses the highest available tier.
-  for(const input of [...hero.options].sort((a:any,b:any)=>selectionRank(hero.id,b)-selectionRank(hero.id,a))){
+  for(const input of [...hero.options].sort((a:any,b:any)=>compareSelection(hero.id,b,a))){
    const option={...input,source:selectionSource(hero.id,input)};
    const automaticEligible=defaultEligible(hero.id,option);
    const state=service.state(hero.id);

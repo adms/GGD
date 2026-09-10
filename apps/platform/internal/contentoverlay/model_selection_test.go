@@ -144,3 +144,32 @@ func TestNineClassPriorityPreservesOriginalSourceTier(t *testing.T) {
 		})
 	}
 }
+
+func TestSourceGameReleaseOrderRetainsOlderVersionsAndManualSelection(t *testing.T) {
+	svc, _, dir := newSvcWithContent(t)
+	versions := []map[string]any{}
+	for _, row := range []struct {
+		key, class, date string
+		eligible         bool
+	}{
+		{"switch", "canonical-game", "2018-12-07", true},
+		{"wii", "canonical-game", "2008-01-31", true},
+		{"unknown", "canonical-game", "", true},
+		{"invalid", "canonical-game", "2026-02-31", true},
+		{"mod", "community-mod", "2026-09-10", true},
+		{"unapproved", "canonical-game", "2026-09-10", false},
+	} {
+		versions = append(versions, map[string]any{"modelKey": "version.body." + row.key, "automaticEligible": row.eligible, "source": map[string]any{"kind": "exact", "selectionClass": row.class, "sourceGameReleasedAt": row.date}})
+	}
+	raw, _ := json.Marshal(map[string]any{"id": "hero", "schema": "champion@1", "modelKey": "version.body.wii", "modelSelectionMode": "manual", "modelVersions": versions})
+	writeShippedDoc(t, dir, "champions/hero.json", string(raw))
+	writeShippedIndex(t, dir, "champions", []shippedEntry{{ID: "hero", Path: "champions/hero.json", Size: len(raw)}})
+	state, err := svc.ModelSelection(context.Background(), "hero")
+	require.NoError(t, err)
+	require.Equal(t, "version.body.switch", state.PreferredModelKey)
+	require.Equal(t, "version.body.wii", state.ActiveModelKey)
+	require.Equal(t, "manual", state.SelectionMode)
+	var retained []map[string]any
+	require.NoError(t, json.Unmarshal(state.Versions, &retained))
+	require.Len(t, retained, 6)
+}

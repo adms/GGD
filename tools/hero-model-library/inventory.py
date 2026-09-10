@@ -1,7 +1,7 @@
 import argparse,json,re,hashlib,datetime
 from pathlib import Path
-from source_links import render_sources, plan_sources, acquired_sources
-from default_policy import eligible, selection_class, selection_rank
+from source_links import render_sources, plan_sources, acquired_sources, is_model_source
+from default_policy import eligible, selection_class, selection_rank, source_release_rank
 repo=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser(description='Rebuild the hero inventory using Git files only.')
 parser.add_argument('--workspace',type=Path,help='Optionally mirror the generated Markdown into an existing workspace.')
@@ -56,7 +56,7 @@ def old(key):
  tier='w3x' if key.startswith(('imported.','w3x.')) else 'original'
  return dict(key=key,id=key,name=known.get(key,key.split('.')[-1]+'（模型檔名）'),work='原 W3X 地圖模型；原始角色作品未由該模型文件證實' if tier=='w3x' and not key.startswith('w3x.stock.') else '魔獸爭霸 III 原生單位' if key.startswith('w3x.stock.') else 'GGD 模型預設',tier=tier,kind='previous',ready=True,old=True)
 def source(option):
- s=option['source'];return dict(key=option['sourceModelKey'],id=option['sourceId'],name=s['character'],work=s['work'],tier=s['tier'],**({'selectionClass':s['selectionClass']} if 'selectionClass' in s else {}),kind=s['kind'],ready=True,old=False)
+ s=option['source'];return dict(key=option['sourceModelKey'],id=option['sourceId'],name=s['character'],work=s['work'],tier=s['tier'],**{k:s[k] for k in ['selectionClass','sourceGame','sourcePlatform','sourceGameReleasedAt','sourceGameReleaseReference'] if k in s},kind=s['kind'],ready=True,old=False)
 def text(v):return str(v).replace('|','／').replace('\n',' ').replace('\r',' ')
 def model_label(o):return f"{text(o['name'])} `{o['id']}`"
 def source_label(o):return f"{'英雄聯盟 LOL' if o['id'].startswith('lol:') else labels[o['tier']]}｜《{text(o['work'])}》"
@@ -70,14 +70,14 @@ for id,h in heroes.items():
  for v in branches.get(id,{}).get('modelVersions',[]):
   key=v['sourceModelKey']
   if key in seen:continue
-  o=old(key);s=v['source'];o.update(name=s.get('character',o['name']) if s.get('kind')!='previous' else o['name'],tier=s.get('tier',o['tier']),**({'selectionClass':s['selectionClass']} if 'selectionClass' in s else {}),kind=s['kind']);options.append(o);seen.add(key)
+  o=old(key);s=v['source'];o.update(name=s.get('character',o['name']) if s.get('kind')!='previous' else o['name'],tier=s.get('tier',o['tier']),**{k:s[k] for k in ['selectionClass','sourceGame','sourcePlatform','sourceGameReleasedAt','sourceGameReleaseReference'] if k in s},kind=s['kind']);options.append(o);seen.add(key)
  existing=c.get('modelKey') if c else None
  if existing and existing not in seen:options.append(old(existing));seen.add(existing)
  # First-batch authoring placeholders are historical authoring choices, not live deployments.
  if id in recipes:
   key=recipes[id].get('presentation',{}).get('modelKey')
   if key and key not in seen:options.append(old(key));seen.add(key)
- options.sort(key=lambda o:(selection_rank(policy,id,o['id'],o['key'],o),['exact','alternate','style-proxy','previous'].index(o['kind']) if o['kind'] in ['exact','alternate','style-proxy','previous'] else 9))
+ options.sort(key=lambda o:(selection_rank(policy,id,o['id'],o['key'],o),source_release_rank(o),['exact','alternate','style-proxy','previous'].index(o['kind']) if o['kind'] in ['exact','alternate','style-proxy','previous'] else 9))
  for o in options:
   o['defaultEligible']=eligible(policy,id,o['id'],o['key'],o['kind'])
   o['selectionClass']=selection_class(policy,id,o['id'],o['key'],o)
@@ -127,7 +127,7 @@ f'- S3 固定成品版本：`{release["release"]}`；對應本次發布後讀回
 '- 正式機目前模型與本分支手動選擇請用查詢工具讀取；主表顯示本分支手動選擇或素材庫順位預設，均不代表正式站已部署。',
 '- **角色出處**是目標角色的作品；**預設模型來源／候選来源**則是提供外觀的遊戲與其模型角色作品，兩者可能不同。',
 '- 原 W3X 模型若只有檔名證據，保留檔名並標記未核實，不將它自動認定為目標角色本尊。',
-'- 候選群包含該角色已記錄的全部可用選項與未通過轉換項目；未對應到任何 GGD 角色的全遊戲原生模型不在本表範圍。','',
+'- 候選群包含該角色已記錄的全部可用選項與未通過轉換項目；未對應到 GGD 角色的素材仍完整保留在上方來源表與機器索引，標記待配對；主表按現有角色 ID 展開，不代表擷取範圍受名單限制。','',
 '**相似加工替身只核准下列 11 組。** 其他相似模型即使來自 300，也不會自動成為預設或暫緩付費的依據。核准範圍由 `default-policy.json` 綁定角色 ID、獨立副本 modelKey 與 SHA-256。','',
 '## 指定三名角色處理結果','',
 '| 角色 | 結果 |','|---|---|',
@@ -157,7 +157,8 @@ for section in ['既有角色／形態','第一批 37 名','第二批 37 名','L
    label='、'.join(c['name'] for c in bindings) or s['target']
    model_paths='；'+'、'.join(c['modelPath'] for c in bindings) if bindings else ''
    storage='；僅本機保存，S3 尚未上傳' if s.get('pendingBackup',{}).get('status')=='not-uploaded' else ''
-   options+=f'<br>新取得：[{text(label)}]({s["url"]})／{text(s["uploader"])}（{text(s["format"])}{text(model_paths)}{storage}；待標準化，不自動預設）'
+   prefix='新取得模型' if is_model_source(s) else '音訊補充（不含模型）'
+   options+=f'<br>{prefix}：[{text(label)}]({s["url"]})／{text(s["uploader"])}（{text(s["format"])}{text(model_paths)}{storage}；待標準化，不自動預設）'
   cols=[text(r['work']),f"{text(r['name'])}<br>`{r['id']}`",text(d['name'])+('（手動指定）' if r['defaultSelectionMode']=='manual' else '') if d else '**待取得核准模型**',source_label(d) if d else '—',options,download]
   lines.append('| '+' | '.join(cols)+' |')
  lines.append('')
@@ -186,8 +187,9 @@ for r in rows:
  chosen=branches.get(r['id'],{})
  r['checkoutSelection']={'modelKey':chosen.get('modelKey'),'mode':chosen.get('modelSelectionMode','auto')} if chosen else None
  r['downloadSources']=[e['id'] for e in download_plan['entries'] if r['id'] in e['heroIds']]
- r['publicCandidates']=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds']]
- r['paidCandidates']=[s for s in download_plan.get('paidSources',[]) if r['id'] in s['heroIds']]
+ r['publicCandidates']=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds'] and is_model_source(s)]
+ r['paidCandidates']=[s for s in download_plan.get('paidSources',[]) if r['id'] in s['heroIds'] and is_model_source(s)]
+ r['audioSources']=[s for s in acquired_sources(download_plan) if r['id'] in s['heroIds'] and not is_model_source(s)]
  for option in r['options']:
   m=by_key.get(option['key'])
   if m:

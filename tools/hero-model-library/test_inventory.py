@@ -11,6 +11,28 @@ REPO = Path(__file__).resolve().parents[2]
 DATA = REPO / 'materials/hero-model-library'
 
 class InventoryHandoff(unittest.TestCase):
+    def test_audio_reserve_cannot_close_a_model_gap_even_when_paid(self):
+        from source_links import plan_sources
+        source={'id':'audio-only','heroIds':['hero'],'resourceRole':'audio-supplement','acquisitionStatus':'downloaded-verified','purchaseDecision':'hold-purchase-review-acquired-source'}
+        data={'entries':[{'id':'owner-one','heroIds':['hero']}], 'publicSources':[], 'paidSources':[source]}
+        result=plan_sources(data, {'heroes':[]}, {'approvedDerivatives':[]})
+        entry=result['entries'][0]
+        self.assertFalse(entry['purchaseHold'])
+        self.assertEqual(entry['needsDownloadFor'], ['hero'])
+        self.assertEqual(entry['downloadPriority'], 'owner-highest')
+        inventory=json.loads((DATA/'inventory.json').read_text())
+        link=next(h for h in inventory['heroes'] if h['id']=='godie-h00l')
+        self.assertIn('dayjo-ssbb-zelda-audio', [s['id'] for s in link['audioSources']])
+        self.assertNotIn('dayjo-ssbb-zelda-audio', [s['id'] for s in link['publicCandidates']])
+
+    def test_source_release_priority_uses_verified_calendar_dates(self):
+        from default_policy import source_release_rank
+        newest={'sourceGameReleasedAt':'2018-12-07'}
+        older={'sourceGameReleasedAt':'2008-01-31'}
+        self.assertLess(source_release_rank(newest), source_release_rank(older))
+        self.assertLess(source_release_rank(older), source_release_rank({}))
+        self.assertEqual(source_release_rank({'sourceGameReleasedAt':'2026-02-31'}),0)
+
     def test_links_and_approved_defaults_are_complete(self):
         inventory = json.loads((DATA/'inventory.json').read_text())
         sources = json.loads((DATA/'download-sources.json').read_text())

@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+"""Build a character audio handoff from existing local indexes and backup receipts.
+
+No AWS access, binary conversion, playback, speaker inference or synthesis occurs.
+The compact per-file SHA index is a Git control manifest; audio remains in S3/local.
+"""
+import argparse
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import re
+
+REPO = Path(__file__).resolve().parents[2]
+OUT = REPO/'materials/hero-model-library'
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--workspace', type=Path, default=REPO.parent)
+    args = parser.parse_args()
+    ws = args.workspace.resolve()
+    native = ws/'outputs/game-asset-library-20260907'
+    inputs = []
+
+    def read(path):
+        inputs.append({'path':str(path.relative_to(ws)), 'sha256':sha(path)})
+        return json.loads(path.read_text())
+
+    def jsonlines(path):
+        inputs.append({'path':str(path.relative_to(ws)), 'sha256':sha(path)})
+        return [json.loads(line) for line in path.read_text().splitlines() if line]
+
+    downloads = read(OUT/'download-sources.json')
+    public_files = read(OUT/'public-source-files.json')
+    models = read(OUT/'manifest.json')
+    latest = read(ws/'GGD-Asset-Library/backups/latest.json')
+    backup_path = ws/'GGD-Asset-Library/backups'/latest['snapshot']/'manifest-path-correction-20260908.json'
+    assert sha(backup_path) == latest['manifest_sha256']
+    backup = read(backup_path)
+    assert '/legacy/' in backup['backup_uri'] and '/leagcy/' not in backup['backup_uri']
+    groups, files, stores = {}, [], {}
+    source_models = {m['id']:m for m in models['models']}
+
+    def hero_ids(source_id):
+        return sorted(h['id'] for h in models['heroes'] if any(o['sourceId']==source_id and o['source']['kind']=='exact' for o in h['options']))
+
+    def group(key, name, library, source_id, mapping, ids=None):
+        if key not in groups:
+            groups[key] = dict(id=key, name=name, library=library, sourceId=source_id,
+                heroIds=hero_ids(source_id) if ids is None else ids, mappingEvidence=mapping,
+                language='unreviewed', speakerVerified=False, transcriptStatus='not-transcribed',
+                confirmedVoiceCount=None, synthesisReady=False, listeningReviewComplete=False,
+                fileCount=0, bytes=0, knownDurationSeconds=0.0, durationMeasuredFiles=0,
+                voiceFilenameCandidates=0, originalBanks=[], backupIds=[])
+        return groups[key]
+
+    def add(g, rel, digest, size, store_id, member, seconds=None, role='unclassified', original_bank=None):
+        path=ws/rel
+        local_ok=path.is_file() and path.stat().st_size==size
+        row=dict(groupId=g['id'],path=rel,sha256=digest,bytes=size,backupId=store_id,
+                 archiveMember=member,localSizeVerified=local_ok,category=role,synthesisReady=False)
+        if seconds is not None:
+            row['seconds']=seconds;g['knownDurationSeconds']+=seconds;g['durationMeasuredFiles']+=1
+        if original_bank:row['sourceBank']=original_bank
+        files.append(row);g['fileCount']+=1;g['bytes']+=size
+        if role=='voice-filename-candidate':g['voiceFilenameCandidates']+=1
+        if store_id not in g['backupIds']:g['backupIds'].append(store_id)
+
+    def backup_rows(group_id):
+        bg=next(g for g in backup['groups'] if g['id']==group_id)
+        index_path=backup_path.parent/bg['files_index']
+        assert sha(index_path)==bg['files_index_sha256']
+        rows=jsonlines(index_path)
+        sid='legacy:'+group_id
+        stores[sid]=dict(type='multipart-tar-gzip',baseUri=backup['backup_uri'],
+            manifestUri=latest['manifest_uri'],manifestSha256=latest['manifest_sha256'],
+            filesIndex=bg['files_index'],filesIndexSha256=bg['files_index_sha256'],parts=bg['parts'],
+            verification='recorded snapshot receipt; current run compares local metadata and sizes, not a new S3 payload readback')
+        return sid,{r['path']:r for r in rows}
+
+    sid, archived = backup_rows('300heroes-audio')
+    characters={str(c['id']):c for c in read(native/'300heroes/character-candidates.json')}
+    for r in jsonlines(native/'300heroes/indexes/audio-playable.jsonl'):
+        bank=r['source_bank'];match=re.search(r'/hero/(\d+)(?:_|\.bank)',bank)
+        cid=match[1] if match else None
+        key='300heroes:'+cid if cid else '300heroes:shared:'+str(Path(bank).parent).replace('/','-')
+        name=characters.get(cid,{}).get('name','原生角色 ID '+cid) if cid else '共用音訊／'+str(Path(bank).parent)
+        g=group(key,name,'300英雄',key,'來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審' if cid else '非角色專屬音效庫；保留待分類',ids=None if cid else [])
+        g['work']=characters.get(cid,{}).get('origin_work','待核')
+        if bank not in g['originalBanks']:g['originalBanks'].append(bank)
+        rel='outputs/game-asset-library-20260907/300heroes/'+r['path'];saved=archived[rel]
+        assert saved['sha256']==r['sha256'] and saved['bytes']==r['bytes']
+        add(g,rel,r['sha256'],r['bytes'],sid,rel,r.get('seconds'),original_bank=bank)
+
+    sid, archived = backup_rows('magical-battle-arena')
+    characters={Path(c['definition']).stem:c for c in read(native/'magical-battle-arena/character-candidates.json')}
+    for r in jsonlines(native/'magical-battle-arena/indexes/audio.jsonl'):
+        parts=Path(r['path']).parts
+        cid=parts[1] if len(parts)>2 and parts[0]=='Sound' and parts[1].startswith('Chara') else 'shared:'+parts[0]
+        key='mba:'+cid;model=source_models.get(key,{})
+        related=sorted({m['sourceCharacter'] for k,m in source_models.items() if k.startswith(key+'_')} | {c['name'] for k,c in characters.items() if k.startswith(cid+'_')})
+        name=model.get('sourceCharacter',characters.get(cid,{}).get('name','／'.join(related)+'（形態待核）' if related else cid))
+        g=group(key,name,'MBA Complete Form 1.60',key,'Sound/Chara 目錄對照 CharacterDefinitions；不延伸到同名其他形態')
+        g['work']=model.get('sourceWork','待核')
+        if related:g['candidateCharactersFromDefinitionPrefix']=related
+        rel='outputs/game-asset-library-20260907/magical-battle-arena/raw/'+r['path'];saved=archived[rel]
+        assert saved['sha256']==r['sha256'] and saved['bytes']==r['bytes']
+        role='voice-filename-candidate' if Path(r['path']).name.lower().startswith('vo_') else 'unclassified'
+        add(g,rel,r['sha256'],r['bytes'],sid,rel,role=role)
+
+    for source in downloads.get('publicSources',[])+downloads.get('paidSources',[]):
+        receipt=source.get('backup',{})
+        if not receipt.get('readbackVerified'):continue
+        archived=next(s for s in public_files['sources'] if s['id']==source['id'] and s['sha256']==receipt['sha256'])
+        audio=[f for f in archived['files'] if Path(f['path']).suffix.lower() in {'.wav','.ogg','.mp3','.flac'}]
+        if source.get('audioConversion',{}).get('decodedFloatWavCount'):
+            audio=[f for f in audio if not f['path'].startswith('decoded-audio/')]
+        if not audio:continue
+        sid='public:'+source['id'];stores[sid]=dict(type='zip',**receipt,localRoot=source['localPath'])
+        for f in audio:
+            member=f['path'];part=None
+            if source['id']=='dayjo-ssbb-zelda-audio':
+                part=next((p for p in source['packages'] if member.startswith('extracted/'+p['id']+'/')),None)
+            elif source['id']=='github-chiikawa':
+                match=re.search(r'/sounds/([^/]+)/',member)
+                if match:part=dict(id=match[1],name='吉伊卡哇素材包／'+match[1],heroIds=[])
+            elif source['id']=='hive-anime-team-survival':
+                part=dict(id=Path(member).stem,name='地圖音訊檔名／'+Path(member).stem,heroIds=[])
+            key=source['id']+(':'+part['id'] if part else '')
+            g=group(key,part['name'] if part else source['target'],'公開來源',source['id'],
+                '來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認',ids=part['heroIds'] if part else source['heroIds'])
+            g['sourceUrl']=source['url'];g['work']=source.get('sourceGame','見來源頁')
+            if 'audioConversion' in source:g['conversion']=source['audioConversion']
+            add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,member)
+
+    summary=dict(schema='ggd-character-voice-index@1',sourceFileManifest='voice-files.jsonl',
+        scope='All indexed 300/MBA audio and all audio in current verified public/paid source archives; not all files are character voices.',
+        groups=list(groups.values()),backups=stores,inputs=inputs,
+        acquisitionPolicy=downloads['ingestionPolicy'],
+            synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
+            perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
+            convertedAudioMustKeepSourceHash=True,generatedAudioMustBeLabeledSynthetic=True),
+        summary=dict(groups=len(groups),audioFiles=len(files),bytes=sum(f['bytes'] for f in files),
+            missingOrSizeChanged=sum(not f['localSizeVerified'] for f in files),
+            confirmedVoiceCount=None,synthesisReadyGroups=0))
+    manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
+    (OUT/'voice-files.jsonl').write_text(manifest)
+    summary['sourceFileManifestSha256']=hashlib.sha256(manifest.encode()).hexdigest()
+    (OUT/'voice-index.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
+    lines=['# 角色語音索引','',
+        '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬讀 `voice-files.jsonl`。', '',
+        f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA、悟空、利姆路、吉伊卡哇、闇影、地圖及 Wii 大亂鬥來源；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
+        '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
+        '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',
+        '原始及待聽審音訊存 S3 `legacy/` 並全留本機；索引、SHA-256、轉錄設定與程式進 Git，驗收成品依第三守則進 Git。這份索引不改變 `legacy/` 的人工指定用途規則；其他工作流不得將整個備份自動匯入正式遊戲。', '',
+        '## 一鍵複製給工作流','', '```text',
+        'Git 分支：codex/hero-model-library-options；PR：https://github.com/adms/GGD/pull/1152',
+        '先讀 materials/hero-model-library/角色語音索引.md 與 voice-index.json。',
+        '依角色／來源 groupId 篩選 voice-files.jsonl，保留各版本，相似模型與目標角色的說話者分開標記，不把借用聲音標成本尊。',
+        '來源角色、GGD heroIds 與逐段說話者是三個不同欄位；未確認值保持 unknown。',
+        '先聽審、轉錄、檢查語言與品質，再建立合成輸入清單；不要把音檔數當成語音數。',
+        '有本機檔時使用 workspace-relative path；使用 S3 時僅用 vibe-coding profile / ap-east-2。',
+        'S3 位置、完整包 SHA-256 與分片順序見 voice-index.json.backups；逐檔 SHA-256 見 voice-files.jsonl。',
+        '查詢例：python3 tools/hero-model-library/query_voice.py 莉娜',
+        '逐檔例：python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json',
+        '保留原檔；新產出的音訊、逐字稿與合成設定另存，附 source hash、來源角色與 synthetic 標記。',
+        '```','', '## 角色與來源分組','',
+        '| 角色／資源組 | 來源 ID／GGD 對應 | 可播放檔數 | 語音判定 | 取檔入口 |','|---|---|---:|---|---|']
+    for g in groups.values():
+        ids='、'.join(g['heroIds']) or '未綁 GGD ID／共用'
+        status=f'Vo_ 檔名候選 {g["voiceFilenameCandidates"]}；待聽審' if g['voiceFilenameCandidates'] else '待聽審分類'
+        lines.append(f'| {g["name"].replace("|","／")} | `{g["id"]}`<br>{ids} | {g["fileCount"]} | {status}；語言待核 | '+ '、'.join('`'+b+'`' for b in g['backupIds'])+' |')
+    lines += ['', '## 原始包與儲存位置','',
+        '| 備份 ID | S3 入口 | 驗證與取用方式 |','|---|---|---|']
+    for sid,s in stores.items():
+        uri=s.get('s3Uri',s.get('baseUri',''))
+        note='完整 ZIP SHA-256：`'+s['sha256']+'`；`archiveMember` 是包內路徑' if s['type']=='zip' else '分片 tar.gz；依 `parts` 原順序合併，核對各片 SHA-256，再按 archiveMember 解出。原始快照收據，不是本次重新讀回整包。'
+        lines.append(f'| `{sid}` | `{uri}` | {note} |')
+    lines += ['', '## 驗證範圍與待辦','',
+        f'- 本次比較 300／MBA 音訊索引與既有備份逐檔 SHA-256、大小，並檢查本機檔案存在及大小；異常 {summary["summary"]["missingOrSizeChanged"]} 筆。本次未重新雜湊全部音訊二進位，也未重新下載歷史 S3 整包。',
+        '- 公開來源使用 download-sources.json 所指的最新已讀回備份；所有角色／形態、語言與台詞需在逐段聽審後確認。合成可用狀態全部維持未驗收。',
+        '- NS 整庫模型仍下載中；模型庫並不等於語音庫。N64、GameCube、NS 與 J-Stars 語音未取得者繼續列於全角色模型盤點的來源範圍，不混進已取得音訊數。',
+        '- 尚無 GGD ID 的來源組仍可查詢及準備素材；不能因未上架而刪除。新增音訊來源後重跑本產生器，保留其他來源及不同語言版本。',
+        '- 重建：`python3 tools/hero-model-library/voice_index.py --workspace ..`。模型／素材守則見 `全角色模型盤點.md`。','']
+    report='\n'.join(lines)
+    (OUT/'角色語音索引.md').write_text(report)
+    for target in [ws/'角色語音索引.md',ws/'GGD-Asset-Library/角色語音索引.md']:
+        target.write_text(report)
+    print(json.dumps(summary['summary'],ensure_ascii=False))
+
+
+if __name__=='__main__':main()

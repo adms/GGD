@@ -56,3 +56,9 @@ python3 query.py fire --kind vfx
 若收到 AccessDenied，停止該操作並回報 AWS action 與 S3 resource，待授權決定；不改身分或繞過限制。共享範圍是已有 bucket 讀取權限的工作流，未設為匿名公開。
 
 備份區：`s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/`，僅供備份及人工明確許可的特殊用途；禁止其他程序自動取用，不納入正式索引或下載包。規則與還原說明見 [BACKUP_README.md](BACKUP_README.md)。
+
+整庫儲備規則：不依角色新舊、上架狀態或既有 GGD ID 篩選；不同世代、平台、作品、版本與配色全部保留。先取得原始整庫／整包並保存逐檔 SHA-256，按需配對轉換。原始儲備存 S3 legacy 並全留本機；驗收成品進 Git，再加入後台獨立選項。同級候選按來源遊戲發售日由新到舊，手動指定及九級順位保留。
+查詢尚未配對與下載中來源：python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
+完整規則：materials/hero-model-library/全角色模型盤點.md；機器規則：download-sources.json 的 ingestionPolicy、consoleSourceScope，以及 default-policy.json 的 sameClassPriority。
+
+角色語音索引：materials/hero-model-library/角色語音索引.md；voice-index.json／voice-files.jsonl 保存角色與逐檔 SHA-256，供合成素材挑選、聽審及轉錄。查詢：python3 tools/hero-model-library/query_voice.py 莉娜

@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-voice-index-validation@1",
+  "groups": 335,
+  "files": 71750,
+  "uniquePaths": 71750,
+  "localSizeMismatches": 0,
+  "perFileHashesFromSourceAndBackupIndexes": true,
+  "rehashAllBinaryAudioThisRun": false,
+  "linaQueryFiles": 36,
+  "linaGroupId": "mba:Chara02",
+  "confirmedVoiceCount": null,
+  "synthesisReadyGroups": 0,
+  "fileManifestSha256": "fc25553ff1f3c75d307bca1bb486768d194484c78623c53152079f4e246d1718"
+}

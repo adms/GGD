@@ -1,4 +1,14 @@
 """Default eligibility is separate from an asset passing format validation."""
+from datetime import date
+
+
+def source_release_rank(source):
+    value = source.get('sourceGameReleasedAt', '')
+    try:
+        parsed = date.fromisoformat(value)
+        return -int(value.replace('-', '')) if parsed.isoformat() == value else 0
+    except (ValueError, TypeError):
+        return 0
 
 def eligible(policy, hero_id, source_id, model_key, kind):
     if kind != 'style-proxy':

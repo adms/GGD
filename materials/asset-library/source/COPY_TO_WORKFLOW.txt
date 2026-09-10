@@ -22,3 +22,9 @@ python3 tools/hero-model-library/sync.py
 以同一 Git commit 的成品與 default-policy.json 為準；release.json 保留既有 S3 副本位置，勿用 S3 latest 覆蓋 Git 版本。
 原始／半成品備份在 legacy/，僅人工指定許可使用，不得自動取用或混入可用候選。
 AWS 只用 vibe-coding profile、ap-east-2 region；不讀憑證、不切換 profile、不改 IAM，AccessDenied 回報 action/resource。
+
+整庫儲備規則：不依角色新舊、上架狀態或既有 GGD ID 篩選；不同世代、平台、作品、版本與配色全部保留。先取得原始整庫／整包並保存逐檔 SHA-256，按需配對轉換。原始儲備存 S3 legacy 並全留本機；驗收成品進 Git，再加入後台獨立選項。同級候選按來源遊戲發售日由新到舊，手動指定及九級順位保留。
+查詢尚未配對與下載中來源：python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
+完整規則：materials/hero-model-library/全角色模型盤點.md；機器規則：download-sources.json 的 ingestionPolicy、consoleSourceScope，以及 default-policy.json 的 sameClassPriority。
+
+角色語音索引：materials/hero-model-library/角色語音索引.md；voice-index.json／voice-files.jsonl 保存角色與逐檔 SHA-256，供合成素材挑選、聽審及轉錄。查詢：python3 tools/hero-model-library/query_voice.py 莉娜

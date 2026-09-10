@@ -39,10 +39,11 @@ def main():
         deliveries=[s for s in acquired_sources(data['downloadPlan'])
             if s['id'] in source_ids or not query or query in json.dumps(s,ensure_ascii=False).casefold()]
         delivery_ids={s['id'] for s in deliveries}
+        lead_ids={sid for e in records for sid in e.get('publicSourceLeadIds',[])}
+        leads=[s for s in data['downloadPlan'].get('publicSourceLeads',[]) if s['id'] in lead_ids or not query or query in json.dumps(s,ensure_ascii=False).casefold()]
         if args.json:
-            lead_ids={sid for e in records for sid in e.get('publicSourceLeadIds',[])}
             print(json.dumps({'release':data['release'], 'purchasePolicy':data['downloadPlan'].get('purchasePolicy',{}), 'ingestionPolicy':data['downloadPlan'].get('ingestionPolicy',{}), 'entries':records,
-                'publicSourceLeads':[s for s in data['downloadPlan'].get('publicSourceLeads',[]) if s['id'] in lead_ids],
+                'publicSourceLeads':leads,
                 'paidSources':[s for s in data['downloadPlan'].get('paidSources',[]) if s['id'] in delivery_ids],
                 'publicSources':[s for s in data['downloadPlan'].get('publicSources',[]) if s['id'] in delivery_ids]}, ensure_ascii=False, indent=2))
         else:
@@ -68,7 +69,11 @@ def main():
                 if source['id'] not in source_ids:
                     print(source['id']+' | '+source['target']+' | 已取得來源，保留整合')
                     print('  '+source['url']+' | '+source['verification'])
-        return 0 if records or deliveries else 1
+            for source in leads:
+                if source['id'] not in lead_ids:
+                    print(source['id']+' | '+source['target']+' | '+source['acquisitionStatus'])
+                    print('  '+source['url']+' | '+source['verification'])
+        return 0 if records or deliveries or leads else 1
     exact = [h for h in data['heroes'] if h['id'].casefold() == query]
     direct = [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options']],ensure_ascii=False).casefold()]
     hero_ids, _ = public_match_scope(acquired_sources(data['downloadPlan']),query)
@@ -94,8 +99,9 @@ def main():
                 print('    S3 副本: '+asset['s3Uri']);print('    SHA-256: '+asset['sha256'])
             else:print('    位置：專案既有模型，未列入此 S3 成品版本')
         for p in h['pending']: print('  待轉換：'+p['name'])
-        for s in h.get('publicCandidates',[]) + h.get('paidCandidates',[]):
-            print('  已取得來源（全部保留整合）：'+s['target']+' | '+s['url'])
+        for s in h.get('publicCandidates',[]) + h.get('paidCandidates',[]) + h.get('audioSources',[]):
+            label='音訊補充（不含模型）' if s.get('resourceRole')=='audio-supplement' else '已取得來源（全部保留整合）'
+            print('  '+label+'：'+s['target']+' | '+s['url'])
             print('    '+s['verification'])
             if s.get('backendIntegration',{}).get('required'):
                 print('    必須納入後台獨立選項；目前狀態：'+s['backendIntegration']['state'])

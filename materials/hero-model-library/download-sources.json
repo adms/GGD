@@ -4924,9 +4924,307 @@
         "usage": "manual-only legacy backup; not runtime-ready"
       },
       "selectionClass": "canonical-game"
+    },
+    {
+      "id": "dayjo-ssbb-zelda-audio",
+      "target": "Wii 大亂鬥 X：薩爾達系列角色／場景音訊整包",
+      "heroIds": [
+        "godie-h00l"
+      ],
+      "url": "https://noproblo.dayjo.org/zeldasounds/ssbb/",
+      "uploader": "noproblo／Dayjo Zelda Sounds；來源遊戲 Super Smash Bros. Brawl",
+      "format": "12 ZIP／448 PCM WAV；不含模型、動作或 VFX",
+      "accessStatus": "public-direct-download",
+      "checkedAt": "2026-09-10T10:31:21.579104+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "audio-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "assetKinds": [
+        "audio"
+      ],
+      "platform": "Wii",
+      "sourceGame": "Super Smash Bros. Brawl",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio",
+      "files": [
+        {
+          "path": "original/SSBB_Announcer.zip",
+          "bytes": 178751,
+          "sha256": "6312433aceb3005e0ffcf7101d87314b97f82f955c0790a8b1abc75f63e5e4e3"
+        },
+        {
+          "path": "original/SSBB_Common.zip",
+          "bytes": 983889,
+          "sha256": "699cc8c29aeae0eee1e11d0c2691bb27736529aec30248f71a71211b274885d9"
+        },
+        {
+          "path": "original/SSBB_Crowd.zip",
+          "bytes": 1212236,
+          "sha256": "0dc9f47d569b1221959cde9fdff3fdaa1d201675d56d62475c84f773d9bb9cdf"
+        },
+        {
+          "path": "original/SSBB_Eldin.zip",
+          "bytes": 1507905,
+          "sha256": "53da4618305aee6bad735e3afa0eb8b40630eafa1e3af5699248d5c44c24a1ca"
+        },
+        {
+          "path": "original/SSBB_Ganondorf.zip",
+          "bytes": 2575799,
+          "sha256": "e4d5a3c6947e115e3f8de24f8697032d8002c4093dbff81d98ae6d92c3062fd6"
+        },
+        {
+          "path": "original/SSBB_Items.zip",
+          "bytes": 239770,
+          "sha256": "666ed40dfe64610695c6f054dec6f0b6ad1f5cf4416e0bfaac789ad060d7232d"
+        },
+        {
+          "path": "original/SSBB_Link.zip",
+          "bytes": 2275653,
+          "sha256": "6cab1c15e2ae3e33b6d2ebcf4ad07d91701fc564570928919185434b50c64363"
+        },
+        {
+          "path": "original/SSBB_PirateShip.zip",
+          "bytes": 3819366,
+          "sha256": "9be1402773ea064300c8ba7246c53b9a86c2823d95ecea9463e61c27295f2d31"
+        },
+        {
+          "path": "original/SSBB_Sheik.zip",
+          "bytes": 784907,
+          "sha256": "f36fa4743eb822a925e7665909146131365fc0f12a0c1cf269bea54a7a51cfb0"
+        },
+        {
+          "path": "original/SSBB_Tingle.zip",
+          "bytes": 554917,
+          "sha256": "a75d1a02d9f98a665c4dba3adb205b5fcfc82204cede1928f55b3cc25f2c8934"
+        },
+        {
+          "path": "original/SSBB_ToonLink.zip",
+          "bytes": 1177289,
+          "sha256": "162f44724345f5c44b1343a7a64037607f366d5e0f13036f99e83209edd6708b"
+        },
+        {
+          "path": "original/SSBB_Zelda.zip",
+          "bytes": 1320531,
+          "sha256": "7261d40558105b1ebab5b0fac42308684617effa58b8c68537b068f65a92c598"
+        }
+      ],
+      "packages": [
+        {
+          "id": "SSBB_Announcer",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Announcer.zip",
+          "archivePath": "original/SSBB_Announcer.zip",
+          "bytes": 178751,
+          "sha256": "6312433aceb3005e0ffcf7101d87314b97f82f955c0790a8b1abc75f63e5e4e3",
+          "crcVerified": true,
+          "name": "播報／Wii 遙控器",
+          "audioCount": 9,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Common",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Common.zip",
+          "archivePath": "original/SSBB_Common.zip",
+          "bytes": 983889,
+          "sha256": "699cc8c29aeae0eee1e11d0c2691bb27736529aec30248f71a71211b274885d9",
+          "crcVerified": true,
+          "name": "共通",
+          "audioCount": 35,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Crowd",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Crowd.zip",
+          "archivePath": "original/SSBB_Crowd.zip",
+          "bytes": 1212236,
+          "sha256": "0dc9f47d569b1221959cde9fdff3fdaa1d201675d56d62475c84f773d9bb9cdf",
+          "crcVerified": true,
+          "name": "觀眾",
+          "audioCount": 21,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Eldin",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Eldin.zip",
+          "archivePath": "original/SSBB_Eldin.zip",
+          "bytes": 1507905,
+          "sha256": "53da4618305aee6bad735e3afa0eb8b40630eafa1e3af5699248d5c44c24a1ca",
+          "crcVerified": true,
+          "name": "奧爾汀大橋",
+          "audioCount": 18,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Ganondorf",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Ganondorf.zip",
+          "archivePath": "original/SSBB_Ganondorf.zip",
+          "bytes": 2575799,
+          "sha256": "e4d5a3c6947e115e3f8de24f8697032d8002c4093dbff81d98ae6d92c3062fd6",
+          "crcVerified": true,
+          "name": "加儂多夫",
+          "audioCount": 65,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Items",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Items.zip",
+          "archivePath": "original/SSBB_Items.zip",
+          "bytes": 239770,
+          "sha256": "666ed40dfe64610695c6f054dec6f0b6ad1f5cf4416e0bfaac789ad060d7232d",
+          "crcVerified": true,
+          "name": "道具",
+          "audioCount": 17,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Link",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Link.zip",
+          "archivePath": "original/SSBB_Link.zip",
+          "bytes": 2275653,
+          "sha256": "6cab1c15e2ae3e33b6d2ebcf4ad07d91701fc564570928919185434b50c64363",
+          "crcVerified": true,
+          "name": "林克",
+          "audioCount": 79,
+          "heroIds": [
+            "godie-h00l"
+          ],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_PirateShip",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_PirateShip.zip",
+          "archivePath": "original/SSBB_PirateShip.zip",
+          "bytes": 3819366,
+          "sha256": "9be1402773ea064300c8ba7246c53b9a86c2823d95ecea9463e61c27295f2d31",
+          "crcVerified": true,
+          "name": "海盜船",
+          "audioCount": 24,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Sheik",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Sheik.zip",
+          "archivePath": "original/SSBB_Sheik.zip",
+          "bytes": 784907,
+          "sha256": "f36fa4743eb822a925e7665909146131365fc0f12a0c1cf269bea54a7a51cfb0",
+          "crcVerified": true,
+          "name": "希克",
+          "audioCount": 58,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Tingle",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Tingle.zip",
+          "archivePath": "original/SSBB_Tingle.zip",
+          "bytes": 554917,
+          "sha256": "a75d1a02d9f98a665c4dba3adb205b5fcfc82204cede1928f55b3cc25f2c8934",
+          "crcVerified": true,
+          "name": "金克爾",
+          "audioCount": 12,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_ToonLink",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_ToonLink.zip",
+          "archivePath": "original/SSBB_ToonLink.zip",
+          "bytes": 1177289,
+          "sha256": "162f44724345f5c44b1343a7a64037607f366d5e0f13036f99e83209edd6708b",
+          "crcVerified": true,
+          "name": "卡通林克",
+          "audioCount": 50,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        },
+        {
+          "id": "SSBB_Zelda",
+          "downloadUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/SSBB_Zelda.zip",
+          "archivePath": "original/SSBB_Zelda.zip",
+          "bytes": 1320531,
+          "sha256": "7261d40558105b1ebab5b0fac42308684617effa58b8c68537b068f65a92c598",
+          "crcVerified": true,
+          "name": "薩爾達",
+          "audioCount": 60,
+          "heroIds": [],
+          "backendState": "pending-audio-classification-and-binding",
+          "selectionVerified": false
+        }
+      ],
+      "verification": "12 原始 ZIP 全部 CRC 通過，完整保留 448 WAV／369.19 秒，逐檔驗證 PCM 資料長度。來源包含喊聲、招式音效、播報及音高變體；語音數量與事件仍待聽審／綁定，沒有 3D 模型、動作或 VFX，不能勾銷模型缺口。道具包實含 17 檔，網站文案寫 12 檔，以實包為準。",
+      "reuseTerms": "保留來源頁、作者與遊戲出處；公開下載的使用條件尚待逐筆核對。",
+      "usage": "intake-only; no automatic runtime selection",
+      "coverage": "Only SSBB_Link is matched to godie-h00l; Toon Link and other characters remain separate, with no inferred GGD hero mapping.",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization",
+        "heroIds": [
+          "godie-h00l"
+        ],
+        "selectionVerified": false,
+        "components": [
+          "SSBB_Announcer",
+          "SSBB_Common",
+          "SSBB_Crowd",
+          "SSBB_Eldin",
+          "SSBB_Ganondorf",
+          "SSBB_Items",
+          "SSBB_Link",
+          "SSBB_PirateShip",
+          "SSBB_Sheik",
+          "SSBB_Tingle",
+          "SSBB_ToonLink",
+          "SSBB_Zelda"
+        ],
+        "note": "每包保留獨立來源選項；待角色對應、音訊聽審、綁定與後台驗收。"
+      },
+      "audioAcquisition": {
+        "schema": "ggd-public-console-audio-intake@1",
+        "sourcePage": "https://noproblo.dayjo.org/zeldasounds/ssbb/",
+        "sourceDataUrl": "https://noproblo.dayjo.org/zeldasounds/ZS_SSBB.js",
+        "sourceDataSha256": "f3072d4de957ae728ea50a97801acde02445e7921b385128f1ce525e71bbe433",
+        "sourceGame": "Super Smash Bros. Brawl",
+        "platform": "Wii",
+        "audioCount": 448,
+        "audioSeconds": 369.1913726489088,
+        "confirmedVoiceCount": null,
+        "listeningVerified": false,
+        "eventBindingsVerified": false,
+        "modelCount": 0,
+        "animationCount": 0,
+        "vfxCount": 0,
+        "runtimeReady": false,
+        "note": "Source index describes voices, effects and pitch variants; native game bytes and event bindings are not independently verified."
+      },
+      "publicationStatus": "s3-legacy-readback-verified",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/dayjo-ssbb-zelda-audio/cabcf313053304369d1728314f8872c94e86b159c66a8dfa7c73f9b325f29efe.zip",
+        "bytes": 33253784,
+        "sha256": "cabcf313053304369d1728314f8872c94e86b159c66a8dfa7c73f9b325f29efe",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
     }
   ],
-  "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。",
+  "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
   "purchasePolicy": {
     "paidPurchaseAllowed": false,
     "scope": "this workflow only; does not revoke separately owner-authorized paid acquisition workflows",
@@ -5111,6 +5409,1447 @@
           "acquired": false
         }
       ]
+    },
+    {
+      "id": "deviantart-jstars-korosensei",
+      "target": "殺老師（J-Stars PS3 原生骨架）",
+      "heroIds": [
+        "community-review-14-20260907"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://www.deviantart.com/josoukitsune/art/Koro-sensei-Rigged-840465983",
+      "pageTitle": "Koro-sensei - Rigged",
+      "checkedAt": "2026-09-10T10:31:21.579104+00:00",
+      "accessStatus": "login-required",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "selectionClass": "canonical-game",
+      "purchaseDecision": "hold-purchase-investigate-public-source",
+      "verification": "作者 JosouKitsune 說明是 PS3 J-Stars Victory VS+ 擷取並保留原遊戲骨架；頁面要求登入下載，未取得檔案，不能替代既有來源的轉換驗收。"
+    },
+    {
+      "id": "gitlab-ssbu-models",
+      "target": "NS 大亂鬥 特別版整庫：戰鬥角色、助手、頭目、敵人與寶可夢",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+      "accessStatus": "public-git-lfs-download-in-progress",
+      "acquisitionStatus": "download-in-progress",
+      "defaultEligible": false,
+      "verification": "已取得作者 Git 目錄並啟動整庫 LFS 下載。此版本索引列 28,681 個 LFS 檔案／16,148,574,001 bytes；索引與 LFS pointer 不是模型實檔，尚未完成整庫下載、逐檔雜湊與 S3 備份。來源包含角色全配色、助手、頭目、敵人及寶可夢，不以 GGD 名單篩選。",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository",
+      "commit": "df76879171b064570b4e49a608c9f98211b33edb",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "platform": "Nintendo Switch",
+      "sourceGameReleasedAt": "2018-12-07",
+      "sourceGameReleaseReference": "https://www.nintendo.com/ph/switch/aaab/index.html",
+      "expectedLfsFiles": 28681,
+      "expectedLfsBytes": 16148574001,
+      "nativeGroups": [
+        {
+          "nativeId": "assist/akira",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/alucard",
+          "expectedFileCount": 10,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/andross",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/androssshot",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/ashley",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/baito",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/baitocrane",
+          "expectedFileCount": 11,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/bomberman",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/bombermanbomb",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/bombermanbomb2",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/bombermanswitch",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/claptrap",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/cyborg",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/darkknight",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/devil",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/dossun",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/driver",
+          "expectedFileCount": 11,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/eleka",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/flyandhand",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/flyandhandfly",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/ghirahim",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/ghirahimknife",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/goroh",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/guile",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/hammerbros",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/hammerbroshammer",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/hebigarasu",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/jeff",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/jeffpencilbullet",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/jeffpencilrocket",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/jiro",
+          "expectedFileCount": 11,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/joe",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/kawasaki",
+          "expectedFileCount": 9,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/kawasakipot",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/kawasakishot",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/kawashima",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/kawashimashot",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/knuckles",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/kozukata",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/krystal",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/lin",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/lioleus",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/lioleustail",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/metroid",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/midna",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/monsters",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/moon",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/motherbrain",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nightmare",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikki",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikkiillust1",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikkiillust2",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikkiillust3",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikkiillust4",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikkiillust5",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nikkiillust6",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nintendogs",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/nintendogshi",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/riki",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/robin",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/robinlift",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/robinpress",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/robinshot",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/rodin",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/rodinarml",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/rodinarmr",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/sable",
+          "expectedFileCount": 9,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/shadow",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/sheriff",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/sheriffshot",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/shiokarazu",
+          "expectedFileCount": 9,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/shovelknight",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/skullkid",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/springman",
+          "expectedFileCount": 9,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/stafy",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/starman",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/sukapon",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/sukaponshot",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/takamaru",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/takamarushot",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/tiki",
+          "expectedFileCount": 14,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/tvgame",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/tvgameshot",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/vince",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/waluigi",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/wanwan",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/wanwanpile",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/wilycapsule",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/wilycapsulewily",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/wright",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/wrightbuil",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "assist/zero",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/crazyhand",
+          "expectedFileCount": 16,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/crazyhandbomb",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/crazyhandsearchlight",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/darz",
+          "expectedFileCount": 37,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/darzcrossbomb",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/darzpierce",
+          "expectedFileCount": 25,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/darzspacerush",
+          "expectedFileCount": 25,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/darztorrent",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/dracula",
+          "expectedFileCount": 27,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/dracula2",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/galleom",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/galleommissile",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/ganonboss",
+          "expectedFileCount": 30,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/kiila",
+          "expectedFileCount": 9,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/kiilacore",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/kiilacrossbomb",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/kiilacrushwing",
+          "expectedFileCount": 8,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/kiilashockwave",
+          "expectedFileCount": 8,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/kiilatorrent",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/lioleusboss",
+          "expectedFileCount": 8,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/lioleusbosstail",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/marx",
+          "expectedFileCount": 49,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/marxchaseeye",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/marxeyelaser",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/marxicebomb1",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/marxplantbody",
+          "expectedFileCount": 15,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/marxplantseed",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/masterhand",
+          "expectedFileCount": 16,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/masterhandbullet",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/masterhandironball",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "boss/masterhandpaintball",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "enemy/flyingman",
+          "expectedFileCount": 6,
+          "heroIds": []
+        },
+        {
+          "nativeId": "enemy/metalface",
+          "expectedFileCount": 11,
+          "heroIds": []
+        },
+        {
+          "nativeId": "enemy/nabbit",
+          "expectedFileCount": 42,
+          "heroIds": []
+        },
+        {
+          "nativeId": "enemy/subetenoyaminoou",
+          "expectedFileCount": 7,
+          "heroIds": []
+        },
+        {
+          "nativeId": "enemy/yellowdevil",
+          "expectedFileCount": 19,
+          "heroIds": []
+        },
+        {
+          "nativeId": "extras/skin-dolly-001b-textures.7z",
+          "expectedFileCount": 1,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/bayonetta",
+          "expectedFileCount": 402,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/brave",
+          "expectedFileCount": 286,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/buddy",
+          "expectedFileCount": 347,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/captain",
+          "expectedFileCount": 164,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/chrom",
+          "expectedFileCount": 204,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/cloud",
+          "expectedFileCount": 297,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/common",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/daisy",
+          "expectedFileCount": 324,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/dedede",
+          "expectedFileCount": 302,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/demon",
+          "expectedFileCount": 263,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/diddy",
+          "expectedFileCount": 314,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/dolly",
+          "expectedFileCount": 424,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/donkey",
+          "expectedFileCount": 161,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/duckhunt",
+          "expectedFileCount": 293,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/edge",
+          "expectedFileCount": 306,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/eflame",
+          "expectedFileCount": 348,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/element",
+          "expectedFileCount": 27,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/elight",
+          "expectedFileCount": 324,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/falco",
+          "expectedFileCount": 256,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/fox",
+          "expectedFileCount": 280,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/gamewatch",
+          "expectedFileCount": 616,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ganon",
+          "expectedFileCount": 204,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/gaogaen",
+          "expectedFileCount": 213,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/gekkouga",
+          "expectedFileCount": 268,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ike",
+          "expectedFileCount": 310,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/inkling",
+          "expectedFileCount": 522,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/jack",
+          "expectedFileCount": 369,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/kamui",
+          "expectedFileCount": 440,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ken",
+          "expectedFileCount": 176,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/kirby",
+          "expectedFileCount": 2571,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/koopa",
+          "expectedFileCount": 130,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/koopag",
+          "expectedFileCount": 10,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/koopajr",
+          "expectedFileCount": 529,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/krool",
+          "expectedFileCount": 380,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/link",
+          "expectedFileCount": 256,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/littlemac",
+          "expectedFileCount": 245,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/lucario",
+          "expectedFileCount": 112,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/lucas",
+          "expectedFileCount": 241,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/lucina",
+          "expectedFileCount": 252,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/luigi",
+          "expectedFileCount": 188,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/mario",
+          "expectedFileCount": 192,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/mariod",
+          "expectedFileCount": 264,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/marth",
+          "expectedFileCount": 275,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/master",
+          "expectedFileCount": 371,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/metaknight",
+          "expectedFileCount": 256,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/mewtwo",
+          "expectedFileCount": 136,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/miifighter",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/miigunner",
+          "expectedFileCount": 24,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/miiswordsman",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/murabito",
+          "expectedFileCount": 718,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/nana",
+          "expectedFileCount": 160,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ness",
+          "expectedFileCount": 250,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/packun",
+          "expectedFileCount": 152,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pacman",
+          "expectedFileCount": 196,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/palutena",
+          "expectedFileCount": 281,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/peach",
+          "expectedFileCount": 540,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pfushigisou",
+          "expectedFileCount": 220,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pichu",
+          "expectedFileCount": 180,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pickel",
+          "expectedFileCount": 318,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pikachu",
+          "expectedFileCount": 198,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pikmin",
+          "expectedFileCount": 335,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pit",
+          "expectedFileCount": 354,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pitb",
+          "expectedFileCount": 413,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/plizardon",
+          "expectedFileCount": 148,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/popo",
+          "expectedFileCount": 180,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ptrainer",
+          "expectedFileCount": 152,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/purin",
+          "expectedFileCount": 340,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/pzenigame",
+          "expectedFileCount": 144,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/reflet",
+          "expectedFileCount": 294,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/richter",
+          "expectedFileCount": 301,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ridley",
+          "expectedFileCount": 93,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/robot",
+          "expectedFileCount": 400,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/rockman",
+          "expectedFileCount": 367,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/rosetta",
+          "expectedFileCount": 297,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/roy",
+          "expectedFileCount": 252,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/ryu",
+          "expectedFileCount": 180,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/samus",
+          "expectedFileCount": 313,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/samusd",
+          "expectedFileCount": 212,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/sheik",
+          "expectedFileCount": 204,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/shizue",
+          "expectedFileCount": 492,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/shulk",
+          "expectedFileCount": 273,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/simon",
+          "expectedFileCount": 309,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/snake",
+          "expectedFileCount": 282,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/sonic",
+          "expectedFileCount": 360,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/szerosuit",
+          "expectedFileCount": 288,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/tantan",
+          "expectedFileCount": 567,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/toonlink",
+          "expectedFileCount": 409,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/trail",
+          "expectedFileCount": 255,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/wario",
+          "expectedFileCount": 202,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/wiifit",
+          "expectedFileCount": 188,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/wolf",
+          "expectedFileCount": 268,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/yoshi",
+          "expectedFileCount": 197,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/younglink",
+          "expectedFileCount": 256,
+          "heroIds": []
+        },
+        {
+          "nativeId": "fighter/zelda",
+          "expectedFileCount": 210,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/arceus",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/darkrai",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/dedenne",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/deoxys",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/eievui",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/entei",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/fire",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/fokko",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/genesect",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/giratina",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/gogoat",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/harimaron",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/hassam",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/hitodeman",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kabigon",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kairyu",
+          "expectedFileCount": 2,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kapukokeko",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kasey",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/keldeo",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kireihana",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kiteruguma",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kofuurai",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kyogre",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/kyurem",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/latiaslatios",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/lugia",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/lunala",
+          "expectedFileCount": 10,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/maaiika",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/marshadow",
+          "expectedFileCount": 5,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/marumine",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/meloetta",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/metagross",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/metamon",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/mew",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/mijumaru",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/mimikkyu",
+          "expectedFileCount": 4,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/namakobushi",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/nassya",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/nyarth",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/palkia",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/peroppafu",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/raichua",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/rokon",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/rokona",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/sirnight",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/solgaleo",
+          "expectedFileCount": 11,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/suicune",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/togedemaru",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/togepy",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/tosakinto",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/tsutarja",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/victini",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/xerneas",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/yayakoma",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/yukinooh",
+          "expectedFileCount": 3,
+          "heroIds": []
+        },
+        {
+          "nativeId": "pokemon/zoroark",
+          "expectedFileCount": 3,
+          "heroIds": []
+        }
+      ],
+      "conversionMode": "on-demand",
+      "backendIntegration": {
+        "required": true,
+        "state": "acquiring-reserve",
+        "selectionVerified": false
+      },
+      "purchaseDecision": "investigate-public-reserve-no-purchase",
+      "readiness": "not-acquired-completely"
     }
   ],
   "ingestionPolicy": {
@@ -5155,7 +6894,195 @@
       "missingStandaloneAudioProvesNoEmbeddedVoice": false
     },
     "finishedStorage": "Git; local copy retained",
-    "storagePolicyPath": "materials/asset-library/STORAGE_POLICY.json"
+    "storagePolicyPath": "materials/asset-library/STORAGE_POLICY.json",
+    "acquisitionScope": "all source characters regardless of old/new, published/unpublished, or existing GGD roster membership",
+    "filterAcquisitionByRoster": false,
+    "unmappedCharacterPolicy": "retain source-library/game/native-character identity with empty heroIds; map later without inventing GGD IDs",
+    "preserveEveryGenerationPlatformGameAndVariant": true,
+    "reservePolicy": {
+      "acquisitionUnit": "complete-library-or-published-package",
+      "clipAcquisitionToCurrentHeroNeeds": false,
+      "conversionMode": "on-demand",
+      "unconvertedStatus": "reserved-pending-conversion",
+      "reserveIsRuntimeReady": false,
+      "retainOriginalPackageAndCompleteExtraction": true,
+      "keepPerFileHashes": true,
+      "rawStorage": "S3 legacy with full local copies",
+      "finishedStorage": "Git with local copies",
+      "sourceQueryAvailableBeforeConversion": true
+    }
   },
-  "paidSources": []
+  "paidSources": [],
+  "consoleSourceScope": {
+    "updatedAt": "2026-09-10T10:31:21.579104+00:00",
+    "platforms": [
+      "PSP",
+      "PS Vita",
+      "PS2",
+      "PS3",
+      "N64",
+      "GameCube",
+      "Wii",
+      "Nintendo Switch",
+      "PS4",
+      "Xbox One",
+      "PC"
+    ],
+    "instruction": "PSP、PS Vita、PS2／PS3、N64、GameCube、Wii、NS（Nintendo Switch）均納入模型、貼圖、骨架、動作、特效、音效與角色語音來源。優先查跨作品格鬥遊戲的完整角色素材包，兼查可公開取得的原作擷取及 MOD／工坊交付。",
+    "preserveDimensions": [
+      "source-game",
+      "platform",
+      "edition",
+      "patch",
+      "dlc",
+      "language",
+      "character",
+      "form",
+      "author",
+      "original-package",
+      "sha256"
+    ],
+    "games": [
+      {
+        "id": "ssb64",
+        "title": "任天堂明星大亂鬥／Super Smash Bros.",
+        "platforms": [
+          "N64"
+        ],
+        "sources": [
+          {
+            "label": "原代素材目錄",
+            "url": "https://www.spriters-resource.com/nintendo_64/ssb/"
+          },
+          {
+            "label": "美日語音包",
+            "url": "https://sounds.spriters-resource.com/nintendo_64/ssb/asset/396114/page-1/"
+          }
+        ],
+        "status": "已找到目錄與語音頁線索；本批尚未取得檔案，模型／動作仍待查找。"
+      },
+      {
+        "id": "ssbm",
+        "title": "大亂鬥 Smash Brothers DX／Super Smash Bros. Melee",
+        "platforms": [
+          "GameCube"
+        ],
+        "sources": [
+          {
+            "label": "模型目錄",
+            "url": "https://models.spriters-resource.com/gamecube/ssbm/"
+          }
+        ],
+        "status": "已找到模型目錄；本次頁面回應 HTTP 403，未取得檔案，保留待查。"
+      },
+      {
+        "id": "ssbb",
+        "title": "大亂鬥 Smash Brothers X／Super Smash Bros. Brawl",
+        "platforms": [
+          "Wii"
+        ],
+        "sources": [
+          {
+            "label": "模型目錄",
+            "url": "https://models.spriters-resource.com/wii/ssbb/"
+          },
+          {
+            "label": "音訊整包",
+            "url": "https://noproblo.dayjo.org/zeldasounds/ssbb/"
+          }
+        ],
+        "status": "已取得 Dayjo 薩爾達系列 12 ZIP／448 WAV；模型、骨架、動作與 VFX 尚未從這批取得，音訊仍待聽審與事件綁定。"
+      },
+      {
+        "id": "ssbu",
+        "title": "任天堂明星大亂鬥 特別版／Super Smash Bros. Ultimate",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "sources": [
+          {
+            "label": "官方網站",
+            "url": "https://www.smashbros.com/"
+          },
+          {
+            "label": "完整角色／配色庫",
+            "url": "https://gitlab.com/Worldblender/smash-ultimate-models-exported"
+          },
+          {
+            "label": "庫魯魯王模型",
+            "url": "https://models.spriters-resource.com/nintendo_switch/supersmashbrosultimate/asset/310675/"
+          },
+          {
+            "label": "路弗萊模型",
+            "url": "https://models.spriters-resource.com/nintendo_switch/supersmashbrosultimate/asset/313628/"
+          },
+          {
+            "label": "露琪娜音訊",
+            "url": "https://sounds.spriters-resource.com/nintendo_switch/supersmashbrosultimate/asset/409651/"
+          }
+        ],
+        "status": "已啟動作者公開整庫 LFS 下載（28,681 檔／16.15 GB），目前未完成，不計已取得。既有、新增、未上架及尚無 GGD ID 的來源角色全部保留為儲備，按需配對轉換。"
+      },
+      {
+        "id": "jstars",
+        "title": "J-Stars Victory VS／VS+",
+        "platforms": [
+          "PS3",
+          "PS Vita",
+          "PS4（VS+）"
+        ],
+        "sources": [
+          {
+            "label": "官方平台介紹",
+            "url": "https://www.youtube.com/watch?v=2snCr5nm39E"
+          },
+          {
+            "label": "殺老師原生骨架模型",
+            "url": "https://www.deviantart.com/josoukitsune/art/Koro-sensei-Rigged-840465983"
+          }
+        ],
+        "status": "找到作者標示 PS3 原遊戲骨架的殺老師模型；下載要求登入，目前僅登記來源頁，尚未取得。優先核對缺口角色與形態。"
+      },
+      {
+        "id": "jump-force",
+        "title": "JUMP FORCE／JUMP FORCE 豪華版",
+        "platforms": [
+          "PS4",
+          "Xbox One",
+          "PC",
+          "Nintendo Switch（豪華版）"
+        ],
+        "sources": [
+          {
+            "label": "官方作品頁",
+            "url": "https://www.bandainamcoent.com/games/jump-force"
+          },
+          {
+            "label": "NS 豪華版",
+            "url": "https://www.bandainamcoent.com/news/jf-deluxe-edition-nsw"
+          },
+          {
+            "label": "青眼究極龍來源頁",
+            "url": "https://www.deviantart.com/whitemagesunny/art/Jump-Force-Blue-Eyes-Ultimate-Dragon-1052702759"
+          }
+        ],
+        "status": "平台與原生骨架 FBX／貼圖公開頁線索已登記；本批尚未取得模型實檔。PC／PS4 與 NS 來源分開核對，不按名稱合併。"
+      },
+      {
+        "id": "other-ps-games",
+        "title": "其他原作與跨作品遊戲：按現有缺口角色查找",
+        "platforms": [
+          "PSP",
+          "PS Vita",
+          "PS2",
+          "PS3"
+        ],
+        "sources": [],
+        "status": "已納入查找範圍；逐作核對可用資源，不能把平台範圍當成已下載遊戲清單。"
+      }
+    ],
+    "filterByRoster": false,
+    "newerGamesFirst": true,
+    "exampleCharactersAreNotScopeLimits": true
+  }
 }

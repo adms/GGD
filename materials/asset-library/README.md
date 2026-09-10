@@ -2,7 +2,11 @@
 
 **第一守則：所有取得資源完整歸檔，全部納入後台可選選項。** 模型、貼圖、骨架、動作、特效、音效與角色語音全部保留；各來源／版本完成標準化後，登記為對應角色下拉選單的獨立選項。取得、備份或登記候選尚不算完成，必須完成後台實際切換驗證。預設順位只決定預選項目，不能省略其他來源。完整規則見 [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) 第一守則，機器讀 `download-sources.json → ingestionPolicy` 與逐來源 `backendIntegration`。
 
+先整庫／整包取得作儲備，按需配對與轉換；「儲備已取得」與「完成上架」分開記錄。擷取不依新舊角色、上架與否或既有 GGD ID 篩選；不同世代、平台、作品、版本與配色全部保留，尚無 GGD ID 者仍可按原生角色 ID 查詢。克勞德只是範例，不是限定收錄對象。
+
 **第二守則：手動指定模型 > 原著模型 > MOD社群修改 > 相似模型貼圖修改 > 相似模型 > 300英雄 > MBA > 原版 > 借用 W3X 選用。** 原著模型只指原作遊戲直接擷取；300／MBA 維持第 6／7 位。來源類別保留，選用順位由 `default-policy.json` 與 `selectionClass` 決定。
+
+同級合格候選按來源遊戲發售日由新到舊，未知日期排後；保留日期依據，不以網站上傳日或入庫日替代。手動選用仍優先，舊版全部留在下拉選單。
 
 **第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 成品固定入口：[git-release.json](git-release.json)，包含模型／動作與 VFX 元件及其依賴。原始與半成品仍在 S3 `legacy/`，不供程序自動取用。
 
@@ -15,6 +19,8 @@
 | 我要做什麼 | 直接入口 |
 |---|---|
 | 看全部角色、預設模型、候選來源 | [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) |
+| 找角色語音作合成／轉錄素材 | [角色語音索引.md](../hero-model-library/角色語音索引.md)；`voice-index.json`／`voice-files.jsonl` 與 `query_voice.py` |
+| 查未上架、尚無 GGD ID 或下載中的儲備 | `query.py --downloads <來源／原生角色>`；例如 `gitlab-ssbu-models` |
 | 避免重複購買模型 | 先讀 `purchasePolicy.scope`；`publicSources`／`paidSources` 是已取得的免費／付費來源，`publicSourceLeads` 是未取得線索 |
 | 整合另一工作流付費取得的模型 | 同一 `download-sources.json` 的 `paidSources`；查詢回傳 `paidCandidates`，與免費來源一起保留整合 |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
@@ -33,6 +39,9 @@ git fetch origin codex/hero-model-library-options
 python3 tools/hero-model-library/query.py 莉娜
 python3 tools/hero-model-library/query.py b2-popp --json
 python3 tools/hero-model-library/query.py 拳四郎 --downloads
+python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
+python3 tools/hero-model-library/query_voice.py 莉娜
+python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json
 ```
 
 需要哪一個版本，就讓工作流使用同一 Git commit 的設定與 `release.json`。查詢輸出分開列出「素材庫預設」「本分支實際選擇」「正式機觀測快照」，避免把候選或 S3 上傳當成正式站已部署。

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a portable, hash-addressed model option release from local conversion receipts."""
 import argparse,json,hashlib,shutil
-from default_policy import selection_class, selection_rank
+from default_policy import selection_class, selection_rank, source_release_rank
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--workspace',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();ws=a.workspace.resolve();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False);repo=Path(__file__).resolve().parents[2]
 def read(p):return json.loads(p.read_text())
@@ -95,7 +95,7 @@ for r in read(ws/'outputs/hero-model-derivatives-20260910/lol-v1/summary.json'):
 policy=read(repo/'materials/hero-model-library/default-policy.json');order=policy['priority']
 for h in heroes.values():
  for o in h['options']:o['source']['selectionClass']=selection_class(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source'])
- h['options'].sort(key=lambda o:(selection_rank(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source']),['exact','alternate','style-proxy','previous'].index(o['source']['kind'])))
+ h['options'].sort(key=lambda o:(selection_rank(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source']),source_release_rank(o['source']),['exact','alternate','style-proxy','previous'].index(o['source']['kind'])))
 manifest=dict(schema='ggd-hero-model-library@1',priority=order,policy=' > '.join(policy['priorityLabels'][key] for key in order),models=list(models.values()),heroes=list(heroes.values()),scope='模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。')
 manifest['withinTierPolicy']='依現行 default-policy.json；保留來源 tier，selectionClass 用於選用順位；手動選擇與全部舊版本保留。'
 manifest['resolved']=[dict(sourceId=k,character=n,status='converted',removedFromConversionGaps=True,sha256=models[k]['sha256']) for k,n in [('300heroes:137','坂田銀時'),('300heroes:41','海克力斯')]]

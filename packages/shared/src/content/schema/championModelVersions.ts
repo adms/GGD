@@ -18,6 +18,10 @@ export const zModelVersionSource = z.object({
   tier: z.enum(MODEL_SOURCE_ORDER).optional(),
   // Selection class is independent of the preserved source library/tier.
   selectionClass: z.enum(MODEL_SELECTION_ORDER).optional(),
+  sourceGame: z.string().trim().min(1).max(160).optional(),
+  sourcePlatform: z.string().trim().min(1).max(80).optional(),
+  sourceGameReleasedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((value) => modelGameReleaseDate({sourceGameReleasedAt:value}) === value, "Invalid game release date").optional(),
+  sourceGameReleaseReference: z.string().trim().min(1).max(1000).optional(),
 }).strict();
 
 /** A retained model document pins the GLB AND the complete animation/appearance binding. */
@@ -49,9 +53,17 @@ export function modelSelectionClass(source: ModelVersionSource): typeof MODEL_SE
   return source.selectionClass ?? (source.kind === "style-proxy" ? "similar-proxy" : modelSourceTier(source));
 }
 
-/** Preserve every version; use the owner order, newest first within a class. */
+/** Unknown dates sort last; upload/registration dates are not game release dates. */
+export function modelGameReleaseDate(source: {sourceGameReleasedAt?: string}): string {
+  const date = source.sourceGameReleasedAt ?? "";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return "";
+  const parsed = new Date(date + "T00:00:00Z");
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0,10) === date ? date : "";
+}
+
+/** Preserve every version; newer source games win within the same owner class. */
 export function sortModelVersions(versions: readonly ChampionModelVersion[]): ChampionModelVersion[] {
-  return [...versions].reverse().sort((a, b) => MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(a.source)) - MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(b.source)));
+  return [...versions].reverse().sort((a, b) => MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(a.source)) - MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(b.source)) || modelGameReleaseDate(b.source).localeCompare(modelGameReleaseDate(a.source)));
 }
 
 /** Eligibility changes automatic selection, never the retained dropdown list. */
