@@ -1,9 +1,9 @@
 {
  "schema": "ggd-asset-manifest@1",
- "usage": "⭐ ou99 付費模型的二進位清冊。依 CLAUDE.md 第一·四之一（owner 2026-09-08：素材本體不進 git，存 S3）——⛔ 這些 .glb **刻意不進 git**；本檔記 SHA-256 供比對，檔案本體待上傳 S3。",
- "s3Target": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/ou99/",
+ "usage": "⭐ ou99 付費模型的 glb 清冊。owner 2026-09-10 逐字:「我們上傳 git 的規則是 **成品一律上傳至 git**, 剩下半成品、來源、準備材料等都進 S3」⇒ ⭐ glb 是**成品** ⇒ 進 git;⛔ 原始 zip 與解出的 mdx/blp 是**來源/準備材料** ⇒ 進 S3。",
+ "s3Target": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/ou99-sources/",
  "localStagingDir": "content/assets/models/ou99",
- "uploadStatus": "pending",
+ "uploadStatus": "pending-sources-only",
  "producedAt": "2026-09-10T14:12:32+08:00",
  "count": 33,
  "totalBytes": 75910608,
@@ -173,5 +173,9 @@
    "bytes": 1806536,
    "sha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480"
   }
- ]
+ ],
+ "gitStatus": "committed",
+ "s3Scope": "⛔ 只放原始 zip 與 extracted/ 的 mdx+blp（來源與準備材料），⭐ 不放 glb",
+ "correctedAt": "2026-09-10T17:48:17+08:00",
+ "correctionNote": "⚠️ 我先前把 glb 排除出 git 是**讀錯規則** —— 我引用 CLAUDE.md 第一·四之一的「素材本體不進 git」,而那條講的是**來源素材庫**;成品不在其列。owner 當場更正。"
 }
