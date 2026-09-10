@@ -212,6 +212,14 @@
       ],
       "minValue": 2,
       "why": "jumps:1 = 一發連鎖閃電沒有跳，就是一發單體"
+    },
+    "maxTotalJumps": {
+      "axes": [
+        "迴圈",
+        "多段"
+      ],
+      "minValue": 2,
+      "why": "同 jumps（它就是 jumps 的**跨鏈總上限**）：上限 1 = 這次施放只跳一次 ⇒ 退化成單體，沒有段也沒有節奏"
     }
   },
   "_byKindWhy": "同一個欄位名在不同 kind 語意不同的，逐 kind 定案。⛔ 這一格贏過 fields。",
@@ -297,7 +305,13 @@
     "summon.damageMult": [],
     "summon.hpMult": [],
     "summon.onOwnerDeath": [],
-    "summon.team": []
+    "summon.team": [],
+    "chainLightning.revisit": [],
+    "applyStatus.sourceScope": [],
+    "applyStatus.lifestealMult": [],
+    "applyStatus.regenMult": [],
+    "damage.distanceScale": [],
+    "status.appliedBy": []
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
   "topLevel": {
@@ -710,7 +724,9 @@
     "onEvade": [],
     "onReflectSuccess": [],
     "onStatusApplied": [],
-    "onStunned": []
+    "onStunned": [],
+    "onUltimateHit": [],
+    "onShieldGained": []
   },
   "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
   "ignored": {

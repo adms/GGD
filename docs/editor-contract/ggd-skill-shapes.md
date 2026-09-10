@@ -402,13 +402,4 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | `(hook).on=onHeal` | 2 |
 | `applyStatus.healingTakenMult` | 2 |
 | `(hook).on=onCrowdControlReceived` | 2 |
-| `chainLightning.revisit` | 2 |
-| `chainLightning.maxTotalJumps` | 2 |
-| `applyStatus.sourceScope` | 1 |
-| `status.appliedBy` | 1 |
-| `(hook).on=onUltimateHit` | 1 |
-| `damage.distanceScale` | 1 |
-| `applyStatus.lifestealMult` | 1 |
-| `applyStatus.regenMult` | 1 |
-| `(hook).on=onShieldGained` | 1 |
 
