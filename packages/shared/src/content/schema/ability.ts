@@ -110,6 +110,36 @@ export const TOGGLE_INTERVAL_MAX_SEC = 60;
  * ⛔ 而且手動關閉與資源耗盡自動關閉走的是**同一個 onExit**，見
  * `sim/abilities/toggle.ts` 的 `exitToggle` —— 兩條路 = 兩份會各自腐爛的實作。
  */
+/**
+ * 【再次施放】（GH#1187）—— 同一槽首放後進入**有期限的後段**：阿璃 R 三段衝刺、
+ * 瑟雷西 Q 命中後沿鉤進場、鄂爾 R 撞羊改向。⭐ 這是一個**機制**（一格資料），
+ * ⛔ 不是三支技能各寫一個 if（第〇·五守則）。省略 = 沒有後段 = 舊行為逐位元組不變。
+ *
+ * 生命週期（`sim/abilities/abilitySystem.ts`）：首放 ⇒ `AbilityInstance.recast` 開窗；
+ * 窗口內再按同一槽 ⇒ 跑 `recastEffects`（缺 ⇒ 重跑 `effects`：阿璃 R 三段同一個衝刺，⛔ 不抄第二份）、次數 −1；
+ * 次數用完／窗口到期／施法者死亡 ⇒ 階段清除（⛔ 不留可濫用或永久卡住的階段）。
+ */
+export const zAbilityRecast = z
+  .object({
+    /** ⭐ 後段次數，⛔ 不含首段（阿璃 R 三段衝刺 = 2；瑟雷西 Q／鄂爾 R = 1）。 */
+    charges: z.number().int().min(1).max(9),
+    /** 首放後多久內可以按後段（秒）。到期 ⇒ 階段清除。 */
+    windowSec: z.number().min(0.1).max(60),
+    /**
+     * 開窗條件。`"always"`（預設）首放就開窗；`"onHit"` 首段**命中才開窗**（瑟雷西 Q：未命中不能重施放）
+     * —— 命中由傷害封包上的 `castInstance` 歸因，⛔ 不是猜。
+     */
+    gate: z.enum(["always", "onHit"]).optional(),
+    /**
+     * 冷卻何時開始。`"first"`（預設，⭐ 保留舊行為）首放就寫冷卻；
+     * `"end"` 等後段用完或窗口到期才寫（阿璃 R：三段衝完才進冷卻）。
+     */
+    cooldownAt: z.enum(["first", "end"]).optional(),
+    /** 每一次後段的耗魔（預設 0 —— 首放已經付過）。 */
+    costPerRecast: z.number().min(0).optional(),
+  })
+  .strict();
+
 export const zAbilityToggle = z
   .object({
     /**
@@ -819,6 +849,11 @@ export const zAbilityDef = z
     targetsEnemies: z.boolean().optional(),
     effects: z.array(zEffectDef),
     /**
+     * 【再次施放】後段跑的效果樹（GH#1187）。⛔ 沒有 `recast` 就不可以有它（守衛在 sim 側）；
+     * 有 `recast` 而沒有它 ⇒ 後段**重跑 `effects`**（同一個衝刺不抄第二份，第〇·四守則）。
+     */
+    recastEffects: z.array(zEffectDef).optional(),
+    /**
      * PERMANENT passive granted while this ability's rank > 0, rank-indexed
      * (WC3 authors passive columns per ability level). An ability with a
      * `passive` and an EMPTY `effects` array is passive-only and can never be
@@ -964,6 +999,8 @@ export const zAbilityDef = z
      * 完整語意見 {@link zAbilityToggle}。
      */
     toggle: zAbilityToggle.optional(),
+    /** 【再次施放】階段設定。完整語意見 {@link zAbilityRecast}。 */
+    recast: zAbilityRecast.optional(),
     /**
      * 【跨技能強化】—— 這支技能**指名改寫另一支技能的數字**（59-001 / 70-002 /
      * 77-002 / 92-002）。缺席 = 不強化任何東西。完整語意見 {@link zAbilityAugment}。

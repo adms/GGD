@@ -385,6 +385,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           ab.slots.E.cooldownRemainingTicks,
           ab.slots.R.cooldownRemainingTicks,
         ]);
+        // ⭐ GH#1187【再次施放】—— 每槽剩餘後段次數／窗口 tick（0 = 不在後段）。
+        //   ⚠️ 這兩行是那兩個 wire 欄位**唯一的寫端**：沒有它，客戶端永遠讀到 0，
+        //   而「有沒有後段」在畫面上跟沒有這個機制一模一樣（失敗形態②）。
+        setArray(ss.recastCharges, [ab.slots.Q, ab.slots.W, ab.slots.E, ab.slots.R].map((s) => s.recast?.chargesLeft ?? 0));
+        setArray(ss.recastWindow, [ab.slots.Q, ab.slots.W, ab.slots.E, ab.slots.R].map((s) =>
+          s.recast ? Math.max(0, s.recast.untilTick - world.tick) : 0));
         // ⭐【開關型技能開著沒有】GH#546 —— 風王結界那一族。
         //
         // ⚠️ 在這一行存在之前，`SeatState.toggleMask` 的**寫端一個都沒有**：欄位在

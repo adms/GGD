@@ -4,7 +4,7 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`daccedce`
+capability 指紋：`dbeac382`
 
 ## 一眼看完
 
@@ -28,7 +28,7 @@ capability 指紋：`daccedce`
 ## 兩個編輯器的表單怎麼量的
 
 - **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1184 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
-- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 177 顆有收據；收據裡沒有的才退回代理值。
+- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 178 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
 ## `effect`（49）
@@ -143,7 +143,7 @@ capability 指紋：`daccedce`
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
-| `hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d` | 1 | 0 | 0 | ⛔ | ⛔ | 0 |
+| `hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `tpl-beam-roll` | 14 | 0 | 2 | ⛔ | ✅ | 13 |
 | `tpl-dragon-quake` | 7 | 0 | 0 | ⛔ | ✅ | 0 |
@@ -220,7 +220,7 @@ capability 指紋：`daccedce`
 | `sub.bladestorm-8hit` 八連斬（連段＋收尾） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
 | `sub.dive-dash-thunder` 隱身俯衝（落地雷擊） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
 | `sub.doom-mark-cast` 末日印記（詠唱標記） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
-| `sub.forward-twin-blast` 雙段爆破（小死＋大爆） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
+| `sub.forward-twin-blast` 雙段爆破（小死＋大爆） | 4 | 0 | 0 | ⛔ | ⛔ | 9 |
 
 ## `vfx-prim`（13）
 

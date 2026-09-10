@@ -280,6 +280,13 @@ export interface AbilityDef {
    */
   toggle?: AbilityToggle;
   /**
+   * 【再次施放】（GH#1187）—— 首放成功後 `windowSec` 內再按同一格 = 後段：⛔ 不撞冷卻、
+   * 耗魔走 `costPerRecast`、效果走 `recastEffects`（缺 ⇒ 重跑 `effects`）。
+   * Mirrors `zAbilityRecast` in content/schema/ability.ts. 三支：阿璃 R · 瑟雷西 Q（onHit）· 鄂爾 R。
+   */
+  recast?: AbilityRecast;
+  recastEffects?: EffectDef[];
+  /**
    * ⭐ G6 —— 【跨技能強化】：這支技能改寫**另一支**技能的數字
    *（70-002 / 77-002 / 92-002 那一族的 EX）。Mirrors `zAbilityAugment`；
    * ⛔ 授權契約（欄位語意、界、為什麼操作是 enum 而不是 JSON Pointer）住在
@@ -299,6 +306,16 @@ export interface AbilityDef {
  * 【切換】的執行期形狀 —— mirrors `zAbilityToggle` (content/schema/ability.ts).
  * ⛔ 語意寫在 schema 上，不在這裡重複一份（兩份會分岔）。
  */
+export interface AbilityRecast {
+  charges: number;
+  windowSec: number;
+  /** `onHit`：首段要先打中任何一個單位，後段才放得出來（瑟雷西 Q）。缺 = always */
+  gate?: "always" | "onHit";
+  /** `end`：冷卻等最後一段放完（或窗口到期）才開始跑。缺 = first */
+  cooldownAt?: "first" | "end";
+  costPerRecast?: number;
+}
+
 export interface AbilityToggle {
   upkeepCadence: "none" | "perAttack" | "perSecond";
   upkeepCost: readonly number[];

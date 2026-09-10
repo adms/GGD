@@ -343,9 +343,12 @@ const MANA_UNIT = String.raw`(?:\[MP]|MP|魔力|法力)`;
 
 export const NUM_PATTERNS: readonly NumPattern[] = [
   // 45秒冷卻 / 60/50/40/30秒冷卻時間
-  { slot: "cd", re: new RegExp(`(${RANKS})(\\s*秒\\s*冷卻(?:時間)?)`, "g"), num: 1 },
+  // ⚠️ 「內置冷卻 3 秒」是**被動 hook 的 internalCooldown**（`passive.ranks[].hooks[].internalCooldown`），
+  //   ⛔ 不是 `cooldown[]` —— b2-matthias.passive 卡面寫 3、cooldown 是 [0]，兩個都對，住在不同格。
+  //   ⇒ 前面接「內置／內建／內部」的一律不算 cd 宣稱（那一軸今天沒有佔位符，留字面值）。
+  { slot: "cd", re: new RegExp(`(?<!內[置建部])(${RANKS})(\\s*秒\\s*(?<!內[置建部])冷卻(?:時間)?)`, "g"), num: 1 },
   // 冷卻時間30秒 / 冷卻 30/25/20/15 秒
-  { slot: "cd", re: new RegExp(`(冷卻(?:時間)?\\s*[:：]?\\s*)(${RANKS})(\\s*秒)`, "g"), num: 2 },
+  { slot: "cd", re: new RegExp(`(?<!內[置建部])(冷卻(?:時間)?\\s*[:：]?\\s*)(${RANKS})(\\s*秒)`, "g"), num: 2 },
   // 消耗MP150/250/350/450 / 耗[MP] 50
   {
     slot: "mp",

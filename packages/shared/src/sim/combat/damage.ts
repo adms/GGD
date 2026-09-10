@@ -34,6 +34,7 @@ import { normalize, sub, lenSq, dist } from "../math/vec2";
 import { knockbackRaw, afterGap } from "../combatFeel";
 import { Abilities, Champions } from "../content/registry";
 import { noteAbilityConnect } from "../abilities/abilityRecovery";
+import { markRecastHit } from "../abilities/recast";
 import { breakStatusesOnDamage } from "../statusBreak";
 import { woundMult } from "../grievousWounds";
 import { weaknessMult } from "../weakness";
@@ -1450,6 +1451,11 @@ export function combatResolveSystem(world: SimWorld): void {
       // Placed before applyImpact only so the free-to-act state is settled
       // before the impact reactions read the world; neither depends on the other.
       noteAbilityConnect(world, pkt.source, pkt.target, pkt.origin);
+      // ⭐ GH#1187【再次施放】`gate:"onHit"` —— 首段的那一次施放打中了誰（瑟雷西 Q 鉤到人才能拉）。
+      if (pkt.castInstance) {
+        const casterSlots = world.abilities.get(pkt.source)?.slots;
+        if (casterSlots) markRecastHit(casterSlots, pkt.castInstance, pkt.target);
+      }
 
       // on-impact reactions (hitstop/knockback/knockdown/guardBreak/hitImpact)
       applyImpact(world, pkt.source, pkt.target, impact, pkt.type, impactGateTypeOf(pkt), blocked, guardBreak, pkt.crit, killingBlow, pkt.origin);

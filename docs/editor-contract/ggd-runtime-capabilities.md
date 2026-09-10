@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `daccedce`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `dbeac382`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -184,7 +184,7 @@
 
 | 寫在哪 | 欄位 |
 |---|---|
-| `ability@1` | `augment` · `castTimeSec` · `castTimeTier` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `persistentVfx` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `rangeUnlimited` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `statusCost` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers` |
+| `ability@1` | `augment` · `castTimeSec` · `castTimeTier` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `persistentVfx` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `rangeUnlimited` · `recast` · `recastEffects` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `statusCost` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers` |
 | `ability@1.marks[]` | `durationSec` · `initial` · `lethal` · `markId` · `max` · `perStackLost` · `resetOn` · `roundDelta` |
 | `projectile@1` | `flight` · `hitRadius` · `id` · `maxRange` · `meshShape` · `pierce` · `schema` · `speed` · `vfxKey` |
 | `status-effect@1` | `alpha` · `description` · `iconKey` · `id` · `name` · `polarity` · `schema` · `tags` · `tint` |
@@ -224,9 +224,9 @@
 
 `affects` · `hooks` · `includeSelf` · `key` · `lingerSec` · `modifiers` · `radius` · `scaleByNearby`
 
-**`ability@1` 頂層欄位**（39）
+**`ability@1` 頂層欄位**（41）
 
-`augment` · `castTimeSec` · `castTimeTier` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `persistentVfx` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `rangeUnlimited` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `statusCost` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers`
+`augment` · `castTimeSec` · `castTimeTier` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `persistentVfx` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `rangeUnlimited` · `recast` · `recastEffects` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `statusCost` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers`
 
 ## 10. ⭐ 一次產出很多支的時候 —— 一件事一份檔
 

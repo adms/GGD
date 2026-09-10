@@ -30,7 +30,7 @@
       },
       "small": {
         "path": "assets/models/guardians/guardian_stone-small.glb",
-        "bytes": 54792,
+        "bytes": 54776,
         "triangles": 1204
       }
     },
@@ -66,7 +66,7 @@
       },
       "small": {
         "path": "assets/models/guardians/guardian_treant_trunk-small.glb",
-        "bytes": 7056,
+        "bytes": 7040,
         "triangles": 70
       }
     },
@@ -205,12 +205,12 @@
       },
       "small": {
         "path": "assets/models/hex/waterlily-small.glb",
-        "bytes": 5468,
+        "bytes": 5452,
         "triangles": 18
       }
     },
     "assets/models/imported/bulbasaur.glb": {
-      "bytes": 450864,
+      "bytes": 452100,
       "triangles": 250,
       "quarantine": [
         "small"
@@ -246,21 +246,21 @@
       }
     },
     "assets/models/imported/collision.glb": {
-      "bytes": 1148,
+      "bytes": 1112,
       "triangles": 0,
       "mid": {
         "path": "assets/models/imported/collision-mid.glb",
-        "bytes": 1164,
+        "bytes": 1108,
         "triangles": 0
       },
       "small": {
         "path": "assets/models/imported/collision-small.glb",
-        "bytes": 1164,
+        "bytes": 1108,
         "triangles": 0
       }
     },
     "assets/models/imported/fox.glb": {
-      "bytes": 204752,
+      "bytes": 206248,
       "triangles": 2199,
       "mid": {
         "path": "assets/models/imported/fox-mid.glb",
@@ -274,7 +274,7 @@
       }
     },
     "assets/models/imported/fox2.glb": {
-      "bytes": 219376,
+      "bytes": 220876,
       "triangles": 2199,
       "mid": {
         "path": "assets/models/imported/fox2-mid.glb",
@@ -288,7 +288,7 @@
       }
     },
     "assets/models/imported/goku.glb": {
-      "bytes": 251648,
+      "bytes": 252672,
       "triangles": 1250,
       "mid": {
         "path": "assets/models/imported/goku-mid.glb",
@@ -302,7 +302,7 @@
       }
     },
     "assets/models/imported/gumdam.glb": {
-      "bytes": 284688,
+      "bytes": 286520,
       "triangles": 474,
       "mid": {
         "path": "assets/models/imported/gumdam-mid.glb",
@@ -316,7 +316,7 @@
       }
     },
     "assets/models/imported/herobiggon.glb": {
-      "bytes": 217568,
+      "bytes": 219240,
       "triangles": 564,
       "quarantine": [
         "small"
@@ -334,7 +334,7 @@
       }
     },
     "assets/models/imported/herobuu.glb": {
-      "bytes": 226920,
+      "bytes": 228584,
       "triangles": 590,
       "mid": {
         "path": "assets/models/imported/herobuu-mid.glb",
@@ -348,7 +348,7 @@
       }
     },
     "assets/models/imported/herofate.glb": {
-      "bytes": 330916,
+      "bytes": 333944,
       "triangles": 2372,
       "mid": {
         "path": "assets/models/imported/herofate-mid.glb",
@@ -362,7 +362,7 @@
       }
     },
     "assets/models/imported/herogirl.glb": {
-      "bytes": 272392,
+      "bytes": 275020,
       "triangles": 1397,
       "quarantine": [
         "small"
@@ -380,7 +380,7 @@
       }
     },
     "assets/models/imported/herohanzouhattori.glb": {
-      "bytes": 262864,
+      "bytes": 265320,
       "triangles": 719,
       "quarantine": [
         "mid",
@@ -399,7 +399,7 @@
       }
     },
     "assets/models/imported/herohehi.glb": {
-      "bytes": 226252,
+      "bytes": 228432,
       "triangles": 1296,
       "mid": {
         "path": "assets/models/imported/herohehi-mid.glb",
@@ -413,7 +413,7 @@
       }
     },
     "assets/models/imported/herohimurakenshin.glb": {
-      "bytes": 345644,
+      "bytes": 349536,
       "triangles": 590,
       "mid": {
         "path": "assets/models/imported/herohimurakenshin-mid.glb",
@@ -427,7 +427,7 @@
       }
     },
     "assets/models/imported/heroichigo.glb": {
-      "bytes": 479956,
+      "bytes": 481884,
       "triangles": 2061,
       "quarantine": [
         "mid",
@@ -446,7 +446,7 @@
       }
     },
     "assets/models/imported/herokunoichi.glb": {
-      "bytes": 265512,
+      "bytes": 268140,
       "triangles": 1397,
       "quarantine": [
         "small"
@@ -464,7 +464,7 @@
       }
     },
     "assets/models/imported/herokyo.glb": {
-      "bytes": 263584,
+      "bytes": 266016,
       "triangles": 826,
       "mid": {
         "path": "assets/models/imported/herokyo-mid.glb",
@@ -478,7 +478,7 @@
       }
     },
     "assets/models/imported/herolight.glb": {
-      "bytes": 148276,
+      "bytes": 150040,
       "triangles": 490,
       "quarantine": [
         "mid",
@@ -497,7 +497,7 @@
       }
     },
     "assets/models/imported/herolingtong.glb": {
-      "bytes": 280824,
+      "bytes": 282964,
       "triangles": 682,
       "quarantine": [
         "small"
@@ -533,7 +533,7 @@
       }
     },
     "assets/models/imported/heromusashimiyamoto.glb": {
-      "bytes": 264104,
+      "bytes": 266740,
       "triangles": 1296,
       "mid": {
         "path": "assets/models/imported/heromusashimiyamoto-mid.glb",
@@ -547,7 +547,7 @@
       }
     },
     "assets/models/imported/herooichi.glb": {
-      "bytes": 238616,
+      "bytes": 240152,
       "triangles": 1650,
       "mid": {
         "path": "assets/models/imported/herooichi-mid.glb",
@@ -561,7 +561,7 @@
       }
     },
     "assets/models/imported/heropika.glb": {
-      "bytes": 285172,
+      "bytes": 286084,
       "triangles": 588,
       "mid": {
         "path": "assets/models/imported/heropika-mid.glb",
@@ -575,7 +575,7 @@
       }
     },
     "assets/models/imported/heropikachu.glb": {
-      "bytes": 80760,
+      "bytes": 81308,
       "triangles": 416,
       "mid": {
         "path": "assets/models/imported/heropikachu-mid.glb",
@@ -589,7 +589,7 @@
       }
     },
     "assets/models/imported/herorider.glb": {
-      "bytes": 186756,
+      "bytes": 188784,
       "triangles": 1205,
       "mid": {
         "path": "assets/models/imported/herorider-mid.glb",
@@ -621,7 +621,7 @@
       }
     },
     "assets/models/imported/herosasuke.glb": {
-      "bytes": 286084,
+      "bytes": 287640,
       "triangles": 988,
       "quarantine": [
         "small"
@@ -639,7 +639,7 @@
       }
     },
     "assets/models/imported/herosephiroth.glb": {
-      "bytes": 273060,
+      "bytes": 275320,
       "triangles": 654,
       "mid": {
         "path": "assets/models/imported/herosephiroth-mid.glb",
@@ -653,7 +653,7 @@
       }
     },
     "assets/models/imported/heroshana.glb": {
-      "bytes": 240920,
+      "bytes": 243120,
       "triangles": 1498,
       "quarantine": [
         "mid",
@@ -672,7 +672,7 @@
       }
     },
     "assets/models/imported/heroshanawingsmall.glb": {
-      "bytes": 27736,
+      "bytes": 27836,
       "triangles": 8,
       "mid": {
         "path": "assets/models/imported/heroshanawingsmall-mid.glb",
@@ -686,7 +686,7 @@
       }
     },
     "assets/models/imported/herotoshiiemaeda.glb": {
-      "bytes": 252412,
+      "bytes": 254404,
       "triangles": 1125,
       "quarantine": [
         "small"
@@ -704,7 +704,7 @@
       }
     },
     "assets/models/imported/heroxelloss.glb": {
-      "bytes": 238712,
+      "bytes": 241508,
       "triangles": 941,
       "quarantine": [
         "small"
@@ -722,7 +722,7 @@
       }
     },
     "assets/models/imported/horse.glb": {
-      "bytes": 271228,
+      "bytes": 274316,
       "triangles": 210,
       "quarantine": [
         "small"
@@ -740,7 +740,7 @@
       }
     },
     "assets/models/imported/horsehead.glb": {
-      "bytes": 108052,
+      "bytes": 108220,
       "triangles": 40,
       "mid": {
         "path": "assets/models/imported/horsehead-mid.glb",
@@ -754,7 +754,7 @@
       }
     },
     "assets/models/imported/hzyn.glb": {
-      "bytes": 360952,
+      "bytes": 363540,
       "triangles": 1813,
       "quarantine": [
         "small"
@@ -772,7 +772,7 @@
       }
     },
     "assets/models/imported/japanesecherry.glb": {
-      "bytes": 101128,
+      "bytes": 101240,
       "triangles": 74,
       "mid": {
         "path": "assets/models/imported/japanesecherry-mid.glb",
@@ -786,7 +786,7 @@
       }
     },
     "assets/models/imported/kikyou.glb": {
-      "bytes": 205672,
+      "bytes": 207056,
       "triangles": 722,
       "quarantine": [
         "small"
@@ -804,7 +804,7 @@
       }
     },
     "assets/models/imported/lgcr.glb": {
-      "bytes": 211932,
+      "bytes": 212720,
       "triangles": 1296,
       "mid": {
         "path": "assets/models/imported/lgcr-mid.glb",
@@ -818,7 +818,7 @@
       }
     },
     "assets/models/imported/linainvers.glb": {
-      "bytes": 229028,
+      "bytes": 230448,
       "triangles": 808,
       "quarantine": [
         "small"
@@ -836,7 +836,7 @@
       }
     },
     "assets/models/imported/linkstik.glb": {
-      "bytes": 206392,
+      "bytes": 207624,
       "triangles": 380,
       "quarantine": [
         "mid",
@@ -855,7 +855,7 @@
       }
     },
     "assets/models/imported/long.glb": {
-      "bytes": 228556,
+      "bytes": 230244,
       "triangles": 818,
       "quarantine": [
         "small"
@@ -873,7 +873,7 @@
       }
     },
     "assets/models/imported/lubu.glb": {
-      "bytes": 577624,
+      "bytes": 579920,
       "triangles": 1525,
       "mid": {
         "path": "assets/models/imported/lubu-mid.glb",
@@ -887,7 +887,7 @@
       }
     },
     "assets/models/imported/luffe.glb": {
-      "bytes": 314236,
+      "bytes": 316016,
       "triangles": 1889,
       "mid": {
         "path": "assets/models/imported/luffe-mid.glb",
@@ -915,7 +915,7 @@
       }
     },
     "assets/models/imported/mfls.glb": {
-      "bytes": 260044,
+      "bytes": 262540,
       "triangles": 1604,
       "mid": {
         "path": "assets/models/imported/mfls-mid.glb",
@@ -929,7 +929,7 @@
       }
     },
     "assets/models/imported/negi.glb": {
-      "bytes": 324180,
+      "bytes": 325568,
       "triangles": 855,
       "quarantine": [
         "small"
@@ -947,7 +947,7 @@
       }
     },
     "assets/models/imported/niya.glb": {
-      "bytes": 338552,
+      "bytes": 341448,
       "triangles": 2462,
       "quarantine": [
         "mid",
@@ -984,7 +984,7 @@
       }
     },
     "assets/models/imported/pika.glb": {
-      "bytes": 316036,
+      "bytes": 317592,
       "triangles": 790,
       "mid": {
         "path": "assets/models/imported/pika-mid.glb",
@@ -998,7 +998,7 @@
       }
     },
     "assets/models/imported/rabbit.glb": {
-      "bytes": 172036,
+      "bytes": 172996,
       "triangles": 520,
       "mid": {
         "path": "assets/models/imported/rabbit-mid.glb",
@@ -1030,7 +1030,7 @@
       }
     },
     "assets/models/imported/sd2.glb": {
-      "bytes": 264488,
+      "bytes": 264736,
       "triangles": 836,
       "mid": {
         "path": "assets/models/imported/sd2-mid.glb",
@@ -1044,7 +1044,7 @@
       }
     },
     "assets/models/imported/sesshomaru.glb": {
-      "bytes": 333424,
+      "bytes": 335208,
       "triangles": 566,
       "quarantine": [
         "small"
@@ -1062,7 +1062,7 @@
       }
     },
     "assets/models/imported/ye-wuqi1.glb": {
-      "bytes": 221780,
+      "bytes": 222868,
       "triangles": 884,
       "mid": {
         "path": "assets/models/imported/ye-wuqi1-mid.glb",
@@ -1076,7 +1076,7 @@
       }
     },
     "assets/models/imported/zy3.glb": {
-      "bytes": 447428,
+      "bytes": 452340,
       "triangles": 1335,
       "quarantine": [
         "small"

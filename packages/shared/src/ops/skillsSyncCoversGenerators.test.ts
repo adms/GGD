@@ -242,6 +242,11 @@ const EXEMPT: Record<string, string> = {
   // ⛔ **無窮遞迴**（skills:check → ship:check → skills:check）。
   // 它自己的閘是 `shipGateScript.test.ts`（驗「每一包 vitest 都在裡面」等三個關係）。
   "ship:check": "**出貨聚合指令本身** —— 它*跑* skills:check，放進去會遞迴；它自己的閘是 shipGateScript.test.ts",
+  "model:intake:check":
+    "⭐ **純檢查、0 個產物**（`tools/w3x-import/model_intake.py` 唯一的 write 是 `tempfile.NamedTemporaryFile` 的" +
+    "暫存 gltf-validator 腳本，跑完即丟，實查 2026-09-11）。它驗的是**每一顆匯入 GLB 與 `content/config/model-lod.json` " +
+    "預算的關係**（貼圖 256 上限 · 通道 · 多邊形），⛔ 不是新鮮度閘 —— 沒有東西會因為技能改動而過期。" +
+    "反駁法：哪天 `--merge` 的合併結果寫回 `content/`，這一列就要刪掉並給它一支 `model:intake:build` 接進 skills:sync。",
 };
 
 /**
