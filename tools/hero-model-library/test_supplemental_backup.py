@@ -188,6 +188,35 @@ class SupplementalBackup(unittest.TestCase):
             self.run_record()
         self.assertEqual(self.catalogs(), before)
 
+    def test_primary_snapshot_replaces_only_not_uploaded_placeholder(self):
+        downloads, index = self.decoded()
+        source = downloads['publicSources'][0]
+        source['backup'] = {'status': 'not-uploaded', 'readbackVerified': False}
+        index['sources'] = []
+        (self.base / 'download-sources.json').write_text(json.dumps(downloads))
+        (self.base / 'public-source-files.json').write_text(json.dumps(index))
+        args = [str(self.receipt), '--id', 'original-source', '--source-id', 'original-source',
+                '--role', 'model-conversion-backup', '--primary-source-backup']
+        with contextlib.redirect_stdout(io.StringIO()):
+            main(args, repo=self.repo)
+        downloads, index = self.decoded()
+        primary = downloads['publicSources'][0]['backup']
+        self.assertEqual(primary['sha256'], sha(self.receipt.with_name('source.tar.gz')))
+        self.assertTrue(primary['fullReadbackVerified'])
+        self.assertEqual(downloads['publicSources'][0]['publicationStatus'], 's3-readback-verified')
+        self.assertEqual(index['sources'][0]['id'], 'original-source')
+
+    def test_primary_snapshot_does_not_replace_an_existing_archive(self):
+        downloads, index = self.decoded()
+        index['sources'] = []
+        (self.base / 'public-source-files.json').write_text(json.dumps(index))
+        before = self.catalogs()
+        args = [str(self.receipt), '--id', 'original-source', '--source-id', 'original-source',
+                '--role', 'model-conversion-backup', '--primary-source-backup']
+        with self.assertRaisesRegex(ValueError, 'Different primary backup'):
+            main(args, repo=self.repo)
+        self.assertEqual(self.catalogs(), before)
+
 
 if __name__ == '__main__':
     unittest.main()

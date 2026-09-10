@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T05:01:51+08:00",
-  "inputsSha256": "8bd4a7a5c30de8fab71b9f68fb8cfbfff1b5d38e8bebe5a8afe03e43c8857f54",
+  "generatedAt": "2026-09-11T05:17:43+08:00",
+  "inputsSha256": "2746aa53192b4edb51fc44a788ae9fe001abe0033b0d0f261a70195390e98aef",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -32677,7 +32677,7 @@
             }
           ],
           "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
-          "publicationStatus": "local-only-not-uploaded",
+          "publicationStatus": "s3-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-standardization",
@@ -32685,8 +32685,14 @@
           },
           "verification": "原包100817444 bytes，SHA與完整解包逐檔紀錄可查；26 mesh／126007 triangles／241骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
           "backup": {
-            "status": "not-uploaded",
-            "readbackVerified": false
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-iori-whitemagesunny-raw/5f6bd77296d0c47ee1ac857fa25e12d14d1f46d1841d149f1a20beb8a7f7bff4.tar.gz",
+            "bytes": 203427402,
+            "sha256": "5f6bd77296d0c47ee1ac857fa25e12d14d1f46d1841d149f1a20beb8a7f7bff4",
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true
           },
           "audioFileIndex": null
         }
@@ -33208,7 +33214,7 @@
             }
           ],
           "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
-          "publicationStatus": "local-only-not-uploaded",
+          "publicationStatus": "s3-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-standardization",
@@ -33216,8 +33222,14 @@
           },
           "verification": "原包79735587 bytes，SHA與完整解包逐檔紀錄可查；21 mesh／116939 triangles／319骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
           "backup": {
-            "status": "not-uploaded",
-            "readbackVerified": false
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-whitemagesunny-raw/ae01396cb75dfaf053363b8bd51d2fa56500c75208f1c2693b8e8c654ccbaac8.tar.gz",
+            "bytes": 170515585,
+            "sha256": "ae01396cb75dfaf053363b8bd51d2fa56500c75208f1c2693b8e8c654ccbaac8",
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true
           },
           "audioFileIndex": null
         }
@@ -94647,7 +94659,7 @@
           }
         ],
         "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
-        "publicationStatus": "local-only-not-uploaded",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-standardization",
@@ -94655,8 +94667,14 @@
         },
         "verification": "原包79735587 bytes，SHA與完整解包逐檔紀錄可查；21 mesh／116939 triangles／319骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
         "backup": {
-          "status": "not-uploaded",
-          "readbackVerified": false
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-whitemagesunny-raw/ae01396cb75dfaf053363b8bd51d2fa56500c75208f1c2693b8e8c654ccbaac8.tar.gz",
+          "bytes": 170515585,
+          "sha256": "ae01396cb75dfaf053363b8bd51d2fa56500c75208f1c2693b8e8c654ccbaac8",
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true
         },
         "audioFileIndex": null
       },
@@ -94748,7 +94766,7 @@
           }
         ],
         "sourceLicense": "Property of SNK; author says they do not own original content. Raw archive offered via public Drive link; separate enhanced Blend available via Patreon was not acquired.",
-        "publicationStatus": "local-only-not-uploaded",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-standardization",
@@ -94756,8 +94774,14 @@
         },
         "verification": "原包100817444 bytes，SHA與完整解包逐檔紀錄可查；26 mesh／126007 triangles／241骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
         "backup": {
-          "status": "not-uploaded",
-          "readbackVerified": false
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-iori-whitemagesunny-raw/5f6bd77296d0c47ee1ac857fa25e12d14d1f46d1841d149f1a20beb8a7f7bff4.tar.gz",
+          "bytes": 203427402,
+          "sha256": "5f6bd77296d0c47ee1ac857fa25e12d14d1f46d1841d149f1a20beb8a7f7bff4",
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true
         },
         "audioFileIndex": null
       },

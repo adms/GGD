@@ -78,7 +78,7 @@ def main(argv=None, repo=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('receipt', type=Path)
     parser.add_argument('--id', required=True)
-    parser.add_argument('--role', choices=['model-conversion-backup', 'audio-conversion-backup', 'integration-evidence-backup'], required=True)
+    parser.add_argument('--role', choices=['source-intake-backup', 'model-conversion-backup', 'audio-conversion-backup', 'integration-evidence-backup'], required=True)
     parser.add_argument('--source-id')
     parser.add_argument('--primary-source-backup', action='store_true',
                         help='Attach this verified archive as the source primary backup; requires --id == --source-id.')
@@ -164,7 +164,11 @@ def main(argv=None, repo=None):
                                                     'archiveMemberRoot', 'readbackVerified',
                                                     'fullReadbackVerified', 's3ReadbackVerified']}
             prior = source.get('backup')
-            if prior is not None and prior != primary:
+            # A source that has never reached S3 uses this explicit placeholder.
+            # It is not an older immutable archive and may be replaced only by
+            # the full verified primary snapshot assembled above.
+            not_uploaded = {'status': 'not-uploaded', 'readbackVerified': False}
+            if prior is not None and prior != primary and prior != not_uploaded:
                 raise ValueError('Different primary backup already exists for source')
             source['backup'] = primary
             source['publicationStatus'] = 's3-readback-verified'
