@@ -16,7 +16,7 @@ import {
   TICK_HZ,
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
-import { recordBossKill, shouldEnterRound11 } from "@ggd/shared/sim/round11Gate";
+import { recordBossKill, round11EndReason, shouldEnterRound11 } from "@ggd/shared/sim/round11Gate";
 import {
   round11MobRulesPatch,
   round11AliveCap,
@@ -3535,8 +3535,63 @@ export class MatchController {
    * same champion. Ties are compared on `>` with a symmetric coin, so the answer
    * cannot depend on iteration order beyond the ascending-team-id list.
    */
+  /**
+   * ⭐⭐ 第十一回合**還有幾個活著的英雄**（GH#1151 A 第 4 條的分母）。
+   *
+   * ⛔⛔ 票逐字警告：「全滅判定的分母是**存活的英雄**，⛔ 不是實體數 ——
+   * **屍體都變成王了**」。⇒ ⭐ 換邊過的座位一律**不算**：
+   * 牠的實體還活著（而且血是滿的），⛔ 但牠已經不是一個活著的英雄。
+   * ⚠️ ⭐ 少了這半句，`deadPlayersControlBoss` 一打開，
+   *   `teamAliveCount()` 會永遠 > 0 ⇒ ⛔ **第十一回合永遠不會結束**。
+   */
+  private round11LivingChampions(team: TeamId | null, zone: number): number {
+    let n = 0;
+    for (const [seatId, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      if (team !== null && seat.teamId !== team) continue;
+      if (this.round11Possessions.has(seatId)) continue; // ⛔ 牠是王,⛔ 不是英雄
+      const t = this.world.transform.get(seat.entityId);
+      if (!t || t.zone !== zone) continue;
+      if (this.world.health.get(seat.entityId)?.alive) n++;
+    }
+    return n;
+  }
+
   private checkRoyaleEnd(bout: RoyaleBout, timerExpired: boolean): boolean {
     if (this.royaleWinner !== null) return true;
+    // ⭐⭐ GH#1151 A 第 4 條 —— 第十一回合有**自己的**結束條件（生存局，
+    //   ⛔ 不是「最後一隊站著」）：時間到，或**活著的英雄歸零**。
+    //   ⚠️ ⭐ 判定住 `sim/round11Gate.round11EndReason`（純函式，⭐ 時間優先）。
+    if (this.round11Round === this.phase.round) {
+      const reason = round11EndReason(
+        this.world.mobTicks / TICK_HZ,
+        this.round11LivingChampions(null, bout.zone),
+        this.rules.round11.durationSec,
+      );
+      if (reason === null) return false; // ⛔ 還沒結束 —— ⛔ 也不要走下面那些提前結束的路
+      // ⭐ 這一局的名次 ＝ 還有活著英雄的隊伍裡血量最高的；
+      //   ⭐ 全滅 ⇒ 沿用既有的「撐到最後的那一隊」，⛔ 不是憑空擲一個。
+      const alive = bout.teams.filter((t) => this.round11LivingChampions(t, bout.zone) > 0);
+      if (alive.length === 0) {
+        const pending = this.pendingDuelWinners.get(bout.zone);
+        return this.recordRoyaleWinner(
+          bout,
+          pending ?? bout.teams[this.world.rng.int(bout.teams.length)]!,
+        );
+      }
+      let best = alive[0]!;
+      let bestPct = this.teamHpPct(best, bout.zone);
+      for (const t of alive.slice(1)) {
+        const pct = this.teamHpPct(t, bout.zone);
+        if (pct > bestPct || (pct === bestPct && this.world.rng.chance(0.5))) {
+          best = t;
+          bestPct = pct;
+        }
+      }
+      // ⭐ `recordRoyaleWinner` 自己是**只記一次**的（上面第一行的 `royaleWinner !== null`）
+      //   ⇒ ⛔ 這裡⛔ 不需要第二個「結算過了沒」的旗標（第〇·四守則：一個住處）。
+      return this.recordRoyaleWinner(bout, best);
+    }
     const standing = bout.teams.filter((t) => this.teamAliveCount(t, bout.zone) > 0);
     if (standing.length === 1) {
       // #L2, same two owner rules as the duel path (see checkCombatEnd): the

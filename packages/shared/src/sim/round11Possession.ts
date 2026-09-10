@@ -130,14 +130,16 @@ export function round11ReconnectState(
 }
 
 /**
- * ⭐⭐ 生存分數在**英雄死亡那一刻凍結**（票驗收④）。
+ * ⛔⛔ 這裡曾經有一支 `round11ScoreAccrual(possessing, delta)`。
  *
- * ⛔⛔ 這一支存在的唯一理由是「⛔ 回刷人類分數」那條濫用：
- * ⭐ 開王期間打死人**不會**讓生存分數上升。
+ * ⭐ 它表達的規則（開王期間 0 增量）**仍然成立** —— ⛔ 但它的住處不是這裡：
+ * 出貨的做法是**在換邊那一刻抄一份 `MatchStats`**，之後
+ * `MatchController.rankEntriesBySeat()`（⭐ **唯一**一份分數組裝）服務那一份。
+ *
+ * ⇒ ⭐ 留著它就是同一條規則的**第二個住處**（第〇·四守則），
+ * ⚠️ 而它**沒有任何呼叫端** —— 一個被守衛守著、卻不影響任何一場比賽的函式，
+ * ⭐ 正是「一格沒有人讀的參數」在程式碼上的樣子。
  */
-export function round11ScoreAccrual(possessing: boolean, delta: number): number {
-  return possessing ? 0 : delta;
-}
 
 /**
  * ⭐ 王擊倒一名英雄 ⇒ **生命回滿**（票驗收⑤）。

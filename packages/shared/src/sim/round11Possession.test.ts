@@ -8,7 +8,6 @@ import {
   round11ConvertibleSeats,
   round11DenyPossession,
   round11ReconnectState,
-  round11ScoreAccrual,
   round11KillRewardHp,
   round11BumpBossKills,
   type Round11Seat,
@@ -114,10 +113,9 @@ describe("重連 —— ⛔ 不可以趁機**重生第二具**", () => {
 });
 
 describe("驗收④⑤⑦ 分數凍結 · 擊倒回滿 · 獨立統計", () => {
-  it("⛔⛔ 驗收④：開王期間打死人 ⇒ 生存分數 **0 增量**", () => {
-    expect(round11ScoreAccrual(true, 250)).toBe(0);
-    expect(round11ScoreAccrual(false, 250), "⭐ 還在開英雄 ⇒ 照常累積").toBe(250);
-  });
+  // ⛔ 「開王期間 0 增量」那一條**不在這裡驗** —— 它的住處是換邊那一刻的
+  //   `MatchStats` 快照,⭐ 而守衛是 `round11Possession.test.ts`(game-server 側)
+  //   的 A/B:同一個座位、同樣的灌注、只差那一格開關。
 
   it("⭐⭐ 驗收⑤：擊倒回滿吃的是**夾限之後**的 maxHp，⛔ 不是基礎值", () => {
     // ⚠️ 票文:「⛔ 不可以被王的強度夾限夾掉」——⭐ 夾限管 maxHp 多大,這一條把 hp 拉到那個 maxHp。
@@ -137,7 +135,6 @@ describe("驗收④⑤⑦ 分數凍結 · 擊倒回滿 · 獨立統計", () => {
     expect(round11BumpBossKills(tally, 3)).toBe(2);
     expect(round11BumpBossKills(tally, 7)).toBe(1);
     expect(tally.get(3)).toBe(2);
-    // ⭐ 而生存分數那一欄**沒有被它改動** —— 同一個座位仍然是 0 增量。
-    expect(round11ScoreAccrual(true, 999)).toBe(0);
+    // ⭐ 而它**只回計數**,⛔ 不回任何分數 —— 分數那一半由 game-server 側的守衛管。
   });
 });
