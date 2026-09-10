@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753702,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-13-20260907.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/community-review-13-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -51,7 +51,7 @@
     "seconds": 6.598821,
     "lufs": null,
     "hash": "3f54040d3742bbf3b5f6028b14fbff288fd5a5ad9b6d21929a7d58f308e6e278",
-    "at": 1789048363788
+    "at": 1789067125560
    },
    "lastError": null
   },
@@ -71,7 +71,7 @@
     "seconds": 5.330431,
     "lufs": null,
     "hash": "317b4d872674dd9d3a0c6c0675a41da643db101b05536cf085e4634749725d60",
-    "at": 1789048363857
+    "at": 1789067125631
    },
    "lastError": null
   },
@@ -402,7 +402,7 @@
     "seconds": 2.683356,
     "lufs": null,
     "hash": "1d33b2d4487c783e3f25bddfb6658ef910a831a3120b55a3aea1aa100a4898ef",
-    "at": 1789048364137
+    "at": 1789067125700
    },
    "lastError": null
   },
@@ -422,7 +422,7 @@
     "seconds": 3.615057,
     "lufs": null,
     "hash": "3540ac875140e9cefe23695fefe25a66ff843db4df1b6d52eb0c10404d40e815",
-    "at": 1789048364210
+    "at": 1789067125772
    },
    "lastError": null
   },

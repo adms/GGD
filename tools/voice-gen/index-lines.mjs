@@ -164,7 +164,11 @@ function main() {
     // has no ORIGINAL for can never be filled — that is a declared partial pack, ⛔ not the
     // corrupt half-drop this gate exists to catch. An mp3 that IS there and disagrees with
     // status.json still fails for them exactly as for everyone else.
-    const originalsOnly = !!casting?.excluded?.[id];
+    // ⭐ A pack with NO reference can never be synthesised — every clip it will ever have is an
+    // ORIGINAL. That is true for the owner-excluded heroes (COMBAT_CASTING.json.excluded) and for the
+    // heroes whose only source is COMBAT_ORIGINALS.json. Both read the same way off the pack itself
+    // (`reference.sourceKind === "none"`), ⛔ so this is not a list anyone has to maintain.
+    const originalsOnly = !!casting?.excluded?.[id] || (status.reference?.sourceKind ?? "") === "none";
     for (const cat of CANON) {
       const mp3 = join(dir, `${cat}.mp3`);
       const entry = statusLines[cat];

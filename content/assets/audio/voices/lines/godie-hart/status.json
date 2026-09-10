@@ -101,10 +101,10 @@
    "lastError": null
   },
   "hurt": {
-   "text": "くっ",
+   "text": "（原檔）0010-vc_cloud_damage01",
    "lang": "ja",
    "kana": "クッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +117,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 7149,
+    "seconds": 0.387483,
     "lufs": null,
-    "hash": "db296ea8705535d06fe8837e58c2f4752baab6bcc8f1d986ffb64b99f9d377ac",
-    "at": 1784974031455
+    "hash": "0d245b639387f2906cfe3870856e270b8d61bfac60c9a3fa104df604fd237bba",
+    "at": 1789067541166
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0010-vc_cloud_damage01.wav"
   },
   "hurt-heavy": {
-   "text": "ぐっ……まだ、立てる……",
+   "text": "（原檔）0014-vc_cloud_damagefly02",
    "lang": "ja",
    "kana": "グッ マダ タテル",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +147,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 7985,
+    "seconds": 0.439048,
     "lufs": null,
-    "hash": "a9bc042e7f379e170dda5af373e4b353aa874fd99649b7c84d0e9fb5efcabb0f",
-    "at": 1784974031654
+    "hash": "ce1f0fb8ce4e864e65c55f88b66b2d8b7b3c044914644417cc12de5d634a51e8",
+    "at": 1789067541268
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0014-vc_cloud_damagefly02.wav"
   },
   "stun": {
    "text": "頭が……回らない……",
@@ -449,10 +451,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "……相手にならないな",
+   "text": "（原檔）0045-vc_cloud_appeal03",
    "lang": "ja",
    "kana": "アイテ ニ ナラナイ ナ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +467,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 23031,
-    "seconds": 1.36,
+    "bytes": 7149,
+    "seconds": 0.383265,
     "lufs": null,
-    "hash": "25f98ae9304f276f12a4e80dc676499b53e2bbbb0aecf952b12da1d608224cdd",
-    "at": 1784974086495
+    "hash": "2bd567384c833899ff0dc88c0e859f64795941d549050ddf5df65edf9c5340d2",
+    "at": 1789067541662
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0045-vc_cloud_appeal03.wav"
   },
   "curse": {
    "text": "ちっ……ふざけた真似を",
@@ -536,10 +539,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "はっ",
+   "text": "（原檔）0001-vc_cloud_attack01",
    "lang": "ja",
    "kana": "ハッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +555,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 4641,
+    "seconds": 0.216122,
     "lufs": null,
-    "hash": "7910fc62d6221ec863b95f308734589330c01eef6902d868ce8ed8734a91f6c7",
-    "at": 1784974099388
+    "hash": "dfeacf8173a1b33fc9a0de5a4e4879359f786a56d21b59ed3f8abe24d0a39034",
+    "at": 1789067540989
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0001-vc_cloud_attack01.wav"
   },
   "attack-heavy": {
-   "text": "せいっ！",
+   "text": "（原檔）0002-vc_cloud_attack02",
    "lang": "ja",
    "kana": "セイッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +585,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.680249,
+    "bytes": 4223,
+    "seconds": 0.190567,
     "lufs": null,
-    "hash": "056964ae0fc2cd0717b64ac0aecca56fd460fd90cbb404e0afb0191207fb6fc0",
-    "at": 1784974099663
+    "hash": "f612a1d82cf1f3f833aa5ecd8a4946b17910436c65d25d64fd1aa9ea30ba02b7",
+    "at": 1789067540895
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0002-vc_cloud_attack02.wav"
   },
   "crit": {
    "text": "これで決める！",
@@ -652,10 +657,10 @@
    "lastError": null
   },
   "dodge": {
-   "text": "遅い",
+   "text": "（原檔）0009-vc_cloud_ottotto",
    "lang": "ja",
    "kana": "オソイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -668,17 +673,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 7985,
+    "seconds": 0.422653,
     "lufs": null,
-    "hash": "26e2fb15971633319d098b85008b05a1fe2eb1b3f99c3c1e071d111171294159",
-    "at": 1784974112401
+    "hash": "ccea9718e4e93fbbf965150c08a1901ded73d70d14a1bc2a9954f33464d76945",
+    "at": 1789067541078
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0009-vc_cloud_ottotto.wav"
   },
   "sprint": {
    "text": "急ぐぞ",
@@ -710,10 +716,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ふっ",
+   "text": "（原檔）0008-vc_cloud_jump01",
    "lang": "ja",
    "kana": "フッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,17 +732,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 3805,
+    "seconds": 0.172721,
     "lufs": null,
-    "hash": "661ff8aaac256f5fab8b33139377fff836679bcb9755bf2d88b47c50377fae3f",
-    "at": 1784974125972
+    "hash": "c2247d932c2a73da92bfbfed352cd10f1cd7d463fa3b9eedd2cec30d249df0da",
+    "at": 1789067541467
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0008-vc_cloud_jump01.wav"
   },
   "respond.ok": {
    "text": "了解だ",
@@ -797,10 +804,10 @@
    "lastError": null
   },
   "puzzled": {
-   "text": "……どういうことだ？",
+   "text": "（原檔）0019-vc_cloud_furafura",
    "lang": "ja",
    "kana": "ドウイウ コト ダ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -813,17 +820,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
     "stub": false,
-    "bytes": 18434,
-    "seconds": 1.08,
+    "bytes": 9657,
+    "seconds": 0.528821,
     "lufs": null,
-    "hash": "b1bd01315ffcfa9e7213e6ee0dfda17335a9bef2728b370b2c1600d93e5408f2",
-    "at": 1784974140158
+    "hash": "d84589b034cb11a5e4ff8457ccc5895fdbacb0386cf6122b37d73327c0129cfc",
+    "at": 1789067541563
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0019-vc_cloud_furafura.wav"
   },
   "love": {
    "text": "……悪くない。そういうのも、な",
@@ -1386,6 +1394,26 @@
    },
    "lastError": null,
    "kana": "キュウキョク マケン"
+  },
+  "hurt.2": {
+   "text": "（原檔）0011-vc_cloud_damage02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-cloud-english-voice/GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/decoded-audio-nus3/001-vc_cloud_c00/0011-vc_cloud_damage02.wav",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-cloud-english-voice",
+    "stub": false,
+    "bytes": 8403,
+    "seconds": 0.460091,
+    "lufs": null,
+    "hash": "8ef377e4cbed532bc95ec4235d7a35406290fa8b7b674d5055c7c1d93f6a43b8",
+    "at": 1789067541356
+   }
   }
  }
 }

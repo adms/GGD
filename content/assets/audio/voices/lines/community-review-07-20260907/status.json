@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789048358809,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-07-20260907.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/community-review-07-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -48,7 +48,7 @@
     "seconds": 5.930862,
     "lufs": null,
     "hash": "3a7c1dc6b25aff3b20cd9a5441552492aee1a2921012bf0c080cd39272a95362",
-    "at": 1789058013762
+    "at": 1789067123248
    },
    "lastError": null
   },
@@ -68,7 +68,7 @@
     "seconds": 5.929025,
     "lufs": null,
     "hash": "02d84560ff9961ae4a4f5e5f982e31666a53edebc5e417ddd9bb14a3e0e7d644",
-    "at": 1789058013858
+    "at": 1789067123334
    },
    "lastError": null
   },
@@ -88,7 +88,7 @@
     "seconds": 5.838027,
     "lufs": null,
     "hash": "9f70dc6711385d1979f5bf0320b84c28e003dd9e93cb3ed2eede5a0de2fee679",
-    "at": 1789058013959
+    "at": 1789067123417
    },
    "lastError": null
   },
@@ -360,7 +360,7 @@
     "seconds": 5.779116,
     "lufs": null,
     "hash": "79974a0dd0e47250f6ee3f9fbf31a048f060974e9022df04d0fd250609715697",
-    "at": 1789058014066
+    "at": 1789067123497
    },
    "lastError": null
   },
@@ -380,7 +380,7 @@
     "seconds": 5.236893,
     "lufs": null,
     "hash": "563b66fa873160ae31c735a1465da365db24fce6219da271145d7df0a271f691",
-    "at": 1789058014171
+    "at": 1789067123572
    },
    "lastError": null
   },
@@ -400,7 +400,7 @@
     "seconds": 2.979025,
     "lufs": null,
     "hash": "193f91fbca7ad1706d9625ce67f3be93c316b32a789b7dbf941f5546ab407bc7",
-    "at": 1789058014278
+    "at": 1789067123649
    },
    "lastError": null
   },
@@ -486,7 +486,7 @@
     "seconds": 0.66,
     "lufs": null,
     "hash": "d905fcf86df7b23aca9079be59567cf38f38293abf4a72eba19fe0f34068fdd1",
-    "at": 1789048358246
+    "at": 1789067123726
    },
    "lastError": null
   },
@@ -535,7 +535,7 @@
     "seconds": 1.24195,
     "lufs": null,
     "hash": "35948cf183221bb17073138ac2abdf99f4516379645d5b6f7828a4a935a48465",
-    "at": 1789058014623
+    "at": 1789067123800
    },
    "lastError": null
   },
@@ -572,7 +572,7 @@
     "seconds": 5.321769,
     "lufs": null,
     "hash": "148e801257dfb3923d6fa5941902d5e988f5ad4ee98bd8d679e1f644f4cac691",
-    "at": 1789058014725
+    "at": 1789067123878
    },
    "lastError": null
   },
@@ -592,7 +592,7 @@
     "seconds": 5.244785,
     "lufs": null,
     "hash": "91fb4e62ecb5012692350eb100d29c991454e3ef8f3e08316b10952963c67829",
-    "at": 1789058014821
+    "at": 1789067123951
    },
    "lastError": null
   },
@@ -612,7 +612,7 @@
     "seconds": 5.223787,
     "lufs": null,
     "hash": "e970c931260c56d2fd5f28588f21b5e62b6ea307d91b7677ef07cce46d97c4cc",
-    "at": 1789058014919
+    "at": 1789067124028
    },
    "lastError": null
   },

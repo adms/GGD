@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789048351331,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-01-20260907.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/community-review-01-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -56,21 +56,12 @@
     "seconds": 3.22322,
     "lufs": null,
     "hash": "e94077a174c1d2a4b3a1625195edebdc2831892a3b1d1e525ed8d30f95512a25",
-    "at": 1789048349200
+    "at": 1789067117271
    },
    "lastError": null
   },
   "quote.2": {
-   "takes": [
-    {
-     "take": 1,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.24,
-     "at": 1789054950481,
-     "error": null
-    }
-   ],
+   "takes": [],
    "text": "（原檔）chr0400_ActVoice#7",
    "lang": "ja",
    "textSource": "original",
@@ -85,7 +76,7 @@
     "seconds": 5.873401,
     "lufs": null,
     "hash": "79601f991e02ac063c436d06b9c6687888d8e8d1d1d9bd9a88dca0bb1771fc40",
-    "at": 1789058006011
+    "at": 1789067117345
    },
    "lastError": null
   },
@@ -105,7 +96,7 @@
     "seconds": 4.938209,
     "lufs": null,
     "hash": "045833678805a3da9f8895ef89e02359ffc141a9418c66b6789c848d5014ddca",
-    "at": 1789058006113
+    "at": 1789067117418
    },
    "lastError": null
   },
@@ -415,7 +406,7 @@
     "seconds": 5.352358,
     "lufs": null,
     "hash": "fceaac3c000b9fb345947a343fcc36fe7cf065952a7f0fb182d92f0a4f9272e4",
-    "at": 1789058006307
+    "at": 1789067117489
    },
    "lastError": null
   },
@@ -435,7 +426,7 @@
     "seconds": 2.676485,
     "lufs": null,
     "hash": "5eb6819201f0536eb4683044e17786d8f30e36761ed9322e332592c940d3129b",
-    "at": 1789058006406
+    "at": 1789067117561
    },
    "lastError": null
   },
@@ -455,7 +446,7 @@
     "seconds": 2.672744,
     "lufs": null,
     "hash": "80120ea77956d9c5725ccd57a76f8757c743c31669a3219acc8f68363110c772",
-    "at": 1789058006509
+    "at": 1789067117633
    },
    "lastError": null
   },
@@ -512,7 +503,7 @@
     "seconds": 3.728254,
     "lufs": null,
     "hash": "f4783a7dd0024c4f9b912bef296dac5a6e248edd20fad1317e4ba82e94645ec9",
-    "at": 1789048349935
+    "at": 1789067117705
    },
    "lastError": null
   },
@@ -532,7 +523,7 @@
     "seconds": 5.880068,
     "lufs": null,
     "hash": "f759bbe23456a259c511813ee213265c16ab1dc508ca66cae5e56b363daf7d48",
-    "at": 1789058006628
+    "at": 1789067117777
    },
    "lastError": null
   },
@@ -597,7 +588,7 @@
     "seconds": 0.694739,
     "lufs": null,
     "hash": "08cbb75fe20d51ca19dbfc4f24f91d035f94e4b1d2a05477b3dd0176bb15c0c1",
-    "at": 1789058006824
+    "at": 1789067117850
    },
    "lastError": null
   },
@@ -662,7 +653,7 @@
     "seconds": 1.217392,
     "lufs": null,
     "hash": "00bd24d5b5bde51580911004aa53d86231f09c2495af4542fcf700451e44c817",
-    "at": 1789058007025
+    "at": 1789067117921
    },
    "lastError": null
   },
@@ -707,7 +698,7 @@
     "seconds": 4.20678,
     "lufs": null,
     "hash": "31d20ab04206594ffe6d8a174f31abddd3f7c39554d940d20e5881b070154b26",
-    "at": 1789058007133
+    "at": 1789067117994
    },
    "lastError": null
   },
@@ -727,7 +718,7 @@
     "seconds": 3.90805,
     "lufs": null,
     "hash": "e335b32056020633ffbb85691e778e7ab0eb54c0d525575f1e776343d933ffe3",
-    "at": 1789058007235
+    "at": 1789067118066
    },
    "lastError": null
   },
@@ -747,7 +738,7 @@
     "seconds": 3.792721,
     "lufs": null,
     "hash": "82735f5ee19aa21290e8f1c1d7bffe8f538490120c22423bca11c6415aca4e8d",
-    "at": 1789058007343
+    "at": 1789067118141
    },
    "lastError": null
   },
@@ -787,7 +778,7 @@
     "seconds": 0.597392,
     "lufs": null,
     "hash": "b8b2c8d8215217b47cc918af9514a477b93396330b178137d30bc48748423f03",
-    "at": 1789058007444
+    "at": 1789067118217
    },
    "lastError": null
   },
@@ -827,7 +818,7 @@
     "seconds": 1.188073,
     "lufs": null,
     "hash": "87c6515720e11c179a39de9a32de91b52e896bbfd307ff439c9f74d3a0068336",
-    "at": 1789058007631
+    "at": 1789067118296
    },
    "lastError": null
   },
@@ -960,7 +951,7 @@
     "seconds": 1.512744,
     "lufs": null,
     "hash": "305af7fe185d8fea8a8f7134240adc6efb2a6d96da7f24acc57dec770fae3e17",
-    "at": 1789058008013
+    "at": 1789067118379
    },
    "lastError": null
   }

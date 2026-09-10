@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop community-review-11-20260907.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549635,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-o00k.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/godie-o00k.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -375,31 +375,11 @@
     "engine": "original",
     "engineVersion": "thunderstore-rimuru-ror2",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.698118,
+    "bytes": 5477,
+    "seconds": 0.28,
     "lufs": null,
-    "hash": "88315f2a581bdfe9f04a60bf097743643d6377a718754562b0143d3e99c87680",
+    "hash": "b320fa12d8c2d971232d907315dddf42e999df38147a013d62b276e9d718b11a",
     "at": 1789058015660
-   },
-   "lastError": null
-  },
-  "hurt.2": {
-   "takes": [],
-   "text": "（原檔）203161346",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/203161346.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "thunderstore-rimuru-ror2",
-    "stub": false,
-    "bytes": 10493,
-    "seconds": 0.58898,
-    "lufs": null,
-    "hash": "e8cf60cf511896813ad244a29df358ed41a5bb5c8cf5d274fd0dc9ee5524f52c",
-    "at": 1789058015757
    },
    "lastError": null
   },
@@ -432,10 +412,10 @@
     "engine": "original",
     "engineVersion": "thunderstore-rimuru-ror2",
     "stub": false,
-    "bytes": 18016,
-    "seconds": 1.059615,
+    "bytes": 9239,
+    "seconds": 0.52,
     "lufs": null,
-    "hash": "bee211c819b422ea36bdf8113e786ed9caffe999885b801d7df1068a2ba809dc",
+    "hash": "1c7ce3b0aef3d328b73efb0ea1085b456410f5d7659b139cb64cd313fa92a0c0",
     "at": 1789058015855
    },
    "lastError": null
@@ -476,46 +456,6 @@
     "hash": "dcc020fe5a6f4ba61b89edee46c16a24d64b3eacb0418cc94049fb009319d93c",
     "maxDb": -3.5,
     "at": 1789054965895
-   },
-   "lastError": null
-  },
-  "attack-light": {
-   "takes": [],
-   "text": "（原檔）352215495",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/352215495.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "thunderstore-rimuru-ror2",
-    "stub": false,
-    "bytes": 7567,
-    "seconds": 0.398912,
-    "lufs": null,
-    "hash": "1ae877d0bb11879138a363d4b776a3c66c69ead127a4c9dde433cf4e419ce867",
-    "at": 1789058015949
-   },
-   "lastError": null
-  },
-  "jump": {
-   "takes": [],
-   "text": "（原檔）980180611",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:thunderstore-rimuru-ror2/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/980180611.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "thunderstore-rimuru-ror2",
-    "stub": false,
-    "bytes": 5059,
-    "seconds": 0.259955,
-    "lufs": null,
-    "hash": "1b1f03fe7e9254ddfc28cc48d0d9511a7b35fe2e32db950623676649227c80d7",
-    "at": 1789058016043
    },
    "lastError": null
   },

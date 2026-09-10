@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=child-boy) — drop community-review-06-20260907.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549617,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-hblm.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/godie-hblm.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -51,7 +51,7 @@
     "seconds": 0.348277,
     "lufs": null,
     "hash": "b6d6e7d95102143b15695a86846b690d8b242adc91251c7be464b2c7b9d3a8a5",
-    "at": 1789048354463
+    "at": 1789067121666
    },
    "lastError": null
   },
@@ -71,7 +71,7 @@
     "seconds": 1.751565,
     "lufs": null,
     "hash": "d1d5268340e2870ef8dbfc18503512f77241fcc7bc8f6e255d1989dd9609960c",
-    "at": 1789048354569
+    "at": 1789067121739
    },
    "lastError": null
   },
@@ -120,7 +120,7 @@
     "seconds": 0.378254,
     "lufs": null,
     "hash": "718cad68d4f569fda9ade021ceec6ba5744f8c152fc312822e04068903400334",
-    "at": 1789048354776
+    "at": 1789067121814
    },
    "lastError": null
   },
@@ -169,7 +169,7 @@
     "seconds": 0.399955,
     "lufs": null,
     "hash": "6e2a54b34de30f51d895ae0a26805181120624bee0b7864fac6217a83240fb2d",
-    "at": 1789048354992
+    "at": 1789067121885
    },
    "lastError": null
   },
@@ -218,7 +218,7 @@
     "seconds": 0.436621,
     "lufs": null,
     "hash": "4f91225b68061445178e74652c7759b7a32130e89d57f02367c2077c4ee40c2f",
-    "at": 1789048355214
+    "at": 1789067121958
    },
    "lastError": null
   },
@@ -267,7 +267,7 @@
     "seconds": 1.282789,
     "lufs": null,
     "hash": "0e1cdf24db541c8df371536d45b26f24f9887f2801815a8fda6a96870d260b43",
-    "at": 1789048355443
+    "at": 1789067122034
    },
    "lastError": null
   },
@@ -316,7 +316,7 @@
     "seconds": 0.34322,
     "lufs": null,
     "hash": "ab00f817c41bcc459f410905cf20e051d989e6ebb0e444cf1c8e6bddd0a7034b",
-    "at": 1789048355664
+    "at": 1789067122113
    },
    "lastError": null
   },
@@ -345,7 +345,7 @@
     "seconds": 0.701565,
     "lufs": null,
     "hash": "20751c1a45e56d3e83261540ed10dadb5235ab60c5fb8b8f8be0d6fcf83df282",
-    "at": 1789048355772
+    "at": 1789067122190
    },
    "lastError": null
   },
@@ -365,7 +365,7 @@
     "seconds": 1.133265,
     "lufs": null,
     "hash": "e76e0fa8605b269b24d98a1af29633c2ba4f43be871df08d5d4fff22065acc0e",
-    "at": 1789048355886
+    "at": 1789067122276
    },
    "lastError": null
   },
@@ -385,7 +385,7 @@
     "seconds": 1.16161,
     "lufs": null,
     "hash": "75e07b9c5eeab9af7f5cd94782c3984d4559ba1814d9df9cea2ea14844650d6b",
-    "at": 1789048356004
+    "at": 1789067122354
    },
    "lastError": null
   },
@@ -434,7 +434,7 @@
     "seconds": 0.959955,
     "lufs": null,
     "hash": "62b678e809e86590a998302fde15dc1495576ad881bdf6706fb284b1b722019a",
-    "at": 1789048356123
+    "at": 1789067122433
    },
    "lastError": null
   },
@@ -454,7 +454,7 @@
     "seconds": 0.416599,
     "lufs": null,
     "hash": "23ff4d1175a694a08d11fd1823f6ab8efef452d8a07c6932f6067519a0b11b66",
-    "at": 1789048356244
+    "at": 1789067122514
    },
    "lastError": null
   },
@@ -503,7 +503,7 @@
     "seconds": 0.626599,
     "lufs": null,
     "hash": "32947a84514be21cbcf83c3983fb759c5cba1d3250a7be5cd1191e0d8c221183",
-    "at": 1789048356476
+    "at": 1789067122595
    },
    "lastError": null
   },
@@ -552,7 +552,7 @@
     "seconds": 0.675533,
     "lufs": null,
     "hash": "8f0315ce3e239f0519e84147c160ed82d17d00c789fb5e7df99fd3655d43e6b2",
-    "at": 1789048356724
+    "at": 1789067122678
    },
    "lastError": null
   },
@@ -581,7 +581,7 @@
     "seconds": 1.008254,
     "lufs": null,
     "hash": "7363a886f93a25bf8683c1a157c88d95a56bb18bc441594378880e82cca346dd",
-    "at": 1789048356862
+    "at": 1789067122762
    },
    "lastError": null
   },
@@ -601,7 +601,7 @@
     "seconds": 0.810862,
     "lufs": null,
     "hash": "21b17a42dce292584154567827e5ffb36e6e997dea8a6aa5ad00b90c2b877cd0",
-    "at": 1789048356982
+    "at": 1789067122844
    },
    "lastError": null
   },
@@ -621,7 +621,7 @@
     "seconds": 0.72161,
     "lufs": null,
     "hash": "8441fc66e2c8c3d338b30473f9359f766780b129170e3c7b061695db49ab0900",
-    "at": 1789048357108
+    "at": 1789067122924
    },
    "lastError": null
   },
@@ -721,7 +721,7 @@
     "seconds": 0.376576,
     "lufs": null,
     "hash": "a1895b2a3ea28d29e8ef4c47232a426db6ea04cc38cecddecac88569d156dce5",
-    "at": 1789048357693
+    "at": 1789067123006
    },
    "lastError": null
   },
@@ -770,7 +770,7 @@
     "seconds": 0.434218,
     "lufs": null,
     "hash": "44478c7e3d83fde19155478961ce551e27f3c11d858e19a38fed42f20cb773b8",
-    "at": 1789048357919
+    "at": 1789067123086
    },
    "lastError": null
   },
@@ -790,7 +790,7 @@
     "seconds": 1.009955,
     "lufs": null,
     "hash": "620b42d4a80180e684cd769ab941a7213173fdeb8655ac6e92ba6cfafc7a99c9",
-    "at": 1789048358026
+    "at": 1789067123167
    },
    "lastError": null
   }

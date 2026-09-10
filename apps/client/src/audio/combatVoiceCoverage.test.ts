@@ -111,6 +111,11 @@ function ownPackIds(pack: ChampionVoicePack | null): Set<string> {
  */
 const VOICE_GAP: readonly string[] = [
   "godie-e00s",
+  // ⚠️ 2026-09-11: godie-ucrl STAYS. The owner adopted Jump Force Gon clips for it on the review page,
+  //   but this hero owns no pack — it borrows its counterpart's (godie-u034) through the form share, and
+  //   a pack of its own would END that borrowing (a champion that owns a pack is never lent one) and
+  //   silence every category the originals do not cover. Its clips are parked in S3 until a partial pack
+  //   can borrow the rest from its counterpart; the same holds for the other seven form-share halves.
   "godie-ucrl",
   // ── 2026-09-10: the 74 new heroes (b2-* / community-review-*) landed their combat
   // packs (tools/voice-gen/src/build-combat-lines.mjs — Japanese-only synthesis over
@@ -139,9 +144,15 @@ const VOICE_GAP: readonly string[] = [
 const CASTING = JSON.parse(readFileSync(join(CONTENT, "assets/audio/voices/lines/COMBAT_CASTING.json"), "utf8")) as {
   excluded?: Record<string, string>;
 };
-const ORIGINALS_ONLY: readonly string[] = Object.keys(CASTING.excluded ?? {})
-  .filter((id) => !VOICE_GAP.includes(id))
-  .sort();
+/** A pack with no reference can never be synthesised — every clip it will ever own is an original. */
+function isOriginalsOnly(id: string): boolean {
+  if (CASTING.excluded?.[id]) return true;
+  const status = join(CONTENT, `assets/audio/voices/lines/${id}/status.json`);
+  if (!existsSync(status)) return false;
+  const doc = JSON.parse(readFileSync(status, "utf8")) as { reference?: { sourceKind?: string } };
+  return (doc.reference?.sourceKind ?? "") === "none";
+}
+const ORIGINALS_ONLY: readonly string[] = ROSTER.filter((id) => !VOICE_GAP.includes(id) && isOriginalsOnly(id)).sort();
 
 /** The gap, rendered the way the failure message renders a silent champion. */
 function labelSilent(id: string): string {

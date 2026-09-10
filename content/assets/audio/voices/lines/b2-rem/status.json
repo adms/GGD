@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753654,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-rem.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/b2-rem.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,7 +40,7 @@
     "seconds": 6.395646,
     "lufs": null,
     "hash": "2425b0a4f699fd2e4c9af532e9e35068f561908fd8b994dc698985b6deff4830",
-    "at": 1789048340414
+    "at": 1789067114797
    },
    "lastError": null
   },
@@ -60,7 +60,7 @@
     "seconds": 3.35093,
     "lufs": null,
     "hash": "890d470504d772df8faf7ed1ac01c39c15e314304ac4dcf12f0b9896a80ff5ad",
-    "at": 1789048340507
+    "at": 1789067114864
    },
    "lastError": null
   },
@@ -70,16 +70,8 @@
      "take": 1,
      "engine": "cosyvoice3",
      "stub": false,
-     "seconds": 2.36,
-     "at": 1789054932412,
-     "error": null
-    },
-    {
-     "take": 2,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 2.36,
-     "at": 1789060154020,
+     "seconds": 2.32,
+     "at": 1789067422850,
      "error": null
     }
    ],
@@ -90,16 +82,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 38914,
-    "seconds": 2.36,
+    "bytes": 38078,
+    "seconds": 2.32,
     "lufs": null,
-    "hash": "e92343b01fe0ef02d84e8b6ecab95a6848868907df7380375aaaf49fd6c527e1",
-    "maxDb": -1.9,
-    "at": 1789060154021
+    "hash": "d91c95a60bd3bd894ab62b7a6c66976f4e0600e212d0c16b6c5a1c4984fc6e78",
+    "maxDb": -2,
+    "at": 1789067422852
    },
    "lastError": null
   },
@@ -430,7 +422,7 @@
     "seconds": 1.632653,
     "lufs": null,
     "hash": "01343c0db38abfa517d9f91efc554c0891f5b4283f5e10617ad00c0d817da51e",
-    "at": 1789048340953
+    "at": 1789067114938
    },
    "lastError": null
   },

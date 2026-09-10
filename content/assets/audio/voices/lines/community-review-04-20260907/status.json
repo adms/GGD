@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753683,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-04-20260907.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/community-review-04-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,7 +40,7 @@
     "seconds": 1.388844,
     "lufs": null,
     "hash": "cbf7ad39d6d967fb1f312b88d5b70810a857f1d34c4b4c482b6b4b2b45184270",
-    "at": 1789048352092
+    "at": 1789067120726
    },
    "lastError": null
   },
@@ -60,7 +60,7 @@
     "seconds": 3.005533,
     "lufs": null,
     "hash": "88019e03b7b5b26598ecc6c1244d6f13ac365696d54d25ea77f8199eaf5a7756",
-    "at": 1789048352186
+    "at": 1789067120807
    },
    "lastError": null
   },
@@ -80,7 +80,7 @@
     "seconds": 1.841633,
     "lufs": null,
     "hash": "49c0b10d73b87a7d3e627c3c81abcd7f63f160369e56c5353e2886ffef98bb5e",
-    "at": 1789048352282
+    "at": 1789067120887
    },
    "lastError": null
   },
@@ -419,7 +419,7 @@
     "seconds": 2.503401,
     "lufs": null,
     "hash": "8a00fb32482cbfa75e99d3d36dcd7fa7bb5d52b6b265d02a2fc344f2b71043a9",
-    "at": 1789048352562
+    "at": 1789067120968
    },
    "lastError": null
   },
@@ -476,7 +476,7 @@
     "seconds": 0.689093,
     "lufs": null,
     "hash": "7fe52a77eee0e290241b5531d7710f093e20366fb68d598eae7a0a3e685d09ab",
-    "at": 1789058012745
+    "at": 1789067121049
    },
    "lastError": null
   },
@@ -533,7 +533,7 @@
     "seconds": 1.18898,
     "lufs": null,
     "hash": "8f3287250dd1bc5367514db19843ed3ff836c42ccda0eeed3e229da490786a3a",
-    "at": 1789058012920
+    "at": 1789067121127
    },
    "lastError": null
   },
@@ -562,7 +562,7 @@
     "seconds": 3.623764,
     "lufs": null,
     "hash": "b96eafe692b363a3a0070ef005db7601e3f04569a001a2062a6dee19d82cd7d0",
-    "at": 1789048353122
+    "at": 1789067121201
    },
    "lastError": null
   },
@@ -582,21 +582,12 @@
     "seconds": 4.910907,
     "lufs": null,
     "hash": "c34e16358f87321509581f93c69aecaff39418aeccc2c20bb7e9dc2a9db6004d",
-    "at": 1789058013006
+    "at": 1789067121276
    },
    "lastError": null
   },
   "taunt.3": {
-   "takes": [
-    {
-     "take": 1,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.04,
-     "at": 1789054956164,
-     "error": null
-    }
-   ],
+   "takes": [],
    "text": "（原檔）chr0340_ActVoice#200",
    "lang": "ja",
    "textSource": "original",
@@ -611,7 +602,7 @@
     "seconds": 4.899615,
     "lufs": null,
     "hash": "2e6240a758496b7d52bf064aa48ea6bd6ff0578611a0835b55bb48826df1e95a",
-    "at": 1789058013094
+    "at": 1789067121353
    },
    "lastError": null
   },
@@ -651,7 +642,7 @@
     "seconds": 0.589138,
     "lufs": null,
     "hash": "4d62937fc1ffe1faf0605ecce50b110c0e55b1e9cb332aa01133460a73fee1b1",
-    "at": 1789058013278
+    "at": 1789067121433
    },
    "lastError": null
   },
@@ -691,7 +682,7 @@
     "seconds": 1.180113,
     "lufs": null,
     "hash": "7583493f59517bf643f2a04457a58db35517a7fb961d84ae4bdae02277607b5e",
-    "at": 1789058013463
+    "at": 1789067121510
    },
    "lastError": null
   },
@@ -808,7 +799,7 @@
     "seconds": 1.227234,
     "lufs": null,
     "hash": "fec3e7f017bab86628109b40f014cff9dca625e2d0792c62e78af3f7a3200aeb",
-    "at": 1789058013652
+    "at": 1789067121583
    },
    "lastError": null
   }

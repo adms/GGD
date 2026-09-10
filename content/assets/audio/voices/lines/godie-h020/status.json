@@ -72,10 +72,10 @@
    "lastError": null
   },
   "defeat": {
-   "text": "うそでしょ！？…覚えてなさいよね〜！",
+   "text": "（原檔）voice_death_1",
    "lang": "ja",
    "kana": "ウソデショ オボエテ ナサイヨネー",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,17 +88,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
     "stub": false,
-    "bytes": 36824,
-    "seconds": 2.24,
+    "bytes": 15508,
+    "seconds": 0.901224,
     "lufs": null,
-    "hash": "fb2703f66a60104c9089d0474147d8663424e32630b86d6edceca1999a58b106",
-    "at": 1784972915084
+    "hash": "c4ac15b662dc4204719472ce80e430432ef3255e260c17b9963ad3eaf986b966",
+    "at": 1789067537564
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0013-46_voice_death_1.ogg"
   },
   "hurt": {
    "text": "きゃっ！",
@@ -536,10 +537,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "えいっ！",
+   "text": "（原檔）voice_attack_1",
    "lang": "ja",
    "kana": "エイッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +553,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 23449,
+    "seconds": 1.394649,
     "lufs": null,
-    "hash": "edf13defda92cc46a022ae0a0bc27c1d8830853594af82cd664f3ca0529184bf",
-    "at": 1784973002289
+    "hash": "284b875b10e958f39839809258d13a652f008269343d586a53aa8e00746c223f",
+    "at": 1789067537458
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0016-46_voice_attack_1.ogg"
   },
   "attack-heavy": {
-   "text": "くらいなさい！",
+   "text": "（原檔）voice_attack_2",
    "lang": "ja",
    "kana": "クライナサイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +583,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 38078,
+    "seconds": 2.306032,
     "lufs": null,
-    "hash": "f4c570c62617b99c0ae6b7408629e84d4c787f4765ad847937a1ca6b5641b78e",
-    "at": 1784973006316
+    "hash": "58a17f757361e7c3da6a8409a27157eab13e755718fa207cf2ae6324476f8ccf",
+    "at": 1789067537369
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0007-46_voice_attack_2.ogg"
   },
   "crit": {
    "text": "直撃〜！ざまーみろ！",
@@ -1314,9 +1317,9 @@
    "kana": "ドラグ スレイブ"
   },
   "skill-name.r": {
-   "text": "神滅斬！",
+   "text": "（原檔）voice_dazhao_2",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1337,18 +1340,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
     "stub": false,
-    "bytes": 16344,
-    "seconds": null,
+    "bytes": 29719,
+    "seconds": 1.79229,
     "lufs": null,
-    "hash": "092a34eca832455910e18a0cb65d0cc365777cde566794168e2c47cc8f4c4525",
-    "at": 1784990916973
+    "hash": "3896fc078c6067194933afc668b42e2de03f87c3274fa2f16fa55dcae1cc5852",
+    "at": 1789067537841
    },
    "lastError": null,
-   "kana": "ラグナ ブレード"
+   "kana": "ラグナ ブレード",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0005-46_voice_dazhao_2.ogg"
   },
   "skill-name.ex": {
    "text": "惡夢魔王的碎片！",
@@ -1386,6 +1390,46 @@
    },
    "lastError": null,
    "kana": "アクム ノ オウ ノ ヒトカケ"
+  },
+  "defeat.2": {
+   "text": "（原檔）voice_death_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0010-46_voice_death_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 16762,
+    "seconds": 0.970884,
+    "lufs": null,
+    "hash": "f4a97e1709e83cb90bd14f0fe96cd23b67896ed9d5155fa70296289c8d425ab6",
+    "at": 1789067537660
+   }
+  },
+  "defeat.3": {
+   "text": "（原檔）voice_death_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0008-46_voice_death_3.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.493333,
+    "lufs": null,
+    "hash": "aae7deeff1ebf922ccae613c6aa391bb0d83f64a5bf5d85c5cb85488160c231c",
+    "at": 1789067537749
+   }
   }
  }
 }

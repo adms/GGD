@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop b2-maple.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549545,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-e00k.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/godie-e00k.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,7 +40,7 @@
     "seconds": 3.821134,
     "lufs": null,
     "hash": "893013e9f8e1b49a51e1bcb50b24b1bade146615a3118b5f7d05f8cd30c8115d",
-    "at": 1789048338367
+    "at": 1789067114418
    },
    "lastError": null
   },
@@ -60,7 +60,7 @@
     "seconds": 2.477279,
     "lufs": null,
     "hash": "5a3daf8f077783920ac8f0af09a112251566fadcbf049a7e28037ee25d71a33a",
-    "at": 1789048338463
+    "at": 1789067114494
    },
    "lastError": null
   },
@@ -80,7 +80,7 @@
     "seconds": 1.438186,
     "lufs": null,
     "hash": "789db8e41219728b690b865b4e1b53d58993c3a13b0575ab703d8d0c0a5b1d3b",
-    "at": 1789048338547
+    "at": 1789067114566
    },
    "lastError": null
   },
@@ -363,7 +363,7 @@
     "seconds": 2.575964,
     "lufs": null,
     "hash": "7866e080e8f49132afa6ba2a9dea2a7dc1833133321b61bf7f703f2a9609f1e4",
-    "at": 1789048338897
+    "at": 1789067114638
    },
    "lastError": null
   },
@@ -383,7 +383,7 @@
     "seconds": 2.863311,
     "lufs": null,
     "hash": "44faa9813c4116abc14e198f7d02bff348e138bf4b50cfb295a724701b94782f",
-    "at": 1789058004051
+    "at": 1789067114707
    },
    "lastError": null
   },

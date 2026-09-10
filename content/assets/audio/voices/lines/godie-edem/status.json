@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "オレは復讐者…憎しみの中で生きる男だ。",
+   "text": "（原檔）voice_joke_1",
    "lang": "ja",
    "kana": "オレ ワ フクシュウシャ ニクシミ ノ ナカ デ イキル オトコ ダ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,17 +30,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 46437,
-    "seconds": 2.84,
+    "bytes": 79456,
+    "seconds": 4.889252,
     "lufs": null,
-    "hash": "08fe61080f50dbea88a5c2b1175ac628b60fba3effdfa93f678919b26ea88fee",
-    "at": 1784971357159
+    "hash": "92b23710de2120f2810d235823cf96fd5c45e8d3f1b905c0a771f26cf9b2f14e",
+    "at": 1789067531512
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0017-69_voice_joke_1.ogg"
   },
   "victory": {
    "text": "フン…この程度か。時間の無駄だったな。",
@@ -72,10 +73,10 @@
    "lastError": null
   },
   "defeat": {
-   "text": "オレが…負ける…？こんな、ところで…",
+   "text": "（原檔）voice_death_1",
    "lang": "ja",
    "kana": "オレ ガ マケル コンナ トコロ デ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,23 +89,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 30973,
+    "seconds": 1.876463,
     "lufs": null,
-    "hash": "69022a79233fa3e597641b55cf0e28c147dd519c59920feae80f976f3f6714d4",
-    "at": 1784971389581
+    "hash": "bfc9b7fda22e97d0998c126a00282eb5a2060139b422f9c11a7e35f7eadca262",
+    "at": 1789067530215
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0034-69_voice_death_1.ogg"
   },
   "hurt": {
-   "text": "くっ。",
+   "text": "（原檔）chr0130_ActVoice#162",
    "lang": "ja",
    "kana": "クッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -117,23 +119,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 12164,
+    "seconds": 0.695034,
     "lufs": null,
-    "hash": "5e19cc1d062af99752f0d101c18c5432e53490e58669b3a5df4d36e1186401c4",
-    "at": 1784971389106
+    "hash": "fffdaeab5486e4919d999c9418f815a52bb8ee16b0a5a9e089bb459f6b5e69aa",
+    "at": 1789067530679
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#162.ogg"
   },
   "hurt-heavy": {
-   "text": "ぐあっ…！舐めた真似を…！",
+   "text": "（原檔）chr0130_ActVoice#142",
    "lang": "ja",
    "kana": "グアッ ナメタ マネ ヲ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -146,17 +149,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
     "stub": false,
-    "bytes": 24285,
-    "seconds": 1.44,
+    "bytes": 21359,
+    "seconds": 1.273946,
     "lufs": null,
-    "hash": "cbb965d232bcc8911e3039df5bcfe3031f7897047dddb01c6251122d4eabd4cd",
-    "at": 1784971403705
+    "hash": "1ce6c1696c4b877c90943d335ff024a8cc6abd9729b9be4c20704a7c2b434d8f",
+    "at": 1789067530773
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#142.ogg"
   },
   "stun": {
    "text": "ち…視界が…揺れる…",
@@ -449,10 +453,10 @@
    "lastError": null
   },
   "taunt": {
-   "text": "お前じゃ、オレは倒せない。",
+   "text": "（原檔）chr0130_ActVoice#8",
    "lang": "ja",
    "kana": "オマエ ジャ オレ ワ タオセナイ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -465,17 +469,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
     "stub": false,
-    "bytes": 25539,
-    "seconds": 1.52,
+    "bytes": 68589,
+    "seconds": 4.219365,
     "lufs": null,
-    "hash": "bd0b1be3a6ab47d0697ec4644b277b6044d1baad965da966ba180120f2698104",
-    "at": 1784971451252
+    "hash": "1d2bce4bf4155cdeb47e64644c95de877fc0f4940c1e8006afe2e6941043a2f8",
+    "at": 1789067532664
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#8.ogg"
   },
   "curse": {
    "text": "クソッ…調子に乗るなよ…",
@@ -536,10 +541,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "はっ。",
+   "text": "（原檔）voice_attack_1",
    "lang": "ja",
    "kana": "ハッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +557,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 26375,
+    "seconds": 1.568798,
     "lufs": null,
-    "hash": "75c3f0f312ce70b4b39112a076e01f81949fdf30c6e47a98f5ce2568ff66a0c4",
-    "at": 1784971465610
+    "hash": "1a0586e63a27eceb53bbd19d57bab13f3260ae9ab7cca9b46b12949e72c1b2ab",
+    "at": 1789067529923
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0014-69_voice_attack_1.ogg"
   },
   "attack-heavy": {
-   "text": "せいっ！",
+   "text": "（原檔）voice_attack_2",
    "lang": "ja",
    "kana": "セイッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,23 +587,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 12164,
-    "seconds": 0.680249,
+    "bytes": 36406,
+    "seconds": 2.207347,
     "lufs": null,
-    "hash": "7cde288c86170742f7509be2c089c85bbae41f9d37df4255a7e42db5298e7d3d",
-    "at": 1784971478958
+    "hash": "86b96a0ff25a0913e17b0cbc657ec917e4a7a43a963e1c5bc74acd27f7997313",
+    "at": 1789067529738
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0005-69_voice_attack_2.ogg"
   },
   "crit": {
-   "text": "そこだ…！",
+   "text": "（原檔）voice_attack_3",
    "lang": "ja",
    "kana": "ソコ ダ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -610,17 +617,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 14672,
-    "seconds": 0.84,
+    "bytes": 66499,
+    "seconds": 4.079456,
     "lufs": null,
-    "hash": "2b14365e403efae8b9258a5194cb1f2f7264f6912b48ec5b0379fcb252eb8b23",
-    "at": 1784971480336
+    "hash": "e4e4d622ebe27eb58dea1dc9767782247a17f03e873e116e2c4a2e6e867185d2",
+    "at": 1789067530101
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0023-69_voice_attack_3.ogg"
   },
   "block": {
    "text": "甘い。",
@@ -710,10 +718,10 @@
    "lastError": null
   },
   "jump": {
-   "text": "ふっ。",
+   "text": "（原檔）chr0130_ActVoice#43",
    "lang": "ja",
    "kana": "フッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -726,23 +734,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 10493,
+    "seconds": 0.59737,
     "lufs": null,
-    "hash": "044a5d3e44228e976486480c35296b375c40782e5ac570b4ad608d72987f5c2c",
-    "at": 1784971494033
+    "hash": "dd42b43225ca9e10857ea884601a09aaaf522d8e775371c070d2ea0299ee4bdd",
+    "at": 1789067531053
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#43.ogg"
   },
   "respond.ok": {
-   "text": "ああ、分かった。",
+   "text": "（原檔）voice_move_1",
    "lang": "ja",
    "kana": "アア ワカッタ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -755,17 +764,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 23449,
-    "seconds": 1.4,
+    "bytes": 65245,
+    "seconds": 4.015601,
     "lufs": null,
-    "hash": "1904dcd55043cc5e8bd5747971969a529dfe0dc172cd7d89c1255910809fa0f8",
-    "at": 1784971507084
+    "hash": "34e34a9a0fe24f563301edc4942234131f627473e12fa10bae89073678ad0617",
+    "at": 1789067532001
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0035-69_voice_move_1.ogg"
   },
   "respond.no": {
    "text": "断る。",
@@ -971,10 +981,10 @@
    "lastError": null
   },
   "free-move": {
-   "text": "好きにしろ。オレも好きにやる。",
+   "text": "（原檔）voice_move_2",
    "lang": "ja",
    "kana": "スキ ニ シロ オレ モ スキ ニ ヤル",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -987,17 +997,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 24703,
-    "seconds": 1.48,
+    "bytes": 46019,
+    "seconds": 2.808163,
     "lufs": null,
-    "hash": "53db2dd145b71d9e46965fe1ea559f6ad0c9e037ed307a312b11f08e1fdc629a",
-    "at": 1784971535263
+    "hash": "cc237e5fa670572907f657944810aac104233368a50c373fea14a1ca56fa10b1",
+    "at": 1789067530587
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0011-69_voice_move_2.ogg"
   },
   "first-blood": {
    "text": "一番首は、オレのものだ…！",
@@ -1029,10 +1040,10 @@
    "lastError": null
   },
   "kill-1": {
-   "text": "一人。",
+   "text": "（原檔）voice_kill_TO70_1",
    "lang": "ja",
    "kana": "ヒトリ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1045,17 +1056,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 76530,
+    "seconds": 4.715102,
     "lufs": null,
-    "hash": "6d7db3c976fca5abe1ccaa290f6bfbcd86ecf654248fef5a310a8741f4627d95",
-    "at": 1784971547155
+    "hash": "f251c7e769dedc03293d854b542ed3125c9204a0370247f86ec8cb58725d2fc2",
+    "at": 1789067531148
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0021-69_voice_kill_TO70_skin0_1.ogg"
   },
   "kill-2": {
    "text": "二人目…手応えがない。",
@@ -1203,9 +1215,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "火遁-豪火龍之術！",
+   "text": "（原檔）voice_q_1",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1226,18 +1238,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 26793,
-    "seconds": null,
+    "bytes": 30555,
+    "seconds": 1.847438,
     "lufs": null,
-    "hash": "c2e086074a82cbcef7a3188b5df5d222f7f27ac4e9d385a68c65364fdcdcfa97",
-    "at": 1784990864861
+    "hash": "386018400feb56bcd311fa33c76fd79ebe1ad6b1a8e3fe3d66ff659986c20428",
+    "at": 1789067532474
    },
    "lastError": null,
-   "kana": "カトン ゴウリュウカ ノ ジュツ"
+   "kana": "カトン ゴウリュウカ ノ ジュツ",
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0030-69_voice_q_1.ogg"
   },
   "skill-name.w": {
    "text": "千鳥流！",
@@ -1277,9 +1290,9 @@
    "kana": "チドリ ナガシ"
   },
   "skill-name.e": {
-   "text": "千鳥！",
+   "text": "（原檔）voice_w_1_1",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1300,18 +1313,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 11328,
-    "seconds": null,
+    "bytes": 10911,
+    "seconds": 0.61678,
     "lufs": null,
-    "hash": "04d8d9146477553f425b27fe5108b674acca69490992d2f6d57cb915913c97f2",
-    "at": 1784990866874
+    "hash": "5bfe0152779c02e901e511c12b29a004fe3a337ab6016614cf611119b46233ba",
+    "at": 1789067532091
    },
    "lastError": null,
-   "kana": "チドリ"
+   "kana": "チドリ",
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0026-69_voice_w_1_1.ogg"
   },
   "skill-name.r": {
    "text": "哥哥！",
@@ -1351,9 +1365,9 @@
    "kana": "ニイサン"
   },
   "skill-name.ex": {
-   "text": "天照！",
+   "text": "（原檔）voice_e_1",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1374,18 +1388,399 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
     "stub": false,
-    "bytes": 17180,
-    "seconds": null,
+    "bytes": 15090,
+    "seconds": 0.880907,
     "lufs": null,
-    "hash": "a190cfcd1de121c443ca830e6a1e498cbc1a7e8e26a55a7cab825d8b3c91e8f7",
-    "at": 1784990862856
+    "hash": "f86eeef571c5a1b27cf2cf4125af7bd7109ceb45b6c05a3fb2a2406928f799f6",
+    "at": 1789067532285
    },
    "lastError": null,
-   "kana": "アマテラス"
+   "kana": "アマテラス",
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0019-69_voice_e_1.ogg"
+  },
+  "attack-heavy.2": {
+   "text": "（原檔）chr0130_ActVoice#32",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#32.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.18415,
+    "lufs": null,
+    "hash": "c1a93dced7b461817ff58cca1107552ecf17c847dcfc540d115906b89989c400",
+    "at": 1789067529831
+   }
+  },
+  "attack-light.2": {
+   "text": "（原檔）chr0130_ActVoice#39",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#39.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.59737,
+    "lufs": null,
+    "hash": "75be30285aeac42bd5bec8e5f2639d5a0fb40770a2070be51a8bfe4889184fc7",
+    "at": 1789067530012
+   }
+  },
+  "defeat.2": {
+   "text": "（原檔）chr0130_ActVoice#209",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#209.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 90741,
+    "seconds": 5.59127,
+    "lufs": null,
+    "hash": "e3f3887819e181f2878c22fa0c35d36b1d359e013e096526dd7479688070a0aa",
+    "at": 1789067530311
+   }
+  },
+  "defeat.3": {
+   "text": "（原檔）chr0130_ActVoice#146",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#146.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.720023,
+    "lufs": null,
+    "hash": "f8e48b47c96960865c2d175f110f8967783884a801d262ccb534b7e133b2ad74",
+    "at": 1789067530405
+   }
+  },
+  "defeat.4": {
+   "text": "（原檔）chr0130_ActVoice#172",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#172.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1.012698,
+    "lufs": null,
+    "hash": "3a14eed62c161c4aca5b3f9e4f9ae1f0921737eccef1b5e642ab500953d093df",
+    "at": 1789067530494
+   }
+  },
+  "hurt-heavy.2": {
+   "text": "（原檔）chr0130_ActVoice#96",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#96.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 20524,
+    "seconds": 1.221338,
+    "lufs": null,
+    "hash": "eb61330d85c92b49cf2f81cff8456021db92fec9d571c439069f764e47f3bda9",
+    "at": 1789067530865
+   }
+  },
+  "hurt.2": {
+   "text": "（原檔）chr0130_ActVoice#141",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#141.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.688685,
+    "lufs": null,
+    "hash": "b5a46cc88b1f7e3d666d5ce750a1e3dfdcaadfd761f4ecbb1932586baaf30f89",
+    "at": 1789067530963
+   }
+  },
+  "kill-1.2": {
+   "text": "（原檔）chr0130_ActVoice#29",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#29.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 84053,
+    "seconds": 5.181361,
+    "lufs": null,
+    "hash": "7f5214970eabbeb79feb60df09333937407aafb48447e6f5add3e4c9b7b34465",
+    "at": 1789067531231
+   }
+  },
+  "kill-1.3": {
+   "text": "（原檔）chr0130_ActVoice#151",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#151.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.498662,
+    "lufs": null,
+    "hash": "cf6f7fdc1db5a3790a57bc9d5b2400ff44762c508201afe00fbb764f4f59f6bf",
+    "at": 1789067531323
+   }
+  },
+  "kill-1.4": {
+   "text": "（原檔）chr0130_ActVoice#115",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#115.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 21777,
+    "seconds": 1.286689,
+    "lufs": null,
+    "hash": "862176cf2bb2420cc84aa196a952504890667ee8069a076e37fdc7b3ddc09276",
+    "at": 1789067531417
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:69/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/69/01-0006-69_voice_joke_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:69",
+    "stub": false,
+    "bytes": 48527,
+    "seconds": 2.953288,
+    "lufs": null,
+    "hash": "51bd6509949fbc6652673a17fd3d3666c5d6c7232075fef2f33fef16be0cf68c",
+    "at": 1789067531604
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）chr0130_ActVoice#206",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#206.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 88233,
+    "seconds": 5.435351,
+    "lufs": null,
+    "hash": "17f47c3ac8bb1e4a97ac44f565202771b7aa66126cad4681004706a460728bfe",
+    "at": 1789067531700
+   }
+  },
+  "quote.4": {
+   "text": "（原檔）chr0130_ActVoice#15",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#15.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 81546,
+    "seconds": 5.041361,
+    "lufs": null,
+    "hash": "6bb82013389d8e071c0f52eda2dd8a5824cd8bff54665a1a04c1d48e741400ef",
+    "at": 1789067531798
+   }
+  },
+  "quote.5": {
+   "text": "（原檔）chr0130_ActVoice#9",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#9.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 78620,
+    "seconds": 4.838027,
+    "lufs": null,
+    "hash": "fc07d2095f247027c2cb36349465a8efc3e2d5c64412f084b8c6e838553e325f",
+    "at": 1789067531904
+   }
+  },
+  "skill-name.e.2": {
+   "text": "（原檔）chr0130_ActVoice#98",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#98.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.570204,
+    "lufs": null,
+    "hash": "13f49169d0d14eed64df667e7720d5dd820c13545d175b7fef95edcbabf3c639",
+    "at": 1789067532185
+   }
+  },
+  "skill-name.ex.2": {
+   "text": "（原檔）chr0130_ActVoice#112",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#112.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.034694,
+    "lufs": null,
+    "hash": "08a3d788bc5ffbf5eda7cd469e8422baa92fafc8565c062cc822cc2e4aaf22b8",
+    "at": 1789067532382
+   }
+  },
+  "skill-name.q.2": {
+   "text": "（原檔）chr0130_ActVoice#107",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#107.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 37660,
+    "seconds": 2.291882,
+    "lufs": null,
+    "hash": "52e7bf737402c757bbb91c2805328e8231c6c71e61b870f769a25a3c5f1edd7d",
+    "at": 1789067532567
+   }
+  },
+  "taunt.2": {
+   "text": "（原檔）chr0130_ActVoice#6",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#6.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 65245,
+    "seconds": 4.012018,
+    "lufs": null,
+    "hash": "ab3613321154c71103b7be4bd82e3c683d825e39dba5cbf3aca0eb6484cad0db",
+    "at": 1789067532757
+   }
+  },
+  "taunt.3": {
+   "text": "（原檔）chr0130_ActVoice#207",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-sasuke/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted/JForce_Sasuke/chr0130_ActVoice/chr0130_ActVoice#207.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+    "stub": false,
+    "bytes": 64827,
+    "seconds": 3.986689,
+    "lufs": null,
+    "hash": "ac5c8ea3a68521e8ced8ba7fc38ceee567bf0352cf4e9b7c6ea5107dc0b74fff",
+    "at": 1789067532852
+   }
   }
  }
 }

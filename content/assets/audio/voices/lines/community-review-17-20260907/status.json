@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753712,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-17-20260907.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/community-review-17-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,7 +40,7 @@
     "seconds": 2.384399,
     "lufs": null,
     "hash": "5f4472888cac5a2cee19bea8175ab770aacfc22834ae99bd8a95cd2cb5a429cf",
-    "at": 1789048366897
+    "at": 1789067126010
    },
    "lastError": null
   },
@@ -60,7 +60,7 @@
     "seconds": 4.067846,
     "lufs": null,
     "hash": "c6da173e566368e0405f60cc6ca8bf23041b4fbe919dc1c83f418d29dc09bb56",
-    "at": 1789048366967
+    "at": 1789067126084
    },
    "lastError": null
   },
@@ -71,7 +71,7 @@
      "engine": "cosyvoice3",
      "stub": false,
      "seconds": 4.68,
-     "at": 1789054972989,
+     "at": 1789067426121,
      "error": null
     }
    ],
@@ -91,7 +91,7 @@
     "lufs": null,
     "hash": "7ab76444fee5b095dacc6432e16711afc7710b000c8cb7a2317cbc6d759f3916",
     "maxDb": -1.9,
-    "at": 1789054972989
+    "at": 1789067426121
    },
    "lastError": null
   },

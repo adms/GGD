@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753603,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-goblin.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/b2-goblin.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -444,31 +444,11 @@
     "engine": "original",
     "engineVersion": "parallel-community-goblin-slayer-ssbu",
     "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "hash": "329d5b10d278e2f8ce00683572ff6115a5f54f06cd71a562d5ef99e814864120",
     "at": 1789048337562
-   },
-   "lastError": null
-  },
-  "hurt.2": {
-   "takes": [],
-   "text": "（原檔）0012-vc_link_damage01",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0012-vc_link_damage01.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789048337644
    },
    "lastError": null
   },
@@ -501,31 +481,11 @@
     "engine": "original",
     "engineVersion": "parallel-community-goblin-slayer-ssbu",
     "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
+    "bytes": 12164,
+    "seconds": 0.680249,
     "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "hash": "1132150e129778a56f4b6a757717dfe4baf3a4bf6caf6f5c5ab82b3362dd43b1",
     "at": 1789048337727
-   },
-   "lastError": null
-  },
-  "hurt-heavy.2": {
-   "takes": [],
-   "text": "（原檔）0015-vc_link_damagefly02",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0015-vc_link_damagefly02.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789048337810
    },
    "lastError": null
   },
@@ -568,66 +528,6 @@
    },
    "lastError": null
   },
-  "attack-light": {
-   "takes": [],
-   "text": "（原檔）0004-vc_link_attack04",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0004-vc_link_attack04.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789058003590
-   },
-   "lastError": null
-  },
-  "attack-heavy": {
-   "takes": [],
-   "text": "（原檔）0005-vc_link_attack05",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0005-vc_link_attack05.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789058003686
-   },
-   "lastError": null
-  },
-  "jump": {
-   "takes": [],
-   "text": "（原檔）0020-vc_link_jump01",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0020-vc_link_jump01.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789048338148
-   },
-   "lastError": null
-  },
   "kill-1": {
    "takes": [
     {
@@ -657,51 +557,11 @@
     "engine": "original",
     "engineVersion": "parallel-community-goblin-slayer-ssbu",
     "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
+    "bytes": 7567,
+    "seconds": 0.4,
     "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
+    "hash": "a4d3bf50552e211e9bf423efa4e531a72320b3c5a3b26ebd01d57124487bb2a3",
     "at": 1789048338231
-   },
-   "lastError": null
-  },
-  "kill-1.2": {
-   "takes": [],
-   "text": "（原檔）0002-vc_link_attack02",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0002-vc_link_attack02.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789058003783
-   },
-   "lastError": null
-  },
-  "kill-1.3": {
-   "takes": [],
-   "text": "（原檔）0003-vc_link_attack03",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:parallel-community-goblin-slayer-ssbu/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0003-vc_link_attack03.wav",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "parallel-community-goblin-slayer-ssbu",
-    "stub": false,
-    "bytes": 25121,
-    "seconds": 1.491156,
-    "lufs": null,
-    "hash": "83ebebdff969175ab74dbe891dee3cb77732958370298269ff9584dfea5b8b4e",
-    "at": 1789058003876
    },
    "lastError": null
   }

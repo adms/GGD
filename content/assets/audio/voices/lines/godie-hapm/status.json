@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "ウオオオオオオオオーーーッ！！！",
+   "text": "（原檔）voice_joke_1",
    "lang": "ja",
    "kana": "ウオオオオオオオオーーーッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,17 +30,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 75276,
+    "seconds": 4.633832,
     "lufs": null,
-    "hash": "c6edd623820c96c330072652b0a3f4526158442f5fe4a4104bed4d278714a594",
-    "at": 1784973781436
+    "hash": "9d883ca357e3b391cf66d52111fbd40f5d60f55ec50422757d631c4c437a7d33",
+    "at": 1789067540711
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0024-41_voice_joke_1.ogg"
   },
   "victory": {
    "text": "グオオオオッ！！オオオオ……ッ！",
@@ -72,10 +73,10 @@
    "lastError": null
   },
   "defeat": {
-   "text": "グゥ……オオ……ォ……",
+   "text": "（原檔）voice_death_2",
    "lang": "ja",
    "kana": "グゥ オオォ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,17 +89,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
     "stub": false,
-    "bytes": 10075,
-    "seconds": 0.56,
+    "bytes": 71933,
+    "seconds": 4.424853,
     "lufs": null,
-    "hash": "87d9ab7b2ea11e6ede13ea83557de89cecb190a5fd7ec4c3d4d17e80ac58948a",
-    "at": 1784973812600
+    "hash": "b413d42ce94f6da41ea0de168d4d2bef1722b8149bbbe464b4471f70a171dcb2",
+    "at": 1789067540430
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0030-41_voice_death_2.ogg"
   },
   "hurt": {
    "text": "グッ",
@@ -536,10 +538,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "ハアッ！",
+   "text": "（原檔）voice_attack_1",
    "lang": "ja",
    "kana": "ハアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +554,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 49363,
+    "seconds": 3.005533,
     "lufs": null,
-    "hash": "e3b1fb9af4477f2d48d565e5d8ff655b6cffbb2a5152589623917a97408d0c4d",
-    "at": 1784973889783
+    "hash": "72ebd9dae1557af1fac70fc1372842843f1d5c1d5cb5e64195567d2f6cc9a797",
+    "at": 1789067540326
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0001-41_voice_attack_1.ogg"
   },
   "attack-heavy": {
-   "text": "ウオオオッ！！",
+   "text": "（原檔）voice_attack_2",
    "lang": "ja",
    "kana": "ウオオオッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,17 +584,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 38496,
+    "seconds": 2.349569,
     "lufs": null,
-    "hash": "f2ab82aadff94deb4d40b8b994e3abd1da8a97b0836ded49cac7444802d0adef",
-    "at": 1784973892981
+    "hash": "1db7b77b275a4c59305e0bfa92584da395b9cdb8d4cde47d462cdb9f7d41a34d",
+    "at": 1789067540235
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0018-41_voice_attack_2.ogg"
   },
   "crit": {
    "text": "グオオオオオッ！！！",
@@ -739,10 +743,10 @@
    "lastError": null
   },
   "respond.ok": {
-   "text": "オオッ！",
+   "text": "（原檔）voice_move_1",
    "lang": "ja",
    "kana": "オオッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -755,17 +759,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 25539,
+    "seconds": 1.522358,
     "lufs": null,
-    "hash": "742778e2aa95320ccb6d0f3cc4b3316cf955b6507932231093d7fcfe761269ef",
-    "at": 1784973919704
+    "hash": "0abd749df7963c3fbc51e939b721ec9b54a7c4d399651252ecd15bd33db67ce3",
+    "at": 1789067540800
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0000-41_voice_move_1.ogg"
   },
   "respond.no": {
    "text": "グルルルッ！",
@@ -971,10 +976,10 @@
    "lastError": null
   },
   "free-move": {
-   "text": "グルル……オゥ",
+   "text": "（原檔）voice_move_2",
    "lang": "ja",
    "kana": "グルル オゥ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -987,17 +992,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
     "stub": false,
-    "bytes": 15926,
-    "seconds": 0.92,
+    "bytes": 17598,
+    "seconds": 1.040544,
     "lufs": null,
-    "hash": "d49bcae53b3dd2158a5a1de13b97dd5786097527e2dbd34cc7f4a46c49456155",
-    "at": 1784973955899
+    "hash": "4098086e0d550246846a0e6c731c7a02e812724a5668691a49a4366ef83db1ff",
+    "at": 1789067540624
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0022-41_voice_move_2.ogg"
   },
   "first-blood": {
    "text": "ガアアアアアーッ！！ウオオオッ！！",
@@ -1386,6 +1392,26 @@
    },
    "lastError": null,
    "kana": "ナイン ライブズ"
+  },
+  "defeat.2": {
+   "text": "（原檔）voice_death_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:41/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/41/01-0034-41_voice_death_3.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:41",
+    "stub": false,
+    "bytes": 53960,
+    "seconds": 3.30449,
+    "lufs": null,
+    "hash": "e3724dbbc5934f2b0e92bb94a7a8d8c67f3b46179bc865d8b1fdd42a1464170d",
+    "at": 1789067540537
+   }
   }
  }
 }

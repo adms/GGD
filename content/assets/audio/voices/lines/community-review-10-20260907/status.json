@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=male-youth) — drop community-review-10-20260907.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549632,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-hpal.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/godie-hpal.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,7 +40,7 @@
     "seconds": 3.583129,
     "lufs": null,
     "hash": "e30623437a8c1c8bafee525ec83b07f951715b3e0622e4046dd77a009057b8b5",
-    "at": 1789048361158
+    "at": 1789067124109
    },
    "lastError": null
   },
@@ -60,7 +60,7 @@
     "seconds": 6.323084,
     "lufs": null,
     "hash": "3e2bb2e1fd53e943b11d161d5bf6b983d9a9f9bdbc1f9106ec4b8e3e7d1b0701",
-    "at": 1789048361231
+    "at": 1789067124181
    },
    "lastError": null
   },
@@ -71,7 +71,7 @@
      "engine": "cosyvoice3",
      "stub": false,
      "seconds": 3.48,
-     "at": 1789054963559,
+     "at": 1789067425098,
      "error": null
     }
    ],
@@ -91,7 +91,7 @@
     "lufs": null,
     "hash": "acdb96ff5ef28ce99bc98152f98f25b2a6b556be2ac1362264e11bf1cedcbf77",
     "maxDb": -2.4,
-    "at": 1789054963559
+    "at": 1789067425098
    },
    "lastError": null
   },
@@ -374,7 +374,7 @@
     "seconds": 3.664399,
     "lufs": null,
     "hash": "59910949332ce763e40b533fd9ba91058ab0825896f35928a3160fe0200a750d",
-    "at": 1789048361512
+    "at": 1789067124256
    },
    "lastError": null
   },

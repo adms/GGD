@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=child-boy) — drop community-review-26-20260907.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549672,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-emfr.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/godie-emfr.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,7 +40,7 @@
     "seconds": 3.110023,
     "lufs": null,
     "hash": "e7f56f13cf5cda579d4879a046c1e71235d2620ddc0e4c5c9690b46f97bf521a",
-    "at": 1789048379065
+    "at": 1789067127572
    },
    "lastError": null
   },
@@ -60,7 +60,7 @@
     "seconds": 2.285714,
     "lufs": null,
     "hash": "4d726bb70de2c07ddea23c96b0e1e5224636406fc87eb0504d2cb41d295eecdc",
-    "at": 1789048379145
+    "at": 1789067127631
    },
    "lastError": null
   },
@@ -71,7 +71,7 @@
      "engine": "cosyvoice3",
      "stub": false,
      "seconds": 0.8,
-     "at": 1789054980299,
+     "at": 1789067427193,
      "error": null
     }
    ],
@@ -91,7 +91,7 @@
     "lufs": null,
     "hash": "8a81b353d81d6703238f2f40d5f750b0d4cca2deae8ee64cddde577885bbe8f3",
     "maxDb": -3.1,
-    "at": 1789054980300
+    "at": 1789067427193
    },
    "lastError": null
   },
@@ -374,7 +374,7 @@
     "seconds": 3.38576,
     "lufs": null,
     "hash": "73a4fcf55e5889fc2852f00cfbbbe0c74310843999fd2d2b57da863f9015f24d",
-    "at": 1789048379549
+    "at": 1789067127688
    },
    "lastError": null
   },

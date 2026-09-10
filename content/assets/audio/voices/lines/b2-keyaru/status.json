@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=male-youth) — drop b2-keyaru.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549525,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-h01n.wav"
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/ggd-main/voice-reference-pipeline/approved/processed/godie-h01n.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
