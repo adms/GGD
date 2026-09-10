@@ -241,13 +241,13 @@
    "champion": "godie-efur",
    "championName": "揍敵客大家長 - 揍敵客桀諾",
    "ability": "13-02 龍頭戲畫。牙突",
-   "modelKey": "champ.sela",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
+   "clip": "Spell One",
+   "blade": "Hand Right Ref←Bip01 R Hand",
+   "sweptDeg": 124.1,
+   "planarity": 1.0,
+   "pitchDeg": 20,
+   "attackClipPitchDeg": 82
   },
   "godie-h00l.q": {
    "champion": "godie-h00l",
@@ -301,13 +301,13 @@
    "champion": "godie-hapm",
    "championName": "海克力斯 - Berserker",
    "ability": "52-03 無銘斧劍",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+   "clip": "Spell Slam",
+   "blade": "Weapon←R_hand",
+   "sweptDeg": 140.5,
+   "planarity": 0.991,
+   "pitchDeg": 25,
+   "attackClipPitchDeg": 76
   },
   "godie-hart.q": {
    "champion": "godie-hart",

@@ -8947,3 +8947,11 @@ overwrite_temp_20260910-191856	Bash	repo 外	/private/tmp/n15.txt	/Users/Takuro/
 20260911-042012	gen_board	產生器覆蓋前	/private/tmp/ggd-merge/docs/_release/ggd-board.html	/private/tmp/ggd-merge/docs/legacy/_overwrites/overwrite_temp_20260911-042012/docs/_release/ggd-board.html
 20260911-043112	gen_board	SKIP(內容相同)	/private/tmp/ggd-merge/docs/_release/ggd-board.html	
 20260911-044234	gen_board	SKIP(內容相同)	/private/tmp/ggd-merge/docs/_release/ggd-board.html	
+20260911-045150	gen_board	SKIP(內容相同)	/private/tmp/ggd-merge/docs/_release/ggd-board.html	
+20260911-045942	gen_board	SKIP(內容相同)	/private/tmp/ggd-merge/docs/_release/ggd-board.html	
+overwrite_temp_20260911-051123	Bash	repo 外	/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/laneZ-663-stale.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260911-051123/laneZ-663-stale.txt
+overwrite_temp_20260911-051237	Edit	SKIP(git 有)	/private/tmp/ggd-merge/README.md	
+overwrite_temp_20260911-051337	Edit	SKIP(git 有)	content/config/ugc.json	
+overwrite_temp_20260911-051337	Edit	SKIP(git 有)	packages/shared/src/sim/SimWorld.ts	
+20260911-052601	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
+20260911-052704	gen_board	產生器覆蓋前	/private/tmp/ggd-merge/docs/_release/ggd-board.html	/private/tmp/ggd-merge/docs/legacy/_overwrites/overwrite_temp_20260911-052704/docs/_release/ggd-board.html
