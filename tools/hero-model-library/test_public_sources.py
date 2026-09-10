@@ -7,11 +7,31 @@ import zlib
 import tempfile
 import unittest
 import zipfile
+import tarfile
+import io
 from pathlib import Path
-from extract_public_sources import unpack_zip, unpack_gma, extract_map_references
+from extract_public_sources import unpack_zip, unpack_gma, unpack_native_archive, extract_map_references
 
 
 class PublicArchive(unittest.TestCase):
+    def test_native_archive_reader_preserves_bytes_and_rejects_late_unsafe_members(self):
+        for unsafe in [None, 'traversal', 'symlink', 'hardlink', 'duplicate']:
+            with self.subTest(unsafe=unsafe), tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp); src=root/'fixture.tar'
+                with tarfile.open(src,'w') as tar:
+                    info=tarfile.TarInfo('models/body.dff');info.size=4;tar.addfile(info,io.BytesIO(b'body'))
+                    if unsafe:
+                        bad=tarfile.TarInfo('../escape' if unsafe=='traversal' else 'models/body.dff' if unsafe=='duplicate' else 'link')
+                        if unsafe in ['symlink','hardlink']:
+                            bad.type=tarfile.SYMTYPE if unsafe=='symlink' else tarfile.LNKTYPE;bad.linkname='../escape'
+                        tar.addfile(bad)
+                if unsafe:
+                    with self.assertRaises(ValueError):unpack_native_archive(src,root/'out')
+                    self.assertFalse((root/'out').exists())
+                else:
+                    unpack_native_archive(src,root/'out')
+                    self.assertEqual((root/'out/models/body.dff').read_bytes(),b'body')
+
     def test_compressed_gma_verifies_bytes_crc_and_paths(self):
         body=b'IDST-model-payload'
         def gma(name,crc):

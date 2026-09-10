@@ -46,16 +46,19 @@ def render_sources(data):
         lines += ['## 已取得免費來源：先暫緩購買', '',
             '**以下角色已取得免費來源的實際檔案，其他工作流先不要重複付費購買。** 這是購買暫緩記錄，並非全部已完成標準化或可直接作預設。沿用 300 優先與 11 組核准加工副本規則。', '',
             '免費檔取得範圍只涵蓋表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組查找。整批付費暫緩另由上方 `purchasePolicy` 決定。', '',
-            '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 購買安排 |', '|---|---|---|---|']
+            '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 檔案保存狀態 | 購買安排 |', '|---|---|---|---|---|']
         for s in public:
             decision = '**暫緩購買，先處理已取得免費檔**' if s['heroIds'] or s.get('ownerEntryIds') else '地圖素材池；尚未認列角色'
             ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
             if s.get('ownerEntryIds'): ids += '<br>未對應角色 ID 的清單組：' + '、'.join(f'`{i}`' for i in s['ownerEntryIds'])
-            lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {decision} |')
-        lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources`。`readiness` 尚未通過的來源只供人工處理，不进入成品自動取用；來源使用條件另行保留，不把免費下載當成已確認可再散布。', '']
+            storage = ('本機已保存；S3 legacy 備份已讀回驗證' if s.get('backup', {}).get('readbackVerified') is True else
+                       '**僅本機已保存，S3 尚未上傳**' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' else
+                       '本機已保存；S3 備份狀態未確認')
+            lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {storage} | {decision} |')
+        lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources`。`pendingBackup.plannedS3Uri` 只是預定上傳位置，不能當成已存在的 S3 檔案；已上傳以 `backup.readbackVerified=true` 為準。`readiness` 尚未通過的來源只供人工處理，不進入成品自動取用；來源使用條件另行保留，不把免費下載當成已確認可再散布。', '']
     if data.get('publicSourceLeads'):
         lines += ['## 已找到來源頁，尚未取得檔案', '',
-            '以下先登記避免重複付費；不計入已下載數量，也不加入可用模型候選。', '',
+            '以下來源尚未取得模型檔，不計入已下載數量，也不加入可用候選；同一角色可能已從上方其他來源取得模型。', '',
             '| 角色 | 公開來源頁 | 查核狀態 | 購買安排 |', '|---|---|---|---|']
         for s in data['publicSourceLeads']:
             ids = '、'.join(f'`{i}`' for i in s['heroIds'] + s.get('ownerEntryIds', []))
@@ -89,7 +92,7 @@ def render_sources(data):
                 state = f'**部分形態免費來源已取得**；{held} 暫緩購買；{remaining} 未取得、保留原下載安排；' + '、'.join(entry['acquiredPublicSources'])
             if entry.get('mappingNote'): notes += '；' + entry['mappingNote']
             if entry.get('publicSourceLeadIds'):
-                state += '；**已找到工坊頁，未取得檔案**：' + '、'.join(entry['publicSourceLeadIds'])
+                state += '；**其他來源線索，尚未取得模型**：' + '、'.join(entry['publicSourceLeadIds'])
             lines.append(f'| {entry["target"]} | {links} | {notes} | {ids}<br>{state} |')
         lines.append('')
     lines += ['同一資源帖只下載一次；不同外觀仍各自保留候選。拳四郎的變身維持放大皮卡丘；岩谷尚文移除刀劍；阿箱＋拉蜜絲加背後白色矩形販賣機；凱亞爾改綠斗篷與黃髮；幸運超人胸口補「大吉」；蒼月潮指定選項改黑髮與藍褲。', '']

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Inspect locally acquired public model packs without executing mod code.
 
-ZIPs are unpacked with path/size checks. Unity bundles embedded in .NET resources
+ZIP/RAR/7z files are unpacked with path/size checks. Unity bundles embedded in .NET resources
 are read with dnfile, never loaded as executable assemblies. Maps are read using
 StormLib's normal archive API. Large native trees belong in intake / S3 legacy.
 """
 import argparse
 import collections
 import ctypes as C
+from ctypes.util import find_library
 import hashlib
 import json
 import lzma
@@ -121,6 +122,73 @@ def unpack_zip(src, dest):
             else:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(archive.read(info))
+
+
+def unpack_native_archive(src, dest):
+    """Read RAR/7z with system libarchive; validate members before writing files.
+
+    API reference: https://github.com/libarchive/libarchive/wiki/Examples
+    No archive-provided code, symlinks, hardlinks or filesystem metadata is used.
+    """
+    lib = C.CDLL(find_library('archive') or 'libarchive.dylib')
+    ptr = C.c_void_p
+    signatures = {
+        'archive_read_new': ([], ptr),
+        'archive_read_support_filter_all': ([ptr], C.c_int),
+        'archive_read_support_format_all': ([ptr], C.c_int),
+        'archive_read_open_filename': ([ptr, C.c_char_p, C.c_size_t], C.c_int),
+        'archive_read_next_header': ([ptr, C.POINTER(ptr)], C.c_int),
+        'archive_entry_pathname': ([ptr], C.c_char_p),
+        'archive_entry_size': ([ptr], C.c_int64),
+        'archive_entry_filetype': ([ptr], C.c_uint),
+        'archive_entry_symlink': ([ptr], C.c_char_p),
+        'archive_entry_hardlink': ([ptr], C.c_char_p),
+        'archive_read_data': ([ptr, ptr, C.c_size_t], C.c_ssize_t),
+        'archive_error_string': ([ptr], C.c_char_p),
+        'archive_read_free': ([ptr], C.c_int),
+    }
+    for name, (args, result) in signatures.items():
+        fn = getattr(lib, name); fn.argtypes = args; fn.restype = result
+    archive = lib.archive_read_new()
+    if not archive: raise ValueError('Cannot allocate archive reader')
+    records, seen, total = [], set(), 0
+    def error():
+        return ValueError((lib.archive_error_string(archive) or b'Archive read failed').decode('utf-8', errors='replace'))
+    try:
+        lib.archive_read_support_filter_all(archive)
+        lib.archive_read_support_format_all(archive)
+        if lib.archive_read_open_filename(archive, str(src).encode(), 10240) != 0: raise error()
+        entry = ptr()
+        while True:
+            status = lib.archive_read_next_header(archive, C.byref(entry))
+            if status == 1: break  # ARCHIVE_EOF
+            if status != 0: raise error()
+            name = (lib.archive_entry_pathname(entry) or b'').decode('utf-8')
+            if not name: raise ValueError('Empty archive path')
+            target = safe_path(dest, name)
+            key = str(target.relative_to(dest)).casefold()
+            if key in seen or len(seen) >= 20000: raise ValueError('Duplicate path or too many archive members')
+            seen.add(key)
+            if lib.archive_entry_symlink(entry) or lib.archive_entry_hardlink(entry): raise ValueError('Archive links are not supported')
+            kind = lib.archive_entry_filetype(entry)
+            if kind == stat.S_IFDIR: continue
+            if kind != stat.S_IFREG: raise ValueError('Archive member is not a regular file')
+            size = lib.archive_entry_size(entry); total += size
+            if not 0 <= size <= 256_000_000 or total > 2_000_000_000: raise ValueError('Archive extraction size limit exceeded')
+            data = bytearray(); buffer = C.create_string_buffer(1024 * 1024)
+            while True:
+                n = lib.archive_read_data(archive, buffer, len(buffer))
+                if n < 0: raise error()
+                if n == 0: break
+                if len(data) + n > size: raise ValueError('Archive member exceeds declared size')
+                data.extend(buffer.raw[:n])
+            if len(data) != size: raise ValueError('Truncated archive member')
+            records.append((target, bytes(data)))
+    finally:
+        lib.archive_read_free(archive)
+    for target, data in records:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
 
 
 def unpack_gma(src, dest):
@@ -259,6 +327,8 @@ def process(home, stormlib):
         magic=source.read_bytes()[:8]
         if magic.startswith(b'PK'):
             unpack_zip(source,home/'extracted')
+        elif magic.startswith((b'Rar!', b'7z\xbc\xaf\x27\x1c')):
+            unpack_native_archive(source,home/'extracted')
         elif magic.startswith(b'GMAD') or source.name.endswith(('.gma','.gma.lzma')):
             unpack_gma(source,home/'extracted')
         elif magic.startswith((b'HM3W',b'MPQ')):

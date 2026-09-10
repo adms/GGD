@@ -67701,5 +67701,3186 @@
       ],
       "readbackVerified": true
     }
+  ],
+  "pendingUploads": [
+    {
+      "id": "thunderstore-pikachu-tiny",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
+      "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-tiny-round5-final.zip",
+      "bytes": 1608020,
+      "sha256": "12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9",
+      "contentKind": "model-intake",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 661,
+          "sha256": "10998080ee98a1564b5868a6f017847a969a431a8c3642ddcb16a63934c1e6c3"
+        },
+        {
+          "path": "bundles/LethalPikachu.templatebundle.bundle",
+          "bytes": 145496,
+          "sha256": "cf7e84833f7eb4be282bdd22a169002bfc905c3494bf4c0409d28eb4d37f5b31"
+        },
+        {
+          "path": "extracted/BepInEx/plugins/moresuits/Pikachu.png",
+          "bytes": 285547,
+          "sha256": "53c732543efe12f59592fb349f311eed7985564f204ecdb9d940ab68f8a2dfce"
+        },
+        {
+          "path": "extracted/LethalPikachu.dll",
+          "bytes": 154112,
+          "sha256": "a6b7847a18cefcf579e19d474cc581736595157dbccda78ff767e26d95bba91c"
+        },
+        {
+          "path": "extracted/README.md",
+          "bytes": 232,
+          "sha256": "bc20f00f48eaf1a3900c1dd5dd9061c4c5879f98ec032bd32ccd81a25d43a89d"
+        },
+        {
+          "path": "extracted/icon.png",
+          "bytes": 70159,
+          "sha256": "c2b0ecffd3dfa45e844ede35fde6dbd15a727a8d11141f511cf1461567d79c4c"
+        },
+        {
+          "path": "extracted/manifest.json",
+          "bytes": 293,
+          "sha256": "a6a13d88a09fd7c30db3e3e597ce5a869162456721b02d31cff1917f2524e1aa"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 33880,
+          "sha256": "8f9f53963f28a3b7f90922c3fa20351558fa1cadf8ca7408ae45b574034320fc"
+        },
+        {
+          "path": "raw/thunderstore-pikachu-tiny.zip",
+          "bytes": 494747,
+          "sha256": "97910708c8ebdff37401095cf7e81ce1da6304ed74829d142a0a28f35d50cb83"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-100806640891805276.json",
+          "bytes": 485,
+          "sha256": "0a67dd042480aff9227a2c4a70eed0e55ef7ee3b34e1e8a15b2c13ac8b18981a"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-1115228957958828096.json",
+          "bytes": 212,
+          "sha256": "88438345656f8e7a5859702d20b0b55173e0928e9d8936ca8e1c6067bcce8388"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-1124965392741731848.json",
+          "bytes": 216,
+          "sha256": "a8b2619bbfbeebee61318c19b06d58d6f71b8bb42fc6ff4849493e52e282d85d"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-1535520373506839181.json",
+          "bytes": 146,
+          "sha256": "22dedafcb624d908b2cce80de088b2a5379bbd86d93600a70113be9df1e5f43b"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-1798771522550561533.json",
+          "bytes": 280,
+          "sha256": "bf64074e5743aa77aecdcc509c040d00b1cb789f3d084a6b30e4068198a3c309"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-2225878350882962842.json",
+          "bytes": 217,
+          "sha256": "f05a1b76be9dcd149d12412747c5bf69fc355a9ff4298266eb2373f3fe5d5842"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-2335119050761323108.json",
+          "bytes": 149,
+          "sha256": "0255aac3184e4fae25477a4ffac83a56eccf0d6ffa7a5146d7d56692b98ca2e7"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-2564314451810587216.json",
+          "bytes": 149,
+          "sha256": "740aed3695040d074bc4fe537ad002ac8322c5849b2e74cff053ed1765c52a3d"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-2594388097758077927.json",
+          "bytes": 481,
+          "sha256": "c04de5ee17180bcdce3efc8eb4e035a791524e50bec00fccc4885e684b36c560"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-3009674779411700740.json",
+          "bytes": 150,
+          "sha256": "7259ca287423ccc0fad12b544a5c5d24b4309b3e84917b5617f4ed68635e1d24"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-3377176915057208588.json",
+          "bytes": 212,
+          "sha256": "0ce38d3da64afa946371b2757c805d43cb372de1e8b2880c3895521aa3abbe31"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-3424486105375401784.json",
+          "bytes": 218,
+          "sha256": "6a54e811686008abf656d17a3b15fce958b0cba7d46b3d3e66b57592641ca9d8"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-3863836787465697252.json",
+          "bytes": 453,
+          "sha256": "70bd31b12e46da549d1b7ad52f01bf9b364610265b659c299e2d9934e02d8753"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-4093603509366964652.json",
+          "bytes": 217,
+          "sha256": "9e8d43e92f1c163490210b82fb8d235c1415da3a6204455dfea1e6c7e49cda7d"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-414913516154439995.json",
+          "bytes": 147,
+          "sha256": "ddcfc9a3f9f6c0f507a253adeff12578e06386366f61eb617ec8cb71ffab9e6e"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-4179478778859604508.png",
+          "bytes": 11674,
+          "sha256": "08f91d6f715ceec494bc8f70b739b98aa41675eeef13ad54ae44384893d658a0"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-4319853837052758063.json",
+          "bytes": 148,
+          "sha256": "18eead39845e96f180683ec9d791a434a64b01476a1a81636c2fa5c3a3ff8ab4"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-4422920355897110740.json",
+          "bytes": 221,
+          "sha256": "4aad951c60dfd0fc45dc656ebca559cdde0766a7a3c9f569d7721818f427b2d3"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-4923358725786516586.json",
+          "bytes": 511,
+          "sha256": "6dee5b1111d93b10ee6e7d4d72b3049f714b6e853d3639c0b7dddbfb8f4f60c6"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5268251516300744237.json",
+          "bytes": 8116,
+          "sha256": "40e66ccdc26d11365df75ea1ef20f4b473beff108d62af132cc5bc22d1b39606"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-537626075887430916.json",
+          "bytes": 489,
+          "sha256": "c4eb5d8a6b6a28276e482111226cd5b37391ca4b6c1ab7ab7c63a35b35ae0e0a"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5652678708261609887.json",
+          "bytes": 218,
+          "sha256": "417a3fe386b507236146e9ab7120c317a5e9036cc241d7e35e4abe60d601c5c3"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5684174445437132115.json",
+          "bytes": 345,
+          "sha256": "115f87872f58f895a8780f6cab384e6c4bfa55b7d1f84f0d7623f617c72b1b05"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5695982792417584808.json",
+          "bytes": 416,
+          "sha256": "a695774eb84210c7f4e3689cbafce8089d81fa9ef024167147846bcd80dcacbc"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5737797383937821341.json",
+          "bytes": 618,
+          "sha256": "e82b0232cbd369d224417d7fce42453c585807e6b1903e5d6df2b88e1ac6f3ed"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5794271440144076091.json",
+          "bytes": 469,
+          "sha256": "d192bd5ef8790ac47ed3120b069d3ecf19637f09f3bcc4f58fafd15251f71720"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5957213298856233855.json",
+          "bytes": 1765847,
+          "sha256": "f6586681cb4784d2d69c73982d2ce0a39f8f26a40c39bd788ec5625e2dd405ef"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-5957213298856233855.obj",
+          "bytes": 670689,
+          "sha256": "d54c3a36db673babfc87e02f864ee85c983444e3f3607a0bf1f98210352ac9b2"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-6052661460438249159.json",
+          "bytes": 8116,
+          "sha256": "e20bfb5c4ae8c3788deb3b3b56a1cc9ed0cdab64c7f105b4628c81fa3eff91a8"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-6504218509729538534.json",
+          "bytes": 3199,
+          "sha256": "adbc3d986ed15ad818a7f2b3a7d213e0d6b832416064265a4a1a3e625cd4b6ca"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-7180989980025897910.png",
+          "bytes": 10504,
+          "sha256": "f11a7926c6b5b05ff90a9fba5b19527a05a280f08de09411e0a4f49dfec79c3e"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-7449818180411604416.json",
+          "bytes": 455,
+          "sha256": "cdbdd8a71dd4d8ed71577a2b815219e103b2b3671889ffffce0a8cecac26056d"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-7654342281757666005.json",
+          "bytes": 217,
+          "sha256": "3572fc8f91d8675327afee43f7f5475884b6335016bb07085181ae6710a77508"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-7673569167221210755.json",
+          "bytes": 148,
+          "sha256": "bde44947c4c7a67ba9275bb298acc3831eed5d7270dcf6fad3565302aa6e450e"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-7728817405036624335.json",
+          "bytes": 422,
+          "sha256": "eb764465b105356877655ab8292fb3a514a174704d6b8717f6924d9f291a4007"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-7848221550135982249.json",
+          "bytes": 8112,
+          "sha256": "6b1f7d47dcb9fbdafd36914792d1169b0e4d5871363ed95be97edc478beae676"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-8169411572628306235.json",
+          "bytes": 493,
+          "sha256": "311aeb8eb50816afea7b24721f60fccfdc98a0cf28d2d0a73b8b20604ce0ace2"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-8471541846912558307.json",
+          "bytes": 147,
+          "sha256": "54dd0dd49659d0b64cd209050631b898f118806964d5588dc7c05904fafe2eae"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-8600955072894798143.json",
+          "bytes": 217,
+          "sha256": "7ea14f33f577d2451f8ef8448c7ce74eb2ee2bf6eb7bfa2d0db81651ee737c9a"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-9061288456148630918.json",
+          "bytes": 393,
+          "sha256": "735b359093fe538b01f6e0598a3af39b6d4e5644fa2285ffb76d42d75995a3ad"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/-9143366640693584475.json",
+          "bytes": 8114,
+          "sha256": "221aa0732b2ff06909526d78831c20f2d694ed2b1fc01ab6a89056999d38628a"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/1211187262731034077.json",
+          "bytes": 383,
+          "sha256": "1a3012fa7d66f026b102be6a45f659e3718f690bfee03ae924226adbb92b3890"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/1316626992539996240.json",
+          "bytes": 518,
+          "sha256": "d4af981c66509b50c4abdc453cc7f957feff5f7db1f202540a0c9e85cc2775f7"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/1500857287749254223.json",
+          "bytes": 482,
+          "sha256": "3c2074c5cf217b8bdf8a27909ddae45caf1321de5efb0e5fecddcfbbd7f38640"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/1549219316893888248.json",
+          "bytes": 148,
+          "sha256": "25db148fdccfb6acd11d20a1feb48c4e4ff00c1ccedbfa5dc65757ba20894dda"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/1808554154964498444.json",
+          "bytes": 502,
+          "sha256": "d843f66a22ee2f3463537b4abca125dbd7c790d479d892d6a15afd9cf7528ee1"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/2343697307509026197.json",
+          "bytes": 460,
+          "sha256": "a2171ecbd406bb967740742be288917680f99e1a60aaaa7e47671248e29ded73"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/2394885463093979358.json",
+          "bytes": 480,
+          "sha256": "8142aec724e32395b21cbe563c5d1c3318f0f8c4af3147b5d5570eda08979b98"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/2818263355883952963.json",
+          "bytes": 422,
+          "sha256": "29368e3bd054dbbd005f020e8d9b2c9ea7f12459376548db402a7a2f3190ffe3"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/2929943638669646882.json",
+          "bytes": 217,
+          "sha256": "c2853afea6a466c6baa3f827800e55bb93d8193a824bd94b1e40420d542a7f12"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3025761784765624991.json",
+          "bytes": 214,
+          "sha256": "03ea343ca11c21c3883cc2f8e1fb4a2020b3a48cda33b3d6c3870d62391bd6f9"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3327780700022638257.json",
+          "bytes": 482,
+          "sha256": "3e420a0a8adb228edfe496e5e4c5d2deceffb25f1dd6fa50f90a08a9a0ce6b44"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3329430821537574293.json",
+          "bytes": 213,
+          "sha256": "0c28b025c51ee856315e54697c47d295513592e5b258cc1305867da5e8cec8d8"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3429136526280711926.json",
+          "bytes": 151,
+          "sha256": "cb3ede27e89e7435a778b143299412526622ce09000ce455937ddbe664d6eff8"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3626667092528222411.json",
+          "bytes": 59124,
+          "sha256": "f0a09f227940f3e4e5de6a795a678f85fd7fd0d386db085fb6076d566cc4096f"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3691368433432344292.json",
+          "bytes": 676,
+          "sha256": "22665949aa50e05e06726a9dce1eeb7c7400bc6b61973feea0610ed2fb5a4f25"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3831646806216616798.json",
+          "bytes": 212,
+          "sha256": "eda6e5d125e6235cd35dedb2fcacb0b02790bb7a462fff955cd15078c4b23782"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/3984412130683650641.json",
+          "bytes": 433,
+          "sha256": "26c0b0750931c19f32a514158a0b56854b315346aae159e5346c1e6c08662c1a"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/4064104003102372577.json",
+          "bytes": 220,
+          "sha256": "1988f6a3227e34b9542405c19968de05803c29a7d7db3ea5b8c089a7ef4f967b"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/4085286750512695694.json",
+          "bytes": 216,
+          "sha256": "f7228e3dc9ee808ed7a36eef52496cbefe06280074e7759855de98f7854f4cab"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/4232168347838189738.json",
+          "bytes": 463,
+          "sha256": "c1dc48671e0f9561268b7e96f22c73154e0fa6a9a999e071ec151d03f1745052"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/4332432706616785976.png",
+          "bytes": 15780,
+          "sha256": "db611c0fccc5d0629e71957be8501f00ac08d75399781714c0d758d598be38ca"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/4432578383611580875.json",
+          "bytes": 510,
+          "sha256": "ed816ab1f46fd31ddaca609144e72bac851b47332a95bb9be888ded3a2c154c2"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/455906698463074561.json",
+          "bytes": 469,
+          "sha256": "ddb4a5f6d0ad51a522e58ab3992d9162cfd94f7188d59d43ebfbbd76c2239b35"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/464645030963102877.json",
+          "bytes": 449,
+          "sha256": "2d66d0ee030d1080793a99b69acd1deaa4912437540ed8051b878d7494f146f6"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/504553024288111348.json",
+          "bytes": 503,
+          "sha256": "4f31a7af08b29596f8eae26416dc0030954c2c2c337b381a9b4dea40deb6eba3"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/5204741019258618418.png",
+          "bytes": 7104,
+          "sha256": "1ca907676640163d1a317c8856f8f647b7107cbff3ddfcf3e1137fcca957eeba"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/5321341856892831017.json",
+          "bytes": 490,
+          "sha256": "fc3164790d9b8bf9e3cfd5743a83e463e9556ea6129bd71f4d28d62a494671d8"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6025867001642852471.json",
+          "bytes": 149,
+          "sha256": "68c41da847c9bc32fb68c1ceb9afc32f1e0a76dd7ef81b55328a62eb319d0055"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6060973424896867209.json",
+          "bytes": 487,
+          "sha256": "1f7c64232378d67c067ab48300c5cf7780b8477c73228015a2bdb057e4d53483"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6187155343302791632.json",
+          "bytes": 506,
+          "sha256": "a06ff5deb2d50b1ad12eaab98ffb740c10c38403b228bae42ba6796d610527df"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6273479535273466654.json",
+          "bytes": 213,
+          "sha256": "4d29328cf1da880b151058ff4dc24dee26dd3121a4956498ecdab2f62bd8828c"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6534639630733450489.json",
+          "bytes": 217,
+          "sha256": "9036a6bb3d0ede02bcfc736720ee4a81775549e258873af58e1132e4dfc6ab9e"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6566087503420312913.json",
+          "bytes": 472,
+          "sha256": "ce0d467c330d8c7372315e676eb007d5d6903ff27fd234ebe14494732f5e35cd"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6585571942136014416.json",
+          "bytes": 383,
+          "sha256": "d247ca318f5aeb4024f1b2f839b4756a376173a603c27cdfcd46ef9eb87f3386"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/6763133562241005022.json",
+          "bytes": 161,
+          "sha256": "087dfdfff678d5015fe1175a3ec5225a5c05f77db79d91e53fec40cb7f2c0842"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/7145626988510873129.json",
+          "bytes": 148,
+          "sha256": "6cf8a6ffcb65f79e0ebec9f440ce1e466fcd434d8715e829c5b77eb6bf958f0e"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/7256469049225650886.json",
+          "bytes": 580,
+          "sha256": "eae7fedefc8ebb8642a603e5caffa0420428e9d9f6062e3898eb7d96f57dce54"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/7406344700411440826.json",
+          "bytes": 217,
+          "sha256": "59ab1946ca6e68c3652e40cc9c0667760e5b87f5254ce154a718b95d3b53df5c"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/7420926394693421216.json",
+          "bytes": 216,
+          "sha256": "a4390534e3557369c2c124929e2c2adf3becdaef5f31504ee10909c5cc00efc3"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/7698254306649368922.json",
+          "bytes": 148,
+          "sha256": "a48093107f3e23333b85db5bd01c76c305f8e794aeadc753c90be86882051373"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/7933772935495037394.json",
+          "bytes": 489,
+          "sha256": "624ea671eba9c60f548c5a5dd4bef783b08462b1738bc36cef44d344b98ae338"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/8120744416976360033.json",
+          "bytes": 217,
+          "sha256": "12ebbdca6849eb0f86c81e904c18e10ff74f36adea204555ae50686e018e6b2b"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/8401195136696067521.json",
+          "bytes": 511,
+          "sha256": "c848a38bd33bf4e046125f3bb5ceacb1aa27e9ff5dfe4cffc4515e8916e95450"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/8640940624877281144.json",
+          "bytes": 148,
+          "sha256": "710de3717fbcd18ff9637f174f13a5361f6964b29592baaaaa1623455d4d1500"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/8881759479046167704.json",
+          "bytes": 421,
+          "sha256": "7d6f4a734b88b83f897fabf8492974e9a2748a3d91c365304932773d89432855"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/9194836917363919811.json",
+          "bytes": 466,
+          "sha256": "7cca22dd599876d9c9f73d28f4b34294e05348ca91c7e201b43c3d958da6d0f6"
+        },
+        {
+          "path": "unity-extracted/LethalPikachu.templatebundle/objects.json",
+          "bytes": 12107,
+          "sha256": "6d1f94f89e2da3ab6d625cc0aa91914c9f70d450b8d8cba64d7366ba97c6fd2b"
+        }
+      ]
+    },
+    {
+      "id": "thunderstore-pikachu-frankzin",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
+      "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-frankzin-round5-final.zip",
+      "bytes": 8075339,
+      "sha256": "7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f",
+      "contentKind": "model-intake",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 670,
+          "sha256": "9638063ac6b1fc1a868463d49fcaed620165cf0972f5cc49361cc63ed9141feb"
+        },
+        {
+          "path": "bundles/Pikachu_Playermodel.PikachuPlayermodel.bundle",
+          "bytes": 935462,
+          "sha256": "28b66d52cfc45eb636df0b9a4ae2224e6f404564a430b41b2f47533854bb99b0"
+        },
+        {
+          "path": "extracted/Pikachu Playermodel.dll",
+          "bytes": 942592,
+          "sha256": "b6e1dd7c5ab04d6a885214952b2d8580efc672ef12b2a0c76bd6c487b2dbb72b"
+        },
+        {
+          "path": "extracted/README.md",
+          "bytes": 228,
+          "sha256": "31a061bd827c7fe11d11fb42a39b7ea5f7cb923c67ee91e85a4a93a5d6e09141"
+        },
+        {
+          "path": "extracted/icon.png",
+          "bytes": 30984,
+          "sha256": "203e52209813a13da91ff09d803f25fae162a9d5584bf3331a0efa54afcc9208"
+        },
+        {
+          "path": "extracted/manifest.json",
+          "bytes": 274,
+          "sha256": "52290731bee2427a5b10299a01cc54e5e770385479094738395eae060256d32c"
+        },
+        {
+          "path": "extracted/moresuits/Pikachu.png",
+          "bytes": 1302441,
+          "sha256": "a1a1e881611a280d80812baddac2fb4eb15127f9e30df6aea2fd9deff1d53b42"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 78304,
+          "sha256": "f7c3766465ecf60b5d417b3bd7ee12028481f1d7568956ee0ab8201c7e492af0"
+        },
+        {
+          "path": "raw/thunderstore-pikachu-frankzin.zip",
+          "bytes": 2266781,
+          "sha256": "01c11aa2eb5f03c83d9878d511ab6f2c5b3a340dadfdebec3db4a931e053347c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1023699291663867571.json",
+          "bytes": 147,
+          "sha256": "97125afe7f58f55b6ae64257071a57e0a7e49e62e29154a14b5dc72c6cd307e9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1114781390357465756.json",
+          "bytes": 159,
+          "sha256": "b89a97d99094e88be6ed24353d0084ff726a8bac4bd3155ce4f389f452ba8689"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1274318246552717141.json",
+          "bytes": 160,
+          "sha256": "d4d123a1cdbaaeff8795c2d5b61997fccf4574605d876e9aa3c7e18f12b11571"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1299098125286611233.json",
+          "bytes": 562,
+          "sha256": "fdadfb9589d4b72d4f29157e9dced8c2608a630be302dd22162a7d9ef0771413"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1460353768644717006.json",
+          "bytes": 161,
+          "sha256": "277596cca0256e5be5e41d1dc50a02af1314b18e45fc36b1b3842c56d88a0ac1"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1581657542547823317.json",
+          "bytes": 419,
+          "sha256": "81e202006f96a9c61cead7ecced9e0b8f02fc889d1aa7da4e9df60e92003c6cd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1603628417162934047.json",
+          "bytes": 357,
+          "sha256": "2aa7e76d6f7222d5dfc453db2cb0432624432696c638a5f95de2e63d3819398a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1758455549421097817.json",
+          "bytes": 155,
+          "sha256": "ecb2c39d0ff72a506dbe73cc004b19d54ecbaf9ebde8159932d08ccd6aebc960"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1773990611673700358.png",
+          "bytes": 836,
+          "sha256": "ac56c32e68b3c8c8133301ad3d2ceffaf1a209932a95d9c365fe7eb1baf5e2d0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1789946452550118551.json",
+          "bytes": 151,
+          "sha256": "697f7cc194f6a3a4c2ff8bdf0452e342e43a2b0bedbcebad189a7a2c59abf194"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1882527292733303310.json",
+          "bytes": 523,
+          "sha256": "47218be48788ba756fd28dce85bae08a064872acc949569c20d0bafa11143a2d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-1912113498345758080.json",
+          "bytes": 310,
+          "sha256": "6771a2d5da5c10d3a2b3509e7b44e9767d278ac8ee8ab6d422a66a24cb5165c7"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2095634128131928848.json",
+          "bytes": 357,
+          "sha256": "4ad642c1eddd96865d8791d3094563ed0739956cac32806242ff0a2fd07112bc"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2145632465313597109.json",
+          "bytes": 433,
+          "sha256": "852aee95a98b8bf5038db76cd859d5c460ed6a8bca9df611e9ede12240f6a2a2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2258395496671777814.json",
+          "bytes": 466,
+          "sha256": "f30a3600ba0ff9b4a758cd8690fab8aa0be294a24ff035aa11414c34d92da333"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2313860868306170648.json",
+          "bytes": 174,
+          "sha256": "591cb5c97e2c9deb9e5eb5f49ba591352bd8f57ed4a4394d762dbc53e4de1145"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2323254398224646179.json",
+          "bytes": 171,
+          "sha256": "3f0bbcd9936662c1162084b8582c044c2fed252f8aebdb669c553a33340cf800"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2336911984252309742.json",
+          "bytes": 171,
+          "sha256": "acea1ac9843555416f17ed9c65e962be54056dcd9ceaf69814b17e503722b51b"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2390701465967030539.json",
+          "bytes": 8428,
+          "sha256": "a01c2d79e08e81eb16e9672b3fa24ff8d90687ca747111f8f49cac0516c10cf1"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2472989589913191255.json",
+          "bytes": 150,
+          "sha256": "b78b4b86a8797b2ee3193e57dccb1b9ac233185b686f00285da0e50f70fa03f4"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2475073302848201472.json",
+          "bytes": 789,
+          "sha256": "ab6ade39b737aa150c996f77fc3edae5e4206a56e1f8e17fbcbc33d912251534"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2633798533336475874.json",
+          "bytes": 431,
+          "sha256": "de45314143a16021e1054586cf39a8739410d8bd36728b8c83966f85f053f3ee"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2695018617897358455.json",
+          "bytes": 459,
+          "sha256": "d8fedd7f8643d84e0c8aa42e4f28ba8592ea5343c7ffc963b9124ecc1dc2d3aa"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2753958102362343928.json",
+          "bytes": 217,
+          "sha256": "949a508652f8cdef176c1efc5aeb61c5d22ad948421f925193a398c0386614ae"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-278723451548907288.json",
+          "bytes": 244,
+          "sha256": "9e9cee6226c615d140c49ecb027a7dc515168581d8f9f062f3f194e053db8115"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2925752299259065435.json",
+          "bytes": 511,
+          "sha256": "02a2cab2afc7e512c47e3fb125d5a81ec51ca95d920a9f76280886cd91c6661f"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-2966418945518661792.json",
+          "bytes": 467,
+          "sha256": "6815f5ea8984a704a9a0539d76ac3be3aa0fb285d4fbf3ec1034d7289eb8cad8"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-314048688983207667.json",
+          "bytes": 174,
+          "sha256": "c3daf1141059230c6ea6bbdc4b0b4a65d4b616200e4cdc720cfd667e083ae198"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3182705194148604126.json",
+          "bytes": 46050,
+          "sha256": "c48a6ad05241a75350c40e8ad83ae77c65ceac9bc767fecd87baec9c27d6ff64"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3182705194148604126.obj",
+          "bytes": 16481,
+          "sha256": "4b0297d166f99f819cd20c5f91ee7eeee2a8675176b62d2acf3d89c7732f9593"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-324324331576954594.json",
+          "bytes": 477,
+          "sha256": "8bc6eed9f424f347010c57f2bf7572f5d6e885ecf1ac71347088e79de727d1d2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3265136463877210302.json",
+          "bytes": 174,
+          "sha256": "db311745148e55c829dfc389a15677ca5e9ebc31bfd248b398c5b1591305a8c2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3381853179555180367.json",
+          "bytes": 309,
+          "sha256": "df775b620f977472cdf7b29742f45b0bdf68d59cb56af378f339c4f279bc2bba"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-338288360289103645.json",
+          "bytes": 149,
+          "sha256": "9b3c45c19400c96e4a071d60f185c5b24358bbfada8052febc5ca3af1d172cd9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3392701840931299926.json",
+          "bytes": 164,
+          "sha256": "720660bf6cff15337dc6a4bf14b442b5a672641b65f5699787ca09e9a5147931"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3471395626147614906.json",
+          "bytes": 561,
+          "sha256": "96b3b41b2e97cd08793b69653f599e2e78693de8bc5b1ba66f45b642226ca55d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-361804648159806049.json",
+          "bytes": 155,
+          "sha256": "11c4f01ea527a35d02da1394659c6901efa9bb678c85bccc51d66a6ba9d3c6d3"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3771632346772692563.json",
+          "bytes": 264804,
+          "sha256": "9d5fbbeca698bae55cad14a2ad5e3320b778a38ccec25a79b916f3320b2efae8"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-3771632346772692563.obj",
+          "bytes": 130304,
+          "sha256": "9c4f1b990bbff031af468302f2736b5496d4ef2428b1b65d2a983ba1b9d8fc02"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4120712942191226514.json",
+          "bytes": 370,
+          "sha256": "8ce02f1a9a945cbe29773b7cabdf8a012071fb785e3b0a93c4c7e46da44c2dcd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4268430614955412911.json",
+          "bytes": 311,
+          "sha256": "fbeed7b186114cbe4d5235c3be07b5838280bd346a4385880562e679d5249701"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4281640123334987945.json",
+          "bytes": 310,
+          "sha256": "590b912aeebd57fd2c1af5c3614b0143a8702a491bf9a3018c848a4806aea62c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-438028478145812883.json",
+          "bytes": 216,
+          "sha256": "84b2ca5837b54a0097a2ebaa61315d36a977de8f4bd939e14f3fb0b9edf967ae"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4659530562807105674.json",
+          "bytes": 164,
+          "sha256": "2d76b217e4d7e71a0fe5c9951f6e9153c41151204988799244be666b41b80bf2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4821075975084226586.json",
+          "bytes": 434,
+          "sha256": "3ce9fcdc94921fdb48fb40e804af59a120f6c243d9346ba87a3f2f52ac8c4eb5"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4841827103323361643.json",
+          "bytes": 782,
+          "sha256": "706980c24ae9072ad8e83bc618e34883c3f81bd5183f2c02c6f3edfbe1b9f882"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4945365657939755017.json",
+          "bytes": 218,
+          "sha256": "06c41ad36914a9d7b74ed56f290ab2cf09dc66c5251a3374a4aceefdf85d246c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4961599300951403500.json",
+          "bytes": 471,
+          "sha256": "7c3ba7005dbf48db42513dcd674d0266d1af80a77de324e8baf2d46f90e71959"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-4963867362664235646.json",
+          "bytes": 170,
+          "sha256": "18a49c778171d8a7577dfab1d6bce9698f5b4454bae2b8181540a1576edee075"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5176602799801376601.json",
+          "bytes": 310,
+          "sha256": "aa2e07c9764527cb4bd5e55a2b50691a936bdb66d67014a8e4b1398ed6884e33"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5209627623517878532.json",
+          "bytes": 458,
+          "sha256": "1fb7f8d64f3862fce703d1bd885e52a3989477d4a35a68efc6b4848a5914f05c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5212130703856519447.json",
+          "bytes": 216,
+          "sha256": "1bb65e5478567a2229ca70896cd57a121e93ba9a38098e7b02b4ec91b31256d3"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5367432469147886576.json",
+          "bytes": 153,
+          "sha256": "e48a7db5f2440d3a36e1cc9eb39fa6d605e080609eb6d84cb00e22afb3e7fd77"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5401423880325938018.json",
+          "bytes": 382,
+          "sha256": "96ace8e5329cc9e2590bc21ce085ae5e53e6a9516c3401592764c0df48232d8d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-546487938401367902.json",
+          "bytes": 371,
+          "sha256": "d283dc7b82b3de2d7208821d5143a93683e8600b70e7c53a9e6bbcecaa4e8eed"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-55609331567588953.json",
+          "bytes": 510,
+          "sha256": "4107efb77e50b9f82294b63fd90fe24a8f167a74bcb74a9c6611bed9981e2882"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5577231465978741787.json",
+          "bytes": 154,
+          "sha256": "9b82e91bd1b7d74eef1ea6835d5be13dd522a5d7b8cf79e924cbf76ede845f26"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5577960535732452421.json",
+          "bytes": 8121,
+          "sha256": "9721956c973a9e10840d608d4879f00f942660068aa49709db647aa0ebc5ec13"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5853499387591916996.json",
+          "bytes": 508,
+          "sha256": "548dea855b598a323a07425ce090ecb0828ac450555aae1d506a52b04142f014"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5893702327675494447.json",
+          "bytes": 21773,
+          "sha256": "f53e4dd9ed65b679d6b9f0c91d5304bd4c9afc0fd227d607fbe3f5287106cb78"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5893702327675494447.obj",
+          "bytes": 11058,
+          "sha256": "6c2ade49111dadb8a396059a8a2a9081f6d0a7dff659cdf2ec1adb396fd8d29c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-5987362625795198130.json",
+          "bytes": 578,
+          "sha256": "306b15fe1b9d07af8b424201eb3ddc171fb571855f573fa3ef94c4fa7533a3bd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6055787669753912052.json",
+          "bytes": 8121,
+          "sha256": "a4167126eb8151be03d4e60a4965860ae73eea7e3be1a812258516c1e4031ed0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6057413524693859627.json",
+          "bytes": 154,
+          "sha256": "23a5086d42b0213044b36f1aebd3833ff49765edd0f30758e0db1802dc4c2ee5"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6225882358221533771.json",
+          "bytes": 504,
+          "sha256": "fbf669ed0b956a6fd4bc6afe5e661d3afbf0315a897edf2858d7f9c1a737e7fd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-626417327429128366.json",
+          "bytes": 465,
+          "sha256": "70556276f28c2fa2a42ae6b21ab8daf27c0fd42fd5a6261b8131ffee30a72cc8"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6333384739308563711.json",
+          "bytes": 9793,
+          "sha256": "f6ee84327ab3953f23849c9e3909e6705f16860fd7e477d70e4a29e5aba151d8"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6333384739308563711.obj",
+          "bytes": 5228,
+          "sha256": "0e26c60be676819605a69af2129a7d77b3d8b690096ec2116ed59c645d08ed71"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6351039036925816576.json",
+          "bytes": 167,
+          "sha256": "3eb3ba6b2d9339d64751fe938fabae7b7087ed5166924d27922a1d8963aac5c2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6357350243442375661.json",
+          "bytes": 8428,
+          "sha256": "6bf663cbb2752ef02115c81863e0d29bed9a085324b794e4fb9e2c3459293593"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-641854283813880498.json",
+          "bytes": 459,
+          "sha256": "ac835e907d801d3d3f138907f1b92996bb537490dd72945b2915e759b15c21d9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6459849770912367294.json",
+          "bytes": 464,
+          "sha256": "2f18d4e39911a51ef79aee7331836d6962aa2f9278a92db7aa4b02c9402368b9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-650662101612072169.json",
+          "bytes": 156,
+          "sha256": "2e0208a2a680441d5fd7ca0cab1627191477f629ffbb6eb6da1cd7aa1a41d61b"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6784145401971174411.json",
+          "bytes": 578,
+          "sha256": "0badaccfa4ecda060dd8699cf2a723e2e85712430ebf4430f7d0467bf670917a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6921218153967469065.json",
+          "bytes": 370,
+          "sha256": "24fdffae0b05176a40cfd45cc3602caae7c50c4f53d88daf67722e0439c5ee26"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6964627650830993602.json",
+          "bytes": 244,
+          "sha256": "7979ab728ea5a135b280d7e87698c237e31adf4ae5e2680161d39459fe9fb25b"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-6995282693757232580.json",
+          "bytes": 162,
+          "sha256": "e4e3ab5c828ca64b736d93343c73b3e3ee996689ea6f75412b1ea7a5e58030be"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7039191331173108893.json",
+          "bytes": 153,
+          "sha256": "28e5b2b9f54d6d8abba346af2abc0dd9317265029594de0c947162e2977dd35f"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7166256756571233286.json",
+          "bytes": 159,
+          "sha256": "0f813ee458aaf01b5aad3ec119e320502a7d1bee952455cc5651cadc58e5b0cc"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7194341497238211512.json",
+          "bytes": 220,
+          "sha256": "fb4505594589ebd16fad51365858a0c3735aed68d8d4ca21bba65455970333aa"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-723531640191183098.json",
+          "bytes": 475,
+          "sha256": "b2074563e2da48c6844d5004bee4b884e12f98f3f7ff8a0ae85aa2d78eaba41d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7240469576845041212.json",
+          "bytes": 147,
+          "sha256": "310bebf925c1fc828b5fc11e67e5e0738c6a0d5c971e7b7d63d747d0b9391c9d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7366957743531619609.json",
+          "bytes": 473,
+          "sha256": "ee49bd8ab83869d48db9b79e0979c361a8d97a9f9d6b0bc5dc3c09f54ce0acb2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7459461147099107289.json",
+          "bytes": 359,
+          "sha256": "13923ef19a94681586230bd3d08a3f79222f8f5dfe751817d2965998a471c387"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7495905973305527601.json",
+          "bytes": 502,
+          "sha256": "bfeef96bfa18856978fb2b07140190b30891c572526a712e98e4497e880738f6"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7593450180304926153.json",
+          "bytes": 219,
+          "sha256": "d9ba516f2eeec99597006ab964f95e4567e58b529626e8334598dba9fa6c5f79"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7700020570092995187.json",
+          "bytes": 430,
+          "sha256": "df3e4e6f356dddaf579e20edb0d064ebaa9c03e664b250932fb2f3873d75962c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7802696101937899191.json",
+          "bytes": 243,
+          "sha256": "e10721bd77333b03210cbc2554cd98c994b595fba150d8ea7273b2b768b6cd01"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7860875244810259206.json",
+          "bytes": 216,
+          "sha256": "52cb9178333de93b6b2e4d852d93fa6fc95e939572e6021bb6263c57b23cc067"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-7931787338036854227.json",
+          "bytes": 486,
+          "sha256": "8ec4a2ead4115a3649a867318cbebfb09529cabe9b5cbbf11e8b26fedb450355"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8282726104242188130.json",
+          "bytes": 170,
+          "sha256": "490f5f88236de969a506cb2080e3cee9746f0c95f9a30db4b5b5716a67fed774"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8283432639088141628.json",
+          "bytes": 158,
+          "sha256": "478b22761c632ffb15952e16e11a633d791be1bdb0227c6825b2d3c115948c39"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8347128046945150608.json",
+          "bytes": 161,
+          "sha256": "ff1bfdd9f05bfdd0a1750ab5584e0dd32877e9835d07a3834e9eddd4d33c428a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8364781231526955271.json",
+          "bytes": 154,
+          "sha256": "ce869124042dd8369ded08e0ed6f5afa9c83ad289b712e755a30a81bba65e761"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8476669077485598081.json",
+          "bytes": 464,
+          "sha256": "0d252b5a9c2a9fb2df22b32c0f8875f66f024dafa3fc1cad8315556e4a365e00"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8563910520968483817.json",
+          "bytes": 217,
+          "sha256": "bec6e5f3b45350b2fc56b4d83871cc2279bcb7b0c12c8b2d2a7f2fd252b96bbc"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8579206998027520226.json",
+          "bytes": 308,
+          "sha256": "7da001488aaf8098895fbab043b944e7af336a2a6b0c3e40dea34cce37f5dc66"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8580630401979810978.json",
+          "bytes": 479,
+          "sha256": "99bae1be9164d289b967535ba629cda616e628183212ac006bf315859e6f2c3e"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8635487717952903581.json",
+          "bytes": 475,
+          "sha256": "9933a30da3661abe294991aa64d471fb667864c60ad831c9962a473c3a415137"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8651515713180731013.json",
+          "bytes": 1494,
+          "sha256": "0932e40263b83efa6346f5d954a7599c6a3423675ccf7019fef13080a663fa54"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8705938836650681257.json",
+          "bytes": 152,
+          "sha256": "4506ada429c275a6ad33c279ba570c2b8b54837e04dbabb32d7816000defba06"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8752654500186343502.json",
+          "bytes": 215,
+          "sha256": "5f95da4ec2cbe29776ceec08e281b723e32fa6d6cbbdaaf9895a882bb0d33711"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8774212460692817708.json",
+          "bytes": 311,
+          "sha256": "d888a34b1ca76e818c5126fc7363d91eca471b8978b05ad45ba3277e9e1a92d4"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8931663478575918987.json",
+          "bytes": 162,
+          "sha256": "117d9344216810760f5b95ff8c4bf3067798488299d9832ef85c03e72d7374a9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8946914650350728983.json",
+          "bytes": 470,
+          "sha256": "1b7f9c5420366f289f45f77226ae306a0730a3f85d5b9d25b3d9495bf65be3f6"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-896449694463630235.json",
+          "bytes": 168,
+          "sha256": "6ad9678ec0050b50a6372e5bbc3fefaf3f7a5ad43704207041323d7f7f10b5b3"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-8995870391534115884.json",
+          "bytes": 367,
+          "sha256": "42118b7053135921f0360f2e6f0f6f63b000d54193e082894a744fb64924a722"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-9038820038070716281.json",
+          "bytes": 458,
+          "sha256": "131c0cc7676eaaa420974f781473f7ef27fac426d02e9ff3c42f078bc8ece29a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-9063378378108495730.json",
+          "bytes": 311,
+          "sha256": "864ac253f7a3f95d947e28057e70038751ed5e9979c31f979ca72cbac79d8092"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-9089066798321834079.json",
+          "bytes": 2544,
+          "sha256": "e7bc91b7958e48f17dc9a2b2e18189a2064f84e8b5220f7b156d07f3a3b45002"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-9102846244568505242.json",
+          "bytes": 428,
+          "sha256": "c5d6fc1dbe3d42b0c11a37f02b09eb87bd25f980fa6b113fde56790ec6f102c5"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-935999481009685569.json",
+          "bytes": 149,
+          "sha256": "f7ee89f37061be1fb68fbfac0466f9aaf4d02c9bb386c7aabd985f8905d1fa79"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-947280926527566130.json",
+          "bytes": 244,
+          "sha256": "d1a962be0e4fefbf7a0777706585e42fa6d8c6c13c79f5127e1600b9e61ffd9e"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/-964032481882485511.json",
+          "bytes": 666,
+          "sha256": "f9d09572f31e1784bbd60a95f2642539cee634b03b4e111b2fb25d5c6591fe38"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1198135596012573927.json",
+          "bytes": 432,
+          "sha256": "faaaecc3acf56efd9569fdadee71c83f52b99a028fb20e8349dd21c364865835"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1238957128234747378.json",
+          "bytes": 422,
+          "sha256": "fdfb9a5abf57bf69a8826f5e4a41d84febba3e78e7fc6984f500e4159c81504d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1415411996370164066.json",
+          "bytes": 366,
+          "sha256": "bbc8570bc0509bcb5e58ab59819980ef80c2c9886c5ea3b84ba7083a23f89452"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1513861952817961665.json",
+          "bytes": 149,
+          "sha256": "d77d3d763fbe95632a2bd0485eb8e1b72e9986c3949a3d2b2a65509c2e46f9cc"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1558716291088661279.json",
+          "bytes": 510,
+          "sha256": "6f9f97817d05eef6e473237f59e1a5c6d2f333307077bd34082ded14519c6852"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1772668527262104579.json",
+          "bytes": 210,
+          "sha256": "aa8e058c3d55529928fefa2046a5719268f6b45133bb01eb95d4198a2123244f"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1820376685792662400.json",
+          "bytes": 370,
+          "sha256": "aa486a841392979f326c3c4abab0bc6576f0d9603645a8d8bc34bb90ae406152"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/1883694931455225816.json",
+          "bytes": 463,
+          "sha256": "f6c5f8cd13b37e5c5d67b7f200cb00aac1f2de503bfb19d03c1e2bd4758359b9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2092875609197854822.json",
+          "bytes": 1440,
+          "sha256": "5884cec606c83db6312b69586dd03d5be823f616bcff8d73171b872b9a9e18f6"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2114941568701560380.json",
+          "bytes": 481,
+          "sha256": "24812c2ab87de9b8fb90c61b61910679308b665b2eb904df0d0ff8eea0b4929d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2147922858782901147.json",
+          "bytes": 154,
+          "sha256": "d6a00955b8dc29d53230e3c143e219785768c242af32543de76abcdd37526dad"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2255834907809667591.json",
+          "bytes": 246,
+          "sha256": "65f21eeeea6505956bbbfaf0fb90439498e678ce4c3d45088cc4a2b830ab7192"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/229841380860967259.json",
+          "bytes": 560,
+          "sha256": "4be9490568327367db346ba413578b55f4f95190b5d62dd1d6f65d29e5ba6cdd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2314421015638622762.json",
+          "bytes": 22772,
+          "sha256": "c7d1b85c029da020d1836b236a57dd8965034fd2308d3b880d13d6eb2ed9c572"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2314421015638622762.obj",
+          "bytes": 11865,
+          "sha256": "7a2572cae3790445d3d58d0c011275c8b9b2e350d9faf097a4b0149c0fa629cb"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2354228617763474512.json",
+          "bytes": 1499,
+          "sha256": "b35c6ed14e6b316560f0a820820aa2a1b04781b81192a1313db742c9eeff9955"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2443170160829504899.json",
+          "bytes": 217,
+          "sha256": "988be65249b4c17e54d2211309608f3c4bb2ed2e4c7b47553b0f4a76d7565b63"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2484390814375763835.json",
+          "bytes": 3303,
+          "sha256": "f82e82fc71e782306d78186633213bc1d953315e045ff848d28f3de0e620b2f6"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/252081353698144842.json",
+          "bytes": 222,
+          "sha256": "87e83056582fd7365006fa68eeebd397c2a1c98c5eb66897c0aa80ce1837a4e4"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2724833411023531788.json",
+          "bytes": 170,
+          "sha256": "d92c3037296ee8227136f247443659a8cb0bee4b0652c5ff801c53e9ff1bb341"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/2829310646763358978.json",
+          "bytes": 219,
+          "sha256": "dbd988667a2ed90ff84fb0206ce0dd7def9bced3b1f7211c569732e9c0bc4c99"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3243639036297181740.json",
+          "bytes": 311,
+          "sha256": "19e8dcb500ac90fbafcf51a0166acbc59eb5bca9e72dc4ec1332baf82e578d9c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3255906836558660.json",
+          "bytes": 243,
+          "sha256": "34338b876869185a3bc713bbb285593b6093d1650b2e18a418fc60c07a6006ef"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3341843767245982987.json",
+          "bytes": 433,
+          "sha256": "7977a53bf697bd18605163c7cd88db85420cb8333dc8ca2be5b85a3a5220a9ea"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3389882679610600372.png",
+          "bytes": 566792,
+          "sha256": "d04486409542bff841cd6b5a4604f8dfc7465d75f482c8ff3e89b33c6aa694d3"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3404871748446274449.json",
+          "bytes": 149,
+          "sha256": "8a8aa88d8e17a0a27767182db0c9d4d98c3a0c6214eb5637a9f0d720005a44ff"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3424515432870557598.json",
+          "bytes": 357,
+          "sha256": "fda16f3a4adf88a5e82715968c8c02091e5cfb3eb5d42863327565cccb90f7b4"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3589300989629017075.json",
+          "bytes": 221,
+          "sha256": "dff562f1e433c760ed76185e6b7d47e2b652e6d62b2295bca06da8f828032afe"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3598158438037491295.json",
+          "bytes": 433,
+          "sha256": "eebf497adb4b5d6c66127bcb5660e5a781f159210e0db2a99e8d12d322b13fec"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3747871378905445196.json",
+          "bytes": 172,
+          "sha256": "6c77c430d32a55e0f4734544143a6b7e98e1d472b51e0dbd015db5f567c378f3"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3795001721273946009.png",
+          "bytes": 741039,
+          "sha256": "8dd78d7e0832a5fac49ec1c6df90d0c8fe95e6805c6884e9d8d3fd53e762f17f"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3838774115468565247.json",
+          "bytes": 557,
+          "sha256": "317dc2f0aaf0538ae6b5c8788a630b067cddc03a8e405925ceb66f4a3ce95504"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/385448440941043382.json",
+          "bytes": 8120,
+          "sha256": "c07ce7215167d3d7c86bb6fb5287fab94fdd3cfdfd1b9a4202dee4cb108978d0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/388719584294116356.json",
+          "bytes": 159,
+          "sha256": "45cd14cf1dc69b7b4b4f498ed219d172ad53ff0e18bd386b8c3479287f5acd8e"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/3960779376074544515.json",
+          "bytes": 311,
+          "sha256": "f7cb4db0b45a3c79cf14849ebc7cc1598639aa4e5cb3954d5367c03530c50cdc"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4081937855319544776.json",
+          "bytes": 310,
+          "sha256": "4a9aa736570a29194432d27edb2e0c3d14384ca5e9116a860ba40628809e845d"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4144744687163606119.json",
+          "bytes": 492,
+          "sha256": "84b9c1bf6add451d82e2c31873ff314919ae1f6a0a9634c406eb71fc9a38c398"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4230352064418772231.json",
+          "bytes": 478,
+          "sha256": "89d6e6627cbf61e21aad4e8bc91a236fe9aab5838319bf02c4caa1fac91fc013"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4325293574557202196.json",
+          "bytes": 369,
+          "sha256": "8b0218894327ee241b2a34b5078ed7f8ab9fb39da7e0c56644daa265e72cb5a6"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4371866641067585203.json",
+          "bytes": 1595,
+          "sha256": "43bd22e1471d5df14a61301e13417bb13a993f35b1513c7f1f11732406cccc8a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4639148269960297878.json",
+          "bytes": 420,
+          "sha256": "fe24eda4254636620a0a539616fb65617713fc0b5f0434e541ae1dccb705bd99"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4717459776156979275.json",
+          "bytes": 468,
+          "sha256": "074b60670aecd0a79af9b3ca74063c9c0a3a96e1fad6683fecfb7cc13fa10265"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4748338470522239943.json",
+          "bytes": 459,
+          "sha256": "e59198c65b9daea43d32002deebcf26953e4d062c779594ddb2debf12c25d440"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4748438440056347424.json",
+          "bytes": 476,
+          "sha256": "d0243896d2a9eb59108c35327ae7317b5b7e19b1cc14974a70de1e25e59a51f4"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4788667990248485376.json",
+          "bytes": 465,
+          "sha256": "1e6220b67197c364237a7a1acd31d1f22842827aa8665f4a7f57c0343ca28192"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4799185739206039795.json",
+          "bytes": 154,
+          "sha256": "13af255190904523bc3c3911f62ba1094d43d4da3b4a9d160ea687b63fc9ed38"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4882467980621599714.json",
+          "bytes": 371,
+          "sha256": "0e3134273578abb5dac1e670116f68088cbf2bb2772a24f4ac50ea43fe7e6d47"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/4906587196417089118.json",
+          "bytes": 218,
+          "sha256": "f5928441ae8fdc60ca27e04f85e5b25c633f1c18a15ed643c987891575c264db"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5228973565522016763.json",
+          "bytes": 146,
+          "sha256": "0fb3978fe02a6e00e6b7fbbc991d559741f53f30b942a5f48417c123c369d5a5"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5271868432858707407.json",
+          "bytes": 8121,
+          "sha256": "c65f8a3b2cb64f7050f382c4380cef70d08567ebe1164d632128b10c89dd851a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5283681233314882253.json",
+          "bytes": 471,
+          "sha256": "a3906fdfa5b5e36af520f73ec4af0777ebb002bb425558efcca7e274d3975d84"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5411383322445163050.json",
+          "bytes": 151,
+          "sha256": "119efb4bdcd9c1299dc88a3a5d6ecc6794bf3056e07cfb93dbec80ee7ccd6971"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5476490175696714180.json",
+          "bytes": 166,
+          "sha256": "edf17a5f09039c95382978afb68672f27d01a287592f6a2a71a6fd4ef957fc2c"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5511548739289028854.json",
+          "bytes": 160,
+          "sha256": "50e82322519c39e209aa3418fa2f0d8a2e1cafd553a4ba08ef4fa2a7769be433"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5653080449496019223.json",
+          "bytes": 768,
+          "sha256": "8388d1312dedee004f01a39ca1d493a48fa57474bda456d9ea830cf6d99757ea"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5736996395188289568.json",
+          "bytes": 468500,
+          "sha256": "f3d4505e48ae6726a5dd27c943646e5ca274a4bd7d80a58ffeff67c1d03d64cf"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/5736996395188289568.obj",
+          "bytes": 247912,
+          "sha256": "9e6341973af6300f7f8497210536cc20702c58213eb6ed72c9f5a4415594c3ed"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6030653550593666867.json",
+          "bytes": 145,
+          "sha256": "b0eee207957c7e2060b25d8d471116808bff16b916bca21e8ae85cfbdb8fcb6e"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6068833504597564088.json",
+          "bytes": 173,
+          "sha256": "5e18057ed09055ec25dd1dadac49d83d53fd4b22b6245d7211576471688068c9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6098611189092776573.json",
+          "bytes": 152,
+          "sha256": "50532886e1f7c7ab69d8591b7e7f31354687cc759d0386a7b561af488b59f16b"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6113199248958938998.png",
+          "bytes": 870329,
+          "sha256": "495a65788b8fe43fcefbcf858910b65d13f0d555ce7f1e1bdc834ba3e218f861"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6126934701657036227.json",
+          "bytes": 104877,
+          "sha256": "8921ae9687d42f427ecae27b1783d705c81980166702b928f3d69258a0c2c5f2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/638620830460957796.json",
+          "bytes": 161,
+          "sha256": "480ac073eabecfb7b4aac2162871ea03db8c6879b1a5020d3cbcb79819e449b5"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/657259326000110639.json",
+          "bytes": 470,
+          "sha256": "80a522188b7f707c117e6d0c5577a8825fa6a82909d33f6ed31e880db643d274"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6676887336672963408.json",
+          "bytes": 159,
+          "sha256": "d45ad3f588fb62faba8a641350c303c020d1986b586800e71cf710ade01747fd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6741195471028511066.json",
+          "bytes": 465,
+          "sha256": "4a977a59a72f445e7bfd321137c8f900d50e221e24d4fad2013de9693ec309a0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6839332421010650269.json",
+          "bytes": 478,
+          "sha256": "9063dd685dc02bb418b3e098fb9de786d0cbc3d9611a3622eb816b36e85e1129"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/6918057475905017845.json",
+          "bytes": 170,
+          "sha256": "3cf775c11ae4d14015d69fb17f331ba3dac22d15ef421f2536afa919347d5d1b"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7074772546340414706.json",
+          "bytes": 160,
+          "sha256": "b0f2b895bf6267404fd00725c44eceb4360df4ac6402199e50dfe3722fc31263"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7095450249504608741.json",
+          "bytes": 158,
+          "sha256": "951a0e72bfe4430036fa1b1bd17be62d2deed82aa5c24b8ab0a4d8497244c954"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7140458756915129766.json",
+          "bytes": 164,
+          "sha256": "3074070fa55139a2b365d020836e1f083fbd05aeeb9b2425c37736d3f3cd2349"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7146272623581085257.json",
+          "bytes": 220,
+          "sha256": "a11f9e08ddd43d4dbef3b1c132cbd29476ed813062ea6d7104ed93fa98f27de5"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/717763071216982197.json",
+          "bytes": 470,
+          "sha256": "10d9f28d1b44950535aed0f4d6630347e48e61a2c8c4b4278abcc0935c01dc0a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7302060389887508711.json",
+          "bytes": 151,
+          "sha256": "bc344a7e10b88be4bdec90a896bef1f8f1e34a8acdf14df39d67b9cd5a78b167"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7471826613613984278.json",
+          "bytes": 153,
+          "sha256": "76ebe3df53e3973f0d4218b892b8fe378c12d96dae4b0e67d72f468d3fa181cd"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7479586202835976429.json",
+          "bytes": 147,
+          "sha256": "48e664302084c9dab279d0df03096cb61d1803c8d0f38182015296b4b91b6a0f"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7580229246610499320.json",
+          "bytes": 310,
+          "sha256": "e47d4a95a9000605fe83ea593d2676e513040cd4fb2929b1f95deeb2cb16b7f4"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7692855052974681812.json",
+          "bytes": 452,
+          "sha256": "f955395dd963951bd89acc926291a59f868eb09d89cf3981b467877f5d1a9e8f"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7804420420001661692.json",
+          "bytes": 499,
+          "sha256": "e8f68ebfa46898fdfe9857d14c8996d6682478a845e6c471b17616cf82416b27"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7831578540412808909.json",
+          "bytes": 308,
+          "sha256": "648e289ffbb5e8515ddc5c61fe364a686d2229898021ebd0af6408a94d94d290"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/7906894664545601303.json",
+          "bytes": 496,
+          "sha256": "0678800012f97ae2d4bc437c8c3a4ec0fd363b22ca9436f669dce177d4780c80"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8131422754212205813.json",
+          "bytes": 308,
+          "sha256": "95f020d8796b5b3817e40c566004cb62992432bd9fe56d169b333e51058251f0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8149191132831516478.json",
+          "bytes": 159,
+          "sha256": "6893e30f8e2bae36903d65abc3fc1c15e86510c8b74f6992e2750165fe6e5ec9"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8155515172249186577.json",
+          "bytes": 154,
+          "sha256": "f78c5aec9fdaf7de0dd0c3aa33294d669e83d5df06625447a8783f668d7074f0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8278141753091598077.json",
+          "bytes": 221,
+          "sha256": "78a4b910bfcd56f8fc8390de0fcefb7d52fe475850b0d64fac38daa756aa89b7"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8353634710857429062.json",
+          "bytes": 159,
+          "sha256": "4cd601e61e2ccf04336ee4aa307b59c52af2cf72be1c16e1b456ffde1b4d5ea2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8456777490694864958.json",
+          "bytes": 159,
+          "sha256": "be57b9ec5bd73123d2b93842f07b3e9956f1df7f1dfbd88db3e7ba2ca36f689b"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8499508261400478258.json",
+          "bytes": 1437,
+          "sha256": "3b1fb68ae76a51e5fad97cb1510e7f027c6391400259ae8cb04d058fe75383f2"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8645037601978869548.json",
+          "bytes": 311,
+          "sha256": "d9721f10d98205c05a98b0f29d659055685619023beb6ef4dba6b646f32cdc29"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8751643041584255897.json",
+          "bytes": 481,
+          "sha256": "b2edfebc09ee28fa71a07c106ba939c86c408e55d9b59fccc26ac94289a479fc"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8823060962073693145.json",
+          "bytes": 212,
+          "sha256": "83cd86188143167c5468937867b2fe35167910f608f89382b636980f81eef0ec"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8884948989546818661.json",
+          "bytes": 9764,
+          "sha256": "a2214e07c79a420ca2b16a819dc43203c446e7861486e8202e3783d40bc15d67"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8884948989546818661.obj",
+          "bytes": 5296,
+          "sha256": "9fcc0da50b8ececd51d2a666da59d673a6019bc94b4e707de5aedc566df02985"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/8910822887358095449.json",
+          "bytes": 508,
+          "sha256": "f1193dbb7340905a6ad2d1878496cd6310e73fbc33219717e0705f93c48f52d0"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/9007116430605160594.json",
+          "bytes": 216,
+          "sha256": "fffa0a6972ec2abbba4f80f73dbe6f692a7c86ced99676384e9b3348862e7837"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/9025439137244057748.json",
+          "bytes": 152,
+          "sha256": "cc97fb78c6d9157977f49b14d58254044f4c8f94e401fd0cb7848ad7b8f90b27"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/9071832172937564089.json",
+          "bytes": 216,
+          "sha256": "b110a51319667e94227c36675ccd5fac98f680e07da819d40010d210230da000"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/985030685889033775.json",
+          "bytes": 245,
+          "sha256": "8ccd0de5345c0d6934726b2df66081545fd67c2f93991be8e2956c8962297eda"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/990426845268607345.json",
+          "bytes": 914,
+          "sha256": "19c8587a49b02559e3b1bf9a41720633a0660368dfa4fd329a8daf60aa97e64a"
+        },
+        {
+          "path": "unity-extracted/Pikachu_Playermodel.PikachuPlayermodel/objects.json",
+          "bytes": 26163,
+          "sha256": "46214bb46bd44e04357f9e876b72c02776751a01d5f42478d4de6a1bdf649f46"
+        }
+      ]
+    },
+    {
+      "id": "gtainside-naofumi",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
+      "localArchive": "outputs/public-model-sources-20260910/gtainside-naofumi-round5-final.zip",
+      "bytes": 9501904,
+      "sha256": "8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7",
+      "contentKind": "model-intake",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 650,
+          "sha256": "18f27c556e6dd32e8fc3cd0598cb53229b2397135d6b17ef3e2778663fe24893"
+        },
+        {
+          "path": "extracted/Naofumi.dff",
+          "bytes": 4397243,
+          "sha256": "b8cd4c49ba315efb81e36caf2dbfbdc05171ac07a5206ff5f3996e71dd23f0fc"
+        },
+        {
+          "path": "extracted/Naofumi.txd",
+          "bytes": 1311272,
+          "sha256": "37bf59722e9cf91de6ace2cf91b09937929e9e7b10eb549533108d8193a012fe"
+        },
+        {
+          "path": "extracted/made by justarandomfaggot.docx",
+          "bytes": 13269,
+          "sha256": "994fa8b1e8ac1ac295bc9efbcdb201c09343cb9a750a5fd3a7530649f57dbc2b"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 970,
+          "sha256": "d3b03d3f1aa1f72f2a16da37b9396572cb8346f41f8659d5525b4b220e0c7aec"
+        },
+        {
+          "path": "raw/gtainside-naofumi.rar",
+          "bytes": 1804687,
+          "sha256": "13cbb515c76771f0d58bfa821e9e88f682bdd70314a374bfb41f897642d2eff6"
+        },
+        {
+          "path": "renderware/Naofumi-37bf59722e/0.png",
+          "bytes": 49203,
+          "sha256": "37d0084db9757da0f7863bd3124e95636f71588b5381a0d259770ccccba0e369"
+        },
+        {
+          "path": "renderware/Naofumi-37bf59722e/1.png",
+          "bytes": 90647,
+          "sha256": "9189e4dc579358552d8f67e953bcd368b98fe55bc43902f7bbb995574ecc5248"
+        },
+        {
+          "path": "renderware/Naofumi-37bf59722e/2.png",
+          "bytes": 133314,
+          "sha256": "db2160ec2296e95536b61f1da96dae01946e9a9e8190726fc1cd89d5c5d349e1"
+        },
+        {
+          "path": "renderware/Naofumi-37bf59722e/3.png",
+          "bytes": 141437,
+          "sha256": "d996ef4dc3204256308bf0972b288ef1bead014d24ea29a1bc34578dc774a51b"
+        },
+        {
+          "path": "renderware/Naofumi-37bf59722e/native.json",
+          "bytes": 1749415,
+          "sha256": "417749f2e750cc54ba9bd6c61670742305077554c25d8555ea1333ace35a9f64"
+        },
+        {
+          "path": "renderware/Naofumi-b8cd4c49ba/native.json",
+          "bytes": 22609719,
+          "sha256": "9acffa37c56c5bc5d51674d10e2d1568b3dafb23d2719ed0c51a9bb439417b74"
+        },
+        {
+          "path": "renderware-inspection.json",
+          "bytes": 2222,
+          "sha256": "7b0ccfe2fc09d51832d982f704b7bf6f3e68f064ae2171118e3af6233bcebf36"
+        }
+      ]
+    },
+    {
+      "id": "gtainside-light-yagami-kw",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
+      "localArchive": "outputs/public-model-sources-20260910/gtainside-light-yagami-kw-round5-final.zip",
+      "bytes": 8285227,
+      "sha256": "3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2",
+      "contentKind": "model-intake",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 689,
+          "sha256": "759e9e0789f4151765c3b43ae9b6e0b9c36ad8b2f1d8d46d7804b14ad79353eb"
+        },
+        {
+          "path": "extracted/Light Death Note KW By Snadjerx/LIGHT DN KW.dff",
+          "bytes": 3121812,
+          "sha256": "9c68738eb07fbcb824baaa0f95b25ddba3ee78bfcd101c48f1c488635fd50651"
+        },
+        {
+          "path": "extracted/Light Death Note KW By Snadjerx/LIGHT DN KW.txd",
+          "bytes": 5911456,
+          "sha256": "4bff38182a29a0b97577df2dbe7afefefb3a9a0aa685896acaede20238eb26d9"
+        },
+        {
+          "path": "extracted/Light Death Note KW By Snadjerx/SX.txt",
+          "bytes": 40,
+          "sha256": "a28f4ce67d57ea6c995320d3b3bebfc308e8e5bcc2609772418c29b96482451d"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 1062,
+          "sha256": "cb62545329343af0194b351386fdc01cb7f26722ed6f4599939018551a74b3d3"
+        },
+        {
+          "path": "raw/gtainside-light-yagami-kw.zip",
+          "bytes": 1953563,
+          "sha256": "38844a4592cd689687905086a10f2d742cfc0acdba9cc7fa0eb90219beb9d6e7"
+        },
+        {
+          "path": "renderware/LIGHT_DN_KW-4bff38182a/0.png",
+          "bytes": 181177,
+          "sha256": "e34fb0f835769a6003c6f318dd1f5efccbba45120eb6f7827bc727eb8c107bdf"
+        },
+        {
+          "path": "renderware/LIGHT_DN_KW-4bff38182a/1.png",
+          "bytes": 114,
+          "sha256": "6baba2db0f8007c3e889a19a082474bca822181abac81f3b800cec8266d39ff0"
+        },
+        {
+          "path": "renderware/LIGHT_DN_KW-4bff38182a/2.png",
+          "bytes": 72430,
+          "sha256": "7e99b4a2cad11b88e67752995a25b383a1bf4e8f83be31b47d0bafd76dc90ed5"
+        },
+        {
+          "path": "renderware/LIGHT_DN_KW-4bff38182a/3.png",
+          "bytes": 99176,
+          "sha256": "fcfb08aa1930aab373e5ddc99eb21f3b1aa43730af606f9b4fbf52ab5ea029f2"
+        },
+        {
+          "path": "renderware/LIGHT_DN_KW-4bff38182a/native.json",
+          "bytes": 7884072,
+          "sha256": "e16246a3220710852bdaf88a038536ecaf2e8a97b2484b93fe4b38b57121cf01"
+        },
+        {
+          "path": "renderware/LIGHT_DN_KW-9c68738eb0/native.json",
+          "bytes": 16609928,
+          "sha256": "d384f7e9fab3274683a119b8a528786e7f265d75f7f54d7b4ba2c7f3dfc09cd8"
+        },
+        {
+          "path": "renderware-inspection.json",
+          "bytes": 2331,
+          "sha256": "d4382113ae88102316a85c312b01caf171a8e1e6da10594f08a32faa18a9b36e"
+        }
+      ]
+    },
+    {
+      "id": "gtainside-kenshin",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-kenshin/9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576.zip",
+      "localArchive": "outputs/public-model-sources-20260910/gtainside-kenshin-round5-final.zip",
+      "bytes": 15983696,
+      "sha256": "9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576",
+      "contentKind": "model-intake",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 611,
+          "sha256": "a6a8a6705674c51bdd103334443d4376c1444842e1891d61ab43d8ed17745bbe"
+        },
+        {
+          "path": "extracted/Kenshin Himura.dff",
+          "bytes": 2903309,
+          "sha256": "d69c6a15dd7db21f42ea9405314bcf1fde4439f03dba7531d04ec4394c8d6b06"
+        },
+        {
+          "path": "extracted/Kenshin Himura.txd",
+          "bytes": 10486696,
+          "sha256": "875a4abec722b00421e7ff9b744775738e0c8c8682844d3861fc88c3305ce7e2"
+        },
+        {
+          "path": "extracted/Readme.txt",
+          "bytes": 607,
+          "sha256": "af32d0e06f767164bc59a8f664a48ae35d84703e6fdfe48a3ad9a5e1e9658040"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 962,
+          "sha256": "7fedcb887e7c7b0fec053bc2e15854cc4ae4c71c24e886a42b8007b073901a59"
+        },
+        {
+          "path": "raw/gtainside-kenshin.zip",
+          "bytes": 3525997,
+          "sha256": "a69e93de5b4be676536e8c1f270a8fe2aea5d4670be5534a369923bb5aebbb07"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/0.png",
+          "bytes": 325796,
+          "sha256": "8cde294824fad64bde182df6164eed414f45e3aab80730bc2df678241bc223b8"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/1.png",
+          "bytes": 438444,
+          "sha256": "97bed8f9709f4ecfc7bb5a15c36e2c949db57d7aeefeea7e7a9be4976a193fc9"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/2.png",
+          "bytes": 310836,
+          "sha256": "94dd291d47580b6a2b70ade78b2e90b26da4f3e18a604e3e27ea2eb926803eed"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/3.png",
+          "bytes": 358089,
+          "sha256": "6e147a216c8a6fa449e10c479e77c3c8bd3179235f901fb92c92052a9a716ab6"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/4.png",
+          "bytes": 356014,
+          "sha256": "f1060a492e1629acd1dc9b70fada3e680f8a5ead3fb69c486846b73bef2b5e83"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/5.png",
+          "bytes": 353600,
+          "sha256": "6be3ce8554e6344586e11b1673a0c171d4d0d503cc9ce97f567558e4def85860"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/6.png",
+          "bytes": 84018,
+          "sha256": "718ae0adac8f7c10348697d8f9736c237c3ffe55ae1cf208358417df0230e7ff"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-875a4abec7/native.json",
+          "bytes": 13984124,
+          "sha256": "26b2008c409fa72b699d66b1ef0ca06d681f5d5c4d7012cf7d5f355ffae51ffa"
+        },
+        {
+          "path": "renderware/Kenshin_Himura-d69c6a15dd/native.json",
+          "bytes": 14624955,
+          "sha256": "5ff02c3691ba4b086d5240534fe068702e9fce87eb1005ffb6d81a665df91d22"
+        },
+        {
+          "path": "renderware-inspection.json",
+          "bytes": 3202,
+          "sha256": "225d1eb90287abac9e44ea81d52f39c4d9ec98964132399a60665af4d300a00d"
+        }
+      ]
+    },
+    {
+      "id": "gtainside-anime-pack",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
+      "localArchive": "outputs/public-model-sources-20260910/gtainside-anime-pack-round5-final.zip",
+      "bytes": 21768074,
+      "sha256": "3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b",
+      "contentKind": "model-intake",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 751,
+          "sha256": "bcce40ad999f1d415bc1879aa2ea370c6c9f9295368cc1b643e3d6d24b74f043"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/1) InuYasha 2 (3 in 1) Sango Miroku Kikyoinuy/Gtasa_Sango_ByJosephManalo.rar",
+          "bytes": 218780,
+          "sha256": "f90d4a991649dd91863486bd25667e0114bf9e2a6ac96fe20c107a4c6875fa74"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/1) InuYasha 2 (3 in 1) Sango Miroku Kikyoinuy/Kikyoinuy.jpg",
+          "bytes": 70793,
+          "sha256": "7bcda5291998cad8cdf1162511cda21983d22bd14030d5c71f5f3ce25cf8076d"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/1) InuYasha 2 (3 in 1) Sango Miroku Kikyoinuy/Kikyoinuy_GTASA.rar",
+          "bytes": 236948,
+          "sha256": "00e4554f85b2659ece1c21599e032bebd4cc8463deae335ecf0ae9c185cc2a1b"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/1) InuYasha 2 (3 in 1) Sango Miroku Kikyoinuy/Miroku.jpg",
+          "bytes": 66792,
+          "sha256": "51c54e93356853a99804ef9f1d15e3d869a8a0c57f2a7306e14732f3165ae55d"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/1) InuYasha 2 (3 in 1) Sango Miroku Kikyoinuy/Miroku_gtasa.rar",
+          "bytes": 83400,
+          "sha256": "0e0953cef4295eba3ff3713f2cac3ce6c4ade472309e433d393515c8742a89b1"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1)/Kamiya.jpg",
+          "bytes": 83392,
+          "sha256": "842faa3b95183bc7ec17714f3cc21d8cb02712d99cb5c8f478c49f428afae032"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1)/Kamiya_GTASA.zip",
+          "bytes": 509958,
+          "sha256": "9707479523a72816a0565842836781b73590199c28233d84dedc98dd02e764cd"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1)/Kenshin.jpg",
+          "bytes": 70958,
+          "sha256": "eb5b5ce211144c179c35deae9d7ad71755e3c8f9a2f828eee7ad0eeaa37c5fef"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1)/Kenshin_GTASA.zip",
+          "bytes": 516844,
+          "sha256": "cfd93f7c9b43e9a27ba31180ef2f6a9a43f086c8c4c8f574c66c04596269ceca"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Erza.jpg",
+          "bytes": 109170,
+          "sha256": "16bfde4c8b7ec6a192d7b1f199896a44754f3e6af25e27ef0ac59bbfb97b2d96"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Gray.jpg",
+          "bytes": 61217,
+          "sha256": "3abc73419417c7510f3e5330be0d0f3e32f9b1d5caf10e1ebf6f753b951baf48"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Gtasa_ErzaOriginalArmor_ByJosephManalo.rar",
+          "bytes": 98908,
+          "sha256": "9f000ac0bdc47524518bc3f3a24e4feb182f3d9fc84a496435e47214845e19e6"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Gtasa_GrayFullB_ByJosephManalo.rar",
+          "bytes": 95341,
+          "sha256": "8805c2b2d700f1def1c63b8de2de9ea387ba07f8b63c16fb114786952e28d4fb"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Gtasa_LucyHearfillaOriginal_ByJosephManalo.rar",
+          "bytes": 95870,
+          "sha256": "cc6fc427b578624fc0c1362892ad09ebc71f27b1c23a8092cd65d1f28f2ff1e1"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Gtasa_NatsuDragneelOrig_ByJosephManalo.rar",
+          "bytes": 181922,
+          "sha256": "d4cf546d9149c66f39f2aeebc573900b0f649bc2a29799a1c24800e0826ac0a9"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Gtasa_NatsuDragneel_ByJosephmodder08 2.zip",
+          "bytes": 185951,
+          "sha256": "ed8f3a89b6da4c49a60b13362f472e9a6f06a0622d8268c400585b96bd32d1b3"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/Natsu.jpg",
+          "bytes": 27668,
+          "sha256": "4156fe3b33e197e2ffb162461e47f8f8a64ad4bcd79d43d1a2423b36fb4f34cd"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/gray.rar",
+          "bytes": 150199,
+          "sha256": "118dd4a1c415e3d458600a7772723522e080fe29f53e9818682274ba9b581b7f"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/3) Fairy Tale (4 in 1) Lucy Ezra Natsu Gray/lucy.jpg",
+          "bytes": 108953,
+          "sha256": "107f3bd25274600f62a3c8e7b85683ee39ac2fbedc03f29913d887a3a55c207d"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/BONUS/Zelda.jpg",
+          "bytes": 51945,
+          "sha256": "974f98db147100320d76229d37fb0abc5163a7380a515e5a57704a8a710f0999"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/BONUS/Zelda.rar",
+          "bytes": 478966,
+          "sha256": "91c9124678120040873cf1a4e9416353bff075ce71e85fea5d07e4e0fda541fd"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/BONUS/link01.jpg",
+          "bytes": 90117,
+          "sha256": "512d77d53e216c942a52164723bac54cfd490d79d4278abf88d011afee773875"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/BONUS/link02.jpg",
+          "bytes": 53500,
+          "sha256": "10e519e40aaf5574ae950732ed0b60afbf79f3af09f086456b87969f3560fb03"
+        },
+        {
+          "path": "extracted/3 Anime Skin Pack.  1) InuYasha 2 (3 in 1) . 2) Rurouni Kenshin Meiji Kenkaku Romantan (2 in 1). 3) Fairy Tale (4 in 1)/BONUS/linkwithweapon_SA.zip",
+          "bytes": 636442,
+          "sha256": "185a803b2686521f923c22a984b67ccc0516377b2b78d1984c1135981f93b298"
+        },
+        {
+          "path": "extracted/Read Me .rtf",
+          "bytes": 614,
+          "sha256": "90f0bb99156b453cf6b269c295ee856072f97f9ff32656fb6c38b5f3969ab5c3"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 8400,
+          "sha256": "5125ef60f5d1a20f92a0961706256a7125cf39c2e4b0ea972c5d7b6df0a279f1"
+        },
+        {
+          "path": "nested/Gtasa_ErzaOriginalArmor_ByJosephManalo-9f000ac0/ErzaOriginal.dff",
+          "bytes": 164813,
+          "sha256": "434b0159c5c5078c9f49b5127544de70e658f8c30cf77eb4b63fe3b3cb681a77"
+        },
+        {
+          "path": "nested/Gtasa_ErzaOriginalArmor_ByJosephManalo-9f000ac0/ErzaOriginal.txd",
+          "bytes": 196904,
+          "sha256": "a557c8b27a8de8eeac03f61aaa7bb2e001425851b5a303d5d52f245f155c3d13"
+        },
+        {
+          "path": "nested/Gtasa_GrayFullB_ByJosephManalo-8805c2b2/GrayFullB.dff",
+          "bytes": 152352,
+          "sha256": "94e54afce8f9155312d9762786b3b7d9d43dbc93e6f1053947a3b3dfb9569346"
+        },
+        {
+          "path": "nested/Gtasa_GrayFullB_ByJosephManalo-8805c2b2/GrayFullB.txd",
+          "bytes": 199080,
+          "sha256": "526a9ca455f966727b10e7344440a9aee3d8054218cd43ece4b5f78c47ec4acb"
+        },
+        {
+          "path": "nested/Gtasa_GrayFullB_ByJosephManalo-8805c2b2/Readme 1st_2_2.txt",
+          "bytes": 576,
+          "sha256": "ea96faf15b94e2ad0a99922a4374af711bfe5aaa1732b2f951b54e1f48db5960"
+        },
+        {
+          "path": "nested/Gtasa_LucyHearfillaOriginal_ByJosephManalo-cc6fc427/Lucy1.dff",
+          "bytes": 144701,
+          "sha256": "65ffd326cd7446bc9728a469e877cd301bfa982ffdb0d68640b5219e50e411c7"
+        },
+        {
+          "path": "nested/Gtasa_LucyHearfillaOriginal_ByJosephManalo-cc6fc427/Lucy1.txd",
+          "bytes": 201128,
+          "sha256": "b2cbd5f2edfa0ef263d4319f9abef227886f0461361c256dcf54270987cbd181"
+        },
+        {
+          "path": "nested/Gtasa_LucyHearfillaOriginal_ByJosephManalo-cc6fc427/Readme 1st_2_2.txt",
+          "bytes": 576,
+          "sha256": "ea96faf15b94e2ad0a99922a4374af711bfe5aaa1732b2f951b54e1f48db5960"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneelOrig_ByJosephManalo-d4cf546d/Natsunormal.dff",
+          "bytes": 344148,
+          "sha256": "e6834573db950aa6c1a9e9ba6a671f0d87dc0702d2fda4c56a0d7a3aff71eb19"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneelOrig_ByJosephManalo-d4cf546d/Natsunormal.txd",
+          "bytes": 164520,
+          "sha256": "426f71bb288ab244ddbd5df4028cec8d2d1b01c5ac3504d892a39593f1f6685d"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneelOrig_ByJosephManalo-d4cf546d/Readme 1st_2_2.txt",
+          "bytes": 576,
+          "sha256": "ea96faf15b94e2ad0a99922a4374af711bfe5aaa1732b2f951b54e1f48db5960"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneel_ByJosephmodder08 2-ed8f3a89/To import to skin.img/NatsuDragne.dff",
+          "bytes": 317440,
+          "sha256": "8ea03802e89f58426a7e7d46d835563ad6589a3098dac693b23a1df6ec89e653"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneel_ByJosephmodder08 2-ed8f3a89/To import to skin.img/NatsuDragne.txd",
+          "bytes": 182272,
+          "sha256": "acb45d055a5c73e6b5af39d5c4393922254339819d4d63713155d9a84360c0c3"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneel_ByJosephmodder08 2-ed8f3a89/readme-de.txt",
+          "bytes": 1602,
+          "sha256": "7e87e406caf48b2adbd080f689d7573c6e80e3417e024a8e6e0020c5a39b413c"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneel_ByJosephmodder08 2-ed8f3a89/readme-en.txt",
+          "bytes": 1528,
+          "sha256": "85b7873358aa8c59395fd2a98d6c036573d94451426658c8007e6c97886f7ef9"
+        },
+        {
+          "path": "nested/Gtasa_NatsuDragneel_ByJosephmodder08 2-ed8f3a89/readme-ru.txt",
+          "bytes": 1737,
+          "sha256": "f0761abbaf5ca1e6741301d4b7f3a03403b87b86e1ec14872a19f05cfd90214d"
+        },
+        {
+          "path": "nested/Gtasa_Sango_ByJosephManalo-f90d4a99/Readme 1st_Inuyasha.txt",
+          "bytes": 568,
+          "sha256": "583ba9c72ead94bba984bc9d8bd29cebec23526c844298ddd5199e80ed9dacb2"
+        },
+        {
+          "path": "nested/Gtasa_Sango_ByJosephManalo-f90d4a99/Sango.dff",
+          "bytes": 467381,
+          "sha256": "0d3878e655b9210227b38e0b26c23914b1bc92b13225847d29739d453ffadb88"
+        },
+        {
+          "path": "nested/Gtasa_Sango_ByJosephManalo-f90d4a99/Sango.txd",
+          "bytes": 189096,
+          "sha256": "03f368cf1be072608abf7fca617b6351022e97666f5f77210fb96eb5ebfec786"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya1.dff",
+          "bytes": 272384,
+          "sha256": "3c8b036dfeffc4f2e758308ea17316c5c0534cda108d9c6a1472cc38a22768e5"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya1.txd",
+          "bytes": 83968,
+          "sha256": "a6d7bfd32da9cacfa8e9527995af2e21f5828581707c4b31bd4bb9878f273c58"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya2.dff",
+          "bytes": 272384,
+          "sha256": "3c8b036dfeffc4f2e758308ea17316c5c0534cda108d9c6a1472cc38a22768e5"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya2.txd",
+          "bytes": 83968,
+          "sha256": "6effa9cb3652ef59319e4c20ad8f670c98bd090b0852089627a76eabafd16062"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya3.dff",
+          "bytes": 272384,
+          "sha256": "3c8b036dfeffc4f2e758308ea17316c5c0534cda108d9c6a1472cc38a22768e5"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya3.txd",
+          "bytes": 83968,
+          "sha256": "898dc8be9b0e9db7c66bf728ba9f742a2d79d75120bcef198f6e08eb7f201e58"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya4.dff",
+          "bytes": 272384,
+          "sha256": "3c8b036dfeffc4f2e758308ea17316c5c0534cda108d9c6a1472cc38a22768e5"
+        },
+        {
+          "path": "nested/Kamiya_GTASA-97074795/kamiya4.txd",
+          "bytes": 83968,
+          "sha256": "3118666ea088cf15fc21fd5b4e9d021e8547baa3324d973111c0690076b9e298"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin1.dff",
+          "bytes": 284672,
+          "sha256": "cef69fa7be7064c11ab59f78ae6936eeb81814ccdafe5421236a0d08caf1ea84"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin1.txd",
+          "bytes": 83968,
+          "sha256": "0f4858ac379412bd92286969b8ef84d090adfa679a5772b7206bcc0baa5d6243"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin2.dff",
+          "bytes": 284672,
+          "sha256": "cef69fa7be7064c11ab59f78ae6936eeb81814ccdafe5421236a0d08caf1ea84"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin2.txd",
+          "bytes": 83968,
+          "sha256": "d910a859b664b2396093b29c8f34ae971dc19f3477031bfd9244a60a94755b55"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin3.dff",
+          "bytes": 284672,
+          "sha256": "cef69fa7be7064c11ab59f78ae6936eeb81814ccdafe5421236a0d08caf1ea84"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin3.txd",
+          "bytes": 83968,
+          "sha256": "73fc2211c2f1db68a6e315849d07962400b3a8d50322aa34b29c94a165260ad6"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin4.dff",
+          "bytes": 284672,
+          "sha256": "cef69fa7be7064c11ab59f78ae6936eeb81814ccdafe5421236a0d08caf1ea84"
+        },
+        {
+          "path": "nested/Kenshin_GTASA-cfd93f7c/kenshin4.txd",
+          "bytes": 83968,
+          "sha256": "29f950e4e35a74c6bd8ecaa03f592ecc8676167a2415dbe3b39171fb56070c1b"
+        },
+        {
+          "path": "nested/Kikyoinuy_GTASA-00e4554f/kikyo.dff",
+          "bytes": 446516,
+          "sha256": "b9f706a399898fa812389b956bb7b43a7febb257206ac10fa63ffc973177e61b"
+        },
+        {
+          "path": "nested/Kikyoinuy_GTASA-00e4554f/kikyo.txd",
+          "bytes": 192512,
+          "sha256": "880c271b75eda7fd237594f238571843ea83bc365a27a696d70a225a6c665b97"
+        },
+        {
+          "path": "nested/Miroku_gtasa-0e0953ce/miroku.dff",
+          "bytes": 212912,
+          "sha256": "e916d01f31138aeff449b3ed3bf5bf3097857ecdc04e92bdec724d59367bc4b0"
+        },
+        {
+          "path": "nested/Miroku_gtasa-0e0953ce/miroku.txd",
+          "bytes": 49448,
+          "sha256": "603e7a3d7ed69d368d0cbdb99b10591d36c0277c59f4e78920f21af119fcc9af"
+        },
+        {
+          "path": "nested/Zelda-91c91246/Read me.txt",
+          "bytes": 996,
+          "sha256": "00b6b4dafa3b839db220e50979bbb642d9a185da15fb6d8d03ee22fab24439e1"
+        },
+        {
+          "path": "nested/Zelda-91c91246/Zelda.dff",
+          "bytes": 237568,
+          "sha256": "ba1c146a54125bdb039116e241fc1add59d31ae4a1eb41e36a7a4df67a71e5bb"
+        },
+        {
+          "path": "nested/Zelda-91c91246/Zelda.jpg",
+          "bytes": 270664,
+          "sha256": "90e7a316e9393a12b74935e7aeb52d7c12b0a9866068558df7e40d1618a025b3"
+        },
+        {
+          "path": "nested/Zelda-91c91246/Zelda.txd",
+          "bytes": 169984,
+          "sha256": "10d16f861efe6f1fc778c0499d6386256192d5a8d99f6e8af6de697cfb60ebeb"
+        },
+        {
+          "path": "nested/gray-118dd4a1/gray fullbuster.dff",
+          "bytes": 88816,
+          "sha256": "b250d3ae07785d4ae8e18c951840369b12c6b4d7eece28bd082a3adabf4adb68"
+        },
+        {
+          "path": "nested/gray-118dd4a1/gray fullbuster.txd",
+          "bytes": 578856,
+          "sha256": "2865708fd301811de2b491eb49014e49d4f9954235a48f8ca7064d0a5b6759b0"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/Read me.txt",
+          "bytes": 1642,
+          "sha256": "b2b38d02ca7540eed6ac921f861b655bb7875c40817198cfbafa83866d6b203d"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/gun_para.dff",
+          "bytes": 47396,
+          "sha256": "df21ffdd303921be544168138566c9e8c2046170ef6230aed08afd89dacf90f0"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/gun_para.txd",
+          "bytes": 58280,
+          "sha256": "ea31e495d3dc9b7c7c2cbddb81fe0af4fa93ecfe4eb04a5c8b822fd84d0bd22b"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/katana.dff",
+          "bytes": 47104,
+          "sha256": "1a74fd1820afcb0455736224841436c47388b416fec98b0be866ad4a6ebcd78e"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/katana.txd",
+          "bytes": 59392,
+          "sha256": "84ba50a20cba6c72f7a2da1addd23fbd0d7d86018804adfcad4bf74466cc8372"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/link01.dff",
+          "bytes": 532480,
+          "sha256": "60b79e112efc816907404a686d2210059fd334555abb35bf0371c1734adc148d"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/link01.txd",
+          "bytes": 104448,
+          "sha256": "9368a3bad4ff054fee3ea4a51c97a07f76d658a6fa47523874a37560a61db6f6"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/link02.jpg",
+          "bytes": 171573,
+          "sha256": "55e8bdd225a4489481bf9209de3876fe656c6adc980cc402df7a8d913bdf982c"
+        },
+        {
+          "path": "nested/linkwithweapon_SA-185a803b/link03.jpg",
+          "bytes": 117873,
+          "sha256": "7a22f6bcd820d6dddc7df40f79618a036d05a52f5d6a6e700e7c0bc157d894c3"
+        },
+        {
+          "path": "nested-archives.json",
+          "bytes": 4980,
+          "sha256": "0f811c73de8ddb76d641a8cbaebab6abbf616b3bd4654e99234785f5ea97f51c"
+        },
+        {
+          "path": "raw/gtainside-anime-pack.zip",
+          "bytes": 4266757,
+          "sha256": "5902d9f1fc761808067e94878d63c25ebb6834b24c0e3fcd848d9bc953f42782"
+        },
+        {
+          "path": "renderware/ErzaOriginal-434b0159c5/native.json",
+          "bytes": 841196,
+          "sha256": "a3978b48ac7b7577d78caf5953c43a33f40479a037b8ad2eb92384f6668fce61"
+        },
+        {
+          "path": "renderware/ErzaOriginal-a557c8b27a/0.png",
+          "bytes": 48018,
+          "sha256": "4ffc8558e85113c8c2a46bffb21857414cb49f166ff6dbd2e54feeebc9ecc69e"
+        },
+        {
+          "path": "renderware/ErzaOriginal-a557c8b27a/1.png",
+          "bytes": 2199,
+          "sha256": "9bd3328ec2134686ac7ed072c42335bafefe086b6c493edb27c6890fac1b0d2a"
+        },
+        {
+          "path": "renderware/ErzaOriginal-a557c8b27a/native.json",
+          "bytes": 263109,
+          "sha256": "73f2855060ad8798c3c88c87ab21ac7b5395c6d48ff0e93815b69765cf9b3e07"
+        },
+        {
+          "path": "renderware/GrayFullB-526a9ca455/0.png",
+          "bytes": 2199,
+          "sha256": "9bd3328ec2134686ac7ed072c42335bafefe086b6c493edb27c6890fac1b0d2a"
+        },
+        {
+          "path": "renderware/GrayFullB-526a9ca455/1.png",
+          "bytes": 49875,
+          "sha256": "3b6a9d21c1c78a1bbc2d801526a17b93aa16d3a220c0620f37e66dbfa126ad4d"
+        },
+        {
+          "path": "renderware/GrayFullB-526a9ca455/2.png",
+          "bytes": 2915,
+          "sha256": "2e6592198ff5cad297ad9d0bb9b603402b7c230ec9d4f749717182f169ea2c55"
+        },
+        {
+          "path": "renderware/GrayFullB-526a9ca455/native.json",
+          "bytes": 266263,
+          "sha256": "bdb0efd26c20ce14ce1998fd397c424224364ae07f2831dba6914df1d40a5152"
+        },
+        {
+          "path": "renderware/GrayFullB-94e54afce8/native.json",
+          "bytes": 763038,
+          "sha256": "32d98bf8481d69cd6bf672c2c836c31da5d9635f44f5517f4479125fd1cce611"
+        },
+        {
+          "path": "renderware/Lucy1-65ffd326cd/native.json",
+          "bytes": 724680,
+          "sha256": "a0edd9244ab187891d9a8e5bf1dceed2f8c7869ab2e9ccbeb030434c922fdd57"
+        },
+        {
+          "path": "renderware/Lucy1-b2cbd5f2ed/0.png",
+          "bytes": 2199,
+          "sha256": "9bd3328ec2134686ac7ed072c42335bafefe086b6c493edb27c6890fac1b0d2a"
+        },
+        {
+          "path": "renderware/Lucy1-b2cbd5f2ed/1.png",
+          "bytes": 8845,
+          "sha256": "52a234642bce0849420f812d4c0ff469599ee21070988141269b0e0dd1f40546"
+        },
+        {
+          "path": "renderware/Lucy1-b2cbd5f2ed/2.png",
+          "bytes": 58922,
+          "sha256": "6322a8781ca41919103c026d0cb8a4e7bb2eb34e775d4dfe135902e1f31656d2"
+        },
+        {
+          "path": "renderware/Lucy1-b2cbd5f2ed/native.json",
+          "bytes": 268999,
+          "sha256": "78e1c46e6b996fceec6a29e72059a723484f5b96601e2076f052cfbbd5acb119"
+        },
+        {
+          "path": "renderware/NatsuDragne-8ea03802e8/native.json",
+          "bytes": 1599957,
+          "sha256": "47b5ee2f0fbe1cdf56b4b4c6a67910357c65e6a0995910a35a1f9abb5734d3d3"
+        },
+        {
+          "path": "renderware/NatsuDragne-acb45d055a/0.png",
+          "bytes": 2472,
+          "sha256": "a3d24eeb1808c016ebe5b17d3fb923d81a9097aceb55e5ca7f0f52e85d0b6c36"
+        },
+        {
+          "path": "renderware/NatsuDragne-acb45d055a/1.png",
+          "bytes": 13584,
+          "sha256": "6257c7334e99af0c0712a9022017d02bd5d9f73f19d0cfdaf8e7436e8dc60561"
+        },
+        {
+          "path": "renderware/NatsuDragne-acb45d055a/2.png",
+          "bytes": 40040,
+          "sha256": "342a597e7c02f74ca3cb8f27aa93ada8ca24745a60a29e2b8224606d4ba62789"
+        },
+        {
+          "path": "renderware/NatsuDragne-acb45d055a/3.png",
+          "bytes": 2199,
+          "sha256": "9bd3328ec2134686ac7ed072c42335bafefe086b6c493edb27c6890fac1b0d2a"
+        },
+        {
+          "path": "renderware/NatsuDragne-acb45d055a/native.json",
+          "bytes": 242128,
+          "sha256": "22d9c00a3bc9d1c567cdab5cb40acdccf5030308556c693a0be22fc65390e8dc"
+        },
+        {
+          "path": "renderware/Natsunormal-426f71bb28/0.png",
+          "bytes": 15337,
+          "sha256": "a792021ca1619ab503fdd32ec4b9edd90195875bfade2dbe3aa8ad8f02ad14f0"
+        },
+        {
+          "path": "renderware/Natsunormal-426f71bb28/1.png",
+          "bytes": 2199,
+          "sha256": "9bd3328ec2134686ac7ed072c42335bafefe086b6c493edb27c6890fac1b0d2a"
+        },
+        {
+          "path": "renderware/Natsunormal-426f71bb28/2.png",
+          "bytes": 13309,
+          "sha256": "ee9848c6643d27da42e11c977fb3385ba3a75643171736f4bc71b4d1460f911c"
+        },
+        {
+          "path": "renderware/Natsunormal-426f71bb28/3.png",
+          "bytes": 9443,
+          "sha256": "d58eec0a2eb7aa34464446c3db4ae51396254f5c4802cfa083cfa963ef0be608"
+        },
+        {
+          "path": "renderware/Natsunormal-426f71bb28/4.png",
+          "bytes": 8788,
+          "sha256": "032086b7170a316ffa388b07785a16252d4ad2aef1d05bbbfba13e6723fb12d4"
+        },
+        {
+          "path": "renderware/Natsunormal-426f71bb28/native.json",
+          "bytes": 220722,
+          "sha256": "fbc60c1feb4eb263f2f3284783b5bc775fbebf5478994a1a8b0b7d81383e7d94"
+        },
+        {
+          "path": "renderware/Natsunormal-e6834573db/native.json",
+          "bytes": 1796257,
+          "sha256": "f571edced387e8c22157b47ee9f889220d5170a9d95b570d03035c33f531a4d1"
+        },
+        {
+          "path": "renderware/Sango-03f368cf1b/0.png",
+          "bytes": 6617,
+          "sha256": "15ae4bae4f0b8c02b86a1c64adb42f0024fd1b08d6006864df8b0ec64de24ed7"
+        },
+        {
+          "path": "renderware/Sango-03f368cf1b/1.png",
+          "bytes": 2199,
+          "sha256": "9bd3328ec2134686ac7ed072c42335bafefe086b6c493edb27c6890fac1b0d2a"
+        },
+        {
+          "path": "renderware/Sango-03f368cf1b/2.png",
+          "bytes": 26578,
+          "sha256": "1b8d64a8c30e0f092f613718818077dd2b173868648751d7b806208774b4cc63"
+        },
+        {
+          "path": "renderware/Sango-03f368cf1b/3.png",
+          "bytes": 7495,
+          "sha256": "30ce37c376732226079fdfccd0b9c8526913507440d6fbc9dd854e78911e5167"
+        },
+        {
+          "path": "renderware/Sango-03f368cf1b/4.png",
+          "bytes": 6109,
+          "sha256": "6c8f25707fec1bc2aa54036ae0b1005adb2846f4ac511ed1bf941eb6a7938d6e"
+        },
+        {
+          "path": "renderware/Sango-03f368cf1b/native.json",
+          "bytes": 253461,
+          "sha256": "6973cfdce0a6f9689e60ad6e346e40bb0f12939631b3b8b86220888eb7e845f3"
+        },
+        {
+          "path": "renderware/Sango-0d3878e655/native.json",
+          "bytes": 2380201,
+          "sha256": "622583ad16d571b8fc347ec2dcadee9b5161646e43ec88b95ab0dd48c706b35b"
+        },
+        {
+          "path": "renderware/Zelda-10d16f861e/0.png",
+          "bytes": 272899,
+          "sha256": "c25910e9e7f68059da4b6cb48aa5c327c4d283dbfd9c8d91c32550c26b86afc1"
+        },
+        {
+          "path": "renderware/Zelda-10d16f861e/1.png",
+          "bytes": 3912,
+          "sha256": "093bca79e36cdd41c3239ecf93b0913094729a92aff757ed1023f7be1cc26705"
+        },
+        {
+          "path": "renderware/Zelda-10d16f861e/2.png",
+          "bytes": 1521,
+          "sha256": "f5a95e931256524add4a8d4aafe3c78ac91935cb4cba324367fef5e3e3637112"
+        },
+        {
+          "path": "renderware/Zelda-10d16f861e/3.png",
+          "bytes": 39744,
+          "sha256": "bb2fd7ad00a14e9192243c43979a45b74a59ad1c0caffebd7461819fe0a75313"
+        },
+        {
+          "path": "renderware/Zelda-10d16f861e/native.json",
+          "bytes": 225698,
+          "sha256": "6f7c3da0ff6de2d324e875de398ade96e8e8ae43c9a9fdb4e0d28d2b07215165"
+        },
+        {
+          "path": "renderware/Zelda-ba1c146a54/native.json",
+          "bytes": 1162437,
+          "sha256": "8c390b6d92000c0361462a968db7c77da79a93cfeeb14692a6c5119c10c9de1b"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/0.png",
+          "bytes": 4706,
+          "sha256": "04c73b2c9b7a2ecca957b572f0a9e96c5312da8910664615dab525eece5f0c89"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/1.png",
+          "bytes": 22275,
+          "sha256": "257e076a68f9413b8620d1245632cc55dcec21ed99d3ecd08e069c6ccd23c764"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/2.png",
+          "bytes": 18056,
+          "sha256": "9439e1fc3a3ab90ff5b71e67bb4295f6e5ae8ff613ae706b7723ad88c5d29ee3"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/3.png",
+          "bytes": 6868,
+          "sha256": "a9727e795ad4555453f8188616b6732be02b5ac92cd3baae6f90df5a75959f36"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/4.png",
+          "bytes": 36476,
+          "sha256": "6e64468d882f2a5874aa3c1ee6c76c5887434ae24c0298fa53b506358c1c8294"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/5.png",
+          "bytes": 25384,
+          "sha256": "2019e6d91c92eb37e75c62650f6d2875269a342f2fe78b3caeb05ad37ef71722"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/6.png",
+          "bytes": 2485,
+          "sha256": "3d55f6a972dde7e6d2ada365e391958487a074dd8796470e5ca707e01cedf91d"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/7.png",
+          "bytes": 26323,
+          "sha256": "aff42ff7855c23c7737b91d31bc3d6215a644ab34acebd151c3267086fcdc6be"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/8.png",
+          "bytes": 26264,
+          "sha256": "e8ee1b8e9d2475995eddf4e97ccef93fc37732371524e6194e82ac51657b5103"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/9.png",
+          "bytes": 46321,
+          "sha256": "dbe2bb3fa8f9a2142f7cd90ada85076e809af6d60cf07cb9d47e5e4403766721"
+        },
+        {
+          "path": "renderware/gray_fullbuster-2865708fd3/native.json",
+          "bytes": 774377,
+          "sha256": "5980bbef2eb47d0a64934d61e8a0709b55bdaa2be3b097df2417722df12fd749"
+        },
+        {
+          "path": "renderware/gray_fullbuster-b250d3ae07/native.json",
+          "bytes": 437289,
+          "sha256": "ef6dcb6e1561b54e2ccb8a288f8039f3a7bd5e6d2f98b1ffc516523157a76457"
+        },
+        {
+          "path": "renderware/gun_para-df21ffdd30/native.json",
+          "bytes": 282048,
+          "sha256": "b50e937b527dde4fb4188fdc32391f133d905c5dc48bdf196ed0e49f46bbad8d"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/0.png",
+          "bytes": 1198,
+          "sha256": "46d79f93863a41560b519e7cb8ec3ec45058197e82a0b2243b14cb7d786b100d"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/1.png",
+          "bytes": 10549,
+          "sha256": "e5aa359e96f28042b323ce75b0ddff2cd56565b7c3a47dd0874aeef69765f7b7"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/2.png",
+          "bytes": 2965,
+          "sha256": "17c3e78ccd605c43039eab06722c863df56974bfd19600c66be60e8cd0e80a74"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/3.png",
+          "bytes": 2546,
+          "sha256": "1fc9b8e34adb603af13b4fa5cb176b7185411d4e2118ee70a22ba2ea3b40e348"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/4.png",
+          "bytes": 5123,
+          "sha256": "8dd666c4287e58478fdb2d635eaff867aa151016e3d9a321e36bbd9468c63da4"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/5.png",
+          "bytes": 1299,
+          "sha256": "b5b9ea89a443b933a95fa0c08d4d1babb17dca17268eb2aacb180a5fd0103f7f"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/6.png",
+          "bytes": 11434,
+          "sha256": "77f3a290637d1b7e88910cfaee803154923b74708e333d364806afa9aa6ef81e"
+        },
+        {
+          "path": "renderware/gun_para-ea31e495d3/native.json",
+          "bytes": 79530,
+          "sha256": "341de5de15f168133c1a81d1f77cf5f631c319c75eccf9dde6f1d3462fa4f216"
+        },
+        {
+          "path": "renderware/kamiya1-3c8b036dfe/native.json",
+          "bytes": 1361800,
+          "sha256": "c63ee51b9270e4d905ca9355b5b58993a80366008da0bb060b82caca910b06f8"
+        },
+        {
+          "path": "renderware/kamiya1-3c8b036dfe/parser-input.dff",
+          "bytes": 272372,
+          "sha256": "0a4630b1935237045e79c13482f16858e854b48a803d6d9d3b74ea8420f9e3d0"
+        },
+        {
+          "path": "renderware/kamiya1-a6d7bfd32d/0.png",
+          "bytes": 10779,
+          "sha256": "fa0312357fef6d928bcffd995d6fce011b2f12bfe9d2ee5aef2a8a7a63a4c057"
+        },
+        {
+          "path": "renderware/kamiya1-a6d7bfd32d/1.png",
+          "bytes": 47143,
+          "sha256": "f1146cd3a4077e326980c1974c2ebb11d9fb322d86c159f379d71e807aad924d"
+        },
+        {
+          "path": "renderware/kamiya1-a6d7bfd32d/2.png",
+          "bytes": 44400,
+          "sha256": "84122bd5d5377a305de5293d78f25ee0bb6199be079f15a700363947bc0f08cb"
+        },
+        {
+          "path": "renderware/kamiya1-a6d7bfd32d/3.png",
+          "bytes": 11410,
+          "sha256": "288c399d518fe0902382c27de13139c32ca65b817d00a2dfbf1a9cdf06643a30"
+        },
+        {
+          "path": "renderware/kamiya1-a6d7bfd32d/native.json",
+          "bytes": 111000,
+          "sha256": "f0f541faa52eb82aa5892a339160a819b777906825bc25c1be3318b9c45b616c"
+        },
+        {
+          "path": "renderware/kamiya2-3c8b036dfe/native.json",
+          "bytes": 1361800,
+          "sha256": "c63ee51b9270e4d905ca9355b5b58993a80366008da0bb060b82caca910b06f8"
+        },
+        {
+          "path": "renderware/kamiya2-3c8b036dfe/parser-input.dff",
+          "bytes": 272372,
+          "sha256": "0a4630b1935237045e79c13482f16858e854b48a803d6d9d3b74ea8420f9e3d0"
+        },
+        {
+          "path": "renderware/kamiya2-6effa9cb36/0.png",
+          "bytes": 10698,
+          "sha256": "d922a5d49a13a497f21346f20f85f9327e077aeeebe103dd7ef25f5efc6dcab3"
+        },
+        {
+          "path": "renderware/kamiya2-6effa9cb36/1.png",
+          "bytes": 47143,
+          "sha256": "f1146cd3a4077e326980c1974c2ebb11d9fb322d86c159f379d71e807aad924d"
+        },
+        {
+          "path": "renderware/kamiya2-6effa9cb36/2.png",
+          "bytes": 44400,
+          "sha256": "84122bd5d5377a305de5293d78f25ee0bb6199be079f15a700363947bc0f08cb"
+        },
+        {
+          "path": "renderware/kamiya2-6effa9cb36/3.png",
+          "bytes": 11410,
+          "sha256": "288c399d518fe0902382c27de13139c32ca65b817d00a2dfbf1a9cdf06643a30"
+        },
+        {
+          "path": "renderware/kamiya2-6effa9cb36/native.json",
+          "bytes": 111000,
+          "sha256": "3be5baf8aa88a170839e99c033b2c67bd7070fd9f934c8c86e5c309afb10af09"
+        },
+        {
+          "path": "renderware/kamiya3-3c8b036dfe/native.json",
+          "bytes": 1361800,
+          "sha256": "c63ee51b9270e4d905ca9355b5b58993a80366008da0bb060b82caca910b06f8"
+        },
+        {
+          "path": "renderware/kamiya3-3c8b036dfe/parser-input.dff",
+          "bytes": 272372,
+          "sha256": "0a4630b1935237045e79c13482f16858e854b48a803d6d9d3b74ea8420f9e3d0"
+        },
+        {
+          "path": "renderware/kamiya3-898dc8be9b/0.png",
+          "bytes": 10225,
+          "sha256": "4797df0b127cb71763738bb8473b4821a269dc98b1a6e19d46e7a134d2e174c5"
+        },
+        {
+          "path": "renderware/kamiya3-898dc8be9b/1.png",
+          "bytes": 47143,
+          "sha256": "f1146cd3a4077e326980c1974c2ebb11d9fb322d86c159f379d71e807aad924d"
+        },
+        {
+          "path": "renderware/kamiya3-898dc8be9b/2.png",
+          "bytes": 44400,
+          "sha256": "84122bd5d5377a305de5293d78f25ee0bb6199be079f15a700363947bc0f08cb"
+        },
+        {
+          "path": "renderware/kamiya3-898dc8be9b/3.png",
+          "bytes": 11410,
+          "sha256": "288c399d518fe0902382c27de13139c32ca65b817d00a2dfbf1a9cdf06643a30"
+        },
+        {
+          "path": "renderware/kamiya3-898dc8be9b/native.json",
+          "bytes": 111000,
+          "sha256": "9698d6d671bb750b1270851eab3280c7ffc22e43acfe83ff557835ed32b720bd"
+        },
+        {
+          "path": "renderware/kamiya4-3118666ea0/0.png",
+          "bytes": 10904,
+          "sha256": "d0d5609bce545d42cf5f0a052042630cf1bed2b29fd758f716f67f0f7dbc933f"
+        },
+        {
+          "path": "renderware/kamiya4-3118666ea0/1.png",
+          "bytes": 47143,
+          "sha256": "f1146cd3a4077e326980c1974c2ebb11d9fb322d86c159f379d71e807aad924d"
+        },
+        {
+          "path": "renderware/kamiya4-3118666ea0/2.png",
+          "bytes": 44400,
+          "sha256": "84122bd5d5377a305de5293d78f25ee0bb6199be079f15a700363947bc0f08cb"
+        },
+        {
+          "path": "renderware/kamiya4-3118666ea0/3.png",
+          "bytes": 11410,
+          "sha256": "288c399d518fe0902382c27de13139c32ca65b817d00a2dfbf1a9cdf06643a30"
+        },
+        {
+          "path": "renderware/kamiya4-3118666ea0/native.json",
+          "bytes": 111000,
+          "sha256": "79aa1704be46d4d474b4d54c58c901c9ad66a6cdfd7204a301f350803de798a1"
+        },
+        {
+          "path": "renderware/kamiya4-3c8b036dfe/native.json",
+          "bytes": 1361800,
+          "sha256": "c63ee51b9270e4d905ca9355b5b58993a80366008da0bb060b82caca910b06f8"
+        },
+        {
+          "path": "renderware/kamiya4-3c8b036dfe/parser-input.dff",
+          "bytes": 272372,
+          "sha256": "0a4630b1935237045e79c13482f16858e854b48a803d6d9d3b74ea8420f9e3d0"
+        },
+        {
+          "path": "renderware/katana-1a74fd1820/native.json",
+          "bytes": 278436,
+          "sha256": "d2d920a0e1f8eefb090dca55e7521221b026a086ce5bacac6c64febc18cb0b5b"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/0.png",
+          "bytes": 1198,
+          "sha256": "46d79f93863a41560b519e7cb8ec3ec45058197e82a0b2243b14cb7d786b100d"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/1.png",
+          "bytes": 10549,
+          "sha256": "e5aa359e96f28042b323ce75b0ddff2cd56565b7c3a47dd0874aeef69765f7b7"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/2.png",
+          "bytes": 2965,
+          "sha256": "17c3e78ccd605c43039eab06722c863df56974bfd19600c66be60e8cd0e80a74"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/3.png",
+          "bytes": 2546,
+          "sha256": "1fc9b8e34adb603af13b4fa5cb176b7185411d4e2118ee70a22ba2ea3b40e348"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/4.png",
+          "bytes": 5123,
+          "sha256": "8dd666c4287e58478fdb2d635eaff867aa151016e3d9a321e36bbd9468c63da4"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/5.png",
+          "bytes": 1299,
+          "sha256": "b5b9ea89a443b933a95fa0c08d4d1babb17dca17268eb2aacb180a5fd0103f7f"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/6.png",
+          "bytes": 11434,
+          "sha256": "77f3a290637d1b7e88910cfaee803154923b74708e333d364806afa9aa6ef81e"
+        },
+        {
+          "path": "renderware/katana-84ba50a20c/native.json",
+          "bytes": 79528,
+          "sha256": "d5cb52c3f95ee8c33b0ea3e31a91c2d4b9a5e4fb44cf0580238ecadc77ecf33a"
+        },
+        {
+          "path": "renderware/kenshin1-0f4858ac37/0.png",
+          "bytes": 12951,
+          "sha256": "17635f924ca853a755c8f7b0f1e120ba2b7d322910322bb41a80bcac03086103"
+        },
+        {
+          "path": "renderware/kenshin1-0f4858ac37/1.png",
+          "bytes": 58898,
+          "sha256": "7b36d730a14ba37b0b9c3bd098ce7d921f126cec61c0a25dce0d5645a0b37990"
+        },
+        {
+          "path": "renderware/kenshin1-0f4858ac37/2.png",
+          "bytes": 46389,
+          "sha256": "15aee71e9a6a41bd0a514a0f562fd78287bd34e635b9417229da08f4f0b5b444"
+        },
+        {
+          "path": "renderware/kenshin1-0f4858ac37/3.png",
+          "bytes": 4582,
+          "sha256": "d5a7a6df2557bd44756cc4b0e7cfd0f5eeda38e315960f6e16d05da7048fc92b"
+        },
+        {
+          "path": "renderware/kenshin1-0f4858ac37/4.png",
+          "bytes": 3652,
+          "sha256": "0d5d077c0e882d6eef9edf7f80d43f554b435f5078fc40ee43631ac32c75bc2a"
+        },
+        {
+          "path": "renderware/kenshin1-0f4858ac37/native.json",
+          "bytes": 111421,
+          "sha256": "218e9ed3be892295d655a44c02bd215e0449a6edc1fb8ad1a41468706ae1b00c"
+        },
+        {
+          "path": "renderware/kenshin1-cef69fa7be/native.json",
+          "bytes": 1423069,
+          "sha256": "64138c563c9c064aaaf140db024229d8d3894e70e00e3cee2cd05d5d1799adba"
+        },
+        {
+          "path": "renderware/kenshin1-cef69fa7be/parser-input.dff",
+          "bytes": 284660,
+          "sha256": "310096c849e0c0c8b9cf32179378818959cfb52659fb5ae3e580e77247dc3084"
+        },
+        {
+          "path": "renderware/kenshin2-cef69fa7be/native.json",
+          "bytes": 1423069,
+          "sha256": "64138c563c9c064aaaf140db024229d8d3894e70e00e3cee2cd05d5d1799adba"
+        },
+        {
+          "path": "renderware/kenshin2-cef69fa7be/parser-input.dff",
+          "bytes": 284660,
+          "sha256": "310096c849e0c0c8b9cf32179378818959cfb52659fb5ae3e580e77247dc3084"
+        },
+        {
+          "path": "renderware/kenshin2-d910a859b6/0.png",
+          "bytes": 13197,
+          "sha256": "621d222580fc4a97901fab157f8ced1a1aa04845d0783d89a0a37059ca18992c"
+        },
+        {
+          "path": "renderware/kenshin2-d910a859b6/1.png",
+          "bytes": 58898,
+          "sha256": "7b36d730a14ba37b0b9c3bd098ce7d921f126cec61c0a25dce0d5645a0b37990"
+        },
+        {
+          "path": "renderware/kenshin2-d910a859b6/2.png",
+          "bytes": 46389,
+          "sha256": "15aee71e9a6a41bd0a514a0f562fd78287bd34e635b9417229da08f4f0b5b444"
+        },
+        {
+          "path": "renderware/kenshin2-d910a859b6/3.png",
+          "bytes": 4582,
+          "sha256": "d5a7a6df2557bd44756cc4b0e7cfd0f5eeda38e315960f6e16d05da7048fc92b"
+        },
+        {
+          "path": "renderware/kenshin2-d910a859b6/4.png",
+          "bytes": 3652,
+          "sha256": "0d5d077c0e882d6eef9edf7f80d43f554b435f5078fc40ee43631ac32c75bc2a"
+        },
+        {
+          "path": "renderware/kenshin2-d910a859b6/native.json",
+          "bytes": 111421,
+          "sha256": "a8929da869cca6eb0006c0c65beaace30aa9dbe71f078d216fd7254df0f6441c"
+        },
+        {
+          "path": "renderware/kenshin3-73fc2211c2/0.png",
+          "bytes": 13306,
+          "sha256": "1c80ad70451fac7af0289c04719786ea58625701d4b8638cba3c3b760a91811a"
+        },
+        {
+          "path": "renderware/kenshin3-73fc2211c2/1.png",
+          "bytes": 58898,
+          "sha256": "7b36d730a14ba37b0b9c3bd098ce7d921f126cec61c0a25dce0d5645a0b37990"
+        },
+        {
+          "path": "renderware/kenshin3-73fc2211c2/2.png",
+          "bytes": 46389,
+          "sha256": "15aee71e9a6a41bd0a514a0f562fd78287bd34e635b9417229da08f4f0b5b444"
+        },
+        {
+          "path": "renderware/kenshin3-73fc2211c2/3.png",
+          "bytes": 4582,
+          "sha256": "d5a7a6df2557bd44756cc4b0e7cfd0f5eeda38e315960f6e16d05da7048fc92b"
+        },
+        {
+          "path": "renderware/kenshin3-73fc2211c2/4.png",
+          "bytes": 3652,
+          "sha256": "0d5d077c0e882d6eef9edf7f80d43f554b435f5078fc40ee43631ac32c75bc2a"
+        },
+        {
+          "path": "renderware/kenshin3-73fc2211c2/native.json",
+          "bytes": 111421,
+          "sha256": "727429fec73d051959bb95c33764150a294a88f39454e6c794898f2099e3899f"
+        },
+        {
+          "path": "renderware/kenshin3-cef69fa7be/native.json",
+          "bytes": 1423069,
+          "sha256": "64138c563c9c064aaaf140db024229d8d3894e70e00e3cee2cd05d5d1799adba"
+        },
+        {
+          "path": "renderware/kenshin3-cef69fa7be/parser-input.dff",
+          "bytes": 284660,
+          "sha256": "310096c849e0c0c8b9cf32179378818959cfb52659fb5ae3e580e77247dc3084"
+        },
+        {
+          "path": "renderware/kenshin4-29f950e4e3/0.png",
+          "bytes": 13145,
+          "sha256": "357d982f7f519a40c3a2f01207ba483bb210727f2c17a7b5d8bc2e56f815981c"
+        },
+        {
+          "path": "renderware/kenshin4-29f950e4e3/1.png",
+          "bytes": 58898,
+          "sha256": "7b36d730a14ba37b0b9c3bd098ce7d921f126cec61c0a25dce0d5645a0b37990"
+        },
+        {
+          "path": "renderware/kenshin4-29f950e4e3/2.png",
+          "bytes": 46389,
+          "sha256": "15aee71e9a6a41bd0a514a0f562fd78287bd34e635b9417229da08f4f0b5b444"
+        },
+        {
+          "path": "renderware/kenshin4-29f950e4e3/3.png",
+          "bytes": 4582,
+          "sha256": "d5a7a6df2557bd44756cc4b0e7cfd0f5eeda38e315960f6e16d05da7048fc92b"
+        },
+        {
+          "path": "renderware/kenshin4-29f950e4e3/4.png",
+          "bytes": 3652,
+          "sha256": "0d5d077c0e882d6eef9edf7f80d43f554b435f5078fc40ee43631ac32c75bc2a"
+        },
+        {
+          "path": "renderware/kenshin4-29f950e4e3/native.json",
+          "bytes": 111421,
+          "sha256": "7784d722e21c4d422eea7dd74000a023e9679ecda2ca94f7d4809ac57b7cb6a3"
+        },
+        {
+          "path": "renderware/kenshin4-cef69fa7be/native.json",
+          "bytes": 1423069,
+          "sha256": "64138c563c9c064aaaf140db024229d8d3894e70e00e3cee2cd05d5d1799adba"
+        },
+        {
+          "path": "renderware/kenshin4-cef69fa7be/parser-input.dff",
+          "bytes": 284660,
+          "sha256": "310096c849e0c0c8b9cf32179378818959cfb52659fb5ae3e580e77247dc3084"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/0.png",
+          "bytes": 25098,
+          "sha256": "b6875031b2fd31e9e8100318835bdd6ab6974e9d028801446bc506a0ecf79a0c"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/1.png",
+          "bytes": 29293,
+          "sha256": "aa7ccb43c82c9ef1d6e8c53359c8b3b8dc1c21beb902a9d09d4b5d9ae6b1b8b4"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/2.png",
+          "bytes": 31714,
+          "sha256": "d6e65908ec2d9ccf6a2e18af000fa2e373eb04baa73b543691f1907ce98e59c5"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/3.png",
+          "bytes": 29339,
+          "sha256": "ce4aaa3eb3c4e1f9f20438316b4299c56ccb29269426f75f3ddbe2226ab80aa0"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/4.png",
+          "bytes": 4680,
+          "sha256": "3ffab934ace9284522475a47d31ef7e96e7899a1b7cf830821c8fe95f9543c54"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/5.png",
+          "bytes": 5080,
+          "sha256": "6106c06b29a9a8d2746cd5085a54ede4102ee41c708877618d05039815a044f8"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/6.png",
+          "bytes": 2286,
+          "sha256": "575c8e2dc84d8bfe0935234dd364956466ebc9aab5d74bd2c341287ad4f84a17"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/7.png",
+          "bytes": 7693,
+          "sha256": "eadeb2a6eb6d882bcd3129cf76c05340a709942751449c48fd1ad7887af3c066"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/8.png",
+          "bytes": 855,
+          "sha256": "42c7d7a412f704e9468d9ba58292b23e1d659ddb4e839345ad08bb37b44ee2e5"
+        },
+        {
+          "path": "renderware/kikyo-880c271b75/native.json",
+          "bytes": 257860,
+          "sha256": "2398d53f9843e2df5335e21b6b7da53de1b2989b45cf79a519f1e29e054cc261"
+        },
+        {
+          "path": "renderware/kikyo-b9f706a399/native.json",
+          "bytes": 2286526,
+          "sha256": "ceb347f3f93cd2655422340dee24d80b61ee8907d0c7ed3656845f7ce8cc0cc6"
+        },
+        {
+          "path": "renderware/kikyo-b9f706a399/parser-input.dff",
+          "bytes": 446504,
+          "sha256": "d639e9fcd68da58d91da00a895e18dc88df31824586a2864c3e30a3cb5e40f70"
+        },
+        {
+          "path": "renderware/link01-60b79e112e/native.json",
+          "bytes": 2615244,
+          "sha256": "22966f9b6fbd612955700a8fefbc376ca1c2d504b8e7a37f99cbdac0fc4fcba0"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/0.png",
+          "bytes": 4276,
+          "sha256": "6cd3f05d4ca53e3dff1739d6e366c8f3d4d74bb7c364aad74814cb94f38a5c55"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/1.png",
+          "bytes": 3821,
+          "sha256": "c3f4a2f2f9bf79e089001504ea525cd7f5ee1941274982f30ebdd81cda96627f"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/10.png",
+          "bytes": 1742,
+          "sha256": "ec45fb1838883bf9686497f64de7fe6e12a00d07886f81d9cfaa0c735e36a2dc"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/11.png",
+          "bytes": 6643,
+          "sha256": "930e8018c7b2c6370cd4806f38ecdc1415ce42b9ff2fa83830949632e5ef5f26"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/12.png",
+          "bytes": 2539,
+          "sha256": "6cb80f1e4da8a54648ce69828f420e78ec491ab84bc1dbb0ce040c55ca199f27"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/13.png",
+          "bytes": 11055,
+          "sha256": "cab30e4db8eda50759711c51eb6534a2c5f5599b6fba6546ae1c94cbc71d7408"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/14.png",
+          "bytes": 2073,
+          "sha256": "a88d8ff83736377cfd6b09f5d8c355c1109ce596b875a7a45e34921bf73d7d46"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/15.png",
+          "bytes": 1705,
+          "sha256": "0013ab23a5183f1b7642e8eaf42f2147ed9a07cb2079a8c3f2a30228851cb673"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/16.png",
+          "bytes": 12756,
+          "sha256": "d0a233e57221409aa32fc820a57d1273f6c6cc2cf1a688522a114fec69a2c1d3"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/17.png",
+          "bytes": 3945,
+          "sha256": "d394052774bec0fbc2892a28de88cc7015fc403942d67dbb6b95c0eee27f4563"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/18.png",
+          "bytes": 43785,
+          "sha256": "a19eb4d15f3309506018ce8badcf4304c5be3e0c5e9ffa40414b50b8b92e1486"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/19.png",
+          "bytes": 164,
+          "sha256": "83f75ea69378e2216f7504d36893c040c1af22dd2bfd0ef1b52eb08eb5170d1a"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/2.png",
+          "bytes": 3741,
+          "sha256": "0fa49bb33bbfada0c007b65f516a353c74c8019a4955ef79f83af32957292fce"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/20.png",
+          "bytes": 1357,
+          "sha256": "c83be5aa603d3ea5b1b68098390c4ab4abe27013f49a597955b71d1bd42d2771"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/21.png",
+          "bytes": 2141,
+          "sha256": "9e4f4cd01e0f21c328f7a8f44edf61dbbc2236cf9fb96aaa2fe3374adf15f9a4"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/3.png",
+          "bytes": 4000,
+          "sha256": "7f26cb090c20a188f0abaf0d6b3967c27ba54e3e308e01c6448effa453e6cf4e"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/4.png",
+          "bytes": 5929,
+          "sha256": "6358ae5ff85512210ed9cb4f51ea0617719616f4d4880d101e7b9c8c69b88fbc"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/5.png",
+          "bytes": 10071,
+          "sha256": "b43000560eb3a4b7779ced9a2cd888c65e386273a7bba329d7a3eea417205a86"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/6.png",
+          "bytes": 11131,
+          "sha256": "976ea76cea5dec4d63baf56881e6cd0b1132b8173a6102d31a27648b8315797f"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/7.png",
+          "bytes": 3616,
+          "sha256": "3afead684d089082e5ae8a7379ce63245a154b728cd2a9d30dab69cd49143e41"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/8.png",
+          "bytes": 8576,
+          "sha256": "ecdbd2e05cfcdd31efb430deaf53299d3e814d1ceaa57ba906768486b94fe038"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/9.png",
+          "bytes": 434,
+          "sha256": "c26e11311d6f1575fc16c4b6078ed970938858448c00c0d3e0b1032a7591d53d"
+        },
+        {
+          "path": "renderware/link01-9368a3bad4/native.json",
+          "bytes": 141885,
+          "sha256": "622ff35f025999100af1824acb4a94dae50f56dfb82c8cd7df3ce644d34aa59c"
+        },
+        {
+          "path": "renderware/miroku-603e7a3d7e/0.png",
+          "bytes": 8009,
+          "sha256": "2eddb7492ee87c6887929816d218721b514f751673af03e672e0b4c877985b73"
+        },
+        {
+          "path": "renderware/miroku-603e7a3d7e/1.png",
+          "bytes": 41416,
+          "sha256": "f440985eab8d94d93c89d09a2b20d7421e7f272dc4d37d11bc664f150e030675"
+        },
+        {
+          "path": "renderware/miroku-603e7a3d7e/native.json",
+          "bytes": 66471,
+          "sha256": "f1b26417b3280f504daead72a731abbda35f253367ae6c92d97204f89bc40914"
+        },
+        {
+          "path": "renderware/miroku-e916d01f31/native.json",
+          "bytes": 1049652,
+          "sha256": "5969d85fbd7fff5cd161ca019cab195489d6385be308ba6119606b6547b8653e"
+        },
+        {
+          "path": "renderware-inspection.json",
+          "bytes": 52660,
+          "sha256": "2843bd89606e40ce4255fc88a2cdf5ba8af535551511f002b1adb4efbc3c9e74"
+        }
+      ]
+    },
+    {
+      "id": "gtainside-shinchan-locator",
+      "status": "not-uploaded",
+      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-shinchan-locator/dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d.zip",
+      "localArchive": "outputs/public-model-sources-20260910/gtainside-shinchan-locator-round5-final.zip",
+      "bytes": 1277,
+      "sha256": "dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d",
+      "contentKind": "locator-only-no-model",
+      "readbackVerified": false,
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 634,
+          "sha256": "c7a812d92eeee48a264897b244a91916e960e247e6446d6f93514e9b07436599"
+        },
+        {
+          "path": "extracted/SHIN CHAN SKIN/🖇️🔗🖇️LINK🔗🖇️🔗.txt",
+          "bytes": 181,
+          "sha256": "9671157fbad698ae201f0ce308dfd98a9ff27b6787d060467bfaa1711eadfac2"
+        },
+        {
+          "path": "raw/gtainside-shinchan-locator.7z",
+          "bytes": 302,
+          "sha256": "25b90724cbd537769d05e77c371425f91a4f5563145d4b88eb4e269453d85b97"
+        }
+      ]
+    }
   ]
 }

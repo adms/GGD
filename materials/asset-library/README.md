@@ -72,6 +72,14 @@ Steam 來源僅在 [Valve 官方公開 API](https://partner.steamgames.com/doc/w
 
 只找到來源頁時記在 `publicSourceLeads`，含角色／形態 ID、網址與未取得原因；盤點會列在「已找到來源頁，尚未取得檔案」，`query.py <角色> --downloads --json` 同時回傳整批 `purchasePolicy` 與該角色的線索。線索不得列入 `publicSources`、`publicCandidates` 或已取得的 `purchaseHoldFor`。
 
+GTA 模型常見 DFF／TXD 與 RAR／7z 包。RAR／7z 解析使用系統 libarchive（macOS 內建），只寫出通過路徑與大小檢查的普通檔案；解出的網址文字檔仍只是線索。內嵌壓縮包的原路徑、SHA 與解包位置保留在 intake 的 `nested-archives.json`，不可只靠外層 ZIP 存在就認列模型。
+
+DFF／TXD 原生解析使用 [DragonFF](https://github.com/Parik27/DragonFF) 的獨立 Python 模組，固定 commit `5a7c2f18d6ff9ac4e3424d552cfe404c931d039d`，不需 Blender。備妥該版本乾淨 checkout 後執行 `python3 tools/hero-model-library/inspect_renderware.py --dragonff <DragonFF checkout> <intake>`，另需 Pillow。輸出的頂點、蒙皮權重、綁定矩陣、骨架階層 JSON 與 PNG 貼圖放 S3 `legacy/`；`renderware-inspection.json` 保留逐檔成功／錯誤。DFF 蒙皮不等於附帶動作，IFP 缺席時不可宣稱動作已取得。
+
+部分舊 DFF 在宣告的 Frame 擴充後附加零長度空記錄。解析器只在副本移除該空記錄並調整外層長度，保留原檔、解析副本 SHA 與逐處差異；不重建骨架或更改權重。副本不會再次當作新來源解析。
+
+尚未上傳的備份列在 `public-source-files.json → pendingUploads` 與來源的 `pendingBackup`，其中 `plannedS3Uri` 只是目的地，`readbackVerified=false` 不可視為 S3 已有檔案。上傳並讀回 SHA 通過後，才改列已發布 `sources`／`backup`。購買暫緩與 S3 發布狀態分開判斷。
+
 每批收尾必做：
 
 ```sh

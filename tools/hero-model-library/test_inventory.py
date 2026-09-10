@@ -34,6 +34,14 @@ class InventoryHandoff(unittest.TestCase):
         self.assertNotIn('godie-u00l', kenshiro['heroIds'])
         self.assertEqual(kenshiro['preserve']['heroId'], 'godie-u00l')
         public = {s['id']:s for s in inventory['downloadPlan'].get('publicSources',[])}
+        for source in public.values():
+            row = next(line for line in report.splitlines() if f'[{source["id"]}](' in line)
+            pending = source.get('pendingBackup', {}).get('status') == 'not-uploaded'
+            self.assertEqual('僅本機已保存，S3 尚未上傳' in row, pending)
+            if pending:
+                self.assertFalse(source['pendingBackup']['readbackVerified'])
+                self.assertNotIn('backup', source)
+                self.assertNotIn('S3 legacy 備份已讀回驗證', row)
         self.assertFalse(inventory['downloadPlan']['purchasePolicy']['paidPurchaseAllowed'])
         for entry in inventory['downloadPlan']['entries']:
             self.assertFalse(entry['paidPurchaseAllowed'])
@@ -62,8 +70,16 @@ class InventoryHandoff(unittest.TestCase):
         # A publicly visible Workshop page is not a downloaded model.
         naofumi = next(e for e in inventory['downloadPlan']['entries'] if 'b2-naofumi' in e['heroIds'])
         self.assertEqual(naofumi['publicSourceLeadIds'], ['steam-naofumi'])
-        self.assertFalse(naofumi['purchaseHold'])
-        self.assertEqual(heroes['b2-naofumi']['publicCandidates'], [])
+        self.assertTrue(naofumi['purchaseHold'])
+        self.assertEqual([s['id'] for s in heroes['b2-naofumi']['publicCandidates']], ['gtainside-naofumi'])
+        pikachu = next(e for e in inventory['downloadPlan']['entries'] if 'godie-ofar' in e['heroIds'])
+        self.assertEqual(pikachu['purchaseHoldFor'], ['godie-ofar'])
+        self.assertTrue(pikachu['partialPurchaseHold'])
+        self.assertEqual(heroes['godie-o02l']['publicCandidates'], [])
+        shinchan = next(e for e in inventory['downloadPlan']['entries'] if 'b2-shinchan' in e['heroIds'])
+        self.assertFalse(shinchan['purchaseHold'])
+        self.assertEqual(heroes['b2-shinchan']['publicCandidates'], [])
+        self.assertEqual(shinchan['publicSourceLeadIds'], ['gtainside-shinchan-locator'])
         billy = next(e for e in inventory['downloadPlan']['entries'] if 'community-review-15-20260907' in e['heroIds'])
         self.assertTrue(billy['purchaseHold'])
         self.assertEqual(billy['acquiredPublicSources'], ['steam-billy-herrington'])
@@ -90,7 +106,7 @@ class InventoryHandoff(unittest.TestCase):
             record=json.loads(result)
             self.assertFalse(record['purchasePolicy']['paidPurchaseAllowed'])
             self.assertFalse(record['entries'][0]['paidPurchaseAllowed'])
-            self.assertEqual(record['publicSources'], [])
+            self.assertEqual([s['id'] for s in record['publicSources']], ['gtainside-naofumi'])
             self.assertEqual(record['publicSourceLeads'][0]['id'], 'steam-naofumi')
             for query, expected_target in [('犬夜叉','犬夜叉'),('亞絲娜','刀劍神域 阿絲娜')]:
                 result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),query,'--downloads','--json'],text=True)

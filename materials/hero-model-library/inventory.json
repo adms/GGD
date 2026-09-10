@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T04:15:44+08:00",
-  "inputsSha256": "e35a967025cee0e0b511114ed5820a280f5bea5cea0b112bcbdbab612f98019d",
+  "generatedAt": "2026-09-10T13:35:58+08:00",
+  "inputsSha256": "c6262008749a3c6ca4019f34c5a5a6a99f18700022f65a7df4181607b27a33b7",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -1025,7 +1025,47 @@
       "downloadSources": [
         "owner-model-073"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "gtainside-light-yagami-kw",
+          "target": "夜神月（DEATH NOTE Killer Within）",
+          "heroIds": [
+            "godie-emns"
+          ],
+          "url": "https://www.gtainside.com/sanandreas/skins/204848-light-yagami-death-note-killer-within/",
+          "downloadUrl": "https://files.gtainside.com/202501/1736681159_Light%20Death%20Note%20KW%20By%20Snadjerx.zip",
+          "uploader": "Snadjerx；模型提供 carinhaqualquer",
+          "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-09T20:22:22+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-light-yagami-kw",
+          "files": [
+            {
+              "path": "raw/gtainside-light-yagami-kw.zip",
+              "bytes": 1953563,
+              "sha256": "38844a4592cd689687905086a10f2d742cfc0acdba9cc7fa0eb90219beb9d6e7",
+              "archiveMember": "raw/gtainside-light-yagami-kw.zip"
+            }
+          ],
+          "verification": "已取得 LIGHT DN KW.dff／txd，解析 33 Frame、32 骨、36,957 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收。",
+          "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "pendingBackup": {
+            "status": "not-uploaded",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
+            "localArchive": "outputs/public-model-sources-20260910/gtainside-light-yagami-kw-round5-final.zip",
+            "bytes": 8285227,
+            "sha256": "3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2",
+            "contentKind": "model-intake",
+            "readbackVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload"
+        }
+      ]
     },
     {
       "id": "godie-etyr",
@@ -2321,7 +2361,77 @@
       "downloadSources": [
         "owner-model-080"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "gtainside-anime-pack",
+          "target": "桔梗／Anime Skin Pack 素材池",
+          "heroIds": [
+            "godie-hvwd"
+          ],
+          "url": "https://cn.gtainside.com/sanandreas/skins/93957-anime-skin-pack/",
+          "downloadUrl": "https://files.gtainside.com/201608/1470174639_3%20Anime%20Skin%20Pack.%20%201%20InuYasha%203%20in%201%20.%202%20Rurouni%20Kenshin%20Meiji%20Kenkaku%20Romantan%202%20in%201.%203%20Fairy%20Tale%204%20in%201.zip",
+          "uploader": "Yuniwii、Duniwill、Joseph Manalo（各成員署名保留）",
+          "format": "ZIP／13 個內嵌包 → 21 DFF + 21 TXD",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-09T20:24:48+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-anime-pack",
+          "files": [
+            {
+              "path": "raw/gtainside-anime-pack.zip",
+              "bytes": 4266757,
+              "sha256": "5902d9f1fc761808067e94878d63c25ebb6834b24c0e3fcd848d9bc953f42782",
+              "archiveMember": "raw/gtainside-anime-pack.zip"
+            }
+          ],
+          "verification": "已解出 21 DFF、21 TXD，全部原生解析通過並轉出 119 張貼圖。9 個舊檔在 33 個 Frame 後多出 12-byte 空記錄，僅在解析副本移除；原檔、差異與 SHA 保留。桔梗 kikyo.dff 有 33 Frame、32 骨、5,452 頂點蒙皮；尚待 GLB、動作綁定與外觀驗收，無 IFP 動作檔。其餘角色留素材池，未逐一映射 GGD。",
+          "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "characters": [
+            {
+              "name": "桔梗",
+              "heroIds": [
+                "godie-hvwd"
+              ],
+              "ownerEntryIds": [],
+              "modelPath": "nested/Kikyoinuy_GTASA-00e4554f/kikyo.dff",
+              "sha256": "b9f706a399898fa812389b956bb7b43a7febb257206ac10fa63ffc973177e61b",
+              "extractionStatus": "extracted-verified",
+              "nativeParsingStatus": "passed-with-recorded-padding-repair",
+              "evidence": "來源頁明列 Kikyo；內嵌包包含 kikyo.dff／txd。解析副本移除骨架區尾端 12-byte 空記錄，原模型保留；33 Frame、32 骨權重與綁定矩陣已解析。",
+              "frames": 33,
+              "skinBones": 32,
+              "vertices": 5452,
+              "parserInput": {
+                "path": "renderware/kikyo-b9f706a399/parser-input.dff",
+                "sha256": "d639e9fcd68da58d91da00a895e18dc88df31824586a2864c3e30a3cb5e40f70",
+                "repairs": [
+                  {
+                    "rawOffset": 4111,
+                    "removedBytes": 12,
+                    "declaredFrames": 33,
+                    "reason": "zero-length null chunks after all declared frame extensions"
+                  }
+                ],
+                "scope": "Only null frame-padding records removed; raw source, frame data, weights and geometry preserved."
+              }
+            }
+          ],
+          "pendingBackup": {
+            "status": "not-uploaded",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
+            "localArchive": "outputs/public-model-sources-20260910/gtainside-anime-pack-round5-final.zip",
+            "bytes": 21768074,
+            "sha256": "3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b",
+            "contentKind": "model-intake",
+            "readbackVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload"
+        }
+      ]
     },
     {
       "id": "godie-n003",
@@ -3289,7 +3399,86 @@
       "downloadSources": [
         "owner-model-081"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "thunderstore-pikachu-tiny",
+          "target": "皮卡丘（一般形態，小型）",
+          "heroIds": [
+            "godie-ofar"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/VenerableCreator/LethalPikachu/",
+          "downloadUrl": "https://thunderstore.io/package/download/VenerableCreator/LethalPikachu/0.1.0/",
+          "uploader": "VenerableCreator",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-09T20:22:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-pikachu-tiny",
+          "files": [
+            {
+              "path": "raw/thunderstore-pikachu-tiny.zip",
+              "bytes": 494747,
+              "sha256": "97910708c8ebdff37401095cf7e81ce1da6304ed74829d142a0a28f35d50cb83",
+              "archiveMember": "raw/thunderstore-pikachu-tiny.zip"
+            }
+          ],
+          "verification": "已靜態擷取 1 Mesh、1 SkinnedMeshRenderer、37 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。只認列一般形態 godie-ofar；瘋狂皮卡丘 godie-o02l 尚未取得。待骨架 GLB 與動作綁定。",
+          "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "pendingBackup": {
+            "status": "not-uploaded",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
+            "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-tiny-round5-final.zip",
+            "bytes": 1608020,
+            "sha256": "12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9",
+            "contentKind": "model-intake",
+            "readbackVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload"
+        },
+        {
+          "id": "thunderstore-pikachu-frankzin",
+          "target": "皮卡丘（一般形態，多網格候選）",
+          "heroIds": [
+            "godie-ofar"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/Frankzin/Yellow_Pokemon_Dude/",
+          "downloadUrl": "https://thunderstore.io/package/download/Frankzin/Yellow_Pokemon_Dude/0.1.0/",
+          "uploader": "Frankzin",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-09T20:22:16+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-pikachu-frankzin",
+          "files": [
+            {
+              "path": "raw/thunderstore-pikachu-frankzin.zip",
+              "bytes": 2266781,
+              "sha256": "01c11aa2eb5f03c83d9878d511ab6f2c5b3a340dadfdebec3db4a931e053347c",
+              "archiveMember": "raw/thunderstore-pikachu-frankzin.zip"
+            }
+          ],
+          "verification": "已靜態擷取 7 Mesh、7 SkinnedMeshRenderer、90 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。模型含 pm0025 身體／尾巴與 Pikachu Avatar；封面非模型預覽，外觀待驗收。只認列一般形態 godie-ofar，不涵蓋瘋狂皮卡丘。",
+          "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "pendingBackup": {
+            "status": "not-uploaded",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
+            "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-frankzin-round5-final.zip",
+            "bytes": 8075339,
+            "sha256": "7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f",
+            "contentKind": "model-intake",
+            "readbackVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload"
+        }
+      ]
     },
     {
       "id": "godie-ogld",
@@ -9182,7 +9371,47 @@
       "downloadSources": [
         "owner-model-035"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "gtainside-naofumi",
+          "target": "岩谷尚文",
+          "heroIds": [
+            "b2-naofumi"
+          ],
+          "url": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+          "downloadUrl": "https://files.gtainside.com/202108/1629990901_naofumishieldbyjarf.rar",
+          "uploader": "carinhaqualquer；原包署名 justarandomfaggot",
+          "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-09T20:22:19+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi",
+          "files": [
+            {
+              "path": "raw/gtainside-naofumi.rar",
+              "bytes": 1804687,
+              "sha256": "13cbb515c76771f0d58bfa821e9e88f682bdd70314a374bfb41f897642d2eff6",
+              "archiveMember": "raw/gtainside-naofumi.rar"
+            }
+          ],
+          "verification": "已取得 Naofumi.dff／txd，解析 33 Frame、32 骨、57,628 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收，保留使用者移除刀劍要求。",
+          "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "pendingBackup": {
+            "status": "not-uploaded",
+            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
+            "localArchive": "outputs/public-model-sources-20260910/gtainside-naofumi-round5-final.zip",
+            "bytes": 9501904,
+            "sha256": "8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7",
+            "contentKind": "model-intake",
+            "readbackVerified": false
+          },
+          "publicationStatus": "local-only-awaiting-s3-upload"
+        }
+      ]
     },
     {
       "id": "b2-makoto",
@@ -11280,7 +11509,9 @@
           }
         ],
         "paidPurchaseAllowed": false,
-        "publicSourceLeadIds": [],
+        "publicSourceLeadIds": [
+          "steam-adult-gon"
+        ],
         "acquiredPublicSources": [
           "thunderstore-gon"
         ],
@@ -11647,17 +11878,21 @@
         "publicSourceLeadIds": [
           "steam-naofumi"
         ],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "gtainside-naofumi"
+        ],
+        "purchaseHoldFor": [
+          "b2-naofumi"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "b2-naofumi"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-036",
@@ -12331,7 +12566,9 @@
           }
         ],
         "paidPurchaseAllowed": false,
-        "publicSourceLeadIds": [],
+        "publicSourceLeadIds": [
+          "steam-kaiji"
+        ],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12389,7 +12626,9 @@
           }
         ],
         "paidPurchaseAllowed": false,
-        "publicSourceLeadIds": [],
+        "publicSourceLeadIds": [
+          "gtainside-shinchan-locator"
+        ],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12826,17 +13065,21 @@
         "publicSourceLeadIds": [
           "steam-light-yagami"
         ],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "gtainside-light-yagami-kw"
+        ],
+        "purchaseHoldFor": [
+          "godie-emns"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-emns"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-074",
@@ -13006,15 +13249,17 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
+        "acquiredPublicSources": [
+          "gtainside-kenshin"
+        ],
         "purchaseHoldFor": [],
-        "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHoldWithoutHeroId": true,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
-        "downloadPriority": "needs-roster-mapping"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-079",
@@ -13070,17 +13315,21 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "gtainside-anime-pack"
+        ],
+        "purchaseHoldFor": [
+          "godie-hvwd"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-hvwd"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-081",
@@ -13104,11 +13353,16 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "thunderstore-pikachu-tiny",
+          "thunderstore-pikachu-frankzin"
+        ],
+        "purchaseHoldFor": [
+          "godie-ofar"
+        ],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
-        "partialPurchaseHold": false,
+        "partialPurchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -15636,6 +15890,271 @@
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
         }
+      },
+      {
+        "id": "thunderstore-pikachu-tiny",
+        "target": "皮卡丘（一般形態，小型）",
+        "heroIds": [
+          "godie-ofar"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/VenerableCreator/LethalPikachu/",
+        "downloadUrl": "https://thunderstore.io/package/download/VenerableCreator/LethalPikachu/0.1.0/",
+        "uploader": "VenerableCreator",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-09T20:22:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-pikachu-tiny",
+        "files": [
+          {
+            "path": "raw/thunderstore-pikachu-tiny.zip",
+            "bytes": 494747,
+            "sha256": "97910708c8ebdff37401095cf7e81ce1da6304ed74829d142a0a28f35d50cb83",
+            "archiveMember": "raw/thunderstore-pikachu-tiny.zip"
+          }
+        ],
+        "verification": "已靜態擷取 1 Mesh、1 SkinnedMeshRenderer、37 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。只認列一般形態 godie-ofar；瘋狂皮卡丘 godie-o02l 尚未取得。待骨架 GLB 與動作綁定。",
+        "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
+          "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-tiny-round5-final.zip",
+          "bytes": 1608020,
+          "sha256": "12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9",
+          "contentKind": "model-intake",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
+      },
+      {
+        "id": "thunderstore-pikachu-frankzin",
+        "target": "皮卡丘（一般形態，多網格候選）",
+        "heroIds": [
+          "godie-ofar"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/Frankzin/Yellow_Pokemon_Dude/",
+        "downloadUrl": "https://thunderstore.io/package/download/Frankzin/Yellow_Pokemon_Dude/0.1.0/",
+        "uploader": "Frankzin",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-09T20:22:16+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-pikachu-frankzin",
+        "files": [
+          {
+            "path": "raw/thunderstore-pikachu-frankzin.zip",
+            "bytes": 2266781,
+            "sha256": "01c11aa2eb5f03c83d9878d511ab6f2c5b3a340dadfdebec3db4a931e053347c",
+            "archiveMember": "raw/thunderstore-pikachu-frankzin.zip"
+          }
+        ],
+        "verification": "已靜態擷取 7 Mesh、7 SkinnedMeshRenderer、90 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。模型含 pm0025 身體／尾巴與 Pikachu Avatar；封面非模型預覽，外觀待驗收。只認列一般形態 godie-ofar，不涵蓋瘋狂皮卡丘。",
+        "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
+          "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-frankzin-round5-final.zip",
+          "bytes": 8075339,
+          "sha256": "7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f",
+          "contentKind": "model-intake",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
+      },
+      {
+        "id": "gtainside-naofumi",
+        "target": "岩谷尚文",
+        "heroIds": [
+          "b2-naofumi"
+        ],
+        "url": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+        "downloadUrl": "https://files.gtainside.com/202108/1629990901_naofumishieldbyjarf.rar",
+        "uploader": "carinhaqualquer；原包署名 justarandomfaggot",
+        "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-09T20:22:19+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi",
+        "files": [
+          {
+            "path": "raw/gtainside-naofumi.rar",
+            "bytes": 1804687,
+            "sha256": "13cbb515c76771f0d58bfa821e9e88f682bdd70314a374bfb41f897642d2eff6",
+            "archiveMember": "raw/gtainside-naofumi.rar"
+          }
+        ],
+        "verification": "已取得 Naofumi.dff／txd，解析 33 Frame、32 骨、57,628 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收，保留使用者移除刀劍要求。",
+        "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
+          "localArchive": "outputs/public-model-sources-20260910/gtainside-naofumi-round5-final.zip",
+          "bytes": 9501904,
+          "sha256": "8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7",
+          "contentKind": "model-intake",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
+      },
+      {
+        "id": "gtainside-light-yagami-kw",
+        "target": "夜神月（DEATH NOTE Killer Within）",
+        "heroIds": [
+          "godie-emns"
+        ],
+        "url": "https://www.gtainside.com/sanandreas/skins/204848-light-yagami-death-note-killer-within/",
+        "downloadUrl": "https://files.gtainside.com/202501/1736681159_Light%20Death%20Note%20KW%20By%20Snadjerx.zip",
+        "uploader": "Snadjerx；模型提供 carinhaqualquer",
+        "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-09T20:22:22+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-light-yagami-kw",
+        "files": [
+          {
+            "path": "raw/gtainside-light-yagami-kw.zip",
+            "bytes": 1953563,
+            "sha256": "38844a4592cd689687905086a10f2d742cfc0acdba9cc7fa0eb90219beb9d6e7",
+            "archiveMember": "raw/gtainside-light-yagami-kw.zip"
+          }
+        ],
+        "verification": "已取得 LIGHT DN KW.dff／txd，解析 33 Frame、32 骨、36,957 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收。",
+        "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
+          "localArchive": "outputs/public-model-sources-20260910/gtainside-light-yagami-kw-round5-final.zip",
+          "bytes": 8285227,
+          "sha256": "3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2",
+          "contentKind": "model-intake",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
+      },
+      {
+        "id": "gtainside-kenshin",
+        "target": "緋村劍心（Jump Force）",
+        "heroIds": [],
+        "url": "https://www.gtainside.com/en/sanandreas/skins/130428-kenshin-himura-from-jump-force/",
+        "downloadUrl": "https://files.gtainside.com/201903/1552943527_Kenshin.zip",
+        "uploader": "Markmadrox；模型擷取 Jo Hye Ryeong",
+        "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-09T20:24:46+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-kenshin",
+        "files": [
+          {
+            "path": "raw/gtainside-kenshin.zip",
+            "bytes": 3525997,
+            "sha256": "a69e93de5b4be676536e8c1f270a8fe2aea5d4670be5534a369923bb5aebbb07",
+            "archiveMember": "raw/gtainside-kenshin.zip"
+          }
+        ],
+        "verification": "已取得 Kenshin Himura.dff／txd，解析 33 Frame、32 骨、33,380 頂點蒙皮與綁定矩陣，轉出 7 張貼圖。包內無 IFP 動作檔；尚待 GGD ID、GLB 與動作綁定。",
+        "reuseTerms": "原 Readme 要求編輯、轉載或影片保留作者署名；遊戲角色權利與跨遊戲再散布仍待核實。",
+        "usage": "intake-only; no automatic runtime selection",
+        "ownerEntryIds": [
+          "owner-model-078"
+        ],
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-kenshin/9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576.zip",
+          "localArchive": "outputs/public-model-sources-20260910/gtainside-kenshin-round5-final.zip",
+          "bytes": 15983696,
+          "sha256": "9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576",
+          "contentKind": "model-intake",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
+      },
+      {
+        "id": "gtainside-anime-pack",
+        "target": "桔梗／Anime Skin Pack 素材池",
+        "heroIds": [
+          "godie-hvwd"
+        ],
+        "url": "https://cn.gtainside.com/sanandreas/skins/93957-anime-skin-pack/",
+        "downloadUrl": "https://files.gtainside.com/201608/1470174639_3%20Anime%20Skin%20Pack.%20%201%20InuYasha%203%20in%201%20.%202%20Rurouni%20Kenshin%20Meiji%20Kenkaku%20Romantan%202%20in%201.%203%20Fairy%20Tale%204%20in%201.zip",
+        "uploader": "Yuniwii、Duniwill、Joseph Manalo（各成員署名保留）",
+        "format": "ZIP／13 個內嵌包 → 21 DFF + 21 TXD",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-09T20:24:48+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-anime-pack",
+        "files": [
+          {
+            "path": "raw/gtainside-anime-pack.zip",
+            "bytes": 4266757,
+            "sha256": "5902d9f1fc761808067e94878d63c25ebb6834b24c0e3fcd848d9bc953f42782",
+            "archiveMember": "raw/gtainside-anime-pack.zip"
+          }
+        ],
+        "verification": "已解出 21 DFF、21 TXD，全部原生解析通過並轉出 119 張貼圖。9 個舊檔在 33 個 Frame 後多出 12-byte 空記錄，僅在解析副本移除；原檔、差異與 SHA 保留。桔梗 kikyo.dff 有 33 Frame、32 骨、5,452 頂點蒙皮；尚待 GLB、動作綁定與外觀驗收，無 IFP 動作檔。其餘角色留素材池，未逐一映射 GGD。",
+        "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "characters": [
+          {
+            "name": "桔梗",
+            "heroIds": [
+              "godie-hvwd"
+            ],
+            "ownerEntryIds": [],
+            "modelPath": "nested/Kikyoinuy_GTASA-00e4554f/kikyo.dff",
+            "sha256": "b9f706a399898fa812389b956bb7b43a7febb257206ac10fa63ffc973177e61b",
+            "extractionStatus": "extracted-verified",
+            "nativeParsingStatus": "passed-with-recorded-padding-repair",
+            "evidence": "來源頁明列 Kikyo；內嵌包包含 kikyo.dff／txd。解析副本移除骨架區尾端 12-byte 空記錄，原模型保留；33 Frame、32 骨權重與綁定矩陣已解析。",
+            "frames": 33,
+            "skinBones": 32,
+            "vertices": 5452,
+            "parserInput": {
+              "path": "renderware/kikyo-b9f706a399/parser-input.dff",
+              "sha256": "d639e9fcd68da58d91da00a895e18dc88df31824586a2864c3e30a3cb5e40f70",
+              "repairs": [
+                {
+                  "rawOffset": 4111,
+                  "removedBytes": 12,
+                  "declaredFrames": 33,
+                  "reason": "zero-length null chunks after all declared frame extensions"
+                }
+              ],
+              "scope": "Only null frame-padding records removed; raw source, frame data, weights and geometry preserved."
+            }
+          }
+        ],
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
+          "localArchive": "outputs/public-model-sources-20260910/gtainside-anime-pack-round5-final.zip",
+          "bytes": 21768074,
+          "sha256": "3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b",
+          "contentKind": "model-intake",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
       }
     ],
     "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。",
@@ -15718,6 +16237,86 @@
           "file_url": "",
           "file_size": "43538903"
         }
+      },
+      {
+        "id": "steam-adult-gon",
+        "target": "大傑（變身後）",
+        "heroIds": [
+          "godie-u034"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2000599979",
+        "pageTitle": "Adult Gon PM - Hunter x Hunter",
+        "checkedAt": "2026-09-09T20:28:47+00:00",
+        "accessStatus": "public-page-no-api-file-url",
+        "acquisitionStatus": "not-downloaded",
+        "defaultEligible": false,
+        "purchaseDecision": "hold-purchase-investigate-public-source",
+        "verification": "官方 API 確認公開項目，但 file_url 為空；尚未取得模型，繼續查找正常取得管道。",
+        "metadataEvidence": {
+          "publishedfileid": "2000599979",
+          "result": 1,
+          "visibility": 0,
+          "banned": 0,
+          "file_url": "",
+          "file_size": "34068100"
+        }
+      },
+      {
+        "id": "steam-kaiji",
+        "target": "伊藤開司",
+        "heroIds": [
+          "b2-kaiji"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3707776242",
+        "pageTitle": "Kaiji Itou (PM + C_Hands)",
+        "checkedAt": "2026-09-09T20:28:47+00:00",
+        "accessStatus": "public-page-no-api-file-url",
+        "acquisitionStatus": "not-downloaded",
+        "defaultEligible": false,
+        "purchaseDecision": "hold-purchase-investigate-public-source",
+        "verification": "官方 API 確認公開項目，但 file_url 為空；尚未取得模型，繼續查找正常取得管道。",
+        "metadataEvidence": {
+          "publishedfileid": "3707776242",
+          "result": 1,
+          "visibility": 0,
+          "banned": 0,
+          "file_url": "",
+          "file_size": "1241533"
+        }
+      },
+      {
+        "id": "gtainside-shinchan-locator",
+        "target": "蠟筆小新",
+        "heroIds": [
+          "b2-shinchan"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://www.gtainside.com/sanandreas/mods/190548-shin-chan-skin-for-mobile/",
+        "checkedAt": "2026-09-09T20:24:49+00:00",
+        "accessStatus": "public-locator-archive-only",
+        "acquisitionStatus": "not-downloaded",
+        "defaultEligible": false,
+        "purchaseDecision": "hold-purchase-investigate-public-source",
+        "verification": "已取得 302-byte 7z，但內容只有 YouTube 影片連結，沒有 3D 模型或貼圖；不計入已取得模型。影片未讀到下載連結，仍待查找。",
+        "locatorEvidence": {
+          "downloadUrl": "https://files.gtainside.com/202309/1694200036_SHIN%20CHAN%20SKIN.7z",
+          "bytes": 302,
+          "sha256": "25b90724cbd537769d05e77c371425f91a4f5563145d4b88eb4e269453d85b97",
+          "url": "https://youtu.be/VOguSQomlD4",
+          "modelFiles": 0
+        },
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-shinchan-locator/dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d.zip",
+          "localArchive": "outputs/public-model-sources-20260910/gtainside-shinchan-locator-round5-final.zip",
+          "bytes": 1277,
+          "sha256": "dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d",
+          "contentKind": "locator-only-no-model",
+          "readbackVerified": false
+        },
+        "publicationStatus": "local-only-awaiting-s3-upload"
       }
     ]
   }

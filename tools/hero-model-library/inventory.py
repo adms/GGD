@@ -140,13 +140,14 @@ for section in ['既有角色／形態','第一批 37 名','第二批 37 名','L
   acquired=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds']]
   if any(r['id'] in e.get('purchaseHoldFor',[]) for e in requests):download='**免費來源已取得，暫緩購買**；先完成轉換／動作驗收'
   leads=[s for s in download_plan.get('publicSourceLeads',[]) if r['id'] in s['heroIds']]
-  if leads:download+='；已找到工坊頁，尚未取得檔案：'+'、'.join(f'[{s["id"]}]({s["url"]})' for s in leads)
+  if leads:download+='；其他來源線索（未取得模型）：'+'、'.join(f'[{s["id"]}]({s["url"]})' for s in leads)
   options='<br>'.join(f"{i+1}. {text(o['name'])}／{source_label(o)}（{kinds.get(o['kind'],'待轉換')}{'；未核准預設' if not o.get('defaultEligible',False) and o['kind']=='style-proxy' else ''}）" for i,o in enumerate(r['options']+r['pending'])) or '尚無可用候選'
   for s in acquired:
    bindings=[c for c in s.get('characters',[]) if r['id'] in c['heroIds']]
    label='、'.join(c['name'] for c in bindings) or s['target']
    model_paths='；'+'、'.join(c['modelPath'] for c in bindings) if bindings else ''
-   options+=f'<br>新取得：[{text(label)}]({s["url"]})／{text(s["uploader"])}（{text(s["format"])}{text(model_paths)}；待標準化，不自動預設）'
+   storage='；僅本機保存，S3 尚未上傳' if s.get('pendingBackup',{}).get('status')=='not-uploaded' else ''
+   options+=f'<br>新取得：[{text(label)}]({s["url"]})／{text(s["uploader"])}（{text(s["format"])}{text(model_paths)}{storage}；待標準化，不自動預設）'
   cols=[text(r['work']),f"{text(r['name'])}<br>`{r['id']}`",text(d['name']) if d else '**待取得核准模型**',source_label(d) if d else '—',options,download]
   lines.append('| '+' | '.join(cols)+' |')
  lines.append('')
