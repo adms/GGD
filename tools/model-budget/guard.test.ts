@@ -10,6 +10,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
+import { HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
@@ -63,7 +64,12 @@ describe("the import guard scores against the role gate", () => {
     expect(status).toBe(1);
     const out = JSON.parse(stdout);
     const axis = (k: string) => out.results[0].axes.find((a: any) => a.key === k);
-    expect(axis("maxTextureEdge").verdict).toBe("warn");
+    // ⭐ GH#1210 —— 這一行原本斷言 `warn`（那時上限是 512，而這顆 1024² 的道具只超過警戒線）。
+    //   ⛔ owner 2026-09-10 把上限也移到 256 ⇒ 1024² 現在是 `over`，⭐ 而那是**對的**。
+    //   ⇒ 驗的是**關係**：邊長超過出貨上限 ⇒ over；⛔ 不釘那個字。
+    expect(axis("maxTextureEdge").verdict).toBe(
+      1024 > HERO_MODEL_BUDGET.texEdge.limit ? "over" : "warn",
+    );
     expect(axis("drawCalls").verdict).toBe("over");
     // ⭐ GH#1164 —— 這一行原本斷言 `warn`（那時警戒線是 120，而這顆是 123 通道）。
     // ⛔ owner 2026-09-10 把警戒線移到 300 ⇒ 123 通道現在是 `ok`，而那是**對的**。
@@ -92,7 +98,10 @@ describe("the import guard scores against the role gate", () => {
     const axisOf = (out: string) =>
       JSON.parse(out).results[0].axes.find((a: any) => a.key === "animChannels");
     expect(axisOf(now.stdout).verdict).toBe("warn");
-    expect(now.status).toBe(0);
+    // ⭐ GH#1210 —— ⛔ 這裡**不能**斷言 `status === 0`：owner 2026-09-10 把貼圖上限移到 256 之後，
+    //   這顆道具因為**別的軸**（maxTextureEdge）被擋 ⇒ 整支的離開碼是 1，⭐ 而那與這條測試無關。
+    //   ⇒ 這條問的是「**通道**那一軸擋不擋」，所以只驗那一軸：現況它不是 over。
+    expect(axisOf(now.stdout).verdict, "⛔ 出貨上限下通道那一軸不該是 over").not.toBe("over");
     // ② ⭐ 把上限壓到那顆之下 ⇒ 「擋」那條路必須真的擋
     const tight = run([dragon, "--role", "champion", "--json", "--channel-limit", "400"]);
     expect(axisOf(tight.stdout).verdict, "⛔ 上限壓到 400 而 412 通道沒被判 over ⇒ 擋的那條路是死的").toBe("over");

@@ -242,6 +242,11 @@ const EXEMPT: Record<string, string> = {
   // ⛔ **無窮遞迴**（skills:check → ship:check → skills:check）。
   // 它自己的閘是 `shipGateScript.test.ts`（驗「每一包 vitest 都在裡面」等三個關係）。
   "ship:check": "**出貨聚合指令本身** —— 它*跑* skills:check，放進去會遞迴；它自己的閘是 shipGateScript.test.ts",
+  "model:intake:check":
+    "⭐ **純檢查、0 個產物**（`tools/w3x-import/model_intake.py` 唯一的 write 是 `tempfile.NamedTemporaryFile` 的" +
+    "暫存 gltf-validator 腳本，跑完即丟，實查 2026-09-11）。它驗的是**每一顆匯入 GLB 與 `content/config/model-lod.json` " +
+    "預算的關係**（貼圖 256 上限 · 通道 · 多邊形），⛔ 不是新鮮度閘 —— 沒有東西會因為技能改動而過期。" +
+    "反駁法：哪天 `--merge` 的合併結果寫回 `content/`，這一列就要刪掉並給它一支 `model:intake:build` 接進 skills:sync。",
 };
 
 /**
@@ -663,6 +668,49 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
         blind.map((d) => `  tools/${d}/  ← ${gens.get(d)![0]}`).join("\n") +
         `\n→ 給它一支 *:build/*:check 並接進 package.json 的 skills:sync / skills:check,` +
         `\n  或在 GENERATOR_NO_CHECK 裡寫下**為什麼它的產物不會過期**（要能被反駁）。`,
+    ).toEqual([]);
+  });
+
+  // ⭐ **順序**（2026-09-11，GH#1207）—— ⛔ 前三條問的都是「在不在」，沒有人問「先後」。
+  //
+  // 📏 量到的實例：`skillforge:audit` 把 `ggd-editor-coverage.json` 的 `capabilityFingerprint`
+  //   **烘進**它自己的報告（`tools/skill-forge/audit-42x46.ts:243`），⛔ 而 `editorcov:build` 才是那一份的作者
+  //   ⇒ 稽核排在它前面時讀到的是**上一輪**的指紋 ⇒ 能力集一變 CI 的 contract 就紅（2026-09-11 紅了一整輪）。
+  //
+  // ⚠️ ⭐ 這條**刻意只驗這一對**，⛔ 不是「讀了排在後面那一支的產物就紅」——
+  //   後者實測命中 **3,276 次**（`skills:sync` 本來就靠多趟收斂，幾乎每一支都讀 `content/**` 的索引）
+  //   ⇒ 一個會誤報三千次的閘，下一個人的正確反應是**關掉它**（本檔上面那段自己記過同一件事）。
+  //   ⭐ 判準是「**烘進產物**」，⛔ 不是「讀過」—— 而那個差別今天量不出來，所以逐對登記。
+  it("⭐ 把別人的產物**烘進自己產物**的那幾對,作者要排在消費者前面（GH#1207）", () => {
+    cover("sync-order-baked-value-pairs");
+    /** [消費者, 作者, 烘的是什麼] —— ⭐ 每一對都要說得出**烘進去的那一格**。 */
+    const BAKED: readonly (readonly [string, string, string])[] = [
+      [
+        "skillforge:audit",
+        "editorcov:build",
+        "docs/_reports/editor-skill-acceptance-42x46.json 的 contracts.capabilityFingerprint " +
+          "← docs/editor-contract/ggd-editor-coverage.json（audit-42x46.ts:243）",
+      ],
+    ];
+    const chain = (scripts()["skills:sync"] ?? "")
+      .split("&&")
+      .map((seg) => seg.trim().replace(/^pnpm\s+/, ""));
+    const bad: string[] = [];
+    for (const [consumer, author, what] of BAKED) {
+      const ci = chain.indexOf(consumer);
+      const ai = chain.indexOf(author);
+      if (ci < 0 || ai < 0) {
+        bad.push(`  ${consumer} 或 ${author} 不在 skills:sync 的鏈上 ⇒ 這一對登記過期了`);
+        continue;
+      }
+      if (ai > ci) bad.push(`  ${consumer}（第 ${ci + 1} 步）烘的是 ${what}，而作者 ${author} 排在第 ${ai + 1} 步`);
+    }
+    expect(
+      bad,
+      "⛔⛔ 這幾對的作者排在消費者**後面** ⇒ 消費者烘進去的永遠是**上一輪**的值：\n" +
+        bad.join("\n") +
+        "\n⇒ ⭐ 把作者挪到消費者前面（改 package.json 的 `skills:sync`）," +
+        "\n  ⛔ 不要放寬消費者的 `--check`（那等於讓它永遠讀舊值而沒有人會知道）。",
     ).toEqual([]);
   });
 });

@@ -12,6 +12,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
+import { HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 import { cover } from "../../packages/shared/testkit/cover";
 
 import { geometryDiff, readGlb, rebuildGlb, sha256File } from "./glb";
@@ -73,14 +74,17 @@ describe("checkRig is the rig-survival gate", () => {
 });
 
 describe.skipIf(!hasFfmpeg)("the optimiser texture stage", () => {
-  it("dry run plans a 1024→512 resize and writes nothing", () => {
+  it("dry run 把超標貼圖規劃縮到出貨上限,而且什麼都不寫", () => {
     const { status, stdout } = run([KNIGHT, "--role", "champion", "--json", "--out", path.join(tmp, "never")]);
     expect(status).toBe(0);
     expect(fs.existsSync(path.join(tmp, "never"))).toBe(false); // dry run touches nothing
     const out = JSON.parse(stdout.slice(stdout.indexOf("{")));
     const tex = out.plans[0].textures[0];
-    expect(Math.max(tex.from.w, tex.from.h)).toBe(1024);
-    expect(Math.max(tex.to.w, tex.to.h)).toBe(512);
+    // ⭐ GH#1210 —— 目標邊長從**出貨預算**推導，⛔ 不是字面值：owner 2026-09-10 把全域上限
+    //   從 512 改成 256，而這兩行原本釘著 512 ⇒ 那一天起 main 上就紅（第〇·四守則：
+    //   一個值有第二個住處，而那個住處沒有守衛）。⭐ 驗的是**關係**：來源比上限大、規劃縮到上限。
+    expect(Math.max(tex.from.w, tex.from.h)).toBeGreaterThan(HERO_MODEL_BUDGET.texEdge.limit);
+    expect(Math.max(tex.to.w, tex.to.h)).toBe(HERO_MODEL_BUDGET.texEdge.limit);
     expect(out.plans[0].vramAfter).toBeLessThan(out.plans[0].vramBefore);
   });
 
