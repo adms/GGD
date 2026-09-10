@@ -1,0 +1,36 @@
+第 4 版的固定模擬紀錄 · 近衛刀太
+
+PASSIVE
+Q
+W
+E
+R
+EX
+額外連段試玩 · 前置施法
+無，重播原固定紀錄
+Q
+W
+E
+R
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 20/36 meshes · 0/10 particles/systems · eye -30.7,16.7,-0.0
+施法者：近衛刀太 · community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3 · 4 meshes · ×1.853 · Main ChampionView · 材質正常
+目標：近衛刀太 · community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3 · 4 meshes · ×1.853 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+333ms · Sim tick 10
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 23 筆事件

@@ -1,0 +1,1198 @@
+{
+  "champion": {
+    "id": "b2-luckyman",
+    "name": "幸運超人",
+    "description": "幸運超人｜對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "tank",
+    "attackType": "melee",
+    "archetype": "tank",
+    "origin": "坦克",
+    "modelKey": "champ.thorne",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.4,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 6,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 27.67734693877551,
+      "healthRegen": 0.08196326530612243,
+      "maxMana": 0.9209183673469388,
+      "manaRegen": 0,
+      "ad": 1.8716734693877548,
+      "as": 0,
+      "mr": 5.279591836734694,
+      "armor": 1.5605204081632653,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 29,
+      "agi": 18,
+      "int": 13,
+      "strGrowth": 2.78,
+      "agiGrowth": 1.67,
+      "intGrowth": 1.25,
+      "primary": "STR",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-luckyman.q",
+        "name": "剛好香蕉皮滑了一下",
+        "provenance": "editor-json",
+        "description": "「剛好香蕉皮滑了一下！」\n增加普攻迴避機會 3 秒；填入 1 仍受正式 evasion 上限約束，不是保證無敵，也不閃技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "evasion",
+            "chance": 1,
+            "durationSec": 3,
+            "applyTo": "self",
+            "dodgesAbilities": false
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "evasion",
+                "chance": 1,
+                "durationSec": 3,
+                "applyTo": "self",
+                "dodgesAbilities": false
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-luckyman.w",
+        "name": "剛好拳頭在這裡",
+        "provenance": "editor-json",
+        "description": "「剛好拳頭在這裡！」\n單體小級物理打擊；幸運不等於所有攻擊必中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+          "params": {
+            "damage": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            },
+            "damageType": "physical",
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+        }
+      },
+      "E": {
+        "id": "b2-luckyman.e",
+        "name": "剛好有張技能保單",
+        "provenance": "editor-json",
+        "description": "「剛好有張技能保單！」\n增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "evasion",
+            "chance": 1,
+            "durationSec": 3,
+            "applyTo": "self",
+            "dodgesAbilities": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "evasion",
+                "chance": 1,
+                "durationSec": 3,
+                "applyTo": "self",
+                "dodgesAbilities": true
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "R": {
+        "id": "b2-luckyman.r",
+        "name": "剛好天上掉贈品",
+        "provenance": "editor-json",
+        "description": "「剛好天上掉贈品！」\n等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "self",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "weightedBranch",
+            "shape": "single",
+            "branches": [
+              {
+                "weight": 1,
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 150,
+                      "perRank": [
+                        0,
+                        112.5,
+                        225
+                      ]
+                    },
+                    "applyTo": "self"
+                  }
+                ]
+              },
+              {
+                "weight": 1,
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 180,
+                      "perRank": [
+                        0,
+                        135,
+                        270
+                      ]
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "weightedBranch",
+                "shape": "single",
+                "branches": [
+                  {
+                    "weight": 1,
+                    "effects": [
+                      {
+                        "kind": "heal",
+                        "amount": {
+                          "flat": 150,
+                          "perRank": [
+                            0,
+                            112.5,
+                            225
+                          ]
+                        },
+                        "applyTo": "self"
+                      }
+                    ]
+                  },
+                  {
+                    "weight": 1,
+                    "effects": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 180,
+                          "perRank": [
+                            0,
+                            135,
+                            270
+                          ]
+                        },
+                        "duration": 3,
+                        "absorbs": "all",
+                        "stackKey": "b2-protection",
+                        "onExisting": "keepLarger"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-luckyman.ex",
+    "passiveAbility": "b2-luckyman.passive",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "b2-luckyman.passive",
+      "name": "剛好撿到零錢",
+      "provenance": "editor-json",
+      "description": "「剛好撿到零錢！」\n真正觸發閃避時回復最大魔力 10%，每 0.5 秒最多一次；未閃掉不退款。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onEvade",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.1,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 0.5,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onEvade",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.1,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 0.5,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "b2-luckyman.q",
+      "name": "剛好香蕉皮滑了一下",
+      "provenance": "editor-json",
+      "description": "「剛好香蕉皮滑了一下！」\n增加普攻迴避機會 3 秒；填入 1 仍受正式 evasion 上限約束，不是保證無敵，也不閃技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "evasion",
+          "chance": 1,
+          "durationSec": 3,
+          "applyTo": "self",
+          "dodgesAbilities": false
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "evasion",
+              "chance": 1,
+              "durationSec": 3,
+              "applyTo": "self",
+              "dodgesAbilities": false
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-luckyman.w",
+      "name": "剛好拳頭在這裡",
+      "provenance": "editor-json",
+      "description": "「剛好拳頭在這裡！」\n單體小級物理打擊；幸運不等於所有攻擊必中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.slash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-luckyman.e",
+      "name": "剛好有張技能保單",
+      "provenance": "editor-json",
+      "description": "「剛好有張技能保單！」\n增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "evasion",
+          "chance": 1,
+          "durationSec": 3,
+          "applyTo": "self",
+          "dodgesAbilities": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "evasion",
+              "chance": 1,
+              "durationSec": 3,
+              "applyTo": "self",
+              "dodgesAbilities": true
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-luckyman.r",
+      "name": "剛好天上掉贈品",
+      "provenance": "editor-json",
+      "description": "「剛好天上掉贈品！」\n等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "weightedBranch",
+          "shape": "single",
+          "branches": [
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 150,
+                    "perRank": [
+                      0,
+                      112.5,
+                      225
+                    ]
+                  },
+                  "applyTo": "self"
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 180,
+                    "perRank": [
+                      0,
+                      135,
+                      270
+                    ]
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "weightedBranch",
+              "shape": "single",
+              "branches": [
+                {
+                  "weight": 1,
+                  "effects": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 150,
+                        "perRank": [
+                          0,
+                          112.5,
+                          225
+                        ]
+                      },
+                      "applyTo": "self"
+                    }
+                  ]
+                },
+                {
+                  "weight": 1,
+                  "effects": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 180,
+                        "perRank": [
+                          0,
+                          135,
+                          270
+                        ]
+                      },
+                      "duration": 3,
+                      "absorbs": "all",
+                      "stackKey": "b2-protection",
+                      "onExisting": "keepLarger"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-luckyman.ex",
+      "name": "沒那麼幸運先搭便車",
+      "provenance": "editor-json",
+      "description": "「沒那麼幸運先搭便車！」\n瞬移至合法落點；提供主動撤退途徑，不能只靠機率。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "ground",
+      "maxRank": 1,
+      "cooldown": [
+        45
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "params": {
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "b2-luckyman.passive",
+      "name": "剛好撿到零錢",
+      "provenance": "editor-json",
+      "description": "「剛好撿到零錢！」\n真正觸發閃避時回復最大魔力 10%，每 0.5 秒最多一次；未閃掉不退款。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onEvade",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.1,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 0.5,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onEvade",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.1,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 0.5,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "b2-luckyman.ex",
+      "name": "沒那麼幸運先搭便車",
+      "provenance": "editor-json",
+      "description": "「沒那麼幸運先搭便車！」\n瞬移至合法落點；提供主動撤退途徑，不能只靠機率。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "ground",
+      "maxRank": 1,
+      "cooldown": [
+        45
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "params": {
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "b2-luckyman.q",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-luckyman.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-luckyman.w",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-luckyman.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-luckyman.e",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-luckyman.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-luckyman.r",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-luckyman.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-luckyman.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-luckyman.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

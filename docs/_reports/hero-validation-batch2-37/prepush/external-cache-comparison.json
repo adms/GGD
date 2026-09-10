@@ -1,0 +1,44 @@
+[
+  {
+    "label": "root",
+    "cache": ".cache",
+    "beforeFiles": 17,
+    "afterFiles": 17,
+    "unchanged": true
+  },
+  {
+    "label": "root",
+    "cache": ".vite",
+    "beforeFiles": 1,
+    "afterFiles": 1,
+    "unchanged": true
+  },
+  {
+    "label": "root",
+    "cache": ".vitest",
+    "beforeFiles": 0,
+    "afterFiles": 0,
+    "unchanged": true
+  },
+  {
+    "label": "shared",
+    "cache": ".cache",
+    "beforeFiles": 1,
+    "afterFiles": 1,
+    "unchanged": true
+  },
+  {
+    "label": "shared",
+    "cache": ".vite",
+    "beforeFiles": 1,
+    "afterFiles": 1,
+    "unchanged": true
+  },
+  {
+    "label": "shared",
+    "cache": ".vitest",
+    "beforeFiles": 0,
+    "afterFiles": 0,
+    "unchanged": true
+  }
+]

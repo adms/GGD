@@ -1,0 +1,35 @@
+import fs from 'node:fs';
+import {inflateRawSync} from 'node:zlib';
+import {pathToFileURL} from 'node:url';
+const repo=process.cwd(),scratch='/private/tmp/ggd-community37-editor-publish';
+const imp=(p:string)=>import(pathToFileURL(repo+'/'+p).href);
+const {ContentLoader}=await imp('packages/shared/src/content/loader.ts');
+const {FsContentSource}=await imp('packages/shared/src/content/node/FsContentSource.ts');
+const {OverlayContentSource}=await imp('packages/shared/src/content/overlay.ts');
+const {registerAll}=await imp('packages/shared/src/content/registries.ts');
+const {registerSkeletonContent}=await imp('packages/shared/src/sim/content/skeleton.ts');
+const {captureCommunityContentBase,buildCommunityRoomContent}=await imp('packages/shared/src/content/communityRoom.ts');
+const {withRegistryContext}=await imp('packages/shared/src/sim/content/registryContext.ts');
+const {Champions}=await imp('packages/shared/src/sim/content/registry.ts');
+const {readPackageZip}=await imp('packages/shared/src/content/import/readPackageZip.ts');
+const data='/private/tmp/ggd-model-upload-acceptance/data';
+const overlay=JSON.parse(fs.readFileSync(data+'/content-overlay/overlay.json','utf8'));
+const loaded=await new ContentLoader(new OverlayContentSource(new FsContentSource(repo+'/content'),overlay)).load({policy:'fail-closed'});
+registerAll(loaded.store);registerSkeletonContent();
+const base=captureCommunityContentBase(loaded.store),audit=JSON.parse(fs.readFileSync(scratch+'/current-package-audit.json','utf8'));
+const pins=[],archives=new Map();let target;
+for(const row of audit.rows){
+ const snap=JSON.parse(fs.readFileSync(data+'/hero-submission-snapshots/'+row.submissionId+'.json','utf8'));
+ const bytes=new Uint8Array(fs.readFileSync(row.archive));
+ const pkg=readPackageZip(bytes,{inflate:(b:Uint8Array,maxBytes:number)=>new Uint8Array(inflateRawSync(b,{maxOutputLength:maxBytes}))});
+ target={gameRevision:pkg.manifest.base.gameRevision,contentVersion:pkg.manifest.base.contentVersion,migrationFingerprint:pkg.manifest.migrationFingerprint,processorFingerprint:pkg.manifest.authoringProcessor.fingerprint};
+ if(loaded.manifest.contentVersion!==target.contentVersion)throw Error('current content mismatch');
+ pins.push({workId:snap.workId,submissionId:snap.id,authorId:snap.accountId,authorName:'model-author',name:row.name,packageDigest:snap.version.packageDigest,snapshotDigest:snap.version.snapshotDigest});
+ archives.set(snap.workId,bytes);
+}
+const began=performance.now();
+const room=buildCommunityRoomContent({base,target,pins,archives,inflate:(b:Uint8Array,maxBytes:number)=>new Uint8Array(inflateRawSync(b,{maxOutputLength:maxBytes}))});
+const names=withRegistryContext(room.context,()=>pins.map(p=>Champions.get(p.workId).name));
+if(names.length!==37)throw Error('roster incomplete');
+const report={status:'verified',scope:'37 actual current Editor ZIPs load together into the game match registry; publication authority verified separately. Not visual or 30fps proof.',heroCount:37,slotCount:222,contentVersion:target.contentVersion,assetCount:room.assets.size,assetBytes:[...room.assets.values()].reduce((n:number,b:Uint8Array)=>n+b.length,0),loadMs:Math.round(performance.now()-began),manifestDigest:room.manifest.digest,names};
+fs.writeFileSync(scratch+'/current-roster-runtime.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));

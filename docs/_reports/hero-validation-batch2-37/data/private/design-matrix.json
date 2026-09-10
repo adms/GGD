@@ -1,0 +1,1879 @@
+[
+  {
+    "id": "b2-popp",
+    "name": "何布",
+    "origin": "法師",
+    "signature": "火候管理：熄掉預熱換定身，撤步後才能急救",
+    "closest": "b2-orphen",
+    "difference": "何布主動消掉火候換控制與撤步救援；歐菲持續汲取續戰。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "status:root"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        }
+      },
+      {
+        "source": "E",
+        "target": "EX",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "EX",
+          "kind": "heal",
+          "conditionalOnly": true
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-rem",
+    "name": "蕾姆",
+    "origin": "狂戰",
+    "signature": "拖地女僕：把客人拉近才繳械，鬼化付血後自我修復",
+    "closest": "b2-guts",
+    "difference": "蕾姆拉人與短繳械控制節奏；凱茲以自損攻擊力及重劍續戰。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "status:numbness"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "applyStatus"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "heal"
+        },
+        "setup": {
+          "caster": {
+            "hpPct": 0.55
+          }
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-zenitsu",
+    "name": "我妻善逸",
+    "origin": "法刺",
+    "signature": "補眠打卡：先等架勢完成才有瞬移，繳械後連閃",
+    "closest": "b2-ned",
+    "difference": "善逸必須等待睡姿窗口，連閃追著同一目標；Ned 是落點劍波幾何。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "delayed"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-rin",
+    "name": "遠坂凜",
+    "origin": "法師",
+    "signature": "寶石分期：先付魔力入庫，擊發讀真實存量，破魔後回款",
+    "closest": "b2-kaiji",
+    "difference": "凜與開司共用實付魔力存款加傷；凜擊發後清空，開司可留著存款或消耗換盾，這條列為相似例外，不冒稱全新銀行玩法。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "spendMana"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        },
+        "setup": {
+          "caster": {
+            "manaPct": 0.6
+          }
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-uncle",
+    "name": "異世界舅舅",
+    "origin": "法師",
+    "signature": "精靈客服：先送錯敵人增益再撤單，結界收據换代理助手",
+    "closest": "b2-haga",
+    "difference": "舅舅有可撤回的錯送增益，羽賀控制別人的施法與標記定位。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "stat:ad"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "dispel"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "caster",
+          "field": "summons"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-boxxo",
+    "name": "阿箱＋拉蜜絲",
+    "origin": "硬輔",
+    "signature": "流動販賣機：補給產生一次營業憑證，搬運後重新選友軍補給圈",
+    "closest": "b2-takopi",
+    "difference": "阿箱產消補給憑證與搬動營業區；章魚嗶直接把隊友接回安全距離。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "ally",
+          "field": "shield",
+          "sample": "max"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 2,
+        "remove": {
+          "slot": "R",
+          "kind": "delayed"
+        },
+        "sourceTarget": "ally"
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-shadow",
+    "name": "闇影",
+    "origin": "法刺",
+    "signature": "觀眾站位管理：聚敵等待爆場，練台詞提高直線收尾",
+    "closest": "b2-goblin",
+    "difference": "闇影把敵人拉到自己周围延爆，哥布林殺手拉入指定工地反覆判定。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "pull"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "E",
+          "kind": "applyBuff"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-bojji",
+    "name": "波吉",
+    "origin": "鬥士",
+    "signature": "搔癢決鬥：有限閃避讓攻擊落空，再把繳械轉為定身",
+    "closest": "b2-luckyman",
+    "difference": "波吉與幸運超人都使用受上限限制的閃避窗口；波吉閃過後回血且繳械轉定身，幸運超人閃過回魔並另有隨機贈品。這條同族防禦列為相似例外。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "evasion"
+        },
+        "targetActor": "foe",
+        "targetTarget": "caster"
+      },
+      {
+        "source": "W",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "status:root"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-maomao",
+    "name": "貓貓",
+    "origin": "軟輔",
+    "signature": "試藥與解毒：自己試吃會壓低治療，先解毒才能喝滿；樣本換友軍處方",
+    "closest": "b2-keyaru",
+    "difference": "貓貓要解除自己真實 DOT 與重創；凱亞爾以治療收據供後續服務。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "dispel"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": [
+      "Q 的自傷不能拿來證明前置帶來額外輸出；驗證比較實際淨化與回血。"
+    ]
+  },
+  {
+    "id": "b2-elma",
+    "name": "艾爾瑪",
+    "origin": "坦克",
+    "signature": "攻略壓血：支付生命跨過門檻才拿厚盾，重甲再換重劍",
+    "closest": "b2-noor",
+    "difference": "艾爾瑪主動壓血換護盾；諾爾要精準擋指定來源的來襲。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "shield",
+          "sample": "max"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "shield"
+        },
+        "setup": {
+          "caster": {
+            "hpPct": 0.55
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "E",
+          "kind": "applyBuff"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-albus",
+    "name": "阿爾巴斯",
+    "origin": "鬥士",
+    "signature": "速通重試：已花的冷卻才能縮短，捷徑解鎖隊友急救",
+    "closest": "b2-klaus",
+    "difference": "阿爾巴斯主動重置有限的按鍵節奏；克勞斯委派定時工作。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "cooldown:Q"
+        },
+        "expect": "decrease",
+        "waitSec": 0.4,
+        "observeSec": 0.2,
+        "remove": {
+          "slot": "W",
+          "kind": "modifyCooldown"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "heal"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-goblin",
+    "name": "哥布林殺手",
+    "origin": "鬥士",
+    "signature": "工地誘導：把敵人拉進固定施工區，再把盲目亂闖者拋走",
+    "closest": "b2-kumoko",
+    "difference": "哥殺用拉人維持可離開的傷害工地；蜘蛛子以可到期的定身網與毒為主。",
+    "combos": [
+      {
+        "source": "W",
+        "target": "Q",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "pull"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        },
+        "targetPoint": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "knockback"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-maple",
+    "name": "梅普露",
+    "origin": "坦克",
+    "signature": "怕痛毒盾：挨打有固定回禮，怪物模式才開毒龍收尾",
+    "closest": "b2-naofumi",
+    "difference": "梅普露自保與毒性變身；尚文把厚盾給隊友並處理施法者與隊友不同位置。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "restore"
+        },
+        "setup": {
+          "caster": {
+            "manaPct": 0.6
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "status:poison"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "applyStatus"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-naofumi",
+    "name": "岩谷尚文",
+    "origin": "硬輔",
+    "signature": "隊友盾牌通行證：友盾產生可兌換保護，先推開威脅再接人",
+    "closest": "b2-maple",
+    "difference": "尚文兩條連動都以隊友為受益者，梅普露主要保護自己。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "ally",
+          "field": "distance:caster"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "blink"
+        },
+        "setup": {
+          "ally": {
+            "x": 0,
+            "z": 5
+          }
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-makoto",
+    "name": "深澄真",
+    "origin": "法師",
+    "signature": "商店距離學：移開近客提升遠射，定點營業區提供控場收尾",
+    "closest": "b2-popp",
+    "difference": "深澄真靠實際距離倍率與固定位置營業；何布是火候消耗及救援窗口。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "knockback"
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "status:magic-break"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-noor",
+    "name": "諾爾",
+    "origin": "坦克",
+    "signature": "只擋得住就算：物理技能反制短窗，成功反彈才有下一張盾",
+    "closest": "b2-elma",
+    "difference": "諾爾讀真實入射傷害與時間，艾爾瑪主動壓血，不做假反彈。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 0.4,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        },
+        "note": "Q → 敵方物理 W 觸發 P 取得 rage → 自己 W 消耗回復 220 HP；只量自己 W 階段，無 Q 對照保留敵 W。",
+        "sourceSteps": [
+          {
+            "kind": "cast",
+            "slot": "Q",
+            "waitSec": 0.2
+          },
+          {
+            "kind": "cast",
+            "actor": "foe",
+            "slot": "W",
+            "target": "caster",
+            "waitSec": 0.3
+          }
+        ],
+        "sourceIndexes": [
+          0
+        ],
+        "responseIndex": 2
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "caster",
+          "field": "shield",
+          "sample": "max"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": [
+      "Q 不承諾方向角判定；只承諾有界的物理技能時間窗。"
+    ]
+  },
+  {
+    "id": "b2-touka",
+    "name": "托卡・史考特",
+    "origin": "鬥士",
+    "signature": "工頭坑洞：拋入延時落點，再用入坑紀錄收場",
+    "closest": "b2-goblin",
+    "difference": "托卡用單次延時地點與空中拋投，哥殺是反覆重選的固定施工區。",
+    "combos": [
+      {
+        "source": "W",
+        "target": "Q",
+        "metric": {
+          "actor": "foe",
+          "field": "status:root"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "leap"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        },
+        "targetPoint": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-haga",
+    "name": "羽賀",
+    "origin": "軟輔",
+    "signature": "重現工單：標記之後可跳到當事人，沉默後回收測試魔力",
+    "closest": "b2-uncle",
+    "difference": "羽賀使用標記定位與施法封鎖，不先送錯攻擊力也不召喚客服。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "blink"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "R",
+          "kind": "consumeStatus"
+        },
+        "setup": {
+          "caster": {
+            "manaPct": 0.6
+          }
+        }
+      }
+    ],
+    "limitations": []
+  },
+  {
+    "id": "b2-guts",
+    "name": "凱茲",
+    "origin": "狂戰",
+    "signature": "先支付生命開加班增益，以普攻清運；低血時才能領工傷回復。",
+    "closest": "b2-elma",
+    "difference": "凱茲用自損換持續攻擊，再自行恢復；艾爾瑪以低血閾值與承傷保固為核心。",
+    "combos": [
+      {
+        "source": "W",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "applyBuff",
+          "stat": "ad"
+        }
+      },
+      {
+        "source": "W",
+        "target": "E",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "E",
+          "kind": "heal",
+          "conditionalOnly": true
+        },
+        "setup": {
+          "caster": {
+            "hpPct": 0.6
+          }
+        },
+        "note": "先從 60% 血支付 18% 最大生命，再確認低血補助；沒有 W 時 E 無效。"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "狂戰是支付生命與攻擊力增益，沒有宣稱狂戰士鎧甲換模。"
+    ]
+  },
+  {
+    "id": "b2-keyaru",
+    "name": "凱亞爾",
+    "origin": "法鬥",
+    "signature": "自己就診拿到病歷暫態，再把病歷換成隊友護盾或回復魔力的帳單處理。",
+    "closest": "b2-takopi",
+    "difference": "凱亞爾以自身真治療事件建立醫療帳單的消耗選擇；章魚嗶以搬移隊友與友善道具保護為主。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "ally",
+          "field": "shield"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        },
+        "sourceTarget": "caster",
+        "targetTarget": "ally"
+      },
+      {
+        "source": "Q",
+        "target": "EX",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "EX",
+          "kind": "consumeStatus"
+        },
+        "sourceTarget": "caster",
+        "setup": {
+          "caster": {
+            "manaPct": 0.5,
+            "hpPct": 0.5
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "僅醫療與帳單喜劇，不採用原作性暴力、記憶操控或復活能力。"
+    ]
+  },
+  {
+    "id": "b2-kaede",
+    "name": "楓",
+    "origin": "法鬥",
+    "signature": "魔劍附魔同時改變普攻傷害與可消耗的附魔暫態，選擇繼續砍或卸載回魔。",
+    "closest": "b2-matthias",
+    "difference": "楓管理自身普攻附魔與卸載；馬提亞斯改變敵方護甲及施法能力。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "PASSIVE",
+          "kind": "damage",
+          "conditionalOnly": true
+        }
+      },
+      {
+        "source": "Q",
+        "target": "EX",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "EX",
+          "kind": "consumeStatus"
+        },
+        "setup": {
+          "caster": {
+            "manaPct": 0.5
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "無法以角色名字證明魔法劍更新視窗是原作能力；視窗只是此處附魔的笑點。",
+      "R 的 point 錨點沿用正式延遲解析：優先凍結首個起手目標位置，無目標才採施法點；後續每跳重新找人。"
+    ]
+  },
+  {
+    "id": "b2-matthias",
+    "name": "馬提亞斯",
+    "origin": "法鬥",
+    "signature": "批改護甲與魔法答案：先破甲讓普通劍術更有效，再消耗封咒換致盲。",
+    "closest": "b2-kaede",
+    "difference": "馬提亞斯改敵人防禦和失能類型；楓修改自己普攻和魔力使用。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "applyBuff",
+          "stat": "armor"
+        }
+      },
+      {
+        "source": "R",
+        "target": "EX",
+        "metric": {
+          "actor": "foe",
+          "field": "status:blind"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "EX",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "採用轉生後第四紋魔法戰鬥者辨識點，批改與重修為 GGD 笑點。"
+    ]
+  },
+  {
+    "id": "b2-sinbad",
+    "name": "辛巴達",
+    "origin": "鬥士",
+    "signature": "少年商會強化合夥人出擊，自己巡迴換位讓遠處客人進入直線展示範圍。",
+    "closest": "b2-aladdin",
+    "difference": "辛巴達直接提高隊友戰鬥能力並自行進場；阿拉丁另召喚有期限的代理身體。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "applyBuff",
+          "stat": "ad"
+        },
+        "sourceTarget": "ally",
+        "targetActor": "ally",
+        "targetTarget": "foe",
+        "setup": {
+          "ally": {
+            "x": 1,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 0.5,
+        "remove": {
+          "slot": "E",
+          "kind": "blink"
+        },
+        "sourcePoint": {
+          "x": 5,
+          "z": 0
+        },
+        "targetPoint": {
+          "x": 6,
+          "z": 0
+        },
+        "setup": {
+          "foe": {
+            "x": 14,
+            "z": 0
+          }
+        },
+        "note": "E 真換位讓原本在 R 長度 11 外的客人進入展示線；量 R 傷害，E 本身的 P 治療不充當第二連動。"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "採少年辛巴達前傳的領袖與冒險者辨識點；不混入本篇成年王者所有能力。"
+    ]
+  },
+  {
+    "id": "b2-kumoko",
+    "name": "蜘蛛子",
+    "origin": "法刺",
+    "signature": "蛛網把住客留在租屋處，毒牙持續扣血；主動撤步讓跟身毒圈改變覆盖位置。",
+    "closest": "b2-maomao",
+    "difference": "蜘蛛子控制領地與自身距離；貓貓以解毒和藥理處置為主。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 3.2,
+        "remove": {
+          "slot": "W",
+          "kind": "dot",
+          "conditionalOnly": true
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 3.2,
+        "remove": {
+          "slot": "E",
+          "kind": "blink"
+        },
+        "sourcePoint": {
+          "x": 5,
+          "z": 0
+        },
+        "setup": {
+          "foe": {
+            "x": 6,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "採蜘蛛魔物階段：蛛絲、毒牙與敏捷。沒有宣稱人形神化、蜘蛛素材或完整進化。"
+    ]
+  },
+  {
+    "id": "b2-yogiri",
+    "name": "高遠夜霧",
+    "origin": "法師",
+    "signature": "雙門檻下班結算：先通知再降到低血，只給有限傷害；不配合者被取消施法。",
+    "closest": "b2-misery",
+    "difference": "夜霧需要低生命與通知同時成立；米瑟利的期限贈品使控制形態轉換。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "damage",
+          "conditionalOnly": true
+        },
+        "setup": {
+          "foe": {
+            "hpPct": 0.4
+          }
+        }
+      },
+      {
+        "source": "Q",
+        "target": "EX",
+        "metric": {
+          "actor": "foe",
+          "field": "status:magic-break"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "EX",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "保留不願被打擾和終結者辨識；無條件秒殺、概念抹殺都不在本改編中。"
+    ]
+  },
+  {
+    "id": "b2-kaiji",
+    "name": "伊藤開司",
+    "origin": "軟輔",
+    "signature": "押上現有魔力留下可讀存款，再決定翻牌伤害或消耗下注保命；亂數只有清楚列出的有限獎項。",
+    "closest": "b2-luckyman",
+    "difference": "開司主動支付真魔力後抉擇；幸運超人的隨機救場由受到敵人攻擊觸發。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "spendMana"
+        }
+      },
+      {
+        "source": "Q",
+        "target": "E",
+        "metric": {
+          "actor": "caster",
+          "field": "shield"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "E",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "本局不使用真錢；機率不能以單一好種子宣稱必贏。"
+    ]
+  },
+  {
+    "id": "b2-fushi",
+    "name": "不死",
+    "origin": "硬輔",
+    "signature": "以主動受擊適應累積既有暫態，在受擊後選擇重建血肉或支援隊友生命與護盾。",
+    "closest": "b2-uncle",
+    "difference": "不死的暫態由實際受擊事件產生，重建只回復活人的生命；舅舅以主動變化與客服驅散為主。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        },
+        "sourceActor": "foe",
+        "sourceTarget": "caster"
+      },
+      {
+        "source": "Q",
+        "target": "E",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "E",
+          "kind": "heal",
+          "conditionalOnly": true
+        },
+        "sourceActor": "foe",
+        "sourceTarget": "caster",
+        "targetTarget": "ally"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "前世篇刺激與再生意象；未提供原作無限再生、死後復活、模仿外觀或死者復活。"
+    ]
+  },
+  {
+    "id": "b2-orphen",
+    "name": "歐菲",
+    "origin": "法鬥",
+    "signature": "催收函先收訂金並分期扣血，縮短冷卻再寄；瞬移登門後提早普攻，真正觸發回魔被動。",
+    "closest": "b2-keyaru",
+    "difference": "歐菲把敵人當債務人，主體是敵方 DOT 及自己定量回血；凱亞爾是自療後消耗病歷保護同伴。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "cooldown:Q"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "modifyCooldown"
+        }
+      },
+      {
+        "source": "R",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.3,
+        "observeSec": 0.6,
+        "remove": {
+          "slot": "PASSIVE",
+          "kind": "restore"
+        },
+        "setup": {
+          "caster": {
+            "manaPct": 0.5
+          },
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        },
+        "note": "R 先把人送到近戰距離，後續真普攻在同一短窗口觸發 P 回魔；無 R 尚在接近，消融 P 時照樣命中但沒有回款。這是提早取得回魔，不承諾無 R 永遠無法普攻。"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "詠唱魔術士、地下放貸者為來源辨識；持續吸血連結與無限還款皆未宣稱。"
+    ]
+  },
+  {
+    "id": "b2-klaus",
+    "name": "克勞斯",
+    "origin": "射手",
+    "signature": "按開始排程後，後續傷害仍分時抵達；移動自己改變跟身自動作業的工作地點。",
+    "closest": "b2-albus",
+    "difference": "克勞斯把幾次出手預先排好等待執行；阿爾巴斯縮冷卻後重新主動操作。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 2,
+        "remove": {
+          "slot": "W",
+          "kind": "damage",
+          "conditionalOnly": true
+        }
+      },
+      {
+        "source": "E",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 3.2,
+        "remove": {
+          "slot": "E",
+          "kind": "blink"
+        },
+        "sourcePoint": {
+          "x": 5,
+          "z": 0
+        },
+        "setup": {
+          "foe": {
+            "x": 6,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "原作自動機能改為可取消的有限排程；不宣稱全遊戲 AI 自動代理。"
+    ]
+  },
+  {
+    "id": "b2-takopi",
+    "name": "章魚嗶",
+    "origin": "軟輔",
+    "signature": "友善接送把夥伴接近後才吃到近距離保護，再把開心貼紙換成治療。",
+    "closest": "b2-keyaru",
+    "difference": "章魚嗶的第一條依赖友方位置，第二條是友方可消耗貼紙；凱亞爾自療後拿自己的病歷付款。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "ally",
+          "field": "shield"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "shield",
+          "conditionalOnly": true
+        },
+        "sourceTarget": "ally",
+        "targetTarget": "ally",
+        "setup": {
+          "ally": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "E",
+        "target": "EX",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "EX",
+          "kind": "consumeStatus"
+        },
+        "sourceTarget": "ally",
+        "targetTarget": "ally"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "只用友善道具與救援笑點；未實作時間倒流、替代死亡或原作悲劇事件。"
+    ]
+  },
+  {
+    "id": "b2-luckyman",
+    "name": "幸運超人",
+    "origin": "坦克",
+    "signature": "兩種幸運保護覆蓋不同攻擊通道，真正閃避時才回魔；幸運受到正式機率上限與種子約束。",
+    "closest": "b2-kaiji",
+    "difference": "幸運在敵人的攻擊到來時才抽驗，沒有主動押注資源；開司付款後選擇翻盤或退桌。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 1.8,
+        "remove": {
+          "slot": "PASSIVE",
+          "kind": "restore"
+        },
+        "targetActor": "foe",
+        "targetTarget": "caster",
+        "setup": {
+          "caster": {
+            "manaPct": 0.5
+          }
+        },
+        "seed": 1234,
+        "note": "Q 提高普通攻擊迴避，敵人真普攻觸發 P 回魔；消融 P 後仍可閃避，回魔收益消失。"
+      },
+      {
+        "source": "E",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "mana"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 0.3,
+        "remove": {
+          "slot": "PASSIVE",
+          "kind": "restore"
+        },
+        "targetActor": "foe",
+        "targetTarget": "caster",
+        "setup": {
+          "caster": {
+            "manaPct": 0.5
+          }
+        },
+        "seed": 1234,
+        "note": "E 打開技能迴避通道，敵人真物理技能觸發 P 回魔；消融 P 後仍閃過但不回魔。與 Q 是同一迴避回魔家族的兩種來源，不計為兩種全新招牌。"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。",
+      "Q 普攻迴避與 E 技能迴避都銜接同一 P 回魔，屬兩種真事件通道的同族連動，不冒稱兩種全新機制。"
+    ]
+  },
+  {
+    "id": "b2-misery",
+    "name": "米瑟利",
+    "origin": "法師",
+    "signature": "贈品先讓敵人跑得快，退貨時消耗贈品轉成致盲；留著贈品則到期前吃到延遲封咒。",
+    "closest": "b2-yogiri",
+    "difference": "米瑟利先給敵方真移速好處，再用持有期限和退貨抉擇變成代價；夜霧需要低血加通知才結算有限傷害。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "status:blind"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        }
+      },
+      {
+        "source": "Q",
+        "target": "EX",
+        "metric": {
+          "actor": "foe",
+          "field": "status:magic-break"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.3,
+        "remove": {
+          "slot": "EX",
+          "kind": "applyStatus",
+          "conditionalOnly": true
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "原作身分是神秘異界案內人；贈品條款商店與本六槽玩法是 GGD 原創，不稱為原作契約惡魔。"
+    ]
+  },
+  {
+    "id": "b2-nube",
+    "name": "鵺野鳴介",
+    "origin": "硬輔",
+    "signature": "鬼手把遠處敵人拉進點名圈；魔力不足時，同學真受傷觸發班導回魔，才趕得及施放急救。",
+    "closest": "b2-naofumi",
+    "difference": "神眉以鬼手拉近點名及封咒控制為特徵；尚文以盾牌保護和隔離威脅為主。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 0.6,
+        "remove": {
+          "slot": "Q",
+          "kind": "knockback"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "Q",
+        "target": "EX",
+        "metric": {
+          "actor": "ally",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 0.4,
+        "remove": {
+          "slot": "PASSIVE",
+          "kind": "restore"
+        },
+        "sourceActor": "foe",
+        "sourceTarget": "ally",
+        "targetTarget": "ally",
+        "setup": {
+          "caster": {
+            "manaPct": 0.04
+          }
+        },
+        "expectedControlResponseRejections": {
+          "preparedAblated": "no-mana",
+          "unprepared": "no-mana",
+          "unpreparedAblated": "no-mana"
+        },
+        "note": "敵方測試 Q 真傷同學，觸發本人的 P 回魔，讓原本只有 4% 魔力的老師及時施放 EX 治療。源 Q 不是神眉的 Q；三個缺少 P 回款的對照在施法時都必須因 no-mana 拒絕，較晚自然回魔後仍可再救。"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。",
+      "P→EX 是低魔力下提早取得救援施法的資源連動；完整護盾仍可能觸發正式 onAllyDamaged，不能宣稱護住同學就不會回魔。"
+    ]
+  },
+  {
+    "id": "b2-shinchan",
+    "name": "野原新之助",
+    "origin": "軟輔",
+    "signature": "春日部接力讓隊友更快追上對手，踩到玩具被定住後再由玩具箱送走。",
+    "closest": "b2-takopi",
+    "difference": "小新讓隊友自行跑得更快與把敵人送走；章魚嗶主動搬回隊友並給近距離道具保護。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "ATTACK",
+        "metric": {
+          "actor": "ally",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 0.7,
+        "remove": {
+          "slot": "Q",
+          "kind": "applyStatus"
+        },
+        "sourceTarget": "ally",
+        "targetActor": "ally",
+        "targetTarget": "foe",
+        "setup": {
+          "ally": {
+            "x": 0,
+            "z": 0
+          },
+          "foe": {
+            "x": 8,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "W",
+        "target": "EX",
+        "metric": {
+          "actor": "foe",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 0.5,
+        "remove": {
+          "slot": "EX",
+          "kind": "consumeStatus"
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "僅幼稚園、玩具與散步的童趣，不含性化內容。"
+    ]
+  },
+  {
+    "id": "b2-aladdin",
+    "name": "阿拉丁",
+    "origin": "法師",
+    "signature": "笛聲叫來真代理樂團，再消耗演奏暫態追加團員；召喚後在圈內指揮，才會強化已到場團員的攻擊。",
+    "closest": "b2-sinbad",
+    "difference": "阿拉丁先增加有期限的攻擊身體，再用圈內指揮強化團員；辛巴達直接強化現有隊友並自己進場。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "summons"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 0.5,
+        "remove": {
+          "slot": "W",
+          "kind": "consumeStatus"
+        }
+      },
+      {
+        "source": "Q",
+        "target": "E",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.3,
+        "observeSec": 2.5,
+        "remove": {
+          "slot": "E",
+          "kind": "applyBuff",
+          "stat": "ad"
+        },
+        "targetPoint": {
+          "x": 1,
+          "z": 0
+        },
+        "setup": {
+          "foe": {
+            "x": 2,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "烏戈是來源中的召喚朋友；本驗證用真代理召喚測機制，沒有宣稱烏戈外形或召喚資產已完成。",
+      "代理使用角色文件與正式屬性管線，不繼承主人當下增益；Q、W 的 maxAlive 分別依技能來源計數，不是合計上限 3 具。"
+    ]
+  },
+  {
+    "id": "b2-ned",
+    "name": "青蛙劍士 Ned",
+    "origin": "鬥士",
+    "signature": "青蛙真跳躍進入短劍距離，推走敵人後再追入線斬；按空間而非標記額外傷害結算。",
+    "closest": "b2-bojji",
+    "difference": "Ned 以跳躍落點與劍氣幾何決定能否近斬；波吉在近身以閃避與失能爭取出手。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "W",
+        "metric": {
+          "actor": "foe",
+          "field": "hp"
+        },
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "W",
+          "kind": "damage",
+          "conditionalOnly": true
+        },
+        "sourcePoint": {
+          "x": 4,
+          "z": 0
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "EX",
+        "target": "W",
+        "metric": {
+          "actor": "caster",
+          "field": "hp"
+        },
+        "expect": "increase",
+        "waitSec": 0.2,
+        "observeSec": 0.3,
+        "remove": {
+          "slot": "PASSIVE",
+          "kind": "applyBuff",
+          "stat": "armor"
+        },
+        "sourcePoint": {
+          "x": 1,
+          "z": 0
+        },
+        "targetActor": "foe",
+        "targetTarget": "caster"
+      }
+    ],
+    "limitations": [
+      "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+      "青蛙劍士 Ned 為使用者已定身分；分身、舌頭攻擊或原作專屬招式未加到本改編。"
+    ]
+  },
+  {
+    "id": "b2-kisaragi",
+    "name": "如月電車",
+    "origin": "坦克",
+    "signature": "誤點電車：驗票聚客後分別送到隨機錯站，煞車蓄力解除後再出發",
+    "closest": "b2-shadow",
+    "difference": "電車逐敵抽距離並抵達套三狀態；闇影只聚敵延爆，沒有傳送乘客。",
+    "combos": [
+      {
+        "source": "Q",
+        "target": "R",
+        "metric": {
+          "actor": "foe",
+          "field": "status:curse"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "Q",
+          "kind": "pull"
+        },
+        "setup": {
+          "foe": {
+            "x": 6,
+            "z": 0
+          }
+        }
+      },
+      {
+        "source": "W",
+        "target": "E",
+        "metric": {
+          "actor": "caster",
+          "field": "x"
+        },
+        "expect": "increase",
+        "waitSec": 0.8,
+        "observeSec": 1.2,
+        "remove": {
+          "slot": "E",
+          "kind": "consumeStatus"
+        },
+        "setup": {
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "limitations": []
+  }
+]

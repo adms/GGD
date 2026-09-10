@@ -1,0 +1,30 @@
+第 6 版的固定模擬紀錄 · 武藤遊戲
+
+PASSIVE
+Q
+W
+E
+R
+EX
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 18/45 meshes · 3/26 particles/systems · eye -33.3,16.7,0.0
+施法者：武藤遊戲 · community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270 · 3 meshes · ×1.812 · Main ChampionView · 材質正常
+目標：武藤遊戲 · community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270 · 3 meshes · ×1.812 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+583ms · Sim tick 18
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 11 筆事件

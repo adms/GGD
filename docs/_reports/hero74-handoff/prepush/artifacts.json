@@ -1,0 +1,42 @@
+[
+  {
+    "path": "summary.json",
+    "sha256": "e938ef06b0915d0a577340e11ba5c5a71bbd854b52c40907a6fcc19fe67f0257",
+    "bytes": 2862
+  },
+  {
+    "path": "editor-accept-release.stderr.log",
+    "sha256": "5b0de86333656a609f51344b23b0e64fd8a9015fc6bc25bdbd580c4cd7a392ca",
+    "bytes": 2336
+  },
+  {
+    "path": "coord-check.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "skills-check.stderr.log",
+    "sha256": "721a98ff08bf8412ecec67549f60fc0477f770de9b3ec7dac17c7acfee351e50",
+    "bytes": 384
+  },
+  {
+    "path": "editor-accept-release.stdout.log",
+    "sha256": "dc84d7b8555ac8d4f93ba266d5a657ce832a900f43ef701faed14b6f51f80649",
+    "bytes": 670
+  },
+  {
+    "path": "start.json",
+    "sha256": "c37165ce487dbdb55bd530a5ea806f58bce52247d0a9dabb7418bdeabd6c4723",
+    "bytes": 1477
+  },
+  {
+    "path": "skills-check.stdout.log",
+    "sha256": "cd1cc7bc574bcb45b5a8c894044666ff3ac945d9909881e7be51c635d02355c1",
+    "bytes": 2370
+  },
+  {
+    "path": "coord-check.stdout.log",
+    "sha256": "ca58aa239d2cb3b0424d259f61e59f980fa0598082d422854fd4524730e55629",
+    "bytes": 5983
+  }
+]

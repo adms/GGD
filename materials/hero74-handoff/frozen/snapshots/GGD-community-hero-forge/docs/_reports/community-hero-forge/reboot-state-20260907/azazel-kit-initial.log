@@ -1,0 +1,61 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts [ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts ]
+ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "integer",
+    "received": "float",
+    "message": "Expected integer, received float",
+    "path": [
+      "colorRgb",
+      0
+    ]
+  },
+  {
+    "code": "invalid_type",
+    "expected": "integer",
+    "received": "float",
+    "message": "Expected integer, received float",
+    "path": [
+      "colorRgb",
+      1
+    ]
+  },
+  {
+    "code": "invalid_type",
+    "expected": "integer",
+    "received": "float",
+    "message": "Expected integer, received float",
+    "path": [
+      "colorRgb",
+      2
+    ]
+  }
+]
+ ❯ Object.get error [as error] ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:39:31
+ ❯ ZodLazy.parse ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:114:22
+ ❯ effect packages/shared/src/content/heroForge/communityRefinements/azazel.ts:12:49
+     10|   }
+     11|   const ids = azazelStatusIds(project.projectId);
+     12|   const effect = (value: unknown) => zEffectDef.parse(value);
+       |                                                 ^
+     13|   const hit = (damageType: "magic" | "physical", damageTier = "小") =>…
+     14|   const text = (value: string, colorRgb: number[], applyTo = "victim")…
+ ❯ text packages/shared/src/content/heroForge/communityRefinements/azazel.ts:14:75
+ ❯ Module.refineAzazelProject packages/shared/src/content/heroForge/communityRefinements/azazel.ts:57:9
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:29:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  05:58:41
+   Duration  3.62s (transform 1.98s, setup 0ms, collect 0ms, tests 0ms, environment 0ms, prepare 96ms)
+

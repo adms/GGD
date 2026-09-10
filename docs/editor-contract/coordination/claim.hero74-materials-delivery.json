@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero74-materials-delivery",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "交付兩批各37名英雄來源、作品、半成品與S3定址，請Main沿既有PR驗收",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "逐項盤點39041檔案項目（含歷史同bytes不同路徑）：2660由已推送Git固定提交定址，3798份補入Git快照，32477由既有S3封存定址，106新增S3。已逐項讀取2660 Git blob及全部補漏快照核SHA。此repro核對Git交付收據與快照，不重新下載S3或重播英雄。",
+      "repro": {
+        "command": "python3 tools/hero74-handoff/verify.py",
+        "expectedExit": 0
+      },
+      "commit": "120d4535d7f05be4775ce80a4f2fe02d9cee9673",
+      "evidence": [
+        "materials/hero74-handoff/frozen/inventory.json",
+        "docs/_reports/hero74-handoff/material-verification.json",
+        "docs/_reports/hero74-handoff/README.md",
+        "docs/_reports/hero74-handoff/prepush/summary.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增106檔（含第二批37個真ZIP與電車素材）已在使用者明確指定的既有bucket/profile上傳，從全新快取下載3分段並逐檔還原SHA；壓縮77724789bytes。舊封存未覆寫，沒有IAM或正式服務變更。",
+      "repro": {
+        "command": "python3 tools/hero74-handoff/verify.py",
+        "expectedExit": 0
+      },
+      "commit": "120d4535d7f05be4775ce80a4f2fe02d9cee9673",
+      "evidence": [
+        "materials/hero74-handoff/frozen/archive/manifest.json",
+        "materials/hero74-handoff/frozen/archive/s3-location.json",
+        "materials/hero74-handoff/frozen/archive/s3-upload-receipt.json",
+        "materials/hero74-handoff/frozen/archive/s3-restore-receipt.json",
+        "docs/_reports/hero74-handoff/s3-restore.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "提供可直接複製的基底／微調模型評估工作流：僅允許公开輸入、教師端隔離、首次與修復後分數分開、等效機制與逐名語意審查。本輪未執行模型評估或訓練；現有教師runner不是模型輸出評分器。第一批不是37名全部合格金標，也不能合稱74名盲測。",
+      "repro": {
+        "command": "python3 tools/hero74-handoff/verify.py",
+        "expectedExit": 0
+      },
+      "commit": "120d4535d7f05be4775ce80a4f2fe02d9cee9673",
+      "evidence": [
+        "docs/_reports/hero74-handoff/COPY_TO_MODEL_EVALUATION.txt",
+        "docs/_reports/hero-validation-batch2-37/data/partition-report.json",
+        "docs/_reports/hero74-handoff/model-input-export.json"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "請你開票並將第一批37支及第二批37支英雄技能機制特效全部相關產生器, 成品, 半成品 等相關文件及產物都 commit , push 給 main 驗收合併"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "程式、設定、文件全部進 Git；大型產物保留 S3，提交完整索引與還原方式（建議）"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "給我一鍵複製給 FINE TUNE model驗證資料集 如何應用來驗證"
+    }
+  ],
+  "asks": [
+    "請Main依總票#1145審查兩批材料；第一批可執行來源沿PR#1135，第二批及本次補漏沿PR#1144，不新增重複PR。",
+    "WIP快照僅保留未完成原始狀態，不直接覆蓋runtime；合併後依各自引擎版本重跑生成與行為驗證。CI及必要review通過後再合併；本票不代表74名完整上場或模型能力通過。",
+    "本輪三項全倉庫gate仍exit1，詳prepush/summary.json；兩份本批packet均通過。保留Draft，由Main處理既有發布阻礙並完成review。"
+  ]
+}

@@ -1,0 +1,1087 @@
+{
+  "champion": {
+    "id": "b2-misery",
+    "name": "米瑟利",
+    "description": "來自魔界｜免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "mage",
+    "attackType": "ranged",
+    "archetype": "mage",
+    "origin": "法師",
+    "modelKey": "champ.sela",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 8.2,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 45.833673469387755,
+      "healthRegen": 0.10673469387755102,
+      "maxMana": 0.9581632653061187,
+      "manaRegen": 0,
+      "ad": 2.5489795918367353,
+      "as": 0,
+      "mr": 2.1118367346938776,
+      "armor": 0.45735714285714285,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 13,
+      "agi": 18,
+      "int": 29,
+      "strGrowth": 1.25,
+      "agiGrowth": 1.67,
+      "intGrowth": 2.78,
+      "primary": "INT",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-misery.q",
+        "name": "免費跑鞋條款另計",
+        "provenance": "editor-json",
+        "description": "「免費跑鞋條款另計！」\n指定敵人取得 rage 贈品暫態 4 秒，移動速度提高 15%；這個好處真的生效，代價需另施技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "rage",
+            "duration": 4,
+            "applyTo": "target",
+            "moveSpeedMult": 1.15
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "rage",
+                "duration": 4,
+                "applyTo": "target",
+                "moveSpeedMult": 1.15
+              }
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-misery.w",
+        "name": "七天鑑賞期不含眼睛",
+        "provenance": "editor-json",
+        "description": "「七天鑑賞期不含眼睛！」\n消耗敵人全部 rage 贈品，施加正式 blind 配方。沒有贈品時不能退貨致盲。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "rage",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 1,
+                "missChance": 0.5
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "rage",
+                "count": "all",
+                "subject": "target",
+                "onConsumed": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "blind",
+                    "duration": 1,
+                    "missChance": 0.5
+                  }
+                ]
+              }
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-misery.e",
+        "name": "店長先移去門後",
+        "provenance": "editor-json",
+        "description": "「店長先移去門後！」\n瞬移到指定合法落點，躲開領到跑鞋的客人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "blink",
+            "shape": "single",
+            "to": "point",
+            "applyTo": "self"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+          "params": {
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+        }
+      },
+      "R": {
+        "id": "b2-misery.r",
+        "name": "櫃檯保固不是無敵",
+        "provenance": "editor-json",
+        "description": "「櫃檯保固不是無敵！」\n建立 3 秒魔力屏障，只吸收物理和魔法傷害；耗盡可用魔力或到期即結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "self",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "manaBarrier",
+            "shape": "single",
+            "who": "self",
+            "perMana": 2,
+            "damageTypes": [
+              "physical",
+              "magic"
+            ],
+            "minManaReserve": 10,
+            "durationSec": 3
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "manaBarrier",
+                "shape": "single",
+                "who": "self",
+                "perMana": 2,
+                "damageTypes": [
+                  "physical",
+                  "magic"
+                ],
+                "durationSec": 3,
+                "minManaReserve": 10
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-misery.ex",
+    "passiveAbility": "b2-misery.passive",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "b2-misery.passive",
+      "name": "異界店主不包售後",
+      "provenance": "editor-json",
+      "description": "「異界店主不包售後！」\n自己受到控制時回復最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onCrowdControlReceived",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.08,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onCrowdControlReceived",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.08,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 4,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "b2-misery.q",
+      "name": "免費跑鞋條款另計",
+      "provenance": "editor-json",
+      "description": "「免費跑鞋條款另計！」\n指定敵人取得 rage 贈品暫態 4 秒，移動速度提高 15%；這個好處真的生效，代價需另施技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "rage",
+          "duration": 4,
+          "applyTo": "target",
+          "moveSpeedMult": 1.15
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "rage",
+              "duration": 4,
+              "applyTo": "target",
+              "moveSpeedMult": 1.15
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-misery.w",
+      "name": "七天鑑賞期不含眼睛",
+      "provenance": "editor-json",
+      "description": "「七天鑑賞期不含眼睛！」\n消耗敵人全部 rage 贈品，施加正式 blind 配方。沒有贈品時不能退貨致盲。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "rage",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "statusId": "blind",
+              "duration": 1,
+              "missChance": 0.5
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "rage",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "blind",
+                  "duration": 1,
+                  "missChance": 0.5
+                }
+              ]
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-misery.e",
+      "name": "店長先移去門後",
+      "provenance": "editor-json",
+      "description": "「店長先移去門後！」\n瞬移到指定合法落點，躲開領到跑鞋的客人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "params": {
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-misery.r",
+      "name": "櫃檯保固不是無敵",
+      "provenance": "editor-json",
+      "description": "「櫃檯保固不是無敵！」\n建立 3 秒魔力屏障，只吸收物理和魔法傷害；耗盡可用魔力或到期即結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "manaBarrier",
+          "shape": "single",
+          "who": "self",
+          "perMana": 2,
+          "damageTypes": [
+            "physical",
+            "magic"
+          ],
+          "minManaReserve": 10,
+          "durationSec": 3
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "manaBarrier",
+              "shape": "single",
+              "who": "self",
+              "perMana": 2,
+              "damageTypes": [
+                "physical",
+                "magic"
+              ],
+              "durationSec": 3,
+              "minManaReserve": 10
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-misery.ex",
+      "name": "小字條款稍後生效",
+      "provenance": "editor-json",
+      "description": "「小字條款稍後生效！」\n0.7 秒後再次檢查目標是否仍持有 rage 贈品；仍持有才施加 2.5 秒 magic-break 沉默。標記提早消失就取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.7,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "rage"
+              },
+              "statusId": "magic-break",
+              "duration": 2.5,
+              "applyTo": "target",
+              "silenced": true
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 0.7,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "applyTo": "target",
+                  "silenced": true,
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "rage",
+                    "subject": "target"
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "b2-misery.passive",
+      "name": "異界店主不包售後",
+      "provenance": "editor-json",
+      "description": "「異界店主不包售後！」\n自己受到控制時回復最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onCrowdControlReceived",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.08,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onCrowdControlReceived",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.08,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 4,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "b2-misery.ex",
+      "name": "小字條款稍後生效",
+      "provenance": "editor-json",
+      "description": "「小字條款稍後生效！」\n0.7 秒後再次檢查目標是否仍持有 rage 贈品；仍持有才施加 2.5 秒 magic-break 沉默。標記提早消失就取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.7,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "rage"
+              },
+              "statusId": "magic-break",
+              "duration": 2.5,
+              "applyTo": "target",
+              "silenced": true
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 0.7,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "applyTo": "target",
+                  "silenced": true,
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "rage",
+                    "subject": "target"
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "b2-misery.q",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-misery.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-misery.w",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-misery.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-misery.e",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-misery.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-misery.r",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-misery.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-misery.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-misery.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

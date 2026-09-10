@@ -1,0 +1,12 @@
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts:92
+    if (!document || document.id !== id) throw new Error(`缺少固定依賴：${key}`);
+                                               ^
+
+Error: 缺少固定依賴：status-effects/community-review-32-20260907.r.curse
+    at include (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts:92:48)
+    at visit (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts:168:79)
+    at Array.forEach (<anonymous>)
+    at compileHeroPackageProject (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts:174:16)
+    at <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/refine-azazel-handoff.ts:50:18)
+
+Node.js v25.9.0

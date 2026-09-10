@@ -1,0 +1,705 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-28-20260907",
+  "revision": 1,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "艾莉絲·伯雷亞斯·格雷拉特",
+    "concept": "艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔劍神流・先發制人〕",
+      "Q": "〔猛進斬〕",
+      "W": "〔鬥氣護身〕",
+      "E": "〔逼近步〕",
+      "R": "光之太刀",
+      "EX": "〔狂劍追擊〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-28-20260907.plan",
+    "title": "艾莉絲·伯雷亞斯·格雷拉特",
+    "summary": "艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "鬥士",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "ad": "大",
+      "ap": "小",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "range": "小"
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔劍神流・先發制人〕",
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。\n【待補機制】需對剛交鋒目標的首次命中及每目標冷卻。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-28-20260907-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "event": "onBasicAttack",
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "internalCooldown": 3
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "〔猛進斬〕",
+        "purpose": "【目前模板可執行】向指定方向突進 180 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】向前踏步斬擊。\n【待補機制】短踏步可以預覽；需武器斬擊時點。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-28-20260907-q-1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "dashDistance": 180,
+                "dashDurationSec": 0.3,
+                "apexHeight": 0,
+                "radius": 150,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "pushDistance": 200,
+                "pushSpeed": 872,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔鬥氣護身〕",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-28-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短時間提高承傷能力，無法無限疊加。\n【待補機制】有限承傷對應基礎版。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "community-review-28-20260907.w.guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "community-review-28-20260907-w-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [],
+                "castTimeSec": 0.15
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔逼近步〕",
+        "purpose": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近，保留可被攔截的路徑。\n【待補機制】此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-28-20260907-e-1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "dashDistance": 250,
+                "dashDurationSec": 0.3,
+                "apexHeight": 0,
+                "radius": 150,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "pushDistance": 200,
+                "pushSpeed": 872,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "光之太刀",
+        "purpose": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】有明確起手的高速直線斬擊，命中後停在合法位置。\n【待補機制】需較長起手、高速單段斬及命中停點。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-28-20260907-r-1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "dashDistance": 450,
+                "dashDurationSec": 0.3,
+                "apexHeight": 0,
+                "radius": 150,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "pushDistance": 200,
+                "pushSpeed": 872,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔狂劍追擊〕",
+        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。\n【待補機制】需剛被自身命中的目標條件與追擊窗口。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-28-20260907-ex-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-28-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-28-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.physical.slash",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-28-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-28-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.physical.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-28-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-28-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.physical.slash",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-28-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-28-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.physical.slash",
+              "at": "self",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-28-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-28-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.physical.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                232,
+                82,
+                51
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

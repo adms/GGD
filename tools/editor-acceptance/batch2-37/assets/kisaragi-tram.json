@@ -1,0 +1,216 @@
+{
+  "schema": "ggd-batch2-original-asset@1",
+  "id": "b2-kisaragi-tram",
+  "source": {
+    "path": "tools/editor-acceptance/batch2-37/assets/kisaragi-tram.source.glb",
+    "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+    "bytes": 78876,
+    "authoringSource": "tools/editor-acceptance/batch2-37/assets.mjs",
+    "origin": "Original procedural commuter-tram geometry authored for this GGD evaluation; no imported mesh or textures."
+  },
+  "normalized": {
+    "path": "tools/editor-acceptance/batch2-37/assets/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+    "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+    "bytes": 78876
+  },
+  "document": {
+    "id": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+    "byteSize": 78876,
+    "clipMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "verification": {
+    "method": "prepareUploadedHeroModel -> verifyUploadedHeroModel from real bytes; Khronos gltf-validator",
+    "validator": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "GGD batch2 original Kisaragi tram v2",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 72100
+          }
+        ],
+        "animationCount": 6,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 5,
+        "totalVertexCount": 1980,
+        "totalTriangleCount": 660,
+        "maxUVs": 0,
+        "maxInfluences": 0,
+        "maxAttributes": 3
+      }
+    },
+    "triangles": 660,
+    "meshes": 5,
+    "textures": [],
+    "clips": [
+      {
+        "index": 0,
+        "name": "idle",
+        "duration": 2,
+        "channels": 1
+      },
+      {
+        "index": 1,
+        "name": "run",
+        "duration": 0.800000011920929,
+        "channels": 3
+      },
+      {
+        "index": 2,
+        "name": "attack",
+        "duration": 0.5,
+        "channels": 1
+      },
+      {
+        "index": 3,
+        "name": "cast",
+        "duration": 1.2000000476837158,
+        "channels": 2
+      },
+      {
+        "index": 4,
+        "name": "hurt",
+        "duration": 0.44999998807907104,
+        "channels": 1
+      },
+      {
+        "index": 5,
+        "name": "death",
+        "duration": 1.7999999523162842,
+        "channels": 2
+      }
+    ],
+    "motion": [
+      {
+        "name": "idle",
+        "channels": [
+          {
+            "node": "TramRoot",
+            "path": "translation",
+            "moving": true
+          }
+        ]
+      },
+      {
+        "name": "run",
+        "channels": [
+          {
+            "node": "TramRoot",
+            "path": "rotation",
+            "moving": true
+          },
+          {
+            "node": "RearWheelPair",
+            "path": "rotation",
+            "moving": true
+          },
+          {
+            "node": "FrontWheelPair",
+            "path": "rotation",
+            "moving": true
+          }
+        ]
+      },
+      {
+        "name": "attack",
+        "channels": [
+          {
+            "node": "TramRoot",
+            "path": "translation",
+            "moving": true
+          }
+        ]
+      },
+      {
+        "name": "cast",
+        "channels": [
+          {
+            "node": "LeftPassengerDoor",
+            "path": "translation",
+            "moving": true
+          },
+          {
+            "node": "RightPassengerDoor",
+            "path": "translation",
+            "moving": true
+          }
+        ]
+      },
+      {
+        "name": "hurt",
+        "channels": [
+          {
+            "node": "TramRoot",
+            "path": "rotation",
+            "moving": true
+          }
+        ]
+      },
+      {
+        "name": "death",
+        "channels": [
+          {
+            "node": "TramRoot",
+            "path": "rotation",
+            "moving": true
+          },
+          {
+            "node": "TramRoot",
+            "path": "translation",
+            "moving": true
+          }
+        ]
+      }
+    ],
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ]
+  },
+  "limits": [
+    "Offline model and byte validation only; deployed importer, game rendering and arena play have not been tested.",
+    "Long tram mesh retains the existing uploaded-body collision radius of 0.6 and shared height normalization; visual-to-hitbox fit needs game review.",
+    "This is an original GGD tram, not a model extracted from the Kisaragi Station story."
+  ]
+}

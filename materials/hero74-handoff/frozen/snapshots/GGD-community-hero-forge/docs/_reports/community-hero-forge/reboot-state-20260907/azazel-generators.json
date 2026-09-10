@@ -1,0 +1,72 @@
+[
+  {
+    "step": "content:build",
+    "exit": 0,
+    "log": "azazel-gen-content-build.log"
+  },
+  {
+    "step": "caps:export",
+    "exit": 0,
+    "log": "azazel-gen-caps-export.log"
+  },
+  {
+    "step": "editorcov:build",
+    "exit": 0,
+    "log": "azazel-gen-editorcov-build.log"
+  },
+  {
+    "step": "bricks:build",
+    "exit": 0,
+    "log": "azazel-gen-bricks-build.log"
+  },
+  {
+    "step": "typecat:build",
+    "exit": 0,
+    "log": "azazel-gen-typecat-build.log"
+  },
+  {
+    "step": "spec:build",
+    "exit": 0,
+    "log": "azazel-gen-spec-build.log"
+  },
+  {
+    "step": "overview:build",
+    "exit": 0,
+    "log": "azazel-gen-overview-build.log"
+  },
+  {
+    "step": "skillforge:audit",
+    "exit": 0,
+    "log": "azazel-gen-skillforge-audit.log"
+  },
+  {
+    "step": "skillforge:visual-review:build",
+    "exit": 0,
+    "log": "azazel-gen-skillforge-visual-review-build.log"
+  },
+  {
+    "step": "skillforge:visual-sheets:build",
+    "exit": 0,
+    "log": "azazel-gen-skillforge-visual-sheets-build.log"
+  },
+  {
+    "step": "vfxforge:handback:build",
+    "exit": 0,
+    "log": "azazel-gen-vfxforge-handback-build.log"
+  },
+  {
+    "step": "skillremake:docs",
+    "exit": 0,
+    "log": "azazel-gen-skillremake-docs.log"
+  },
+  {
+    "step": "contract:numbers",
+    "exit": 0,
+    "log": "azazel-gen-contract-numbers.log"
+  },
+  {
+    "step": "atlas:build",
+    "exit": 0,
+    "log": "azazel-gen-atlas-build.log"
+  }
+]

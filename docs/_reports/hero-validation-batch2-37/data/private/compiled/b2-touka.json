@@ -1,0 +1,1384 @@
+{
+  "champion": {
+    "id": "b2-touka",
+    "name": "托卡・史考特",
+    "description": "勇者死了｜挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "鬥士",
+    "modelKey": "champ.thorne",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.6,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 35.000204081632646,
+      "healthRegen": 0.13085306122448978,
+      "maxMana": 26.357142857142858,
+      "manaRegen": 0,
+      "ad": 4.289142857142858,
+      "as": 0,
+      "mr": 2.639795918367347,
+      "armor": 0.4578979591836735,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 18,
+      "agi": 29,
+      "int": 13,
+      "strGrowth": 1.67,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.25,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-touka.q",
+        "name": "英雄招募延時坑",
+        "provenance": "editor-json",
+        "description": "「英雄招募延時坑！」\n以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑 2.5 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 2.5,
+            "side": "enemies",
+            "maxTargets": 4,
+            "delaySec": 0.6,
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 2,
+                "applyTo": "target",
+                "root": true
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "point",
+            "stopOnCasterDeath": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "circle",
+                "delaySec": 0.6,
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "root",
+                    "duration": 2,
+                    "applyTo": "target",
+                    "root": true
+                  }
+                ],
+                "stopOnCasterDeath": true,
+                "radius": 2.5,
+                "side": "enemies",
+                "maxTargets": 4,
+                "targetMode": "reresolve",
+                "anchor": "point"
+              }
+            ],
+            "castType": "ground",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-touka.w",
+        "name": "聖劍當釣竿使",
+        "provenance": "editor-json",
+        "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "leap",
+            "applyTo": "target",
+            "mode": "toPoint",
+            "apexHeight": 0.4,
+            "durationSec": 0.4,
+            "throwDistance": 1.83,
+            "dragToCaster": true,
+            "landRadius": 2,
+            "onLand": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+          "params": {
+            "mode": "toPoint",
+            "grabMode": "dragToCaster",
+            "throwMode": "distance",
+            "throwDistance": 100,
+            "durationSec": 0.4,
+            "apexHeight": 100,
+            "landRadius": 2,
+            "landDamageTier": "小",
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d"
+        }
+      },
+      "E": {
+        "id": "b2-touka.e",
+        "name": "入坑紀錄蓋個章",
+        "provenance": "editor-json",
+        "description": "「入坑紀錄蓋個章！」\n貼上 root 定身 2 秒的入坑紀錄，小級物理傷害；可被淨化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "root",
+            "duration": 2,
+            "applyTo": "target",
+            "root": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+          "params": {
+            "damage": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            },
+            "damageType": "physical",
+            "castTimeSec": 0.1,
+            "status": {
+              "statusId": "root",
+              "duration": 2,
+              "applyTo": "target",
+              "root": true
+            }
+          },
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+        }
+      },
+      "R": {
+        "id": "b2-touka.r",
+        "name": "錄取地下室再送出口",
+        "provenance": "editor-json",
+        "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離 4 單位並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                375,
+                750
+              ]
+            }
+          },
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "root",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "knockback",
+                "distance": 4,
+                "speed": 12,
+                "from": "caster",
+                "subtractGap": false,
+                "uncontrollable": false
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    375,
+                    750
+                  ]
+                }
+              },
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "root",
+                "count": "all",
+                "subject": "target",
+                "onConsumed": [
+                  {
+                    "kind": "knockback",
+                    "distance": 4,
+                    "speed": 12,
+                    "from": "caster",
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ]
+              }
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-touka.ex",
+    "passiveAbility": "b2-touka.passive",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
+    {
+      "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+      "schema": "template@1",
+      "name": "拉扯投擲",
+      "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
+      "family": "pull-throw",
+      "status": "enabled",
+      "params": {
+        "mode": {
+          "type": "enum",
+          "default": "toPoint",
+          "values": [
+            "toPoint",
+            "inPlace"
+          ],
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。"
+        },
+        "grabMode": {
+          "type": "enum",
+          "default": "dragToCaster",
+          "values": [
+            "dragToCaster",
+            "throwOnly"
+          ],
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。"
+        },
+        "throwMode": {
+          "type": "enum",
+          "default": "distance",
+          "values": [
+            "distance",
+            "point"
+          ],
+          "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。"
+        },
+        "apexHeight": {
+          "type": "number",
+          "default": 300,
+          "min": 0,
+          "max": 2000,
+          "unit": "wc3h",
+          "origin": "j:51828 A0U1 `SetUnitFlyHeightBJ( target, ( -3 × (Index − 11)² ) + 300, 0 )` —— 原作自己在 j:51827 的註解逐字「Index=11時高度=**300**」⇒ 峰高 **300 wc3**。`toApex(300) = 300 ÷ 250 = 1.2` ＝ 出貨 `godie-hapm.w.json` 的 `leap.apexHeight`（⚠️ 那一格**已經是 GGD 單位**，`schema/effects/leap.ts` 檔頭逐字「apexHeight arrives in GGD units」）。⚠️⚠️ GH#1060：2026-09-06 之前這一格 default 是 **1.2** —— 把出貨節點的 GGD 值抄進了一個 `wc3h` 槽，於是 `expand.ts` 的 `num()` 再換算一次 ⇒ 弧頂 **0.005** GGD ＝ 貼地滑行，⛔ 不是拋物線。⭐ 判準：`wc3h`／`wc3u` 槽的 default 一律是**原作那一把尺**上的值（JASS 字面值，整數），⛔ 不是出貨節點的值 —— 守衛 `pullThrowApex.test.ts` 掃全部模板。⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`toApex` 1/250 vs `toLen` 11/600）—— 這一格走 apex。max 2000 ＝ 全圖最高拋物線 1000（76-04, j:36757）的 2×，仍擋得住把 `SetUnitFlyHeightBJ` 第三參數（速率 5000）誤貼進來（同 `tpl-leap-strike`）。"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 0.42,
+          "min": 0.05,
+          "max": 10,
+          "unit": "s",
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。"
+        },
+        "throwDistance": {
+          "type": "number",
+          "default": 500,
+          "min": 0,
+          "max": 2600,
+          "unit": "wc3u",
+          "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+        },
+        "landRadius": {
+          "type": "number",
+          "default": 4.95,
+          "min": 0,
+          "max": 30,
+          "unit": "count",
+          "optional": true,
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。"
+        },
+        "landDamageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "optional": true,
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。"
+        },
+        "landApRatio": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 5,
+          "unit": "ratio",
+          "optional": true,
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。"
+        },
+        "grabInvulnSec": {
+          "type": "number",
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "optional": true,
+          "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。"
+        }
+      },
+      "requires": [],
+      "gapScore": 3,
+      "exemplar": {
+        "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）",
+        "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）"
+      }
+    },
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "b2-touka.passive",
+      "name": "工頭撤退有體力補貼",
+      "provenance": "editor-json",
+      "description": "「工頭撤退有體力補貼！」\n位移成功後回復自己 50 生命，每 3 秒一次；沒有死亡換身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDashOrBlink",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 50
+                    },
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 3,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDashOrBlink",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 50
+                  },
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 3,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "b2-touka.q",
+      "name": "英雄招募延時坑",
+      "provenance": "editor-json",
+      "description": "「英雄招募延時坑！」\n以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑 2.5 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.5,
+          "side": "enemies",
+          "maxTargets": 4,
+          "delaySec": 0.6,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 2,
+              "applyTo": "target",
+              "root": true
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "point",
+          "stopOnCasterDeath": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "delaySec": 0.6,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 2,
+                  "applyTo": "target",
+                  "root": true
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "radius": 2.5,
+              "side": "enemies",
+              "maxTargets": 4,
+              "targetMode": "reresolve",
+              "anchor": "point"
+            }
+          ],
+          "castType": "ground",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-touka.w",
+      "name": "聖劍當釣竿使",
+      "provenance": "editor-json",
+      "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "target",
+          "mode": "toPoint",
+          "apexHeight": 0.4,
+          "durationSec": 0.4,
+          "throwDistance": 1.83,
+          "dragToCaster": true,
+          "landRadius": 2,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+        "params": {
+          "mode": "toPoint",
+          "grabMode": "dragToCaster",
+          "throwMode": "distance",
+          "throwDistance": 100,
+          "durationSec": 0.4,
+          "apexHeight": 100,
+          "landRadius": 2,
+          "landDamageTier": "小",
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-touka.e",
+      "name": "入坑紀錄蓋個章",
+      "provenance": "editor-json",
+      "description": "「入坑紀錄蓋個章！」\n貼上 root 定身 2 秒的入坑紀錄，小級物理傷害；可被淨化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 2,
+          "applyTo": "target",
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.slash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.1,
+          "status": {
+            "statusId": "root",
+            "duration": 2,
+            "applyTo": "target",
+            "root": true
+          }
+        },
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-touka.r",
+      "name": "錄取地下室再送出口",
+      "provenance": "editor-json",
+      "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離 4 單位並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "root",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "knockback",
+              "distance": 4,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              }
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "root",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "knockback",
+                  "distance": 4,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "uncontrollable": false
+                }
+              ]
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-touka.ex",
+      "name": "工頭先下班",
+      "provenance": "editor-json",
+      "description": "「工頭先下班！」\n工頭先撤離至合法指定點，不改寫地形也不復活勇者。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "ground",
+      "maxRank": 1,
+      "cooldown": [
+        45
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "params": {
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "b2-touka.passive",
+      "name": "工頭撤退有體力補貼",
+      "provenance": "editor-json",
+      "description": "「工頭撤退有體力補貼！」\n位移成功後回復自己 50 生命，每 3 秒一次；沒有死亡換身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDashOrBlink",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 50
+                    },
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 3,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDashOrBlink",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 50
+                  },
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 3,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "b2-touka.ex",
+      "name": "工頭先下班",
+      "provenance": "editor-json",
+      "description": "「工頭先下班！」\n工頭先撤離至合法指定點，不改寫地形也不復活勇者。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "ground",
+      "maxRank": 1,
+      "cooldown": [
+        45
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "params": {
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "b2-touka.q",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.w",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.e",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.r",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

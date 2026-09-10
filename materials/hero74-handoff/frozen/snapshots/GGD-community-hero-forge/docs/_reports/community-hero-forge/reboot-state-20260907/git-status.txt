@@ -1,0 +1,47 @@
+ M README.md
+ M apps/editor/README.md
+ M apps/editor/src/hero/HeroInteractivePreview.tsx
+ M apps/editor/src/hero/HeroSlotEditor.test.tsx
+ M content/ability-templates/_index.json
+ M content/ability-templates/tpl-dragon-serpent.json
+ M content/bundle.json
+ M content/editor-target-profile.json
+ M content/manifest.json
+ M docs/_reports/editor-skill-acceptance-42x46.json
+ M docs/_reports/editor-skill-acceptance-42x46.md
+ M docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md
+ M docs/editor-contract/coordination/claim.community-hero-forge-integration.json
+ M docs/editor-contract/coordination/claim.editor-form-receipts.json
+ M docs/editor-contract/editor-vfx-template-handback.json
+ M docs/editor-contract/ggd-brick-census.json
+ M docs/editor-contract/ggd-bricks.json
+ M docs/editor-contract/ggd-bricks.md
+ M docs/editor-contract/ggd-editor-coverage.json
+ M docs/editor-contract/ggd-runtime-capabilities.json
+ M docs/editor-contract/ggd-runtime-capabilities.md
+ M docs/editor-contract/ggd-type-catalog.json
+ M docs/editor-contract/ggd-type-catalog.md
+ M docs/engine-atlas.json
+ M docs/reference/abilities.md
+ M docs/reference/grail-wishes.md
+ M docs/reference/items.md
+ M docs/reference/mechanics.md
+ M docs/reference/roster.md
+ M "docs/\345\233\272\346\234\211\350\203\275\345\212\233\345\217\212\345\257\266\345\205\267\347\270\275\350\246\275.md"
+ M "docs/\346\212\200\350\203\275\346\250\231\350\250\230\346\251\237\345\210\266\350\210\207\346\225\210\346\236\234\350\246\217\345\211\207.md"
+ M "docs/\346\212\200\350\203\275\347\267\250\350\274\257\345\231\250\345\274\225\346\223\216\351\240\210\347\237\245 20260811.md"
+ M packages/shared/src/content/editorCapabilities.ts
+ M packages/shared/src/content/heroForge/scenario.ts
+ M packages/shared/src/content/heroForge/scenarioSetup.ts
+ M packages/shared/src/content/import/heroPackage.ts
+ M packages/shared/src/content/schema/template.ts
+ M packages/shared/src/content/templates/expand.ts
+ M packages/shared/src/content/templates/paramsSchema.test.ts
+ M packages/shared/src/content/templates/paramsSchema.ts
+ M tools/skill-spec/curated.json
+?? content/ability-templates/tpl-effect-sequence.json
+?? content/ability-templates/tpl-event-passive.json
+?? docs/_reports/community-hero-forge/reboot-state-20260907/
+?? packages/shared/src/content/heroForge/communityRefinements/
+?? packages/shared/testkit/fixtures/
+?? tools/community-hero-forge/refine-azazel-handoff.mts

@@ -1,0 +1,14 @@
+
+> ggd@0.0.0 caps:export /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh caps:export caps:export:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 caps:export:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/capability-export/export.ts
+
+已寫入 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/editor-contract/ggd-runtime-capabilities.json
+已寫入 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/editor-contract/ggd-runtime-capabilities.md
+指紋 6f6d1de1
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: caps:export 完成（產物已重新上鎖）

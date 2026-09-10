@@ -1,0 +1,2446 @@
+{
+  "schema": "ggd-batch2-diversity-report@2",
+  "heroCount": 37,
+  "exactDuplicateKitPairs": [],
+  "nearDuplicateKitPairs": [],
+  "distinctNormalizedKits": 37,
+  "distinctNormalizedAbilities": 172,
+  "mostSharedAbilityHeroCount": 14,
+  "signatureCreativityVerified": false,
+  "limitations": [
+    "Not graph-isomorphism complete; recentCast slot changes or alternate effect encodings can evade it.",
+    "Status IDs are retained to avoid equating unrelated resources; synonymous status recipes need manual review.",
+    "Near-duplicate findings require semantic review; structurally distinct kits can still share the same signature loop.",
+    "No claim of gameplay correctness, balance, fun or asset readiness."
+  ],
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
+  "coverage": {
+    "templates": [
+      {
+        "key": "tpl-effect-sequence",
+        "occurrences": 124,
+        "heroCount": 37,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "tpl-event-passive",
+        "occurrences": 35,
+        "heroCount": 35,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "tpl-blink",
+        "occurrences": 14,
+        "heroCount": 14,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-fushi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-misery",
+          "b2-ned",
+          "b2-popp",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "tpl-heal",
+        "occurrences": 14,
+        "heroCount": 13,
+        "heroes": [
+          "b2-aladdin",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rin",
+          "b2-sinbad",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "tpl-single-strike",
+        "occurrences": 12,
+        "heroCount": 12,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-elma",
+          "b2-goblin",
+          "b2-luckyman",
+          "b2-matthias",
+          "b2-noor",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-touka",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "tpl-line-strike",
+        "occurrences": 8,
+        "heroCount": 8,
+        "heroes": [
+          "b2-aladdin",
+          "b2-guts",
+          "b2-kaede",
+          "b2-ned",
+          "b2-popp",
+          "b2-shadow",
+          "b2-sinbad",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "tpl-apply-status",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-keyaru",
+          "b2-kumoko",
+          "b2-nube",
+          "b2-orphen",
+          "b2-shinchan"
+        ]
+      },
+      {
+        "key": "tpl-buff-self",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-elma",
+          "b2-fushi",
+          "b2-kaede",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "tpl-periodic-field",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-kaede",
+          "b2-klaus",
+          "b2-kumoko"
+        ]
+      },
+      {
+        "key": "tpl-blink-strike",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-orphen",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "tpl-charge-push",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-guts",
+          "b2-rem"
+        ]
+      },
+      {
+        "key": "tpl-on-hit-react",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-maple",
+          "b2-rem"
+        ]
+      },
+      {
+        "key": "tpl-teleport",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-boxxo",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "tpl-drain-leech",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-orphen"
+        ]
+      },
+      {
+        "key": "tpl-leap-strike",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-ned"
+        ]
+      },
+      {
+        "key": "tpl-lock-combo",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-albus"
+        ]
+      },
+      {
+        "key": "tpl-pull-throw",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "tpl-summon-agent",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-aladdin"
+        ]
+      },
+      {
+        "key": "tpl-transform",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-maple"
+        ]
+      }
+    ],
+    "effects": [
+      {
+        "key": "applyStatus",
+        "occurrences": 61,
+        "heroCount": 29,
+        "heroes": [
+          "b2-aladdin",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kaede",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "shield",
+        "occurrences": 39,
+        "heroCount": 27,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-naofumi",
+          "b2-noor",
+          "b2-nube",
+          "b2-rem",
+          "b2-shadow",
+          "b2-takopi",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "damage",
+        "occurrences": 51,
+        "heroCount": 26,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-elma",
+          "b2-goblin",
+          "b2-guts",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maple",
+          "b2-matthias",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-touka",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "heal",
+        "occurrences": 38,
+        "heroCount": 25,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-guts",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-naofumi",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "consumeStatus",
+        "occurrences": 28,
+        "heroCount": 24,
+        "heroes": [
+          "b2-aladdin",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-noor",
+          "b2-popp",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "blink",
+        "occurrences": 23,
+        "heroCount": 19,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-fushi",
+          "b2-haga",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-orphen",
+          "b2-popp",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "restore",
+        "occurrences": 23,
+        "heroCount": 18,
+        "heroes": [
+          "b2-aladdin",
+          "b2-elma",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-klaus",
+          "b2-luckyman",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rin",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "applyBuff",
+        "occurrences": 13,
+        "heroCount": 13,
+        "heroes": [
+          "b2-aladdin",
+          "b2-elma",
+          "b2-fushi",
+          "b2-guts",
+          "b2-kaede",
+          "b2-maple",
+          "b2-matthias",
+          "b2-ned",
+          "b2-noor",
+          "b2-rem",
+          "b2-shadow",
+          "b2-sinbad",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "delayed",
+        "occurrences": 12,
+        "heroCount": 10,
+        "heroes": [
+          "b2-boxxo",
+          "b2-goblin",
+          "b2-kaede",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-misery",
+          "b2-shadow",
+          "b2-touka",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "knockback",
+        "occurrences": 9,
+        "heroCount": 9,
+        "heroes": [
+          "b2-goblin",
+          "b2-guts",
+          "b2-makoto",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-nube",
+          "b2-rem",
+          "b2-shinchan",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "damageLine",
+        "occurrences": 8,
+        "heroCount": 8,
+        "heroes": [
+          "b2-aladdin",
+          "b2-guts",
+          "b2-kaede",
+          "b2-ned",
+          "b2-popp",
+          "b2-shadow",
+          "b2-sinbad",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "dispel",
+        "occurrences": 10,
+        "heroCount": 8,
+        "heroes": [
+          "b2-boxxo",
+          "b2-haga",
+          "b2-keyaru",
+          "b2-maomao",
+          "b2-nube",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "leap",
+        "occurrences": 7,
+        "heroCount": 7,
+        "heroes": [
+          "b2-albus",
+          "b2-boxxo",
+          "b2-guts",
+          "b2-ned",
+          "b2-rem",
+          "b2-takopi",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "dot",
+        "occurrences": 6,
+        "heroCount": 5,
+        "heroes": [
+          "b2-albus",
+          "b2-kumoko",
+          "b2-maomao",
+          "b2-maple",
+          "b2-orphen"
+        ]
+      },
+      {
+        "key": "pull",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-goblin",
+          "b2-kisaragi",
+          "b2-noor",
+          "b2-rem",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "damageArea",
+        "occurrences": 5,
+        "heroCount": 4,
+        "heroes": [
+          "b2-kisaragi",
+          "b2-nube",
+          "b2-shinchan",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "spendHealth",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-elma",
+          "b2-fushi",
+          "b2-guts",
+          "b2-rem"
+        ]
+      },
+      {
+        "key": "manaBarrier",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-kaede",
+          "b2-misery",
+          "b2-sinbad"
+        ]
+      },
+      {
+        "key": "weightedBranch",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-kaiji",
+          "b2-kisaragi",
+          "b2-luckyman"
+        ]
+      },
+      {
+        "key": "evasion",
+        "occurrences": 3,
+        "heroCount": 2,
+        "heroes": [
+          "b2-bojji",
+          "b2-luckyman"
+        ]
+      },
+      {
+        "key": "modifyCooldown",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-albus",
+          "b2-orphen"
+        ]
+      },
+      {
+        "key": "spawnVfx",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-orphen",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "spendMana",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-kaiji",
+          "b2-rin"
+        ]
+      },
+      {
+        "key": "summon",
+        "occurrences": 3,
+        "heroCount": 2,
+        "heroes": [
+          "b2-aladdin",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "championForm",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-maple"
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "key": "onDamageTaken",
+        "occurrences": 7,
+        "heroCount": 7,
+        "heroes": [
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-kisaragi",
+          "b2-maple",
+          "b2-noor",
+          "b2-rem"
+        ]
+      },
+      {
+        "key": "onBasicAttack",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-albus",
+          "b2-guts",
+          "b2-kaede",
+          "b2-orphen",
+          "b2-rin"
+        ]
+      },
+      {
+        "key": "onDashOrBlink",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-ned",
+          "b2-popp",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "onCrowdControlApplied",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-goblin",
+          "b2-kumoko",
+          "b2-matthias",
+          "b2-shinchan"
+        ]
+      },
+      {
+        "key": "onAllyDamaged",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-naofumi",
+          "b2-nube",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "onUltimateCast",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-aladdin",
+          "b2-kaiji",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "onCrowdControlReceived",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-misery",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "onEvade",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-bojji",
+          "b2-luckyman"
+        ]
+      },
+      {
+        "key": "onHeal",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-keyaru",
+          "b2-maomao"
+        ]
+      },
+      {
+        "key": "onAbilityCast",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-haga"
+        ]
+      },
+      {
+        "key": "onInterval",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-klaus"
+        ]
+      },
+      {
+        "key": "onReflectSuccess",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-noor"
+        ]
+      },
+      {
+        "key": "onShieldGained",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "onUltimateHit",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-makoto"
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "key": "status",
+        "occurrences": 9,
+        "heroCount": 9,
+        "heroes": [
+          "b2-fushi",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kaede",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-misery",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "recentCast",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-albus",
+          "b2-boxxo",
+          "b2-maple",
+          "b2-naofumi",
+          "b2-popp"
+        ]
+      },
+      {
+        "key": "stat",
+        "occurrences": 5,
+        "heroCount": 4,
+        "heroes": [
+          "b2-elma",
+          "b2-guts",
+          "b2-rem",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "distance",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-ned",
+          "b2-rem",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "form",
+        "occurrences": 2,
+        "heroCount": 1,
+        "heroes": [
+          "b2-maple"
+        ]
+      }
+    ],
+    "statuses": [
+      {
+        "key": "magic-break",
+        "occurrences": 15,
+        "heroCount": 9,
+        "heroes": [
+          "b2-haga",
+          "b2-keyaru",
+          "b2-makoto",
+          "b2-matthias",
+          "b2-misery",
+          "b2-nube",
+          "b2-orphen",
+          "b2-rin",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "root",
+        "occurrences": 14,
+        "heroCount": 9,
+        "heroes": [
+          "b2-bojji",
+          "b2-kisaragi",
+          "b2-kumoko",
+          "b2-nube",
+          "b2-popp",
+          "b2-shinchan",
+          "b2-touka",
+          "b2-uncle",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "blind",
+        "occurrences": 7,
+        "heroCount": 4,
+        "heroes": [
+          "b2-goblin",
+          "b2-kisaragi",
+          "b2-matthias",
+          "b2-misery"
+        ]
+      },
+      {
+        "key": "numbness",
+        "occurrences": 6,
+        "heroCount": 4,
+        "heroes": [
+          "b2-bojji",
+          "b2-kisaragi",
+          "b2-rem",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "rage",
+        "occurrences": 10,
+        "heroCount": 4,
+        "heroes": [
+          "b2-aladdin",
+          "b2-keyaru",
+          "b2-misery",
+          "b2-noor"
+        ]
+      },
+      {
+        "key": "spell-shield",
+        "occurrences": 8,
+        "heroCount": 4,
+        "heroes": [
+          "b2-naofumi",
+          "b2-noor",
+          "b2-takopi",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "confusion",
+        "occurrences": 4,
+        "heroCount": 2,
+        "heroes": [
+          "b2-kisaragi",
+          "b2-shinchan"
+        ]
+      },
+      {
+        "key": "curse",
+        "occurrences": 7,
+        "heroCount": 2,
+        "heroes": [
+          "b2-kisaragi",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "moon-combo",
+        "occurrences": 4,
+        "heroCount": 2,
+        "heroes": [
+          "b2-boxxo",
+          "b2-maomao"
+        ]
+      },
+      {
+        "key": "nen-banked",
+        "occurrences": 6,
+        "heroCount": 2,
+        "heroes": [
+          "b2-kaiji",
+          "b2-rin"
+        ]
+      },
+      {
+        "key": "poison",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-maomao",
+          "b2-maple"
+        ]
+      },
+      {
+        "key": "red-comet",
+        "occurrences": 4,
+        "heroCount": 2,
+        "heroes": [
+          "b2-klaus",
+          "b2-shinchan"
+        ]
+      },
+      {
+        "key": "armor-break",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-matthias"
+        ]
+      },
+      {
+        "key": "berserk",
+        "occurrences": 3,
+        "heroCount": 1,
+        "heroes": [
+          "b2-fushi"
+        ]
+      },
+      {
+        "key": "burn",
+        "occurrences": 2,
+        "heroCount": 1,
+        "heroes": [
+          "b2-popp"
+        ]
+      },
+      {
+        "key": "camera-mark",
+        "occurrences": 2,
+        "heroCount": 1,
+        "heroes": [
+          "b2-haga"
+        ]
+      },
+      {
+        "key": "grievous-wounds",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-maomao"
+        ]
+      },
+      {
+        "key": "octuple-slash-window",
+        "occurrences": 2,
+        "heroCount": 1,
+        "heroes": [
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "slow40",
+        "occurrences": 2,
+        "heroCount": 1,
+        "heroes": [
+          "b2-makoto"
+        ]
+      },
+      {
+        "key": "three-sword-style",
+        "occurrences": 3,
+        "heroCount": 1,
+        "heroes": [
+          "b2-kaede"
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "key": "法師",
+        "occurrences": 7,
+        "heroCount": 7,
+        "heroes": [
+          "b2-aladdin",
+          "b2-makoto",
+          "b2-misery",
+          "b2-popp",
+          "b2-rin",
+          "b2-uncle",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "鬥士",
+        "occurrences": 6,
+        "heroCount": 6,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-goblin",
+          "b2-ned",
+          "b2-sinbad",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "坦克",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-elma",
+          "b2-kisaragi",
+          "b2-luckyman",
+          "b2-maple",
+          "b2-noor"
+        ]
+      },
+      {
+        "key": "軟輔",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-haga",
+          "b2-kaiji",
+          "b2-maomao",
+          "b2-shinchan",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "法鬥",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-kaede",
+          "b2-keyaru",
+          "b2-matthias",
+          "b2-orphen"
+        ]
+      },
+      {
+        "key": "硬輔",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-naofumi",
+          "b2-nube"
+        ]
+      },
+      {
+        "key": "法刺",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-kumoko",
+          "b2-shadow",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "狂戰",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-guts",
+          "b2-rem"
+        ]
+      },
+      {
+        "key": "射手",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-klaus"
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "key": "cast:self/allies-or-self",
+        "occurrences": 45,
+        "heroCount": 37,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "applyTo:self",
+        "occurrences": 84,
+        "heroCount": 35,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "shape:single",
+        "occurrences": 76,
+        "heroCount": 34,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "cast:self/enemies",
+        "occurrences": 52,
+        "heroCount": 30,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-uncle",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "cast:targeted/enemies",
+        "occurrences": 61,
+        "heroCount": 30,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-elma",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "applyTo:target",
+        "occurrences": 49,
+        "heroCount": 24,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-haga",
+          "b2-kisaragi",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-nube",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "cast:ground/allies-or-self",
+        "occurrences": 23,
+        "heroCount": 19,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-fushi",
+          "b2-guts",
+          "b2-kaede",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-misery",
+          "b2-ned",
+          "b2-popp",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "cast:targeted/allies-or-self",
+        "occurrences": 30,
+        "heroCount": 19,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-haga",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-naofumi",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "to:point",
+        "occurrences": 15,
+        "heroCount": 15,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-fushi",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-misery",
+          "b2-ned",
+          "b2-popp",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "cast:ground/enemies",
+        "occurrences": 11,
+        "heroCount": 10,
+        "heroes": [
+          "b2-boxxo",
+          "b2-goblin",
+          "b2-guts",
+          "b2-kaede",
+          "b2-kisaragi",
+          "b2-makoto",
+          "b2-ned",
+          "b2-rem",
+          "b2-touka",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "shape:circle",
+        "occurrences": 10,
+        "heroCount": 9,
+        "heroes": [
+          "b2-boxxo",
+          "b2-goblin",
+          "b2-kaede",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-shadow",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "side:enemies",
+        "occurrences": 9,
+        "heroCount": 8,
+        "heroes": [
+          "b2-goblin",
+          "b2-kaede",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-shadow",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "targetMode:reresolve",
+        "occurrences": 8,
+        "heroCount": 8,
+        "heroes": [
+          "b2-boxxo",
+          "b2-goblin",
+          "b2-kaede",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-shadow",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "who:self",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-albus",
+          "b2-kaede",
+          "b2-misery",
+          "b2-orphen",
+          "b2-sinbad"
+        ]
+      },
+      {
+        "key": "anchor:caster",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-boxxo",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "to:targetUnit",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-haga",
+          "b2-orphen",
+          "b2-shadow",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "anchor:point",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-goblin",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "to:caster",
+        "occurrences": 4,
+        "heroCount": 2,
+        "heroes": [
+          "b2-kisaragi",
+          "b2-naofumi"
+        ]
+      },
+      {
+        "key": "side:allies",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-boxxo"
+        ]
+      },
+      {
+        "key": "to:alternate",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-maple"
+        ]
+      },
+      {
+        "key": "who:caster",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-zenitsu"
+        ]
+      }
+    ],
+    "timing": [
+      {
+        "key": "duration:3",
+        "occurrences": 38,
+        "heroCount": 25,
+        "heroes": [
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-naofumi",
+          "b2-noor",
+          "b2-nube",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-takopi",
+          "b2-uncle",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "internalCooldown:3",
+        "occurrences": 21,
+        "heroCount": 21,
+        "heroes": [
+          "b2-albus",
+          "b2-elma",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-nube",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-uncle",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "duration:2",
+        "occurrences": 24,
+        "heroCount": 20,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kisaragi",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-rem",
+          "b2-shadow",
+          "b2-takopi",
+          "b2-touka",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "duration:4",
+        "occurrences": 18,
+        "heroCount": 15,
+        "heroes": [
+          "b2-aladdin",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaede",
+          "b2-keyaru",
+          "b2-klaus",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "count:3",
+        "occurrences": 14,
+        "heroCount": 12,
+        "heroes": [
+          "b2-boxxo",
+          "b2-goblin",
+          "b2-haga",
+          "b2-kaede",
+          "b2-keyaru",
+          "b2-klaus",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-nube",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "duration:1",
+        "occurrences": 15,
+        "heroCount": 9,
+        "heroes": [
+          "b2-goblin",
+          "b2-kisaragi",
+          "b2-matthias",
+          "b2-misery",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "durationSec:3",
+        "occurrences": 10,
+        "heroCount": 8,
+        "heroes": [
+          "b2-kaede",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-maomao",
+          "b2-maple",
+          "b2-misery",
+          "b2-orphen",
+          "b2-sinbad"
+        ]
+      },
+      {
+        "key": "duration:2.5",
+        "occurrences": 8,
+        "heroCount": 7,
+        "heroes": [
+          "b2-keyaru",
+          "b2-misery",
+          "b2-nube",
+          "b2-orphen",
+          "b2-shinchan",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "internalCooldown:4",
+        "occurrences": 7,
+        "heroCount": 7,
+        "heroes": [
+          "b2-aladdin",
+          "b2-boxxo",
+          "b2-kaiji",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-misery",
+          "b2-yogiri"
+        ]
+      },
+      {
+        "key": "internalCooldown:2",
+        "occurrences": 6,
+        "heroCount": 6,
+        "heroes": [
+          "b2-bojji",
+          "b2-fushi",
+          "b2-guts",
+          "b2-keyaru",
+          "b2-noor",
+          "b2-orphen"
+        ]
+      },
+      {
+        "key": "intervalSec:1",
+        "occurrences": 7,
+        "heroCount": 6,
+        "heroes": [
+          "b2-boxxo",
+          "b2-kaede",
+          "b2-kumoko",
+          "b2-maomao",
+          "b2-maple",
+          "b2-orphen"
+        ]
+      },
+      {
+        "key": "delaySec:0.5",
+        "occurrences": 5,
+        "heroCount": 5,
+        "heroes": [
+          "b2-boxxo",
+          "b2-goblin",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto"
+        ]
+      },
+      {
+        "key": "durationSec:4",
+        "occurrences": 6,
+        "heroCount": 5,
+        "heroes": [
+          "b2-aladdin",
+          "b2-kaiji",
+          "b2-maple",
+          "b2-rin",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "durationSec:0.4",
+        "occurrences": 4,
+        "heroCount": 4,
+        "heroes": [
+          "b2-guts",
+          "b2-ned",
+          "b2-rem",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "intervalSec:0.5",
+        "occurrences": 5,
+        "heroCount": 4,
+        "heroes": [
+          "b2-goblin",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto"
+        ]
+      },
+      {
+        "key": "duration:1.8",
+        "occurrences": 3,
+        "heroCount": 3,
+        "heroes": [
+          "b2-bojji",
+          "b2-noor",
+          "b2-popp"
+        ]
+      },
+      {
+        "key": "count:1",
+        "occurrences": 4,
+        "heroCount": 2,
+        "heroes": [
+          "b2-aladdin",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "count:6",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-klaus",
+          "b2-kumoko"
+        ]
+      },
+      {
+        "key": "delaySec:0.3",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-klaus",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "delaySec:0.7",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-misery",
+          "b2-shadow"
+        ]
+      },
+      {
+        "key": "duration:1.5",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-nube",
+          "b2-rem"
+        ]
+      },
+      {
+        "key": "intervalSec:0.3",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-albus",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "count:2",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-haga"
+        ]
+      },
+      {
+        "key": "delaySec:0.55",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "delaySec:0.6",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "delaySec:1",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-kaede"
+        ]
+      },
+      {
+        "key": "duration:0.5",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "duration:1.2",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-makoto"
+        ]
+      },
+      {
+        "key": "duration:5",
+        "occurrences": 3,
+        "heroCount": 1,
+        "heroes": [
+          "b2-kisaragi"
+        ]
+      },
+      {
+        "key": "durationSec:0.1",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "durationSec:0.35",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-boxxo"
+        ]
+      },
+      {
+        "key": "durationSec:0.8999999999999999",
+        "occurrences": 2,
+        "heroCount": 1,
+        "heroes": [
+          "b2-albus"
+        ]
+      },
+      {
+        "key": "durationSec:1.8",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-bojji"
+        ]
+      },
+      {
+        "key": "internalCooldown:0",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-noor"
+        ]
+      },
+      {
+        "key": "internalCooldown:0.5",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-luckyman"
+        ]
+      },
+      {
+        "key": "internalCooldown:0.7",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-kaede"
+        ]
+      },
+      {
+        "key": "internalCooldown:5",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-shadow"
+        ]
+      }
+    ],
+    "vfx": [
+      {
+        "key": "fx.prim.arcane.pulse-sm",
+        "occurrences": 88,
+        "heroCount": 35,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-goblin",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaede",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-matthias",
+          "b2-misery",
+          "b2-naofumi",
+          "b2-ned",
+          "b2-noor",
+          "b2-nube",
+          "b2-orphen",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-touka",
+          "b2-uncle",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "fx.prim.wind.pulse-sm",
+        "occurrences": 34,
+        "heroCount": 21,
+        "heroes": [
+          "b2-aladdin",
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-elma",
+          "b2-fushi",
+          "b2-guts",
+          "b2-haga",
+          "b2-kaiji",
+          "b2-keyaru",
+          "b2-makoto",
+          "b2-maomao",
+          "b2-maple",
+          "b2-naofumi",
+          "b2-nube",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi"
+        ]
+      },
+      {
+        "key": "fx.prim.arcane.dash",
+        "occurrences": 22,
+        "heroCount": 20,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-boxxo",
+          "b2-fushi",
+          "b2-guts",
+          "b2-kisaragi",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-luckyman",
+          "b2-misery",
+          "b2-ned",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-shinchan",
+          "b2-sinbad",
+          "b2-takopi",
+          "b2-touka",
+          "b2-yogiri",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "fx.prim.arcane.slash",
+        "occurrences": 13,
+        "heroCount": 13,
+        "heroes": [
+          "b2-albus",
+          "b2-bojji",
+          "b2-elma",
+          "b2-goblin",
+          "b2-luckyman",
+          "b2-matthias",
+          "b2-ned",
+          "b2-noor",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-touka",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "fx.prim.arcane.bolt",
+        "occurrences": 12,
+        "heroCount": 12,
+        "heroes": [
+          "b2-aladdin",
+          "b2-guts",
+          "b2-kaede",
+          "b2-klaus",
+          "b2-ned",
+          "b2-orphen",
+          "b2-popp",
+          "b2-rem",
+          "b2-rin",
+          "b2-shadow",
+          "b2-sinbad",
+          "b2-uncle"
+        ]
+      },
+      {
+        "key": "fx.prim.arcane.nova",
+        "occurrences": 10,
+        "heroCount": 9,
+        "heroes": [
+          "b2-goblin",
+          "b2-kaede",
+          "b2-klaus",
+          "b2-kumoko",
+          "b2-makoto",
+          "b2-nube",
+          "b2-rin",
+          "b2-shinchan",
+          "b2-touka"
+        ]
+      },
+      {
+        "key": "fx.prim.lightning.slash",
+        "occurrences": 2,
+        "heroCount": 2,
+        "heroes": [
+          "b2-shadow",
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "fx.prim.ice.pulse-sm",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-popp"
+        ]
+      },
+      {
+        "key": "fx.prim.lightning.nova",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-zenitsu"
+        ]
+      },
+      {
+        "key": "fx.prim.physical.bolt",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-makoto"
+        ]
+      },
+      {
+        "key": "fx.prim.void.nova",
+        "occurrences": 1,
+        "heroCount": 1,
+        "heroes": [
+          "b2-kisaragi"
+        ]
+      }
+    ]
+  },
+  "multiCardSlots": 11,
+  "semanticReview": {
+    "schema": "ggd-batch2-similarity-review@2",
+    "reviewType": "agent-semantic-review",
+    "pairs": [
+      {
+        "heroes": [
+          "b2-kumoko",
+          "b2-klaus"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "E 都是 blink；R 都是 caster-anchor delayed circle reresolve，0.5秒共6跳、同半徑，E→R 的搬位因果相同。",
+        "fitAndJoke": "蜘蛛子以自身為租屋領地主人；克勞斯以自身為行動工作站。兩者都合理表現跟身活動區。 蜘蛛子躲房東後把客廳毒圈搬走；克勞斯搬辦公室後週期作業真的跟著跑。",
+        "difference": "蜘蛛子另一條 Q root→W額外獨立DOT；克勞斯另一條Q授權→W分三次檢查，EX可取消未執行工作。",
+        "residual": "搬位跟身傷害場仍是同一招牌子機制；physical/magic數字差不當作原創差異。"
+      },
+      {
+        "heroes": [
+          "b2-rin",
+          "b2-kaiji"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "spendMana 真扣魔力，bankAs nen-banked，後招 bankedBonus 讀實付值並有180上限。",
+        "fitAndJoke": "凜寶石消耗與開司押注均有先支付再回收價值的原作辨識。 凜預付宝石刷卡後擊發清空；開司押當前午餐錢，選續押打擊或退桌換盾。",
+        "difference": "凜Q固定120、W擊發消耗銀行，另一鏈E記帳→R回魔；開司Q當前35%、W只讀不耗、E消耗換盾，R有限亂數。",
+        "residual": "兩者第一條都是支付資源換banked傷害，承認重複，不把固定/百分比視為完全不同引擎能力。"
+      },
+      {
+        "heroes": [
+          "b2-naofumi",
+          "b2-takopi"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "指定友方 spell-shield 暫態，再consumeStatus換同一友方heal；標記本身未填免疫旗標。",
+        "fitAndJoke": "盾勇保護隊友的通行證；章魚嗶以友善貼紙作救援道具，均符合支援定位。 尚文盾牌通行證可兌換醫療；章魚嗶集貼紙換繃帶。回復確實要耗掉該友方持有物。",
+        "difference": "尚文Q先有實際盾240、標記3秒，E清門後R搬人；章魚嗶E單純貼紙4秒，另一條Q先搬近→W距離盾。",
+        "residual": "貼紙/通行證是同一友方標記換治療機制，數字190/200與笑話不洗成獨特。"
+      },
+      {
+        "heroes": [
+          "b2-bojji",
+          "b2-luckyman"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "有限evasion提升，敵人真攻擊抽到evade事件後，被動給自身回復；同受正式機率上限約束。",
+        "fitAndJoke": "波吉靠靈巧近身迴避；幸運超人靠偶然落空，兩種來源都可合理落在相同機率原語。 波吉讓大個子揮空後喘口氣；幸運超人香蕉皮救場還撿到魔力零錢，失敗抽樣不退款。",
+        "difference": "波吉P回血，另一链繳械轉定身；幸運P回魔，E另開技能迴避通道並有亂數補給。",
+        "residual": "Q→被攻擊→onEvade恢復仍同族；HP/Mana指標差不能聲稱根本不同防禦機制。 幸運超人自己的Q與E也是同族迴避→P回魔，兩條只區分普攻／技能通道，不稱兩種新招牌。"
+      },
+      {
+        "heroes": [
+          "b2-guts",
+          "b2-elma"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "主動spendHealth跨入低生命閾值，後招條件式給保護或回復；另外都有有限AD增益。",
+        "fitAndJoke": "凱茲以帶傷強行戰鬥；艾爾瑪照攻略壓血，兩者能承擔主動扣血的角色笑點。 凱茲先簽加班扣血才領工傷補助；艾爾瑪照攻略把血條壓低才拿厚盾。",
+        "difference": "凱茲18%扣血與AD90同槽，後招低血heal160且P低血追加普攻；艾爾瑪15%+小盾，後招低血300盾，另一鏈AD→有AD比率重擊。",
+        "residual": "支付生命→低血條件保護是共用核心，不把回復/盾或15/18差異說成無相似。"
+      },
+      {
+        "heroes": [
+          "b2-popp",
+          "b2-albus"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "先施放位移技能，4秒 recentCast 窗口內給隊友追加治療；不因英雄名字或回復量而視為新機制。",
+        "fitAndJoke": "何布嘴上撤退卻轉身救隊友；阿爾巴斯抄捷徑速通才趕上急救。兩者都以實際位移施法記錄解鎖救援，缺前置與移除條件分支時少補血。",
+        "difference": "何布另一條是消火候換定身；阿爾巴斯則縮已使用Q的冷卻後重新操作。",
+        "residual": "這條移動後救援連動相同；接受角色契合的共用子玩法，不計為兩種原創救援。"
+      },
+      {
+        "heroes": [
+          "b2-goblin",
+          "b2-touka"
+        ],
+        "classification": "accepted-similar-signature-family",
+        "shared": "先強制移動敵人進入固定位置的延時區，再由區域重新選敵。",
+        "fitAndJoke": "哥布林殺手把客人拉進重複施工點名；托卡用聖劍釣竿把求職勇者丟進招募坑。實際拉人／拋投會改變後招命中與定身。",
+        "difference": "哥殺單體地面拉近後三次傷害；托卡低弧拋投後單次延遲定身，並消耗定身再送出坑。",
+        "residual": "同屬搬人進區域的招牌家族，不把三跳改一跳或傷害改控制誇稱毫無相似。"
+      },
+      {
+        "heroes": [
+          "b2-rem",
+          "b2-guts"
+        ],
+        "classification": "accepted-similar-signature-family",
+        "shared": "同槽自損生命加AD，跨入半血以下後用另一槽自療，另共用charge-push落地傷推。",
+        "fitAndJoke": "蕾姆女僕鬼化加班先扣生命，再領差評急救；凱茲清運大劍工人簽自願加班後領工傷補助。兩者均真付血改變治療門檻，笑點是代價與補助可操作。",
+        "difference": "蕾姆還要拉近客人才能繳械，受擊固定反擊；凱茲低血普攻追加傷害且buff服務普攻清運，沒有拉近繳械。",
+        "residual": "這對比單純共享坦克盾更相近，接受同族狂戰加班循環，不以傷害量、命名或角色題材計成兩種全新玩法。"
+      },
+      {
+        "heroes": [
+          "b2-albus",
+          "b2-orphen"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "先施放Q進入冷卻，W才縮短Q剩餘冷卻；1.5與2秒不是新機制差異。",
+        "fitAndJoke": "阿爾巴斯跳過已跑的速通分段；歐菲把催收函冷卻縮短好重寄。真正的冷卻剩餘值下降，没先Q就沒有收益。",
+        "difference": "阿爾巴斯另一鏈位移解鎖友軍急救；歐菲R登門後以真普攻提早觸發P回魔，Q還有固定訂金自療與DOT。",
+        "residual": "兩者同一冷卻回收子循環，不能以文案、數值差異計作新創意。"
+      },
+      {
+        "heroes": [
+          "b2-touka",
+          "b2-shinchan"
+        ],
+        "classification": "accepted-similar-loop",
+        "shared": "對敵人主動施root，後招消耗root並推離4單位；換槽或附基礎傷不消除相似。",
+        "fitAndJoke": "托卡記錄入坑再把應徵者送出口；小新讓踩到玩具的敵人被彈簧玩具箱送走。缺root時搬人失敗是可操作笑點。",
+        "difference": "托卡另一鏈把人拋進延遲坑；小新給友軍真移速加成去參與追逐接力。",
+        "residual": "控制標記消耗搬人相同；視為角色合適的共享子玩法，非兩套新搬人機制。"
+      },
+      {
+        "heroes": [
+          "b2-boxxo",
+          "b2-keyaru"
+        ],
+        "classification": "accepted-similar-loop-family",
+        "shared": "治療後自己取得暫態憑證，再消憑證給指定隊友盾。",
+        "fitAndJoke": "阿箱售出飲料主動發營業券供兌贈品；凱亞爾自己接受真治療事件建立病歷供職災保險。收据缺少時没有护盾。",
+        "difference": "阿箱對友軍施法即產券並可搬快閃補給區；凱亞爾是受療事件，且病歷可選換魔力，沒有移動補給區。",
+        "residual": "同為治療憑證兌盾家族，真事件與主動產券的差異不掩蓋共同結構。"
+      }
+    ]
+  },
+  "uniqueSignatureCount": null,
+  "interpretation": "結構診斷不是玩法數。相似例外保留原分類，不以改名、VFX或數值冒稱新創意；逐名最接近者差異與逐對例外共同審查。"
+}

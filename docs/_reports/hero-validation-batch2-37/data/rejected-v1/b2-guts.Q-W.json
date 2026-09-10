@@ -1,0 +1,2156 @@
+{
+  "projectSha256": "c104120b2bf981ab39efbc16d69a1ef05ef76220a1d0faf7b772de1bdbdeaf4c",
+  "compiledSha256": "bbe889bad83a0000e3a5866a0d77b8d7d283a7838b7a5907d50770a9a239fd72",
+  "good": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1403.120293061224,
+      "casterPos": {
+        "x": -40.09999999997185,
+        "z": 0
+      },
+      "targetHp": 8688.14815630028,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -38.90000000002815,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 1
+    },
+    "after": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1409.4018930612224,
+      "casterPos": {
+        "x": -40.09999999999928,
+        "z": 0
+      },
+      "targetHp": 6632.034594588875,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -38.54824601754993,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-guts.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 730.3539763527734,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 730.3539763527734,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "point": {
+            "x": -38.90000000002815,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999998874,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000001126,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999998874,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000001126,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.90000000000072,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 610.3539763527734,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.90000000000072,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 730.3539763527734,
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": true,
+            "isCounter": false,
+            "shakeMag": 0.51,
+            "shakeStyle": "directional",
+            "sparkKind": "block",
+            "camKick": 0.25,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "guardBreak",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "x": -38.90000000000072,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.90000000000072,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 1460.7079527055469,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.90000000000072,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 1460.7079527055469,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.35175398245079537,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "knockdown",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "x": -38.90000000000072,
+          "z": 0,
+          "ticks": 14
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 2,
+      "castBegin": 2,
+      "statusApplied": 2,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 2,
+      "damage": 3,
+      "recoveryEnd": 2,
+      "hitImpact": 3,
+      "shieldGained": 1,
+      "guardBreak": 1,
+      "knockdown": 1
+    },
+    "digestTrail": [
+      3638341349,
+      1898253867,
+      2321593848,
+      1515739723,
+      72109527,
+      595847112,
+      2515891119,
+      4172287539,
+      689440890,
+      3769046304,
+      1213834043,
+      3832766387,
+      2969007199,
+      3616103122,
+      2971728215,
+      1612928742,
+      2033643828,
+      92241202,
+      614347701,
+      1771636803,
+      1659542844,
+      3713967351,
+      351313411,
+      2956372880,
+      1512893405,
+      747007629,
+      1849324330,
+      502690482,
+      3664368916,
+      868580587,
+      2117644267,
+      4046074999,
+      26923556,
+      2406260987,
+      3897387293,
+      2869291766,
+      2579228656,
+      3288101952,
+      3006440770,
+      3596166234,
+      2462631759,
+      1481345755,
+      3879627539,
+      441299706,
+      2591857189,
+      2582624804,
+      1876237859,
+      740697782,
+      2922825899,
+      1498914844,
+      1045639992,
+      1931900634,
+      811641690,
+      1994572290,
+      4119906371,
+      3886425324,
+      1919830590,
+      2769407122,
+      3417143191,
+      3548520523
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 Q：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1403.120293061224,
+      "casterPos": {
+        "x": -40.09999999997185,
+        "z": 0
+      },
+      "targetHp": 8688.14815630028,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -38.90000000002815,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 1
+    },
+    "after": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1409.4018930612224,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 8092.7425472944215,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-guts.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 730.3539763527734,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-guts.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 730.3539763527734,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "point": {
+            "x": -38.90000000002815,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999998874,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000001126,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999998874,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000001126,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.90000000000072,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 610.3539763527734,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.90000000000072,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 730.3539763527734,
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": true,
+            "isCounter": false,
+            "shakeMag": 0.51,
+            "shakeStyle": "directional",
+            "sparkKind": "block",
+            "camKick": 0.25,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "guardBreak",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "x": -38.90000000000072,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999999999928,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000000000072,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 2,
+      "castBegin": 2,
+      "statusApplied": 2,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 2,
+      "damage": 2,
+      "recoveryEnd": 2,
+      "hitImpact": 2,
+      "shieldGained": 1,
+      "guardBreak": 1
+    },
+    "digestTrail": [
+      3638341349,
+      1898253867,
+      2321593848,
+      301640242,
+      725218397,
+      3946810399,
+      3025496211,
+      4007079344,
+      1117717274,
+      150637056,
+      2668913043,
+      2262388923,
+      4277966843,
+      3035430394,
+      4289002523,
+      1861056886,
+      2798037116,
+      1821588274,
+      857060301,
+      1414483760,
+      1879462484,
+      1434504570,
+      275822235,
+      2212913591,
+      482551781,
+      684878624,
+      3304955562,
+      2312577446,
+      2658886324,
+      1250053483,
+      2603709963,
+      4190456011,
+      3530358924,
+      807812175,
+      3365608805,
+      305432298,
+      4266514492,
+      3790223084,
+      4044896199,
+      1440413410,
+      2110143256,
+      16098967,
+      2775890030,
+      629093846,
+      3413223606,
+      3481835952,
+      830088242,
+      597320898,
+      2472649611,
+      715674940,
+      2194932444,
+      761646065,
+      111291633,
+      344352245,
+      3774023996,
+      2952925623,
+      3613156969,
+      1667700997,
+      1702753736,
+      23710797
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 Q：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1487.0076530612246,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 9413.270204081633,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1487.0076530612246,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 8697.117176708429,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 1
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 730.3539763527734,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 730.3539763527734,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 1,
+      "castBegin": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1,
+      "statusApplied": 1,
+      "shieldGained": 1
+    },
+    "digestTrail": [
+      1452510885,
+      2423157395,
+      1079227296,
+      3748051058,
+      2568595202,
+      4181795091,
+      2662842258,
+      736238118,
+      2297026815,
+      3780945553,
+      3196993027,
+      1373252339,
+      3193969001,
+      685418678,
+      3063388864,
+      1058532564,
+      31983270,
+      3553690580,
+      2720024197,
+      4189796640,
+      3688161208,
+      3803234845,
+      1236064750,
+      385891458,
+      2965575329,
+      355222205,
+      1266892202,
+      152538063,
+      3349648292,
+      2812227738,
+      179295194,
+      1142531141,
+      1963901422,
+      1239526128,
+      2467292835,
+      26105523,
+      3177789723,
+      153862286,
+      828914325,
+      274946979,
+      1464332474,
+      3889109897,
+      656172655,
+      1166670898,
+      4097768210,
+      783426298,
+      1585855743,
+      1368527607,
+      1721438281,
+      2413577692,
+      4074894962,
+      2841316003,
+      1819423857,
+      3030373694,
+      4060985178,
+      4155526286,
+      438226869,
+      1815355156,
+      3823371863,
+      4080887840
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1487.0076530612246,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 9413.270204081633,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 9413.270204081633,
+      "casterMana": 1487.0076530612246,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 8697.117176708429,
+      "targetMana": 1487.0076530612246,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 1
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 730.3539763527734,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-guts.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-guts.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 730.3539763527734,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-guts.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 1,
+      "castBegin": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1,
+      "statusApplied": 1,
+      "shieldGained": 1
+    },
+    "digestTrail": [
+      1452510885,
+      2423157395,
+      1079227296,
+      2311760468,
+      860998788,
+      1405653941,
+      2670069716,
+      3688119744,
+      824803129,
+      2346811703,
+      1446786501,
+      940800341,
+      362735215,
+      1769175568,
+      2738253122,
+      2450056302,
+      1879180268,
+      692857134,
+      1673346183,
+      1319945090,
+      2206919418,
+      4166988351,
+      3774492084,
+      342202976,
+      759511195,
+      2429991583,
+      4108772904,
+      1194100397,
+      1536571230,
+      3131214392,
+      1883179596,
+      1063695379,
+      97640872,
+      4186629590,
+      2966053109,
+      3657577957,
+      1103863341,
+      1958111656,
+      44208963,
+      2553237269,
+      720585964,
+      2386742239,
+      2160881401,
+      2936294852,
+      4023430276,
+      2396974796,
+      914055053,
+      1850491877,
+      3787469891,
+      342520326,
+      2193674016,
+      1493452169,
+      4235832427,
+      3634783572,
+      1042705352,
+      3685242340,
+      2855163367,
+      1518712126,
+      2119487461,
+      1353225554
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

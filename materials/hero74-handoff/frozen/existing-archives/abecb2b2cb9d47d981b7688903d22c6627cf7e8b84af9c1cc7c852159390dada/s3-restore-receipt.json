@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-release-remote-restore@1",
+  "status": "passed",
+  "profile": "vibe-coding",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "manifestSha256": "abecb2b2cb9d47d981b7688903d22c6627cf7e8b84af9c1cc7c852159390dada",
+  "freshDownloadParts": 6,
+  "s3FilesVerified": 2202,
+  "gitControlJsonCopied": 2445,
+  "completeLegacyVersionStoreFilesVerified": 4534,
+  "all37ZipsEqual": true,
+  "replayPreserved": true,
+  "restoredRoot": "/private/tmp/ggd-model-upload-acceptance/release-13956d93b/restored-materials",
+  "sourceAccountDataExcluded": true
+}

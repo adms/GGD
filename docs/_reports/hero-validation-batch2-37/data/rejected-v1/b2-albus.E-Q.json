@@ -1,0 +1,1890 @@
+{
+  "projectSha256": "e659303064bc7fe87bbe10c96e7ddf07dc12fbaf17193e2773c9aeace06459ca",
+  "compiledSha256": "ce6b20a410bfb2542bd3f4fce2d02e55aabd2ac7afe0e0cb7ba0ecd9c62dafa4",
+  "good": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1908.8320714285717,
+      "casterPos": {
+        "x": -39.553199997567,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.353200002433,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1922.472071428573,
+      "casterPos": {
+        "x": -39.5532,
+        "z": 0
+      },
+      "targetHp": 8597.97173408387,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.3532,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-albus.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-albus.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-albus.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-albus.e",
+          "abilityId": "b2-albus.e",
+          "durationSec": 0,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-albus.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "manaRestore",
+        "tick": 4,
+        "data": {
+          "x": -39,
+          "z": 0,
+          "source": 1,
+          "target": 1,
+          "amount": 57.954642857142744,
+          "overflow": 1.0658141036401503e-13,
+          "origin": "hook:abilityPassive:b2-albus.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-albus.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "point": {
+            "x": -38.353200002433,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 2,
+      "manaRestore": 1,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 2,
+      "recoveryEnd": 1,
+      "hitImpact": 2
+    },
+    "digestTrail": [
+      1430911768,
+      1155408426,
+      3668925982,
+      4294829895,
+      663671808,
+      1949946451,
+      452629662,
+      4181659771,
+      86442874,
+      1261147995,
+      3283140432,
+      1876114145,
+      478676554,
+      970976277,
+      625220516,
+      174965068,
+      1135793992,
+      60721617,
+      3051061774,
+      2202398544,
+      1433372761,
+      1019693388,
+      3526974661,
+      3067124984,
+      20005973,
+      715091775,
+      4285866761,
+      83891461,
+      1111830866,
+      146574601,
+      696090156,
+      3619551726,
+      1051820851,
+      1563580520,
+      3862974809,
+      257402586,
+      1620348921,
+      2352533970,
+      2009110608,
+      1278677041,
+      1762010142,
+      585838190,
+      4252457468,
+      3741981145,
+      2856214123,
+      1491395800,
+      2916148807,
+      2362218322,
+      102755425,
+      1151407799,
+      660770472,
+      2766098330,
+      3394078600,
+      3430472153,
+      2870615228,
+      628156016,
+      2232719961,
+      1043757204,
+      2740003272,
+      3673240119
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1908.8320714285717,
+      "casterPos": {
+        "x": -39.553199997567,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.353200002433,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1922.472071428573,
+      "casterPos": {
+        "x": -39.5532,
+        "z": 0
+      },
+      "targetHp": 9309.730402756228,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.3532,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-albus.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-albus.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-albus.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-albus.e",
+          "abilityId": "b2-albus.e",
+          "durationSec": 0,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-albus.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "manaRestore",
+        "tick": 4,
+        "data": {
+          "x": -39,
+          "z": 0,
+          "source": 1,
+          "target": 1,
+          "amount": 57.954642857142744,
+          "overflow": 1.0658141036401503e-13,
+          "origin": "hook:abilityPassive:b2-albus.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-albus.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "point": {
+            "x": -38.353200002433,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 2,
+      "manaRestore": 1,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      1430911768,
+      1155408426,
+      3668925982,
+      3085804621,
+      350506995,
+      2972359703,
+      3673184085,
+      3712483441,
+      2982679325,
+      233801494,
+      342550751,
+      3284912915,
+      3664254476,
+      585986713,
+      2391215863,
+      875339134,
+      394045815,
+      1593890545,
+      3722252081,
+      2582257594,
+      1404528758,
+      542027092,
+      2309709921,
+      3269783386,
+      3983023765,
+      126621859,
+      1562514473,
+      252604056,
+      729112982,
+      3943399905,
+      1080892583,
+      2323508090,
+      2165913942,
+      2959479072,
+      1512311174,
+      3827980811,
+      1239871672,
+      2350186134,
+      3024360030,
+      2148216281,
+      3108481335,
+      2092018946,
+      1742083959,
+      1510311977,
+      2194428038,
+      3085704784,
+      2072828416,
+      255846718,
+      1260789799,
+      4064432083,
+      4039203695,
+      134366606,
+      4098444457,
+      2420661633,
+      2848399631,
+      1629274756,
+      780721416,
+      3041643968,
+      3846173587,
+      1742805911
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 9309.730402756228,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "manaRestore",
+        "tick": 4,
+        "data": {
+          "x": -40.0936,
+          "z": 0,
+          "source": 1,
+          "target": 1,
+          "amount": 57.954642857142744,
+          "overflow": 1.0658141036401503e-13,
+          "origin": "hook:abilityPassive:b2-albus.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 1,
+      "manaRestore": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2543901869,
+      2564165300,
+      525515579,
+      2580307052,
+      241642906,
+      3045920522,
+      658426317,
+      1138870668,
+      1806690778,
+      2999139096,
+      1970117194,
+      1526900335,
+      1972176523,
+      3774324003,
+      1576998892,
+      4099181665,
+      2199726399,
+      753259619,
+      1161465111,
+      4024790500,
+      2398246931,
+      238491120,
+      1930564542,
+      200501236,
+      3644538712,
+      1135938058,
+      612561930,
+      987135104,
+      3440752102,
+      3497495406,
+      3477625210,
+      750260041,
+      3716650604,
+      1318595212,
+      1419408845,
+      1468455610,
+      916559910,
+      3865976527,
+      416383952,
+      1905925640,
+      182815376,
+      3615898032,
+      2643023293,
+      1923438693,
+      384019978,
+      1523631973,
+      2618720970,
+      3169495261,
+      4134856980,
+      2912081570,
+      3619878689,
+      3533519919,
+      1625515821,
+      4242283619,
+      1854068696,
+      1838825646,
+      2065602179,
+      970586598,
+      3750675798,
+      983357732
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 9309.730402756228,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "manaRestore",
+        "tick": 4,
+        "data": {
+          "x": -40.0936,
+          "z": 0,
+          "source": 1,
+          "target": 1,
+          "amount": 57.954642857142744,
+          "overflow": 1.0658141036401503e-13,
+          "origin": "hook:abilityPassive:b2-albus.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-albus.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-albus.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 1,
+      "manaRestore": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2543901869,
+      2564165300,
+      525515579,
+      269738829,
+      245256635,
+      2843163243,
+      4021866604,
+      1884815021,
+      2552635131,
+      152611257,
+      3914326859,
+      3714250958,
+      358942762,
+      4096924386,
+      3941910705,
+      1919852508,
+      1497955610,
+      3732458782,
+      3257702194,
+      3513656713,
+      777053038,
+      140099349,
+      2974222115,
+      2919518393,
+      3674480221,
+      1165879567,
+      3244822511,
+      3697662085,
+      2347320203,
+      3472608243,
+      3414128463,
+      4091541052,
+      3053534361,
+      3923124345,
+      441559712,
+      1047045519,
+      2814447451,
+      2344369978,
+      2386127389,
+      3895070133,
+      2792460189,
+      510266557,
+      4163551472,
+      1336155928,
+      2446701823,
+      1484607000,
+      1487457123,
+      3963895532,
+      2828659941,
+      2132581979,
+      1373439056,
+      1086596950,
+      1528463836,
+      4159609482,
+      1599356425,
+      873743399,
+      4001790378,
+      1291330975,
+      2475405999,
+      213120309
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

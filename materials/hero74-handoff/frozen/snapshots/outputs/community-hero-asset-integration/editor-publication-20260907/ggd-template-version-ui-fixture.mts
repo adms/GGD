@@ -1,0 +1,14 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createLocalDraft } from '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor/src/drafts/repository.ts';
+import { contentSha256 } from '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/jcs.ts';
+const draft = JSON.parse(readFileSync('/private/tmp/ggd-template-version-ui-download/hero-19418679-b6ef-414a-92b8-caa3e51ea102-draft.json','utf8'));
+const project=draft.payload.project, plan=project.acceptedPlan;
+project.brief.name='模板版本升級驗收（模擬舊版）';
+const card=plan.slots.Q.products[0].template;
+const old=structuredClone(plan.templateVersions[card.contentSha256]);
+old.name+='（驗收舊版）';old.params.damage.default={perRank:[333],ratios:[]};
+const digest=contentSha256(old);plan.templateVersions[digest]=old;card.contentSha256=digest;
+plan.slots.Q.products.push({...structuredClone(plan.slots.Q.products[0]),instanceId:'q-second'});
+plan.slots.Q.templateConflictPolicy='lastWins';
+card.params.damage={perRank:[111],ratios:[]};
+writeFileSync('/private/tmp/ggd-template-version-ui-old-fixture.json',JSON.stringify(createLocalDraft(draft.key,'hero',project.revision,draft.payload),null,2));

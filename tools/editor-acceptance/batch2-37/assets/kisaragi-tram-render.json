@@ -1,0 +1,36 @@
+{
+  "schema": "ggd-batch2-asset-render@1",
+  "sourceGlbSha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+  "renderer": "render-assets.py: orthographic CPU depth buffer, triangles and interpolated GLB animation channels",
+  "preview": "kisaragi-tram-preview.png",
+  "previewSha256": "a025564bf1eefc7736159bd4bdc065c5c2793742a673bbc5b87e34801a8472b2",
+  "clips": [
+    {
+      "name": "idle",
+      "fraction": 0.25
+    },
+    {
+      "name": "run",
+      "fraction": 0.25
+    },
+    {
+      "name": "attack",
+      "fraction": 0.5
+    },
+    {
+      "name": "cast",
+      "fraction": 0.5
+    },
+    {
+      "name": "hurt",
+      "fraction": 0.25
+    },
+    {
+      "name": "death",
+      "fraction": 1.0
+    }
+  ],
+  "limits": [
+    "Offline authored-asset preview only; production renderer, upload endpoint and game arena have not been exercised."
+  ]
+}

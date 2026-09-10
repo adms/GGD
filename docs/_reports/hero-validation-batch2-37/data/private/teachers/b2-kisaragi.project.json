@@ -1,0 +1,852 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-kisaragi",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "如月電車",
+    "concept": "如月車站・GGD原創｜一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "列車延誤請攻擊客服",
+      "Q": "逃票乘客請先集合",
+      "W": "緊急煞車先拉手閘",
+      "E": "解除手閘本車才出發",
+      "R": "如月末班車・乘客全數迷途",
+      "EX": "車門即將關閉請勿探頭"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-kisaragi.plan",
+    "title": "如月電車",
+    "summary": "如月車站・GGD原創｜一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "坦克",
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "列車延誤請攻擊客服",
+        "purpose": "「列車延誤請攻擊客服！」\n電車受傷後獲得 120 護盾 2 秒，每 4 秒一次；可操作本體由真實電車 GLB 提供。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-kisaragi.passive.card1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onDamageTaken",
+                    "effects": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 120
+                        },
+                        "duration": 2,
+                        "absorbs": "all",
+                        "stackKey": "b2-protection",
+                        "onExisting": "keepLarger"
+                      }
+                    ],
+                    "internalCooldown": 4,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "逃票乘客請先集合",
+        "purpose": "「逃票乘客請先集合！」\n驗票集合：半徑 7 內最多 8 名敵人拉向車身，在 2 單位外停下；友軍不拉。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-kisaragi.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "pull",
+                    "shape": "circle",
+                    "radius": 7,
+                    "side": "enemies",
+                    "maxTargets": 8,
+                    "destination": "caster",
+                    "speed": 20,
+                    "stopDistance": 2
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "緊急煞車先拉手閘",
+        "purpose": "「緊急煞車先拉手閘！」\n緊急煞車：自身 root 定身 3 秒並給 140 護盾；E 可以消耗這個定身後啟動額外閃移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-kisaragi.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "root",
+                    "duration": 3,
+                    "applyTo": "self",
+                    "root": true
+                  },
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 140
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "解除手閘本車才出發",
+        "purpose": "「解除手閘本車才出發！」\n消耗自身煞車 root 才瞬移到合法施法點，沒有煞車不發車；到站極小級範圍傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-kisaragi.e.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "root",
+                    "count": "all",
+                    "subject": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "blink",
+                        "shape": "single",
+                        "to": "point",
+                        "applyTo": "self",
+                        "onArrive": [
+                          {
+                            "kind": "damageArea",
+                            "radius": 3,
+                            "includeOrigin": true,
+                            "amount": {
+                              "damageTier": "極小"
+                            },
+                            "damageType": "magic",
+                            "maxTargets": 6
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "castType": "ground",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "如月末班車・乘客全數迷途",
+        "purpose": "「如月末班車・乘客全數迷途！」\n以半徑 4 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽 8／12／16 單位，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-kisaragi.r.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "radius": 4,
+                    "includeOrigin": true,
+                    "amount": {
+                      "damageTier": "極小"
+                    },
+                    "damageType": "magic",
+                    "maxTargets": 8,
+                    "onHitTargets": [
+                      {
+                        "kind": "weightedBranch",
+                        "shape": "single",
+                        "branches": [
+                          {
+                            "weight": 1,
+                            "effects": [
+                              {
+                                "kind": "blink",
+                                "shape": "single",
+                                "to": "caster",
+                                "applyTo": "target",
+                                "distanceUnits": 8,
+                                "onArrive": [
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "curse",
+                                    "duration": 5,
+                                    "missChance": 0.5
+                                  },
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "blind",
+                                    "duration": 1,
+                                    "missChance": 0.5
+                                  },
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "confusion",
+                                    "duration": 1,
+                                    "berserk": true,
+                                    "targetsAllies": true
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "weight": 1,
+                            "effects": [
+                              {
+                                "kind": "blink",
+                                "shape": "single",
+                                "to": "caster",
+                                "applyTo": "target",
+                                "distanceUnits": 12,
+                                "onArrive": [
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "curse",
+                                    "duration": 5,
+                                    "missChance": 0.5
+                                  },
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "blind",
+                                    "duration": 1,
+                                    "missChance": 0.5
+                                  },
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "confusion",
+                                    "duration": 1,
+                                    "berserk": true,
+                                    "targetsAllies": true
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "weight": 1,
+                            "effects": [
+                              {
+                                "kind": "blink",
+                                "shape": "single",
+                                "to": "caster",
+                                "applyTo": "target",
+                                "distanceUnits": 16,
+                                "onArrive": [
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "curse",
+                                    "duration": 5,
+                                    "missChance": 0.5
+                                  },
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "blind",
+                                    "duration": 1,
+                                    "missChance": 0.5
+                                  },
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "confusion",
+                                    "duration": 1,
+                                    "berserk": true,
+                                    "targetsAllies": true
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "onHitTargetsMode": "perTarget"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "車門即將關閉請勿探頭",
+        "purpose": "「車門即將關閉請勿探頭！」\n車門即將關閉：指定敵人小級物理傷害與 1 秒繳械；不搬動友軍。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-kisaragi.ex.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 1,
+                    "applyTo": "target",
+                    "disarmed": true
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "byteSize": 78876,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "sourceAssetId": "ggd.batch2.original-kisaragi-tram",
+      "sourceCharacter": "如月電車",
+      "sourceWork": "GGD 原創改編",
+      "relationship": "exact",
+      "notes": "Original procedural tram geometry, animated wheels, sliding doors and six runtime states. Offline byte validation is recorded separately; no production import or game-play receipt."
+    },
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-kisaragi.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-kisaragi.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-kisaragi.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-kisaragi.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-kisaragi.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-kisaragi.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.void.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-kisaragi.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-kisaragi.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-kisaragi.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-kisaragi.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+        "byteSize": 78876,
+        "mediaType": "model/gltf-binary",
+        "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

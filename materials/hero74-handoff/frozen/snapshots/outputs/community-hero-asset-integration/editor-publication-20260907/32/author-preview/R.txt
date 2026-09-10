@@ -1,0 +1,1597 @@
+創作英雄
+我的作品
+🔨 鑄技工坊
+✨ 特效工坊
+📦 匯出中心
+COLLECTIONS
+Champions
+Abilities
+Items
+Augments
+Projectiles
+Status Effects
+Loot Tables
+Arenas
+Maps
+Config
+Models
+VFX
+Skins
+Ability Templates
+VFX Scripts
+VFX Subtypes
+阿薩謝爾
+
+從概念到六槽技能，逐項試作與調整。
+
+復原重做建立另一位英雄
+已恢復本機草稿 · 已保存到本機
+
+已讀取本機內容設定 · AI 關閉
+
+快速創作
+視覺編輯
+進階編輯
+原設計與逐槽審查
+
+保留 阿薩謝爾 的交接原文。模板模擬通過與模型替代，不會自動完成這些設計要求。
+
+原始角色說明與完整投稿文字
+PASSIVEQWEREX
+R · THE END OF SON
+
+舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。
+
+交接時的模板行為
+
+待補與複核：需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。
+
+此槽處理說明
+
+處理說明會隨作品保存，正式裁決仍由投稿審查記錄。
+
+PASSIVEQWEREX
+R 技能
+招式名稱
+解鎖
+完整說明與台詞
+鎖定
+
+槽位是裝備位置；主動或被動行為由模板機制決定。
+
+最高階級
+3
+鎖定
+Document (optional)
+🔒 此欄位目前為唯讀
+Cooldown Sec
+
+冷卻秒數
+
+已使用下方級距設定；清除該級距後才能改固定值
+
+🔒 此欄位目前為唯讀
+Mana Cost
+
+魔力消耗
+
+已使用下方級距設定；清除該級距後才能改固定值
+
+🔒 此欄位目前為唯讀
+Range
+
+施放距離
+
+已使用下方級距設定；清除該級距後才能改固定值
+
+級距與追加效果
+技能產品鏈
+鎖定
+不同產品填入同一欄時
+停下來處理衝突
+後面的產品覆寫前面
+1. 自訂效果序列
+鎖定
+上移
+下移
+移除
+Document
+Cast Type
+targeted
+self
+ground
+skillshot
+Cast Time Sec
+
+unit:s
+
+Radius
+Side
+enemies
+allies
+Effects (2)
+↑
+↓
+✕
+Item
+damage
+damageArea
+damageLine
+grantAttribute
+revive
+heal
+shield
+applyStatus
+applyBuff
+cycleBuff
+restore
+spendHealth
+spendMana
+dash
+leap
+blink
+championForm
+spawnProjectile
+spawnVfx
+dot
+summon
+invulnerable
+knockback
+evasion
+taunt
+grantGold
+grantXp
+dispel
+shieldBreak
+devour
+modifyCooldown
+weightedBranch
+consumeStatus
+swapResource
+eventValueConversion
+randomArea
+delayed
+proxyCast
+manaBarrier
+extendBuff
+carry
+convertTeam
+chainLightning
+comboStrikes
+pull
+spawnModelFx
+screenFlash
+screenShake
+floatingText
+Condition
+＋ 加一個條件
+
+實際效果：無條件，每次都觸發。
+
+觸發條件：只有條件成立的目標才吃到這一段效果（省略＝所有目標都吃到）。與觸發器上的條件用同一組判斷式；「對身上有〔恐懼〕的敵人追加傷害」是**逐一**判斷的，範圍技裡沒有恐懼的人不會被算進去。沒有目標的效果（自我增益／落點特效）則是整段成立或整段不發生。
+
+Amount
+Damage Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Condition Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Damage Tier Per Rank (0)
++ add damage tier per rank
+Flat (optional)
+Per Rank (0)
++ add per rank
+Ratios (0)
++ add ratio
+Attr Ratios (0)
++ add attr ratio
+Slot Rank Ratios (0)
++ add slot rank ratio
+Mult (optional)
+
+施法者支付的生命固定值／係數，與百分比項相加；不是傷害。
+
+Pct Max Health (optional)
+取值方式
+—
+所有等級共用
+逐階設定
+數值
+
+額外支付自己最大生命的比例（0.03＝3%），於效果執行時讀取。
+
+Pct Current Health (optional)
+取值方式
+—
+所有等級共用
+逐階設定
+
+額外支付自己當前生命的比例，可逐階設定。
+
+Minimum Hp (optional)
+
+支付後保留的生命底線，省略＝1 HP；已低於底線不會回血。
+
+↑
+↓
+✕
+Item
+damage
+damageArea
+damageLine
+grantAttribute
+revive
+heal
+shield
+applyStatus
+applyBuff
+cycleBuff
+restore
+spendHealth
+spendMana
+dash
+leap
+blink
+championForm
+spawnProjectile
+spawnVfx
+dot
+summon
+invulnerable
+knockback
+evasion
+taunt
+grantGold
+grantXp
+dispel
+shieldBreak
+devour
+modifyCooldown
+weightedBranch
+consumeStatus
+swapResource
+eventValueConversion
+randomArea
+delayed
+proxyCast
+manaBarrier
+extendBuff
+carry
+convertTeam
+chainLightning
+comboStrikes
+pull
+spawnModelFx
+screenFlash
+screenShake
+floatingText
+Condition
+＋ 加一個條件
+
+實際效果：無條件，每次都觸發。
+
+觸發條件：只有條件成立的目標才吃到這一段效果（省略＝所有目標都吃到）。與觸發器上的條件用同一組判斷式；「對身上有〔恐懼〕的敵人追加傷害」是**逐一**判斷的，範圍技裡沒有恐懼的人不會被算進去。沒有目標的效果（自我增益／落點特效）則是整段成立或整段不發生。
+
+Projectile Id → projectiles
+—
+basic-attack
+grail.projection-bolt
+grail.tracking-bolt
+imported.bolt
+imported.bolt.arcane
+imported.bolt.ki
+imported.bolt.lightning
+imported.bolt.nature
+imported.bolt.void
+imported.thrust.arcane
+imported.wave
+imported.wave.arcane
+imported.wave.earth
+imported.wave.fire
+imported.wave.ice
+imported.wave.ki
+imported.wave.lightning
+imported.wave.physical
+imported.wave.void
+sela.q.bolt
+thorne.e.thorn
+On Hit (3)
+↑
+↓
+✕
+Item
+damage
+damageArea
+damageLine
+grantAttribute
+revive
+heal
+shield
+applyStatus
+applyBuff
+cycleBuff
+restore
+spendHealth
+spendMana
+dash
+leap
+blink
+championForm
+spawnProjectile
+spawnVfx
+dot
+summon
+invulnerable
+knockback
+evasion
+taunt
+grantGold
+grantXp
+dispel
+shieldBreak
+devour
+modifyCooldown
+weightedBranch
+consumeStatus
+swapResource
+eventValueConversion
+randomArea
+delayed
+proxyCast
+manaBarrier
+extendBuff
+carry
+convertTeam
+chainLightning
+comboStrikes
+pull
+spawnModelFx
+screenFlash
+screenShake
+floatingText
+Condition
+＋ 加一個條件
+
+實際效果：無條件，每次都觸發。
+
+觸發條件：只有條件成立的目標才吃到這一段效果（省略＝所有目標都吃到）。與觸發器上的條件用同一組判斷式；「對身上有〔恐懼〕的敵人追加傷害」是**逐一**判斷的，範圍技裡沒有恐懼的人不會被算進去。沒有目標的效果（自我增益／落點特效）則是整段成立或整段不發生。
+
+Apply To (optional)
+—
+self
+target
+
+落在誰身上：target（預設，這次解出來的每個目標）或 self（施法者自己）。
+
+Damage Type (optional)
+—
+physical
+magic
+true
+
+傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。⚠️ 它與**係數來源**是兩件事：型別決定吃什麼減免，`amount` 的 Scaling(ap/ad/str/agi/int) 決定數字多大。
+
+Amount
+Damage Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Condition Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Damage Tier Per Rank (0)
++ add damage tier per rank
+Flat (optional)
+Per Rank (0)
++ add per rank
+Ratios (0)
++ add ratio
+Attr Ratios (0)
++ add attr ratio
+Slot Rank Ratios (0)
++ add slot rank ratio
+Mult (optional)
+Can Crit
+Combo Bonus (optional)
+Status Id → status-effects (soft)
+—
+aban-x-mark
+alcohol-enema
+armor-break
+bankai
+berserk
+blind
+burn
+burnstun
+camera-mark
+charmed
+confusion
+curse
+devour-cooldown
+evil-eye
+fang-stun
+fear
+grail-strengthened-projection
+grief-seed-charge
+grievous-wounds
+ingredient
+light-wand-banked
+lock-combo
+magic-break
+millennium-plot-armor
+moon-combo
+nen-banked
+no-heal
+numbness
+octuple-slash-window
+omnislash-lock
+omnislash-perform
+paralysis
+poison
+rage
+red-comet
+root
+slow20
+slow25
+slow30
+slow35
+slow40
+slow50
+slow60
+stun
+trial-stun
+triforce-courage
+united-states-of-smash
+witch-form
+Amount
+Damage Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Condition Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Damage Tier Per Rank (0)
++ add damage tier per rank
+Flat (optional)
+Per Rank (0)
++ add per rank
+Ratios (0)
++ add ratio
+Attr Ratios (0)
++ add attr ratio
+Slot Rank Ratios (0)
++ add slot rank ratio
+Mult (optional)
+Hp Pct (optional)
+Basis
+max
+current
+Per Rank (0)
++ add per rank
+Banked Bonus (optional)
+Status Id → status-effects (soft)
+—
+aban-x-mark
+alcohol-enema
+armor-break
+bankai
+berserk
+blind
+burn
+burnstun
+camera-mark
+charmed
+confusion
+curse
+devour-cooldown
+evil-eye
+fang-stun
+fear
+grail-strengthened-projection
+grief-seed-charge
+grievous-wounds
+ingredient
+light-wand-banked
+lock-combo
+magic-break
+millennium-plot-armor
+moon-combo
+nen-banked
+no-heal
+numbness
+octuple-slash-window
+omnislash-lock
+omnislash-perform
+paralysis
+poison
+rage
+red-comet
+root
+slow20
+slow25
+slow30
+slow35
+slow40
+slow50
+slow60
+stun
+trial-stun
+triforce-courage
+united-states-of-smash
+witch-form
+Coeff
+Max
+Incoming Pct (optional)
+Basis (optional)
+—
+raw
+mitigated
+hpLost
+Per Rank (0)
++ add per rank
+Max Chain Depth (optional)
+Apply Global Damage Mult
+When Too Late (optional)
+—
+drop
+spill
+Negate Original
+
+反彈的同時免除這一發傷害（自己不掉血）。留空＝照樣掉血，只是把傷害打回去。⚠️ 打開它之後這一發的「已損失生命」是 0，所以反彈量不可以用「實際掉血」當基數。
+
+Resource Pct (optional)
+Subject
+self
+target
+Resource
+health
+mana
+Basis
+current
+max
+missing
+Scale (optional)
+—
+ratio
+points
+Per Rank (0)
++ add per rank
+Distance Scale (optional)
+At Range
+Near
+Far
+Refund (optional)
+Resource
+health
+mana
+Basis (optional)
+—
+hpLost
+mitigated
+Pct
+↑
+↓
+✕
+Item
+damage
+damageArea
+damageLine
+grantAttribute
+revive
+heal
+shield
+applyStatus
+applyBuff
+cycleBuff
+restore
+spendHealth
+spendMana
+dash
+leap
+blink
+championForm
+spawnProjectile
+spawnVfx
+dot
+summon
+invulnerable
+knockback
+evasion
+taunt
+grantGold
+grantXp
+dispel
+shieldBreak
+devour
+modifyCooldown
+weightedBranch
+consumeStatus
+swapResource
+eventValueConversion
+randomArea
+delayed
+proxyCast
+manaBarrier
+extendBuff
+carry
+convertTeam
+chainLightning
+comboStrikes
+pull
+spawnModelFx
+screenFlash
+screenShake
+floatingText
+Condition
+＋ 加一個條件
+
+實際效果：無條件，每次都觸發。
+
+觸發條件：只有條件成立的目標才吃到這一段效果（省略＝所有目標都吃到）。與觸發器上的條件用同一組判斷式；「對身上有〔恐懼〕的敵人追加傷害」是**逐一**判斷的，範圍技裡沒有恐懼的人不會被算進去。沒有目標的效果（自我增益／落點特效）則是整段成立或整段不發生。
+
+Source Scope (optional)
+—
+caster
+
+依施法者分開保存與疊層；省略則沿用共用來源。具名狀態可供「由自己施加」條件辨識。
+
+Modifiers (2)
+↑
+↓
+✕
+Item
+Stat
+maxHealth
+healthRegen
+maxMana
+manaRegen
+ad
+ap
+armor
+mr
+as
+ms
+critChance
+critDamage
+cdr
+lifesteal
+range
+evasion
+spellVamp
+outputDamagePct
+outputHealingPct
+outputShieldPct
+maxHitPctMaxHp
+unavoidablePct
+cooldownDrainRate
+Op
+flat
+pctAdd
+pctMult
+override
+capRaise
+capRaisePct
+percentOf
+Value (optional)
+Ms Bonus Tier (optional)
+—
+極小
+小
+中
+大
+極大
+
+移速加成五級距（極小/小/中/大/極大 → config.move-speed-tiers@1 的五格，0.5 = +50%）。填了級別就**不要**再寫 value（值在載入時解析）；只對 stat=ms、op=pctAdd/pctMult 合法。
+
+From (optional)
+—
+maxHealth
+healthRegen
+maxMana
+manaRegen
+ad
+ap
+armor
+mr
+as
+ms
+critChance
+critDamage
+cdr
+lifesteal
+range
+evasion
+spellVamp
+outputDamagePct
+outputHealingPct
+outputShieldPct
+maxHitPctMaxHp
+unavoidablePct
+cooldownDrainRate
+From Resource (optional)
+—
+hp
+mp
+Scope Slot (optional)
+—
+Q
+W
+E
+R
+EX
+PASSIVE
+
+只對某一格技能生效（Q/W/E/R/EX/天生技）。留空＝對全部技能生效。「瞬步的冷卻縮短 50%」填的是這一格；它不會顯示在角色面板的冷卻縮減上，因為它只影響那一格技能的冷卻圈。
+
+Scope Ability Id (optional)
+
+只對某一支具名技能生效（填技能 id）。留空＝對全部技能生效。⚠️ 打錯 id 不會有錯誤訊息，這條加成會安靜地不生效。
+
+↑
+↓
+✕
+Item
+Stat
+maxHealth
+healthRegen
+maxMana
+manaRegen
+ad
+ap
+armor
+mr
+as
+ms
+critChance
+critDamage
+cdr
+lifesteal
+range
+evasion
+spellVamp
+outputDamagePct
+outputHealingPct
+outputShieldPct
+maxHitPctMaxHp
+unavoidablePct
+cooldownDrainRate
+Op
+flat
+pctAdd
+pctMult
+override
+capRaise
+capRaisePct
+percentOf
+Value (optional)
+Ms Bonus Tier (optional)
+—
+極小
+小
+中
+大
+極大
+
+移速加成五級距（極小/小/中/大/極大 → config.move-speed-tiers@1 的五格，0.5 = +50%）。填了級別就**不要**再寫 value（值在載入時解析）；只對 stat=ms、op=pctAdd/pctMult 合法。
+
+From (optional)
+—
+maxHealth
+healthRegen
+maxMana
+manaRegen
+ad
+ap
+armor
+mr
+as
+ms
+critChance
+critDamage
+cdr
+lifesteal
+range
+evasion
+spellVamp
+outputDamagePct
+outputHealingPct
+outputShieldPct
+maxHitPctMaxHp
+unavoidablePct
+cooldownDrainRate
+From Resource (optional)
+—
+hp
+mp
+Scope Slot (optional)
+—
+Q
+W
+E
+R
+EX
+PASSIVE
+
+只對某一格技能生效（Q/W/E/R/EX/天生技）。留空＝對全部技能生效。「瞬步的冷卻縮短 50%」填的是這一格；它不會顯示在角色面板的冷卻縮減上，因為它只影響那一格技能的冷卻圈。
+
+Scope Ability Id (optional)
+
+只對某一支具名技能生效（填技能 id）。留空＝對全部技能生效。⚠️ 打錯 id 不會有錯誤訊息，這條加成會安靜地不生效。
+
++ add modifier
+Duration (optional)
+Permanent
+
+永久生效（不會到期）。勾了就不要填持續秒數，兩者只能填一格。
+
+Permanent Scope (optional)
+—
+match
+round
+
+「永久」有多久：match（預設，整場都在）或 round（只到這一回合結束，下一回合開打前會被拿掉）。⛔ 只有勾了「永久」才填得了。
+
+Status Id → status-effects (soft)
+—
+aban-x-mark
+alcohol-enema
+armor-break
+bankai
+berserk
+blind
+burn
+burnstun
+camera-mark
+charmed
+confusion
+curse
+devour-cooldown
+evil-eye
+fang-stun
+fear
+grail-strengthened-projection
+grief-seed-charge
+grievous-wounds
+ingredient
+light-wand-banked
+lock-combo
+magic-break
+millennium-plot-armor
+moon-combo
+nen-banked
+no-heal
+numbness
+octuple-slash-window
+omnislash-lock
+omnislash-perform
+paralysis
+poison
+rage
+red-comet
+root
+slow20
+slow25
+slow30
+slow35
+slow40
+slow50
+slow60
+stun
+trial-stun
+triforce-courage
+united-states-of-smash
+witch-form
+community-review-32-20260907.r.curse (unresolved)
+
+讓這份增益同時掛上一個具名狀態（讓別的技能問得到「他身上有沒有〔狂怒〕」）。⭐ 它與數值是**同一份**來源：延長／淨化／到期會一起發生，不會出現「圖示還在但條件已經讀不到」。
+
+Apply To (optional)
+—
+self
+target
+
+落在誰身上：target（預設，這次解出來的每個目標）或 self（施法者自己）。
+
+Exclusive Group (optional)
+
+互斥組名：身上同一組只會有一份（15-02/03/04 那種「永遠只有一種戰型」）。⛔ 它只管屬性狀態，不換 3D 模型 —— 換身體仍然是變身那條路。
+
+Exclusive On Existing (optional)
+—
+replace
+reject
+
+同一個互斥組已經有一份時：replace（預設，新的接手）或 reject（新的不生效）。
+
+Max Stat (optional)
+Stat
+maxHealth
+healthRegen
+maxMana
+manaRegen
+ad
+ap
+armor
+mr
+as
+ms
+critChance
+critDamage
+cdr
+lifesteal
+range
+evasion
+spellVamp
+outputDamagePct
+outputHealingPct
+outputShieldPct
+maxHitPctMaxHp
+unavoidablePct
+cooldownDrainRate
+Value
+Basis (optional)
+—
+final
+thisSource
+
+這條加成加到某個絕對值就停（「攻擊距離上限 10」）。basis 決定那個數字比的是誰：final（預設＝角色面板上的最終值）或 thisSource（只算這一份增益自己疊出來的量，需要 stackKey）。⚠️ 它只**拒絕**再疊，不會把已經疊上去的收回來，所以最後一層可能小幅越線。
+
+Per Rank (0)
++ add per rank
+Stack Key (optional)
+Max Stacks (optional)
+Stack Visual
+Hooks (0)
++ add hook
+Dispellable
+Polarity (optional)
+—
+buff
+debuff
+Block (optional)
+Damage Types (0)
++ add damage type
+
+這個格擋擋得住哪些傷害型別。想表達「真實傷害無法阻擋」就**不要**把 true 列進來 —— 擋不擋真傷是這個欄位的內容,不是寫死的規則。
+
+Chance
+
+觸發機率,0~1(0.5 = 50%)。每一發合格的傷害各抽一次,抽中才擋。
+
+Fraction
+
+抽中時擋掉這一發的幾成,0~1(1 = 整包擋掉)。擋掉的部分不會進護盾池,也不會扣血;沒擋掉的部分照常走護盾與血條。
+
+Lethal Only
+
+只擋「會殺死我」的那一發(抵擋致命一擊)。留空 = 每一發合格的傷害都可能被擋。
+
+Lethal Basis (optional)
+—
+hp
+hpAndShields
+
+致死怎麼算:hpAndShields(預設)= 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」;hp = 只看血條(文案的字面讀法)。只有 lethalOnly 打開時才有意義。
+
+Internal Cooldown (optional)
+
+內部冷卻(秒):這個來源擋中一次之後,要隔多久才能再擋一次。留空 / 0 = 沒有冷卻,每一發合格的傷害都各抽一次。抽輸不會進冷卻,只有真的擋中才會。
+
+Vfx Id (optional)
+
+⭐ 擋下的那一瞬間放什麼特效(掛在**被擋的那個人**身上)。留空 = 維持泛用的格擋火花。⚠️ 它**取代**泛用火花,⛔ 不是疊在上面 —— 疊起來會變成一次擋兩發。
+
+Vfx Scale (optional)
+
+上面那份特效的縮放。留空 = 1(用特效自己的尺寸)。
+
+Vfx Tint
+#0
+#1
+#2
+
+上面那份特效的染色 [r,g,b] 0–255。留空 = 不染色。⚠️ 它乘進 diffuse,所以一份本來就有顏色的特效會被**再乘一次**。
+
+Death Ward (optional)
+Radius
+
+遺留物光環的半徑（GGD 單位）。站進這個圈才吃得到下面的加成。
+
+Max Per Zone
+
+同一座競技場裡同時最多幾個遺留物。滿了之後再有人陣亡就不再留下新的。
+
+Beneficiary
+owner
+team
+
+誰吃得到這一圈：owner = 只有帶著這支技能／這件道具的人自己；team = 他整隊。⚠️ 這不是隊伍光環（那要用 auras），它問的是「誰帶著這份來源」。
+
+Stacking
+max
+add
+
+多個遺留物重疊時：max = 只算一份（站在三個圈裡和站在一個圈裡一樣）；add = 每一個都算（三個圈就是三倍）。一場團滅會留下很多個，所以這是真的平衡決定。
+
+Model Key (optional)
+
+遺留物在畫面上用哪一份模型。留空 = 暗夜旗（prop.night-flag）。
+
+Modifiers (0)
++ add modifier
+
+站在圈內的受益者吃到的加成。⚠️ 與這一階自己的 modifiers 是**兩件事**：那一份是持有者常駐，這一份是站進圈裡才有。
+
+Crit Strike (optional)
+Chance
+
+觸發機率,0~1(0.06 = 6%)。每一次普攻(近戰揮擊/遠程射出)各抽一次。
+
+Damage Mult
+
+抽中時**這一條**貢獻的倍率(10 = 10倍),不是加在暴擊傷害屬性上的增量。和英雄自己的暴擊傷害、以及其他抽中的暴擊來源**相乘**(owner 2026-08-09,後台『暴擊規則』的 stackMode 可改),總倍率再夾在該頁的上限。
+
+Lifesteal Fraction
+
+抽中時吸回**真的從血條掉下來的量**的幾成,0~1(1 = 100%)。打在護盾上被吃掉的部分不算,和一般吸血同一個基數。
+
+Empowers (optional)
+—
+ownProcOnly
+everyCrit
+
+倍率與吸血套用在哪些暴擊上:ownProcOnly(預設)= 只有這個來源自己抽中的那一發;everyCrit = 這一發只要是暴擊就算(包含英雄自己暴擊率骰出來的)。預設選較弱的那一個 —— 一個已經堆滿暴擊率的英雄不會因為撿到它就整場 10 倍。
+
+Lifesteal Mode (optional)
+—
+replace
+add
+
+這一發的吸血怎麼結合持有者原本的吸血:replace(預設)= 直接用上面那個比例;add = 加在原本的吸血上面。預設 replace 是較弱的那一個。
+
+Vision (optional)
+Stealth Fade Delay Sec (optional)
+True Sight Radius (optional)
+Attributes (optional)
+Str (optional)
+Agi (optional)
+Int (optional)
+Damage Type Override (optional)
+Scope
+basic
+ability
+all
+
+換哪些傷害:basic = 普通攻擊(近戰與遠程投射物都算)、ability = 技能,含技能留下的延燒/中毒每一跳、all = 這個來源的持有者打出去的每一發(額外含道具觸發、小怪與守衛塔封包)。
+
+Becomes
+physical
+magic
+true
+
+換成什麼型別。true = 真實傷害(完全跳過護甲與魔抗,而且只有不指定型別的護盾吃得到)。
+
+Apply At (optional)
+—
+afterGates
+beforeGates
+
+什麼時候換。afterGates(預設)= 無敵/免疫與閃避先用原本的型別判定,轉換只影響護甲魔抗與護盾;beforeGates = 連免疫與閃避也用新型別判定(例:被轉成真傷的法術,魔法免疫就擋不住了)。
+
+Impact Type (optional)
+—
+original
+converted
+
+換完之後,擊倒判定讀哪一個型別。original(預設)= 讀轉換前的型別 —— 被轉成真傷的法術跳過魔抗,但不會因此多出一個它本來沒有的擊倒;converted = 讀轉換後的型別,也就是「轉真傷順便附贈擊倒」。
+
+Flight (optional)
+Hover Height (optional)
+Ignore Units
+Ignore Obstacles
+Stay Inside Boundary
+Penetration (optional)
+Scope
+basic
+ability
+all
+
+穿哪些傷害:basic = 普通攻擊(近戰與遠程投射物都算)、ability = 技能,含技能留下的延燒/中毒每一跳、all = 這個來源的持有者打出去的每一發(額外含道具觸發、小怪與守衛塔封包)。
+
+Armor Pct (optional)
+
+百分比護甲穿透,0~1(1 = 100%,完全無視護甲)。多件**相乘**疊加(50% + 50% = 75%,不是 100%)。⚠️ 目標護甲已經 ≤ 0 時**完全無效** —— 穿透只能把抗性往 0 撈回來,不能穿破 0。
+
+Armor Flat (optional)
+
+扁平護甲穿透(致命性),多件**相加**。⚠️ 夾在 0,不會把護甲推成負的;目標護甲已經 ≤ 0 時同樣完全無效。
+
+Mr Pct (optional)
+
+百分比魔法穿透,規則同 armorPct。
+
+Mr Flat (optional)
+
+扁平魔法穿透,規則同 armorFlat。
+
+Type Streak Immunity (optional)
+Damage Types (0)
++ add damage type
+
+哪幾種傷害會被計進連擊、並在達標後被免疫。想表達「真實傷害不列入」就**不要**把 true 列進來 —— 算不算真傷是這個欄位的內容,不是寫死的規則。
+
+Threshold
+
+連續受到幾發**同一型別**的傷害之後開始免疫該型別。卡片上的「連續 2 次」= 2。
+
+Reset Mode (optional)
+—
+restart
+zero
+
+來了**不同型別**的一發時,那一發自己算不算新連擊的第 1 發:restart(預設,內文的自然讀法)= 算,連擊立刻變成「新型別 ×1」;zero = 不算,連擊歸零,要下一發才開始數。
+
+Streak Timeout Sec (optional)
+
+連擊多久沒被續上就歸零(秒)。留空 = 永不逾時 —— 面對一波純物理的殭屍那就是無限免疫,所以這一格是安全閥。
+
+Immobile
+true
+
+紮根：持有這份來源期間**不能移動**，但**可以攻擊、可以施放技能**。⛔ 與【定身】不同 —— 它不是控場效果，淨化拔不掉、免控擋不住，也不計進控場戰績。
+
+Primary Attribute (optional)
+—
+STR
+AGI
+INT
+
+持有這份來源期間，把這具身體的**主屬性**改成這一個（蓋掉英雄卡上宣告的那一格）。影響「每級主屬性加成 / 非主屬性加成」那兩種成長模式。留空 = 照英雄卡。
+
+Attack Type (optional)
+—
+melee
+ranged
+
+持有這份來源期間，把這具身體的**攻擊型態**改成這一個（蓋掉英雄卡上宣告的那一格）。近戰＝走到身邊揮擊；遠程＝射出一發普攻投射物。也會換掉移動速度吃的環境倍率（近戰 `moveSpeedMelee` / 遠程 `moveSpeedRanged`）。留空 = 照英雄卡。
+
+Status Immunity (optional)
+Tags (0)
++ add tag
+
+要擋下來的**狀態類別**，逐字對 status-effect@1 的 tags。填 `cc` = 暈眩／緩慢／詛咒／致盲／纏繞／恐懼那一整族掛不上來；填 `slow` = 只免減速。⚠️ 這一格擋的是「掛上來」，⛔ 不擋傷害、不擋吸血暴擊、不擋【淨化】把身上的增益拔走，而且不帶這些 tag 的**標記與疊層照樣掛得上**。
+
+持有這份來源期間，帶著指定 tag 的狀態一律**掛不上這具身體**（GH#656 殭屍王）。
+
+↑
+↓
+✕
+Item
+damage
+damageArea
+damageLine
+grantAttribute
+revive
+heal
+shield
+applyStatus
+applyBuff
+cycleBuff
+restore
+spendHealth
+spendMana
+dash
+leap
+blink
+championForm
+spawnProjectile
+spawnVfx
+dot
+summon
+invulnerable
+knockback
+evasion
+taunt
+grantGold
+grantXp
+dispel
+shieldBreak
+devour
+modifyCooldown
+weightedBranch
+consumeStatus
+swapResource
+eventValueConversion
+randomArea
+delayed
+proxyCast
+manaBarrier
+extendBuff
+carry
+convertTeam
+chainLightning
+comboStrikes
+pull
+spawnModelFx
+screenFlash
+screenShake
+floatingText
+Condition
+＋ 加一個條件
+
+實際效果：無條件，每次都觸發。
+
+觸發條件：只有條件成立的目標才吃到這一段效果（省略＝所有目標都吃到）。與觸發器上的條件用同一組判斷式；「對身上有〔恐懼〕的敵人追加傷害」是**逐一**判斷的，範圍技裡沒有恐懼的人不會被算進去。沒有目標的效果（自我增益／落點特效）則是整段成立或整段不發生。
+
+Shape
+single
+circle
+Radius (optional)
+Side (optional)
+—
+enemies
+allies
+Max Targets (optional)
+Text
+
+要冒的字。⭐ 支援 {{i}}（第幾段）—— 連段的「1Hit…7Hit」寫成一個節點。
+
+Color Rgb
+#0
+#1
+#2
+Velocity Angle (optional)
+
+數字往哪個方向飛出（度，0 = 正上方，順時針）。⭐ 同一瞬間多個目標時，給不同角度才讀得到；留空 = 全部往上疊在一起。
+
+Size Scale (optional)
+Rise Speed (optional)
+Drift Speed (optional)
+Drift Angle Deg (optional)
+Drift Angle Step Deg (optional)
+Drift From (optional)
+—
+world
+casterFacing
+Duration Sec (optional)
+Apply To (optional)
+—
+self
+victim
+
+字冒在誰頭上。⛔ 沒有 all —— 字要有一個身體當錨。
+
++ add on hit
++ add effect
+加入產品（同一模板可重複加入）
+選擇一個模板…
+翻滾光束（橫放光束砲）
+瞬移突斬
+變身強化-數值面
+衝鋒推撞
+龍虎亂舞（自動連段→收尾重招）
+動地剁落點環
+多實例龍形推進
+汲取吸附
+自訂效果序列
+自訂事件被動
+原地震波
+成長蓄能
+瞬發點爆
+跳躍落地
+生命操作
+直線衝擊波（落點大爆炸）
+直線分段掃擊
+鎖定連段
+沿線 N 具（蝗蟲群·一次擺出整條線）
+球體定點（蝗蟲群·不動的那一群）
+定點打擊（蝗蟲群·擺在腳下的那一具）
+推進多具（蝗蟲群·等分散開各自推進）
+推進單具（蝗蟲群·一具沿面向推出去）
+具名標記-層數與免死
+攻擊觸發
+受擊反應
+環形放射陣
+週期領域
+代理錨點施法
+範圍逐一施法
+拉扯投擲
+圓周噴發（大冰塊）
+亂數彈幕轟炸
+單體斬擊
+召喚代理
+瞬移貼身
+行進波動
+英雄模型
+champ.godie-zombiex
+champ.sela
+champ.skin.barbarian
+champ.thorne
+community.lol.karthus
+community.lol.leesin
+community.lol.lux
+community.lol.missfortune
+community.lol.warwick
+community.lol.xerath
+community.lol.yasuo
+imported.bulbasaur
+imported.cloud
+imported.fox
+imported.fox2
+imported.goku
+imported.herobiggon
+imported.herobuu
+imported.herohehi
+imported.heroichigo
+imported.heroichigo-bankai
+imported.herokyo
+imported.herolight
+imported.herolingtong
+imported.heromiku
+imported.heromusashimiyamoto
+imported.herooichi
+imported.heropikachu
+imported.herorider
+imported.herosaber
+imported.herosasuke
+imported.herosephiroth
+imported.heroshana
+imported.herotoshiiemaeda
+imported.heroxelloss
+imported.horse
+imported.kikyou
+imported.linainvers
+imported.linkstik
+imported.long
+imported.lubu
+imported.luffe
+imported.mfls
+imported.negi
+imported.picacugy
+imported.pika
+imported.rabbit
+imported.renaryugu2
+imported.sd2
+imported.sesshomaru
+version.body.6b84de6e6b438d8ab27790735632817727b7b3b5730a197f
+w3x.stock.satyrtrickster
+已上傳的英雄模型
+保留並鎖定
+近似風格替代
+
+喜羊羊 · 喜羊羊與灰太狼
+
+以矮小卡通羊角動物暫代阿薩謝爾；實際為白色喜羊羊，不是原作黃色惡魔。THE END OF SON 的重複詛咒反轉原文及敵方增益要求完整保留，不能以本體到位宣稱該機制完成。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。
+
+上傳模型與動作庫
+
+支援內嵌貼圖、骨架與動畫的 GLB。獨立動作庫需使用相同骨架名稱、階層與基準姿勢；FBX 請先轉成 GLB。
+
+模型原檔與動作對應
+更換模型 GLB
+
+e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb · 原檔 1 份 · 5,681 三角面 · 5 段動作
+
+匯入相容動作庫 GLB
+
+同一段動作可以對應多項用途。Q／W／E／R／EX 共用「施法」動作。
+
+待機動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.28 秒）
+dead（1.06 秒）
+移動動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.28 秒）
+dead（1.06 秒）
+普攻動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.28 秒）
+dead（1.06 秒）
+施法動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.28 秒）
+dead（1.06 秒）
+受傷動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.28 秒）
+dead（1.06 秒）
+死亡動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.28 秒）
+dead（1.06 秒）
+模型朝向修正（度）
+套用模型與六項動作
+英雄肖像與技能圖片
+施法特效與聲音
+目前結果
+
+六槽編譯與模擬已通過
+
+目前預覽 R · 第 21 版
+
+目標生命：5006 → 2513
+
+事件：castRejected × 1、abilityCast × 1、castBegin × 1、healthSpend × 1、projectileSpawn × 1、abilityHit × 1、castEnd × 1、recoveryBegin × 1、projectileHit × 1、buffApply × 1、floatingText × 1、projectileEnd × 1、damage × 1、recoveryEnd × 1、hitImpact × 1、markChanged × 1
+
+檢視執行結果
+調整試玩情境
+
+完成施放 · 實際技能階級 1 · 目標生命 5006 → 4024
+
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 24/40 meshes · 32/13 particles/systems · eye -32.6,16.7,0.0
+施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常
+目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+900ms · Sim tick 27
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 15 筆事件
+事件驅動的演出時間軸
+
+演出依實際施法、命中與連段事件觸發；不會改動技能傷害。未觀察到觸發事件的段落不會播放。
+
+加入特效子型
+選擇已支援的特效子型…
+八連斬（連段＋收尾）
+隱身俯衝（落地雷擊）
+末日印記（詠唱標記）
+雙段爆破（小死＋大爆）
+由此演出接管預設施法裝飾（保留範圍與施法提示）
+↺
+−1f
+▶
++1f
+0.90s
+精確秒數
++ 3D 模型特效
++ 粒子特效
++ 浮動文字
++ 畫面閃光
++ 鏡頭震動
++ 音效
++ 角色動作
++ 角色位移
++ 隱藏角色
+建議關鍵格
+0.175s
+0.980s
+1. 角色動作 · 施法者施法
+施法起手 · +0ms
+2. 粒子特效 · fx.prim.void.pulse-sm
+施法起手 · +0ms
+3. 粒子特效 · fx.prim.void.slash
+技能結算 · +0ms
+Document
+modelFx
+vfx
+floatingText
+screenFlash
+screenShake
+sound
+anim
+hideBody
+bodyMove
+On
+castStart
+castEffect
+strike
+projectileSpawn
+projectileHit
+reflectSuccess
+At Ms (optional)
+Strike Index (optional)
+Replaces (optional)
+—
+caster.action
+target.reaction
+Replaces For Ms (optional)
+At (optional)
+—
+target
+caster
+Pulse
+attack
+cast
+hurt
+guard
+dodge
+Clip Window Ms (optional)
+移除選取的演出段落
+保存與分享作品
+
+草稿備份保留未完成欄位、模型與動作庫原檔；完整英雄包含六槽技能、演出、模型、已選動作與圖片。
+
+下載草稿備份
+開啟作品檔
+建立完整英雄 ZIP
+
+草稿備份與完整英雄 ZIP 均可離線開啟。建立完整英雄與送審時的遊戲相容檢查需要連線。
+
+雲端保存與社群投稿
+雲端帳號：model-author
+登出雲端
+
+本機有尚未同步的修改。同步草稿與投稿審查是分開的步驟。
+
+同步雲端草稿允許其他玩家在署名原作者與來源版本後改作此發布版本
+
+投稿目前開放；同帳號最多 5 份待審，每日最多 20 份新英雄候選（UTC 00:00 重置），此作品 ZIP 上限 64.00 MiB。撤回不會退還當日投稿次數。英雄仍須由管理員審查發布。
+
+更新投稿政策提交這份完整英雄審查
+
+先建立完整英雄 ZIP，檢查正規化圖片後即可投稿。
+
+投稿結果：退回修改
+
+隔離流程驗收：最新版建包、原文保留、六槽代理模型及固定審查版本均已確認。原設計仍有下列缺項，退回逐項補強；本次不授予完整原設計驗收或正式發布資格。
+
+E acceptedPlan.slots.E.products：尚缺方向判定、近身技能分類與影子反擊；目前只反擊近距離普攻。
+
+W presentation.slots.W：白色魔力雨的專屬特效、角色動作與音效仍待完成；目前保留通用演出。
+
+EX presentation.slots.EX：重複自身 R 詛咒時反轉為敵方增益的機制已補驗；金光、敌方增益 UI 與施法者驚愕專屬演出仍未全部完成。
+
+更新審查結果
+與這份投稿比較
+批次匯入英雄交接
+
+選取交接資料夾，自動配對英雄、六槽模板、微調、隨附模型及動作，將每位角色保存為新的本機作品。
+
+選擇交接資料夾

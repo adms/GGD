@@ -1,0 +1,386 @@
+{
+  "schema": "ggd-batch2-slot-source-review@2",
+  "reviewer": "root-agent-author-review",
+  "heroes": [
+    {
+      "id": "b2-popp",
+      "projectSha256": "e770f5af7419886d215c6eccdd93e6063fd9e5818f6f3d8e93a3dff4f779d7d5",
+      "compiledSha256": "b4937f8e415147ea6188ad940d7c28556020672ffd9381fe1a47dcdc59d63b32",
+      "slots": {
+        "PASSIVE": "onDashOrBlink確實只回自身4%魔力，三秒冷卻；不是受到傷害也回魔。",
+        "Q": "Q先打魔法傷害再給3秒burn；編譯無DOT，預熱笑點不假裝持續燃燒。",
+        "W": "W只有consumeStatus成功才建立root:true；未預熱仍有基礎傷害。",
+        "E": "E是真ground blink，合法落點；救援窗口讀recentCast，不另造資源。",
+        "R": "R是9×1.5直線一次damageLine；吃到飽只為名稱，未乘擊中次數。",
+        "EX": "EX友軍120治療，加recent E條件180；受益者是ally，與原作辨識和救援笑點一致。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-rem",
+      "projectSha256": "ca7dd15b0c5867c20892aad388bb8008d04c52d878ad19ca12e241bc1d101d7f",
+      "compiledSha256": "b2ca8e95c23251019a892e52a44bc9d2aaaf7e0d0bdb46d17e117c971ae1fff6",
+      "slots": {
+        "PASSIVE": "固定500物理反擊讀onDamageTaken/event；明確不是按入射百分比反彈。",
+        "Q": "Q無傷害pull、stopDistance1；拖客人真改敵人位置。",
+        "W": "W物理傷後以distance<=2.5加disarmed；遠距離無繳械分支。",
+        "E": "E的spendHealth保留1HP，AD+35三秒；生命支付不等於受擊事件。",
+        "R": "R任何情況100盾，hp<.5才240治療；E不是必要施法條件，只是能真壓血跨門檻的其中手段。",
+        "EX": "EX編譯leap低弧3.67、落地半徑2.75後物理傷和推離；沒有沿路多次傷害承諾。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-zenitsu",
+      "projectSha256": "fe84c9450f104d4a3367c168c91b53c0905a35f7213769ac73dd3ac58b81b089",
+      "compiledSha256": "b4f63eef857341575a9c82c22697d5f849ceaabaa2728d581df9ca66ac1d0801",
+      "slots": {
+        "PASSIVE": "位移給90盾一秒且3秒冷卻，與onEvade區分。",
+        "Q": "Q先自root0.5秒，delayed0.55秒才給3秒窗口；不能提前領到打卡卡。",
+        "W": "W先物理斬，再消自己窗口blink目標並追加物理斬；技能串用真前置。",
+        "E": "E原正文先後顛倒已修，compiled先damage後disarmed2.5秒。",
+        "R": "R條件成立後delayed三次，非三次傷害外再乘3；strikeReposition只服務連閃。",
+        "EX": "EX直接blink也可觸發被動，未給補眠窗口；獨立逃生。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-rin",
+      "projectSha256": "63a3ecba49dae9e81a377eabef9978cfe84916fdd6dd130cb4b9b8c1ef5a52f5",
+      "compiledSha256": "16863c4185bcee21f98c5203036d2bbee3887a1b42663bb16dcb8f4fc9ae9e52",
+      "slots": {
+        "PASSIVE": "普攻事件回3%最大魔力，非新增現金資源。",
+        "Q": "Q額外spendMana120，bankAs記實付且4秒期限；未假注入存款。",
+        "W": "W讀實付bankedBonus上限180，清存款後退1%最大魔力；刪掉无玩法用途的0.1秒moon-combo。",
+        "E": "E physical傷後只有magic-break標記，沒有暗加魔抗削減。",
+        "R": "R基礎中傷，消魔法標記才回12%魔力並silenced一秒。",
+        "EX": "EX針對友軍120有限治療；不能退寶石庫存。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-uncle",
+      "projectSha256": "4c39d700a3f35043c09f53f0819f51a2a713fde1effd626762d3e03b633ea8d0",
+      "compiledSha256": "95a988214f2787a3466431871d9b490703591d12079c0f2f2461f994bee37998",
+      "slots": {
+        "PASSIVE": "onShieldGained持有者是自己，因此自己獲盾才回3%魔力。",
+        "Q": "Q真送敵人AD+50，已顯式dispellable:true才能被W撤回；代價不是台詞。",
+        "W": "W只驅散最新一筆buff並root一秒；對照移除dispel可量敵AD差。",
+        "E": "E180盾和spell-shield只作收據；旗標沒有魔法免疫。",
+        "R": "Rconsume收據後產生實體self召喚4秒，hpMult/damageMult各0.3依正式基礎屬性管線；不繼承主人當下buff，該來源最多2具。",
+        "EX": "EX單次直線魔法；不再使用失效蛇形參數或把混亂名字套在直線上。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-boxxo",
+      "projectSha256": "35a5c61ef4bf18bfcc18f285e339b3dd2bb66101fd183d99416260a1b11b1af6",
+      "compiledSha256": "b6247ead88fa802d4238a91de91a9bf1c42e920874819ca13093ac91c4e24057",
+      "slots": {
+        "PASSIVE": "受擊給80盾四秒冷卻，搭檔只有單一可控本體與HP。",
+        "Q": "Q友軍120治療，自己moon-combo憑證；已避開帶stun標籤的ingredient。",
+        "W": "W消自己的憑證、把240盾放友軍；沒有憑證就無贈品。",
+        "E": "E的tpl-teleport實際leap自己至點，0.35秒搬運；並非拋投敵人。",
+        "R": "R在recent E條件下delayed三次重選allies、anchor caster；確實治療而非把periodic-field敵傷改成友傷。",
+        "EX": "EX先dispel負面再heal100，與退款消毒服務一致。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-shadow",
+      "projectSha256": "d6ae148f93d47cd658f1b2245e2bf53a36b01722839a50e39a809b02cefad54d",
+      "compiledSha256": "ecb6a638efe60dd80cf856fb9438c1eb6769904fee44aecdb9c83269473a9010",
+      "slots": {
+        "PASSIVE": "onUltimateCast後160盾兩秒，講話前不授予無敵。",
+        "Q": "Q circle pull最多6名進1.5間距；第一段不藏傷害。",
+        "W": "W0.7秒後reresolve自身半徑3，走出圈可躲；不凍結起手目標強制命中。",
+        "E": "E確實加AP80三秒；原來Q/W聚敵與E/R屬性成長分開量。",
+        "R": "R角色縮放後0.7725AP而非原稿0.8，正文已依compiled修正。",
+        "EX": "EX真blink-strike指定敵人，stopShort1.8；不稱有分身。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-bojji",
+      "projectSha256": "fc9ca92b06865ea5f3b5bf3993083ca83e5f8ce15615dcfad5520b074612c547",
+      "compiledSha256": "94c834a927d0a2eb9ef9d93a14255012be4fbac6e5ec9350d61f6bd08e2b54a8",
+      "slots": {
+        "PASSIVE": "真正onEvade才heal70，每2秒，未把位移當閃避。",
+        "Q": "Q chance1仍受世界evasion上限，正文已撤掉必閃說法；技能不在可閃清單。",
+        "W": "W物理傷與numbness disarmed，角色搔癢笑點落在繳械。",
+        "E": "E只有blink，不能自行觸發onEvade的heal。",
+        "R": "R消numbness換root1.8秒；沒前置仍基礎打擊。",
+        "EX": "EX140盾給友军兩秒，與自保閃避分清楚受益者。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-maomao",
+      "projectSha256": "f73f307c358c9cedfb320fe457a2f4f133aa1bd912f1a32dfdb5f565d12123d4",
+      "compiledSha256": "577243e2b0d22c934d0681fc9dafb58121f7ffe4d0b4278ab133829cee4375a3",
+      "slots": {
+        "PASSIVE": "onHeal是受療者事件，自己受治才回3%魔力。",
+        "Q": "Q自poison healingTakenMult.5且真DOT，試藥有可量負作用；無現實配方。",
+        "W": "W多卡次序先self dispel再heal120，解除減療才能喝滿；不是只拼兩個名字。",
+        "E": "E自moon-combo4秒與80盾，樣本不帶ingredient的stun分類。",
+        "R": "R消自己的樣本對友軍dispel和heal240；缺樣本不產生處方。",
+        "EX": "EX把healingTaken/lifesteal/regen各降為.5三秒；沒有捏造新毒素狀態。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-elma",
+      "projectSha256": "668e010c407749f0a2e1bbbeba3a43d56c5d8c0b6b8075baab2334318ad10b61",
+      "compiledSha256": "301fa253a25db0468c816c6250300efe9f8734dba0d838c3bf9fe4d1a7ebcf1d",
+      "slots": {
+        "PASSIVE": "物理傷害type filter才回4%魔力，法傷與真傷不算攻略回饋。",
+        "Q": "Q支付15%最大HP保留1並給60盾；盾不抵銷支付成本。",
+        "W": "W每次回2%魔力但只低於50%血有300盾，低血不是招名假效果。",
+        "E": "E加AD70三秒是真buff，不能稱換重騎士模型。",
+        "R": "R中級physical加.8AD，E增益已由獨立對照量出。",
+        "EX": "EX自heal120有限回復，不聲稱復活。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-albus",
+      "projectSha256": "7580ac02a5810debac7d76a95352d2cf226827aaf621b7d276fc1a3567b1b476",
+      "compiledSha256": "094744b27d14c843d6e36ee94233201421cff310fff244d3ebc23bb7d14a5f09",
+      "slots": {
+        "PASSIVE": "普攻heal40/3秒是續航，沒有世界時間回溯。",
+        "Q": "Q小級physical斬擊有正式耗魔冷卻，供W縮實際剩餘CD。",
+        "W": "W reduceFlat Q1.5秒；沒用Q不能預存CD折扣。",
+        "E": "E點blink，捷徑是合法位移而非越過所有地形。",
+        "R": "R基礎友盾100與recent E heal200；移動後急救與何布列明同族例外。",
+        "EX": "EX指定physical：敵人身上.3秒DOT三跳，另有自己原地.9秒低弧落地半徑1.83收尾；遠敵不保證中收尾，無無敵或敵鎖。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-goblin",
+      "projectSha256": "7a7e14660da358f2e95540bb2db45cf1ca48b30140f0cb939a564b4f14c5b716",
+      "compiledSha256": "3f159eff356d1d3326640b2e11aa8e2f3debc596d8449d39d293bcd255d9a8da",
+      "slots": {
+        "PASSIVE": "onCC由含cc tags的blind等觸發，正文改控制，不把soft cc誤叫硬控。",
+        "Q": "Q以首個起手命中中心/無命中施法點凍結，三次reresolve；不是持久陷阱實體。",
+        "W": "W拉敵至身前1，真位置差使工地命中改變。",
+        "E": "E沿正式blind配方missChance.5一秒；不全黑玩家畫面。",
+        "R": "R只有仍blind才knockback4，無前置僅物理傷；淨化可打斷。",
+        "EX": "EX200盾3秒的工安帽服務存活，沒有永久裝備。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-maple",
+      "projectSha256": "e111b32e7d9b57d8d93892b223128b2d9c3d609a658fed27e4996d30223d6eee",
+      "compiledSha256": "677624c3ce45d09cf11b1a3fef7ebd0612d0cef74978b70c50c145cbb295dc16",
+      "slots": {
+        "PASSIVE": "反擊是固定200魔法，不是反射比例傷害；與蕾姆共享原子被動。",
+        "Q": "Q自盾260三秒，不稱隊友也被保護。",
+        "W": "W自heal120，recent Q才回10%mana，內置條件實際讀Q施法。",
+        "E": "E正式championForm與counterpart，4秒armor25；兩型仍代理外觀。",
+        "R": "R alternate才DOT與poison標記，本體只小級魔法；不能當毒龍美術完成。",
+        "EX": "EX把heal100與shield100放友軍，區別Q只保護自己。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-naofumi",
+      "projectSha256": "d6fc3f54e92e0c229b848f09468d8331e7831fbb499cee2c49d22ff4295e0df9",
+      "compiledSha256": "cc2478d35f4a9a0e86717d4320f772632f4aba1f9ec58e422cce0caaf1ebeca9",
+      "slots": {
+        "PASSIVE": "onAllyDamaged對同隊受傷回魔，正文去掉沒有距離參數的附近承諾。",
+        "Q": "Q友軍240盾與spell-shield暫態，未把ID當免費免控。",
+        "W": "W consume友方標記heal200，和章魚嗶相同子玩法已列相似例外。",
+        "E": "E物理傷與push3，真清出位置但不是禁止敵人靠近的牆。",
+        "R": "R無條件先heal80，recent E才搬友軍到caster並onArrive盾180；清場敵人與被救隊友不同受益者。",
+        "EX": "EX只自盾150兩秒，與友軍Q不同接收者。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-makoto",
+      "projectSha256": "c46553ddb40e6e19c918edfdcce0e78798a0a5760d5101bb597e2048b95bedf6",
+      "compiledSha256": "e2c6a5bbb90256b78507109ed243f3aefcea87d659043c9e540a85cd4ccd9ec0",
+      "slots": {
+        "PASSIVE": "onUltimateHit才自heal80，每3秒一次，不能由普通攻擊任意觸發。",
+        "Q": "Q只有push3，刻意不用傷害來污染距離連動對照。",
+        "W": "W distanceScale在8單位到1.5倍，0距離.5倍；改位置才改量。",
+        "E": "E三次重新施slow40=.6移速，首個起手中心固定；不是全圖營業界域。",
+        "R": "R消slow40才silenced1.2秒，標記處理不以status ID自帶效果。",
+        "EX": "EX友軍heal120，沒有銷售／金幣持久系統。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-noor",
+      "projectSha256": "64006cd065445e802ec1f6b9f68dacea06138cd765463aa00e9210e297e63038",
+      "compiledSha256": "d3cf62d0c11aadd7a4d6244aab10afdbfd84ff0d33104bf625a814211618bdd1",
+      "slots": {
+        "PASSIVE": "onReflectSuccess才給rage3秒，不能把挨打視為成功反彈。",
+        "Q": "Q給armor+10且限定physical ability一次1.8秒窗；反彈成功連同護甲提前detach，返還是magic仍受MR，沒有方向角。",
+        "W": "W physical基傷後消自身rage才heal220，收據來源來自真反彈事件。",
+        "E": "E100盾與spell-shield只是下一張盾的憑證，非反彈本體。",
+        "R": "R消E憑證換300盾，受keepLarger同stack規則，不永久疊盾。",
+        "EX": "EX單體拉近1.5距離，無反射位移說法。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-touka",
+      "projectSha256": "cca08eb61d1ac01521dc0330b0c909c96737404cfc8994980e0be8079f7f7cd9",
+      "compiledSha256": "1c573df6458c52b55e78906084a181d56a679eb239dbba5e106508a9c2c4821b",
+      "slots": {
+        "PASSIVE": "onDashOrBlink heal50/3秒，未描述換死人身體。",
+        "Q": "Q延遲.6重新選區域內root2秒，首目標中心固定，沒有真挖洞改地形。",
+        "W": "W真dragToCaster leap拋投，100 WC3→1.83世界距離；落地小級magic，最終compiled無AP ratio，正文與舊審查誤述已刪除。",
+        "E": "E物理傷後root2秒，入坑紀錄是現有控制可淨化。",
+        "R": "R消root後推離4，沒有root不搬人；同族施工玩法與哥殺列明。",
+        "EX": "EX合法點blink逃命，不復活或挖通新路。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-haga",
+      "projectSha256": "cb6ddcaf30682526ccc0b5f3dfccf0c1edfa05c6ec5974efffd4c1220d44790e",
+      "compiledSha256": "e53a8e56b21cc6035793156046423ce41be96f85b4d6c9c8ca771d760f57f104",
+      "slots": {
+        "PASSIVE": "P明綁E施法回4%魔力，不把magic-break錯當onCC事件。",
+        "Q": "Q camera-mark使用caster來源隔離；只標記不提供全圖視野。",
+        "W": "W targeted condition appliedBy:self再blink；不使用只認同技能來源的markedUnit造成跨槽失效。",
+        "E": "E只silenced2秒，能走能普攻；沒有stun旗標。",
+        "R": "R dispel buff/shield最多2後消magic-break回10%魔力，並不修改敵方JSON。",
+        "EX": "EX友軍dispel與shield120，熱修是戰鬥效果不是改存檔。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    },
+    {
+      "id": "b2-kisaragi",
+      "projectSha256": "a845ae37a87810a2a71b957cd5838dab994426cfc053a7bb68b697ceecc0e24a",
+      "compiledSha256": "118809da407f23be2440f8e3a052bc897b57a8d43612d697f46182036b34fe60",
+      "slots": {
+        "PASSIVE": "受擊120盾/4秒，本體對應實際已驗證GLB，不是騎士換標籤。",
+        "Q": "Q circle pull半徑7最多8名敵人、停2，友軍不拉。",
+        "W": "W自身root3秒與140盾；確實限制行車且E可以解手閘。",
+        "E": "E消自身root才blink合法點，onArrive極小級AoE；已改掉原文小級誤述。",
+        "R": "R每敵等權8/12/16朝caster分支，碰撞體重疊選人；onArrive沿出貨curse5秒、blind/confusion1秒，不全地圖均勻。",
+        "EX": "EX小級physical和numbness disarmed1秒，不對隊友關門或搬位。"
+      },
+      "findings": [
+        "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+      ],
+      "limitations": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,587 @@
+{
+  "schema": "ggd-batch2-37-build-report@1",
+  "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "sourceHashes": {
+    "roster.mjs": "bd0e5bdee71e246578e566473b3d6854ae74e87974e2571a936a495aa76fcfb3",
+    "recipes.mjs": "6d367dc55ad0ca7fe8b9dd688ef1744e9124463b99d8b8eb143da892012119ab",
+    "decisions.json": "6dd13ae372572cd056b66ee6743d39b30d3287d781b1ae57e427c8e99d0f3862",
+    "build.mjs": "8e48e862015cc33c954914be18a0f58321fa50c6e2e4d39f1513d607725881d9"
+  },
+  "catalogDigest": "d624009e2c4fa0aad02a0f26c222e88ec6d68513f44d405f37c49659a8fed904",
+  "partition": "external-evaluation-only",
+  "trainEligible": false,
+  "heroCount": 37,
+  "slotCount": 222,
+  "limits": [
+    "Compilation and basic scenarios do not prove full semantics, balance, asset readiness or live game acceptance.",
+    "No custom status documents, registered templates, engine mechanics or resource systems are added.",
+    "Teacher self-review, cross-slot behavior, packaging and asset review remain separate admission gates."
+  ],
+  "heroes": [
+    {
+      "number": 1,
+      "id": "b2-popp",
+      "name": "何布",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 2,
+      "id": "b2-rem",
+      "name": "蕾姆",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 3,
+      "id": "b2-zenitsu",
+      "name": "我妻善逸",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 4,
+      "id": "b2-rin",
+      "name": "遠坂凜",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 5,
+      "id": "b2-uncle",
+      "name": "異世界舅舅",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 6,
+      "id": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 7,
+      "id": "b2-shadow",
+      "name": "闇影",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 8,
+      "id": "b2-bojji",
+      "name": "波吉",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "projectSha256": "d4a258609a858159dceb3b6bfa1b77df06ecfacc9bf13dbc74ffa2bb75c8b244",
+      "compiledSha256": "6ea5bf72f6b777e64bc2ed6791c4737dcddf4549bd006cf2f52ff7ce57b975d7",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 9,
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 10,
+      "id": "b2-elma",
+      "name": "艾爾瑪",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 11,
+      "id": "b2-albus",
+      "name": "阿爾巴斯",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 12,
+      "id": "b2-goblin",
+      "name": "哥布林殺手",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"W\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 13,
+      "id": "b2-maple",
+      "name": "梅普露",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 14,
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 15,
+      "id": "b2-makoto",
+      "name": "深澄真",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"W\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 16,
+      "id": "b2-noor",
+      "name": "諾爾",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "projectSha256": "ba5c13eea5cc7bb573c6388d2fd130cb947d67d4949f0a3be494f5b02caa0287",
+      "compiledSha256": "2d1648805981ad683de63bd1a26051fe0f81309f40c8c6f2d45c4db6bfadb5d5",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 17,
+      "id": "b2-touka",
+      "name": "托卡・史考特",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"Q\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 18,
+      "id": "b2-haga",
+      "name": "羽賀",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 19,
+      "id": "b2-guts",
+      "name": "凱茲",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 20,
+      "id": "b2-keyaru",
+      "name": "凱亞爾",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"Q\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 21,
+      "id": "b2-kaede",
+      "name": "楓",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 22,
+      "id": "b2-matthias",
+      "name": "馬提亞斯",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 23,
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 24,
+      "id": "b2-kumoko",
+      "name": "蜘蛛子",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 25,
+      "id": "b2-yogiri",
+      "name": "高遠夜霧",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "projectSha256": "5c8c15df5f224518b54581d32cdb0fee7aa1b0f7cff304d64f9aca0c6afb3874",
+      "compiledSha256": "68bd9d2847d8bef4efe70eb5a1bb15cb51c9f9f28cfcedd67f4a679f38f7ecae",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 26,
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 27,
+      "id": "b2-fushi",
+      "name": "不死",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 28,
+      "id": "b2-orphen",
+      "name": "歐菲",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 29,
+      "id": "b2-klaus",
+      "name": "克勞斯",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 30,
+      "id": "b2-takopi",
+      "name": "章魚嗶",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 31,
+      "id": "b2-luckyman",
+      "name": "幸運超人",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "projectSha256": "0b14d9245995b48a476216bfa053f5df7ae48929f0c66a36045d0c4906a0e3f4",
+      "compiledSha256": "c0528e125c9080c414cc4d431d94fddb272b749b5367349eb4477f5e95ef7001",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 32,
+      "id": "b2-misery",
+      "name": "米瑟利",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 33,
+      "id": "b2-nube",
+      "name": "鵺野鳴介",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 34,
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "schema": false,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "number": 35,
+      "id": "b2-aladdin",
+      "name": "阿拉丁",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 36,
+      "id": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "number": 37,
+      "id": "b2-kisaragi",
+      "name": "如月電車",
+      "schema": true,
+      "compile": false,
+      "basicKit": false,
+      "admitted": false,
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    }
+  ],
+  "failures": [
+    {
+      "id": "b2-popp",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-rem",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-zenitsu",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-rin",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-uncle",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-boxxo",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-shadow",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-maomao",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-elma",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-albus",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-goblin",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"W\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-maple",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-naofumi",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-makoto",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"W\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-touka",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"Q\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-haga",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-guts",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-keyaru",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"Q\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-kaede",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-matthias",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-sinbad",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-kumoko",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-kaiji",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-fushi",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-orphen",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"EX\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-klaus",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-takopi",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-misery",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-nube",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-shinchan",
+      "error": "[\n  {\n    \"expected\": \"'melee' | 'ranged'\",\n    \"received\": \"null\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"attackType\"\n    ],\n    \"message\": \"Expected 'melee' | 'ranged', received null\"\n  }\n]"
+    },
+    {
+      "id": "b2-aladdin",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"code\\\": \\\"custom\\\",\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      2,\\n      \\\"side\\\"\\n    ],\\n    \\\"message\\\": \\\"shape:\\\\\\\"single\\\\\\\" 讀不到 side —— 要用範圍請改成 shape:\\\\\\\"circle\\\\\\\"，否則這一格是一個看起來有設、其實沒有人讀的數字\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-ned",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    },
+    {
+      "id": "b2-kisaragi",
+      "error": "AssertionError [ERR_ASSERTION]: [{\"slot\":\"E\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onEnd\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"},{\"slot\":\"R\",\"phase\":\"expand\",\"refs\":[\"hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550\"],\"message\":\"[\\n  {\\n    \\\"received\\\": \\\"each\\\",\\n    \\\"code\\\": \\\"invalid_enum_value\\\",\\n    \\\"options\\\": [\\n      \\\"batch\\\",\\n      \\\"perTarget\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"effects\\\",\\n      0,\\n      \\\"onHitTargetsMode\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid enum value. Expected 'batch' | 'perTarget', received 'each'\\\"\\n  }\\n]\"}]"
+    }
+  ],
+  "baseline": {
+    "digest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
+    "counts": {
+      "champions": 71,
+      "abilities": 421,
+      "items": 142,
+      "augments": 91,
+      "projectiles": 21,
+      "status-effects": 51,
+      "loot-tables": 3,
+      "arenas": 13,
+      "config": 101,
+      "ability-templates": 54
+    }
+  },
+  "counts": {
+    "schema": 23,
+    "compile": 4,
+    "basicKit": 4,
+    "admitted": 0
+  }
+}

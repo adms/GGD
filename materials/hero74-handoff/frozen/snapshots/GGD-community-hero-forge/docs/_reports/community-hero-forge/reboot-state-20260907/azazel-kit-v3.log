@@ -1,0 +1,31 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (12 tests | 1 failed) 287ms
+   × Azazel authored six-slot refinement > R then EX spends exactly three and makes the enemy stronger without ordinary EX damage 59ms
+     → expected '[{"type":"healthSpend","tick":23,"dat…' to contain '反轉增益'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > R then EX spends exactly three and makes the enemy stronger without ordinary EX damage
+AssertionError: expected '[{"type":"healthSpend","tick":23,"dat…' to contain '反轉增益'
+
+Expected: "反轉增益"
+Received: "[{"type":"healthSpend","tick":23,"data":{"source":1,"target":1,"amount":128.51687755102012,"remaining":4155.379040816327,"origin":"ability:community-review-32-20260907.r"}},{"type":"projectileSpawn","tick":23,"data":{"id":4,"owner":1,"projectileId":"imported.bolt.void","origin":"ability:community-review-32-20260907.r"}},{"type":"abilityHit","tick":23,"data":{"caster":1,"target":3,"slot":"R"}},{"type":"castEnd","tick":23,"data":{"caster":1,"slot":"R","abilityId":"community-review-32-20260907.r"}},{"type":"recoveryBegin","tick":23,"data":{"caster":1,"slot":"R","abilityId":"community-review-32-20260907.r","ticks":18,"recoverySec":0.6,"rule":"damage"}},{"type":"projectileHit","tick":24,"data":{"id":4,"owner":1,"target":3,"projectileId":"imported.bolt.void","origin":"ability:community-review-32-20260907.r"}},{"type":"buffApply","tick":24,"data":{"source":1,"target":3,"origin":"ability:community-review-32-20260907.r"}},{"type":"floatingText","tick":24,"data":{"text":"萎靡 ↓","colorRgb":[166,102,217],"durationSec":1.2,"subjects":[{"id":3,"x":-38.00000526983764,"z":10}],"caster":1,"zone":0,"origin":"ability:community-review-32-20260907.r"}},{"type":"projectileEnd","tick":24,"data":{"id":4,"x":-39.10000526983764,"z":10,"owner":1,"projectileId":"imported.bolt.void","origin":"ability:community-review-32-20260907.r","hit":true}},{"type":"damage","tick":24,"data":{"x":-38.00000526983764,"z":10,"source":1,"target":3,"amount":965.1990189812707,"type":"magic","dmgType":"magic","blocked":false,"crit":false,"killingBlow":false,"origin":"ability:community-review-32-20260907.r"}},{"type":"recoveryEnd","tick":24,"data":{"caster":1,"slot":"R","abilityId":"community-review-32-20260907.r","reason":"hit","ticksSaved":17}},{"type":"hitImpact","tick":24,"data":{"x":-38.00000526983764,"z":10,"source":1,"target":3,"dmgType":"magic","amount":965.1990189812707,"blocked":false,"crit":false,"killingBlow":false,"profile":{"tier":"heavy","hitstopTicks":6,"hitstunTicks":12,"knockbackDir":{"x":0,"z":0},"knockbackMag":0,"isEX":false,"isBlock":false,"isCounter":false,"shakeMag":0.85,"shakeStyle":"directional","sparkKind":"magic","camKick":0.5,"exFreeze":0}}},{"type":"markChanged","tick":24,"data":{"id":1,"markId":"community-review-32-20260907.negative-energy","count":1}}]"
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:107:38
+    105|     expect(hasStatus(r.world, r.foe, ids.curse as StatusId, r.caster))…
+    106|     expect(hasStatus(r.world, r.foe, ids.boon as StatusId, r.caster)).…
+    107|     expect(JSON.stringify(r.events)).toContain("反轉增益");
+       |                                      ^
+    108|     expect(JSON.stringify(r.events)).toContain("怎麼反而變強了");
+    109|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  05:59:55
+   Duration  5.66s (transform 2.99s, setup 0ms, collect 4.46s, tests 287ms, environment 0ms, prepare 136ms)
+

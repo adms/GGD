@@ -1,0 +1,2138 @@
+{
+  "projectSha256": "7a0e3c026e40ea621326fae026a6f057649d46fc9a6fc13507fb14b6f003c375",
+  "compiledSha256": "3d57e806486b73a994c1db16b23b48326c3dcf4fd364e17687c69eb2ad28aa3e",
+  "good": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1418.4616122448983,
+      "casterPos": {
+        "x": -38.09999440815293,
+        "z": 0
+      },
+      "targetHp": 11613.570763536582,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -36.90000559184708,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 1
+    },
+    "after": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1432.1016122448996,
+      "casterPos": {
+        "x": -38.1,
+        "z": 0
+      },
+      "targetHp": 9757.867519369975,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -36.90000000000001,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-kisaragi.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-kisaragi.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-kisaragi.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "dash",
+          "phase": "start",
+          "caster": 1,
+          "origin": "ability:b2-kisaragi.e",
+          "abilityId": "b2-kisaragi.e",
+          "durationSec": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-kisaragi.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-kisaragi.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 650.5743385042357,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 650.5743385042357,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "point": {
+            "x": -36.90000559184708,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999776326118,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900002236738835,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999776326118,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900002236738835,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -36.900000143151296,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 542.1769317290061,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -36.900000143151296,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 662.1769317290061,
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": true,
+            "isCounter": false,
+            "shakeMag": 0.51,
+            "shakeStyle": "directional",
+            "sparkKind": "block",
+            "camKick": 0.25,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "guardBreak",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "x": -36.900000143151296,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -36.900000143151296,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 1324.3538634580123,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -36.900000143151296,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 1324.3538634580123,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "statusApplied": 2,
+      "damage": 3,
+      "hitImpact": 3,
+      "shieldGained": 1,
+      "recoveryBegin": 1,
+      "recoveryEnd": 1,
+      "guardBreak": 1
+    },
+    "digestTrail": [
+      2867477065,
+      1415140337,
+      3408295750,
+      180908865,
+      538012714,
+      1072959147,
+      543808956,
+      2859823102,
+      1222326193,
+      320295730,
+      2110197488,
+      1563694298,
+      2071825881,
+      3659948906,
+      683083130,
+      1734996841,
+      856937615,
+      1591871979,
+      1145165271,
+      3791783647,
+      3024953121,
+      914890825,
+      4030465097,
+      1813924635,
+      4065051429,
+      2378491113,
+      2960264853,
+      2969529084,
+      3466339499,
+      148887943,
+      3766901444,
+      2777051089,
+      2572799207,
+      2435478174,
+      570203591,
+      561744604,
+      4241447705,
+      2476366671,
+      677023426,
+      1579260269,
+      2511895122,
+      29593561,
+      3513994588,
+      2910021947,
+      265754645,
+      454819853,
+      973588937,
+      6483755,
+      2328411931,
+      714896259,
+      1756915903,
+      2127595269,
+      3646239081,
+      1861331942,
+      3348560470,
+      1246214807,
+      1653389201,
+      2161933811,
+      2812057991,
+      2578221056
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1418.4616122448983,
+      "casterPos": {
+        "x": -38.09999440815293,
+        "z": 0
+      },
+      "targetHp": 11613.570763536582,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -36.90000559184708,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 1
+    },
+    "after": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1432.1016122448996,
+      "casterPos": {
+        "x": -38.1,
+        "z": 0
+      },
+      "targetHp": 11082.221382827987,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -36.90000000000001,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-kisaragi.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-kisaragi.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-kisaragi.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "dash",
+          "phase": "start",
+          "caster": 1,
+          "origin": "ability:b2-kisaragi.e",
+          "abilityId": "b2-kisaragi.e",
+          "durationSec": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-kisaragi.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-kisaragi.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 650.5743385042357,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 650.5743385042357,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "point": {
+            "x": -36.90000559184708,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999776326118,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900002236738835,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999776326118,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900002236738835,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -36.900000143151296,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 542.1769317290061,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -36.900000143151296,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 662.1769317290061,
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": true,
+            "isCounter": false,
+            "shakeMag": 0.51,
+            "shakeStyle": "directional",
+            "sparkKind": "block",
+            "camKick": 0.25,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "guardBreak",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "x": -36.900000143151296,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -38.09999985684872,
+            "z": 0
+          },
+          "target": {
+            "x": -36.900000143151296,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "statusApplied": 2,
+      "damage": 2,
+      "hitImpact": 2,
+      "shieldGained": 1,
+      "recoveryBegin": 1,
+      "recoveryEnd": 1,
+      "guardBreak": 1
+    },
+    "digestTrail": [
+      2867477065,
+      1415140337,
+      3408295750,
+      888214825,
+      445677633,
+      3830450111,
+      6634890,
+      580957210,
+      1216153066,
+      3543219213,
+      3966855087,
+      2926254549,
+      732346522,
+      1944388881,
+      3606886345,
+      2433249926,
+      3795982100,
+      598759671,
+      3862090493,
+      182010483,
+      3838600423,
+      1435237073,
+      2404869611,
+      4219301853,
+      503424461,
+      3214966935,
+      1408001161,
+      2351970431,
+      3084246436,
+      1503113054,
+      3256723677,
+      2382936456,
+      2355687449,
+      2789960673,
+      993240460,
+      844064035,
+      2797732185,
+      1769864737,
+      3178309431,
+      4130725993,
+      670149860,
+      4050470382,
+      3092670350,
+      3956947271,
+      535405783,
+      580998526,
+      1629822058,
+      3704612841,
+      1508829636,
+      1621719572,
+      506708107,
+      1148016943,
+      1371544038,
+      205432717,
+      2516642312,
+      840273884,
+      420493334,
+      1080508576,
+      3268467240,
+      2178791091
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1499.4056122448978,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 12261.979591836734,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1499.4056122448978,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 11610.08883357712,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 1
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 662.1769317290061,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 662.1769317290061,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 1,
+      "castBegin": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1,
+      "statusApplied": 1,
+      "shieldGained": 1
+    },
+    "digestTrail": [
+      1139565065,
+      1050381121,
+      3284922017,
+      2941180490,
+      1305929023,
+      1181936499,
+      3997437413,
+      1167435822,
+      984386031,
+      2320346170,
+      1050382619,
+      4222086509,
+      2038016917,
+      2221412970,
+      1490854055,
+      2095318336,
+      3727576278,
+      3936122897,
+      738082000,
+      2405213764,
+      2263775390,
+      1349957858,
+      332216503,
+      1210661336,
+      2521107899,
+      1883548878,
+      3969184920,
+      1089921681,
+      4026226448,
+      1324422366,
+      1486730003,
+      3611769371,
+      2594650859,
+      1313778620,
+      3124021390,
+      635155809,
+      2968416712,
+      3060978050,
+      3723986343,
+      2065385517,
+      607433735,
+      2402415900,
+      2540864606,
+      542267628,
+      2477807986,
+      822934753,
+      4003670182,
+      2767403864,
+      4173405996,
+      3542246414,
+      2202041006,
+      2426694154,
+      532919413,
+      3084620522,
+      3578653572,
+      13715977,
+      1862124744,
+      2023708866,
+      201009074,
+      1638615333
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "W",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1499.4056122448978,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 12261.979591836734,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 12261.979591836734,
+      "casterMana": 1499.4056122448978,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 11610.08883357712,
+      "targetMana": 1499.4056122448978,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 1
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "W",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 662.1769317290061,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kisaragi.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-kisaragi.w",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 662.1769317290061,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "shieldGained",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "amount": 120,
+          "origin": "hook:abilityPassive:b2-kisaragi.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 1,
+      "castBegin": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1,
+      "statusApplied": 1,
+      "shieldGained": 1
+    },
+    "digestTrail": [
+      1139565065,
+      1050381121,
+      3284922017,
+      3356034284,
+      3361745657,
+      2885540565,
+      3990209955,
+      1144445768,
+      1998595369,
+      3775773852,
+      2066130845,
+      3478677515,
+      3455860243,
+      1215052,
+      1155071397,
+      2139006818,
+      4159226076,
+      2892313899,
+      2827490642,
+      3105507166,
+      3044768740,
+      3443358848,
+      1400716277,
+      3315742650,
+      1836487169,
+      1565685556,
+      3686659290,
+      2173678571,
+      864280722,
+      2824616900,
+      83245605,
+      1255272397,
+      2265860285,
+      2507761578,
+      3774505800,
+      227236919,
+      4155745102,
+      1846206740,
+      4073622449,
+      3390832187,
+      667316753,
+      1387420746,
+      2904370520,
+      3160287962,
+      236068644,
+      436837623,
+      3901177052,
+      1741233866,
+      4202977078,
+      3156149284,
+      3938394084,
+      3060910488,
+      2970644263,
+      1146150200,
+      1906732366,
+      940899,
+      2039786586,
+      1531097680,
+      798764384,
+      2210556535
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

@@ -1,0 +1,112 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (12 tests | 8 failed) 251ms
+   × Azazel authored six-slot refinement > R then EX spends exactly three and makes the enemy stronger without ordinary EX damage 45ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > clean target receives ordinary damage and stronger debuff 5ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > cleansed target receives ordinary damage and stronger debuff 18ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > expired target receives ordinary damage and stronger debuff 64ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > two Azazels reverse only their own curse in the same tick 10ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > control immunity does not change curse reversal 8ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > missing resources reject EX before payment or effect; interrupted R never pays 1ms
+     → Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+   × Azazel authored six-slot refinement > R at one HP cannot kill its caster or earn self-damage energy 8ms
+     → expected 'approaching' to be 'out-of-range' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > R then EX spends exactly three and makes the enemy stronger without ordinary EX damage
+TypeError: Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+ ❯ Object.cast packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:62:25
+     60|   const cast = (slot: CastableSlot, id = caster!) => {
+     61|     const ability = world.abilities.get(id)!;
+     62|     ability.slots[slot].cooldownRemainingTicks = 0;
+       |                         ^
+     63|     world.health.get(id)!.mana = world.health.get(id)!.maxMana;
+     64|     return castAbility(world, id, slot, slot === "E" ? { type: "self" …
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:102:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > clean target receives ordinary damage and stronger debuff
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > cleansed target receives ordinary damage and stronger debuff
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > expired target receives ordinary damage and stronger debuff
+TypeError: Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+ ❯ Object.cast packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:62:25
+     60|   const cast = (slot: CastableSlot, id = caster!) => {
+     61|     const ability = world.abilities.get(id)!;
+     62|     ability.slots[slot].cooldownRemainingTicks = 0;
+       |                         ^
+     63|     world.health.get(id)!.mana = world.health.get(id)!.maxMana;
+     64|     return castAbility(world, id, slot, slot === "E" ? { type: "self" …
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:115:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > two Azazels reverse only their own curse in the same tick
+TypeError: Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+ ❯ Object.cast packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:62:25
+     60|   const cast = (slot: CastableSlot, id = caster!) => {
+     61|     const ability = world.abilities.get(id)!;
+     62|     ability.slots[slot].cooldownRemainingTicks = 0;
+       |                         ^
+     63|     world.health.get(id)!.mana = world.health.get(id)!.maxMana;
+     64|     return castAbility(world, id, slot, slot === "E" ? { type: "self" …
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:124:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > control immunity does not change curse reversal
+TypeError: Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+ ❯ Object.cast packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:62:25
+     60|   const cast = (slot: CastableSlot, id = caster!) => {
+     61|     const ability = world.abilities.get(id)!;
+     62|     ability.slots[slot].cooldownRemainingTicks = 0;
+       |                         ^
+     63|     world.health.get(id)!.mana = world.health.get(id)!.maxMana;
+     64|     return castAbility(world, id, slot, slot === "E" ? { type: "self" …
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:134:47
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > missing resources reject EX before payment or effect; interrupted R never pays
+TypeError: Cannot set properties of undefined (setting 'cooldownRemainingTicks')
+ ❯ Object.cast packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:62:25
+     60|   const cast = (slot: CastableSlot, id = caster!) => {
+     61|     const ability = world.abilities.get(id)!;
+     62|     ability.slots[slot].cooldownRemainingTicks = 0;
+       |                         ^
+     63|     world.health.get(id)!.mana = world.health.get(id)!.maxMana;
+     64|     return castAbility(world, id, slot, slot === "E" ? { type: "self" …
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:139:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > R at one HP cannot kill its caster or earn self-damage energy
+AssertionError: expected 'approaching' to be 'out-of-range' // Object.is equality
+
+Expected: "out-of-range"
+Received: "approaching"
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:148:25
+    146|     r.world.transform.get(r.foe)!.pos.x += 25; r.world.rebuildGrid();
+    147|     // Pointing R at an out-of-range target must not release, pay or g…
+    148|     expect(r.cast("R")).toBe("out-of-range"); expect(r.hp(r.caster)).t…
+       |                         ^
+    149|     r.world.transform.get(r.foe)!.pos.x -= 25; r.world.rebuildGrid();
+    150|     expect(r.cast("R")).toBe("ok"); r.step(38); expect(r.hp(r.caster))…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 4 passed (12)
+   Start at  05:59:08
+   Duration  5.00s (transform 2.63s, setup 0ms, collect 4.03s, tests 251ms, environment 0ms, prepare 88ms)
+

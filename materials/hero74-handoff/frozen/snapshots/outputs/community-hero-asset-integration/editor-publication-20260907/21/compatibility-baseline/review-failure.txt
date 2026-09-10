@@ -1,0 +1,33 @@
+第 16 版的固定模擬紀錄 · 比利海靈頓
+
+PASSIVE
+Q
+W
+E
+R
+EX
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 13/32 meshes · 12/7 particles/systems · eye -34.5,16.7,0.0
+施法者：比利海靈頓 · community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938 · 2 meshes · ×1.511 · Main ChampionView · 材質正常
+目標：比利海靈頓 · community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938 · 2 meshes · ×1.511 · Main ChampionView · 材質正常
+全螢幕預覽
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+0ms · Sim tick 0
+↺
+−1 frame
+▶
++1 frame
+abilityCast
+abilityId=community-review-15-20260907.q · slot=Q
+castBegin
+abilityId=community-review-15-20260907.q · slot=Q
+全部 6 筆事件

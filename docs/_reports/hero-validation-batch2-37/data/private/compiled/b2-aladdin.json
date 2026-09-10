@@ -1,0 +1,1458 @@
+{
+  "champion": {
+    "id": "b2-aladdin",
+    "name": "阿拉丁",
+    "description": "魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "mage",
+    "attackType": "ranged",
+    "archetype": "mage",
+    "origin": "法師",
+    "modelKey": "champ.sela",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 8.2,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 45.833673469387755,
+      "healthRegen": 0.10673469387755102,
+      "maxMana": 0.9581632653061187,
+      "manaRegen": 0,
+      "ad": 2.5489795918367353,
+      "as": 0,
+      "mr": 2.1118367346938776,
+      "armor": 0.45735714285714285,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 13,
+      "agi": 18,
+      "int": 29,
+      "strGrowth": 1.25,
+      "agiGrowth": 1.67,
+      "intGrowth": 2.78,
+      "primary": "INT",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-aladdin.q",
+        "name": "烏戈代班先派一位",
+        "provenance": "editor-json",
+        "description": "「烏戈代班先派一位！」\n召喚 1 具可獨立攻擊的自身代理 4 秒，攻擊與生命倍率欄位均為 30%，本招最多 3 具；同時取得 rage 演奏暫態 4 秒。代理不是烏戈原作模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "summon",
+            "body": "self",
+            "championId": "self",
+            "count": 1,
+            "durationSec": 4,
+            "formation": "ring",
+            "spread": 1,
+            "maxAlive": 3,
+            "onOwnerDeath": "despawn",
+            "hpMult": 0.3,
+            "damageMult": 0.3
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "rage",
+            "duration": 4,
+            "applyTo": "self"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "cards": [
+            {
+              "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+              "params": {
+                "body": "self",
+                "count": 1,
+                "durationSec": 4,
+                "damageMult": 0.3,
+                "hpMult": 0.3,
+                "formation": "ring",
+                "spread": 1,
+                "maxAlive": 3,
+                "onOwnerDeath": "despawn",
+                "cleanse": "none",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f"
+            },
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "rage",
+                    "duration": 4,
+                    "applyTo": "self"
+                  }
+                ],
+                "castType": "self",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "W": {
+        "id": "b2-aladdin.w",
+        "name": "樂團加演再請一位",
+        "provenance": "editor-json",
+        "description": "「樂團加演再請一位！」\n消耗自身 rage 演奏暫態再召喚 1 具同規格代理 4 秒，W 自己的上限為 3 具；沒有演奏暫態就不能加演。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "rage",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
+              {
+                "kind": "summon",
+                "body": "self",
+                "count": 1,
+                "durationSec": 4,
+                "formation": "ring",
+                "spread": 1,
+                "maxAlive": 3,
+                "onOwnerDeath": "despawn",
+                "hpMult": 0.3,
+                "damageMult": 0.3
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "rage",
+                "count": "all",
+                "subject": "self",
+                "onConsumed": [
+                  {
+                    "kind": "summon",
+                    "body": "self",
+                    "count": 1,
+                    "durationSec": 4,
+                    "damageMult": 0.3,
+                    "hpMult": 0.3,
+                    "formation": "ring",
+                    "spread": 1,
+                    "maxAlive": 3,
+                    "onOwnerDeath": "despawn"
+                  }
+                ]
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-aladdin.e",
+        "name": "團員到齊才打節拍",
+        "provenance": "editor-json",
+        "description": "「團員到齊才打節拍！」\n指定地點半徑 3 內的友方單位增加 80 攻擊力 4 秒，可驅散；先叫出代理再指揮，代理才會領到加班增益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 80
+              }
+            ],
+            "duration": 4,
+            "applyTo": "target",
+            "dispellable": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "applyTo": "target",
+                "duration": 4,
+                "modifiers": [
+                  {
+                    "stat": "ad",
+                    "op": "flat",
+                    "value": 80
+                  }
+                ],
+                "dispellable": true
+              }
+            ],
+            "castType": "ground",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "R": {
+        "id": "b2-aladdin.r",
+        "name": "魔法音樂課吹整排",
+        "provenance": "editor-json",
+        "description": "「魔法音樂課吹整排！」\n發出直線魔法波動，打擊沿線敵人；演出是吹笛，幾何以編譯能力為準。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "ground",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                750,
+                1500
+              ]
+            },
+            "length": 10,
+            "width": 1.8,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+          "params": {
+            "damage": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                750,
+                1500
+              ]
+            },
+            "damageType": "magic",
+            "length": 10,
+            "width": 1.8,
+            "aim": "target",
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+        }
+      }
+    },
+    "exAbility": "b2-aladdin.ex",
+    "passiveAbility": "b2-aladdin.passive",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+      "schema": "template@1",
+      "name": "召喚代理",
+      "description": "召喚代理 —— 生出 N 具會自己打的身體。⭐ `body:\"self\"` = 分身（複製施法者自己）。⚠️ `cleanse` 是獨立的一格：卡面上的「除掉身上的法術效果」與召喚是兩件事，⛔ 綁死在一起就表達不出「只召喚、不淨化」那一半的技能。",
+      "family": "summon-agent",
+      "status": "enabled",
+      "params": {
+        "count": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 20,
+          "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
+        },
+        "body": {
+          "type": "enum",
+          "default": "self",
+          "values": [
+            "champion",
+            "self"
+          ],
+          "optional": true,
+          "origin": "taxonomy:分身族（複製施法者自己）是這個家族的**多數**形狀 —— `summon.ts` 檔頭逐字點名 57-03 複製鏡 / 27-002 霧隱分身之術；⭐ 選 `self` 當預設讓那一族**零個欄位**就寫得出來。"
+        },
+        "championId": {
+          "type": "docRef",
+          "optional": true,
+          "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。",
+          "origin": "inert —— ⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己。"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 10,
+          "min": 0.5,
+          "max": 600,
+          "unit": "s",
+          "optional": true,
+          "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。"
+        },
+        "damageMult": {
+          "type": "number",
+          "default": 1,
+          "min": 0.01,
+          "max": 10,
+          "optional": true,
+          "origin": "taxonomy:1 ＝ **與本體同強**，也就是「沒有宣告倍率」的中性值。⭐ 逐支覆寫由卡面決定（普屋 E 逐字「具有 **30%** 攻擊力」）。"
+        },
+        "hpMult": {
+          "type": "number",
+          "default": 1,
+          "min": 0.01,
+          "max": 10,
+          "optional": true,
+          "origin": "taxonomy:同 `damageMult` —— 1 是中性值，⛔ 不是一個平衡選擇。"
+        },
+        "formation": {
+          "type": "enum",
+          "default": "ring",
+          "values": [
+            "ring",
+            "line",
+            "scatter"
+          ],
+          "optional": true,
+          "origin": "taxonomy:`ring` 是唯一與具數無關的陣型（1 具也成立，N 具不重疊）；⛔ `line` 需要一個朝向、`scatter` 需要 RNG。"
+        },
+        "spread": {
+          "type": "number",
+          "default": 2,
+          "min": 0.1,
+          "max": 12,
+          "optional": true,
+          "origin": "taxonomy:2 個**世界單位** ≈ 一個身體寬 —— ⭐ 讓兩具不互相卡住的最小間距。⚠️ ⛔ 這一格刻意**沒有** `unit` —— 標成 `wc3u` 會被展開器除以 50（2026-09-01 實測：2 變成 0.04，兩具疊在同一點），⭐ 而 `summon.spread` 本來就是世界單位。"
+        },
+        "maxAlive": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 20,
+          "optional": true,
+          "origin": "taxonomy:0 ＝ **不設上限**，也就是「沒有宣告」的中性值。⭐ 要設上限的技能自己填。"
+        },
+        "onOwnerDeath": {
+          "type": "enum",
+          "default": "despawn",
+          "values": [
+            "despawn",
+            "persist"
+          ],
+          "optional": true,
+          "origin": "taxonomy:`despawn` —— 分身是施法者的延伸，⭐ 本體死了它們留著會變成「打不死的殘影」；`persist` 是少數（獨立召喚物）才要的。"
+        },
+        "cleanse": {
+          "type": "enum",
+          "default": "none",
+          "values": [
+            "none",
+            "status",
+            "all"
+          ],
+          "optional": true,
+          "origin": "taxonomy:`none` ＝ **只召喚**。⚠️ 淨化是**另一件事**（普屋 E 的卡面把兩件事寫在同一句），⛔ 綁死在一起就表達不出只召喚的技能。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "taxonomy:0 ＝ 瞬發，也就是「沒有宣告吟唱」的中性值（同 `tpl-single-strike` 的同名格）。"
+        }
+      },
+      "requires": [
+        "summon"
+      ],
+      "gapScore": 4,
+      "exemplar": {
+        "skill": "28-02 分身（普屋）",
+        "jass": "A0??"
+      }
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "schema": "template@1",
+      "name": "回血",
+      "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+      "family": "heal",
+      "status": "enabled",
+      "params": {
+        "target": {
+          "type": "enum",
+          "default": "ally",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+        },
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+        },
+        "applyTo": {
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.067,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+      }
+    },
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+      "schema": "template@1",
+      "name": "直線貫穿",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "family": "line-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "min": 0.5,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "min": 0.2,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+        },
+        "aim": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+        }
+      },
+      "requires": [
+        "damageLine"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "b2-aladdin.passive",
+      "name": "吹錯音先喘口氣",
+      "provenance": "editor-json",
+      "description": "「吹錯音先喘口氣！」\n施放大招時回復自身最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onUltimateCast",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.08,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onUltimateCast",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.08,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 4,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "b2-aladdin.q",
+      "name": "烏戈代班先派一位",
+      "provenance": "editor-json",
+      "description": "「烏戈代班先派一位！」\n召喚 1 具可獨立攻擊的自身代理 4 秒，攻擊與生命倍率欄位均為 30%，本招最多 3 具；同時取得 rage 演奏暫態 4 秒。代理不是烏戈原作模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "summon",
+          "body": "self",
+          "championId": "self",
+          "count": 1,
+          "durationSec": 4,
+          "formation": "ring",
+          "spread": 1,
+          "maxAlive": 3,
+          "onOwnerDeath": "despawn",
+          "hpMult": 0.3,
+          "damageMult": 0.3
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "rage",
+          "duration": 4,
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+            "params": {
+              "body": "self",
+              "count": 1,
+              "durationSec": 4,
+              "damageMult": 0.3,
+              "hpMult": 0.3,
+              "formation": "ring",
+              "spread": 1,
+              "maxAlive": 3,
+              "onOwnerDeath": "despawn",
+              "cleanse": "none",
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f"
+          },
+          {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "rage",
+                  "duration": 4,
+                  "applyTo": "self"
+                }
+              ],
+              "castType": "self",
+              "side": "allies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-aladdin.w",
+      "name": "樂團加演再請一位",
+      "provenance": "editor-json",
+      "description": "「樂團加演再請一位！」\n消耗自身 rage 演奏暫態再召喚 1 具同規格代理 4 秒，W 自己的上限為 3 具；沒有演奏暫態就不能加演。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "rage",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "summon",
+              "body": "self",
+              "count": 1,
+              "durationSec": 4,
+              "formation": "ring",
+              "spread": 1,
+              "maxAlive": 3,
+              "onOwnerDeath": "despawn",
+              "hpMult": 0.3,
+              "damageMult": 0.3
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "rage",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "summon",
+                  "body": "self",
+                  "count": 1,
+                  "durationSec": 4,
+                  "damageMult": 0.3,
+                  "hpMult": 0.3,
+                  "formation": "ring",
+                  "spread": 1,
+                  "maxAlive": 3,
+                  "onOwnerDeath": "despawn"
+                }
+              ]
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-aladdin.e",
+      "name": "團員到齊才打節拍",
+      "provenance": "editor-json",
+      "description": "「團員到齊才打節拍！」\n指定地點半徑 3 內的友方單位增加 80 攻擊力 4 秒，可驅散；先叫出代理再指揮，代理才會領到加班增益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 80
+            }
+          ],
+          "duration": 4,
+          "applyTo": "target",
+          "dispellable": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "target",
+              "duration": 4,
+              "modifiers": [
+                {
+                  "stat": "ad",
+                  "op": "flat",
+                  "value": 80
+                }
+              ],
+              "dispellable": true
+            }
+          ],
+          "castType": "ground",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-aladdin.r",
+      "name": "魔法音樂課吹整排",
+      "provenance": "editor-json",
+      "description": "「魔法音樂課吹整排！」\n發出直線魔法波動，打擊沿線敵人；演出是吹笛，幾何以編譯能力為準。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "length": 10,
+          "width": 1.8,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.bolt",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+        "params": {
+          "damage": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "magic",
+          "length": 10,
+          "width": 1.8,
+          "aim": "target",
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-aladdin.ex",
+      "name": "暖風模式先照顧同學",
+      "provenance": "editor-json",
+      "description": "「暖風模式先照顧同學！」\n治療指定友軍 120 生命，並給予 100 點護盾 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 120
+          }
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 100
+          },
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+            "params": {
+              "target": "ally",
+              "amount": {
+                "flat": 120
+              },
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+          },
+          {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 100
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ],
+              "castType": "targeted",
+              "side": "allies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "b2-aladdin.passive",
+      "name": "吹錯音先喘口氣",
+      "provenance": "editor-json",
+      "description": "「吹錯音先喘口氣！」\n施放大招時回復自身最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onUltimateCast",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.08,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onUltimateCast",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.08,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 4,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "b2-aladdin.ex",
+      "name": "暖風模式先照顧同學",
+      "provenance": "editor-json",
+      "description": "「暖風模式先照顧同學！」\n治療指定友軍 120 生命，並給予 100 點護盾 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 120
+          }
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 100
+          },
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+            "params": {
+              "target": "ally",
+              "amount": {
+                "flat": 120
+              },
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+          },
+          {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 100
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ],
+              "castType": "targeted",
+              "side": "allies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "b2-aladdin.q",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-aladdin.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-aladdin.w",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-aladdin.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-aladdin.e",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-aladdin.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-aladdin.r",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-aladdin.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-aladdin.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-aladdin.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

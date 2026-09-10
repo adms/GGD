@@ -1,0 +1,29 @@
+FAIL Skill Forge
+
+> ggd@0.0.0 skillforge:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2
+> node tools/skill-forge/check.mjs -- --machine-only
+
+ ELIFECYCLE  Command failed with exit code 1.
+
+FAIL Skill Forge no-code acceptance
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/apps/editor:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/collections.test.ts src/forge/skillTypePresets.test.ts src/forge/skillAcceptanceCatalog.test.ts src/forge/skillReasonableness.test.ts src/forge/runtimePreviewDoc.test.ts src/forge/forgeRealCast.test.ts src/forge/conditionEditor.test.ts src/forge/forgeStudioCondition.test.ts src/forge/forgeStudioStack.test.ts src/forge/forgeWritebackTemplateGate.test.ts src/preview/forgeRealCast.test.ts src/vfx-forge/backdropFrameAudit.test.ts src/vfx-forge/assetSafety.test.ts src/vfx-forge/basicVisualAuthoring.test.ts src/vfx-forge/mechanicVisualOverlay.test.ts src/vfx-forge/visualAcceptanceIssues.test.ts ../../tools/skill-forge/visualProofImport.test.ts ../../tools/skill-forge/visualProofScope.test.ts --pool=threads --minWorkers=1 --maxWorkers=1 --reporter=dot
+
+failed to load config from /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/apps/editor/vite.config.ts
+
+⎯⎯⎯⎯⎯⎯⎯ Startup Error ⎯⎯⎯⎯⎯⎯⎯⎯
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/apps/editor/vite.config.ts.timestamp-1788906486440-d0e05892fb7848.mjs
+Did you mean to import "vite/index.cjs"?
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:764:81)
+    at moduleResolve (node:internal/modules/esm/resolve:855:18)
+    at defaultResolve (node:internal/modules/esm/resolve:988:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:697:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:714:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:746:52)
+    at #resolve (node:internal/modules/esm/loader:679:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:599:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:162:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}

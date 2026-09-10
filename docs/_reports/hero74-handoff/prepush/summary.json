@@ -1,0 +1,60 @@
+{
+  "schema": "ggd-hero74-prepush-receipt@1",
+  "scope": "Repository gates at the recorded source snapshot; not a replacement for final frozen-dataset verification.",
+  "startedAt": "2026-09-08T23:24:23.118Z",
+  "head": "565fb51dd2f51a7b12fa388d5575975a2f240d15",
+  "branch": "codex/hero-validation-batch2-37",
+  "worktreeStatus": "?? docs/editor-contract/coordination/claim.hero74-materials-delivery.json",
+  "sourceHashes": {
+    "tools/hero74-handoff/collect.py": "c58ac20ec6be621937457c01f486e4382baf4be0e706be23077b239ad8c23be8",
+    "tools/hero74-handoff/finish-sanitized-sources.py": "c1ffcd9e924a17595b6d0c8445171f3dd6c639ed2af38ac070367c89ba8da497",
+    "tools/hero74-handoff/prepush.mjs": "09dd1e8ef0f5f689cf046efe3b7ff3b8be28379af9ff3cec6a3070ff72378d5d",
+    "tools/hero74-handoff/restore.py": "df60976f9fb89ec8754f6d1ddb2fc1d784e08a189b63f4b1b738aa87c0f8563d",
+    "tools/hero74-handoff/s3_transport.py": "fd0c990eadd0c36dc8c5a05642b3fa8bc18f3f8e40591c214ec170d465583b0f",
+    "tools/hero74-handoff/test_verify.py": "1aed7c54a78a795dd0050fc879b4cab133b1ba353d216da09e2e9cb75e68afd6",
+    "tools/hero74-handoff/verify.py": "b2745683456a0693b836d4edaba3dfc58bee39c02bf07c038a5ee60d81b39b63",
+    "materials/hero74-handoff/frozen/inventory.json": "4cce1d60f3df6f21d7314d160326b7d87bb7d9a778f3f200181f110d54b2b8ae",
+    "materials/hero74-handoff/frozen/archive/manifest.json": "d83f95f5d29ac52bd5419170f3b6ba383c77e67a3afb5652b6ddbc6756ffbd74"
+  },
+  "commands": [
+    {
+      "command": "pnpm skills:check",
+      "startedAt": "2026-09-08T23:24:23.401Z",
+      "stdout": "/private/tmp/hero74-prepush-final/skills-check.stdout.log",
+      "stderr": "/private/tmp/hero74-prepush-final/skills-check.stderr.log",
+      "timedOut": false,
+      "exitCode": 1,
+      "signal": null,
+      "durationMs": 4698,
+      "finishedAt": "2026-09-08T23:24:28.099Z",
+      "status": "failed"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "startedAt": "2026-09-08T23:24:23.405Z",
+      "stdout": "/private/tmp/hero74-prepush-final/editor-accept-release.stdout.log",
+      "stderr": "/private/tmp/hero74-prepush-final/editor-accept-release.stderr.log",
+      "timedOut": false,
+      "exitCode": 1,
+      "signal": null,
+      "durationMs": 37700,
+      "finishedAt": "2026-09-08T23:25:01.105Z",
+      "status": "failed"
+    },
+    {
+      "command": "pnpm coord:check",
+      "startedAt": "2026-09-08T23:24:23.407Z",
+      "stdout": "/private/tmp/hero74-prepush-final/coord-check.stdout.log",
+      "stderr": "/private/tmp/hero74-prepush-final/coord-check.stderr.log",
+      "timedOut": false,
+      "exitCode": 1,
+      "signal": null,
+      "durationMs": 3992,
+      "finishedAt": "2026-09-08T23:24:27.399Z",
+      "status": "failed"
+    }
+  ],
+  "finishedAt": "2026-09-08T23:25:01.105Z",
+  "sourceSnapshotUnchanged": true,
+  "allPassed": false
+}

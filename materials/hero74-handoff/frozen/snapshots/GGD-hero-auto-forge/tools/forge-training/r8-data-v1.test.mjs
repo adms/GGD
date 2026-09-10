@@ -1,0 +1,9 @@
+import fs from'node:fs';import path from'node:path';import test from'node:test';import assert from'node:assert/strict';import{fileURLToPath}from'node:url';import{build,withdrawnIds,correctedDescriptions}from'./r8-data-v1.mjs';
+const base=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../outputs'),read=p=>JSON.parse(fs.readFileSync(path.join(base,p))),prior=read('forge-low-lr-r7-v2-20260906/cases.private.json'),community=read('forge-final-three-hours-20260906/seven-heroes-data-v1/cases.private.json'),catalog=read('forge-low-lr-r7-v2-20260906/catalog.json');
+test('R8 corpus rebuild preserves source priorities and withdraws only unsupported labels',()=>{
+ const data=build(prior,community,catalog),saved=read('forge-source-rehearsal-r8-v1-20260906/cases.private.json');assert.deepEqual(saved,data.cases);assert.deepEqual(data.counts,{train:550,dev:179,test:228});assert.equal(data.oldSourceRowsUnchanged,516);assert.equal(data.withdrawn.length,2);assert(data.withdrawn.every(w=>withdrawnIds.includes(w.original.id)&&w.original.target.decision==='accept'));assert(data.cases.every(c=>!withdrawnIds.includes(c.id)));
+ const replacements=data.cases.filter(c=>c.cohort==='r8-runtime-clarified-training');assert.equal(replacements.length,2);assert(replacements.every(c=>c.target.decision==='accept'));
+ for(const split of['train','dev','test'])for(const task of['hero-source','owner-mechanism','mechanism-template','mechanism-stack'])assert(data.cases.some(c=>c.split===split&&c.task===task));
+ for(const c of data.cases.filter(c=>c.id.includes('main-candidate-line-sweep-supported')))assert(c.acceptedTargets.some(t=>t.templateId==='tpl-traveling-wave'||t.templateIds?.includes('tpl-traveling-wave')));
+ assert(data.catalog.allowedPlans.find(p=>p.id==='tpl-traveling-wave').description===correctedDescriptions['tpl-traveling-wave']);assert.equal(catalog.allowedPlans.find(p=>p.id==='tpl-traveling-wave').requiredChoices.length,0,'ORIGINAL_MUTATED');
+});

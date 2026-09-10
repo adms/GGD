@@ -1,0 +1,21 @@
+[content-cache] Redis 連不上（127.0.0.1:6379）⇒ 退回檔案層
+node:internal/fs/promises:1281
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/skins/_index.json'
+    at async open (node:internal/fs/promises:1281:25)
+    at async readFile (node:internal/fs/promises:1929:14)
+    at async FsContentSource.readJson (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/packages/shared/src/content/node/FsContentSource.ts:15:18)
+    at async FsContentSource.readIndex (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/packages/shared/src/content/node/FsContentSource.ts:24:13)
+    at async ContentLoader.load (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/packages/shared/src/content/loader.ts:107:21)
+    at async fresh (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/packages/shared/src/content/cache/contentCache.ts:389:15)
+    at async loadContentCached (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/packages/shared/src/content/cache/contentCache.ts:462:13)
+    at async main (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/tools/skill-spec/gen_spec.ts:2349:16) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/skins/_index.json'
+}
+
+Node.js v25.9.0

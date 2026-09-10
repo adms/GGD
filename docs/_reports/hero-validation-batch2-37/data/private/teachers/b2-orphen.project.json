@@ -1,0 +1,899 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-orphen",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "歐菲",
+    "concept": "魔術士歐菲｜咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "催收電話無須長談",
+      "Q": "我放出的光之催繳函",
+      "W": "利息可以再寄一次",
+      "E": "債務人請勿插話",
+      "R": "債主不用敲門",
+      "EX": "這筆急救算借你的"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-orphen.plan",
+    "title": "歐菲",
+    "summary": "魔術士歐菲｜咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "法鬥",
+    "archetype": "mage",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:eeb97623763a184bab0219a940b43f3db6560ce19bb589900d2ad0e541fd1e5b": {
+        "id": "tpl-drain-leech",
+        "schema": "template@1",
+        "name": "汲取吸附",
+        "description": "汲取吸附：打一下 → 持續傷害（同傷害型別、同級距、同係數的 dot）→ 回施法者一個定量（`leechFlat`，⭐ 可清空 ⇒ 純「打一下＋dot」，#1073）。",
+        "family": "drain-leech",
+        "status": "enabled",
+        "params": {
+          "damageTier": {
+            "type": "enum",
+            "default": "小",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ],
+            "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+          },
+          "apRatio": {
+            "type": "number",
+            "default": 0.6,
+            "min": 0,
+            "max": 5,
+            "unit": "ratio",
+            "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ],
+            "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。"
+          },
+          "leechFlat": {
+            "type": "number",
+            "default": 50,
+            "min": 0,
+            "max": 5000,
+            "unit": "count",
+            "optional": true,
+            "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。 ⭐ #1073：這一格改成 **optional** —— 清空 ⇒ 展開沒有 heal 節點（「打一下＋持續傷害」而不吸血：30-03 痴漢火焰 ×2 · 72-02 黑人牙菌斑，出貨 3 支逐位元對得上）；default 50 只是編輯器的建議值（`has()` 對 optional 槽：沒填＝缺席）。"
+          },
+          "intervalSec": {
+            "type": "number",
+            "default": 1,
+            "min": 0.2,
+            "max": 10,
+            "unit": "s",
+            "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": 5,
+            "min": 0.2,
+            "max": 60,
+            "unit": "s",
+            "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
+          },
+          "stacking": {
+            "type": "enum",
+            "default": "refresh",
+            "values": [
+              "refresh",
+              "independent",
+              "stack"
+            ],
+            "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "optional": true,
+            "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+          }
+        },
+        "requires": [],
+        "gapScore": 4,
+        "exemplar": {
+          "skill": "90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`）",
+          "jass": "war3map.j:26592 / 26603 / 26604 / 26608（Trig_Parasitism_Seed_Actions：buff 閘 → 5 跳 × 0.95s → 回施法者 +50）"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937": {
+        "id": "tpl-apply-status",
+        "schema": "template@1",
+        "name": "只上狀態",
+        "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+        "family": "apply-status",
+        "status": "enabled",
+        "params": {
+          "status": {
+            "type": "applyStatus",
+            "default": {
+              "statusId": "root",
+              "duration": 1.5,
+              "root": true
+            },
+            "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+          },
+          "radius": {
+            "type": "number",
+            "default": 327,
+            "min": 50,
+            "max": 1500,
+            "unit": "wc3u",
+            "optional": true,
+            "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.833,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [
+          "applyStatus"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+          "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+        }
+      },
+      "sha256:4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f161452bd780097ace4": {
+        "id": "tpl-blink-strike",
+        "schema": "template@1",
+        "name": "瞬移突斬",
+        "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
+        "family": "blink-strike",
+        "status": "enabled",
+        "params": {
+          "range": {
+            "type": "number",
+            "default": 6,
+            "min": 1,
+            "max": 20,
+            "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+          },
+          "stopShortUnits": {
+            "type": "number",
+            "default": 1.8,
+            "min": 0,
+            "max": 5,
+            "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ad",
+                  "coeff": 0.5
+                }
+              ]
+            },
+            "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "physical",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ],
+            "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。"
+          },
+          "arriveVfxId": {
+            "type": "docRef",
+            "default": "fx.prim.lightning.slash",
+            "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 5,
+        "exemplar": {
+          "skill": "godie-n01c.w（出貨最接近預設的那一支）",
+          "jass": "(P2/P3)"
+        }
+      },
+      "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856": {
+        "id": "tpl-heal",
+        "schema": "template@1",
+        "name": "回血",
+        "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+        "family": "heal",
+        "status": "enabled",
+        "params": {
+          "target": {
+            "type": "enum",
+            "default": "ally",
+            "values": [
+              "self",
+              "ally"
+            ],
+            "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+          },
+          "amount": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                50,
+                85,
+                120,
+                155
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.465
+                }
+              ]
+            },
+            "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+          },
+          "applyTo": {
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ],
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.067,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "催收電話無須長談",
+        "purpose": "「催收電話無須長談！」\n普通攻擊命中後回復自己最大魔力 4%，每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-orphen.passive.card1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onBasicAttack",
+                    "effects": [
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.04,
+                        "applyTo": "self"
+                      }
+                    ],
+                    "internalCooldown": 2,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "我放出的光之催繳函",
+        "purpose": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-orphen.q.card1",
+            "template": {
+              "ref": "tpl-drain-leech",
+              "params": {
+                "damageTier": "極小",
+                "apRatio": 0.2,
+                "damageType": "magic",
+                "leechFlat": 100,
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:eeb97623763a184bab0219a940b43f3db6560ce19bb589900d2ad0e541fd1e5b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 15,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "利息可以再寄一次",
+        "purpose": "「利息可以再寄一次！」\n縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-orphen.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "modifyCooldown",
+                    "shape": "single",
+                    "who": "self",
+                    "slot": "Q",
+                    "mode": "reduceFlat",
+                    "amount": 2
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "債務人請勿插話",
+        "purpose": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-orphen.e.card1",
+            "template": {
+              "ref": "tpl-apply-status",
+              "params": {
+                "status": {
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "silenced": true
+                },
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 15,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "債主不用敲門",
+        "purpose": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-orphen.r.card1",
+            "template": {
+              "ref": "tpl-blink-strike",
+              "params": {
+                "range": 6,
+                "stopShortUnits": 1.2,
+                "damage": {
+                  "damageTier": "中"
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f161452bd780097ace4"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "這筆急救算借你的",
+        "purpose": "「這筆急救算借你的！」\n回復指定友軍 120 生命，所有借款話術只是角色喜劇。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-orphen.ex.card1",
+            "template": {
+              "ref": "tpl-heal",
+              "params": {
+                "target": "ally",
+                "amount": {
+                  "flat": 120
+                },
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.sela",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-orphen.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-orphen.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-orphen.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-orphen.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-orphen.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-orphen.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-orphen.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-orphen.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-orphen.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-orphen.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

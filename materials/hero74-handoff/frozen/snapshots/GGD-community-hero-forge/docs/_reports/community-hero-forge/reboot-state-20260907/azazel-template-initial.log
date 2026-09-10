@@ -1,0 +1,37 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/templates/expand.test.ts (18 tests) 39ms
+ ❯ packages/shared/src/content/templates/paramsSchema.test.ts (11 tests | 1 failed) 381ms
+   × paramsSchemaFor / defaultParamsFor — the form↔expander agreement > 每一格參數,要嘛 MOVES 展開結果,要嘛宣告 inert（⭐ GH#987:⛔ 不再只有 number） 88ms
+     → tpl-dragon-serpent.clipTimeScale is marked inert but the expander now honours it — drop the `inert` flag: expected true to be false // Object.is equality
+ ✓ packages/shared/src/content/templates/onAttackCondition.test.ts (8 tests) 1684ms
+   ✓ 獸矛 —— tpl-on-attack 終於說得出自己的範本 > ★ 1% 的英雄處決分支真的存在 —— 跑夠多刀就會中 1406ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/templates/paramsSchema.test.ts > paramsSchemaFor / defaultParamsFor — the form↔expander agreement > 每一格參數,要嘛 MOVES 展開結果,要嘛宣告 inert（⭐ GH#987:⛔ 不再只有 number）
+AssertionError: tpl-dragon-serpent.clipTimeScale is marked inert but the expander now honours it — drop the `inert` flag: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/shared/src/content/templates/paramsSchema.test.ts:224:13
+    222|             moved,
+    223|             `${key} is marked inert but the expander now honours it — …
+    224|           ).toBe(false);
+       |             ^
+    225|         }
+    226|       }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 36 passed (37)
+   Start at  05:53:11
+   Duration  7.37s (transform 2.62s, setup 0ms, collect 5.91s, tests 2.10s, environment 0ms, prepare 319ms)
+

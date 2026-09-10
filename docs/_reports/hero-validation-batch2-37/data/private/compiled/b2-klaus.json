@@ -1,0 +1,1254 @@
+{
+  "champion": {
+    "id": "b2-klaus",
+    "name": "克勞斯",
+    "description": "覺醒了自動機能｜把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "marksman",
+    "attackType": "ranged",
+    "archetype": "marksman",
+    "origin": "射手",
+    "modelKey": "champ.thorne",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 8.2,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 29.202653061224485,
+      "healthRegen": 0.07234693877551021,
+      "maxMana": 19.291836734693877,
+      "manaRegen": 0,
+      "ad": 7.6918367346938785,
+      "as": 0,
+      "mr": 1.3198979591836735,
+      "armor": 0,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 13,
+      "agi": 29,
+      "int": 18,
+      "strGrowth": 1.25,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.67,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-klaus.q",
+        "name": "已加入工作佇列",
+        "provenance": "editor-json",
+        "description": "「已加入工作佇列！」\n取得 red-comet 排程授權暫態 4 秒，並增加移速 10%；到期必須重新授權。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "red-comet",
+            "duration": 4,
+            "applyTo": "self",
+            "moveSpeedMult": 1.1
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "red-comet",
+                "duration": 4,
+                "applyTo": "self",
+                "moveSpeedMult": 1.1
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-klaus.w",
+        "name": "全部執行不要再問",
+        "provenance": "editor-json",
+        "description": "「全部執行不要再問！」\n對指定敵人排出 3 次間隔 0.5 秒的極小傷害；每次付款時仍需持有 red-comet，授權到期後不再付款。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 0.3,
+            "count": 3,
+            "intervalSec": 0.5,
+            "effects": [
+              {
+                "kind": "damage",
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "red-comet"
+                },
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                }
+              }
+            ],
+            "stopOnCasterDeath": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "single",
+                "delaySec": 0.3,
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200,
+                      "perRank": [
+                        0,
+                        100,
+                        200,
+                        300
+                      ]
+                    },
+                    "condition": {
+                      "kind": "status",
+                      "statusId": "red-comet",
+                      "subject": "self"
+                    }
+                  }
+                ],
+                "stopOnCasterDeath": true,
+                "count": 3,
+                "intervalSec": 0.5
+              }
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-klaus.e",
+        "name": "更改辦公室位置",
+        "provenance": "editor-json",
+        "description": "「更改辦公室位置！」\n瞬移到指定合法地點，使跟身週期作業的中心一同移動。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "blink",
+            "shape": "single",
+            "to": "point",
+            "applyTo": "self"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+          "params": {
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+        }
+      },
+      "R": {
+        "id": "b2-klaus.r",
+        "name": "移動式背景工作",
+        "provenance": "editor-json",
+        "description": "「移動式背景工作！」\n自己周身執行 3 秒週期傷害，每 0.5 秒重新尋找敵人；不是替玩家自動走位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "self",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 4.5,
+            "radiusTier": "小",
+            "side": "enemies",
+            "delaySec": 0.5,
+            "count": 6,
+            "intervalSec": 0.5,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "中",
+                  "mult": 0.16666666666666666,
+                  "flat": 1000,
+                  "perRank": [
+                    0,
+                    750,
+                    1500
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "caster"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+          "params": {
+            "intervalSec": 0.5,
+            "durationSec": 3,
+            "radiusTier": "小",
+            "anchor": "caster",
+            "applyTo": "enemies",
+            "damageTier": "中",
+            "damageType": "physical",
+            "castTimeSec": 0.1,
+            "radius": 4.5,
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
+        }
+      }
+    },
+    "exAbility": "b2-klaus.ex",
+    "passiveAbility": "b2-klaus.passive",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "schema": "template@1",
+      "name": "週期領域",
+      "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
+      "family": "periodic-field",
+      "status": "enabled",
+      "params": {
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "min": 0.2,
+          "max": 10,
+          "unit": "s"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "min": 0.1,
+          "max": 60,
+          "unit": "s"
+        },
+        "radiusTier": {
+          "type": "enum",
+          "default": "中",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "anchor": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "point",
+            "caster"
+          ]
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "damageTier": {
+          "type": "enum",
+          "default": "極小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "hitVfx": {
+          "type": "docRef",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "periodicDamage"
+      ],
+      "gapScore": 5,
+      "exemplar": {
+        "skill": "90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒）",
+        "jass": "(P3 待查 —— 引擎面由 delayed.anchor 落地)"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "b2-klaus.passive",
+      "name": "自動回覆我正在忙",
+      "provenance": "editor-json",
+      "description": "「自動回覆我正在忙！」\n每 4 秒回復自身最大魔力 4%；是真週期事件，不是離線掛機收入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onInterval",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.04,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.04,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 4,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "b2-klaus.q",
+      "name": "已加入工作佇列",
+      "provenance": "editor-json",
+      "description": "「已加入工作佇列！」\n取得 red-comet 排程授權暫態 4 秒，並增加移速 10%；到期必須重新授權。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "red-comet",
+          "duration": 4,
+          "applyTo": "self",
+          "moveSpeedMult": 1.1
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "red-comet",
+              "duration": 4,
+              "applyTo": "self",
+              "moveSpeedMult": 1.1
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-klaus.w",
+      "name": "全部執行不要再問",
+      "provenance": "editor-json",
+      "description": "「全部執行不要再問！」\n對指定敵人排出 3 次間隔 0.5 秒的極小傷害；每次付款時仍需持有 red-comet，授權到期後不再付款。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.3,
+          "count": 3,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "condition": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "red-comet"
+              },
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              }
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.bolt",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 0.3,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小",
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "red-comet",
+                    "subject": "self"
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "count": 3,
+              "intervalSec": 0.5
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-klaus.e",
+      "name": "更改辦公室位置",
+      "provenance": "editor-json",
+      "description": "「更改辦公室位置！」\n瞬移到指定合法地點，使跟身週期作業的中心一同移動。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "params": {
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-klaus.r",
+      "name": "移動式背景工作",
+      "provenance": "editor-json",
+      "description": "「移動式背景工作！」\n自己周身執行 3 秒週期傷害，每 0.5 秒重新尋找敵人；不是替玩家自動走位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "side": "enemies",
+          "delaySec": 0.5,
+          "count": 6,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中",
+                "mult": 0.16666666666666666,
+                "flat": 1000,
+                "perRank": [
+                  0,
+                  750,
+                  1500
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "params": {
+          "intervalSec": 0.5,
+          "durationSec": 3,
+          "radiusTier": "小",
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "damageTier": "中",
+          "damageType": "physical",
+          "castTimeSec": 0.1,
+          "radius": 4.5,
+          "flat": 1000,
+          "perRank": [
+            0,
+            750,
+            1500
+          ]
+        },
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-klaus.ex",
+      "name": "強制結束順便保命",
+      "provenance": "editor-json",
+      "description": "「強制結束順便保命！」\n消耗自身 red-comet 授權，獲得 200 點護盾 3 秒；原 W 後續付款因此停止。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "red-comet",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 200
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "red-comet",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 200
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ]
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "b2-klaus.passive",
+      "name": "自動回覆我正在忙",
+      "provenance": "editor-json",
+      "description": "「自動回覆我正在忙！」\n每 4 秒回復自身最大魔力 4%；是真週期事件，不是離線掛機收入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onInterval",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.04,
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.04,
+                  "applyTo": "self"
+                }
+              ],
+              "internalCooldown": 4,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "b2-klaus.ex",
+      "name": "強制結束順便保命",
+      "provenance": "editor-json",
+      "description": "「強制結束順便保命！」\n消耗自身 red-comet 授權，獲得 200 點護盾 3 秒；原 W 後續付款因此停止。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "red-comet",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 200
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "red-comet",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 200
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ]
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "b2-klaus.q",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-klaus.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-klaus.w",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-klaus.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-klaus.e",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-klaus.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-klaus.r",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-klaus.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-klaus.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-klaus.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

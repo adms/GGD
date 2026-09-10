@@ -1,0 +1,37 @@
+第 29 版的固定模擬紀錄 · 阿薩謝爾
+
+PASSIVE
+Q
+W
+E
+R
+EX
+額外連段試玩 · 前置施法
+無，重播原固定紀錄
+Q
+W
+E
+R
+技能試玩與演出
+終章萎靡 ↓ AD/AP -20%
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 32/48 meshes · 23/24 particles/systems · eye -32.0,16.7,0.0
+施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常
+目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+100ms · Sim tick 3
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 8 筆事件

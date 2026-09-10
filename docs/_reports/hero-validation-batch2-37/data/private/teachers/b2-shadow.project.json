@@ -1,0 +1,863 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-shadow",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "闇影",
+    "concept": "我想成為影之強者｜先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "講完大招才想起防護",
+      "Q": "觀眾請往舞台靠攏",
+      "W": "掌聲先等零點七秒",
+      "E": "對鏡練習我是路人",
+      "R": "I AM 加班到 ATOMIC",
+      "EX": "謝幕後閃到你背前"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-shadow.plan",
+    "title": "闇影",
+    "summary": "我想成為影之強者｜先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "法刺",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18": {
+        "id": "tpl-buff-self",
+        "schema": "template@1",
+        "name": "變身強化-數值面",
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+        "family": "buff-self",
+        "status": "enabled",
+        "params": {
+          "duration": {
+            "type": "number",
+            "default": 15,
+            "min": 1,
+            "max": 60,
+            "unit": "s"
+          },
+          "modifiers": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 50
+              }
+            ]
+          },
+          "perRank": {
+            "type": "buffPerRank",
+            "optional": true
+          },
+          "statusId": {
+            "type": "docRef",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "82-04 闇之魔法",
+          "jass": "A0Q6"
+        }
+      },
+      "sha256:895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb712d62b4a40ff1ada5": {
+        "id": "tpl-line-strike",
+        "schema": "template@1",
+        "name": "直線貫穿",
+        "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+        "family": "line-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "damageTier": "大"
+            },
+            "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ],
+            "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+          },
+          "length": {
+            "type": "number",
+            "default": 11.67,
+            "min": 0.5,
+            "max": 24,
+            "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+          },
+          "width": {
+            "type": "number",
+            "default": 1.4,
+            "min": 0.2,
+            "max": 24,
+            "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+          },
+          "aim": {
+            "type": "enum",
+            "default": "facing",
+            "values": [
+              "facing",
+              "target"
+            ],
+            "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.833,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+          }
+        },
+        "requires": [
+          "damageLine"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+        }
+      },
+      "sha256:4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f161452bd780097ace4": {
+        "id": "tpl-blink-strike",
+        "schema": "template@1",
+        "name": "瞬移突斬",
+        "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
+        "family": "blink-strike",
+        "status": "enabled",
+        "params": {
+          "range": {
+            "type": "number",
+            "default": 6,
+            "min": 1,
+            "max": 20,
+            "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+          },
+          "stopShortUnits": {
+            "type": "number",
+            "default": 1.8,
+            "min": 0,
+            "max": 5,
+            "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ad",
+                  "coeff": 0.5
+                }
+              ]
+            },
+            "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "physical",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ],
+            "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。"
+          },
+          "arriveVfxId": {
+            "type": "docRef",
+            "default": "fx.prim.lightning.slash",
+            "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 5,
+        "exemplar": {
+          "skill": "godie-n01c.w（出貨最接近預設的那一支）",
+          "jass": "(P2/P3)"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "講完大招才想起防護",
+        "purpose": "「講完大招才想起防護！」\n終極技施放後給自己 160 護盾 2 秒，每 5 秒一次；演說前仍可被打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-shadow.passive.card1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onUltimateCast",
+                    "effects": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 160
+                        },
+                        "duration": 2,
+                        "absorbs": "all",
+                        "stackKey": "b2-protection",
+                        "onExisting": "keepLarger"
+                      }
+                    ],
+                    "internalCooldown": 5,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "觀眾請往舞台靠攏",
+        "purpose": "「觀眾請往舞台靠攏！」\n工作人員引導觀眾：半徑 6 內最多 6 名敵人拉到自己 1.5 單位外。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-shadow.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "pull",
+                    "shape": "circle",
+                    "radius": 6,
+                    "side": "enemies",
+                    "maxTargets": 6,
+                    "destination": "caster",
+                    "speed": 20,
+                    "stopDistance": 1.5
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "掌聲先等零點七秒",
+        "purpose": "「掌聲先等零點七秒！」\n等 0.7 秒才在自己半徑 3 重新選敵，最多 6 人中級魔法傷害；敵人走開可躲，本體死亡取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-shadow.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "delayed",
+                    "shape": "circle",
+                    "delaySec": 0.7,
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "中"
+                        }
+                      }
+                    ],
+                    "stopOnCasterDeath": true,
+                    "radius": 3,
+                    "side": "enemies",
+                    "maxTargets": 6,
+                    "targetMode": "reresolve",
+                    "anchor": "caster"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "對鏡練習我是路人",
+        "purpose": "「對鏡練習我是路人！」\n對鏡練台詞，AP +80 持續 3 秒；沒有無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-shadow.e.card1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "stat": "ap",
+                    "op": "flat",
+                    "value": 80
+                  }
+                ],
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 15,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "I AM 加班到 ATOMIC",
+        "purpose": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-shadow.r.card1",
+            "template": {
+              "ref": "tpl-line-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "中",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.8
+                    }
+                  ]
+                },
+                "damageType": "magic",
+                "length": 9,
+                "width": 1.5,
+                "aim": "target",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb712d62b4a40ff1ada5"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "謝幕後閃到你背前",
+        "purpose": "「謝幕後閃到你背前！」\n閃到指定敵人前 1.8 單位並打小級物理傷害；不生成假的分身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-shadow.ex.card1",
+            "template": {
+              "ref": "tpl-blink-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小"
+                },
+                "range": 6,
+                "stopShortUnits": 1.8,
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f161452bd780097ace4"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-shadow.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-shadow.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-shadow.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-shadow.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-shadow.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-shadow.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-shadow.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-shadow.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.lightning.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-shadow.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-shadow.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

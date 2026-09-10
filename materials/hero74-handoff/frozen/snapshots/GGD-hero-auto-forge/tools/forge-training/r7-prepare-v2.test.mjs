@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {treatmentChanges} from './r7-prepare-v2.mjs';
+const before={learningRate:1e-5,trainingCutoff:'2026-09-06T14:15:00Z',trainingStopAt:'2026-09-06T16:15:00Z',trainingHardStopAt:'2026-09-06T16:18:00Z',deadline:'2026-09-06T17:36:10Z',reportReserveSeconds:900,seed:20260906,trainingEpochs:1,presencePenalty:0};
+const after={...before,learningRate:2.5e-6,trainingCutoff:'2026-09-06T15:30:00Z',trainingStopAt:'2026-09-06T16:45:00Z',trainingHardStopAt:'2026-09-06T16:48:00Z'};
+test('only the registered LR and time-window differences are permitted',()=>{assert.equal(treatmentChanges(before,after).ratio,0.25);for(const change of [{seed:1},{trainingEpochs:2},{presencePenalty:1.5},{deadline:'2026-09-06T18:36:10Z'}])assert.throws(()=>treatmentChanges(before,{...after,...change}),/UNREGISTERED/);});
+test('a claimed ablation cannot omit the changed LR or overrun the GPU reserve',()=>{assert.throws(()=>treatmentChanges(before,{...after,learningRate:before.learningRate}),/UNREGISTERED/);assert.throws(()=>treatmentChanges(before,{...after,trainingHardStopAt:'2026-09-06T17:30:00Z'}));});

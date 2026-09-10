@@ -1,0 +1,150 @@
+Browser tab: 15, Title: "GGD Content Editor", URL: "http://127.0.0.1:5199/editor/works".
+1 AXWebArea GGD Content Editor, URL: 127.0.0.1:5199/editor/works
+	2 container root
+		3 container
+			4 button 創作英雄
+			5 button 我的作品
+			6 button 🔨 鑄技工坊
+			7 button ✨ 特效工坊
+			8 button 📦 匯出中心
+			9 heading COLLECTIONS, Value: 2
+				10 text COLLECTIONS
+			11 button Champions
+			12 button Abilities
+			13 button Items
+			14 button Augments
+			15 button Projectiles
+			16 button Status Effects
+			17 button Loot Tables
+			18 button Arenas
+			19 button Maps
+			20 button Config
+			21 button Models
+			22 button VFX
+			23 button Skins
+			24 button Ability Templates
+			25 button VFX Scripts
+			26 button VFX Subtypes
+		27 container
+			28 heading 我的作品, Value: 1
+				29 text 我的作品
+			30 text 本機草稿會保留未完成的欄位。保存草稿後仍需另行提交審查。 已保存到本機
+			31 content list
+				32 container
+					33 heading 齊勒斯, Value: 2
+						34 text 齊勒斯
+					35 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:45:00 獨立恢復副本
+					36 button 繼續編輯
+					37 button 複製為新作品
+				38 container
+					39 heading 李星, Value: 2
+						40 text 李星
+					41 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:44:26 獨立恢復副本
+					42 button 繼續編輯
+					43 button 複製為新作品
+				44 container
+					45 heading 好運姐, Value: 2
+						46 text 好運姐
+					47 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:41:20 獨立恢復副本
+					48 button 繼續編輯
+					49 button 複製為新作品
+				50 container
+					51 heading 犽宿, Value: 2
+						52 text 犽宿
+					53 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:39:15 獨立恢復副本
+					54 button 繼續編輯
+					55 button 複製為新作品
+				56 container
+					57 heading 拉克絲, Value: 2
+						58 text 拉克絲
+					59 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:38:37 獨立恢復副本
+					60 button 繼續編輯
+					61 button 複製為新作品
+				62 container
+					63 heading 卡爾瑟斯, Value: 2
+						64 text 卡爾瑟斯
+					65 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:37:45 獨立恢復副本
+					66 button 繼續編輯
+					67 button 複製為新作品
+				68 container
+					69 heading 沃維克, Value: 2
+						70 text 沃維克
+					71 text 英雄作品  · 本機第  2  版 ·  2026/9/7 上午12:35:30 獨立恢復副本
+					72 button 繼續編輯
+					73 button 複製為新作品
+				74 container
+					75 heading 未命名英雄, Value: 2
+						76 text 未命名英雄
+					77 text 英雄作品  · 本機第  1  版 ·  2026/9/7 上午12:34:29
+					78 button 繼續編輯
+					79 button 複製為新作品
+			80 container 雲端與社群作品
+				81 heading 雲端與社群作品, Value: 2
+					82 text 雲端與社群作品
+				83 container
+					84 text 遊戲帳號
+					85 text field (settable) 遊戲帳號
+					86 text 密碼
+					87 text field (settable) 密碼
+					88 button (disabled) 登入以同步與投稿
+				89 button 更新雲端與發布清單
+				90 text 登入後可取回雲端草稿，或開啟作者授權的署名改作。
+				91 heading 已發布英雄, Value: 3
+					92 text 已發布英雄
+				93 text 目前沒有開放瀏覽的已發布英雄。
+			94 container 社群角色驗收範例
+				95 heading LoL 概念改編・社群角色驗收, Value: 2
+					96 text LoL 概念改編・社群角色驗收
+				97 text 建立自己的六槽英雄副本，直接試玩、調整及送審。範例使用本遊戲的積木與級距，AI 關閉也能完成。
+				98 content list
+					99 container
+						100 heading 沃維克, Value: 3
+							101 text 沃維克
+						102 text 循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。
+						103 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							104 text 查看改編差異
+						105 button 建立沃維克改編作品
+					106 container
+						107 heading 卡爾瑟斯, Value: 3
+							108 text 卡爾瑟斯
+						109 text 在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。
+						110 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							111 text 查看改編差異
+						112 button 建立卡爾瑟斯改編作品
+					113 container
+						114 heading 拉克絲, Value: 3
+							115 text 拉克絲
+						116 text 結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。
+						117 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							118 text 查看改編差異
+						119 button 建立拉克絲改編作品
+					120 container
+						121 heading 犽宿, Value: 3
+							122 text 犽宿
+						123 text 以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。
+						124 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							125 text 查看改編差異
+						126 button 建立犽宿改編作品
+					127 container
+						128 heading 好運姐, Value: 3
+							129 text 好運姐
+						130 text 以雙重射擊、機動增益與持續彈雨控制交戰區域。
+						131 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							132 text 查看改編差異
+						133 button 建立好運姐改編作品
+					134 container
+						135 heading 李星, Value: 3
+							136 text 李星
+						137 text 以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。
+						138 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							139 text 查看改編差異
+						140 button 建立李星改編作品
+					141 container
+						142 heading 齊勒斯, Value: 3
+							143 text 齊勒斯
+						144 text 以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。
+						145 button (collapsed) 查看改編差異, Secondary Actions: Expand
+							146 text 查看改編差異
+						147 button 建立齊勒斯改編作品
+
+The focused UI element is 5 button 我的作品

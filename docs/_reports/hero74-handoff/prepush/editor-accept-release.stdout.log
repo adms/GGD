@@ -1,0 +1,8 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-08T23:24Z","branch":"codex/hero-validation-batch2-37","head":"565fb51dd2f5","originMain":"a6537b864005","dirty":true,"worktreeChangeCount":1,"handbackMainCommit":null,"coverageFingerprint":"ed44cfd5f2d5","capabilityFingerprint":"43cd2f44","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+ ELIFECYCLE  Command failed with exit code 1.

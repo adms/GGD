@@ -1,0 +1,3 @@
+[content-cache] Redis 連不上（127.0.0.1:6379）⇒ 退回檔案層
+⛔ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/技能標記機制與效果規則.md 已經過期 —— 引擎的 schema／註冊表／內容改過了，但這份文件沒跟上。
+   跑 `pnpm spec:build` 然後 `git add docs/`。⛔ 不要改測試。

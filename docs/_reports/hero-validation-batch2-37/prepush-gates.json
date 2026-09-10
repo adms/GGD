@@ -1,0 +1,69 @@
+{
+  "schema": "ggd-batch2-prepush-gates@2",
+  "status": "failed-global-gates-scoped-dataset-passed",
+  "testedSourceCommit": "0e001412a32ae1dddffb64e3528cfff923bf6cf6",
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
+  "ranTogether": true,
+  "allPassed": false,
+  "sourceSnapshotUnchanged": true,
+  "latestReceipt": "prepush/strict-final-summary.json",
+  "rawArtifacts": "prepush/artifacts.json",
+  "historicalReceipts": [
+    "prepush/legacy-v1.json",
+    "prepush/initial-summary.json",
+    "prepush/environment-repair-summary.json"
+  ],
+  "runs": [
+    {
+      "command": "pnpm skills:check",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 5612,
+      "timedOut": false,
+      "stdout": "prepush/strict-final-skills-check.stdout.log",
+      "stderr": "prepush/strict-final-skills-check.stderr.log",
+      "classification": "sparse-environment-missing-unrelated-inputs",
+      "firstFailure": "spec:check：本工作樹缺content/audio-manifests的9份HEAD JSON（175869 bytes），唯讀生成與HEAD文檔唯一差異為audio-manifests數量9的表格行。",
+      "notReached": "spec之後的skills鏈未執行；後續包含同一個既有stale visual-advisory gate，不能宣稱全skills通過。"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 39320,
+      "timedOut": false,
+      "stdout": "prepush/strict-final-editor-accept-release.stdout.log",
+      "stderr": "prepush/strict-final-editor-accept-release.stderr.log",
+      "classification": "pre-existing-advisory-receipt-mismatch",
+      "firstFailure": "Skill Forge後段Codex visual advisory review.json過期；其5項固定輸入、generator/helper與輸出均等於HEAD及merge-base。",
+      "passedBeforeFailure": [
+        "Main capability receipt",
+        "Editor coverage freshness：2 tests",
+        "Skill Forge no-code acceptance：185 tests",
+        "acceptance receipt／real Sim routes／proof importer／human review packet／chronological contact sheets"
+      ],
+      "notReached": "VFX Forge、Editor typecheck、完整Editor tests及production build未執行。"
+    },
+    {
+      "command": "pnpm coord:check",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 3546,
+      "timedOut": false,
+      "stdout": "prepush/strict-final-coord-check.stdout.log",
+      "stderr": "prepush/strict-final-coord-check.stderr.log",
+      "classification": "pre-existing-unrelated-packet-fingerprint",
+      "firstFailure": "claim.editor-form-receipts.json指紋bdb64ca51f9b3b1d與當前b91a0f59c31289ed不同；該packet保持merge-base原blob。",
+      "passedBeforeFailure": [
+        "本批claim.hero-validation-batch2-37.json通過",
+        "26份packet中25份通過"
+      ]
+    }
+  ],
+  "scope": "本批37名離線參考驗證通過；本檔記錄另外三項全倉庫發布gate。沒有跳過或更新歷史文件假造通過。CI與必要Main review仍待處理，不得合併。",
+  "preservation": {
+    "originalDependencyLinksRestored": "prepush/node-cache-restored.json",
+    "otherWorktreeCachesUnchanged": "prepush/external-cache-comparison.json"
+  },
+  "classification": "prepush/final-classification.json"
+}

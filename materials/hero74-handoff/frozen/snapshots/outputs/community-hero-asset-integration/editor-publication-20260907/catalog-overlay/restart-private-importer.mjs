@@ -1,0 +1,7 @@
+import fs from 'node:fs';import {spawn,execFileSync} from 'node:child_process';import assert from 'node:assert/strict';
+const root='/private/tmp/ggd-model-upload-acceptance/catalog-overlay-proof',out='/private/tmp/ggd-catalog-overlay-proof',p=root+'/service-config-private.json',config=JSON.parse(fs.readFileSync(p));
+const listening=execFileSync('lsof',['-t','-iTCP:8802','-sTCP:LISTEN'],{encoding:'utf8'}).trim();assert.equal(Number(listening),config.importer.pid);
+process.kill(config.importer.pid,'SIGTERM');for(let i=0;i<100;i++){try{process.kill(config.importer.pid,0)}catch{break}await new Promise(r=>setTimeout(r,100));}
+const log=fs.openSync(out+'/importer.log','a');const child=spawn(process.execPath,['--import','tsx','apps/content-api/src/heroImportIndex.ts'],{cwd:process.cwd(),env:{...process.env,...config.importer.env},detached:true,stdio:['ignore',log,log]});child.unref();config.importer.pid=child.pid;fs.writeFileSync(p,JSON.stringify(config,null,2),{mode:0o600});
+const pub=JSON.parse(fs.readFileSync(out+'/services-public.json'));pub.pids.importer=child.pid;fs.writeFileSync(out+'/services-public.json',JSON.stringify(pub,null,2));
+for(let i=0;i<100;i++){try{const r=await fetch('http://127.0.0.1:8802/api/v1/content-import/active/target-profile');if(r.status===401){console.log('Isolated importer restarted with corrected dependency closure');process.exit(0)}}catch{}await new Promise(r=>setTimeout(r,150));}throw Error('Importer restart health failed');

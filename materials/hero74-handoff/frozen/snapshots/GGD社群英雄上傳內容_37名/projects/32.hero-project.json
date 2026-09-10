@@ -1,0 +1,679 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-32-20260907",
+  "revision": 1,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "阿薩謝爾",
+    "concept": "阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n視覺方向：Q 普通一拳配誇張凝重起手；W 白色魔力雨；R 紫黑能量球；EX 反轉時敵人金光、施法者驚愕。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "淫奔",
+      "Q": "肩パンチ",
+      "W": "流精群（ホワイトレイン）",
+      "E": "闇ぱんち",
+      "R": "THE END OF SON",
+      "EX": "THE END OF SON〔終章〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-32-20260907.plan",
+    "title": "阿薩謝爾",
+    "summary": "阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n視覺方向：Q 普通一拳配誇張凝重起手；W 白色魔力雨；R 紫黑能量球；EX 反轉時敵人金光、施法者驚愕。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "法鬥",
+    "archetype": "mage",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "ad": "中",
+      "ap": "大",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "range": "小"
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "淫奔",
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】轉譯為「負面能量」資源。對敵人造成有效技能傷害時累積，最多三層，每次施法最多一層。自傷、反傷及持續傷害的每跳不重複增加。\n【待補機制】需每次有效施法一次負面能量，上限三；自傷反傷與每跳不得增加。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-32-20260907-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "event": "onBasicAttack",
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "internalCooldown": 3
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "肩パンチ",
+        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。\n【待補機制】肩膀拳需小幅擊退与一本正經起手，当前只是單擊。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-32-20260907-q-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "流精群（ホワイトレイン）",
+        "purpose": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.45 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】指定區域落下三波白色魔力雨。每波對同一目標最多命中一次；以白色光點、漫畫速度線及誇張表情演出。\n【待補機制】三波白色雨可作時序預覽；每波同目標一次與白點落下造型須驗收。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-32-20260907-w-1",
+            "template": {
+              "ref": "tpl-random-barrage",
+              "params": {
+                "count": 3,
+                "intervalSec": 0.45,
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "impactRadius": 150,
+                "scatterRadius": 120,
+                "payout": "perImpact",
+                "castTimeSec": 0.5
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "闇ぱんち",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-32-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。「闇人格向敵人反擊」為 GGD 改編，不改寫原作招式使用者。\n【待補機制】護盾不代表闇人格反擊；需第一個近身受擊成功事件及一次出拳。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "community-review-32-20260907.e.guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "community-review-32-20260907-e-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [],
+                "castTimeSec": 0.15
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "THE END OF SON",
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。\n【待補機制】需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-32-20260907-r-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "THE END OF SON〔終章〕",
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】消耗三層負面能量，施放較集中的強化詛咒。未處於「萎靡」的目標受到傷害及較強、較短的輸出降低。已處於「萎靡」的目標移除原詛咒，改獲短暫的有限輸出增益，作為重複詛咒的反效果。因此 R→EX 可以實際觸發「本來想補刀，結果把對手弄強」的惡搞失誤。\n【待補機制】需三層消耗及已萎靡目標反轉增益。R→EX 把敵人變強是必要驗收，不得刪成普通強化傷害。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-32-20260907-ex-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.sela",
+    "championIcon": "assets/icons/champions/sela.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-32-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-32-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.void.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.void.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-32-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-32-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.void.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                247,
+                247,
+                255
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.void.nova",
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                247,
+                247,
+                255
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-32-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-32-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.void.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.void.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-32-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-32-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.void.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.void.slash",
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-32-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-32-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.void.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.void.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

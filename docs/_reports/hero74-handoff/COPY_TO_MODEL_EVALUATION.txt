@@ -1,0 +1,61 @@
+請接手「GGD 英雄生成模型驗證」，比較既有基底模型與微調模型。本次只評估，不訓練、不改權重、不改教師答案、不投稿、不部署。先確認兩個模型的 checkpoint／adapter／tokenizer 路徑與雜湊；未指定時請求這些資料，不自行代選模型。
+
+一、固定資料與用途
+
+第二批主驗證：
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2
+PR：https://github.com/adms/GGD/pull/1144
+已驗資料提交：0e001412a32ae1dddffb64e3528cfff923bf6cf6
+buildHash：5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c
+正式引擎：ed547549fb453f6652f53bd7ed9548b0ccef3a36
+入口：docs/_reports/hero-validation-batch2-37/README.md
+37 名／222 槽，external-evaluation-only、trainEligible=false。這是開發驗證，不是已認證的嚴格盲測。
+
+第一批補充參考：
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+PR：https://github.com/adms/GGD/pull/1135
+本次已核版本：9a7583e0ee79812c79befe3e992dc3d39909c9c7
+入口：materials/community-hero-forge/README.md
+第一批含原稿、草稿、局部修正與未完成要求，不是 37 名全部合格的黃金答案。先按完整英雄與已知別名比對真實訓練清單；用過的資料只作已知資料回歸。不能直接把兩批稱為 74 名盲測集，也不能拿第一批的舊通過收據當新版本結果。
+
+二、公開輸入與教師隔離
+
+本次已核對的公開輸入目錄（39個公開檔案＋1份allowlist）：
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero74-model-input-20260909
+可直接使用這份目錄，無需把教師資料複製給模型。
+
+以下是給評估協調者的操作指令，不是直接給受測模型的提示。在第二批 repo root：
+node tools/editor-acceptance/batch2-37/check.mjs --receipt-only
+node tools/editor-acceptance/batch2-37/partition.mjs --export=/absolute/new/model-input
+
+匯出目錄必須尚不存在。若缺公開電車 GLB，先依總報告在評分端重建或由交付封存還原並核 SHA，不能捏造 uploadedModel 驗證狀態。
+受測模型只可讀該新目錄的 37 份 prompts、catalog.json、公開電車及 INPUT-ONLY.json；禁止掛载整个 repo、private/teachers、private/compiled、private/evidence、教師設計矩陣與逐槽審查。
+
+目前題目只有 outputSchema=ggd-hero-project@2，公開包未自帶完整 JSON Schema。協調者須從固定引擎提取正式輸出契約及通用格式說明，兩模型共用，不能把教師作品當範例。若完整目錄超出 context，先固定相同的公開目錄檢索方法與限制，保留每題實際可見模板清單，不能靜默截斷。
+
+三、公平生成
+
+固定模型、tokenizer/chat template、量化、context、輸出 token 上限、system prompt、溫度、seeds、工具權限與題目順序。原生 chat template 的必要差異明列。
+先每模型每英雄一次，共 74 份完整英雄輸出；有預算再用預先指定的同樣 3 個 seeds 重跑。所有失敗、超時、截斷保留在分母。
+每份保存 heroId、modelId、attempt、prompt／目錄雜湊、原始回答、token 數、耗時、錯誤及輸出 SHA。原始回答不可覆寫。
+首次成功率與修復後成功率分開。若允許一次修復，兩模型同額度，只回饋 schema/compiler 錯誤，不提供教師招式、不人工替模型補內容。
+
+四、驗模型輸出，不是重跑教師
+
+現有 run.mjs／check.mjs 驗的是參考資料，尚不是模型輸出評分器。請先建立獨立接收器，將每份模型 HeroProject 送進相同正式 schema、generator、compiler、數值鏡像、引用及資產檢查。不得重跑教師生成器，卻將其通過數記到模型名下。
+
+逐英雄分層評分：
+A. 合法性：JSON、正式 schema、完整六槽、出身／屬性、enabled 模板、有效參數、引用及數值鏡像。
+B. 行為：六槽真實效果、被動觸發、至少兩條真前置改變後招結果。依模型實際設計建立有／無前置、保留／移除連動四組對照；不能注入所需狀態，也不能強迫合理等效設計符合教師特定 Q→W。
+C. 邊界：友敵、距離、資源不足、條件失敗、到期、上限及相關控制／召喚／位置指標。不要全換算成傷害；未建立的案例記未驗證。
+D. 語意：完整讀正文並比對參數與行為；原作設定與 GGD 惡搞分清楚。笑點須可操作，不接受假反彈、假複製、假復活或無效參數。
+E. 多元性：在每個模型自己的 37 名中比較，忽略名稱、顏色、特效和純倍率。少量相似可接受，但逐對交代共同機制、角色契合、可執行笑點、差異及剩餘相似。結構初篩不能證明好玩；不要求教師唯一招名或模板排列。
+F. 包裝／素材：正式 ZIP 往返、真 bytes／SHA；代理模型明列，如月須是可用原創電車。離線通過與正式遊戲匯入、畫面、碰撞、對戰分開。
+
+如月 R 專驗多敵人隨機合法落點、到站既有 curse／blind／confusion、友軍／圈外排除、固定種子重現、隨機差異、到期與命令恢復。教師採朝施法者方向 8／12／16 分支，可越過本體，非全地圖均勻亂數；其他滿足公開需求的合法方案也可接受。
+
+五、報告
+
+輸出兩模型並列表：37 名／222 槽首次與修復後合法率、編譯率、兩條因果連動合格率、正文行為一致率、特色審查、套件率與完整遊戲驗收數。附逐英雄失敗、原始證據、基底通過而微調失敗的退步案例；不要只報平均總分。TTFT／速度與品質分開，未量不報。
+若依本批選模型或改提示，只能稱開發驗證；另設未使用的英雄批次才可做後續保留測試。
+教師目前完整遊戲上場 0／37、嚴格盲測資格 0／37。没有實際模型輸出和上述評分前，不得聲稱「微調提升」或「完整英雄自動生成已驗證」。本交接本身不授權啟動模型訓練或付費外部算力。

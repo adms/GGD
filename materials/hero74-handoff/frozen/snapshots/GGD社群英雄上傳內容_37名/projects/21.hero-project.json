@@ -1,0 +1,698 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-21-20260907",
+  "revision": 1,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "鹿目圓",
+    "concept": "鹿目圓 社群英雄功能驗收稿。作品：《魔法少女小圓》  \n採用：魔法少女圓為主，EX 借用圓環之理意象。  \n定位：弓箭、保護、有限救援。\n\n視覺方向：粉白弓光、玫瑰花瓣盾、圓環環帶；不使用時停。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔希望的連結〕",
+      "Q": "〔光之箭〕",
+      "W": "〔希望之弓〕",
+      "E": "〔淨化之願〕",
+      "R": "〔願望箭雨〕",
+      "EX": "圓環之理"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-21-20260907.plan",
+    "title": "鹿目圓",
+    "summary": "鹿目圓 社群英雄功能驗收稿。作品：《魔法少女小圓》  \n採用：魔法少女圓為主，EX 借用圓環之理意象。  \n定位：弓箭、保護、有限救援。\n\n視覺方向：粉白弓光、玫瑰花瓣盾、圓環環帶；不使用時停。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "軟輔",
+    "archetype": "fighter",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "大",
+      "ad": "小",
+      "ap": "中",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "大",
+      "range": "中"
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔希望的連結〕",
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。\n【待補機制】需有效治療／吸收量計算希望，溢出不計。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-21-20260907-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "event": "onBasicAttack",
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "internalCooldown": 3
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "〔光之箭〕",
+        "purpose": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】發射直線魔法箭。\n【待補機制】需魔法箭投射物。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "大",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-21-20260907-q-1",
+            "template": {
+              "ref": "tpl-traveling-wave",
+              "params": {
+                "stepSize": 100,
+                "stepCount": 4,
+                "stepIntervalSec": 0.12,
+                "aoePerStep": 100,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [
+          "travelingWave"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔希望之弓〕",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-21-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供護盾；消耗一層希望可加強。\n【待補機制】目前自身；需指定友軍及希望消耗。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "大",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "community-review-21-20260907.w.guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "community-review-21-20260907-w-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [],
+                "castTimeSec": 0.15
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔淨化之願〕",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】解除一項可淨化的負面狀態，並提供短效移速。\n【待補機制】目前自身加速；需一項可淨化狀態移除。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "大",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-21-20260907-e-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "msBonusTier": "極小"
+                  }
+                ],
+                "castTimeSec": 0.15
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "〔願望箭雨〕",
+        "purpose": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-21-20260907-r-1",
+            "template": {
+              "ref": "tpl-random-barrage",
+              "params": {
+                "count": 3,
+                "intervalSec": 0.35,
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "impactRadius": 150,
+                "scatterRadius": 120,
+                "payout": "perImpact",
+                "castTimeSec": 0.5
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "圓環之理",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":160,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-21-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。\n【待補機制】護盾不是友軍致死攔截；需限時保命印記與每目標每回合一次。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 160,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "community-review-21-20260907.ex.guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "community-review-21-20260907-ex-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [],
+                "castTimeSec": 0.15
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.sela",
+    "championIcon": "assets/icons/champions/sela.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-21-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-21-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-21-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-21-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-21-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-21-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-21-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-21-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.holy.nova",
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-21-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-21-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.holy.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                158,
+                212
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

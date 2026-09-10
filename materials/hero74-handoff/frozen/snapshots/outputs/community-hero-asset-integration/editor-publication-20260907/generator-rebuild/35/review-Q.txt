@@ -1,0 +1,38 @@
+第 11 版的固定模擬紀錄 · 炭治郎
+
+PASSIVE
+Q
+W
+E
+R
+EX
+額外連段試玩 · 前置施法
+無，重播原固定紀錄
+W
+E
+R
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 18/34 meshes · 5/10 particles/systems · eye -33.3,16.7,0.0
+施法者：炭治郎 · community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2 · 3 meshes · ×2.135 · Main ChampionView · 材質正常
+目標：炭治郎 · community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2 · 3 meshes · ×2.135 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+100ms · Sim tick 3
+↺
+−1 frame
+▶
++1 frame
+castEnd
+abilityId=community-review-35-20260907.q · slot=Q
+recoveryBegin
+abilityId=community-review-35-20260907.q · slot=Q
+全部 11 筆事件

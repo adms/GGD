@@ -1,0 +1,947 @@
+{
+  "schema": "ggd-batch2-partition@2",
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
+  "partition": "external-evaluation-only",
+  "trainEligible": false,
+  "groups": [
+    {
+      "groupId": "b2-popp",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-popp",
+        "何布",
+        "ポップ（Popp）"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-popp.json",
+      "privateTeacher": "private/teachers/b2-popp.project.json",
+      "privateCompiled": "private/compiled/b2-popp.json"
+    },
+    {
+      "groupId": "b2-rem",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-rem",
+        "蕾姆",
+        "レム"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-rem.json",
+      "privateTeacher": "private/teachers/b2-rem.project.json",
+      "privateCompiled": "private/compiled/b2-rem.json"
+    },
+    {
+      "groupId": "b2-zenitsu",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-zenitsu",
+        "我妻善逸"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-zenitsu.json",
+      "privateTeacher": "private/teachers/b2-zenitsu.project.json",
+      "privateCompiled": "private/compiled/b2-zenitsu.json"
+    },
+    {
+      "groupId": "b2-rin",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-rin",
+        "遠坂凜",
+        "遠坂凛"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-rin.json",
+      "privateTeacher": "private/teachers/b2-rin.project.json",
+      "privateCompiled": "private/compiled/b2-rin.json"
+    },
+    {
+      "groupId": "b2-uncle",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-uncle",
+        "異世界舅舅",
+        "おじさん"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-uncle.json",
+      "privateTeacher": "private/teachers/b2-uncle.project.json",
+      "privateCompiled": "private/compiled/b2-uncle.json"
+    },
+    {
+      "groupId": "b2-boxxo",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-boxxo",
+        "阿箱＋拉蜜絲",
+        "ハッコン＋ラッミス"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-boxxo.json",
+      "privateTeacher": "private/teachers/b2-boxxo.project.json",
+      "privateCompiled": "private/compiled/b2-boxxo.json"
+    },
+    {
+      "groupId": "b2-shadow",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-shadow",
+        "闇影",
+        "シド・カゲノー／シャドウ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-shadow.json",
+      "privateTeacher": "private/teachers/b2-shadow.project.json",
+      "privateCompiled": "private/compiled/b2-shadow.json"
+    },
+    {
+      "groupId": "b2-bojji",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-bojji",
+        "波吉",
+        "ボッジ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-bojji.json",
+      "privateTeacher": "private/teachers/b2-bojji.project.json",
+      "privateCompiled": "private/compiled/b2-bojji.json"
+    },
+    {
+      "groupId": "b2-maomao",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-maomao",
+        "貓貓",
+        "猫猫"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-maomao.json",
+      "privateTeacher": "private/teachers/b2-maomao.project.json",
+      "privateCompiled": "private/compiled/b2-maomao.json"
+    },
+    {
+      "groupId": "b2-elma",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-elma",
+        "艾爾瑪",
+        "エルマ・エドヴァン"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-elma.json",
+      "privateTeacher": "private/teachers/b2-elma.project.json",
+      "privateCompiled": "private/compiled/b2-elma.json"
+    },
+    {
+      "groupId": "b2-albus",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-albus",
+        "阿爾巴斯",
+        "アルバス"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-albus.json",
+      "privateTeacher": "private/teachers/b2-albus.project.json",
+      "privateCompiled": "private/compiled/b2-albus.json"
+    },
+    {
+      "groupId": "b2-goblin",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-goblin",
+        "哥布林殺手",
+        "ゴブリンスレイヤー"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-goblin.json",
+      "privateTeacher": "private/teachers/b2-goblin.project.json",
+      "privateCompiled": "private/compiled/b2-goblin.json"
+    },
+    {
+      "groupId": "b2-maple",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-maple",
+        "梅普露",
+        "メイプル／本条楓"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-maple.json",
+      "privateTeacher": "private/teachers/b2-maple.project.json",
+      "privateCompiled": "private/compiled/b2-maple.json"
+    },
+    {
+      "groupId": "b2-naofumi",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-naofumi",
+        "岩谷尚文"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-naofumi.json",
+      "privateTeacher": "private/teachers/b2-naofumi.project.json",
+      "privateCompiled": "private/compiled/b2-naofumi.json"
+    },
+    {
+      "groupId": "b2-makoto",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-makoto",
+        "深澄真"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-makoto.json",
+      "privateTeacher": "private/teachers/b2-makoto.project.json",
+      "privateCompiled": "private/compiled/b2-makoto.json"
+    },
+    {
+      "groupId": "b2-noor",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-noor",
+        "諾爾",
+        "ノール"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-noor.json",
+      "privateTeacher": "private/teachers/b2-noor.project.json",
+      "privateCompiled": "private/compiled/b2-noor.json"
+    },
+    {
+      "groupId": "b2-touka",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-touka",
+        "托卡・史考特",
+        "トウカ・スコット"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-touka.json",
+      "privateTeacher": "private/teachers/b2-touka.project.json",
+      "privateCompiled": "private/compiled/b2-touka.json"
+    },
+    {
+      "groupId": "b2-haga",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-haga",
+        "羽賀",
+        "ハガ／羽賀誠"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-haga.json",
+      "privateTeacher": "private/teachers/b2-haga.project.json",
+      "privateCompiled": "private/compiled/b2-haga.json"
+    },
+    {
+      "groupId": "b2-guts",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-guts",
+        "凱茲",
+        "ガッツ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-guts.json",
+      "privateTeacher": "private/teachers/b2-guts.project.json",
+      "privateCompiled": "private/compiled/b2-guts.json"
+    },
+    {
+      "groupId": "b2-keyaru",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-keyaru",
+        "凱亞爾",
+        "ケヤル"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-keyaru.json",
+      "privateTeacher": "private/teachers/b2-keyaru.project.json",
+      "privateCompiled": "private/compiled/b2-keyaru.json"
+    },
+    {
+      "groupId": "b2-kaede",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-kaede",
+        "楓",
+        "カエデ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-kaede.json",
+      "privateTeacher": "private/teachers/b2-kaede.project.json",
+      "privateCompiled": "private/compiled/b2-kaede.json"
+    },
+    {
+      "groupId": "b2-matthias",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-matthias",
+        "馬提亞斯",
+        "マティアス＝ヒルデスハイマー"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-matthias.json",
+      "privateTeacher": "private/teachers/b2-matthias.project.json",
+      "privateCompiled": "private/compiled/b2-matthias.json"
+    },
+    {
+      "groupId": "b2-sinbad",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-sinbad",
+        "辛巴達",
+        "シンドバッド"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-sinbad.json",
+      "privateTeacher": "private/teachers/b2-sinbad.project.json",
+      "privateCompiled": "private/compiled/b2-sinbad.json"
+    },
+    {
+      "groupId": "b2-kumoko",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-kumoko",
+        "蜘蛛子",
+        "私（蜘蛛の魔物）"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-kumoko.json",
+      "privateTeacher": "private/teachers/b2-kumoko.project.json",
+      "privateCompiled": "private/compiled/b2-kumoko.json"
+    },
+    {
+      "groupId": "b2-yogiri",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-yogiri",
+        "高遠夜霧"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-yogiri.json",
+      "privateTeacher": "private/teachers/b2-yogiri.project.json",
+      "privateCompiled": "private/compiled/b2-yogiri.json"
+    },
+    {
+      "groupId": "b2-kaiji",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-kaiji",
+        "伊藤開司"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-kaiji.json",
+      "privateTeacher": "private/teachers/b2-kaiji.project.json",
+      "privateCompiled": "private/compiled/b2-kaiji.json"
+    },
+    {
+      "groupId": "b2-fushi",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-fushi",
+        "不死",
+        "フシ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-fushi.json",
+      "privateTeacher": "private/teachers/b2-fushi.project.json",
+      "privateCompiled": "private/compiled/b2-fushi.json"
+    },
+    {
+      "groupId": "b2-orphen",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-orphen",
+        "歐菲",
+        "オーフェン／キリランシェロ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-orphen.json",
+      "privateTeacher": "private/teachers/b2-orphen.project.json",
+      "privateCompiled": "private/compiled/b2-orphen.json"
+    },
+    {
+      "groupId": "b2-klaus",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-klaus",
+        "克勞斯",
+        "クラウス"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-klaus.json",
+      "privateTeacher": "private/teachers/b2-klaus.project.json",
+      "privateCompiled": "private/compiled/b2-klaus.json"
+    },
+    {
+      "groupId": "b2-takopi",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-takopi",
+        "章魚嗶",
+        "タコピー"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-takopi.json",
+      "privateTeacher": "private/teachers/b2-takopi.project.json",
+      "privateCompiled": "private/compiled/b2-takopi.json"
+    },
+    {
+      "groupId": "b2-luckyman",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-luckyman",
+        "幸運超人",
+        "ラッキーマン／追手内洋一"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-luckyman.json",
+      "privateTeacher": "private/teachers/b2-luckyman.project.json",
+      "privateCompiled": "private/compiled/b2-luckyman.json"
+    },
+    {
+      "groupId": "b2-misery",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-misery",
+        "米瑟利",
+        "ミザリィ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-misery.json",
+      "privateTeacher": "private/teachers/b2-misery.project.json",
+      "privateCompiled": "private/compiled/b2-misery.json"
+    },
+    {
+      "groupId": "b2-nube",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-nube",
+        "鵺野鳴介"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-nube.json",
+      "privateTeacher": "private/teachers/b2-nube.project.json",
+      "privateCompiled": "private/compiled/b2-nube.json"
+    },
+    {
+      "groupId": "b2-shinchan",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-shinchan",
+        "野原新之助",
+        "野原しんのすけ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-shinchan.json",
+      "privateTeacher": "private/teachers/b2-shinchan.project.json",
+      "privateCompiled": "private/compiled/b2-shinchan.json"
+    },
+    {
+      "groupId": "b2-aladdin",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-aladdin",
+        "阿拉丁",
+        "アラジン"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-aladdin.json",
+      "privateTeacher": "private/teachers/b2-aladdin.project.json",
+      "privateCompiled": "private/compiled/b2-aladdin.json"
+    },
+    {
+      "groupId": "b2-ned",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-ned",
+        "青蛙劍士 Ned",
+        "ネッド／ロイド・コスギ"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-ned.json",
+      "privateTeacher": "private/teachers/b2-ned.project.json",
+      "privateCompiled": "private/compiled/b2-ned.json"
+    },
+    {
+      "groupId": "b2-kisaragi",
+      "partition": "external-evaluation-only",
+      "trainEligible": false,
+      "aliases": [
+        "b2-kisaragi",
+        "如月電車",
+        "如月電車（GGD 原創）"
+      ],
+      "aliasScope": "Known identity spellings only; not a complete historical alias census.",
+      "sameGroupRequired": [
+        "all-six-slots",
+        "paraphrases",
+        "counterpart-forms",
+        "teacher-answers",
+        "future-aliases"
+      ],
+      "publicPrompt": "public/prompts/b2-kisaragi.json",
+      "privateTeacher": "private/teachers/b2-kisaragi.project.json",
+      "privateCompiled": "private/compiled/b2-kisaragi.json"
+    }
+  ],
+  "publicFiles": [
+    {
+      "path": "catalog.json",
+      "sha256": "dec5a1bc8df80cdd114485eb12c7e345a39ae788abc40ac77cda501e11da23d6"
+    },
+    {
+      "path": "prompts/b2-popp.json",
+      "sha256": "209f978cfd5943466101395900e14b14d0397427d687f877b11f221e69943782"
+    },
+    {
+      "path": "prompts/b2-rem.json",
+      "sha256": "483e8a7c40a60bc4d23aa7f9d6416693c970cc236e90c69b6c51d9a24d1c16a6"
+    },
+    {
+      "path": "prompts/b2-zenitsu.json",
+      "sha256": "b715b8e9d51210ddee648bf97e4d8735d1edad14fbeb244a49fd1589535d9c4e"
+    },
+    {
+      "path": "prompts/b2-rin.json",
+      "sha256": "4a09923ae9e7344cf695fb0d1693773c1a0beddef0690a83258ebb91db903c67"
+    },
+    {
+      "path": "prompts/b2-uncle.json",
+      "sha256": "efb9e09a6719768521af563a47ef436e17c8d6cdc7caf64b3b4696cadb16bd43"
+    },
+    {
+      "path": "prompts/b2-boxxo.json",
+      "sha256": "98fc831e6c32ffd0b71b5f69bf30b2b4920cf4de7a59ca532fd1735375a7abc0"
+    },
+    {
+      "path": "prompts/b2-shadow.json",
+      "sha256": "1bebefcd81bc48976e0f938095901d8e493535804d7ee8dd212eb4b8fcb02f64"
+    },
+    {
+      "path": "prompts/b2-bojji.json",
+      "sha256": "f54a382304debafc8f7c600144400811a62c84fa140c008da6baadd3fa80188b"
+    },
+    {
+      "path": "prompts/b2-maomao.json",
+      "sha256": "e704045f83fc2e67857f17d9b58ec4a5c3d5749ee861abf3427f864e62705454"
+    },
+    {
+      "path": "prompts/b2-elma.json",
+      "sha256": "94ff140976fa4d6fb1607b2e9e77fd5b8c5f8f9116fc1eb4427d5e83eeda4f3d"
+    },
+    {
+      "path": "prompts/b2-albus.json",
+      "sha256": "f06c26f103dcd66aabfab29e9d7170091ad92b592c76296919c654b0a13cf69e"
+    },
+    {
+      "path": "prompts/b2-goblin.json",
+      "sha256": "fbd5cb5bb6ecbdf28abe4dfec3ebf86470bae0b6a1539b4776d31b7b5033ab34"
+    },
+    {
+      "path": "prompts/b2-maple.json",
+      "sha256": "a680d70e394922b998cff7c67e8dc27414c4a0211c094d367853bd73b26f2240"
+    },
+    {
+      "path": "prompts/b2-naofumi.json",
+      "sha256": "1041e72fb39cb41ffe2a356e7ee0e81e85c0a6862b8d980d8e8835acad43a3e8"
+    },
+    {
+      "path": "prompts/b2-makoto.json",
+      "sha256": "72695da1e970fb8f05e41773a8efb4538f5e1ca2754fd68dd8a12f38b3e1949a"
+    },
+    {
+      "path": "prompts/b2-noor.json",
+      "sha256": "7b6395f1c15fe7231d7470c0a6010aadcec343496bcf627deab3ed7ab084230c"
+    },
+    {
+      "path": "prompts/b2-touka.json",
+      "sha256": "0cbf59c06a24363cc845b3f68ca2303110d16494ae42931adfbbc8504a32ca57"
+    },
+    {
+      "path": "prompts/b2-haga.json",
+      "sha256": "c72f6caf977a660b734a324ce1ee4ec7d37bfa84803b522bc3da03b8176b5fb9"
+    },
+    {
+      "path": "prompts/b2-guts.json",
+      "sha256": "b7d5c9dcbacfd8d7fd1a01e494ad301639af199cb1d26eb4cc8b5785bde9248d"
+    },
+    {
+      "path": "prompts/b2-keyaru.json",
+      "sha256": "c86e2b50cfa6efa973e02c495f65ce2cd6e74c18e43e80fa4220642e5c2f40a8"
+    },
+    {
+      "path": "prompts/b2-kaede.json",
+      "sha256": "dcf68f2c024cc0e1d084f85b73269617bef457d442ea8f3225b3c962413dec28"
+    },
+    {
+      "path": "prompts/b2-matthias.json",
+      "sha256": "75c39d9eb377b8f2e31a4e0fad1d989ea95c81fd9f28b50d85d971309d8d4643"
+    },
+    {
+      "path": "prompts/b2-sinbad.json",
+      "sha256": "91a8dc3c0e5c9bfe26962240aacd20f102b27897b8e1c8f2f0703b29f8f40169"
+    },
+    {
+      "path": "prompts/b2-kumoko.json",
+      "sha256": "a0e8f064061314d8b4dc59ef94ecd010dd5f7d189fada8aa942a0bc43913c9aa"
+    },
+    {
+      "path": "prompts/b2-yogiri.json",
+      "sha256": "112e87658eb11b921e68dba83f7755b732fd59afffda92eb1b79ca41a46aa4ee"
+    },
+    {
+      "path": "prompts/b2-kaiji.json",
+      "sha256": "817b9ea3fbf9f5ab1a949da79914241872c857c2197e7e18578103cb829066ce"
+    },
+    {
+      "path": "prompts/b2-fushi.json",
+      "sha256": "547239dcef4f9625fe563bd5875160b4ba68a34079a3ac09a77dc28d6f8a85f0"
+    },
+    {
+      "path": "prompts/b2-orphen.json",
+      "sha256": "15d9360fe30780c3b873a4b895c8d48b84761fcc295e0308b4362f7afbaf9c80"
+    },
+    {
+      "path": "prompts/b2-klaus.json",
+      "sha256": "0ebcfeeb413665339c7e6a901a1a54d48fb0765f592f1fc9d99af3dcf2b2065b"
+    },
+    {
+      "path": "prompts/b2-takopi.json",
+      "sha256": "43e14f299ca288c1b725abd695ad75a8f1824a907b7d65b1242b6b0723afd713"
+    },
+    {
+      "path": "prompts/b2-luckyman.json",
+      "sha256": "df9d4ef7229b4e6ecafe20b0aaa40120629e354b3a1293c092d262ff86794542"
+    },
+    {
+      "path": "prompts/b2-misery.json",
+      "sha256": "bee349a4adc6f6628f271a9f10fcfa7e988c609aa059c66f471f5ac836b49907"
+    },
+    {
+      "path": "prompts/b2-nube.json",
+      "sha256": "cf3593005a1f15c44b3cde3265036c0b5f201525129d4eebd385f697f4abd4e9"
+    },
+    {
+      "path": "prompts/b2-shinchan.json",
+      "sha256": "8754578c1fb3b752c08f8a8ac04aeedd222b6a458782a61dc7dcbd232ecee34c"
+    },
+    {
+      "path": "prompts/b2-aladdin.json",
+      "sha256": "8afae5548580542268aeec5bb0f594568e39d6e599a07af9603c846917a03ecc"
+    },
+    {
+      "path": "prompts/b2-ned.json",
+      "sha256": "ec5387e89fc4ad93880e609f1a456fee8c06eb87b71e4816c240d840bac59d83"
+    },
+    {
+      "path": "prompts/b2-kisaragi.json",
+      "sha256": "2ef17b1e8568ef9c4ed09b91a01c23803de9efb0b7008b30b99dd3ffeeb9bb68"
+    },
+    {
+      "path": "assets/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443"
+    }
+  ],
+  "isolation": "allowlisted-model-input-export",
+  "historicalTrainingExposure": "not-certified",
+  "blindAdmission": false,
+  "restrictions": [
+    "Do not mount this repository or the private directory into the evaluated model workspace.",
+    "Do not select models or prompts on this batch and then label it blind testing.",
+    "No training data or model weights are modified.",
+    "Existing exposure-report.json is a historical partial snapshot, not a fresh training-manifest attestation.",
+    "Equivalent legal designs are valid; exact teacher skill names and card order are not the scoring key."
+  ]
+}

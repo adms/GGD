@@ -1,0 +1,52 @@
+import json,shutil
+from pathlib import Path
+repo=Path.cwd();root=Path('/private/tmp/ggd-community37-editor-publish');data=Path('/private/tmp/ggd-model-upload-acceptance/data');report=repo/'docs/_reports/community-hero-forge/editor-publication'
+audit=json.loads((root/'current-package-audit.json').read_text());rows=[]
+for a in audit['rows']:
+ n=a['number'];p=root/f'{n:02}';snap=json.loads((data/'hero-submission-snapshots'/f"{a['submissionId']}.json").read_text());control=json.loads((data/'submission-promotions'/f"hero-work-{snap['workId']}.json").read_text());active=control.get('published');published=bool(active and active['submissionId']==a['submissionId'] and active['version']['packageDigest']==a['packageDigest']);review=json.loads((p/'review.json').read_text());assessment=json.loads((p/'review-assessment.json').read_text());reviewed=review['status']=='captured' and assessment['status']=='reviewed' and assessment['url']==review['url'] and review['url'].endswith(a['submissionId']);assert reviewed
+ if published: assert (data/'submission-verdicts'/f"{active['decisionId']}.json").exists()
+ rows.append({'number':n,'name':a['name'],'workId':snap['workId'],'status':'目前版本已發布（隔離驗收平台）' if published else '目前版本已送審、已完成記錄範圍內的畫面審查；待發布','submitted':True,'published':published,'fixedVersionReviewed':reviewed,'publishedVersion':active['submissionId'] if active else None,'currentSubmissionId':a['submissionId'],'packageDigest':a['packageDigest'],'snapshotDigest':snap['version']['snapshotDigest'],'projectRevision':a['revision'],'historyCount':len(control['history']),'evidenceReuse':review.get('evidenceReuse'),'decisionId':active['decisionId'] if published else None})
+summary={'schema':'ggd-community37-publication-audit@1','heroCount':37,'slotCount':222,'submitted':37,'currentVersionPublished':sum(r['published'] for r in rows),'fixedVersionReviewed':sum(r['fixedVersionReviewed'] for r in rows),'contentVersion':audit['rows'][0]['base']['contentVersion'],'gameRevision':audit['rows'][0]['base']['gameRevision'],'productionDeployed':False,'rows':rows}
+(root/'current-publication-audit.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n');(report/'progress.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n')
+p=report/'README.md';old=root/'historical-progress-readme.md'
+if not old.exists():shutil.copy2(p,old)
+p.write_text(f'''# 37 名英雄編輯器投稿與版本驗收
+
+目前：37/37 名、222 槽已由 Editor 依目前服務建包並投稿；{summary['currentVersionPublished']}/37 名的**目前套件**已在 127.0.0.1 隔離平台發布。尚未部署正式站，整體功能也尚未宣稱完成。
+
+原文、指定角色名稱、每槽技能名稱與 requiredRefinement 均逐項核對。審查意見逐槽列出現行 GGD 改編行為、原設計差異及模型來源；代理模型與模板演出不代表原設計完整還原。
+
+- 套件基準：`{summary['contentVersion']}` / `{summary['gameRevision']}`。
+- `current-package-audit.json`：37 份 ZIP 完整性、222 槽、完整來源一致性、模型位元組與不可變投稿對應。
+- `current-publication-audit.json`：以 Platform 真正發布指標對照目前套件，不從過期 UI 文字推算上線數。
+- `current-roster-runtime.json`：37 份實際 ZIP 可同時載入遊戲版本名單；146 份去重素材，共 39,337,379 bytes。這不是裝置 FPS 或完整對戰驗收證明。
+- 01–31 的來源、compiled、依賴、素材逐位元組及六槽／整套 replay 均與先前受審內容一致，保留 `rebase-equivalence.json`；新版另各取一個固定候選畫面複查。32–37 有新版六槽畫面。完整六槽沿用證據的範圍記在各英雄 `review.json.evidenceReuse`，不冒充重新取得全部畫面。
+- 武藤遊戲 W 及安茲 W 的固定候選畫面已確認第三名召喚物；使用明示的 GGD 方塊法師／戰士造型。
+- 阿薩謝爾固定候選 R → 1.5 秒 → EX：消耗本施法者 R 詛咒與三層負能量，敵方 AD/AP +10% 持續 2 秒，反轉分支不執行普通 EX 傷害。套件與實際固定畫面證據在 `32/fixed-curse-mechanism-proof.json`、`32/fixed-R-EX.json`、`32/fixed-R-EX.png`；27 項機制測試通過。
+
+## 正式英雄與版本規則
+
+使用者已確認：管理員審查通過後就是正式英雄，不另分社群版。`a1d80408` 已讓普通房間自動固定相容的已發布版本，移除房主社群開關與選角社群標籤。新對局使用正常排行／獎勵，仍保存完整版本 pins；歷史對局保持原結算，不補發或重複發放獎勵。該版亦修正上傳模型被誤當成出貨依賴而阻止載入的問題。
+
+隔離 Platform 已換成上述實作。相關 submissions／gamelink Go 測試、client／game-server 型別檢查、4 項版本載入測試通過。完整實際對局、重連與回放仍待驗收，不把運行期載入測試當作完成對戰。
+
+後台完整投稿版本可查看固定原文、技能、素材及發布歷史；已補完整資料版本下拉選單與目前上線版的檔案差異比較。切換查看版本不直接更動上線資料；恢復歷史版仍走原發布、相容性檢查與 CAS。SUN樂 已由實際後台選單查看未上線版本與差異，再對目前版本下架、恢復；完整版本逐欄相同，歷史與新的操作紀錄保留。證據為 `version-restore-proof.json` 與 `version-dropdown-*.png`。
+
+既有 119 個英雄 ID（71 名出貨庫、48 名歷史庫）的完整初始資料已由 `captureHeroCatalogVersion` 沿用 ImportStore 保存為不可變版本：4,384 份檔案、113,499,144 bytes，包含來源原始位元組、全目錄素材與實際覆蓋層；沒有更動 ACTIVE 或上架狀態。`existing-catalog-baseline.json` 保存版本與快照摘要，完整備份另存於工作區 `outputs/community-hero-asset-integration/existing-catalog-baselines` 並逐檔核對，3 項快照測試及 content-api 型別檢查通過。
+
+雲端草稿已補不可變版本歷史：每次同步先保存完整 payload 與模型原檔引用，再以 CAS 更新最新指標；舊服務草稿從仍存在的版本建立基線，不捏造已被覆寫的更早資料。作者可透過版本下拉選單比較、回復；回復會新增版本並標記來源，預先保留未同步本機副本與還原素材。歷史分頁不刪除舊版，未提交成功的快照不會出現在歷史中。
+
+SUN樂 實際 Editor 驗收通過：第 3 版 Q 冷卻 10 → 第 4 版冷卻 11 → 回復第 3 版內容並存為第 5 版；完整草稿逐欄一致，模型動作綁定保留，未同步的 `1e` 輸入存於本機副本，發布控制資料完全相同。證據 `draft-version-proof.json`、`draft-version-comparison.png`、`draft-version-restored.png`。Go submissions／gamelink 測試與 Editor 草稿相關 23 項測試通過。畫面驗收曾發現版本網址編碼未解碼，已修正並加入真實編碼路由測試；Go 快取權限曾造成重啟建置中断，修正建置後隔離服務健康檢查通過，未將工具失敗視為產品回歸。
+
+**尚待補齊：既有 119 名英雄的每次修訂自動留存、個別版本選取／完整資料回復與畫面驗收。** 現有逐文件備份與模型版本不能算作完整英雄版本管理。不要再次新增英雄模板來替代這些工作。
+
+配額已依最新授權設定：一般每日 100 次新候選投稿、認證 Power User 每日 200 次、同時待審 50 份。相同候選重試不重複扣額，改稿重投計新候選；模型檔保存上限 100，保留原容量限制。
+
+## 證據與續作
+
+完整 ZIP、逐槽畫面、操作結果與腳本在工作區 `outputs/community-hero-asset-integration/editor-publication-20260907`；暫存操作在 `/private/tmp/ggd-community37-editor-publish`。過往逾時、錯誤和階段性狀態另保存在證據中，不再與本頁目前狀態混列。模型載入曾受登入逾期／開發熱更新影響；重新登入既有測試帳號及重新載入同一固定候選後複查，沒有降低門檻。
+
+| # | 英雄 | 目前狀態 |
+| --- | --- | --- |
+'''+''.join(f"| {r['number']:02} | {r['name']} | {r['status']} |\n"for r in rows))
+print(json.dumps({k:v for k,v in summary.items() if k!='rows'},ensure_ascii=False))

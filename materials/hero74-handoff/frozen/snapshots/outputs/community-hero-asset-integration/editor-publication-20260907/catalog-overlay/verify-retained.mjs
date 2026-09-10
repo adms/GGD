@@ -1,0 +1,10 @@
+import {readFileSync,writeFileSync,readdirSync} from 'node:fs';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';
+const out='/private/tmp/ggd-catalog-overlay-proof',base='http://127.0.0.1:8092/api/v1';const ui=JSON.parse(readFileSync(out+'/ui-proof.json')),headers={'content-type':'application/json'};
+const r=await fetch(base+'/auth/login',{method:'POST',headers,body:JSON.stringify({username:'model-reviewer',password:'REDACTED_TEST_PASSWORD'})});assert.equal(r.status,200);headers.authorization='Bearer '+(await r.json()).tokens.accessToken;
+const call=async(path,body)=>{const r=await fetch(base+path,{method:body?'POST':'GET',headers,body:body?JSON.stringify(body):undefined});const result=await r.json();assert.equal(r.status,200,JSON.stringify(result));return result;};
+const current=await call('/content-overlay/bundle');assert.equal(current.generation,14);
+const saved=await call('/content-overlay/hero-catalog/versions/capture',{});assert.equal(saved.incomplete,null);
+const preview=await call('/content-overlay/hero-catalog/preview',{heroPath:'catalog/champions/sela.json',versionId:ui.originalVersion});assert.deepEqual(preview.changes,[]);
+const initial=JSON.parse(readFileSync(out+'/original-published-record-hashes.json'));const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+console.log(JSON.stringify({savedVersion:saved.version.versionId,repeatPreviewChanges:preview.changes.length,originalRecordHashShape:Object.keys(initial)}));
+writeFileSync(out+'/retained-proof.json',JSON.stringify({schema:'ggd-full-hero-recapture-proof@1',status:'passed',savedVersion:saved.version.versionId,files:saved.version.files.length,incomplete:saved.incomplete,repeatOriginalRestoreHasZeroChanges:true,generation:current.generation},null,2));

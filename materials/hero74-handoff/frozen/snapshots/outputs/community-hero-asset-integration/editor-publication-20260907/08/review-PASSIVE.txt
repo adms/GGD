@@ -1,0 +1,31 @@
+第 4 版的固定模擬紀錄 · 米卡莎
+
+PASSIVE
+Q
+W
+E
+R
+EX
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 18/36 meshes · 0/20 particles/systems · eye -30.2,16.7,-0.3
+施法者：米卡莎 · community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c · 3 meshes · ×1.959 · Main ChampionView · 材質正常
+目標：米卡莎 · community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c · 3 meshes · ×1.959 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+817ms · Sim tick 24
+↺
+−1 frame
+▶
++1 frame
+attackWindup
+無摘要欄位
+全部 30 筆事件

@@ -1,0 +1,17 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
+import assert from 'node:assert/strict';
+const root='/private/tmp/ggd-community37-live-match';
+const {connect}=await import(pathToFileURL(process.cwd()+'/docs/_reports/community-hero-forge/cast-credit/ui/cdp.mjs'));
+const source=JSON.parse(readFileSync(root+'/current-match.json'));
+const login=await fetch('http://127.0.0.1:8091/api/v1/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({username:'model-reviewer',password:'REDACTED_TEST_PASSWORD'})});assert.equal(login.status,200);
+const actor=await login.json();
+const accessResponse=await fetch(`http://127.0.0.1:8091/api/v1/admin/replays/${source.matchId}/ticket`,{method:'POST',headers:{authorization:`Bearer ${actor.tokens.accessToken}`,'content-type':'application/json'},body:'{}'});assert.equal(accessResponse.status,200);
+const access=await accessResponse.json();
+const existing=await connect('5540A0FD8040795FAF172B7B1FA0329C');
+const {targetId}=JSON.parse(readFileSync(root+'/replay-ui-target.json'));existing.close();
+const tab=await connect(targetId);await tab.call('Network.enable');await tab.call('Page.bringToFront');
+await tab.call('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+await tab.call('Page.navigate',{url:`http://127.0.0.1:5209/#replay=${encodeURIComponent(source.matchId)}&ticket=${encodeURIComponent(access.ticket)}`});
+writeFileSync(root+'/replay-ui-target.json',JSON.stringify({targetId,matchId:source.matchId,origin:'http://127.0.0.1:5209',startedAt:new Date().toISOString()},null,2));
+for(let i=0;i<500;i++){await tab.call('Input.dispatchMouseEvent',{type:'mouseMoved',x:720,y:400});if(await tab.evaluate('!!document.querySelector(\"input[aria-label=時間軸]\")'))break;await new Promise(r=>setTimeout(r,100));}console.log(JSON.stringify({targetId,matchId:source.matchId,text:await tab.evaluate('document.body.innerText.slice(0,4000)')}));const img=await tab.call('Page.captureScreenshot',{format:'png'});writeFileSync(root+'/replay-ui-reopen.png',Buffer.from(img.data,'base64'));tab.close();

@@ -1,0 +1,30 @@
+第 4 版的固定模擬紀錄 · 魔法少女☆伊莉雅
+
+PASSIVE
+Q
+W
+E
+R
+EX
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 13/35 meshes · 22/18 particles/systems · eye -33.9,16.7,0.0
+施法者：魔法少女☆伊莉雅 · community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81 · 3 meshes · ×1.886 · Main ChampionView · 材質正常
+目標：魔法少女☆伊莉雅 · community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81 · 3 meshes · ×1.886 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+383ms · Sim tick 12
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 10 筆事件
