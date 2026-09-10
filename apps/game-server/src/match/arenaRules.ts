@@ -135,6 +135,10 @@ export interface ArenaRules {
       readonly normalToSpecialSec: number;
       readonly specialDropsReviveCircle: boolean;
       readonly breakItemOnDeath: boolean;
+      /** ⭐ ④ 打死王 ⇒ 重抽三選一的機率（%）。⛔ `0` ＝ 機制關著。 */
+      readonly bossRerollChancePct: number;
+      /** ⭐ ④ 重抽從哪一張獎池抽（`content/loot-tables/<id>.json`）。 */
+      readonly bossRerollTable: string;
     };
     /** ⭐ 陣亡玩家改控自己的殭屍王（#1151 E）。 */
     readonly deadPlayersControlBoss: boolean;
@@ -346,7 +350,15 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     bossScaleCeil: 1,
     bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
     // ⭐ 全部惰性:⛔ 沒有一格開關被預設打開。
-    survivalLoop: { normalToSpecialSec: 0, specialDropsReviveCircle: false, breakItemOnDeath: false },
+    // ⭐ `bossRerollChancePct: 0` ＝ ④ 也關著（⛔ 「機率 0」在這裡就是「不發生」,
+    //   而且呼叫端在 0 的時候**連 rng 都不動** ⇒ 逐位元 no-op）。
+    survivalLoop: {
+      normalToSpecialSec: 0,
+      specialDropsReviveCircle: false,
+      breakItemOnDeath: false,
+      bossRerollChancePct: 0,
+      bossRerollTable: "",
+    },
     deadPlayersControlBoss: false,
     // ⭐ 逃跑窗 0 ＋ 不繼承增幅 ＝ 逐位元惰性(⛔ 沒有開關被預設打開)。
     possession: { escapeWindowSec: 0, telegraphRadius: 1, inheritBossAugments: false },
@@ -551,6 +563,9 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
         normalToSpecialSec: doc.round11?.survivalLoop?.normalToSpecialSec ?? 0,
         specialDropsReviveCircle: doc.round11?.survivalLoop?.specialDropsReviveCircle ?? false,
         breakItemOnDeath: doc.round11?.survivalLoop?.breakItemOnDeath ?? false,
+        // ⭐ ④ fallback 是「⛔ 關著」：機率 0 ＋ 空池 —— 缺文件時一張卡都不發。
+        bossRerollChancePct: doc.round11?.survivalLoop?.bossRerollChancePct ?? 0,
+        bossRerollTable: doc.round11?.survivalLoop?.bossRerollTable ?? "",
       },
       deadPlayersControlBoss: doc.round11?.deadPlayersControlBoss ?? false,
       possession: {

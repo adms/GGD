@@ -46,6 +46,9 @@ const rules = (over: Partial<ArenaRules["round11"]["survivalLoop"]> = {}): Arena
     waveTable: { eventIntervalSec: 1, difficultyBase: 1, baseSpawnCount: 3, events: [{ kind: "normal", weight: 1 }] },
     bombardment: { ...DEFAULT_ARENA_RULES.round11.bombardment, enabled: false },
     survivalLoop: {
+      // ⭐ ④（王死重抽）在這一支**保持關著** —— 它量的是 ①②③，
+      //   ⛔ 讓 ④ 一起發卡只會在同一條斷言上多一個變因（④ 的守衛是 `round11BossReroll.test.ts`）。
+      ...DEFAULT_ARENA_RULES.round11.survivalLoop,
       normalToSpecialSec: PROMOTE_SEC,
       specialDropsReviveCircle: true,
       breakItemOnDeath: true,

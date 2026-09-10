@@ -58,3 +58,30 @@ export function pickItemToBreak(
   const idx = Math.floor(r * filled.length);
   return filled[idx < filled.length ? idx : filled.length - 1]!;
 }
+
+/**
+ * ⭐⭐ ④ 打死殭屍王 ⇒ **這一次發不發重抽三選一**（GH#920 ④）。
+ *
+ * > owner 2026-09-01（逐字，⭐ 兩則，⛔ 兩則都不可以只讀一半）：
+ * > 「殭屍王要有真正的威脅跟獎勵對抗取捨（寶具死掉會隨機噴
+ * >  **有機會**隨機三選一再拿到新的）」
+ * > 「打死殭屍王後的**重抽三選一 不暫停時間**喔 我回答過了」（23:52，⭐ 較新、較specific）
+ *
+ * ── ⭐ 為什麼**沒有**第二格 `enabled` 布林 ────────────────────────────
+ * ⭐ `chancePct === 0` **就是**關著（⛔ 而不是「每次都不中」）——
+ * ⚠️ 這是這個檔案上面 `shouldConvertToSpecial` 已經用過的**同一個**家族慣例
+ * （逐字：「⛔ 調 0 ＝ **不轉化**（機制關著）」）。
+ * ⛔ 一格 `enabled:false` ＋ 一格 `chancePct:50` 是**兩個住處在說同一件事**
+ * （第〇·四守則），而它們會漂：關著卻寫 50 的那一格，讀的人分不出哪一個贏。
+ *
+ * ⚠️ ⭐ `sim/**` 禁 `Math.random`／時鐘 ⇒ `roll` 是呼叫端從 `world.rng` 取的
+ * **[0,1)** 抽樣值，⭐ 而那讓錄影重播抽得出同一次結果。
+ */
+export function bossRerollGranted(chancePct: number, roll: number): boolean {
+  // ⭐ 0（與負數）＝ 機制關著。⛔ 呼叫端在這之前就該連 rng 都不動 —— 見
+  //   `MatchController.onRound11BossReroll`：關著的那條路要**逐位元 no-op**。
+  if (!(chancePct > 0)) return false;
+  if (chancePct >= 100) return true;
+  const r = roll < 0 ? 0 : roll >= 1 ? 0.999999 : roll;
+  return r * 100 < chancePct;
+}

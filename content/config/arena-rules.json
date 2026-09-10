@@ -392,7 +392,9 @@
     "survivalLoop": {
       "normalToSpecialSec": 45,
       "specialDropsReviveCircle": true,
-      "breakItemOnDeath": true
+      "breakItemOnDeath": true,
+      "bossRerollChancePct": 100,
+      "bossRerollTable": "legendary-weapons"
     },
     "deadPlayersControlBoss": true,
     "possession": {

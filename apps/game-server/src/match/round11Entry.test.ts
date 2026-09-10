@@ -50,7 +50,9 @@ const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
     bossScaleFloor: 1,
     bossScaleCeil: 1,
     bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
-    survivalLoop: { normalToSpecialSec: 0, specialDropsReviveCircle: false, breakItemOnDeath: false },
+    // ⭐ 從出貨 fallback 展開 ⇒ ⛔ 這一支不必因為別人加一格取捨迴圈參數就改一次
+    //   （而且它要的正是「全部惰性」，`DEFAULT_ARENA_RULES` 的那一份就是）。
+    survivalLoop: { ...DEFAULT_ARENA_RULES.round11.survivalLoop },
     deadPlayersControlBoss: false,
     possession: { escapeWindowSec: 0, telegraphRadius: 1, inheritBossAugments: false },
     scoring: { survivalWeight: 0, scoreMultiplier: 1, minContributionForFullSurvival: 0 },

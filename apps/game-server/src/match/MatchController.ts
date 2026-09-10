@@ -49,6 +49,7 @@ import {
   round11Score,
 } from "@ggd/shared/sim/round11Scoring";
 import {
+  bossRerollGranted,
   pickItemToBreak,
   shouldConvertToSpecial,
 } from "@ggd/shared/sim/round11SurvivalLoop";
@@ -3857,6 +3858,22 @@ export class MatchController {
    * Shared by the normal combat→resolution transition and the skipPhase cheat.
    */
   private concludeCombat(): void {
+    // ⭐⭐ GH#920 ④ —— 第十一回合是**最後一回合**，⛔ 它後面沒有 `enterCombat`。
+    //
+    // ⚠️ ⭐ 那條「把沒收掉的卡自動代選」的安全網住在 `enterCombat`（下一回合開打時），
+    //   ⇒ ⛔ 第十一回合發的重抽卡如果沒人按，它會**連被代選的機會都沒有**就蒸發。
+    // ⭐ 而 owner 2026-08-06 已經對**完全同一個形狀**裁決過（逐字）：
+    //   「我前面已購買 寶玉 或 強化屬性 出現隨機三選一**來不及選**，
+    //    請**隨機幫我選一個**避免買了沒選到吃虧」——⭐ 而「⛔ 不暫停時間」正好
+    //   保證了「來不及選」是這一回合的**常態**，⛔ 不是例外。
+    // ⛔ 用**同一支** `autoPickIndex`（seeded off the match，⛔ 不是 Math.random／
+    //   world.rng）⇒ 同種子重播一致；`applyPick` 自己記帳（auto ⇒ 算 `autoPicked`）
+    //   也自己從 `offers` 移除。⚠️ 用快照迭代（`applyPick` 會動 `this.offers`）。
+    if (this.round11Round === this.phase.round) {
+      for (const [offerId, offer] of [...this.offers]) {
+        this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer), true);
+      }
+    }
     endCombatFlowers(this.world); // round over: all flowers despawn
     endCombatRevives(this.world); // …and every circle + in-flight channel dies
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
@@ -4794,6 +4811,85 @@ export class MatchController {
     }
   }
 
+  /**
+   * ⭐⭐ ④ 打死殭屍王 ⇒ **重抽三選一**（GH#920 ④ / #1151 C）。
+   *
+   * > owner 2026-09-01 23:52（逐字）：「打死殭屍王後的**重抽三選一 不暫停時間**喔 我回答過了」
+   * > owner 2026-09-01（逐字，較早）：「寶具死掉會隨機噴 **有機會**隨機三選一再拿到新的」
+   *
+   * ── ⭐⭐ 「⛔ 不暫停時間」是怎麼做到的（⛔ 這不是「我沒有寫暫停」）───────
+   * ⭐ 這張卡走的是**這個檔案既有的第三條發卡路**：傳說寶玉／能力屬性強化
+   *   （`registerOrbOffer` / `registerAttrOffer`）—— ⭐ 那兩張**本來就是在
+   *   `combat` 相位發的**（陣亡者可以在戰鬥中買，見 `sim/economy/shopAccess.ts`），
+   *   而 `net/snapshot.ts:414` 投影 `SeatState.offers` **不看相位**。
+   * ⇒ ⭐ 相位、`phase.ticksLeft`、`world.combatActive`、`economyOpen` 一格都不碰。
+   * ⛔ 中場那條路（`grantRoundRewards`）反而**會**動時間（`bothDraftsExtraSec`
+   *   延長中場）—— ⭐ 那正是這裡⛔ 不重用它的原因之一。
+   *
+   * ── ⭐ 獎池為什麼是一格設定而不是 `pickWeaponTable` ──────────────────
+   * ⚠️ 中場那條路吃「**回合** `grant.weaponLootTable`」＋「逐座位劣勢值 D」＋
+   *   `weaponTiers`（按 `minRound`/`maxRound` **開窗**的升階表）。
+   * ⛔ 第十一回合三個前提**都不成立**：它沒有 `grant`（`grantForRound` 只排到
+   *   第 10 回合）、它在 `weaponTiers` 的排程表**之外**（`ex-origin` 是 10..10
+   *   ＝「最終回合大戰**前**」），而 D 量的是**前十回合**的勝場與裝備差距。
+   * ⇒ ⭐ 硬餵進去是「用現有參數湊一個看起來像的」（CLAUDE.md 明令禁止的第三條路），
+   *   ⛔ 不是翻譯。⭐ 翻譯是：owner 說的是「再拿到新的**寶具**」⇒ 一格**池子 id**，
+   *   而它預設就是 ③ 損壞的那一族（`legendary-weapons`，`rounds[2]`/`rounds[5]` 同一張）。
+   *
+   * ⚠️ ⭐ **可選的兩個守門，都是刻意的**：
+   * · ⛔ 換邊之後的座位（`round11Possessions`）不發 —— 牠現在是一具王，
+   *   分數已凍結（GH#922），發一件英雄裝備既沒有人拿得到也會動到王的屬性。
+   * · ⭐ 池子抽不出東西時**出聲**（`console.warn`）而不是發一張空卡
+   *   （fail-open 沒錯，**靜默**才是缺陷 —— 第二守則）。
+   */
+  private onRound11BossReroll(seatId: SeatId, bossId: number): void {
+    if (this.round11Round !== this.phase.round) return;
+    const pct = this.rules.round11.survivalLoop.bossRerollChancePct;
+    // ⭐ 關著 ⇒ **這裡就回**，⛔ 連 `world.rng` 都不動 —— 出貨（`enabled:false`）
+    //   與今天的行為要**逐位元**相同，⛔ 而多抽一顆亂數就會讓同一顆種子走出不同的一場。
+    if (!(pct > 0)) return;
+    const seat = this.seats.get(seatId);
+    if (!seat || seat.entityId === null) return;
+    if (this.round11Possessions.has(seatId)) return; // ⛔ 牠是王,⛔ 不是英雄
+    // ⭐ 去重走**同一本**一次性帳本：一隻王只發一次（斷線重連／重複請求／
+    //   同 tick 多來源致命都會讓這顆事件重覆抵達）。⛔ 不是「應該不會重覆」。
+    if (!this.round11Claims.claim("reroll", String(bossId))) return;
+    const granted = bossRerollGranted(pct, this.world.rng.next());
+    if (!granted) {
+      this.world.emit("round11BossReroll", { seatId, bossId, granted: false, choices: [] });
+      return;
+    }
+    const table = this.rules.round11.survivalLoop.bossRerollTable;
+    const offer = offerItems(
+      this.world,
+      seat.entityId,
+      table,
+      this.rules.offerCount,
+      this.rules.itemDraft,
+    );
+    if (offer.choices.length === 0) {
+      // ⭐ 出聲：⛔ 一張零選項的卡與「這次沒中」在畫面上長得一模一樣。
+      console.warn(
+        `[match ${this.matchId}] round 11 seat ${seatId}: the ${table} pool holds nothing this ` +
+          `champion may be offered — the boss-kill reroll card is EMPTY. Check ` +
+          `round11.survivalLoop.bossRerollTable and 內容白名單.`,
+      );
+      return;
+    }
+    this.offers.set(`r11reroll:${bossId}:${seatId}`, {
+      kind: "item",
+      ...offer,
+      seatId,
+      createdTick: this.world.tick,
+    });
+    this.world.emit("round11BossReroll", {
+      seatId,
+      bossId,
+      granted: true,
+      choices: [...offer.choices],
+    });
+  }
+
   private clampRound11AliveCap(): void {
     if (this.round11Round !== this.phase.round) return;
     const rules = this.world.mobRules;
@@ -5235,6 +5331,9 @@ export class MatchController {
         //   （見 `round11BossKills` 的說明：它與上面那一行是兩個不同的量。）
         if (data.kind === "boss" && typeof data.id === "number") {
           recordBossKill(this.round11BossKills, data.id);
+          // ⭐⭐ GH#920 ④ —— 打死殭屍王 ⇒ **重抽三選一**（⛔ 不暫停戰鬥）。
+          //   ⚠️ ⭐ 只在第十一回合做事（`onRound11BossReroll` 第一行就回）。
+          this.onRound11BossReroll(key, data.id);
         }
         return;
       }
