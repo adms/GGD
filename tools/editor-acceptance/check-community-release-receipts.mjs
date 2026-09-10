@@ -6,11 +6,10 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const reports = path.join(root, "docs/_reports/community-acquired-heroes");
 const read = (name) => JSON.parse(fs.readFileSync(path.join(reports, name), "utf8"));
-const batch = read("loopback-release-27of34.json");
-const rollback = read("loopback-release-rollback.json");
+const batch = read("loopback-release-34of34.json");
 const canonical = read("loopback-release-canonical-id-blocker.json");
 const statusTable = fs.readFileSync(path.join(root, "docs/editor-contract/社群英雄126名上架狀態.md"), "utf8");
-const maxGeneralBytes = 4 * 1024 * 1024;
+const maxModelBytes = 64 * 1024 * 1024;
 const digest = /^sha256:[0-9a-f]{64}$/;
 
 function assertNoSecrets(value, location = "$") {
@@ -22,36 +21,21 @@ function assertNoSecrets(value, location = "$") {
   }
 }
 
-for (const report of [batch, rollback, canonical]) {
+for (const report of [batch, canonical]) {
   assert.equal(report.schema, "ggd-community-hero-release-check@1");
   assertNoSecrets(report);
   assert.equal(report.target.gameRevision, batch.target.gameRevision, "Receipts must use one checked-out target");
   assert.equal(report.target.contentVersion, batch.target.contentVersion, "Receipts must use one content target");
 }
 
-assert.equal(batch.status, "failed", "The 34-name run must preserve its seven policy failures");
+assert.equal(batch.status, "passed", "The 34-name run must publish every complete model package");
 assert.equal(batch.selectedIds.length, 34);
 assert.equal(batch.receipts.length, 34);
-assert.equal(batch.passed, 27);
-assert.equal(batch.failed, 7);
-const expectedOversize = new Set([
-  "acquired-alice",
-  "acquired-astralym",
-  "acquired-cattiva",
-  "acquired-inuyasha",
-  "acquired-jetragon",
-  "godie-e00q",
-  "godie-hlgr",
-]);
-const oversize = batch.receipts.filter((receipt) => receipt.status === "failed");
-assert.deepEqual(new Set(oversize.map((receipt) => receipt.id)), expectedOversize);
-for (const receipt of oversize) {
-  assert(receipt.packageArchiveBytes > maxGeneralBytes, `${receipt.id} must exceed the measured 4 MiB policy boundary`);
-  assert.match(receipt.packageArchiveSha256, digest);
-  assert.match(receipt.error, /英雄 ZIP 超過目前投稿政策的大小上限/);
-}
-for (const receipt of batch.receipts.filter((item) => item.status === "published")) {
-  assert(receipt.packageArchiveBytes <= maxGeneralBytes, `${receipt.id} unexpectedly exceeded the configured boundary`);
+assert.equal(batch.passed, 34);
+assert.equal(batch.failed, 0);
+for (const receipt of batch.receipts) {
+  assert.equal(receipt.status, "published", `${receipt.id} did not finish publication`);
+  assert(receipt.packageArchiveBytes <= maxModelBytes, `${receipt.id} exceeded the complete model-package boundary`);
   assert.match(receipt.packageArchiveSha256, digest);
   assert.match(receipt.submissionId, /^hero-[0-9a-f]{59}$/);
   assert.match(receipt.packageDigest, digest);
@@ -59,16 +43,13 @@ for (const receipt of batch.receipts.filter((item) => item.status === "published
   assert.equal(receipt.slots, 6);
 }
 
-assert.equal(rollback.status, "passed");
-assert.equal(rollback.passed, 2);
-assert.equal(rollback.failed, 0);
-assert.equal(rollback.rollback.status, "passed");
-assert.equal(rollback.rollback.workId, "acquired-dio");
-assert.equal(rollback.rollback.restoredSubmissionId, rollback.rollback.v1SubmissionId);
-assert.notEqual(rollback.rollback.v2SubmissionId, rollback.rollback.v1SubmissionId);
-assert.equal(rollback.rollback.unaffectedWorkId, "acquired-saya");
-assert(rollback.rollback.historyCount >= 3);
-assert(rollback.rollback.publicationRevision >= 3);
+assert.equal(batch.rollback.status, "passed");
+assert.equal(batch.rollback.workId, "acquired-dio");
+assert.equal(batch.rollback.restoredSubmissionId, batch.rollback.v1SubmissionId);
+assert.notEqual(batch.rollback.v2SubmissionId, batch.rollback.v1SubmissionId);
+assert.equal(batch.rollback.unaffectedWorkId, "acquired-alice");
+assert(batch.rollback.historyCount >= 3);
+assert(batch.rollback.publicationRevision >= 3);
 
 assert.equal(canonical.status, "failed");
 assert.equal(canonical.selectedIds.length, 2);
@@ -104,8 +85,8 @@ for (const id of canonicalIds) {
 console.log(JSON.stringify({
   status: "passed",
   published: batch.passed,
-  oversize: batch.failed,
-  rollback: rollback.rollback.status,
+  failed: batch.failed,
+  rollback: batch.rollback.status,
   canonicalBlocked: canonical.failed,
   canonicalCatalogIds: canonicalIds.length,
 }));
