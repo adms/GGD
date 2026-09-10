@@ -21,22 +21,15 @@
       "on": "castEffect"
     },
     {
-      "modelKey": "w3x.stock.nedeathsmall",
-      "path": "static",
-      "anchor": "target",
-      "lifeSec": 1,
-      "kind": "modelFx",
-      "on": "castEffect",
-      "offsetForwardU": 0
-    },
-    {
-      "modelKey": "w3x.stock.neutralbuildingexplosion",
-      "path": "static",
-      "anchor": "target",
-      "lifeSec": 0.8,
-      "kind": "modelFx",
-      "on": "castEffect",
-      "offsetForwardU": 0
+      "call": {
+        "subtype": "sub.forward-twin-blast",
+        "params": {
+          "trigger": "castEffect",
+          "anchor": "target",
+          "offsetForwardU": 0,
+          "burstLifeSec": 0.8
+        }
+      }
     }
   ]
 }
