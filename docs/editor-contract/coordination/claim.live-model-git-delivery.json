@@ -1,0 +1,31 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.live-model-git-delivery",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "補交已上架81名所缺的44個模型實檔，修正先前上架狀態誤判",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "正式cv_a5039179a7ff中81名及486個技能ID齊全，81名皆在營運白名單且無覆蓋刪除／隱藏／下架。此前只看投稿API空清單的未上架推論已更正。固定Main7b639e630的77個現行模型檔有44個未追蹤且正式URL404；本提交補相同SHA的44個既有GLB，沒有重複發布或改模型綁定。",
+      "commit": "3e5a151821f7b4ab832c5c5edac18daf839bf847",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/verify-live-model-delivery.py --git-ref 3e5a151821f7b4ab832c5c5edac18daf839bf847",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "materials/community-hero-forge/receipts/live-model-git-delivery.json",
+        "materials/community-hero-forge/README.md",
+        "materials/community-hero-forge/lol/README.md",
+        "tools/community-hero-forge/verify-live-model-delivery.py"
+      ]
+    }
+  ],
+  "asks": [
+    "請優先審查模型補檔提交 3e5a151821f7b4ab832c5c5edac18daf839bf847，沿正常合併部署補齊現有44個404模型；不重複發布舊community-concept-*英雄。",
+    "模型的Git補檔已完成，但線上404須部署後再確認；公開Editor／原PR公告CI為獨立待辦，不能再據此回報81名未上架。"
+  ]
+}
