@@ -125,7 +125,35 @@ function allNames(): Map<string, string> {
  * ⚠️ 2026-08-13 godie-h02s(死亡騎士)與 godie-h02z(不良少年)隨著未上架英雄
  * 搬進 `content/_legacy/`,所以營運母體只剩兩位非 w3x 原創角色。
  */
-const TITLELESS_IDS = ["sela", "thorne"];
+/**
+ * ⭐ GH#1211（2026-09-11）：2026-09-10 上架的 81 名新英雄**全部沒有稱號** ——
+ * 產生器的檔頭逐字寫著「82 champions, ⭐ ALL authored WITHOUT a 稱號」。
+ * ⇒ 這張名單 2 → 84 位。⛔ 它仍然是**名單**不是數字：
+ * 一位**有稱號**的英雄悄悄掉了稱號，會在下面那條 `toEqual` 多出一個 id 而當場紅。
+ */
+const TITLELESS_IDS = [
+  "b2-aladdin", "b2-albus", "b2-bojji", "b2-boxxo",
+  "b2-elma", "b2-fushi", "b2-goblin", "b2-guts",
+  "b2-haga", "b2-kaede", "b2-kaiji", "b2-keyaru",
+  "b2-kisaragi", "b2-klaus", "b2-kumoko", "b2-luckyman",
+  "b2-makoto", "b2-maomao", "b2-maple", "b2-maple-alt-9769eb88b85b",
+  "b2-matthias", "b2-misery", "b2-naofumi", "b2-ned",
+  "b2-noor", "b2-nube", "b2-orphen", "b2-popp",
+  "b2-rem", "b2-rin", "b2-shadow", "b2-shinchan",
+  "b2-sinbad", "b2-takopi", "b2-touka", "b2-uncle",
+  "b2-yogiri", "b2-zenitsu", "community-review-01-20260907", "community-review-02-20260907",
+  "community-review-03-20260907", "community-review-04-20260907", "community-review-05-20260907", "community-review-06-20260907",
+  "community-review-07-20260907", "community-review-08-20260907", "community-review-09-20260907", "community-review-10-20260907",
+  "community-review-11-20260907", "community-review-12-20260907", "community-review-13-20260907", "community-review-14-20260907",
+  "community-review-15-20260907", "community-review-16-20260907", "community-review-17-20260907", "community-review-18-20260907",
+  "community-review-19-20260907", "community-review-20-20260907", "community-review-21-20260907", "community-review-22-20260907",
+  "community-review-23-20260907", "community-review-24-20260907", "community-review-25-20260907", "community-review-26-20260907",
+  "community-review-27-20260907", "community-review-28-20260907", "community-review-29-20260907", "community-review-30-20260907",
+  "community-review-31-20260907", "community-review-32-20260907", "community-review-33-20260907", "community-review-34-20260907",
+  "community-review-35-20260907", "community-review-36-20260907", "community-review-37-20260907", "lol-karthus",
+  "lol-leesin", "lol-lux", "lol-missfortune", "lol-warwick",
+  "lol-xerath", "lol-yasuo", "sela", "thorne",
+];
 
 function isMp3(buf: Buffer): boolean {
   if (buf.length < 4) return false;

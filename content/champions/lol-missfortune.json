@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 29,
     "int": 18,
-    "strGrowth": 1.25,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.67,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },

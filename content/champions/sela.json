@@ -38,9 +38,9 @@
     "str": 18,
     "agi": 16,
     "int": 26,
-    "strGrowth": 3.6,
-    "agiGrowth": 2.031,
-    "intGrowth": 3,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },

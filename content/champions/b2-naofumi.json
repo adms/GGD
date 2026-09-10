@@ -400,13 +400,13 @@
   "attackType": "melee",
   "attributes": {
     "agi": 12,
-    "agiGrowth": 1.18,
+    "agiGrowth": 0,
     "int": 23,
-    "intGrowth": 2.17,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 25,
-    "strGrowth": 2.36
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

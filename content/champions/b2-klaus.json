@@ -278,13 +278,13 @@
   "attackType": "ranged",
   "attributes": {
     "agi": 29,
-    "agiGrowth": 2.78,
+    "agiGrowth": 0,
     "int": 18,
-    "intGrowth": 1.67,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
