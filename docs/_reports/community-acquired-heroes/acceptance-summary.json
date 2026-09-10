@@ -1,16 +1,16 @@
 {
   "schema": "ggd-acquired-heroes-check@1",
   "scope": "Local factory/schema compilation, source dependency and manifest-verified asset checks, existing package SimWorld/ZIP/inspection. No service, production, model appearance, design-fidelity or publication acceptance.",
-  "startedAt": "2026-09-10T19:35:38.134Z",
-  "finishedAt": "2026-09-10T19:36:34.726Z",
+  "startedAt": "2026-09-10T19:46:40.258Z",
+  "finishedAt": "2026-09-10T19:47:59.948Z",
   "status": "passed",
   "sourceSha256": "sha256:228ca17d6c6cf5e69a6bfa3c0cf24e013d2517b630aecfe687c641e4b9097e55",
-  "catalogSha256": "sha256:61f50243991da37f67179ba9ffe0d93a691ea20cf0fd92450b7e2a2d9d9f3257",
+  "catalogSha256": "sha256:310c2990327f885ca0f90d9e10b94359e4ce5083dbc5c2852f1897faada2ff4f",
   "target": {
     "gameRevision": "local-authoring-check",
-    "contentVersion": "sha256:61f50243991da37f67179ba9ffe0d93a691ea20cf0fd92450b7e2a2d9d9f3257",
+    "contentVersion": "sha256:310c2990327f885ca0f90d9e10b94359e4ce5083dbc5c2852f1897faada2ff4f",
     "migrationFingerprint": "local-authoring-check",
-    "processorFingerprint": "3763b014a5d4"
+    "processorFingerprint": "7fa275f09510"
   },
   "counts": {
     "heroes": 34,
@@ -43,8 +43,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:7b4784821e14bc4553bc42d3e3744d27745fb24a787c749d01193caf110f7efd",
-        "zipSha256": "sha256:d8cda1d447c51c204fe92565cf69f10028345daac74c8ec6e663ef2bce055a81",
+        "digest": "sha256:84b1dea79a541683b5153a905430f0a4430875dd97c7f8214aa5c6df50265bd8",
+        "zipSha256": "sha256:da0d1c6cf8efecb67529d5b591010a1cdc84e64ca3108640cbfc13ab53862c9c",
         "zipBytes": 6288197,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -70,8 +70,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:e77ef30b4e149b7e00850977f0b5b6b724f282d8e38845106dd9b6af65a738ce",
-        "zipSha256": "sha256:aeffe61386337d059efdd619e97984eb9482ed7085734b9936c72ab965e04d4e",
+        "digest": "sha256:13a19721d27e385506a7e438eec19fc6fc2eec18fa4b72605ab318d18387feb0",
+        "zipSha256": "sha256:fd2a4e3f7d9e7bdd068e76ffa3850ceb2eff6574bb094dd19437fe9d9e2907a9",
         "zipBytes": 6865837,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -97,8 +97,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:e3d1d7014fc3d06ee344196fefb5d3ce1ea67fd8ed394f7f0f68fd35be24074b",
-        "zipSha256": "sha256:3f89cde9f398de9c81da554bc6035aad132ea04841020619f87c00ca644a604b",
+        "digest": "sha256:ac1ca4471d85f4c14c4cb06c69d6c50e99e08844f1659f6c02f48a7ba57c55ba",
+        "zipSha256": "sha256:2987e0e35772e17af11c356de9e419dfd113bf7da875be5ff94058374ba525f1",
         "zipBytes": 4398337,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -124,8 +124,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:2e0b7c206f185ca6459aaa865e19e8abc7e401bb7d7bd1518ad7a575f1bee1c8",
-        "zipSha256": "sha256:83508e9182dfd85045a1528ecada9f9291eb7e4df232d072121641d34b479aaf",
+        "digest": "sha256:cdb41d877890be2cb91aed5ead3f6f0728d7bfee280f7f3e8504f6a28581c2c0",
+        "zipSha256": "sha256:e5820897cee1af704e6df26e07e1fcff01e2bea66d9a20f0af3e2e18f18d0b92",
         "zipBytes": 3649849,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -151,8 +151,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:81e4d4461d5cc81359a2ad9c78beef79dff4b125737a5dac03728769776f6616",
-        "zipSha256": "sha256:2b9f7807b5ed7f251e0f92852b61b1600b566bc86fe658803f3c94c42628ffb2",
+        "digest": "sha256:bfeb2c7de856735de9515b57dde36c4addda1f251e8d00833e8d79b0ba010720",
+        "zipSha256": "sha256:a57a8f50a5084cb9839ae7b3edbdd99bbbe13078b06ea8f21882c795ed28d934",
         "zipBytes": 3769845,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -178,8 +178,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:9962760479d51516bb72391909c5a6eb015da657866b5ec2a10cfafda89e981b",
-        "zipSha256": "sha256:c7d6c15734233f4ae7b099fc145a7a1f6fb2f57067d66e710c2471092fb3bb06",
+        "digest": "sha256:ff0612c135dbe00bc4c330c16bee9b5b5c48c382c5724b8c4adbe07b3783b9b5",
+        "zipSha256": "sha256:8b87e947f9de451aaab3beebad24948a52926e4d09edd14756137bfff6bb70e5",
         "zipBytes": 3345921,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -205,8 +205,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:ac35d6b7a40b009cfb207e86b8f98fcbdb6200a33e6cf4e2469ec7eb681ea447",
-        "zipSha256": "sha256:ddea2debd7728ae82db35ce8362375b2db3f004a25374dd6bfdc7137b103027e",
+        "digest": "sha256:32fc5738142ebec7759a23e95fd8a57d93e86895a8f4709c21c8b2cd633e8bd8",
+        "zipSha256": "sha256:39f1aa06e32577f61db4118e5a631551f8a8084feea48a1ac9e4747e168c8df1",
         "zipBytes": 4093876,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -232,8 +232,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:50b1abc23838293290d90cb88aa4cc65640d37d00b50cba455456321e5278bdc",
-        "zipSha256": "sha256:0967042a4653d3495fbc440cec7434cf379864196fd7b3f64dd14060bd53a4ac",
+        "digest": "sha256:bcfccd8e63e4ed2291ddec5229ba00c098585508bdab6635c5f1daaaa128caad",
+        "zipSha256": "sha256:796b7b6d9297e991d3c9f2d3e57022930822ae195951e18e031a7db49eec1448",
         "zipBytes": 3215563,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -259,8 +259,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:02cff5366647cc28e24e4b0d382f4e6b199dacd8261a46e04216f794f7c015fa",
-        "zipSha256": "sha256:7f3ac5711ff3b11d9569adcd1ec61d9ff29f85173d16045a6cf520639ecc07d6",
+        "digest": "sha256:4757eaabd3c64466507421bc9e377eba8ec673d2a2aa34a8404df72083e481fe",
+        "zipSha256": "sha256:fb310170898c74d07dd9de662bcdda8d7cabace6d7bc9055ff96dbaca249710a",
         "zipBytes": 3106078,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -286,8 +286,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:767d3ffc6fa7a1a2702ab83ab439a72a452eb597308b58290775e6ea27c245f9",
-        "zipSha256": "sha256:c411696cc29ffb4c3170c537d1a3f548cf1f09b1e19d8ec75fd1ebf5c0d85d36",
+        "digest": "sha256:84cdd9a6ba41527a913558e34562bebb5ab3bbbd706e9a025b2d1f942e2c2510",
+        "zipSha256": "sha256:e152a6c276b8593aff137fd37e16e8ceed57b6f6fad79e33869b33add1e3e19c",
         "zipBytes": 3235572,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -313,8 +313,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:0b1587ec2432b5fc1670e2b06dab2237debf06c914230cc66736c891e9560385",
-        "zipSha256": "sha256:5843ffb34c0eb91ac5a2ad8d2ca2df246af0ca9e9a4557ed13a9faf8db121b97",
+        "digest": "sha256:11ce197ad822ef946659addcd5da3ca71284f0cfa304c3c490795c585c097eb8",
+        "zipSha256": "sha256:83432d8884714d55b6710c03cff48f023c267af105a82a6b96e358bc9ebd7b7a",
         "zipBytes": 3284122,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -340,8 +340,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:c2515e3727ae4296be0be8a5286c35de43707d2b4b3bffe54e1a7b228cd9f258",
-        "zipSha256": "sha256:50f84fc774db2d8c463bf39ab8fbdca66af2653c771fe6dd25eecb6368cbb166",
+        "digest": "sha256:ba8e6fed8b7fac0ca9c82d7ea74badbc1cd7535df24925b884343e6bdb6d0de6",
+        "zipSha256": "sha256:4dacb66611981f71c3179c212bb06bd87b5dff7758837bb5ab0fbeb10944d0cb",
         "zipBytes": 3157559,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -367,8 +367,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:8cb76e352724a8adb4c2bea8d8fd62b6c8d377ac57d04f101e47f172d6cd6608",
-        "zipSha256": "sha256:5207022dbe84e035d535462c106f0af316cd40729be395dabd342ba877ae541b",
+        "digest": "sha256:36c0dd930eec7cf9742d211756f1cc7ba81a81ea0d9634e225dcf2b328bd37b9",
+        "zipSha256": "sha256:720095ebeed0eeaf224a750ddc6e39b8165f77cfbf39873b4d64c54c859f4263",
         "zipBytes": 3342952,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -394,8 +394,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:30949d94c0112333fb5e3dabc4ffab68768f2694b70b081844599c997f621132",
-        "zipSha256": "sha256:2789563cd34acf04c4cee4f8c8a77fa65efba8f1686ffa40b85fb792f770933d",
+        "digest": "sha256:8cb75662e23ffa96be0843d1414f0e5ba5406d8b446c54213c2e852171936d04",
+        "zipSha256": "sha256:b3d70a3f98cfab2883a302b2dc3c2758a06df4d71bef0a69f119b4ef96b9536e",
         "zipBytes": 3032854,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -421,8 +421,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:eba401dd02f9b40c19e419cd42b5ee56c49f718d9a0b491e16f072e90134baf2",
-        "zipSha256": "sha256:941433f9504415f3face4e4313084e097e392748e6e6204b6a53aac2572a7a0d",
+        "digest": "sha256:583fbdc2c70653139936fa1fd403883cb36968a1df04bc8eafcd7d79b9be8f66",
+        "zipSha256": "sha256:39ad186b235de41bc9ce13572e4ee4f42ac3165a003b18f4daf3f16cd3ed996e",
         "zipBytes": 3369709,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -448,8 +448,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:abade547a2ad37e26292816f149ca3157c77eb15aec82c941e6087cdfcd18de2",
-        "zipSha256": "sha256:5dbb0f688a5e626c7f4be514ade6f3dfccf8509ec129738c0a72fc9c0450bcb8",
+        "digest": "sha256:58ac883036e90d1d68377f252fed10e6f79ddc8e6e4e277aebe53c817e688d65",
+        "zipSha256": "sha256:f2f28ee0d93f9ba8a44788acd5e8f5641b661e559ec69656d2f8a39596b572d4",
         "zipBytes": 3690090,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -475,8 +475,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:7bfea5d782835600000cec31063d632ff333b5e8c90dbd4c8aa8739bb704c860",
-        "zipSha256": "sha256:799e7d8c6efb114bf2f1fb6097c7f92f7b76fefc497274df4db44e46e27e3698",
+        "digest": "sha256:d1c9f8b50265de3a0662478e2450207526300b4ed1610ade39993541cfd87883",
+        "zipSha256": "sha256:3fd136357128eb91b2b39c6418539de3de73e5e5d12d40cdad188a2f84b8e170",
         "zipBytes": 3834514,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -502,8 +502,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:d9a4aa9453bba80cf017bd7ff4e5c036a658b9b8160a4ca2791ca75ca7652fcc",
-        "zipSha256": "sha256:574ff8bcd1ebc8d810d6fdf6f18bbbb58922e4342dbc39a6cfbd290e254fa179",
+        "digest": "sha256:2d2a037f6b1beb74fd8ffbab9197492a5ef5a50812cd38d27e2fef7c8e1bdc82",
+        "zipSha256": "sha256:74d50d4df5841df13d2e1084ab58cf0e1825e3aad5b95ccf680af436d557768c",
         "zipBytes": 3538756,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -529,8 +529,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:e971559474bbbacbbd892b9b0da00771096186309b71a39af07c0ad51f2d37a4",
-        "zipSha256": "sha256:3fbd1b89c1cc801b622a6e2a1dd376203f2503123ae7b151e04a3ff401f361fb",
+        "digest": "sha256:22a8811ae626eb886270794631829e0d08514e0a4d0ac178cc27f48c61ff900e",
+        "zipSha256": "sha256:79d5c21919ef4bd39470fadbbdb7d36496151252994e9e6710fb8272cf4adac3",
         "zipBytes": 3730134,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -556,8 +556,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:d7c64e515d2880837b61f6b83bd1456a9e19c9231b5b758d81679eb6cf813f30",
-        "zipSha256": "sha256:7ae69c0c6234843b2b635f85a33aa596c0b16e3bf60add7bed8f8ff1b9d1cef1",
+        "digest": "sha256:5963604bc8772f3273e190283a3711008760d7466314e2f9af923d0d08e2673f",
+        "zipSha256": "sha256:30bc1cac925865306491efe369e39bbcdd49718c55b1fed151b5d3c30d93a11b",
         "zipBytes": 3847959,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -583,8 +583,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:648e322e90261ea95cfd0f4508ab542b0e1efa13d86f2431f292581509cf2752",
-        "zipSha256": "sha256:08c62500890a4043267d8749c8259c0ba094108e94e07ea49f347b2d9707f5c8",
+        "digest": "sha256:fce9172e17a3f186524d6cf72369acd34229f215b4e1379270a2db5c25fae855",
+        "zipSha256": "sha256:7e3739b637fd59f5436123c79e2d7d1e509c63c53568d4590b1fe275e65d525a",
         "zipBytes": 3566082,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -610,8 +610,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:34a396c042e908a12c18485a75aa1f9332c84cff4aa0475432e0631cdeb1ea99",
-        "zipSha256": "sha256:5be48b81e688aadd5fa9a7465af1a7a93442b623c5207d84c61188bbd3677cd2",
+        "digest": "sha256:d5bcea2af6fd16e029db1e4b1489b58c4d99d160d4f035056cd93681df6e007a",
+        "zipSha256": "sha256:839327111c9bd97f72cbcfd9f48905e550833b964801d757731001f316ef6802",
         "zipBytes": 4201155,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -637,8 +637,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:bc93b81373afcb17c49d2fd25a66b6ba5d3ff638db035f1b4fcf7d60ec7be493",
-        "zipSha256": "sha256:5013635c5f1b990ed511a116823bf001c01cda94cf9c4cea8b2119a1fca56088",
+        "digest": "sha256:e736b343e650e66e6141f74ccf12b2639a890957b64404d5f6f170263d4cf59b",
+        "zipSha256": "sha256:71d877bffd5c73f8d4f6094d9ab274b5147778a1fc7c0589ad2711f808d79d5b",
         "zipBytes": 3888129,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -664,8 +664,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:04b841f91c78f8e358f493f40c2d1c1830499032615dedde7333aaf6b0e4da1d",
-        "zipSha256": "sha256:cbf1e943290f91deee722a0877f4738af400418902bce516ba560d7337768756",
+        "digest": "sha256:cb3431d725e64fbd9a03bedaae4e8e1c6e558b88e3763cf826527dcce1d9699c",
+        "zipSha256": "sha256:bedeb2d8f303d810a381fcd5343d9ac7d530c5ac2657e5eaa5bdf32dc6b11010",
         "zipBytes": 4453565,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -691,8 +691,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:86c32cf22a3355d9e5d5a855d8ea0a42af1b5de77994650cdd3cf1fea0de35a3",
-        "zipSha256": "sha256:f913eb6d601a3edab9edf2e075fc41bd67ea3efd9b97e47abd3d84bdf46acf77",
+        "digest": "sha256:b9a1f1aaf7f878ea6718412c0bd41a9eb7b644d800d050375337f18282cf2b26",
+        "zipSha256": "sha256:befd979398c14094dfd76bd2746ba673d5282fc29e96525157e03ee94e16f18b",
         "zipBytes": 4163918,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -718,8 +718,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:83d772e9944bec11586ebb69b6158a17633bf97d975750c6a55f1c41526de7e4",
-        "zipSha256": "sha256:08bf295e3468dd289e5240ba921f652534d1577df6187e9c67ebb86a45232602",
+        "digest": "sha256:c3e4c7c65be477598d767379ddc5139aeb788402ac37e0195566b46720671738",
+        "zipSha256": "sha256:22cac8f967ad9f063c4dc530c796bedc926cc88db6fd001919a87002e138ee71",
         "zipBytes": 3532523,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -745,8 +745,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:02d2a9435b3bd65fdf9f1759ad58cf0a97fa783a0c0af76606e3db2272a56784",
-        "zipSha256": "sha256:195dd3ffbab57e1e92f84f8d00c53b60f576e86fa7f995fe3fe86f3ab9187ff9",
+        "digest": "sha256:ab4cb892246558932cbe8aa6398454a8595e3f53928efbc26570e5e793e2ebc4",
+        "zipSha256": "sha256:9c32b303bcbe9db7132a6dcf0a302682866b6d7d0bb4f0a367d93d2d8b708e8e",
         "zipBytes": 4961402,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -772,8 +772,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:5c16d70638744169be8f8e105c8eb88560304b868b2370407301b54c4ef10716",
-        "zipSha256": "sha256:af108115514569c1e72348fb9458c6e81febcfaf52812fb62d9c11681ffb3078",
+        "digest": "sha256:ef7dbb9d21fbee0a3a9c9c880c79c86ac9c1f35bb76e219308604ae2ed3f25a5",
+        "zipSha256": "sha256:952d756bea282125e30b3679c8a95b1b52ea9af32f8b2a463c4e63567d6d52b2",
         "zipBytes": 3988456,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -799,8 +799,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:e6329b0a9b8be599667eaf628abd4050bf0389eca6432a8b70e17aed5daa4f45",
-        "zipSha256": "sha256:8c11c830e450e2d6e7f172f525864042375af633621ec94ca85a1d21cf158b37",
+        "digest": "sha256:2a44cfea6503fb876662a8e91a52f43db52a85888c10f62ce93de98070954466",
+        "zipSha256": "sha256:04179daae9fa17d138362f5408770863173ec09052179bd171fff75aace6c81f",
         "zipBytes": 4359878,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -826,8 +826,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:adea0bfda97e88e6b1dae530d196cbf81a02de1abf40d79dae563d556ac12bc7",
-        "zipSha256": "sha256:fbbb6b9166c180c517f5ff7b13067ee898f7d8f3632c57cdc55c4fa2cfd86d70",
+        "digest": "sha256:f7cbafe8b5b280e8409b84ad4c7895eaab1779f0f9cb51dc7cdd39ea3141f7bd",
+        "zipSha256": "sha256:e330f9afdfb22eb5a7e124bd49c1751fb68e942707b34e35d07bf4a563600789",
         "zipBytes": 3502378,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -853,8 +853,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:5050d8f6baf79920358153787057ffc6069d98e30ce307bf7bba14a1fe550b6d",
-        "zipSha256": "sha256:6dad583e8d1557565cc058b0c20b8bec577314d42fd810eb814cb64a21771849",
+        "digest": "sha256:0e8819247ae264e693f92f372bc6573977811059a6031c5b9963d22d41f73b67",
+        "zipSha256": "sha256:ac6840cde1e4f930707b60ac211bde479ad063bd810a2ba0ee908e22d355b21b",
         "zipBytes": 3548774,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -880,8 +880,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:3b1aac1480aedb1ba9ad260bbc7f653b97038938722d6bdbdb1ac38b9af9f71b",
-        "zipSha256": "sha256:4311423c115e554d9e0f71d8b114a74c6d3a16795b9c04373cb3f116e251aedd",
+        "digest": "sha256:b6330572ab5c8f7ad8fdce03b0a49d740ca534ac86c042859beacb5502c68ad5",
+        "zipSha256": "sha256:004a4790b1e4df5ad4bb9409318cdfd57d4104628d69c5c593dfe323bbde42d6",
         "zipBytes": 3776133,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -907,8 +907,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:f9d605476113d73a8128938c7f55bc043e0618ff84d11ee027c9bd2903a322d5",
-        "zipSha256": "sha256:d156cfc6faad8a90ac0076600ee9ac8ebac83355754a5cc5d694b1631bea970e",
+        "digest": "sha256:783de598ed1e1a1f753f366140132606584d69a1df670d9bbd5925413456bf6e",
+        "zipSha256": "sha256:c70cdbbbd3ca57099ef0e5b41ee047037575867e108e7c4e4974bf46bb0ba040",
         "zipBytes": 3424988,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -934,8 +934,8 @@
       "warnings": [],
       "package": {
         "status": "passed",
-        "digest": "sha256:7ccee43aeccfafb28abc1322fec84cca61b688bb6631964fb1b754279d1898d6",
-        "zipSha256": "sha256:0af30b71473c18c0e9b365d2209e04b42655900ce07b0866aaa36a0144165576",
+        "digest": "sha256:9ee6dd24f9f83bb6e83f4e7be3ccad727619a603936eeb72d3d70f1444fb8d42",
+        "zipSha256": "sha256:c35fc44b8043f1ece48a122bb558686166ded778b262cf69024f5c929770d28a",
         "zipBytes": 4017208,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"

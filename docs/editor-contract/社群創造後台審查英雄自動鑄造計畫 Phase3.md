@@ -30,3 +30,7 @@
 P3-01 至 P3-05 已核准；使用既有證據並補足可回答指定問題的最小驗收。沒有新改動或重大失敗，不重跑已通過案例；不能只因數字、畫面或覆蓋率還能更漂亮就延長工作。
 
 每項完成即記錄證據與版本；缺 Main 專屬整合、簽章或發行基礎設施時，用 coordination packet 精確交接，不用假資料補通過。
+
+## 2026-09-11 實作狀態
+
+P3-01 至 P3-04 已依 Owner 縮限完成：沿用仍有效的視覺、確定性、故障與效能證據，只修本輪實際發現的 Hero Forge PBR 冷啟動阻擋，不新增錄影、全量回放或美術微調。P3-05 已把固定模型 manifest、驗證／續傳下載、桌面 IPC、硬體政策、llama runner、216 案例品質 gate 與封裝 gate 接入目前分支；核准模型在 macOS Metal 與 Windows CUDA 的 E8 收據及可發布 runtime artifact 尚未提供，所以 manifest 正確維持 `released=false` 與 `LOCAL_AI_E8_GATE_PENDING`，AI-off 路徑不受影響。
