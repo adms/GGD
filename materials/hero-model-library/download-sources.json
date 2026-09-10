@@ -10702,9 +10702,9 @@
       ],
       "verifiedLocalDeliveryOnly": true,
       "acquisitionScope": "Only the frozen packages and files listed in this immutable delivery; other sibling downloads are excluded.",
-      "publicationStatus": "local-only-preparing-s3-backup",
+      "publicationStatus": "s3-readback-verified",
       "usage": "Local audio may be used immediately for listening, transcription and preparation; not automatically imported into the game.",
-      "verification": "不可變交付索引已核對；10 個完整包／2612 個音訊檔可直接讀本機。OGG 結構全檔檢查、分類取樣解碼通過；未全檔解碼。S3 備份另行完成；其餘仍下載包不包含於本次交付。說話者、語言、逐字稿與品質待聽審。",
+      "verification": "不可變交付索引已核對；10 個完整包／2612 個音訊檔可直接讀本機。OGG 結構全檔檢查、分類取樣解碼通過；未全檔解碼。S3 備份另行完成；其餘仍下載包不包含於本次交付。說話者、語言、逐字稿與品質待聽審。 第一批固定 10 包與交付 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；其餘同根目錄的後續交付不在此備份範圍。",
       "backendIntegration": {
         "required": true,
         "state": "pending-character-mapping",
@@ -10712,7 +10712,17 @@
         "selectionVerified": false,
         "note": "按原生包／角色群保留；本機音訊可立即準備，正式綁定另驗收。"
       },
-      "reuseTerms": "原作者與來源頁資訊保留，取用狀態與正式發佈驗收分開。"
+      "reuseTerms": "原作者與來源頁資訊保留，取用狀態與正式發佈驗收分開。",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-10/6d80c1c6f28f3cc1bdad3287d81a58a6442f61e0177e296f30600abec39820e6.tar.gz",
+        "bytes": 141366454,
+        "sha256": "6d80c1c6f28f3cc1bdad3287d81a58a6442f61e0177e296f30600abec39820e6",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "s3ReadbackVerified": true
+      }
     },
     {
       "id": "parallel-voice-melee-local-29",
