@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "fe3861a11eab",
+  "hash": "ce945dd686b3",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -1851,6 +1851,12 @@
       "size": 517
     },
     {
+      "id": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
+      "path": "models/version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199.json",
+      "hash": "9dc5d60a3220",
+      "size": 536
+    },
+    {
       "id": "version.body.1014b88114b4a3aad2dcab3a7554583dac7499d569b63ead",
       "path": "models/version.body.1014b88114b4a3aad2dcab3a7554583dac7499d569b63ead.json",
       "hash": "167cc0ac727f",
@@ -1947,6 +1953,18 @@
       "size": 516
     },
     {
+      "id": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
+      "path": "models/version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57.json",
+      "hash": "bafb41763377",
+      "size": 538
+    },
+    {
+      "id": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
+      "path": "models/version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6.json",
+      "hash": "cd425ec6efa2",
+      "size": 537
+    },
+    {
       "id": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
       "path": "models/version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa.json",
       "hash": "d0e0a843e7e6",
@@ -1965,10 +1983,28 @@
       "size": 524
     },
     {
+      "id": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
+      "path": "models/version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9.json",
+      "hash": "5a61cb266ad3",
+      "size": 544
+    },
+    {
+      "id": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
+      "path": "models/version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618.json",
+      "hash": "05868c2f451c",
+      "size": 534
+    },
+    {
       "id": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
       "path": "models/version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e.json",
       "hash": "079f897456eb",
       "size": 514
+    },
+    {
+      "id": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
+      "path": "models/version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375.json",
+      "hash": "cb90e8b8718b",
+      "size": 538
     },
     {
       "id": "version.body.621e928d6f5f58a8b7fc18bde58c8e0b189843fd36202b2f",
@@ -1987,6 +2023,12 @@
       "path": "models/version.body.66347ee0e95b4a1960dd0b58b17e50bedd726e4dddea3a67.json",
       "hash": "fe8af673566f",
       "size": 517
+    },
+    {
+      "id": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+      "path": "models/version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe.json",
+      "hash": "3cc07289d3ff",
+      "size": 541
     },
     {
       "id": "version.body.7135f29cae6eb26851a90d407801e0b7dc27671ca3b08909",
@@ -2025,6 +2067,12 @@
       "size": 520
     },
     {
+      "id": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
+      "path": "models/version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94.json",
+      "hash": "4f04ecf73998",
+      "size": 533
+    },
+    {
       "id": "version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1",
       "path": "models/version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1.json",
       "hash": "75754c057e77",
@@ -2061,6 +2109,12 @@
       "size": 511
     },
     {
+      "id": "version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa",
+      "path": "models/version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa.json",
+      "hash": "c31721d6b6e8",
+      "size": 536
+    },
+    {
       "id": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
       "path": "models/version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533.json",
       "hash": "fe630ba66638",
@@ -2073,6 +2127,12 @@
       "size": 515
     },
     {
+      "id": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
+      "path": "models/version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab.json",
+      "hash": "4464c49385bb",
+      "size": 534
+    },
+    {
       "id": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
       "path": "models/version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837.json",
       "hash": "7d1b86c75f17",
@@ -2083,6 +2143,12 @@
       "path": "models/version.body.c574cdb9cfe55750d8acef037f8463288a5078a121e5db71.json",
       "hash": "8e9b11e3143b",
       "size": 522
+    },
+    {
+      "id": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
+      "path": "models/version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24.json",
+      "hash": "49fb772ba523",
+      "size": 536
     },
     {
       "id": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
