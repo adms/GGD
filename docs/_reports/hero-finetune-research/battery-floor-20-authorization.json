@@ -1,0 +1,10 @@
+{
+  "schema": "ggd-distillation-battery-authorization@1",
+  "date": "2026-09-10",
+  "userQuote": "那電量界限再一次調低到20%",
+  "minimumPercent": 20,
+  "comparison": "strictly-less-than",
+  "replacesRelativeDropGuard": true,
+  "otherGuardsUnchanged": true,
+  "scope": "A new full Mac-local Gemma 4 12B IT one-epoch run may continue at 20 percent or above and must stop strictly below 20 percent. AC, memory, swap, phase timeouts, exclusive GPU ownership, the frozen data/recipe, and the one-epoch cap remain unchanged. Historical 40-percent and 30-percent authorizations and prior runs remain immutable."
+}

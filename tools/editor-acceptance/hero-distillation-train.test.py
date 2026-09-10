@@ -16,11 +16,11 @@ GUARD = {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2}
 
 class GuardTests(unittest.TestCase):
     def test_authorized_absolute_floor_replaces_relative_drop(self):
-        guard = {**GUARD, 'minBatteryPercent': 30}
+        guard = {**GUARD, 'minBatteryPercent': 20}
         del guard['maxBatteryDropPoints']
-        for percent in [100, 98, 80, 31, 30]:
+        for percent in [100, 98, 80, 21, 20]:
             self.assertIsNone(trainer.violation(START, {**START, 'batteryPercent': percent}, guard))
-        for percent in [29.99, 29, 0]:
+        for percent in [19.99, 19, 0]:
             self.assertEqual(trainer.violation(START, {**START, 'batteryPercent': percent}, guard), 'BATTERY_BELOW_FLOOR')
         self.assertEqual(trainer.violation(START, {**START, 'batteryPercent': None}, guard), 'BATTERY_STATUS_UNKNOWN')
         self.assertEqual(trainer.violation(START, {**START, 'acPower': False}, guard), 'AC_POWER_REQUIRED')
@@ -29,16 +29,16 @@ class GuardTests(unittest.TestCase):
 
     def test_battery_policy_requires_exact_authorization_and_preserves_legacy(self):
         self.assertEqual(trainer.battery_authorization(None), ({'maxBatteryDropPoints': 2}, None))
-        record = {'schema': 'ggd-distillation-battery-authorization@1', 'minimumPercent': 30,
+        record = {'schema': 'ggd-distillation-battery-authorization@1', 'minimumPercent': 20,
                   'comparison': 'strictly-less-than', 'replacesRelativeDropGuard': True,
                   'otherGuardsUnchanged': True,
-                  'userQuote': '電量界限我們改成30%'}
+                  'userQuote': '那電量界限再一次調低到20%'}
         with tempfile.TemporaryDirectory() as tmp:
             file = Path(tmp)/'authorization.json'; trainer.atomic(file, record)
             guard, receipt = trainer.battery_authorization(file)
-            self.assertEqual(guard, {'minBatteryPercent': 30})
+            self.assertEqual(guard, {'minBatteryPercent': 20})
             self.assertEqual(receipt['sha256'], trainer.digest(file))
-            for mutation in [{'minimumPercent': 29}, {'replacesRelativeDropGuard': False}, {'otherGuardsUnchanged': False}]:
+            for mutation in [{'minimumPercent': 19}, {'replacesRelativeDropGuard': False}, {'otherGuardsUnchanged': False}]:
                 trainer.atomic(file, {**record, **mutation})
                 with self.assertRaises(AssertionError): trainer.battery_authorization(file)
 
