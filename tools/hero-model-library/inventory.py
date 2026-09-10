@@ -1,7 +1,7 @@
 import argparse,json,re,hashlib,datetime
 from pathlib import Path
 from source_links import render_sources, plan_sources, acquired_sources
-from default_policy import eligible
+from default_policy import eligible, selection_class, selection_rank
 repo=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser(description='Rebuild the hero inventory using Git files only.')
 parser.add_argument('--workspace',type=Path,help='Optionally mirror the generated Markdown into an existing workspace.')
@@ -56,7 +56,7 @@ def old(key):
  tier='w3x' if key.startswith(('imported.','w3x.')) else 'original'
  return dict(key=key,id=key,name=known.get(key,key.split('.')[-1]+'（模型檔名）'),work='原 W3X 地圖模型；原始角色作品未由該模型文件證實' if tier=='w3x' and not key.startswith('w3x.stock.') else '魔獸爭霸 III 原生單位' if key.startswith('w3x.stock.') else 'GGD 模型預設',tier=tier,kind='previous',ready=True,old=True)
 def source(option):
- s=option['source'];return dict(key=option['sourceModelKey'],id=option['sourceId'],name=s['character'],work=s['work'],tier=s['tier'],kind=s['kind'],ready=True,old=False)
+ s=option['source'];return dict(key=option['sourceModelKey'],id=option['sourceId'],name=s['character'],work=s['work'],tier=s['tier'],**({'selectionClass':s['selectionClass']} if 'selectionClass' in s else {}),kind=s['kind'],ready=True,old=False)
 def text(v):return str(v).replace('|','／').replace('\n',' ').replace('\r',' ')
 def model_label(o):return f"{text(o['name'])} `{o['id']}`"
 def source_label(o):return f"{'英雄聯盟 LOL' if o['id'].startswith('lol:') else labels[o['tier']]}｜《{text(o['work'])}》"
@@ -70,16 +70,25 @@ for id,h in heroes.items():
  for v in branches.get(id,{}).get('modelVersions',[]):
   key=v['sourceModelKey']
   if key in seen:continue
-  o=old(key);s=v['source'];o.update(name=s.get('character',o['name']) if s.get('kind')!='previous' else o['name'],tier=s.get('tier',o['tier']),kind=s['kind']);options.append(o);seen.add(key)
+  o=old(key);s=v['source'];o.update(name=s.get('character',o['name']) if s.get('kind')!='previous' else o['name'],tier=s.get('tier',o['tier']),**({'selectionClass':s['selectionClass']} if 'selectionClass' in s else {}),kind=s['kind']);options.append(o);seen.add(key)
  existing=c.get('modelKey') if c else None
  if existing and existing not in seen:options.append(old(existing));seen.add(existing)
  # First-batch authoring placeholders are historical authoring choices, not live deployments.
  if id in recipes:
   key=recipes[id].get('presentation',{}).get('modelKey')
   if key and key not in seen:options.append(old(key));seen.add(key)
- options.sort(key=lambda o:(manifest['priority'].index(o['tier']),0 if o['id']==h.get('preferredDerivative') else 1,['exact','alternate','style-proxy','previous'].index(o['kind']) if o['kind'] in ['exact','alternate','style-proxy','previous'] else 9))
- for o in options:o['defaultEligible']=eligible(policy,id,o['id'],o['key'],o['kind'])
- default=next((o for o in options if o['defaultEligible']),None)
+ options.sort(key=lambda o:(selection_rank(policy,id,o['id'],o['key'],o),['exact','alternate','style-proxy','previous'].index(o['kind']) if o['kind'] in ['exact','alternate','style-proxy','previous'] else 9))
+ for o in options:
+  o['defaultEligible']=eligible(policy,id,o['id'],o['key'],o['kind'])
+  o['selectionClass']=selection_class(policy,id,o['id'],o['key'],o)
+ automatic_default=next((o for o in options if o['defaultEligible']),None)
+ default=automatic_default
+ chosen=branches.get(id,{})
+ manual=chosen.get('modelSelectionMode')=='manual'
+ if manual:
+  selected=next((v['sourceModelKey'] for v in chosen.get('modelVersions',[]) if v['modelKey']==chosen.get('modelKey')),chosen.get('modelKey'))
+  default=next((o for o in options if o['key']==selected),None)
+  if default is None:raise ValueError('Manual model missing from retained candidates: '+id)
  current=old(p['modelKey']) if p else None
  pending=[]
  for miss in h.get('pending',[]):
@@ -95,7 +104,7 @@ for id,h in heroes.items():
   pending.append(o);pending_rows.append((id,h['name'],o,miss['reason']))
  section='既有角色／形態' if c else '第一批 37 名' if id.startswith('community-review-') else '第二批 37 名' if id.startswith('b2-') else 'LOL 追加 7 名' if id.startswith('example:') else '歷史對應 4 筆'
  status='正式機白名單可選' if id in white else '原版佔位；不在白名單' if id in ['sela','thorne'] else '變身／替代形態；不在白名單' if c and c.get('transform',{}).get('role')=='alternate' else '目錄有定義；不在白名單' if c else '目錄未上架'
- rows.append(dict(id=id,name=c['name'] if c else h['name'],work=works[id],section=section,status=status,default=default,current=current,options=options,pending=pending))
+ rows.append(dict(id=id,name=c['name'] if c else h['name'],work=works[id],section=section,status=status,default=default,automaticDefault=automatic_default,defaultSelectionMode='manual' if manual else 'automatic',current=current,options=options,pending=pending))
 assert len(rows)==156
 download_plan=plan_sources(read(repo/'materials/hero-model-library/download-sources.json'),manifest,policy)
 input_paths=[repo/'materials/hero-model-library'/name for name in ['manifest.json','release.json','inventory-context.json','pairing-inputs.json','download-sources.json','derivatives.json','default-policy.json']]
@@ -106,16 +115,16 @@ validation_path=repo/'materials/hero-model-library/inventory-validation.json'
 previous=read(validation_path) if validation_path.exists() else {}
 now=previous.get('time') if previous.get('inputs_sha256')==input_digest else datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
 lines=['# 全角色模型盤點', '',f'更新時間：{now}（Asia/Taipei）。按角色／形態 ID 計數，不將同名變身態合併成一筆。','',
-*render_sources(download_plan),
+*render_sources(download_plan,policy),
 '## 盤點基準','',
 f'- 全表 **{len(rows)} 個角色／形態 ID**：既有目錄 71、第一批 37、第二批 37、LOL 追加 7、歷史對應 4；新增共 **81 名**。',
 f'- 正式機白名單可選 **{len(white)}** 名；靜態角色目錄 71 筆。正式站公開社群角色清單為 0 筆、內容覆寫 generation 為 {live["generation"]}。',
 f'- 正式機觀測快照（2026-09-10 01:59）之 main：`{main["commit"]}`；正式機：`{prod["commit"]}`。兩者角色設定已逐一核對。',
 f'- S3 固定成品版本：`{release["release"]}`；對應本次發布後讀回驗證的固定版本。',
 '- [模型選項 PR #1152](https://github.com/adms/GGD/pull/1152) 目前仍未合併；素材庫預設不等於正式站目前採用。',
-'- **預設模型**欄依指定順位 **300英雄 > MBA > 原版 > 借用 W3X**；同來源先 Owner 本次指定的獨立副本，其他相似代理只保留候選，不能作為新的預設。既有原模型保留作回退；不因此認定原稿佔位已獲新核准。',
-'- 分支合併保留遠端對 15 名既有英雄的手動原模型選擇；下表的順位預設不會覆蓋手動選擇。',
-'- 正式機目前模型與本分支手動選擇請用查詢工具讀取；主表只顯示素材庫順位預設，避免與部署混淆。',
+'- **預設模型**欄依第二守則，已記錄的手動選擇優先；指定 11 組副本列手動指定。其他未核准相似代理只保留候選；既有原模型保留作回退。',
+'- 分支合併保留遠端對 15 名既有英雄的手動原模型選擇；下表優先顯示手動選擇，`automaticDefault` 另保留切回自動模式後的首選。',
+'- 正式機目前模型與本分支手動選擇請用查詢工具讀取；主表顯示本分支手動選擇或素材庫順位預設，均不代表正式站已部署。',
 '- **角色出處**是目標角色的作品；**預設模型來源／候選来源**則是提供外觀的遊戲與其模型角色作品，兩者可能不同。',
 '- 原 W3X 模型若只有檔名證據，保留檔名並標記未核實，不將它自動認定為目標角色本尊。',
 '- 候選群包含該角色已記錄的全部可用選項與未通過轉換項目；未對應到任何 GGD 角色的全遊戲原生模型不在本表範圍。','',
@@ -142,14 +151,14 @@ for section in ['既有角色／形態','第一批 37 名','第二批 37 名','L
   if any(e.get('acquiredPaidSources') for e in requests):download='**來源已取得（含論壇付費），全部保留整合**；先完成轉換／後台切換驗收'
   leads=[s for s in download_plan.get('publicSourceLeads',[]) if r['id'] in s['heroIds']]
   if leads:download+='；其他來源線索（未取得模型）：'+'、'.join(f'[{s["id"]}]({s["url"]})' for s in leads)
-  options='<br>'.join(f"{i+1}. {text(o['name'])}／{source_label(o)}（{kinds.get(o['kind'],'待轉換')}{'；未核准預設' if not o.get('defaultEligible',False) and o['kind']=='style-proxy' else ''}）" for i,o in enumerate(r['options']+r['pending'])) or '尚無可用候選'
+  options='<br>'.join(f"{i+1}. {text(o['name'])}／{source_label(o)}（{policy['priorityLabels'].get(o.get('selectionClass'),'待轉換')}；{kinds.get(o['kind'],'待轉換')}{'；未核准預設' if not o.get('defaultEligible',False) and o['kind']=='style-proxy' else ''}）" for i,o in enumerate(r['options']+r['pending'])) or '尚無可用候選'
   for s in acquired:
    bindings=[c for c in s.get('characters',[]) if r['id'] in c['heroIds']]
    label='、'.join(c['name'] for c in bindings) or s['target']
    model_paths='；'+'、'.join(c['modelPath'] for c in bindings) if bindings else ''
    storage='；僅本機保存，S3 尚未上傳' if s.get('pendingBackup',{}).get('status')=='not-uploaded' else ''
    options+=f'<br>新取得：[{text(label)}]({s["url"]})／{text(s["uploader"])}（{text(s["format"])}{text(model_paths)}{storage}；待標準化，不自動預設）'
-  cols=[text(r['work']),f"{text(r['name'])}<br>`{r['id']}`",text(d['name']) if d else '**待取得核准模型**',source_label(d) if d else '—',options,download]
+  cols=[text(r['work']),f"{text(r['name'])}<br>`{r['id']}`",text(d['name'])+('（手動指定）' if r['defaultSelectionMode']=='manual' else '') if d else '**待取得核准模型**',source_label(d) if d else '—',options,download]
   lines.append('| '+' | '.join(cols)+' |')
  lines.append('')
 lines+=['## 尚未通過轉換的候選','', '| 目標角色 | 候選 | 原因 |','|---|---|---|']
@@ -182,7 +191,7 @@ for r in rows:
  for option in r['options']:
   m=by_key.get(option['key'])
   if m:
-   option['asset']={'modelKey':m['modelKey'],'glbPath':m['glbPath'],'sha256':m['sha256'],'s3Uri':release['release_uri']+release['model_locations'][m['modelKey']],'limitations':m['limitations']}
+   option['asset']={'modelKey':m['modelKey'],'glbPath':m['glbPath'],'sha256':m['sha256'],'s3Uri':release['release_uri']+release['model_locations'][m['modelKey']],'gitPath':'materials/asset-library/releases/'+release['release']+'/'+release['model_locations'][m['modelKey']],'limitations':m['limitations']}
   else:option['asset']={'modelKey':option['key'],'location':'existing-project-model','s3Uri':None}
 path=repo/'materials/hero-model-library/全角色模型盤點.md'
 inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'productionSnapshot':{'observedAt':'2026-09-10 01:59 Asia/Taipei','commit':prod['commit']},'heroes':rows,'downloadPlan':download_plan}

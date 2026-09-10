@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.6906c0aebd70a4dbb8d4946d",
+  "title": "芙莉莲",
+  "kind": "model-body",
+  "model": "models/community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-29-20260907",
+        "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+        "glbPath": "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+        "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+        "bytes": 2343924,
+        "documentSha256": "6906c0aebd70a4dbb8d4946d52457d1c2b6ef14456f46cca167a04c537d0a2cf",
+        "sourceCharacter": "芙莉莲",
+        "sourceWork": "葬送的芙莉蓮",
+        "sourceAssetId": "300heroes:cfce4a1a5c5ede186be83a40",
+        "sourceSha256": "c2eab8c612abb2ca6babb6b1202a2c8d10d3b01976e8234ee6dcc3e8d610234f",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_2",
+          "cast": "single_skill_01_b",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.6906c0aebd70a4dbb8d4946d"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-29-20260907",
+        "name": "芙莉蓮"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.ca573ffd30ec4008a2681d85",
+  "title": "绯村剑心",
+  "kind": "model-body",
+  "model": "models/community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:121",
+        "modelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+        "glbPath": "assets/models/community/9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077.glb",
+        "sha256": "9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077",
+        "bytes": 1290540,
+        "documentSha256": "ca573ffd30ec4008a2681d85e8ec5f09a67b903b44a041cf881e20b4d027eff4",
+        "sourceCharacter": "绯村剑心",
+        "sourceWork": "神劍闖江湖／浪客劍心",
+        "sourceAssetId": "300heroes:4e2be7df945bb18fbf27d02a",
+        "sourceSha256": "8400cff3a281ee4452792fc97f3e9ca7950700abfe679dbf552c6d9892b1272f",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.ca573ffd30ec4008a2681d85"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-touka",
+        "name": "托卡・史考特"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

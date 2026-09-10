@@ -1,0 +1,41 @@
+{
+  "id": "ggd.model.de7ceb215b2e01016ca55b27",
+  "title": "木之本櫻",
+  "kind": "model-body",
+  "model": "models/community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-27-20260907",
+        "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+        "glbPath": "assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb",
+        "sha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
+        "bytes": 981000,
+        "documentSha256": "de7ceb215b2e01016ca55b270885e9488e9acc80983f9ef753927bcf7e25a6ad",
+        "sourceCharacter": "木之本櫻",
+        "sourceWork": "庫洛魔法使",
+        "sourceAssetId": "mba:ce884f239ba2fa1f0e05bceb",
+        "sourceSha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.de7ceb215b2e01016ca55b27"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-27-20260907",
+        "name": "庫洛魔法使"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

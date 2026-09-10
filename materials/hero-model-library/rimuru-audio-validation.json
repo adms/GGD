@@ -1,0 +1,61 @@
+{
+  "schema": "ggd-intake-audio-validation@1",
+  "sourceId": "thunderstore-rimuru-ror2",
+  "heroIds": [
+    "community-review-11-20260907"
+  ],
+  "version": "1.1.3",
+  "decoder": {
+    "name": "vgmstream-cli",
+    "version": "r2117",
+    "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e",
+    "source": "https://github.com/vgmstream/vgmstream/tree/r2117",
+    "sourceCommit": "71e2361042531fe767fb98300cf8c1ee95e539a0"
+  },
+  "sourceArchive": {
+    "path": "raw/thunderstore-rimuru-ror2.zip",
+    "sha256": "184feb4badfbdd365723a57f7312221fc5f9f4a41086a2fc54b26a7da196b020"
+  },
+  "nativeMediaCount": 13,
+  "decodedFloatWavCount": 13,
+  "totalSeconds": 23.67224092970522,
+  "floatWavBytes": 8903280,
+  "nativeRateAndChannelsPreserved": true,
+  "samplesMatchDecoderMetadata": true,
+  "sourceWemHashesPreserved": true,
+  "ffmpegValidation": {
+    "count": 13,
+    "passed": true,
+    "path": "decoded-audio-float/ffmpeg-validation.json",
+    "sha256": "767da910bac849741b624ec598bd6ceac301ccaa4e251dc01fc31527304f1f1d"
+  },
+  "floatAudioIndex": {
+    "path": "decoded-audio-float/audio-index.json",
+    "sha256": "e69e1b006699938a210f05a098fdc980fa6052e79f79a5049fffa2ea070262de"
+  },
+  "quality": {
+    "allSilentFiles": 0,
+    "filesWithPeaksAboveUnity": 4,
+    "maxAbsFloatPeak": 1.1149697303771973,
+    "floatPeaksRetained": true,
+    "listeningReviewComplete": false
+  },
+  "voiceClassification": {
+    "status": "pending-listening-and-event-review",
+    "confirmedVoiceCount": null,
+    "unclassifiedAudioCount": 13
+  },
+  "eventBindingsVerified": false,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "blockers": [
+    "Voice versus sound-effect classification and bank event/skill bindings unverified.",
+    "Four floating-point files exceed unity; playback gain and integer export remain unreviewed.",
+    "Model/animation/VFX standardization and backend selection remain unverified."
+  ],
+  "priorIntakePreservation": {
+    "backupSha256": "eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5",
+    "filesChecked": 1995,
+    "allBytesUnchanged": true
+  }
+}

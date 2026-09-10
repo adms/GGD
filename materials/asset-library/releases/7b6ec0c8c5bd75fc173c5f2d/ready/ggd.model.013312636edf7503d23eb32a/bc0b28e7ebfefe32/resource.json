@@ -1,0 +1,41 @@
+{
+  "id": "ggd.model.013312636edf7503d23eb32a",
+  "title": "GGD 圓滾滾粉紅替身",
+  "kind": "model-body",
+  "model": "models/community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-06-20260907",
+        "modelKey": "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7",
+        "glbPath": "assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
+        "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+        "bytes": 199556,
+        "documentSha256": "013312636edf7503d23eb32afed3417a6807cf0868d7a6b7d463efb8bb00d9f8",
+        "sourceCharacter": "GGD 圓滾滾粉紅替身",
+        "sourceWork": "GGD 自製程序化卡通替身",
+        "sourceAssetId": "generated:ggd-cartoon-proxy-pink-round",
+        "sourceSha256": "ebfe00f9ac1ad088bf668dbbeb7aeb15a67275eb8606a7e3d51229a2761ce3c7",
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.013312636edf7503d23eb32a"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-06-20260907",
+        "name": "卡比"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

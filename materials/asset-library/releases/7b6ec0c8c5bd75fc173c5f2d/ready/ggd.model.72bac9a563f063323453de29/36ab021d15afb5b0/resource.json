@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.72bac9a563f063323453de29",
+  "title": "夜斗",
+  "kind": "model-body",
+  "model": "models/community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-22-20260907",
+        "modelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+        "glbPath": "assets/models/community/57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9.glb",
+        "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+        "bytes": 691776,
+        "documentSha256": "72bac9a563f063323453de29f8a0a170e68e61583eabe97e91072f0ede89df79",
+        "sourceCharacter": "夜斗",
+        "sourceWork": "流浪神差／野良神",
+        "sourceAssetId": "300heroes:64db6774e13416da32390b5b",
+        "sourceSha256": "4e75ee17fef1b4c10298e2836316e2ebb10ca807139e2155513dc05c1cabb9f5",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.72bac9a563f063323453de29"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-22-20260907",
+        "name": "菜月昴"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

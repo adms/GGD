@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.f5b09564eab02d38a0560f53",
+  "title": "灶门炭治郎",
+  "kind": "model-body",
+  "model": "models/community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-35-20260907",
+        "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+        "glbPath": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+        "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+        "bytes": 1249564,
+        "documentSha256": "f5b09564eab02d38a0560f538a84307ba1811ec423241a7a531cc561305d8e29",
+        "sourceCharacter": "灶门炭治郎",
+        "sourceWork": "鬼滅之刃",
+        "sourceAssetId": "300heroes:19ab89526d5a6812479cb932",
+        "sourceSha256": "4d595cb3c95ff93b2c3348a49a6138d94e83a661a009b06da927a3ee99633d05",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.f5b09564eab02d38a0560f53"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-35-20260907",
+        "name": "炭治郎"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

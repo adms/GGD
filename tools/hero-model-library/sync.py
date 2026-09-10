@@ -42,6 +42,9 @@ def main():
             if version['binarySha256'] not in sources:
                 previous = read(inside(root, 'models/'+version['sourceModelKey']+'.json'))
                 original[version['binarySha256']] = inside(root, previous['glbPath'])
+    git_pointer = REPO/'materials/asset-library/git-release.json'
+    git_release = read(git_pointer) if git_pointer.is_file() else None
+    if git_release and git_release['release'] != release['release']: raise ValueError('Git finished release differs from model release')
     checked_identity = False
     def aws(arguments, action, resource):
         env = dict(os.environ, AWS_PROFILE='vibe-coding', AWS_REGION='ap-east-2', AWS_PAGER='')
@@ -59,8 +62,12 @@ def main():
         if source:
             location = release['model_locations'][source['modelKey']]
             if not location.startswith('ready/') or '..' in Path(location).parts: raise ValueError('Unapproved model path')
+            if git_release:
+                git_file = inside(inside(REPO, git_release['gitRoot']), location)
+                if not git_file.is_file(): raise ValueError('Missing committed finished asset: '+location)
+                raw = git_file.read_bytes()
             local = inside(args.local_library.resolve()/'shared/releases'/release['release'], location)
-            if local.is_file(): raw = local.read_bytes()
+            if raw is None and local.is_file(): raw = local.read_bytes()
             if raw is None:
                 if not checked_identity:
                     identity = aws(['sts', 'get-caller-identity', '--query', 'Arn', '--output', 'text'], 'sts:GetCallerIdentity', 'configured role')

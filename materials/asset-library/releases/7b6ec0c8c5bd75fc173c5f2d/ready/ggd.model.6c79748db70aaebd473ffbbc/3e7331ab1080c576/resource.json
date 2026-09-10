@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.6c79748db70aaebd473ffbbc",
+  "title": "贵公子",
+  "kind": "model-body",
+  "model": "models/community.body.f45b0ee2b6cbfaa6928f2cb914bb46e7cc8fc5d498616841.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:115",
+        "modelKey": "community.body.f45b0ee2b6cbfaa6928f2cb914bb46e7cc8fc5d498616841",
+        "glbPath": "assets/models/community/cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047.glb",
+        "sha256": "cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047",
+        "bytes": 1030392,
+        "documentSha256": "6c79748db70aaebd473ffbbcf80efa128e33cf25caa440c06194df0c4e482120",
+        "sourceCharacter": "贵公子",
+        "sourceWork": "犬夜叉",
+        "sourceAssetId": "300heroes:8959786d1611f717e24c5321",
+        "sourceSha256": "fcb0c37f53ad448fb7dacd0690910dee9bc0912430da17f64dcbb131ca046e79",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.6c79748db70aaebd473ffbbc"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-osam",
+        "name": "犬妖 - 殺生丸"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

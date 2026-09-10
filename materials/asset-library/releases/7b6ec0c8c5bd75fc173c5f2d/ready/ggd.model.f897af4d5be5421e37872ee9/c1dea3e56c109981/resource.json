@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.f897af4d5be5421e37872ee9",
+  "title": "尤吉欧",
+  "kind": "model-body",
+  "model": "models/community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:269",
+        "modelKey": "community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54",
+        "glbPath": "assets/models/community/697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb.glb",
+        "sha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+        "bytes": 2355292,
+        "documentSha256": "f897af4d5be5421e37872ee96c314a858a1ec96a2c24711d802fa16cfcc3f91c",
+        "sourceCharacter": "尤吉欧",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "sourceAssetId": "300heroes:8c19c91adaebbcc55755a5ef",
+        "sourceSha256": "b73185c542570ee21a66a085ac4f230690a0552e9033161a49313dd34715f6ec",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.f897af4d5be5421e37872ee9"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-albus",
+        "name": "阿爾巴斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

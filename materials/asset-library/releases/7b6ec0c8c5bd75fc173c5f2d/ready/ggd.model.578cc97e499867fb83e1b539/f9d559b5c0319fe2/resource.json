@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.578cc97e499867fb83e1b539",
+  "title": "鹿目圆香",
+  "kind": "model-body",
+  "model": "models/community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-21-20260907",
+        "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+        "glbPath": "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
+        "sha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+        "bytes": 862984,
+        "documentSha256": "578cc97e499867fb83e1b5397097b4a5cd7ff4a34a48f390d15fb1b9ae6c73a1",
+        "sourceCharacter": "鹿目圆香",
+        "sourceWork": "魔法少女小圓",
+        "sourceAssetId": "300heroes:36223c09f16c6648e9508448",
+        "sourceSha256": "74941d93b65da3d0437c3da8f23a167d54e0d0b294e1eab89cfe86050c080a3a",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.578cc97e499867fb83e1b539"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-21-20260907",
+        "name": "鹿目圓"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,6 +1,11 @@
 {
   "schema": "ggd-hero-model-default-policy@1",
   "priority": [
+    "manual",
+    "canonical-game",
+    "community-mod",
+    "retextured-proxy",
+    "similar-proxy",
     "300heroes",
     "mba",
     "original",
@@ -8,7 +13,7 @@
   ],
   "unapprovedStyleProxy": "candidate-only",
   "existingModelFallback": "preserve-existing-binding-without-claiming-new-approval",
-  "paidDownloadRule": "Use eligible ready 300 or an approved derivative first; otherwise prioritize owner download sources.",
+  "paidDownloadRule": "Acquisition/payment authorization is separate from model default priority. Review acquired versions before repeat purchase.",
   "approvedDerivatives": [
     {
       "heroId": "community-review-03-20260907",
@@ -109,5 +114,26 @@
       "source": "波吉（獨立副本／小桐人寵物）",
       "changes": "小桐人上半身藍色、下半身白色"
     }
-  ]
+  ],
+  "priorityLabels": {
+    "manual": "手動指定模型",
+    "canonical-game": "原著模型",
+    "community-mod": "MOD社群修改",
+    "retextured-proxy": "相似模型貼圖修改",
+    "similar-proxy": "相似模型",
+    "300heroes": "300英雄",
+    "mba": "MBA",
+    "original": "原版",
+    "w3x": "借用 W3X 選用"
+  },
+  "canonicalGameDefinition": "原作遊戲直接擷取；300／MBA 仍按第 6／7 位，不因角色本尊改列第 2 位。",
+  "sourceClassOverrides": {
+    "lol:karthus": "canonical-game",
+    "lol:lux": "canonical-game",
+    "lol:missfortune": "canonical-game",
+    "lol:xerath": "canonical-game"
+  },
+  "approvedDerivativePriority": "manual",
+  "manualSelectionOverridesAutomatic": true,
+  "sourceTierPreserved": true
 }

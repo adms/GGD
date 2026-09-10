@@ -1,0 +1,41 @@
+{
+  "id": "ggd.model.bf8f10fb13575d84a343d24a",
+  "title": "菲特·泰斯塔羅莎（少女版）",
+  "kind": "model-body",
+  "model": "models/community.body.5b6c56501ba531d659b76b559321ab19bcea39d8861961f7.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "mba:Chara04_02",
+        "modelKey": "community.body.5b6c56501ba531d659b76b559321ab19bcea39d8861961f7",
+        "glbPath": "assets/models/community/f748d3b90142efa3569e0c8fd932ad8323781f5d551b04592194333a295e39af.glb",
+        "sha256": "f748d3b90142efa3569e0c8fd932ad8323781f5d551b04592194333a295e39af",
+        "bytes": 728476,
+        "documentSha256": "bf8f10fb13575d84a343d24a411673fea6b325996bfbdd764f584f5ea4d04610",
+        "sourceCharacter": "菲特·泰斯塔羅莎（少女版）",
+        "sourceWork": "魔法少女奈葉",
+        "sourceAssetId": "mba:3c6da9c24e1a174fc58cad0b",
+        "sourceSha256": "f29fdc23b0bfecf9053b22d4142b93a6c378af1605493ee63457ca32d42850b5",
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.bf8f10fb13575d84a343d24a"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-ntin",
+        "name": "菲特"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

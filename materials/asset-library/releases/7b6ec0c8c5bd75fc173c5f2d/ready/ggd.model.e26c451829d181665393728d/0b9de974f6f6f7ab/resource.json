@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.e26c451829d181665393728d",
+  "title": "吉尔伽美什",
+  "kind": "model-body",
+  "model": "models/community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-18-20260907",
+        "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+        "glbPath": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+        "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+        "bytes": 834460,
+        "documentSha256": "e26c451829d181665393728d0083f3e3a9923fcbe62e15a8d5950e1f57780c81",
+        "sourceCharacter": "吉尔伽美什",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:d568447cc4f61f5d9a44f07a",
+        "sourceSha256": "0b15cda6dafaea647f42f992d7f3bb61ecc7571fa02125cf0dc832b8efd2915a",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.e26c451829d181665393728d"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-18-20260907",
+        "name": "吉爾伽美什"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

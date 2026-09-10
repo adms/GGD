@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.53dbc3c40d35c966f2077db1",
+  "title": "亚瑟王",
+  "kind": "model-body",
+  "model": "models/community.body.0b0fa08d10dc191af2ecb20cea5baa60a42557f22d528915.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:53",
+        "modelKey": "community.body.0b0fa08d10dc191af2ecb20cea5baa60a42557f22d528915",
+        "glbPath": "assets/models/community/ada782968f855a1bb061fb26e54b0b2aaf77168222d2e60ab68bf9e886311caa.glb",
+        "sha256": "ada782968f855a1bb061fb26e54b0b2aaf77168222d2e60ab68bf9e886311caa",
+        "bytes": 955980,
+        "documentSha256": "53dbc3c40d35c966f2077db124f255d1436b316c2fc423dd4933a17c06224b45",
+        "sourceCharacter": "亚瑟王",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:e7ac718fdf90602320f8d391",
+        "sourceSha256": "7341c257806f141b8975b4758072b281d35b596ab9efadbd8fbae9bc723fc17c",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.53dbc3c40d35c966f2077db1"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-e002",
+        "name": "亞瑟王 - Saber"
+      },
+      {
+        "id": "godie-e00l",
+        "name": "亞瑟王 - Saber"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -28,9 +28,10 @@ type retainedModel struct {
 	BinarySHA256      string `json:"binarySha256"`
 	AutomaticEligible *bool  `json:"automaticEligible,omitempty"`
 	Source            struct {
-		Kind    string `json:"kind"`
-		Tier    string `json:"tier"`
-		Library string `json:"library"`
+		Kind           string `json:"kind"`
+		Tier           string `json:"tier"`
+		Library        string `json:"library"`
+		SelectionClass string `json:"selectionClass"`
 	} `json:"source"`
 }
 
@@ -80,6 +81,19 @@ func modelTier(v retainedModel) int {
 		return 2
 	}
 }
+
+func modelSelectionRank(v retainedModel) int {
+	order := []string{"manual", "canonical-game", "community-mod", "retextured-proxy", "similar-proxy", "300heroes", "mba", "original", "w3x"}
+	for i, class := range order {
+		if v.Source.SelectionClass == class {
+			return i
+		}
+	}
+	if v.Source.Kind == "style-proxy" {
+		return 4
+	}
+	return 5 + modelTier(v)
+}
 func (s *Service) modelSelectionDoc(o Overlay, collection, id string) (json.RawMessage, error) {
 	k := key(collection, id)
 	if o.Deleted[k] {
@@ -115,12 +129,12 @@ func selectionState(id string, raw json.RawMessage) (ModelSelectionState, []reta
 		return ModelSelectionState{}, nil, err
 	}
 	preferred := doc.ModelKey
-	best := 5
+	best := 9
 	for _, v := range versions {
 		if !modelAutomaticEligible(v) {
 			continue
 		}
-		if rank := modelTier(v); rank <= best {
+		if rank := modelSelectionRank(v); rank <= best {
 			best = rank
 			preferred = v.ModelKey
 		}

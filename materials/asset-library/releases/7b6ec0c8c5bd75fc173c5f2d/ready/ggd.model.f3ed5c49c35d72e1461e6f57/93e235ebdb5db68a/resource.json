@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.f3ed5c49c35d72e1461e6f57",
+  "title": "我妻善逸",
+  "kind": "model-body",
+  "model": "models/community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:332",
+        "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+        "glbPath": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
+        "sha256": "7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892",
+        "bytes": 1436500,
+        "documentSha256": "f3ed5c49c35d72e1461e6f5743a9959dc7f69a98237d0d9f40e3f55a852c8915",
+        "sourceCharacter": "我妻善逸",
+        "sourceWork": "鬼滅之刃",
+        "sourceAssetId": "300heroes:c889a7140d6e9fdb88343a0c",
+        "sourceSha256": "f1fcedbb51437fd20f597ecb3d0b43cf5f0c106372e0b45e86c9ca3c5c0a0758",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.f3ed5c49c35d72e1461e6f57"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-zenitsu",
+        "name": "我妻善逸"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

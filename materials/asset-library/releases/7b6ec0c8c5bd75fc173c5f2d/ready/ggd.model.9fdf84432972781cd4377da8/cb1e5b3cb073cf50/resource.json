@@ -1,0 +1,54 @@
+{
+  "id": "ggd.model.9fdf84432972781cd4377da8",
+  "title": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
+  "kind": "model-body",
+  "model": "models/community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:takopi",
+        "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+        "glbPath": "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
+        "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+        "bytes": 856548,
+        "documentSha256": "9fdf84432972781cd4377da8986c0cf48017fa213bb335d7bb8c18ec535c7356",
+        "sourceCharacter": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
+        "sourceWork": "300英雄寵物；其他作品出處未確認",
+        "sourceAssetId": "derivative:takopi",
+        "sourceSha256": "2e50327ee16753849cd5add1c414300095bc433124b6c1a79bd741364faa70c1",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "bat_run",
+          "attack": "bat_dance1",
+          "cast": "bat_dance2",
+          "hurt": "bat_hit",
+          "death": "dead"
+        },
+        "limitations": [
+          "Pet dance clips adapt attack/cast; no native combat or separate hurt reaction.",
+          "Visual proxy only; character-specific remodeling and composite bodies are not included.",
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-takopi",
+          "targetName": "章魚嗶",
+          "targetWork": "章魚嗶的原罪",
+          "sourceId": "pet:octopus",
+          "sourceSha256": "2e50327ee16753849cd5add1c414300095bc433124b6c1a79bd741364faa70c1",
+          "copyMode": "independent-embedded-copy",
+          "changes": "八爪魚全身粉紅，修復原生損壞動畫"
+        },
+        "bundleId": "ggd.model.9fdf84432972781cd4377da8"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-takopi",
+        "name": "章魚嗶"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

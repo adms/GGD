@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build a portable, hash-addressed model option release from local conversion receipts."""
 import argparse,json,hashlib,shutil
+from default_policy import selection_class, selection_rank
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--workspace',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();ws=a.workspace.resolve();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False);repo=Path(__file__).resolve().parents[2]
 def read(p):return json.loads(p.read_text())
@@ -91,10 +92,12 @@ for r in read(ws/'outputs/hero-model-derivatives-20260910/lol-v1/summary.json'):
  else:
   failures[key]=r['error'].split('Error: ')[-1].splitlines()[0]
   option(h,key,'exact','original')
-order=['300heroes','mba','original','w3x']
-for h in heroes.values():h['options'].sort(key=lambda o:(order.index(o['source']['tier']), 0 if o['sourceId']==h.get('preferredDerivative') else 1, ['exact','alternate','style-proxy','previous'].index(o['source']['kind'])))
-manifest=dict(schema='ggd-hero-model-library@1',priority=order,policy='300>MBA>原版>借用w3x',models=list(models.values()),heroes=list(heroes.values()),scope='模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。')
-manifest['withinTierPolicy']='同來源順位先採用 Owner 指定的獨立副本，其餘本尊、同角色形態、視覺代理依序；舊版本保留。'
+policy=read(repo/'materials/hero-model-library/default-policy.json');order=policy['priority']
+for h in heroes.values():
+ for o in h['options']:o['source']['selectionClass']=selection_class(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source'])
+ h['options'].sort(key=lambda o:(selection_rank(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source']),['exact','alternate','style-proxy','previous'].index(o['source']['kind'])))
+manifest=dict(schema='ggd-hero-model-library@1',priority=order,policy=' > '.join(policy['priorityLabels'][key] for key in order),models=list(models.values()),heroes=list(heroes.values()),scope='模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。')
+manifest['withinTierPolicy']='依現行 default-policy.json；保留來源 tier，selectionClass 用於選用順位；手動選擇與全部舊版本保留。'
 manifest['resolved']=[dict(sourceId=k,character=n,status='converted',removedFromConversionGaps=True,sha256=models[k]['sha256']) for k,n in [('300heroes:137','坂田銀時'),('300heroes:41','海克力斯')]]
 manifest['resolved'].append(dict(sourceId='pet:spider',character='蜘蛛子',status='identity-confirmed-pet-form',proof='spider-identity.json',sha256=models['pet:spider']['sha256']))
 write(out/'manifest.json',manifest);write(base/'runtime-locations.json',local)

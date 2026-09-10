@@ -1,0 +1,49 @@
+{
+  "id": "ggd.model.bf084d372ce1532ba48d15d2",
+  "title": "小桐人寵物",
+  "kind": "model-body",
+  "model": "models/community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "pet:tiny-kirito",
+        "modelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
+        "glbPath": "assets/models/community/9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16.glb",
+        "sha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
+        "bytes": 1337420,
+        "documentSha256": "bf084d372ce1532ba48d15d2302d78c07ad7aa1adbb6bb7e288cf1e84be33fe1",
+        "sourceCharacter": "小桐人寵物",
+        "sourceWork": "刀劍神域；依檔名與外觀推定",
+        "sourceAssetId": "300heroes:752d81a9fe2da27b368dadee",
+        "sourceSha256": "d8cf1d132ffe3b4be249c5dd27e18aaf9a497717cf8635ff634529c1ba41cc9f",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "bat_run",
+          "attack": "bat_dance1",
+          "cast": "bat_dance2",
+          "hurt": "bat_idle",
+          "death": "bat_dead"
+        },
+        "limitations": [
+          "Pet dance clips adapt attack/cast; no native combat or separate hurt reaction.",
+          "Visual proxy only; character-specific remodeling and composite bodies are not included.",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.bf084d372ce1532ba48d15d2"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-bojji",
+        "name": "波吉"
+      },
+      {
+        "id": "b2-shinchan",
+        "name": "野原新之助"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

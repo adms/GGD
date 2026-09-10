@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.43c2daab596768f01cc4f702",
+  "title": "十六夜咲夜",
+  "kind": "model-body",
+  "model": "models/community.body.734466678f4a8ae0176e61f3de9094c0db5ccf0705f1468e.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:135",
+        "modelKey": "community.body.734466678f4a8ae0176e61f3de9094c0db5ccf0705f1468e",
+        "glbPath": "assets/models/community/22d9977515515c09ec51f7d771bb3a4093eb2ce7d819be46b920ed75e312b9f6.glb",
+        "sha256": "22d9977515515c09ec51f7d771bb3a4093eb2ce7d819be46b920ed75e312b9f6",
+        "bytes": 896804,
+        "documentSha256": "43c2daab596768f01cc4f702a54e7b386af3e0e77ed61ebe3712e88bd1e5f335",
+        "sourceCharacter": "十六夜咲夜",
+        "sourceWork": "東方 Project",
+        "sourceAssetId": "300heroes:19f41d875d9de0e441518899",
+        "sourceSha256": "3872261ad56da8e9c91fff95c981d31f00e7bd60f31dc15b5d7651b7988fdb04",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.43c2daab596768f01cc4f702"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-e00u",
+        "name": "十六夜咲夜"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.7cb67d5b138d42e34bd59f29",
+  "title": "御坂美琴",
+  "kind": "model-body",
+  "model": "models/community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-20-20260907",
+        "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+        "glbPath": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+        "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+        "bytes": 1492264,
+        "documentSha256": "7cb67d5b138d42e34bd59f295a7e39c6a5e442f35a587fb92ae89977d1ff7c65",
+        "sourceCharacter": "御坂美琴",
+        "sourceWork": "魔法禁書目錄／科學超電磁砲",
+        "sourceAssetId": "300heroes:d397198ec699d52dbaff951e",
+        "sourceSha256": "a2aeccd3a2235e11f4b38d66c33d7897b7c304320cd4b9c3ddbb42bb02725fc8",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.7cb67d5b138d42e34bd59f29"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-20-20260907",
+        "name": "御坂美琴"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

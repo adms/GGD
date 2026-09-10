@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.b06fff73ec09076455b6f115",
+  "title": "奇犽",
+  "kind": "model-body",
+  "model": "models/community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-24-20260907",
+        "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+        "glbPath": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+        "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+        "bytes": 663584,
+        "documentSha256": "b06fff73ec09076455b6f11509968d71e48cac9a765e349a31ab023592abee4c",
+        "sourceCharacter": "奇犽",
+        "sourceWork": "HUNTER×HUNTER 獵人",
+        "sourceAssetId": "300heroes:37e03796cc2c9c2829f7e345",
+        "sourceSha256": "7491aae07b5d3c2c5c98f46cf357315de4589e202bb3320e32a983339fd50669",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.b06fff73ec09076455b6f115"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-24-20260907",
+        "name": "奇犽"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

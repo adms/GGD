@@ -2,9 +2,9 @@
 
 **共編、按角色查詢與下載排程：[統一素材庫入口](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/asset-library/README.md)。** 本文件只負責整包下載；角色狀態統一看 Git 盤點。
 
-**固定共享位置：`s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/`**
+**成品主要入口：[Git 固定版本](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/asset-library/git-release.json)。既有 S3 副本：`s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/`**
 
-共享成品與發布索引以 S3 為固定下載入口。本機仍保留工作庫及每次發布的完整副本。使用具有此 bucket 讀取權限、已配置 `vibe-coding` profile 的環境下載；不需要把憑證放进程式或文件。
+第三守則：成品一律進 Git；半成品、來源、準備材料進 S3，本機全保留。下方 S3 下載方式保留供既有版本副本取用；現行預設規則以同一 Git commit 的 `default-policy.json` 為準。本機仍保留工作庫及每次發布的完整副本。使用具有此 bucket 讀取權限、已配置 `vibe-coding` profile 的環境下載；不需要把憑證放进程式或文件。
 
 ## 共享索引
 

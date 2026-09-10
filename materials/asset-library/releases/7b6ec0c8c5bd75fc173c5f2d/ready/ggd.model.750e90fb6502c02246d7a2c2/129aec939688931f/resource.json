@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.750e90fb6502c02246d7a2c2",
+  "title": "远坂凛",
+  "kind": "model-body",
+  "model": "models/community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:160",
+        "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+        "glbPath": "assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
+        "sha256": "076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889",
+        "bytes": 992984,
+        "documentSha256": "750e90fb6502c02246d7a2c24075cef819b52b95618eeeee4569b5d2377500f8",
+        "sourceCharacter": "远坂凛",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:7a9bba24a848388ea5dea661",
+        "sourceSha256": "84c296c9da96b75ed698c0bbe62891bb3a9c39f3450f45474f85abe28d7d430f",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.750e90fb6502c02246d7a2c2"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-rin",
+        "name": "遠坂凜"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

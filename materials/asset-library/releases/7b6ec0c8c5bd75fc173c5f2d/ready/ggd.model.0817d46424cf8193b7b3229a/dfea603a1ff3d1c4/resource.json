@@ -1,0 +1,44 @@
+{
+  "id": "ggd.model.0817d46424cf8193b7b3229a",
+  "title": "齊勒斯",
+  "kind": "model-body",
+  "model": "models/community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "lol:xerath",
+        "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+        "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+        "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+        "bytes": 2287728,
+        "documentSha256": "0817d46424cf8193b7b3229a2c0dbb7d7155638a36c17626f118e54e892c864b",
+        "sourceCharacter": "齊勒斯",
+        "sourceWork": "英雄聯盟 League of Legends",
+        "sourceAssetId": "lol:xerath",
+        "sourceSha256": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+        "clipMap": {
+          "idle": "xerath_idle1",
+          "run": "xerath_run",
+          "attack": "xerath_attack1",
+          "cast": "xerath_spell1",
+          "hurt": "xerath_idle1",
+          "death": "xerath_death"
+        },
+        "limitations": [
+          "原 LOL 模型；hurt 共用 idle。保留先前已驗證的六動作選段與無渲染子節點動畫裁剪。完整動作原檔另存備份。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.0817d46424cf8193b7b3229a"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "example:xerath",
+        "name": "齊勒斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

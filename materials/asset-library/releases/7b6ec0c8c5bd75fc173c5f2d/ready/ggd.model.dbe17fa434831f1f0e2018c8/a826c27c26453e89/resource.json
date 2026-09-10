@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.dbe17fa434831f1f0e2018c8",
+  "title": "黑羽快斗",
+  "kind": "model-body",
+  "model": "models/community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-07-20260907",
+        "modelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+        "glbPath": "assets/models/community/eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789.glb",
+        "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+        "bytes": 742988,
+        "documentSha256": "dbe17fa434831f1f0e2018c8b17f10ea7dc11e97dd917fee6b9cefe12c0d71fb",
+        "sourceCharacter": "黑羽快斗",
+        "sourceWork": "神偷怪盜／魔術快斗；名偵探柯南",
+        "sourceAssetId": "300heroes:ff525e143d53b09dab32f9e0",
+        "sourceSha256": "e04108960a6fc47d18d4cddd90833afb7fb2e32339fb29f76ef24264f5af71b4",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.dbe17fa434831f1f0e2018c8"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-07-20260907",
+        "name": "西索"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

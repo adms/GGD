@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.7f41043352ed86bd9208db4d",
+  "title": "优克莉伍德",
+  "kind": "model-body",
+  "model": "models/community.body.7e715d64546a03a955ff8a6530120071081ea7eafac09239.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:199",
+        "modelKey": "community.body.7e715d64546a03a955ff8a6530120071081ea7eafac09239",
+        "glbPath": "assets/models/community/e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef.glb",
+        "sha256": "e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef",
+        "bytes": 1280832,
+        "documentSha256": "7f41043352ed86bd9208db4df07e84d599cab7dc6fdce762e251d7e73a23e20c",
+        "sourceCharacter": "优克莉伍德",
+        "sourceWork": "這樣算是殭屍嗎？",
+        "sourceAssetId": "300heroes:cce0d9c46d77319ecef36c85",
+        "sourceSha256": "e38085ad3767983517218fc89a63eb25ff1cdc289aaa36174eec29725ec6d426",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.7f41043352ed86bd9208db4d"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-misery",
+        "name": "米瑟利"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

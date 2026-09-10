@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.a0d55bbf2b48f1c8f0d4eb99",
+  "title": "左二少",
+  "kind": "model-body",
+  "model": "models/community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:69",
+        "modelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+        "glbPath": "assets/models/community/9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74.glb",
+        "sha256": "9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74",
+        "bytes": 800144,
+        "documentSha256": "a0d55bbf2b48f1c8f0d4eb99809ae9b8c37cd1d9b5621a8dab444383cb2dc665",
+        "sourceCharacter": "左二少",
+        "sourceWork": "火影忍者 NARUTO",
+        "sourceAssetId": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "sourceSha256": "e750bf0c9ecbfc5e40144b7ed506791a74c20e312b55e39695d68b7fe5ac821b",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.a0d55bbf2b48f1c8f0d4eb99"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-edem",
+        "name": "寫輪眼復仇者 - 宇智波佐助"
+      },
+      {
+        "id": "b2-sinbad",
+        "name": "辛巴達"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

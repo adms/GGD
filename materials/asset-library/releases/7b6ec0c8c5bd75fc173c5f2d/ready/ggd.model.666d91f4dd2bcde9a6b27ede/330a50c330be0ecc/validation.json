@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-resource-validation@1",
+  "status": "standardized",
+  "profile": "model-body",
+  "content_digest": "c1298896a00ed5ec1476466a3cf264300db9a8e4f382706ec39cff91292e64ec",
+  "files": [
+    {
+      "path": "content/assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
+      "bytes": 683364,
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c"
+    },
+    {
+      "path": "content/models/community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82.json",
+      "bytes": 455,
+      "sha256": "666d91f4dd2bcde9a6b27edee2660e1bb517b8dba7902fa2fc0186ac3ba69e31"
+    },
+    {
+      "path": "resource.json",
+      "bytes": 2284,
+      "sha256": "8aa215c4b85e9d08f0fa74669430e069ac672925a5d9b6ade2e824928876cc8f"
+    }
+  ],
+  "policy_sha256": "f176565b89c85b9e0ff70f167efb52ae26072c85c79a472d4a5352fdd0d75b64",
+  "schema_tree_sha256": "a5134b89bb902ec94f503759c5cbc382fe3b98e5e76c77e83d17092074c81812",
+  "source_repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "checked_at": "2026-09-10T02:18:38.185251+08:00",
+  "checks": {
+    "animations": 5,
+    "skins": 1,
+    "state_bindings": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "full_character_package": false,
+    "aliased_states": true,
+    "event_binding_targets": [],
+    "schema_validation": {
+      "checked": 1,
+      "errors": []
+    }
+  },
+  "validator_sha256": "317d9f19fb4d37bd49c6d705b218806b3c527bcc0f9435908644f89d808438fb",
+  "schema_validator_sha256": "49fe459e684a59e0f33e63b51e05eb469b76f6f04fad50c00ad4475638d64164",
+  "production_acceptance": "not_claimed",
+  "admission_digest": "330a50c330be0ecc0663f1e5f81916877541f8a48a6551b620d371fd886c5314"
+}

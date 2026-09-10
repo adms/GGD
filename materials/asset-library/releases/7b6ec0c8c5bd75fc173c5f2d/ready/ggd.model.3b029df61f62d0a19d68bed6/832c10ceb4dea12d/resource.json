@@ -1,0 +1,45 @@
+{
+  "id": "ggd.model.3b029df61f62d0a19d68bed6",
+  "title": "高町奈葉（少女版）",
+  "kind": "model-body",
+  "model": "models/community.body.46bbbdc1e995f678c7fceabcb6732470c89a64dd2a05d567.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "mba:Chara01",
+        "modelKey": "community.body.46bbbdc1e995f678c7fceabcb6732470c89a64dd2a05d567",
+        "glbPath": "assets/models/community/ff2786fae7185f2c5faf884eddb72963000fd2329c5a72b15b9dd6f158e08090.glb",
+        "sha256": "ff2786fae7185f2c5faf884eddb72963000fd2329c5a72b15b9dd6f158e08090",
+        "bytes": 909064,
+        "documentSha256": "3b029df61f62d0a19d68bed667c00238c19d05a194d2f50485f758e6bb139615",
+        "sourceCharacter": "高町奈葉（少女版）",
+        "sourceWork": "魔法少女奈葉",
+        "sourceAssetId": "mba:6108521bf64084332eb2f63c",
+        "sourceSha256": "af5ecd910bbc83b2fa5520d4b0e6b86aff298f3cb9f0966169695b171e0efb5a",
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "SP-1",
+          "hurt": "Damage-1",
+          "death": "lose"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.3b029df61f62d0a19d68bed6"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-o01z",
+        "name": "高町奈葉"
+      },
+      {
+        "id": "godie-o02v",
+        "name": "高町奈葉"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

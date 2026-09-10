@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.8a4f4237130086cd12c973cf",
+  "title": "空条承太郎",
+  "kind": "model-body",
+  "model": "models/community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-04-20260907",
+        "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+        "glbPath": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+        "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+        "bytes": 764552,
+        "documentSha256": "8a4f4237130086cd12c973cfce854290daacc959ae056ef8bdc15bfc976567eb",
+        "sourceCharacter": "空条承太郎",
+        "sourceWork": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+        "sourceAssetId": "300heroes:53fd11c0026fe928567b7760",
+        "sourceSha256": "d901d0df79f6757bfdfa3432bf02a8042a83953ea8c98fb8127a1ca407c6b134",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.8a4f4237130086cd12c973cf"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-04-20260907",
+        "name": "空條承太郎"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

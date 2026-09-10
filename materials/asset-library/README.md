@@ -1,6 +1,10 @@
 # GGD 素材庫共編入口
 
-**第一守則：所有取得資源完整歸檔，全部納入後台可選選項。** 模型、貼圖、骨架、動作、特效與音效全部保留；各來源／版本完成標準化後，登記為對應角色下拉選單的獨立選項。取得、備份或登記候選尚不算完成，必須完成後台實際切換驗證。預設順位只決定預選項目，不能省略其他來源。完整規則見 [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) 第一守則，機器讀 `download-sources.json → ingestionPolicy` 與逐來源 `backendIntegration`。
+**第一守則：所有取得資源完整歸檔，全部納入後台可選選項。** 模型、貼圖、骨架、動作、特效、音效與角色語音全部保留；各來源／版本完成標準化後，登記為對應角色下拉選單的獨立選項。取得、備份或登記候選尚不算完成，必須完成後台實際切換驗證。預設順位只決定預選項目，不能省略其他來源。完整規則見 [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) 第一守則，機器讀 `download-sources.json → ingestionPolicy` 與逐來源 `backendIntegration`。
+
+**第二守則：手動指定模型 > 原著模型 > MOD社群修改 > 相似模型貼圖修改 > 相似模型 > 300英雄 > MBA > 原版 > 借用 W3X 選用。** 原著模型只指原作遊戲直接擷取；300／MBA 維持第 6／7 位。來源類別保留，選用順位由 `default-policy.json` 與 `selectionClass` 決定。
+
+**第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 成品固定入口：[git-release.json](git-release.json)，包含模型／動作與 VFX 元件及其依賴。原始與半成品仍在 S3 `legacy/`，不供程序自動取用。
 
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
 
@@ -14,7 +18,7 @@
 | 避免重複購買模型 | 先讀 `purchasePolicy.scope`；`publicSources`／`paidSources` 是已取得的免費／付費來源，`publicSourceLeads` 是未取得線索 |
 | 整合另一工作流付費取得的模型 | 同一 `download-sources.json` 的 `paidSources`；查詢回傳 `paidCandidates`，與免費來源一起保留整合 |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
-| 查單一角色、取得 modelKey 與 S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
+| 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
 | 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
 | 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |
@@ -36,20 +40,20 @@ python3 tools/hero-model-library/query.py 拳四郎 --downloads
 ## 模型怎麼拿
 
 ```sh
-# 優先使用已在本機的正確檔案；缺檔才從 Git 固定的 S3 版本下載。
+# 從 checkout 內已提交的固定成品補齊執行目錄；不需下載原始素材。
 python3 tools/hero-model-library/sync.py
 python3 tools/hero-model-library/sync.py --verify-only
 ```
 
-成品位置：`s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/`。本版精確版本、每個模型路徑及 SHA-256 由 [release.json](../hero-model-library/release.json) 與 [manifest.json](../hero-model-library/manifest.json) 固定。共享 VFX／完整成品包的下載方法見 [共享下載說明](source/SHARED_README.md)。
+成品位置：`materials/asset-library/releases/<版本>/`，由 [git-release.json](git-release.json) 固定全部 150 個成品元件、432 個檔案與 SHA-256（目前版本）。模型路徑由 [manifest.json](../hero-model-library/manifest.json) 固定；[release.json](../hero-model-library/release.json) 仍保留既有 S3 副本位置。這些元件不等於完整英雄已上架。
 
-AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 profile；AccessDenied 回報原 action/resource。`legacy/` 是備份，不能自動取用。二進位放 S3，程式、設定、清單、SHA 與文件放 Git，本機副本保留。
+AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 profile；AccessDenied 回報原 action/resource。`legacy/` 是備份，不能自動取用。儲存依第三守則按完成狀態區分；二進位成品也必須進 Git，S3 舊成品副本保留。
 
 ## 預設與付費下載規則
 
-- **已有可用 300英雄模型：預設選 300，付費來源暫緩。** 相似加工替身僅限使用者核准的 11 組（含原創 pink-round 卡比），詳見 `default-policy.json`；其他相似模型只留候選。
+- 模型預設按第二守則。使用者指定的 11 組加工副本（含 pink-round 卡比）列為手動指定；其他未核准相似模型保留候選，不憑格式驗證自動核准。
 - 缺可用 300 模型：使用者清單是最高優先下載來源；原「加購替換」分類與改造備註保留。
-- 可用模型順位仍為 **300 > MBA > 原版 > 借用 W3X**。未取得／未轉換來源不進預設。
+- 原作直接擷取、MOD 社群、改貼圖代理、相似代理按已核實來源分級；300／MBA 的本尊不改列原著。未取得／未轉換來源不進預設。
 - 既有後台手動選擇另有記錄；切回依順位自動選用才套用素材庫預設。
 
 ## 共編改哪個檔
@@ -57,13 +61,13 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 | 要改的內容 | 編輯來源 | 重建／生效方式 |
 |---|---|---|
 | 使用者提供的網址、角色對應、改造備註、取得狀態 | [download-sources.json](../hero-model-library/download-sources.json) | 重建盤點；付費先看 `purchasePolicy`，取得狀態與下載順位另行判斷 |
-| 新預設可用範圍 | [default-policy.json](../hero-model-library/default-policy.json) | 只核准指定 11 組加工替身；角色 ID、modelKey 與 SHA-256 固定，其他相似模型不自動採用 |
+| 新預設可用範圍 | [default-policy.json](../hero-model-library/default-policy.json) | 九級預設順位與 11 組指定副本；模型來源 tier 與選用 selectionClass 分開，保留其他相似候選 |
 | 第二批 37 名與舊英雄的新模型配對 | [pairing-inputs.json](../hero-model-library/pairing-inputs.json) | `assemble.py` 與盤點讀同一份來源；新增成品仍須經轉換、入庫、發布 |
 | 11 個獨立副本的來源、改色與手持配件要求 | [derivatives.json](../hero-model-library/derivatives.json) | 轉換工作流重建副本、驗證、再發布；改 JSON 不等於模型已改好 |
 | 第一批 37 名角色的原稿設定 | [recipes](../community-hero-forge/recipes/) 與 [模型配對](../../tools/community-hero-forge/library-bodies/community37.bindings.json) | 同步原稿與模型產生流程 |
 | 正式機實際觀測結果 | [inventory-context.json](../hero-model-library/inventory-context.json) | 取得真實新快照才更新，不把文件生成時間當作部署時間 |
 
-`manifest.json`、`release.json`、`inventory.json`、`全角色模型盤點.md` 是發布或盤點產物。不要只改產物掩蓋來源差異；模型成品用既有 `assemble.py → register.mts → 入庫／S3 發布 → pin-release.py` 流程。轉換流程仍需要原始素材與本機轉換收據，並不宣稱 clone 即可重新製作所有模型。
+`manifest.json`、`release.json`、`inventory.json`、`全角色模型盤點.md` 是發布或盤點產物。不要只改產物掩蓋來源差異；模型成品用既有 `assemble.py → register.mts → 成品驗證／入庫 → Git 成品發布` 流程。轉換流程仍需要原始素材與本機轉換收據，並不宣稱 clone 即可重新製作所有模型。
 
 免費公開模型、MOD、魔獸自訂地圖的取得記錄放 `download-sources.json → publicSources`；論壇付費工作流的已取得記錄放同檔 `paidSources`，使用相同來源 ID、原始網址、角色／形態、檔案 SHA、本機／S3 位置、`readiness` 與 `backendIntegration` 欄位。`paidSources` 只放有實檔收據的交付，不以付款、網址或下載計畫代替。`acquisitionStatus=downloaded-verified` 只證明已取得並驗證檔案；`purchaseDecision=hold-purchase-review-free-source` 表示先暫緩購買，待檢查免費來源。每個角色的 `publicCandidates`、`paidCandidates` 及下載安排的 `purchaseHoldFor` 都會由盤點產生器同步更新。**購買流程須逐一比對 `purchaseHoldFor` 的角色 ID**；`purchaseHold=true` 代表整組形態已有實檔，`partialPurchaseHold=true` 代表只有部分形態已有實檔；先核對版本以避免重買，不取消另行授權的付費工作流。例如一般小傑取得候選，不等於變身後大傑已取得。這批候選還未加入成品 release，不可自動從 `legacy/` 上架。
 
@@ -104,4 +108,8 @@ python3 tools/hero-model-library/check-index.py
 python3 tools/hero-model-library/inventory.py --workspace ..
 ```
 
-同批提交來源 JSON、盤點 JSON／Markdown、驗證與版本清單，commit＋push 到同一個 PR，保留別人的修改。其他工作流共編時先 fetch；遇到同檔衝突，合併來源後重建盤點，不覆蓋對方整份檔案。
+同批提交全部成品、來源索引 JSON、盤點 JSON／Markdown、驗證與版本清單，commit＋push 到同一個 PR，保留別人的修改。其他工作流共編時先 fetch；遇到同檔衝突，合併來源後重建盤點，不覆蓋對方整份檔案。
+
+固定成品從已驗證本機 release 納入 Git：`python3 tools/hero-model-library/pin-git-release.py --library <本機庫>`；用 `--check` 可只靠 Git 檔案逐檔驗證。此工具保留全部 `ready/` 元件、依賴與驗證收據，不納入原始／半成品，既有不同內容拒絕覆蓋。
+
+語音與音效的取得、解碼、分類、事件／技能綁定分開記錄。利姆路新增 13 段浮點 WAV（23.672 秒）已與原始 BNK／WEM 一起在 S3 legacy 讀回驗證；其中 4 檔峰值超過 1，仍待聽審、增益與綁定，不計為已驗收語音成品。

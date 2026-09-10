@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.9cdd717b3f778bf285181952",
+  "title": "哥布林殺手（獨立副本／尤吉欧）",
+  "kind": "model-body",
+  "model": "models/community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:goblin",
+        "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+        "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+        "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+        "bytes": 2361292,
+        "documentSha256": "9cdd717b3f778bf2851819528f12950712c7bb3703b7e19197e9008fe82eed09",
+        "sourceCharacter": "哥布林殺手（獨立副本／尤吉欧）",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "sourceAssetId": "derivative:goblin",
+        "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-goblin",
+          "targetName": "哥布林殺手",
+          "targetWork": "哥布林殺手",
+          "sourceId": "300heroes:269",
+          "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+          "copyMode": "independent-embedded-copy",
+          "changes": "完整複製尤吉歐，右手小劍、左手小盾"
+        },
+        "bundleId": "ggd.model.9cdd717b3f778bf285181952"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-goblin",
+        "name": "哥布林殺手"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

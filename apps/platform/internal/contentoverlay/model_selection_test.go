@@ -119,3 +119,28 @@ func TestManualOnlySourcesRemainSelectableAndNeverBecomeAutomaticDefault(t *test
 		require.JSONEq(t, string(initial.Versions), string(automatic.Versions))
 	}
 }
+
+func TestNineClassPriorityPreservesOriginalSourceTier(t *testing.T) {
+	order := []string{"manual", "canonical-game", "community-mod", "retextured-proxy", "similar-proxy", "300heroes", "mba", "original", "w3x"}
+	for start, expected := range order {
+		t.Run(expected, func(t *testing.T) {
+			svc, _, dir := newSvcWithContent(t)
+			versions := []map[string]any{}
+			for _, class := range order[start:] {
+				versions = append(versions, map[string]any{"modelKey": "version.body." + class, "source": map[string]any{"kind": "exact", "tier": "300heroes", "selectionClass": class}})
+			}
+			raw, _ := json.Marshal(map[string]any{"id": "hero", "schema": "champion@1", "modelKey": "old", "modelVersions": versions})
+			writeShippedDoc(t, dir, "champions/hero.json", string(raw))
+			writeShippedIndex(t, dir, "champions", []shippedEntry{{ID: "hero", Path: "champions/hero.json", Size: len(raw)}})
+			state, err := svc.ModelSelection(context.Background(), "hero")
+			require.NoError(t, err)
+			require.Equal(t, "version.body."+expected, state.PreferredModelKey)
+			var retained []map[string]any
+			require.NoError(t, json.Unmarshal(state.Versions, &retained))
+			require.Len(t, retained, len(order)-start)
+			for _, v := range retained {
+				require.Equal(t, "300heroes", v["source"].(map[string]any)["tier"])
+			}
+		})
+	}
+}

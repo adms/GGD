@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.97248fdcfa04b33f1ffda159",
+  "title": "刑天",
+  "kind": "model-body",
+  "model": "models/community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-05-20260907",
+        "modelKey": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+        "glbPath": "assets/models/community/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb",
+        "sha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+        "bytes": 3139792,
+        "documentSha256": "97248fdcfa04b33f1ffda1590ee7e1e6c618aac1a3e6f19ace126c0710a88d29",
+        "sourceCharacter": "刑天",
+        "sourceWork": "鎧甲勇士刑天",
+        "sourceAssetId": "300heroes:ad8377d942a4909779a1b20c",
+        "sourceSha256": "f4990469cd668f82ad2b3224c9bb6c65d099ef456ab364ad9be50e2c515ecc2f",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.97248fdcfa04b33f1ffda159"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-05-20260907",
+        "name": "洛克人"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

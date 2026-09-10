@@ -12,11 +12,13 @@ python3 tools/hero-model-library/query.py b2-popp --json
 python3 tools/hero-model-library/query.py 拳四郎 --downloads
 python3 tools/hero-model-library/sync.py
 
-已有可用 300英雄本尊模型就預設用 300、暫緩付費下載；相似加工替身僅限 default-policy.json 核准的 11 組。缺可用 300 才優先處理使用者指定來源。
+第一守則：所有工作流取得的模型、貼圖、動作、特效、音效與語音完整保留，免費／付費版本均須整合後台選項。
+第二守則：手動指定模型 > 原著模型 > MOD社群修改 > 相似模型貼圖修改 > 相似模型 > 300英雄 > MBA > 原版 > 借用 W3X 選用。原著模型指原作遊戲直接擷取；300／MBA 保留第 6／7 位。
+第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。
 每批完成後重建全角色模型盤點.md，來源與產物同批 commit + push。查詢只讀 Git，不依赖這台 Mac 的 outputs 或 intake。
 來源網址／改造備註改 download-sources.json；第二批／舊英雄配對改 pairing-inputs.json；獨立副本改 derivatives.json。詳細來源表都在唯一共編說明。
 
-模型等二進位：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/
-Git release.json 固定本版的精確 S3 位置及 SHA-256；不要用 S3 latest 覆蓋不同 Git 版本。
+成品固定入口：materials/asset-library/git-release.json；成品檔案：materials/asset-library/releases/<版本>/
+以同一 Git commit 的成品與 default-policy.json 為準；release.json 保留既有 S3 副本位置，勿用 S3 latest 覆蓋 Git 版本。
 原始／半成品備份在 legacy/，僅人工指定許可使用，不得自動取用或混入可用候選。
 AWS 只用 vibe-coding profile、ap-east-2 region；不讀憑證、不切換 profile、不改 IAM，AccessDenied 回報 action/resource。

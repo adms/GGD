@@ -1,0 +1,45 @@
+{
+  "id": "ggd.model.47ebc46da58908abb37ee42c",
+  "title": "POD 機械寵物 06_pod",
+  "kind": "model-body",
+  "model": "models/community.body.4d64263f3044235d7aecedf3642860c37d061a06d95e0bc5.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "pet:pod",
+        "modelKey": "community.body.4d64263f3044235d7aecedf3642860c37d061a06d95e0bc5",
+        "glbPath": "assets/models/community/bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f.glb",
+        "sha256": "bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f",
+        "bytes": 158960,
+        "documentSha256": "47ebc46da58908abb37ee42c46e669ebdfc8880a34131f46942de610177ccc12",
+        "sourceCharacter": "POD 機械寵物 06_pod",
+        "sourceWork": "来源遊戲 300英雄；外觀近 NieR POD，出處未獨立確認",
+        "sourceAssetId": "300heroes:15becf8ae6a0265a94b514f3",
+        "sourceSha256": "66d619ac1b49b1fe2646ae2c259f9b9fc7b3e49963beafb7121735f44840adff",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "bat_run",
+          "attack": "bat_dance1",
+          "cast": "bat_dance2",
+          "hurt": "bat_idle",
+          "death": "bat_dead"
+        },
+        "limitations": [
+          "Pet dance clips adapt attack/cast; no native combat or separate hurt reaction.",
+          "Visual proxy only; character-specific remodeling and composite bodies are not included.",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.47ebc46da58908abb37ee42c"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-boxxo",
+        "name": "阿箱＋拉蜜絲"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

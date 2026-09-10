@@ -28,7 +28,9 @@ class InventoryHandoff(unittest.TestCase):
             self.assertEqual(default['id'], approved['sourceId'])
             self.assertEqual(default['asset']['sha256'], approved['sha256'])
         for hero in heroes.values():
-            if hero['default']: self.assertTrue(hero['default']['defaultEligible'])
+            if hero['default'] and hero['defaultSelectionMode'] != 'manual': self.assertTrue(hero['default']['defaultEligible'])
+            if hero['defaultSelectionMode'] == 'manual':
+                self.assertEqual(hero['checkoutSelection']['mode'], 'manual')
         # Similar strings must not cause an extra character mapping.
         nico = next(e for e in sources['entries'] if e['target'] == '尼古貓貓')
         self.assertEqual(nico['heroIds'], ['community-review-30-20260907'])
@@ -184,7 +186,7 @@ class InventoryHandoff(unittest.TestCase):
         data=json.loads((DATA/'inventory.json').read_text())['downloadPlan']
         source=next(s for s in data['publicSources'] if s.get('backup',{}).get('readbackVerified'))
         source['pendingBackup']={'status':'not-uploaded','readbackVerified':False}
-        report='\n'.join(render_sources(data))
+        report='\n'.join(render_sources(data, json.loads((DATA/'default-policy.json').read_text())))
         row=next(line for line in report.splitlines() if f'[{source["id"]}](' in line)
         self.assertIn('最新修訂僅本機已保存，S3 尚未上傳',row)
         self.assertIn('舊版備份仍保留',row)

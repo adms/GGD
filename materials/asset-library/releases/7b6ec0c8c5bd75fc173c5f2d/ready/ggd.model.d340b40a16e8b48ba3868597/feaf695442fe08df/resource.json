@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.d340b40a16e8b48ba3868597",
+  "title": "蕾姆",
+  "kind": "model-body",
+  "model": "models/community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:310",
+        "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+        "glbPath": "assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
+        "sha256": "2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e",
+        "bytes": 1230780,
+        "documentSha256": "d340b40a16e8b48ba386859745acd1af67cc25353e36040ba3c5dcff0061bc22",
+        "sourceCharacter": "蕾姆",
+        "sourceWork": "Re:從零開始的異世界生活",
+        "sourceAssetId": "300heroes:81b284ecdb9d20cddd22624e",
+        "sourceSha256": "eb3fa119d05497d5e3b4c973812af81a57bf1a667173ae9e699e3e6cab88e04c",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.d340b40a16e8b48ba3868597"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-rem",
+        "name": "蕾姆"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

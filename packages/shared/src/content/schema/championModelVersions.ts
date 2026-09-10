@@ -5,6 +5,8 @@ export const MODEL_VERSION_PREFIX = "version.body.";
 const zDigest = z.string().regex(/^[a-f0-9]{64}$/);
 export const MODEL_SOURCE_ORDER = ["300heroes", "mba", "original", "w3x"] as const;
 export const MODEL_SOURCE_LABELS = { "300heroes": "300英雄", mba: "MBA", original: "原版", w3x: "借用 W3X" } as const;
+export const MODEL_SELECTION_ORDER = ["manual", "canonical-game", "community-mod", "retextured-proxy", "similar-proxy", ...MODEL_SOURCE_ORDER] as const;
+export const MODEL_SELECTION_LABELS = { manual: "手動指定模型", "canonical-game": "原著模型", "community-mod": "MOD社群修改", "retextured-proxy": "相似模型貼圖修改", "similar-proxy": "相似模型", ...MODEL_SOURCE_LABELS } as const;
 export const zModelSelectionMode = z.enum(["automatic", "manual"]);
 
 export const zModelVersionSource = z.object({
@@ -14,6 +16,8 @@ export const zModelVersionSource = z.object({
   library: z.string().trim().min(1).max(120),
   reference: z.string().trim().min(1).max(1000),
   tier: z.enum(MODEL_SOURCE_ORDER).optional(),
+  // Selection class is independent of the preserved source library/tier.
+  selectionClass: z.enum(MODEL_SELECTION_ORDER).optional(),
 }).strict();
 
 /** A retained model document pins the GLB AND the complete animation/appearance binding. */
@@ -41,9 +45,13 @@ export function modelSourceTier(source: ModelVersionSource): typeof MODEL_SOURCE
   return "original";
 }
 
-/** Newest within a tier, but a lower-priority import never displaces a higher tier. */
+export function modelSelectionClass(source: ModelVersionSource): typeof MODEL_SELECTION_ORDER[number] {
+  return source.selectionClass ?? (source.kind === "style-proxy" ? "similar-proxy" : modelSourceTier(source));
+}
+
+/** Preserve every version; use the owner order, newest first within a class. */
 export function sortModelVersions(versions: readonly ChampionModelVersion[]): ChampionModelVersion[] {
-  return [...versions].reverse().sort((a, b) => MODEL_SOURCE_ORDER.indexOf(modelSourceTier(a.source)) - MODEL_SOURCE_ORDER.indexOf(modelSourceTier(b.source)));
+  return [...versions].reverse().sort((a, b) => MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(a.source)) - MODEL_SELECTION_ORDER.indexOf(modelSelectionClass(b.source)));
 }
 
 /** Eligibility changes automatic selection, never the retained dropdown list. */

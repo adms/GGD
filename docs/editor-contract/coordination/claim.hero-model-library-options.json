@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
   "contractFingerprint": "ed197415160df4f6",
-  "title": "統一素材庫共編入口、下載順位與 11 個核准加工副本",
+  "title": "素材庫三守則：全來源含語音保留、九級選用順位、成品入 Git",
   "claims": [
     {
       "kind": "owner-decision",
@@ -86,9 +86,27 @@
     }
   ],
   "asks": [
-    "Main review shared schema 與正式後台／部署接線；CI 綠且 review 通過後合併，再用 mini-deploy.sh 部署同一 Git 與固定 S3 版本。",
+    "Main review 同一 PR 的 shared schema、正式後台九級選用順序與成品 Git 發布；既有手動選擇保留，合併後再同步站點。此批不部署。",
     "此 PR 僅改素材選項與管理流程。新增角色名單涵蓋 37＋37＋7＝81；共 156 筆角色／形態 ID，85 筆未在目前靜態出貨目錄。11 個指定代理使用獨立模型／貼圖／骨架／動作副本，不能以素材索引存在宣稱完整英雄已上架。",
     "保留遠端 88ac699fd 的 15 名既有英雄手動原模型選擇及所有候選。本次未修改戰情版；本機 board:check 顯示既有產物有 22 份帳本、分支來源僅 21 份，msgledger:check 也回報 2026-09-09 訊息漏列。待 Main 補齊來源後重生，不藉此覆蓋現有紀錄。",
-    "共編請從 materials/asset-library/README.md 開始；來源配對改 pairing-inputs.json、下載來源改 download-sources.json、核准範圍改 default-policy.json，來源與全角色模型盤點同批提交。僅 11 組加工替身獲准預設；其餘相似模型仍是候選，勿將 S3 候選清單第一列直接當成預設。"
+    "共編從 materials/asset-library/README.md 開始。第一守則保留全部來源與語音；第二守則的原著模型指原作遊戲直接擷取，300／MBA 維持第 6／7 位；第三守則要求全部成品進 Git，原始／半成品進 S3，本機全留。依 default-policy.json 及 git-release.json 取用；舊 S3 四級排序只作歷史記錄。"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-10",
+      "text": "別忘了有語音檔也要一起抓喔"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "預設順序改為\n手動指定模型 > 原著模型 > MOD社群修改 >相似模型貼圖修改 > 相似模型 > 300英雄 ＞ MBA ＞ 原版 ＞ 借用 W3X 選用\n\n請註明在全角色模型盤點第二守則"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "原作遊戲直接擷取；300／MBA 仍按第 6／7 位"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "第三守則 我們上傳git的規則是 成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3 (本機全保留)"
+    }
   ]
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Check portable release references and the three resolved identities without native backups."""
+from default_policy import selection_rank
 import hashlib
 import json
 from pathlib import Path
@@ -8,7 +9,10 @@ repo=Path(__file__).resolve().parents[2]
 root=repo/'materials/hero-model-library'
 read=lambda p:json.loads(p.read_text())
 manifest=read(root/'manifest.json');release=read(root/'release.json');receipt=read(root/'s3-publication-receipt.json')
-assert manifest['priority']==['300heroes','mba','original','w3x']
+policy=read(root/'default-policy.json')
+assert policy['priority']==['manual','canonical-game','community-mod','retextured-proxy','similar-proxy','300heroes','mba','original','w3x']
+# Frozen S3 snapshots retain their original metadata; current Git policy overrides ordering.
+assert manifest['priority'] in [['300heroes','mba','original','w3x'],policy['priority']]
 assert receipt['status']=='published_and_read_back_verified' and receipt['release']==release['release']
 assert receipt['archive_sha256']==release['archive_sha256']
 models={m['id']:m for m in manifest['models']}
@@ -20,7 +24,7 @@ for m in models.values():
     assert release['model_locations'][m['modelKey']].startswith('ready/')
 heroes={h['id']:h for h in manifest['heroes']}
 for h in heroes.values():
-    ranks=[(manifest['priority'].index(o['source']['tier']),0 if o['sourceId']==h.get('preferredDerivative') else 1,['exact','alternate','style-proxy','previous'].index(o['source']['kind'])) for o in h['options']]
+    ranks=[((selection_rank(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source']) if manifest['priority']==policy['priority'] else manifest['priority'].index(o['source']['tier'])),0 if o['sourceId']==h.get('preferredDerivative') else 1,['exact','alternate','style-proxy','previous'].index(o['source']['kind'])) for o in h['options']]
     assert ranks==sorted(ranks),h['id']
     assert all(o['sourceId'] in models for o in h['options'])
 for hero,source in [('community-review-23-20260907','300heroes:137'),('b2-kumoko','pet:spider'),('godie-hapm','300heroes:41')]:

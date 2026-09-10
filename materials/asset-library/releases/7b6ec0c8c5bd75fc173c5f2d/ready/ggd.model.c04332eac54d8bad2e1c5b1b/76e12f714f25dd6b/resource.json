@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.c04332eac54d8bad2e1c5b1b",
+  "title": "哈桑",
+  "kind": "model-body",
+  "model": "models/community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-31-20260907",
+        "modelKey": "community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a",
+        "glbPath": "assets/models/community/04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d.glb",
+        "sha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+        "bytes": 879100,
+        "documentSha256": "c04332eac54d8bad2e1c5b1b4c02f3cf0749e99e1ea54c1ad32e5cb02a62de9a",
+        "sourceCharacter": "哈桑",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:1b46757671158e661a0105d1",
+        "sourceSha256": "e6a23ed07580341651cf45638b1b4ed4baea3b6b581a148eca2238415ba96942",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.c04332eac54d8bad2e1c5b1b"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-31-20260907",
+        "name": "SUN樂"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

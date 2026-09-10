@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.91e76db9698f07890203dbd0",
+  "title": "美杜莎",
+  "kind": "model-body",
+  "model": "models/community.body.d62b41cb1072b7fa36a4598d48668437b0c22b1548b3cbb0.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:253",
+        "modelKey": "community.body.d62b41cb1072b7fa36a4598d48668437b0c22b1548b3cbb0",
+        "glbPath": "assets/models/community/572134b9f8460e95c4fbdd797c32cf597c61a06b7fdc5f81785f9053cacc4910.glb",
+        "sha256": "572134b9f8460e95c4fbdd797c32cf597c61a06b7fdc5f81785f9053cacc4910",
+        "bytes": 910560,
+        "documentSha256": "91e76db9698f07890203dbd0f55254239bdd5922bea8c5bdfef62cf175698b8e",
+        "sourceCharacter": "美杜莎",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:2bfb288f7feb077d82852876",
+        "sourceSha256": "854612fec161aecefd290049ceca5d4f21fd47c8c61052b78b99e8f2131c1c63",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.91e76db9698f07890203dbd0"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-hvsh",
+        "name": "梅杜莎 - Rider"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

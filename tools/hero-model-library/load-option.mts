@@ -1,4 +1,4 @@
-import { defaultEligible } from './default-policy.mts';
+import { defaultEligible, selectionRank } from './default-policy.mts';
 import { readFileSync, realpathSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,7 +14,7 @@ export async function loadPreferredLibraryModel(projectId: string, contentRoot =
   const manifest = read(resolve(repo, 'materials/hero-model-library/manifest.json'));
   const hero = manifest.heroes.find((row: any) => row.id === projectId);
   if (!hero?.options.length) return null;
-  const option = [...hero.options].filter((o: any) => defaultEligible(projectId, o)).sort((a: any, b: any) => manifest.priority.indexOf(a.source.tier) - manifest.priority.indexOf(b.source.tier))[0];
+  const option = [...hero.options].filter((o: any) => defaultEligible(projectId, o)).sort((a: any, b: any) => selectionRank(projectId, a) - selectionRank(projectId, b))[0];
   if (!option) return null;
   const model = manifest.models.find((row: any) => row.id === option.sourceId);
   if (!model) throw Error('Missing library model definition: ' + option.sourceId);

@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.3f497f30c3e42510ebbb1237",
+  "title": "何布（獨立副本／李小狼）",
+  "kind": "model-body",
+  "model": "models/community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:popp",
+        "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+        "glbPath": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
+        "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+        "bytes": 762900,
+        "documentSha256": "3f497f30c3e42510ebbb1237c66a3091f7418f0dc968a05fad1b155696d4f134",
+        "sourceCharacter": "何布（獨立副本／李小狼）",
+        "sourceWork": "TSUBASA 翼／翼年代記",
+        "sourceAssetId": "derivative:popp",
+        "sourceSha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-popp",
+          "targetName": "何布",
+          "targetWork": "神龍之謎／DRAGON QUEST 達伊的大冒險",
+          "sourceId": "300heroes:119",
+          "sourceSha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+          "copyMode": "independent-embedded-copy",
+          "changes": "完整複製李小狼模型與貼圖"
+        },
+        "bundleId": "ggd.model.3f497f30c3e42510ebbb1237"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-popp",
+        "name": "何布"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

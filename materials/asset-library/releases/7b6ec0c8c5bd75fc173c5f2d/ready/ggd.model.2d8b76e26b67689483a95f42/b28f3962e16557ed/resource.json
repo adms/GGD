@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.2d8b76e26b67689483a95f42",
+  "title": "八云紫",
+  "kind": "model-body",
+  "model": "models/community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-34-20260907",
+        "modelKey": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+        "glbPath": "assets/models/community/dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084.glb",
+        "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+        "bytes": 946740,
+        "documentSha256": "2d8b76e26b67689483a95f420cb14b0362e88b269a88f8f7792e22e50537562c",
+        "sourceCharacter": "八云紫",
+        "sourceWork": "東方 Project",
+        "sourceAssetId": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+        "sourceSha256": "3765562722900fd4cac96952598acbdcac1ef583ae5594cacbb4f930b4d0644d",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.2d8b76e26b67689483a95f42"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-34-20260907",
+        "name": "高速婆婆"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

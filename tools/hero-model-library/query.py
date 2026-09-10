@@ -82,15 +82,16 @@ def main():
     for h in records:
         default = h['default']
         print(f"\n{h['name']} [{h['id']}] — {h['work']}")
-        print('  素材庫預設：'+(default['name']+'／'+default['tier'] if default else '尚無已核准預設'))
+        print('  素材庫預設（'+h['defaultSelectionMode']+'）：'+(default['name']+'／'+default['tier'] if default else '尚無已核准預設'))
         choice=h['checkoutSelection'];current=h['current']
         print('  本分支實際選擇：'+(str(choice['modelKey'])+'（'+choice['mode']+'）' if choice else '尚無角色定義'))
         print('  正式機觀測快照：'+data['productionSnapshot']['observedAt']+'；'+(current['name'] if current else '當時未上架'))
         for i,option in enumerate(h['options'],1):
             print(f"  候選 {i}：{option['name']} | {option['tier']} | {option['work']} | {option['kind']} | {'可作預設' if option['defaultEligible'] else '未核准預設'}")
             asset=option['asset'];print('    modelKey: '+asset['modelKey'])
+            if asset.get('gitPath'): print('    Git: '+asset['gitPath'])
             if asset.get('s3Uri'):
-                print('    S3: '+asset['s3Uri']);print('    SHA-256: '+asset['sha256'])
+                print('    S3 副本: '+asset['s3Uri']);print('    SHA-256: '+asset['sha256'])
             else:print('    位置：專案既有模型，未列入此 S3 成品版本')
         for p in h['pending']: print('  待轉換：'+p['name'])
         for s in h.get('publicCandidates',[]) + h.get('paidCandidates',[]):

@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.783291279029e5bc6d9769b7",
+  "title": "鲁路修",
+  "kind": "model-body",
+  "model": "models/community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-10-20260907",
+        "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+        "glbPath": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+        "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+        "bytes": 890368,
+        "documentSha256": "783291279029e5bc6d9769b7fda69863480589c014f0de8900a4fcbd67e96feb",
+        "sourceCharacter": "鲁路修",
+        "sourceWork": "Code Geass 反叛的魯路修",
+        "sourceAssetId": "300heroes:33317960eca2c46de312fce2",
+        "sourceSha256": "221cd4e13379d665b9da5d286d0073ec37c72f121305652a66a249a37eb920bb",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.783291279029e5bc6d9769b7"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-10-20260907",
+        "name": "魯路修"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

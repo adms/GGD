@@ -1,0 +1,81 @@
+{
+  "id": "ggd.model.550c1060c9dfa0f2c6cd0e63",
+  "title": "赫拉克勒斯",
+  "kind": "model-body",
+  "model": "models/community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:41",
+        "modelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+        "glbPath": "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+        "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+        "bytes": 881000,
+        "documentSha256": "550c1060c9dfa0f2c6cd0e631f61b79d98664d9810d9a7d4b4f053767c9230d9",
+        "sourceCharacter": "赫拉克勒斯",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:cb2c63b8a72af4572f8e8550",
+        "sourceSha256": "102e6f3e59d670620a50d4231e595b1f018eb0cd68ce179d464d3a834af209dc",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.550c1060c9dfa0f2c6cd0e63"
+      },
+      {
+        "id": "community:community-review-15-20260907",
+        "modelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+        "glbPath": "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+        "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+        "bytes": 881000,
+        "documentSha256": "550c1060c9dfa0f2c6cd0e631f61b79d98664d9810d9a7d4b4f053767c9230d9",
+        "sourceCharacter": "赫拉克勒斯",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:cb2c63b8a72af4572f8e8550",
+        "sourceSha256": "102e6f3e59d670620a50d4231e595b1f018eb0cd68ce179d464d3a834af209dc",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.550c1060c9dfa0f2c6cd0e63"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-hapm",
+        "name": "海克力斯 - Berserker"
+      },
+      {
+        "id": "community-review-15-20260907",
+        "name": "比利海靈頓"
+      },
+      {
+        "id": "b2-noor",
+        "name": "諾爾"
+      },
+      {
+        "id": "b2-guts",
+        "name": "凱茲"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.eba1d1141943fb1855696a4c",
+  "title": "米瑟利（獨立副本／优克莉伍德）",
+  "kind": "model-body",
+  "model": "models/community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:misery",
+        "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+        "glbPath": "assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
+        "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+        "bytes": 1281100,
+        "documentSha256": "eba1d1141943fb1855696a4c7e22dfec8a8b66bc4b3f81035f1054808ef7319c",
+        "sourceCharacter": "米瑟利（獨立副本／优克莉伍德）",
+        "sourceWork": "這樣算是殭屍嗎？",
+        "sourceAssetId": "derivative:misery",
+        "sourceSha256": "e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-misery",
+          "targetName": "米瑟利",
+          "targetWork": "來自魔界／アウターゾーン",
+          "sourceId": "300heroes:199",
+          "sourceSha256": "e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef",
+          "copyMode": "independent-embedded-copy",
+          "changes": "完整複製優克莉伍德模型與貼圖"
+        },
+        "bundleId": "ggd.model.eba1d1141943fb1855696a4c"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-misery",
+        "name": "米瑟利"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

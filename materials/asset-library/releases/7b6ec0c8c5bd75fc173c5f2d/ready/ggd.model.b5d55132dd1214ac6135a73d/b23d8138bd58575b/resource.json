@@ -1,0 +1,46 @@
+{
+  "id": "ggd.model.b5d55132dd1214ac6135a73d",
+  "title": "蜘蛛子（300英雄寵物版）",
+  "kind": "model-body",
+  "model": "models/community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "pet:spider",
+        "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+        "glbPath": "assets/models/community/f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b.glb",
+        "sha256": "f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b",
+        "bytes": 799056,
+        "documentSha256": "b5d55132dd1214ac6135a73d6ebd1d74676c4affb3e9f126927d7bc902fe9899",
+        "sourceCharacter": "蜘蛛子（300英雄寵物版）",
+        "sourceWork": "轉生成蜘蛛又怎樣！",
+        "sourceAssetId": "300heroes:4157bcefff6690cc3cf84b76",
+        "sourceSha256": "018e12f5dc7ca40a7bdbe92d190132f8b3f00b4e7d320a9ecdfb1b321d77cd00",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "bat_run",
+          "attack": "bat_dance1",
+          "cast": "bat_dance2",
+          "hurt": "bat_idle",
+          "death": "bat_dead"
+        },
+        "limitations": [
+          "Pet dance clips adapt attack/cast; no native combat or separate hurt reaction.",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。",
+          "確認角色與來源模型對應；不表示完整戰鬥動畫、人形或專屬特效音效已就緒。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "identityProof": "spider-identity.json",
+        "bundleId": "ggd.model.b5d55132dd1214ac6135a73d"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-kumoko",
+        "name": "蜘蛛子"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

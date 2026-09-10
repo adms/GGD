@@ -1,0 +1,52 @@
+{
+  "id": "ggd.model.ea975386405e8702b6fde096",
+  "title": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+  "kind": "model-body",
+  "model": "models/community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:kirby",
+        "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+        "glbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+        "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+        "bytes": 199860,
+        "documentSha256": "ea975386405e8702b6fde096968313acee2c3c4e9dcae07c114f35bcef8587c0",
+        "sourceCharacter": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+        "sourceWork": "GGD 自製程序化卡通替身",
+        "sourceAssetId": "derivative:kirby",
+        "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "community-review-06-20260907",
+          "targetName": "卡比",
+          "targetWork": "星之卡比",
+          "sourceId": "community:community-review-06-20260907",
+          "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+          "copyMode": "independent-embedded-copy",
+          "changes": "完整複製 pink-round 程序化替身"
+        },
+        "bundleId": "ggd.model.ea975386405e8702b6fde096"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-06-20260907",
+        "name": "卡比"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

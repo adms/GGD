@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.3cd69b3d3be17422970e3f4c",
+  "title": "小一",
+  "kind": "model-body",
+  "model": "models/community.body.64dc1015923537534452de098ac7209081039b5fae0e2169.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:227",
+        "modelKey": "community.body.64dc1015923537534452de098ac7209081039b5fae0e2169",
+        "glbPath": "assets/models/community/efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509.glb",
+        "sha256": "efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509",
+        "bytes": 1104152,
+        "documentSha256": "3cd69b3d3be17422970e3f4c0a09bbcdb8f3d360bbfa6adaf116b51f35c324d4",
+        "sourceCharacter": "小一",
+        "sourceWork": "BLEACH 死神",
+        "sourceAssetId": "300heroes:0583f874944e93106f8f0f97",
+        "sourceSha256": "7dfa5b999a4928cff686076edd3777b0b43ae1188a638506656b5ce55aa3143a",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.3cd69b3d3be17422970e3f4c"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-h01n",
+        "name": "開外掛的死神 - 黑崎一護"
+      },
+      {
+        "id": "godie-h01o",
+        "name": "外掛開很大的死神 - 黑崎一護"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}
