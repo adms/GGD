@@ -86,7 +86,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -149,7 +150,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -265,7 +267,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -362,7 +365,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.w.webp"
     }
   },
   "archetype": "fighter",

@@ -106,7 +106,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "point"
+        }
+      ]
     },
     "W": {
       "id": "community-review-07-20260907.w",
@@ -164,7 +171,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-07-20260907.e",
@@ -237,7 +250,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.arc"
+        }
+      ]
     },
     "R": {
       "id": "community-review-07-20260907.r",
@@ -289,7 +308,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-07-20260907.ex",

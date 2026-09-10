@@ -96,7 +96,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-leesin.q.webp"
     },
     "W": {
       "id": "lol-leesin.w",
@@ -167,7 +168,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-leesin.w.webp"
     },
     "E": {
       "id": "lol-leesin.e",
@@ -221,7 +223,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/lol-leesin.e.webp"
     },
     "R": {
       "id": "lol-leesin.r",
@@ -297,7 +300,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-leesin.r.webp"
     }
   },
   "exAbility": "lol-leesin.ex",

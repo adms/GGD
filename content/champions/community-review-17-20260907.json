@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-17-20260907.w",
@@ -155,7 +161,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.summon",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.summon",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-17-20260907.e",
@@ -220,7 +233,14 @@
           "damageType": "magic"
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.pulse",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-17-20260907.r",
@@ -272,7 +292,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "vfxKey": "fx.prim.void.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-17-20260907.ex",

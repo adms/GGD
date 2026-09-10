@@ -99,7 +99,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "vfxKey": "fx.prim.sound.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.sound.nova",
+          "attachTo": "point"
+        }
+      ]
     },
     "W": {
       "id": "community-review-30-20260907.w",
@@ -157,7 +164,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.sound.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.sound.pulse"
+        }
+      ]
     },
     "E": {
       "id": "community-review-30-20260907.e",
@@ -235,7 +248,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.sound.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.sound.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-30-20260907.r",
@@ -294,7 +314,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.sound.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.sound.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-30-20260907.ex",

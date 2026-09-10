@@ -99,7 +99,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/lol-karthus.q.webp"
     },
     "W": {
       "id": "lol-karthus.w",
@@ -157,7 +158,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-karthus.w.webp"
     },
     "E": {
       "id": "lol-karthus.e",
@@ -224,7 +226,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-karthus.e.webp"
     },
     "R": {
       "id": "lol-karthus.r",
@@ -276,7 +279,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/lol-karthus.r.webp"
     }
   },
   "exAbility": "lol-karthus.ex",

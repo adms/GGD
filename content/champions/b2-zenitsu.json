@@ -65,7 +65,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-zenitsu.e.webp"
     },
     "Q": {
       "castTimeSec": 0.5,
@@ -155,7 +156,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-zenitsu.q.webp"
     },
     "R": {
       "castTimeSec": 1.033,
@@ -259,7 +261,8 @@
           "vfxKey": "fx.prim.lightning.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-zenitsu.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -373,7 +376,8 @@
           "vfxKey": "fx.prim.lightning.slash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-zenitsu.w.webp"
     }
   },
   "archetype": "fighter",

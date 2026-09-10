@@ -111,7 +111,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-missfortune.q.webp"
     },
     "W": {
       "id": "lol-missfortune.w",
@@ -175,7 +176,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-missfortune.w.webp"
     },
     "E": {
       "id": "lol-missfortune.e",
@@ -244,7 +246,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/lol-missfortune.e.webp"
     },
     "R": {
       "id": "lol-missfortune.r",
@@ -303,7 +306,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/lol-missfortune.r.webp"
     }
   },
   "exAbility": "lol-missfortune.ex",

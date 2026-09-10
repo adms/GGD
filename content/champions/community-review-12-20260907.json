@@ -126,7 +126,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367
+      "castTimeSec": 0.367,
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-12-20260907.w",
@@ -187,7 +193,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.physical.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.nova",
+          "attachTo": "point"
+        }
+      ]
     },
     "E": {
       "id": "community-review-12-20260907.e",
@@ -265,7 +278,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-12-20260907.r",
@@ -332,7 +352,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.physical.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-12-20260907.ex",

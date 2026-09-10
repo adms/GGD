@@ -78,7 +78,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.e.webp"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -171,7 +172,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -300,7 +302,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -393,7 +396,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.w.webp"
     }
   },
   "archetype": "tank",

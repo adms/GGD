@@ -130,7 +130,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.bolt"
+        }
+      ]
     },
     "W": {
       "id": "community-review-26-20260907.w",
@@ -188,7 +194,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-26-20260907.e",
@@ -242,7 +254,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-26-20260907.r",
@@ -298,7 +317,13 @@
           "castTimeSec": 1.633
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-26-20260907.ex",

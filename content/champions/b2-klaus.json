@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-klaus.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -107,7 +108,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-klaus.q.webp"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -177,7 +179,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.nova"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-klaus.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -271,7 +274,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-klaus.w.webp"
     }
   },
   "archetype": "marksman",

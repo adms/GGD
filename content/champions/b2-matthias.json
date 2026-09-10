@@ -78,7 +78,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-matthias.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -155,7 +156,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-matthias.q.webp"
     },
     "R": {
       "castTimeSec": 1.033,
@@ -216,7 +218,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-matthias.r.webp"
     },
     "W": {
       "castTimeSec": 0.567,
@@ -270,7 +273,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-matthias.w.webp"
     }
   },
   "archetype": "mage",

@@ -130,7 +130,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse"
+        }
+      ]
     },
     "W": {
       "id": "community-review-21-20260907.w",
@@ -189,7 +195,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-21-20260907.e",
@@ -243,7 +256,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-21-20260907.r",
@@ -302,7 +322,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.holy.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-21-20260907.ex",

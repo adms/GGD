@@ -118,7 +118,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.arc"
+        }
+      ]
     },
     "W": {
       "id": "community-review-06-20260907.w",
@@ -190,7 +196,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam"
+        }
+      ]
     },
     "E": {
       "id": "community-review-06-20260907.e",
@@ -249,7 +261,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-06-20260907.r",
@@ -319,7 +338,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-06-20260907.ex",

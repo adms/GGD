@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-25-20260907.w",
@@ -177,7 +183,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.9
+      "castTimeSec": 0.9,
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-25-20260907.e",
@@ -255,7 +267,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-25-20260907.r",
@@ -325,7 +344,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ki.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-25-20260907.ex",

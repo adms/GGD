@@ -104,7 +104,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.summon",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.summon",
+          "attachTo": "caster"
+        }
+      ]
     },
     "W": {
       "id": "community-review-01-20260907.w",
@@ -163,7 +170,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.summon",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.summon",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-01-20260907.e",
@@ -222,7 +236,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-01-20260907.r",
@@ -274,7 +295,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "vfxKey": "fx.prim.lightning.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-01-20260907.ex",

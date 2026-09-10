@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-05-20260907.w",
@@ -202,7 +208,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.bolt"
+        }
+      ]
     },
     "E": {
       "id": "community-review-05-20260907.e",
@@ -261,7 +273,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-05-20260907.r",
@@ -320,7 +339,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.lightning.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-05-20260907.ex",

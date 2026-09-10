@@ -57,7 +57,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-elma.e.webp"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -153,7 +154,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-elma.q.webp"
     },
     "R": {
       "castTimeSec": 1.7,
@@ -217,7 +219,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-elma.r.webp"
     },
     "W": {
       "castTimeSec": 0.067,
@@ -323,7 +326,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-elma.w.webp"
     }
   },
   "archetype": "tank",

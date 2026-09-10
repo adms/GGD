@@ -51,7 +51,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-keyaru.e.webp"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -113,7 +114,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-keyaru.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -216,7 +218,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-keyaru.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -315,7 +318,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-keyaru.w.webp"
     }
   },
   "archetype": "mage",

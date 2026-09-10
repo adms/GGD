@@ -117,7 +117,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.q.webp"
     },
     "W": {
       "id": "lol-yasuo.w",
@@ -176,7 +177,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.w.webp"
     },
     "E": {
       "id": "lol-yasuo.e",
@@ -254,7 +256,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.e.webp"
     },
     "R": {
       "id": "lol-yasuo.r",
@@ -340,7 +343,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.9
+      "castTimeSec": 0.9,
+      "icon": "assets/icons/abilities/lol-yasuo.r.webp"
     }
   },
   "exAbility": "lol-yasuo.ex",
