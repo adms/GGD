@@ -18,10 +18,10 @@
  *   · 20* 分支裡的 `>> "$LEDGER"` 兩行拿掉 → 🔴（帳本沒長出那兩列）
  */
 import { describe, it, expect } from "vitest";
-import { execFile, execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { createServer } from "node:http";
-import { mkdtempSync, writeFileSync, readFileSync, chmodSync, mkdirSync } from "node:fs";
+import { mkdtempSync, writeFileSync, readFileSync, chmodSync, mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve, join } from "node:path";
 
@@ -36,55 +36,68 @@ const ROOT = resolve(__dirname, "../../../..");
  */
 const run = promisify(execFile);
 
+// 這條量的是發送後記帳。固定 Git／票庫輸入，避免最新版本的真玩家改動
+// 在 post 前正確觸發「缺玩家句」閘，卻被誤報為發送成功後漏記帳。
+const SINCE = "v0.0.0";
+const MIDDLE = "v0.0.1";
+const NOW = "v0.0.2";
+function stubReleaseInputs(dir: string): string {
+  const stub = join(dir, "bin");
+  mkdirSync(stub);
+  writeFileSync(join(stub, "gh"), "#!/bin/sh\nexit 0\n"); // issue list -q：零張票
+  writeFileSync(join(stub, "git"), `#!/bin/sh
+case "$*" in
+  "tag --sort=v:refname") printf '%s\\n' '${SINCE}' '${MIDDLE}' '${NOW}' ;;
+  "log -1 --format=%cI ${SINCE}") printf '%s\\n' '2026-09-01T00:00:00+00:00' ;;
+  "log --format=%s%n%b ${SINCE}..${NOW}"|"log --format=%s ${SINCE}..${NOW}") : ;;
+  *) echo "Unexpected Git fixture call: $*" >&2; exit 2 ;;
+esac
+`);
+  chmodSync(join(stub, "gh"), 0o755);
+  chmodSync(join(stub, "git"), 0o755);
+  return stub;
+}
+
 describe("Discord 公告發成功就要記帳（owner 2026-09-01：每個版本號都不能跳過）", () => {
   it("★ ⭐ 跑真的那一支：發成功 ⇒ `_announced.tsv` 長出這一版（⛔ 不是掃字串）", async () => {
-    const srv = createServer((_q, s) => s.writeHead(204).end());
+    let hits = 0;
+    const srv = createServer((_q, s) => { hits += 1; s.writeHead(204).end(); });
     await new Promise<void>((ok) => srv.listen(0, "127.0.0.1", ok));
     const port = (srv.address() as { port: number }).port;
 
-    // ⭐ 在**真的 repo** 上跑真的那一支（腳本要 git tag），
-    // ⛔ 而帳本指到暫存檔 —— 測試不可以動到出貨的那一份。
+    // 跑出貨腳本與帳本合併器；只有 Git、票庫和 HTTP 是 fixture。
+    // 帳本指到暫存檔，測試不可以動到出貨的那一份。
     const dir = mkdtempSync(join(tmpdir(), "ggd-announce-"));
     const ledger = join(dir, "_announced.tsv");
     writeFileSync(ledger, "版號\t日期\t一句\n");
 
-    // ⭐ `gh` 換成假的 —— ⛔ 不是為了「不碰網路」這種潔癖：
-    // 量到 **180 秒 → 1 秒**（那一支要逐張票撈玩家句）。
-    // ⚠️ 而被測的**仍然是真的那一支腳本** —— 換掉的是它的**外部依賴**，
-    //   ⛔ 不是它的邏輯（失敗形態⑤：被測的不是出貨的那個）。
-    const stub = join(dir, "bin");
-    mkdirSync(stub, { recursive: true });
-    writeFileSync(join(stub, "gh"), '#!/bin/sh\ncase "$*" in *--json*) echo "[]";; *) echo "";; esac\n');
-    chmodSync(join(stub, "gh"), 0o755);
-
-    const tags = execFileSync("git", ["tag", "--sort=-v:refname"], { cwd: ROOT, encoding: "utf8" })
-      .split("\n").filter(Boolean);
-    const now = tags[0]!;
+    const stub = stubReleaseInputs(dir);
+    const now = NOW;
 
     try {
-      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", tags[2]!], {
+      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", SINCE, "--until", now], {
         cwd: ROOT, encoding: "utf8", timeout: 60_000,
         env: {
-          ...process.env,
           GGD_DISCORD_WEBHOOK: `http://127.0.0.1:${port}/hook`,
           GGD_ANNOUNCE_LEDGER: ledger,
           PATH: `${stub}:${process.env.PATH ?? ""}`,
         },
       });
-    } catch {
-      /* 沒有玩家句時腳本會非零離開 —— 那與這條守衛無關，下面的斷言自己會說話 */
+      expect(hits, "必須真的收到一次 HTTP 請求，才能宣稱發送成功").toBe(1);
+      const after = readFileSync(ledger, "utf8");
+      expect(
+        after.includes(`${now}\t`),
+        `⛔⛔ Discord 發成功了，而 \`_announced.tsv\` **沒有** ${now} 這一列\n` +
+          `⇒ 閘 (everyTagAnnounced) 會一直紅，而下一輪會**重發同一則公告**。\n` +
+          `⭐ 修在**發送端**（\`release-note-players.sh\` 的 20* 分支），⛔ 不是手打一列。\n` +
+          `帳本現況:\n${after}`,
+      ).toBe(true);
+      expect(after, "補發涵蓋的中間版本也必須記帳").toContain(`${MIDDLE}\t`);
+      expect(after, "區間起點不在本次公告內").not.toContain(`${SINCE}\t`);
     } finally {
-      srv.close();
+      await new Promise<void>((ok, fail) => srv.close((err) => err ? fail(err) : ok()));
+      rmSync(dir, { recursive: true, force: true });
     }
-
-    const after = readFileSync(ledger, "utf8");
-    expect(
-      after.includes(`${now}\t`),
-      `⛔⛔ Discord 發成功了，而 \`_announced.tsv\` **沒有** ${now} 這一列\n` +
-        `⇒ 閘 (everyTagAnnounced) 會一直紅，而下一輪會**重發同一則公告**。\n` +
-        `⭐ 修在**發送端**（\`release-note-players.sh\` 的 20* 分支），⛔ 不是手打一列。\n` +
-        `帳本現況:\n${after}`,
-    ).toBe(true);
   }, 90_000);
 
   /**
@@ -109,31 +122,23 @@ describe("Discord 公告發成功就要記帳（owner 2026-09-01：每個版本�
 
     const dir = mkdtempSync(join(tmpdir(), "ggd-announce-dup-"));
     const ledger = join(dir, "_announced.tsv");
-    const stub = join(dir, "bin");
-    mkdirSync(stub, { recursive: true });
-    writeFileSync(join(stub, "gh"), '#!/bin/sh\ncase "$*" in *--json*) echo "[]";; *) echo "";; esac\n');
-    chmodSync(join(stub, "gh"), 0o755);
-
-    const tags = execFileSync("git", ["tag", "--sort=-v:refname"], { cwd: ROOT, encoding: "utf8" })
-      .split("\n").filter(Boolean);
-    const now = tags[0]!;
+    const stub = stubReleaseInputs(dir);
+    const now = NOW;
     // ⭐ 帳本上**已經有**這一版 —— 也就是「第一次已經發過了」的世界。
     writeFileSync(ledger, `版號\t日期\t一句\n${now}\t2026-09-01\t（上一次發過了）\n`);
 
     try {
-      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", tags[2]!], {
+      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", SINCE, "--until", now], {
         cwd: ROOT, encoding: "utf8", timeout: 60_000,
         env: {
-          ...process.env,
           GGD_DISCORD_WEBHOOK: `http://127.0.0.1:${port}/hook`,
           GGD_ANNOUNCE_LEDGER: ledger,
           PATH: `${stub}:${process.env.PATH ?? ""}`,
         },
       });
-    } catch {
-      /* 同上：非零離開與這條守衛無關 */
     } finally {
-      srv.close();
+      await new Promise<void>((ok, fail) => srv.close((err) => err ? fail(err) : ok()));
+      rmSync(dir, { recursive: true, force: true });
     }
 
     expect(

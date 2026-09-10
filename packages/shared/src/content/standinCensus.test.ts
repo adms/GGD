@@ -124,8 +124,8 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "godie-u00k",
     "sela",
   ],
-  // blocky-knight.glb
-  "champ.thorne": ["godie-hapm", "godie-ucrl", "godie-udea", "thorne"],
+  // blocky-knight.glb. Main 107626f90 moved godie-ucrl to imported.herobiggon.
+  "champ.thorne": ["godie-hapm", "godie-udea", "thorne"],
   // blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form swap
   // moved him onto a shared mesh, a downgrade the owner already knows about,
   // and #231's per-champion skin is what makes it survivable.

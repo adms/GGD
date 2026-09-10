@@ -1,0 +1,53 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.mvp-ci-fixtures-budget",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "社群 MVP 的設定讀端、變身判準與 CI 治具修正",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "模型匯入改讀已存在的 channel 設定；相同模型在不同設定下分別拒收、警告、通過，未新增豁免。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/modelUpload/budget.test.ts packages/shared/src/content/modelUpload/heroModel.test.ts packages/shared/src/ops/modelBudgetThresholdsOrdered.test.ts tools/model-budget/limits.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "97601e43e926d1fcb1f4aa71e98b18db990bc594",
+      "evidence": [
+        "materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "傑富力士兩態共用模型但既有 tint 顯示綠轉灰，Shared 判準與 Client 真實消費端一致；替身普查同步既有 Main 綁定，ART_DEBT 未改。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/championFormVisibility.test.ts packages/shared/src/content/standinCensus.test.ts apps/client/src/render/views/formAwareModelResolve.test.ts apps/client/src/render/views/standinCensus.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "97601e43e926d1fcb1f4aa71e98b18db990bc594",
+      "evidence": [
+        "materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "公告 fixture 固定 Git 區間與空票庫，要求 HTTP 回應與成功退出後才驗證臨時帳本；出貨公告腳本及真實帳本未改。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/ops/announceLedgerIsWritten.test.ts packages/shared/src/ops/playerNoteNeverEmpty.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "97601e43e926d1fcb1f4aa71e98b18db990bc594",
+      "evidence": [
+        "materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json"
+      ]
+    }
+  ],
+  "asks": [
+    "請沿 #1135／#1153 審查合併必要修正；#1159 的真實公告缺口仍保留，不能由 mock 成功推論實際送達。",
+    "模型 channel 設定已接入匯入程式；CLI 啟動時讀取，Editor 與服務需一起重建部署。",
+    "沿既有 community overlay 部署 Editor 後，執行已接受 81 份作品的投稿、核准與必要進場確認；不新增英雄設計或額外驗收。"
+  ]
+}

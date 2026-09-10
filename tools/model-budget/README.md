@@ -22,7 +22,7 @@ DERIVES 160 channels per hero.
 
 **That derived number is no longer the shipped limit.** owner set the thresholds
 directly on 2026-09-10 (GH#1164): "太低了 至少要有 300以上每個" and then
-"你改成 300 warning, 500 limit". The live values are a config knob --
+"你改成 300 warning, 500 limit". The values come from the config --
 `content/config/model-lod.json`'s `championChannelWarn` / `championChannelLimit`
 (shipped 300 / 500) -- and the formula above is now a DIAGNOSTIC only:
 `derateFor(limit)` answers "how much safety margin does this setting imply"
@@ -32,6 +32,8 @@ Do not hand-write the numbers here again: read them from the config, or from
 `HERO_MODEL_BUDGET.channels` which reads the same single home. Geometry, draws,
 and texture limits stay unchanged. A channel is one animated node property,
 not a clip: storing many clips does not mean playing them all in one frame.
+The CLI reads that JSON on startup; Editor and service builds bundle it, so
+changing these import thresholds requires rebuilding and deploying them together.
 
 ---
 
