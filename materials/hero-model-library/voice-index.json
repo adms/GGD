@@ -12365,7 +12365,9 @@
       "name": "小呆／達伊 / Dai",
       "library": "公開來源",
       "sourceId": "parallel-ps-jumpforce-audio",
-      "heroIds": [],
+      "heroIds": [
+        "godie-nbbc"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -43355,7 +43357,7 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "fa9440c24cf6215b59ebd3470fc61f5500ecd1cb9af946ed22c892c254b0a3a9"
+      "sha256": "f09f5c6cc6c377c151f715453b09c654c6687e6eaec6892092629bc226923ecf"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",

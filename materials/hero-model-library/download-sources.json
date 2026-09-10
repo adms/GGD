@@ -5549,7 +5549,9 @@
         {
           "id": "JForce_Dai",
           "name": "小呆／達伊 / Dai",
-          "heroIds": [],
+          "heroIds": [
+            "godie-nbbc"
+          ],
           "pathPrefixes": [
             "extracted/JForce_Dai/"
           ],

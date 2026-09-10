@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:15:54+08:00",
-  "inputsSha256": "ee69673d3c8e260b0b5a04a72a86440461649ac231d56233a4e1e7939f17514e",
+  "generatedAt": "2026-09-11T06:24:18+08:00",
+  "inputsSha256": "98ca165cada78b5ae9b2cb32dc470b973660066a138ba55eb953e8b566e56442",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -31779,7 +31779,9 @@
             {
               "id": "JForce_Dai",
               "name": "小呆／達伊 / Dai",
-              "heroIds": [],
+              "heroIds": [
+                "godie-nbbc"
+              ],
               "pathPrefixes": [
                 "extracted/JForce_Dai/"
               ],
@@ -31894,7 +31896,9 @@
             {
               "id": "JForce_Dai",
               "name": "小呆／達伊 / Dai",
-              "heroIds": [],
+              "heroIds": [
+                "godie-nbbc"
+              ],
               "pathPrefixes": [
                 "extracted/JForce_Dai/"
               ],
@@ -63545,7 +63549,9 @@
           {
             "id": "JForce_Dai",
             "name": "小呆／達伊 / Dai",
-            "heroIds": [],
+            "heroIds": [
+              "godie-nbbc"
+            ],
             "pathPrefixes": [
               "extracted/JForce_Dai/"
             ],
