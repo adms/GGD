@@ -154,7 +154,23 @@ const VOICE_LINES_PREFIX = "audio/voices/lines/";
  *   ⇒ 閘：`assetsInContentVersion.test.ts` 的「⑤ 雜湊的母體 == git 追蹤的母體」
  *     **兩個方向一起驗**（多算了 ⇒ 紅並指名檔；少算了 ⇒ 也紅並指名檔）。
  */
+/**
+ * ⭐⭐ **素材本體不進 git 的那幾族** —— owner 2026-09-08（逐字）：
+ * 「資源庫 我覺得**不要進 git** 但可以存到 S3 `ggd-390630837668-ap-east-2-an`」
+ *
+ * ⚠️⚠️ ⭐ 這一格與 `.gitignore` 是**同一條規則的兩個住處**（見上面那段說明）
+ * ⇒ ⛔ 改一個而不改另一個，這台機器就會算出跟乾淨 clone **不一樣的 cv**，
+ *   ⭐ 而症狀是 `shippedBundleIsCurrent` 在 CI 上必紅、訊息說「bundle 過期了」
+ *   —— ⛔ **指著錯方向**（跑一百次 `content:build` 也不會綠）。
+ * ⇒ ⭐ 閘 `assetsInContentVersion.test.ts` ⑤ **兩個方向一起驗**，這一格漂掉就會紅。
+ */
+const OFF_DISK_ASSET_PREFIXES = [
+  // ⭐ ou99 模型 33 顆／72 MB —— 走 S3，git 只收 `manifest.json` 的 SHA-256。
+  "models/ou99/",
+] as const;
+
 export function isNonShippingAsset(rel: string): boolean {
+  if (OFF_DISK_ASSET_PREFIXES.some((prefix) => rel.startsWith(prefix))) return true;
   if (!rel.startsWith(VOICE_LINES_PREFIX)) return false;
   return rel.includes("/takes/") || rel.endsWith("/reference.wav") || rel.endsWith(".method");
 }

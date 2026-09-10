@@ -151,7 +151,14 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
     { collection: "champions", id: compiled.champion.id, document: json(compiled.champion) },
     ...compiled.relatedChampions.map((body) => ({ collection: "champions" as const, id: body.id, document: json(body) })),
     ...HERO_SLOTS.map((slot) => ({ collection: "abilities" as const, id: compiled.abilityDrafts[slot].id, document: json(compiled.abilityDrafts[slot]) })),
-    ...compiled.vfxScripts.map((script) => ({ collection: "vfx-scripts" as const, id: script.id, document: json(script) })),
+    // ⭐⭐ **作者稿**（保留 `call`）—— ⛔ 不是 `compiled.vfxScripts`（那是展開後的預覽用）。
+    //
+    // ⚠️⚠️ ⭐ 這一行踩過：寫展開後的那一份 ⇒ 七名 LOL 英雄的 `.r` 一上架就是**烘平**的，
+    //   ⛔ 而作者稿裡明明寫著 `call`。烘平＝`content/vfx-subtypes/` 那塊積木
+    //   從此有了 N 個住處（第〇·四守則），⛔ 而改積木再也影響不到它們。
+    // ⭐ 出貨載入器自己會展開（`registries.ts` 的 `expandVfxScriptDoc()`）
+    //   ⇒ ⭐ 玩家看到的一模一樣，⛔ 而住處仍然只有一個。
+    ...compiled.authoredVfxScripts.map((script) => ({ collection: "vfx-scripts" as const, id: script.id, document: json(script) })),
   ];
   const own = new Set(runtime.map(keyOf));
   const visited = new Set<string>();

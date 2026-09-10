@@ -50,7 +50,7 @@
       ]
     }
   ],
-  "castTimeSec": 1.833,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
@@ -68,7 +68,7 @@
       "pushSpeed": 872,
       "pushFrom": "facing",
       "pushLaunchHeight": 100,
-      "castTimeSec": 1.833
+      "castTimeSec": 0.3
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"

@@ -46,7 +46,7 @@
       "anchor": "caster"
     }
   ],
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -58,7 +58,7 @@
       "applyTo": "enemies",
       "damageTier": "極小",
       "damageType": "magic",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "radius": 4.5
     },
     "inheritDefaults": true,

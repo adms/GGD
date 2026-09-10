@@ -34,7 +34,24 @@ export interface GeneratedHeroDraft {
   warnings: readonly ForgeWarning[];
 }
 
-export type CompiledHeroDraft = Omit<GeneratedHeroDraft, "vfxScripts"> & { vfxScripts: readonly VfxScriptDoc[] };
+export type CompiledHeroDraft = Omit<GeneratedHeroDraft, "vfxScripts"> & {
+  /**
+   * ⭐ **展開後**的 script —— 給編輯器預覽用（它要看到最終長什麼樣）。
+   * ⛔⛔ **不要拿它當出貨文件**：展開＝把 `content/vfx-subtypes/` 那塊積木的段落
+   * **烘平**進來 ⇒ 那塊積木從此有了 N 個住處（第〇·四守則）。
+   */
+  vfxScripts: readonly VfxScriptDoc[];
+  /**
+   * ⭐⭐ **作者稿**（保留 `call`）—— ⭐ 這一份才是要寫進 `content/` 的。
+   *
+   * ⚠️ ⭐ 出貨的載入器**自己會展開**（`registries.ts` 的 `expandVfxScriptDoc()`）
+   * ⇒ ⭐ 送作者稿出去，玩家看到的東西**一模一樣**，⛔ 而積木仍然只有一個住處。
+   *
+   * ⚠️⚠️ ⭐ 這一格是**踩出來的**：在它出現之前 `heroPackage.ts` 寫的是展開後的那一份
+   * ⇒ ⭐ 七名 LOL 英雄的 `.r` 一上架就是烘平的，⛔ 而作者稿裡明明寫著 `call`。
+   */
+  authoredVfxScripts: readonly VfxScriptAuthoredDoc[];
+};
 
 export interface HeroDraftCompileFailure {
   slot: HeroSlot;
@@ -238,6 +255,8 @@ export function compileGeneratedHeroDraft(
     draft: {
       ...generated,
       vfxScripts,
+      // ⭐ 作者稿原樣帶出去 —— ⛔ 出貨要用這一份（見型別上的說明）。
+      authoredVfxScripts: generated.vfxScripts,
       champion: runtimeBodies.champion,
       relatedChampions: runtimeBodies.relatedChampions.map((body) => resolveChampionRuntimeStats(body, configs, runtimeRoster)),
       abilityDrafts,
