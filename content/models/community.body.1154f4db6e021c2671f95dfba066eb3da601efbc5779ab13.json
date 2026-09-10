@@ -1,0 +1,17 @@
+{
+  "id": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "garen_2013_idle1",
+    "run": "garen_2013_run",
+    "attack": "garen_2013_attack_01",
+    "cast": "garen_2013_spell1",
+    "hurt": "garen_2013_idle1",
+    "death": "garen_2013_death"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

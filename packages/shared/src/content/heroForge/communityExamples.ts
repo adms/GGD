@@ -9,12 +9,13 @@ import { pinHeroPlanTemplates } from "./templateVersions";
 
 type Band = "極小" | "小" | "中" | "大" | "極大";
 type Params = Record<string, unknown>;
-interface Move {
+export interface Move {
   name: string;
   purpose: string;
   ref: string;
   params: Params;
   effects?: Params[];
+  abilityOverrides?: Record<string, unknown>;
   range?: Band;
   cooldown?: Band;
   mana?: Band;
@@ -26,6 +27,7 @@ export interface CommunityHeroExample {
   name: string;
   origin: Origin;
   attackType?: "melee" | "ranged";
+  modelKey?: string;
   summary: string;
   adaptations: readonly string[];
   sourceUrl: string;
@@ -154,11 +156,17 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
 export function createCommunityHeroExample(exampleId: string, projectId: string, templates: readonly TemplateDoc[], generatorVersion?: string): HeroProject {
   const recipe = COMMUNITY_HERO_EXAMPLES.find((entry) => entry.id === exampleId);
   if (!recipe) throw new Error(`找不到社群驗收範例：${exampleId}`);
+  return createCommunityHeroRecipe(recipe, projectId, templates, generatorVersion);
+}
+
+/** Compile an authoring recipe with its own identity and pinned template sources. */
+export function createCommunityHeroRecipe(recipe: CommunityHeroExample, projectId: string, templates: readonly TemplateDoc[], generatorVersion?: string): HeroProject {
   const catalog = new Map(templates.map((template) => [template.id, template]));
+  const withHeroId = <T,>(value: T): T => JSON.parse(JSON.stringify(value).replaceAll("$hero", projectId));
   const sourceLock = { canonicalId: null, versionId: null };
-  const concept = `${recipe.summary}\n\n概念來源：LoL ${recipe.inspiration}\n${recipe.sourceUrl}\n\n本遊戲改編：\n${recipe.adaptations.map((text) => `• ${text}`).join("\n")}\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。`;
+  const concept = `${recipe.summary}\n\n概念來源：LoL ${recipe.inspiration}\n${recipe.sourceUrl}\n\n本遊戲改編：\n${recipe.adaptations.map((text) => `• ${text}`).join("\n")}\n\n${recipe.modelKey ? "採用所選 GGD 模型與特效。" : "採用既有 GGD 模型與特效，外觀為驗收用替身。"}`;
   const presentation = defaultHeroPresentation();
-  presentation.modelKey = recipe.origin === "法師" || recipe.origin === "軟輔" ? "champ.sela" : "champ.thorne";
+  presentation.modelKey = recipe.modelKey ?? (recipe.origin === "法師" || recipe.origin === "軟輔" ? "champ.sela" : "champ.thorne");
   const slots = zHeroSlotPlans.parse(Object.fromEntries(HERO_SLOTS.map((slot) => {
     const definition = recipe.moves[slot];
     const template = catalog.get(definition.ref);
@@ -174,10 +182,10 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
     return [slot, {
       slot, name: definition.name, purpose: definition.purpose, maxRank: defaultAbilityMaxRank(slot),
       products: [{ instanceId: `${recipe.id}-${slot.toLowerCase()}-1`, template: { ref: definition.ref, inheritDefaults: true,
-        params: JSON.parse(JSON.stringify(definition.params).replaceAll("$hero", projectId)) } }],
+        params: withHeroId(definition.params) } }],
       templateConflictPolicy: "reject",
       tuning: { cooldownSec: passive ? 0 : 10, manaCost: passive ? 0 : 40, range: passive ? 0 : 6 },
-      abilityOverrides: { provenance: "editor-json", ...(passive ? {} : { rangeTier: definition.range ?? "中", cooldownTier: definition.cooldown ?? (slot === "EX" ? "大" : "小"), manaCostTier: definition.mana ?? "小", castTimeTier: definition.cast ?? "小" }), ...(definition.effects ? { effects: structuredClone(definition.effects) } : {}) },
+      abilityOverrides: withHeroId({ provenance: "editor-json", ...(passive ? {} : { rangeTier: definition.range ?? "中", cooldownTier: definition.cooldown ?? (slot === "EX" ? "大" : "小"), manaCostTier: definition.mana ?? "小", castTimeTier: definition.cast ?? "小" }), ...(definition.effects ? { effects: definition.effects } : {}), ...definition.abilityOverrides }),
       capabilityIds: [...template.requires], directionOptionIds: [], fallbackOptionIds: [],
     }];
   })));

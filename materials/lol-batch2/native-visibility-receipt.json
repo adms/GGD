@@ -1,0 +1,242 @@
+{
+  "schema": "ggd-lol-native-visibility@1",
+  "policy": "Only native skin0 initialSubmeshToHide; original complete converted candidates retained",
+  "models": [
+    {
+      "nativeId": "Sett",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/sett.glb",
+      "sourceSha256": "9110afcfd168016d7af9ca2865cb4f46f363850c1654617bb9e7bbab0484290a",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/sett.glb",
+      "outputSha256": "4b2d0e5cb00f8aeb75f34ccb53f4066ded6896168a3242cbef80b558d6482ff6",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/sett/skin0.bin",
+      "sourceSkinBinSha256": "c73bc9ae2f08756a54bed760129eaaf6642baf3ac73ccfc652dc9fec33569ed0",
+      "sourceSkinJsonSha256": "bd9a3ff3401341638fee0c5a9dfb3a6fee83d322665cce85285fe11167bf4f22",
+      "initialSubmeshToHide": [
+        "Wolverine",
+        "Joke"
+      ],
+      "removedPrimitives": [
+        {
+          "mesh": 0,
+          "primitive": 1,
+          "submesh": "Joke"
+        },
+        {
+          "mesh": 0,
+          "primitive": 2,
+          "submesh": "Wolverine"
+        }
+      ],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "FiddleSticks",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/fiddlesticks.glb",
+      "sourceSha256": "27ba0329650473a5bc48a38d50597ad5fa6bcd0e301746e4ca3f3c92bc077949",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/fiddlesticks.glb",
+      "outputSha256": "683a79aeedf01fe9b4d470312e443034fd00740ea94a91e3d0c9702e316fe6b8",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/fiddlesticks/skin0.bin",
+      "sourceSkinBinSha256": "14b534158cf76f9ab94b40518a37b445d2c230b4dcab8f1113819b2b78ada6b2",
+      "sourceSkinJsonSha256": "a24e31214e1cb70ddae2745e87e47bb37ad59f2a4e57435a3642e5de7354a049",
+      "initialSubmeshToHide": [
+        "L_Demon_Arm",
+        "Lantern",
+        "Tongue",
+        "R_Demon_Arm"
+      ],
+      "removedPrimitives": [
+        {
+          "mesh": 0,
+          "primitive": 2,
+          "submesh": "Lantern"
+        },
+        {
+          "mesh": 0,
+          "primitive": 3,
+          "submesh": "Tongue"
+        },
+        {
+          "mesh": 0,
+          "primitive": 4,
+          "submesh": "L_Demon_Arm"
+        },
+        {
+          "mesh": 0,
+          "primitive": 5,
+          "submesh": "R_Demon_Arm"
+        }
+      ],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Ornn",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/ornn.glb",
+      "sourceSha256": "cc3f6d6a68f305de8ce2840e386cb3c7a73fe596d79bd909e3cc5fc2a029d872",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/ornn.glb",
+      "outputSha256": "8119647b05f24f29801a5d90f6e78e7a3575d3f36258b225bf52e80229ea2c56",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/ornn/skin0.bin",
+      "sourceSkinBinSha256": "62ff7d9991cc1768ab685d3e147c008c43abd755dc92bc83473421e6cfd867d2",
+      "sourceSkinJsonSha256": "46f19c0e8ee09957606cd16650a3f099294c22d4f187d3dad600b57c6e6a2b4c",
+      "initialSubmeshToHide": [
+        "Ornn_Base_Sword_Mat",
+        "Ornn_Base_Bucket_Mat",
+        "Ornn_Base_Poro_Mat"
+      ],
+      "removedPrimitives": [
+        {
+          "mesh": 0,
+          "primitive": 3,
+          "submesh": "Ornn_Base_Sword_Mat"
+        },
+        {
+          "mesh": 0,
+          "primitive": 4,
+          "submesh": "Ornn_Base_Bucket_Mat"
+        },
+        {
+          "mesh": 0,
+          "primitive": 5,
+          "submesh": "Ornn_Base_Poro_Mat"
+        }
+      ],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Chogath",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/chogath.glb",
+      "sourceSha256": "3ca4b7888a88e2884e4495ed23f07dad7e4a490223ea324dbc91e8bf0fc55e99",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/chogath.glb",
+      "outputSha256": "3ca4b7888a88e2884e4495ed23f07dad7e4a490223ea324dbc91e8bf0fc55e99",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/chogath/skin0.bin",
+      "sourceSkinBinSha256": "7d7f264584c04b31dac82558609672016d9269beccd16302280d5709c9e34043",
+      "sourceSkinJsonSha256": "b32abc99314a29a71842d567bf70611adadd558f5ad40fbc99c1607f1585514d",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Ashe",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/ashe.glb",
+      "sourceSha256": "3d349a9c3d58ac9a0179884c745010f564860a2429e54c45e070c448172cc0b1",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/ashe.glb",
+      "outputSha256": "3d349a9c3d58ac9a0179884c745010f564860a2429e54c45e070c448172cc0b1",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/ashe/skin0.bin",
+      "sourceSkinBinSha256": "1a400435cb19b8d3a0fdc55878ff16f633097032a29a0ca02d58da182f49011d",
+      "sourceSkinJsonSha256": "151a1e8675a38090781dfc0e42ec611fb8980316b132b754d31d734a85c9bea3",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Blitzcrank",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/blitzcrank.glb",
+      "sourceSha256": "7f2ef7d96e126013e23306e186c328799b2584b0459d30d2983c976ff3b940c3",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/blitzcrank.glb",
+      "outputSha256": "7f2ef7d96e126013e23306e186c328799b2584b0459d30d2983c976ff3b940c3",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/blitzcrank/skin0.bin",
+      "sourceSkinBinSha256": "5a3701e685927577c67c54a9dc637b170d17f51ad05928d0a50d1d2ff9423921",
+      "sourceSkinJsonSha256": "e9176c2c7dfc7a8b0a6c4b7029095671784b0219a40c63e5af107d6fb2d46720",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Ahri",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/ahri.glb",
+      "sourceSha256": "b2d74a18345782e2d0d4b493bade335d0ca808e4c2c19f1b64481bcda7ca1aed",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/ahri.glb",
+      "outputSha256": "5ccf963af7495d6e461e572e39ac38c43567d94e89df2488397ae12a405fa8e1",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/ahri/skin0.bin",
+      "sourceSkinBinSha256": "3e9b89b5b2c55149b95223f26fd51a5f4c7f94e90e3ffb28745b116c6d4d4ef0",
+      "sourceSkinJsonSha256": "372337988a0aa9e1d03cce759d753933153bb805b18714808be0b447ea2ea2a2",
+      "initialSubmeshToHide": [
+        "Tail_Large",
+        "Body_Proxy"
+      ],
+      "removedPrimitives": [
+        {
+          "mesh": 0,
+          "primitive": 3,
+          "submesh": "Tail_Large"
+        }
+      ],
+      "hiddenNamesAbsentFromSkn": [
+        "Body_Proxy"
+      ],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Thresh",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/thresh.glb",
+      "sourceSha256": "466bc77490ef0f9698835261e32cab371313c6b23e304676627cea3439f0e6b1",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/thresh.glb",
+      "outputSha256": "466bc77490ef0f9698835261e32cab371313c6b23e304676627cea3439f0e6b1",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/thresh/skin0.bin",
+      "sourceSkinBinSha256": "045c7e8b63240a827ab77eea28bd978958287fa42a7655c28a6f9ad3810f6048",
+      "sourceSkinJsonSha256": "99e19104ee3304228abfb9c661d49f8d539b6aa0ddf93af71497bfab3ed82eea",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Velkoz",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/velkoz.glb",
+      "sourceSha256": "6041685c64720b278ed3c0975b7bf250a49328b5f7ac8dc4a91c330076976951",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/velkoz.glb",
+      "outputSha256": "6041685c64720b278ed3c0975b7bf250a49328b5f7ac8dc4a91c330076976951",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/velkoz/skin0.bin",
+      "sourceSkinBinSha256": "00283667664751274b7ee67bb252b0f1c0661490cd918d0c3fc57855fa1a3521",
+      "sourceSkinJsonSha256": "be54b5dc6128f0473a20de617516e4ab9262d50862ef988edd7f3725169e52eb",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Malphite",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/malphite.glb",
+      "sourceSha256": "d6bf5d9ea2d4bbd3c3ed3ac4a216c1e17777a935868cae378fa350502584f15b",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/malphite.glb",
+      "outputSha256": "d6bf5d9ea2d4bbd3c3ed3ac4a216c1e17777a935868cae378fa350502584f15b",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/malphite/skin0.bin",
+      "sourceSkinBinSha256": "3221214886ae3b694192dbd04e964282a0be49eb617c3a11f897a3955a09b895",
+      "sourceSkinJsonSha256": "7fbfdc8455a1a2e6a35543a61945a74002f3c82068b82f994dcfa5e8c87af45b",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    },
+    {
+      "nativeId": "Garen",
+      "source": "/private/tmp/ggd-lol-batch2-assets/converted/garen.glb",
+      "sourceSha256": "2eac4abb51a41ae109081b155c687c27319f749137b26a4883993fb30f1ec6e0",
+      "output": "/private/tmp/ggd-lol-batch2-assets/native-visible/garen.glb",
+      "outputSha256": "2eac4abb51a41ae109081b155c687c27319f749137b26a4883993fb30f1ec6e0",
+      "sourceSkinBin": "/private/tmp/ggd-lol-batch2-assets/skin-config/garen/skin0.bin",
+      "sourceSkinBinSha256": "3356e1a894b5eb6b68a31a6f0645be090c83b0bcdedeca643ac4bfb04a75daea",
+      "sourceSkinJsonSha256": "5cbaeeb54546c04a8e99eaba48bcb95b01efb10b14472be19bb595a0323dd656",
+      "initialSubmeshToHide": [],
+      "removedPrimitives": [],
+      "hiddenNamesAbsentFromSkn": [],
+      "binaryChunkUnchanged": true,
+      "otherJsonUnchanged": true
+    }
+  ]
+}

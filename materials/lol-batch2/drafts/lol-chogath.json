@@ -1,0 +1,873 @@
+{
+  "schema": "ggd-local-draft@1",
+  "key": "hero/lol-chogath",
+  "kind": "hero",
+  "revision": 1,
+  "payload": {
+    "project": {
+      "schema": "ggd-hero-project@2",
+      "projectId": "lol-chogath",
+      "revision": 1,
+      "sourceLock": {
+        "canonicalId": null,
+        "versionId": null
+      },
+      "brief": {
+        "name": "科加斯",
+        "concept": "設計草案，尚未完成上架驗收。擊殺補給、前排控制與低血吞噬\n\n概念來源：LoL 科加斯\nhttps://www.leagueoflegends.com/zh-tw/champions/chogath/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：回復用固定GGD數值，不隨LoL等級原公式。\n• Q：原地擊飛含0.2單位的小推移。\n• W：錐形改成短寬直帶，保留方向與沉默用途。\n• E：不改用無條件額外普攻被動；確實只有三次額度。\n• R：20%處決線替代原作固定傷害致死判斷；onDevour在排致死傷時觸發，免死者可存活而仍給成長。最多六層+240生命，無體型成長。\n• EX：不増大模型、不新增飽食資源。\n\n採用所選 GGD 模型與特效。",
+        "moveNames": {
+          "PASSIVE": "肉食者",
+          "Q": "破裂",
+          "W": "野性尖嘯",
+          "E": "恐懼尖刺",
+          "R": "饗宴",
+          "EX": "吃太飽走不動"
+        }
+      },
+      "sections": {
+        "identity": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "attributes": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "skills": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "mechanics": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "presentation": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "validation": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "package": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        }
+      },
+      "acceptedPlan": {
+        "schema": "ggd-hero-plan@2",
+        "planId": "lol-chogath.concept",
+        "title": "科加斯",
+        "summary": "設計草案，尚未完成上架驗收。擊殺補給、前排控制與低血吞噬\n\n概念來源：LoL 科加斯\nhttps://www.leagueoflegends.com/zh-tw/champions/chogath/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：回復用固定GGD數值，不隨LoL等級原公式。\n• Q：原地擊飛含0.2單位的小推移。\n• W：錐形改成短寬直帶，保留方向與沉默用途。\n• E：不改用無條件額外普攻被動；確實只有三次額度。\n• R：20%處決線替代原作固定傷害致死判斷；onDevour在排致死傷時觸發，免死者可存活而仍給成長。最多六層+240生命，無體型成長。\n• EX：不増大模型、不新增飽食資源。\n\n採用所選 GGD 模型與特效。",
+        "sourceLock": {
+          "canonicalId": null,
+          "versionId": null
+        },
+        "origin": "坦克",
+        "archetype": "tank",
+        "attackType": "melee",
+        "budget": {
+          "power": 50,
+          "complexity": 40
+        },
+        "statOverrides": {},
+        "templateVersions": {
+          "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+            "id": "tpl-event-passive",
+            "schema": "template@1",
+            "name": "自訂事件被動",
+            "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+            "family": "event-passive",
+            "status": "enabled",
+            "params": {
+              "hooks": {
+                "type": "hooks",
+                "default": [
+                  {
+                    "on": "onBasicAttack",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "極小"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              }
+            },
+            "requires": [
+              "hooks",
+              "conditions"
+            ],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+              "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+            }
+          },
+          "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+            "id": "tpl-effect-sequence",
+            "schema": "template@1",
+            "name": "自訂效果序列",
+            "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+            "family": "effect-sequence",
+            "status": "enabled",
+            "params": {
+              "castType": {
+                "type": "enum",
+                "default": "targeted",
+                "values": [
+                  "targeted",
+                  "self",
+                  "ground",
+                  "skillshot"
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "castTimeSec": {
+                "type": "number",
+                "default": 0,
+                "min": 0,
+                "max": 10,
+                "unit": "s",
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "radius": {
+                "type": "number",
+                "default": 2,
+                "min": 0,
+                "max": 40,
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "side": {
+                "type": "enum",
+                "default": "enemies",
+                "values": [
+                  "enemies",
+                  "allies"
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              },
+              "effects": {
+                "type": "effects",
+                "default": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ],
+                "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+              }
+            },
+            "requires": [
+              "hooks",
+              "conditions"
+            ],
+            "gapScore": 10,
+            "exemplar": {
+              "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+              "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+            }
+          }
+        },
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "name": "肉食者",
+            "purpose": "擊殺敵方單位回復生命與魔力。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json"
+            },
+            "products": [
+              {
+                "instanceId": "chogath-passive-1",
+                "template": {
+                  "ref": "tpl-event-passive",
+                  "params": {
+                    "hooks": [
+                      {
+                        "on": "onKill",
+                        "effects": [
+                          {
+                            "kind": "heal",
+                            "amount": {
+                              "flat": 50,
+                              "ratios": []
+                            },
+                            "applyTo": "self"
+                          },
+                          {
+                            "kind": "restore",
+                            "manaPct": 0.03,
+                            "applyTo": "self"
+                          }
+                        ],
+                        "target": "self",
+                        "victim": "enemy",
+                        "internalCooldown": 0.2
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 0,
+              "manaCost": 0,
+              "range": 0
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "Q": {
+            "slot": "Q",
+            "name": "破裂",
+            "purpose": "落點預警後地刺傷害、短擊飛與緩速。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "chogath-q-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "ground",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "delayed",
+                        "shape": "circle",
+                        "delaySec": 0.5,
+                        "count": 1,
+                        "intervalSec": 0.5,
+                        "effects": [
+                          {
+                            "kind": "damage",
+                            "damageType": "magic",
+                            "amount": {
+                              "damageTier": "小"
+                            }
+                          },
+                          {
+                            "kind": "knockback",
+                            "distance": 0.2,
+                            "speed": 12,
+                            "from": "caster",
+                            "subtractGap": false,
+                            "launchHeight": 1
+                          },
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-chogath.rupture-slow",
+                            "duration": 1.5,
+                            "sourceScope": "caster",
+                            "moveSpeedMult": 0.65
+                          }
+                        ],
+                        "stopOnCasterDeath": true,
+                        "radius": 2,
+                        "side": "enemies",
+                        "targetMode": "reresolve"
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "W": {
+            "slot": "W",
+            "name": "野性尖嘯",
+            "purpose": "前方短寬帶造成魔法傷害並沉默。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "chogath-w-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "skillshot",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "damageLine",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "小"
+                        },
+                        "length": 4,
+                        "width": 3,
+                        "aim": "facing",
+                        "fromCaster": true,
+                        "includeOrigin": true,
+                        "onHitTargets": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "lol-chogath.scream",
+                            "duration": 1,
+                            "sourceScope": "caster",
+                            "silenced": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "E": {
+            "slot": "E",
+            "name": "恐懼尖刺",
+            "purpose": "接下來三次普攻向前噴刺，傷害及緩速。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "chogath-e-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "self",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "duration": 6,
+                        "modifiers": [],
+                        "statusId": "lol-chogath.spikes",
+                        "stackKey": "lol-chogath.spikes",
+                        "maxStacks": 1,
+                        "hooks": [
+                          {
+                            "on": "onBasicAttack",
+                            "effects": [
+                              {
+                                "kind": "damageLine",
+                                "damageType": "magic",
+                                "amount": {
+                                  "damageTier": "極小"
+                                },
+                                "length": 4,
+                                "width": 1.2,
+                                "aim": "facing",
+                                "fromCaster": true,
+                                "includeOrigin": true,
+                                "onHitTargets": [
+                                  {
+                                    "kind": "applyStatus",
+                                    "statusId": "lol-chogath.spike-slow",
+                                    "duration": 1,
+                                    "sourceScope": "caster",
+                                    "moveSpeedMult": 0.75
+                                  }
+                                ]
+                              }
+                            ],
+                            "maxTriggers": 3,
+                            "onConsumed": "detachSource"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "R": {
+            "slot": "R",
+            "name": "饗宴",
+            "purpose": "近距真傷；處決線內吞噬並獲得有上限的最大生命成長。",
+            "maxRank": 3,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "極小",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "chogath-r-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "targeted",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "true",
+                        "amount": {
+                          "damageTier": "中"
+                        },
+                        "condition": {
+                          "not": {
+                            "kind": "stat",
+                            "subject": "target",
+                            "stat": "hp",
+                            "mode": "percent",
+                            "op": "<=",
+                            "value": 0.2
+                          }
+                        }
+                      },
+                      {
+                        "kind": "devour",
+                        "shape": "single",
+                        "thresholdPctOfMax": [
+                          0.2
+                        ],
+                        "victim": "any",
+                        "healPct": 0,
+                        "throughShields": true,
+                        "onDevour": [
+                          {
+                            "kind": "applyBuff",
+                            "applyTo": "self",
+                            "permanent": true,
+                            "permanentScope": "match",
+                            "modifiers": [
+                              {
+                                "stat": "maxHealth",
+                                "op": "flat",
+                                "value": 40
+                              }
+                            ],
+                            "stackKey": "lol-chogath.feast-growth",
+                            "maxStacks": 6
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "EX": {
+            "slot": "EX",
+            "name": "吃太飽走不動",
+            "purpose": "大口回復自身生命，但兩秒移速降至六成。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "chogath-ex-1",
+                "template": {
+                  "ref": "tpl-effect-sequence",
+                  "params": {
+                    "castType": "self",
+                    "castTimeSec": 0.2,
+                    "radius": 2.5,
+                    "side": "enemies",
+                    "effects": [
+                      {
+                        "kind": "heal",
+                        "amount": {
+                          "flat": 220,
+                          "ratios": []
+                        },
+                        "applyTo": "self"
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "lol-chogath.full",
+                        "duration": 2,
+                        "sourceScope": "caster",
+                        "applyTo": "self",
+                        "moveSpeedMult": 0.6
+                      }
+                    ]
+                  },
+                  "inheritDefaults": true,
+                  "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          }
+        }
+      },
+      "presentation": {
+        "schema": "ggd-hero-presentation@1",
+        "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+        "championIcon": null,
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": null,
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "Q": {
+            "slot": "Q",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-chogath.q",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-chogath.q",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "破裂",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "W": {
+            "slot": "W",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-chogath.w",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-chogath.w",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "野性尖嘯",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "E": {
+            "slot": "E",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-chogath.e",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-chogath.e",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "恐懼尖刺",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "R": {
+            "slot": "R",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-chogath.r",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-chogath.r",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "饗宴",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                },
+                {
+                  "call": {
+                    "subtype": "sub.forward-twin-blast",
+                    "params": {
+                      "trigger": "castEffect",
+                      "anchor": "target",
+                      "offsetForwardU": 0,
+                      "burstLifeSec": 0.8
+                    }
+                  }
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "EX": {
+            "slot": "EX",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "lol-chogath.ex",
+              "schema": "vfx-script@1",
+              "abilityId": "lol-chogath.ex",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "吃太飽走不動",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          }
+        },
+        "assetLocks": []
+      },
+      "validationState": {
+        "identity": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "attributes": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "skills": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "mechanics": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "presentation": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "validation": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "package": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        }
+      },
+      "receipts": []
+    },
+    "rawInputs": {},
+    "mode": "visual",
+    "origin": "坦克"
+  },
+  "updatedAt": 0,
+  "token": "5decb86467ccbf86c40d292539cc610266eddf2c15d0ba3036838d7a6d1b66c3"
+}

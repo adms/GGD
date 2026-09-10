@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1",
+  "sourceModel": {
+    "id": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "velkoz_idle1v2",
+      "run": "velkoz_run",
+      "attack": "velkoz_attack1",
+      "cast": "velkoz_spell1",
+      "hurt": "velkoz_idle1v2",
+      "death": "velkoz_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    87
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "velkoz_idle1v2",
+      "changedVertices": 4477,
+      "maxDelta": 177.40096429073455,
+      "vertices": 4477
+    },
+    {
+      "state": "run",
+      "clip": "velkoz_run",
+      "changedVertices": 4477,
+      "maxDelta": 193.03127054402782,
+      "vertices": 4477
+    },
+    {
+      "state": "attack",
+      "clip": "velkoz_attack1",
+      "changedVertices": 4477,
+      "maxDelta": 218.3107592315369,
+      "vertices": 4477
+    },
+    {
+      "state": "cast",
+      "clip": "velkoz_spell1",
+      "changedVertices": 4477,
+      "maxDelta": 150.53091195031703,
+      "vertices": 4477
+    },
+    {
+      "state": "hurt",
+      "clip": "velkoz_idle1v2",
+      "changedVertices": 4477,
+      "maxDelta": 177.40096429073455,
+      "vertices": 4477
+    },
+    {
+      "state": "death",
+      "clip": "velkoz_death",
+      "changedVertices": 4477,
+      "maxDelta": 355.1872894652472,
+      "vertices": 4477
+    }
+  ],
+  "nativePoseComparison": null,
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

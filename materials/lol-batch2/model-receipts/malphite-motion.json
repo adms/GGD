@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9",
+  "sourceModel": {
+    "id": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "malphite_idle1",
+      "run": "malphite_run",
+      "attack": "malphite_attack1",
+      "cast": "malphite_spell1",
+      "hurt": "malphite_idle1",
+      "death": "malphite_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    47
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "malphite_idle1",
+      "changedVertices": 1610,
+      "maxDelta": 18.330958153780653,
+      "vertices": 1610
+    },
+    {
+      "state": "run",
+      "clip": "malphite_run",
+      "changedVertices": 1610,
+      "maxDelta": 66.29210903907953,
+      "vertices": 1610
+    },
+    {
+      "state": "attack",
+      "clip": "malphite_attack1",
+      "changedVertices": 1610,
+      "maxDelta": 155.2709815395814,
+      "vertices": 1610
+    },
+    {
+      "state": "cast",
+      "clip": "malphite_spell1",
+      "changedVertices": 1610,
+      "maxDelta": 64.09796786308587,
+      "vertices": 1610
+    },
+    {
+      "state": "hurt",
+      "clip": "malphite_idle1",
+      "changedVertices": 1610,
+      "maxDelta": 18.330958153780653,
+      "vertices": 1610
+    },
+    {
+      "state": "death",
+      "clip": "malphite_death",
+      "changedVertices": 1610,
+      "maxDelta": 174.11206042567883,
+      "vertices": 1610
+    }
+  ],
+  "nativePoseComparison": null,
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

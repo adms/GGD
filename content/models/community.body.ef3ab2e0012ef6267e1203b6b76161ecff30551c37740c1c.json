@@ -1,0 +1,17 @@
+{
+  "id": "community.body.ef3ab2e0012ef6267e1203b6b76161ecff30551c37740c1c",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/73c7d2745836e8224c7ebb103e329477f6764c804956a784ff7f2f42e8c5081e.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "thresh_idle1",
+    "run": "thresh_run",
+    "attack": "thresh_attack1_long",
+    "cast": "thresh_spell1_in",
+    "hurt": "thresh_idle1",
+    "death": "thresh_death"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

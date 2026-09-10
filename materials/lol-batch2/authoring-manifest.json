@@ -1,0 +1,231 @@
+{
+  "schema": "ggd-lol-batch2-authoring@1",
+  "issue": 1185,
+  "releaseReady": false,
+  "source": "packages/shared/src/content/heroForge/communityLolBatch2.ts",
+  "generator": "tools/community-hero-forge/lol-batch2.mts",
+  "recipeSha256": "sha256:20ed31822521229741842f3e4d771c3be991560e85616d88125cc475195dfc8a",
+  "status": "candidate; source-critical mechanics pending Main",
+  "serviceImported": false,
+  "published": false,
+  "rows": [
+    {
+      "id": "lol-sett",
+      "name": "賽特",
+      "revision": 1,
+      "projectSha256": "sha256:1c2302bd14681a7ee4132155f7142096e6f6aa811884e21e35b67661064d0110",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/sett/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-fiddlesticks",
+      "name": "稻草人",
+      "revision": 1,
+      "projectSha256": "sha256:f5ecc6cf80f1a73785b57b2637d5a33a39dc678e33380cb90e28abbb6bf426a2",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/fiddlesticks/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+        "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18"
+      ]
+    },
+    {
+      "id": "lol-ornn",
+      "name": "鄂爾",
+      "revision": 1,
+      "projectSha256": "sha256:1b2d48a6a66e7b8f903017f645925c7b6f4efec26a12cd742c17a8c7fdaf9445",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/ornn/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+        "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+        "sha256:cd1a55b463af1810a2877caa1a555bc5133aea203f5bb08250897febe16549be"
+      ]
+    },
+    {
+      "id": "lol-chogath",
+      "name": "科加斯",
+      "revision": 1,
+      "projectSha256": "sha256:90c1fbbeecdc80b0acb2341809a562a16ef7f70e8a8a281fc5c57f393965329b",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/chogath/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-ashe",
+      "name": "艾希",
+      "revision": 1,
+      "projectSha256": "sha256:ae02bc409d2df4a4b1e4b08211725af7c0988d29e29de42d63bd9f1daaa1d68f",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/ashe/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1bd60879cbecd89756",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-blitzcrank",
+      "name": "布里姿",
+      "revision": 1,
+      "projectSha256": "sha256:c88ed97f3aadf6ef85f9a6f54ddc26f06009f3dd48ed9e467838906016bfdf20",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/blitzcrank/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-ahri",
+      "name": "阿璃",
+      "revision": 1,
+      "projectSha256": "sha256:09aab6139665d0228ee138d182c18f67f051136086bcd7d74c5d4906a2c783e0",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/ahri/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-thresh",
+      "name": "瑟雷西",
+      "revision": 1,
+      "projectSha256": "sha256:91655ba922582089ae5cc3149b2acf70daf076fb3133c9b25a38dd5281ac4f6c",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/thresh/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+        "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458"
+      ]
+    },
+    {
+      "id": "lol-velkoz",
+      "name": "威寇茲",
+      "revision": 1,
+      "projectSha256": "sha256:e9610799628739f15234e5ecef88533a6a9126c715039e0d915ad2354ccbf0b1",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/velkoz/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:22f3592f006a022a252618d0bbc9fb733d12e81613182d1cbe4215650038f48f",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-malphite",
+      "name": "墨菲特",
+      "revision": 1,
+      "projectSha256": "sha256:2790625ae2be4b22adddb93a4f3484be3da0e65650c56733fc10e0540c5e1b9b",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/malphite/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+      ]
+    },
+    {
+      "id": "lol-garen",
+      "name": "蓋倫",
+      "revision": 1,
+      "projectSha256": "sha256:314483d025ac1897967aad4b583a6e16f2dbe92060b6c24225e1f3522c2847b9",
+      "slots": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/garen/",
+      "templateVersions": [
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+        "sha256:cd1a55b463af1810a2877caa1a555bc5133aea203f5bb08250897febe16549be",
+        "sha256:8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806676b36f2bcfb9911"
+      ]
+    }
+  ]
+}

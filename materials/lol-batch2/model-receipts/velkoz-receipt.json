@@ -1,0 +1,185 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "lol:velkoz",
+    "source": {
+      "path": "/private/tmp/ggd-lol-batch2-assets/native-visible/velkoz.glb",
+      "sha256": "6041685c64720b278ed3c0975b7bf250a49328b5f7ac8dc4a91c330076976951",
+      "bytes": 4622820
+    },
+    "output": {
+      "path": "/private/tmp/ggd-lol-batch2-assets/texture256/velkoz.glb",
+      "bytes": 4522640,
+      "sha256": "bfe1b231061d6c1ae336968a72c7fb801dc55bdbbfb1456506c3bf46f65f678f"
+    },
+    "stateClips": {
+      "idle": "velkoz_idle1v2",
+      "run": "velkoz_run",
+      "attack": "velkoz_attack1",
+      "cast": "velkoz_spell1",
+      "death": "velkoz_death",
+      "hurt": "velkoz_idle1v2"
+    },
+    "sourceArchive": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+      "sha256": "2de8837128bbe3a8261bf933e1ad6ce43ccaa66d0efbee98407116dfb4602261"
+    },
+    "nativeVisibilityReceipt": "/private/tmp/ggd-lol-batch2-assets/native-visibility-receipt.json",
+    "conversionRecipe": "/private/tmp/ggd-lol-batch2-assets/conversion-recipes.json",
+    "normalizer": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/normalize-existing-glb.py",
+      "sha256": "8500099dcd359dd09fb9439fadc184f44dec208fca6dc86b996a26c6f8692569",
+      "bytes": 4167
+    },
+    "limitations": [
+      "hurt aliases original idle; no dedicated native hurt animation",
+      "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+      "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+    ],
+    "accessorRepair": "/private/tmp/ggd-lol-batch2-assets/repair-tool-source.json",
+    "textureResize": "/private/tmp/ggd-lol-batch2-assets/texture256/optimize-manifest.json"
+  },
+  "selectedClips": {
+    "idle": "velkoz_idle1v2",
+    "run": "velkoz_run",
+    "attack": "velkoz_attack1",
+    "cast": "velkoz_spell1",
+    "death": "velkoz_death",
+    "hurt": "velkoz_idle1v2"
+  },
+  "originalClipCount": 5,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "velkoz_idle1v2",
+      "duration": 7.966667175292969,
+      "channels": 258
+    },
+    {
+      "index": 1,
+      "name": "velkoz_run",
+      "duration": 7.966667175292969,
+      "channels": 258
+    },
+    {
+      "index": 2,
+      "name": "velkoz_attack1",
+      "duration": 1.6000001430511475,
+      "channels": 258
+    },
+    {
+      "index": 3,
+      "name": "velkoz_spell1",
+      "duration": 1.3000000715255737,
+      "channels": 258
+    },
+    {
+      "index": 4,
+      "name": "velkoz_death",
+      "duration": 6.300000190734863,
+      "channels": 258
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1",
+    "byteSize": 4523524,
+    "clipMap": {
+      "idle": "velkoz_idle1v2",
+      "run": "velkoz_run",
+      "attack": "velkoz_attack1",
+      "cast": "velkoz_spell1",
+      "hurt": "velkoz_idle1v2",
+      "death": "velkoz_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "velkoz_idle1v2",
+      "run": "velkoz_run",
+      "attack": "velkoz_attack1",
+      "cast": "velkoz_spell1",
+      "hurt": "velkoz_idle1v2",
+      "death": "velkoz_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 7488,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 122578,
+        "sha256": "f71023c8ea7a87ecb68da0f7a6e5f27903bdb904492c988c8e2d641c59ca85a9"
+      }
+    ]
+  },
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "SharpGLTF 1.0.0+2803c34b2c2f2d7c2034e6633700c46447876a0f",
+      "extensionsUsed": [
+        "KHR_materials_unlit"
+      ],
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 3800064
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 4477,
+      "totalTriangleCount": 7488,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}
