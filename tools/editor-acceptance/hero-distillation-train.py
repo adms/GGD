@@ -142,10 +142,10 @@ def battery_authorization(path):
         return {'maxBatteryDropPoints': 2}, None
     record = read(path)
     assert record['schema'] == 'ggd-distillation-battery-authorization@1'
-    assert record['minimumPercent'] == 40 and record['comparison'] == 'strictly-less-than'
+    assert record['minimumPercent'] == 30 and record['comparison'] == 'strictly-less-than'
     assert record['replacesRelativeDropGuard'] is True and record['otherGuardsUnchanged'] is True
-    assert record['userQuote'] == '我一直都接著電源 你等電源掉到40%以下再來處理好嗎 不要杯弓蛇影'
-    return {'minBatteryPercent': 40}, {'sha256': digest(path), 'record': record}
+    assert record['userQuote'] == '電量界限我們改成30%'
+    return {'minBatteryPercent': 30}, {'sha256': digest(path), 'record': record}
 
 
 def base_files_from_receipt(receipt):
@@ -597,7 +597,7 @@ if __name__ == '__main__':
     parser.add_argument('--run', type=Path); parser.add_argument('--phase', choices=['probe', 'train']); parser.add_argument('--token')
     parser.add_argument('--cache-diagnostic', action='store_true', help='Prepare a bounded forward-only cache diagnostic, never a training admission.')
     parser.add_argument('--time-authorization', type=Path, help='Explicit user authorization record for this single epoch; default remains 7200s.')
-    parser.add_argument('--battery-authorization', type=Path, help='Explicit 40-percent floor authorization; replaces relative battery-drop guard for this new run only.')
+    parser.add_argument('--battery-authorization', type=Path, help='Explicit 30-percent floor authorization; replaces relative battery-drop guard for this new run only.')
     args = parser.parse_args()
     if args.action == 'prepare':
         assert args.data and args.base_receipt and args.out
