@@ -8,7 +8,8 @@ import argparse,gzip,hashlib,json,os,shutil,subprocess,tarfile
 
 REPO=Path(__file__).resolve().parents[2]
 SCOPES=['content/assets','content/models','tools','materials/hero-model-library',
-        'materials/asset-library','packages/shared/src/content','apps/content-api/src']
+        'materials/asset-library','packages/shared/src/content','apps/content-api/src',
+        'eslint.config.mjs']
 BUCKET='ggd-390630837668-ap-east-2-an'
 def sha(path):
     h=hashlib.sha256()
