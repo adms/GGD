@@ -181,7 +181,18 @@ export function round11SelfRole(input: {
   readonly roundDeaths: number;
   /** ⭐ 我這一隊**有實體**的每一格是不是都在這一回合死過 */
   readonly teamAllDiedThisRound: boolean;
+  /**
+   * ⭐⭐ 伺服器送來的**權威答案**（`SeatState.round11Role`，GH#922）。
+   * `""` / 缺席 ＝ 舊伺服器或不在第十一回合 ⇒ ⭐ 退回下面的推導。
+   */
+  readonly wireRole?: string;
 }): Round11SelfRole {
+  // ⭐⭐ 有權威答案就用它 —— ⛔ 推導那一段只是**舊伺服器的相容路徑**。
+  //   ⚠️ ⭐ 這一行把上面檔頭記的那個洞關掉了：
+  //   `A 死 → B 用圈救 A → B 之後才死` 不再把 A 誤報成王。
+  if (input.wireRole === "champion" || input.wireRole === "boss" || input.wireRole === "spectator") {
+    return input.wireRole;
+  }
   if (!input.active) return "champion";
   if (!input.alive) return "spectator";
   if (input.deadPlayersControlBoss && input.roundDeaths > 0 && input.teamAllDiedThisRound) {
@@ -358,6 +369,8 @@ export function round11View(input: {
   readonly notices: readonly Round11Notice[];
   readonly nowMs: number;
   readonly rules: Round11Rules;
+  /** ⭐ 伺服器送來的 `SeatState.round11Role`（⭐ 權威）；缺席 ⇒ 退回推導。 */
+  readonly wireRole?: string;
 }): Round11View | null {
   const { rules } = input;
   if (input.phase !== "combat") return null;
@@ -368,6 +381,7 @@ export function round11View(input: {
     alive: input.alive,
     roundDeaths: input.roundDeaths,
     teamAllDiedThisRound: input.teamAllDied,
+    wireRole: input.wireRole,
   });
   return {
     bannerText: rules.bannerText,

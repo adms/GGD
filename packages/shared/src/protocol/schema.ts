@@ -200,6 +200,22 @@ export class SeatState extends Schema {
    */
   declare mobKills: number;
   /**
+   * ⭐⭐ 第十一回合這個座位**現在是什麼**（GH#922）：
+   * `""` ＝ 不在第十一回合 · `"champion"` · `"boss"`（換邊操作自己的殭屍王）· `"spectator"`。
+   *
+   * ⚠️⚠️ ⭐ 為什麼**非送不可**：換邊在快照上**與復活長得一模一樣** ——
+   * `convertWipedTeamsToBosses()` 重用**同一個 `entityId`** 並把 `hp.alive` 設回 true
+   * ⇒ ⛔ 客戶端看到的是「死掉的人又站起來了」，⭐ 而那與「隊友用復活圈救了他」
+   *   在**位元層級無法區分**。
+   * ⇒ ⭐ 在這一格出現之前，客戶端只能用「我死過 ＋ 全隊都死過」去**推**，
+   *   ⛔ 而 `A 死 → B 用圈救 A → B 之後才死` 會把 A **誤報成王**。
+   *
+   * ⭐ 權威來源是 `MatchController.round11ReconnectRole(seatId)`（⛔ 只有伺服器知道）。
+   *
+   * ⚠️ APPEND-ONLY（同下面那段）：它加在**最後**，⛔ 而且以後也只能有人加在它後面。
+   */
+  declare round11Role: string;
+  /**
    * 這一回合**最後一次**陣亡的絕對 sim tick;`0` = 這一回合沒有被記過陣亡
    * (還活著、輪空被停在場邊、或還沒生成實體)。GH#257 的頒獎台就靠它排名次。
    *
@@ -518,6 +534,9 @@ defineTypes(SeatState, {
   // it anywhere else would silently re-number every field after it and desync
   // any client built against the old order.
   mobKills: "uint16",
+  // ⭐ APPEND-ONLY（見上）：第十一回合的換邊／旁觀身分（GH#922）。**最後一格**——
+  //   ⛔ 換邊與復活在快照上位元層級無法區分，所以這一格是唯一的權威答案。
+  round11Role: "string",
   // APPEND-ONLY (見上):回合存活順序,GH#257。**放在最後**,因為它是最新的欄位 ——
   // @colyseus/schema 用宣告索引編碼,插在任何別的位置都會靜默地把它後面每一個
   // 欄位重新編號,讓任何用舊順序建出來的客戶端整個對不上。

@@ -4534,6 +4534,17 @@ export class MatchController {
   }
 
   /**
+   * ⭐⭐ 送上線的那一格（GH#922）—— ⭐ **只在第十一回合**回非空字串。
+   *
+   * ⚠️ ⭐ 其他回合回 `""` 是刻意的：⛔ 一個永遠有值的欄位會讓客戶端
+   * 以為「每一回合都有換邊這件事」，⭐ 而換邊只存在於第十一回合。
+   */
+  round11RoleOnWire(seatId: SeatId): string {
+    if (this.round11Round !== this.phase.round) return "";
+    return this.round11ReconnectRole(seatId);
+  }
+
+  /**
    * ⭐ 重連之後這個座位是什麼（票:「重連恢復**同一個王／旁觀狀態**」）。
    * ⛔⛔ 它**不分配新的王** —— 會分配的實作正是票說的「重生第二具」。
    */

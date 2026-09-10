@@ -8,22 +8,22 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 210 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 19 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 580 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 55 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 64 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 144 | permanent WC3 passive, never cast, nothing to warn about |
 
-**229 / 229 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**635 / 635 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 90 | self marker at the caster's feet |
-| `targeted` | 69 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 64 | not cast |
-| `ground` | 54 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
-| `skillshot` | 15 | line — the projectile's corridor; step sideways |
+| `self` | 223 | self marker at the caster's feet |
+| `targeted` | 213 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `ground` | 152 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
+| `—` | 144 | not cast |
+| `skillshot` | 46 | line — the projectile's corridor; step sideways |
 | `dash` | 1 | line — the sweep of the dash body |
 
 ## Per-ability matrix
@@ -323,3 +323,489 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | E | 100-03 咕咕嘎嘎 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
 | 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | R | 100-04 百式・哈基米 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
 | 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | EX | 100-002 此世全部之咖哩・バタンキュー | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 武藤遊戲 `community-review-01-20260907` | PASSIVE | 〔決鬥者的布局〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 武藤遊戲 `community-review-01-20260907` | Q | 黑魔導 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 武藤遊戲 `community-review-01-20260907` | W | 黑魔導女孩 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 武藤遊戲 `community-review-01-20260907` | E | 神聖彗星・反射力量 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 武藤遊戲 `community-review-01-20260907` | R | 歐西里斯的天空龍 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 武藤遊戲 `community-review-01-20260907` | EX | 黑・魔・導 | `skillshot` | line 5.86×4.80u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 3 ×2 × abilityRange 0.8 |
+| 八神庵 `community-review-02-20260907` | PASSIVE | 〔八神之炎〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 八神庵 `community-review-02-20260907` | Q | 百八式・闇拂 | `skillshot` | line 5.86×2.93u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 1.83 ×2 × abilityRange 0.8 |
+| 八神庵 `community-review-02-20260907` | W | 百式・鬼燒 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 八神庵 `community-review-02-20260907` | E | 百二十七式・葵花 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 八神庵 `community-review-02-20260907` | R | 禁千二百十一式・八稚女 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 八神庵 `community-review-02-20260907` | EX | 裏三百十六式・豺華 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 不知火舞 `community-review-03-20260907` | PASSIVE | 〔不知火流身法〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 不知火舞 `community-review-03-20260907` | Q | 花蝶扇 | `skillshot` | line 5.86×2.93u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 1.83 ×2 × abilityRange 0.8 |
+| 不知火舞 `community-review-03-20260907` | W | 龍炎舞 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 不知火舞 `community-review-03-20260907` | E | 必殺忍蜂 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 不知火舞 `community-review-03-20260907` | R | 超必殺忍蜂 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 不知火舞 `community-review-03-20260907` | EX | 陽炎之舞 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 空條承太郎 `community-review-04-20260907` | PASSIVE | 〔白金之星・精密動作〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 空條承太郎 `community-review-04-20260907` | Q | 歐拉連打 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 空條承太郎 `community-review-04-20260907` | W | 流星指刺 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 空條承太郎 `community-review-04-20260907` | E | 〔替身護衛〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 空條承太郎 `community-review-04-20260907` | R | 白金之星・世界 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 空條承太郎 `community-review-04-20260907` | EX | 〔歐拉終結拳〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 洛克人 `community-review-05-20260907` | PASSIVE | 〔武器能源管理〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 洛克人 `community-review-05-20260907` | Q | 洛克砲 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 洛克人 `community-review-05-20260907` | W | Metal Blade | `skillshot` | line 5.86×2.93u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 1.83 ×2 × abilityRange 0.8 |
+| 洛克人 `community-review-05-20260907` | E | Leaf Shield | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 洛克人 `community-review-05-20260907` | R | 〔全武裝齊射〕 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 洛克人 `community-review-05-20260907` | EX | 〔特殊武器切換〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 卡比 `community-review-06-20260907` | PASSIVE | 〔圓滾滾的韌性〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 卡比 `community-review-06-20260907` | Q | 吸入 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 卡比 `community-review-06-20260907` | W | 吐出 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 卡比 `community-review-06-20260907` | E | 石頭 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 卡比 `community-review-06-20260907` | R | 超級巨劍 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 卡比 `community-review-06-20260907` | EX | 複製能力 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 西索 `community-review-07-20260907` | PASSIVE | 〔魔術師的節奏〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 西索 `community-review-07-20260907` | Q | 〔撲克牌連射〕 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 西索 `community-review-07-20260907` | W | 伸縮自在的愛 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 西索 `community-review-07-20260907` | E | 〔收線〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 西索 `community-review-07-20260907` | R | 〔彈性殺陣〕 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 西索 `community-review-07-20260907` | EX | 輕薄的假象 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 米卡莎 `community-review-08-20260907` | PASSIVE | 〔阿卡曼戰鬥直覺〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 米卡莎 `community-review-08-20260907` | Q | 〔雙刃斬擊〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 米卡莎 `community-review-08-20260907` | W | 立體機動裝置 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 米卡莎 `community-review-08-20260907` | E | 〔補給與換刃〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 米卡莎 `community-review-08-20260907` | R | 雷槍 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 米卡莎 `community-review-08-20260907` | EX | 〔立體機動・迴旋斬〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 赫蘿 `community-review-09-20260907` | PASSIVE | 〔賢狼的眼光〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 赫蘿 `community-review-09-20260907` | Q | 〔狼牙警告〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 赫蘿 `community-review-09-20260907` | W | 〔行商議價〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 赫蘿 `community-review-09-20260907` | E | 〔麥穗庇護〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 赫蘿 `community-review-09-20260907` | R | 賢狼真身 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 赫蘿 `community-review-09-20260907` | EX | 〔豐收的約定〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魯路修 `community-review-10-20260907` | PASSIVE | 〔戰局推演〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 魯路修 `community-review-10-20260907` | Q | 〔戰術射擊〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 魯路修 `community-review-10-20260907` | W | 〔集中火力〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 魯路修 `community-review-10-20260907` | E | 〔撤退指令〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魯路修 `community-review-10-20260907` | R | 絕對遵守的 Geass | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 魯路修 `community-review-10-20260907` | EX | 〔Checkmate〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 利姆路 `community-review-11-20260907` | PASSIVE | 大賢者 | `—` | — | 🟣 PASSIVE | never cast |
+| 利姆路 `community-review-11-20260907` | Q | 水刃 | `skillshot` | line 5.86×2.93u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 1.83 ×2 × abilityRange 0.8 |
+| 利姆路 `community-review-11-20260907` | W | 捕食者 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 利姆路 `community-review-11-20260907` | E | 擬態 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 利姆路 `community-review-11-20260907` | R | 黑炎 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 利姆路 `community-review-11-20260907` | EX | 〔解析完成・能力再現〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 衛宮士郎 `community-review-12-20260907` | PASSIVE | 〔武器解析〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 衛宮士郎 `community-review-12-20260907` | Q | 干將・莫邪 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 衛宮士郎 `community-review-12-20260907` | W | 〔投影・飛劍〕 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 衛宮士郎 `community-review-12-20260907` | E | 〔強化・踏步〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 衛宮士郎 `community-review-12-20260907` | R | 無限劍製 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 衛宮士郎 `community-review-12-20260907` | EX | 〔投影・迎擊〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 朝田詩乃 `community-review-13-20260907` | PASSIVE | 〔狙擊專注〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 朝田詩乃 `community-review-13-20260907` | Q | 〔Hecate II・精準射擊〕 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 朝田詩乃 `community-review-13-20260907` | W | 〔觀測射界〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 朝田詩乃 `community-review-13-20260907` | E | 〔戰術翻滾〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 朝田詩乃 `community-review-13-20260907` | R | 〔Hecate II・決定性一槍〕 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 朝田詩乃 `community-review-13-20260907` | EX | 〔副武器應急射擊〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 殺老師 `community-review-14-20260907` | PASSIVE | 〔教師的觀察〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 殺老師 `community-review-14-20260907` | Q | 〔觸手批改〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 殺老師 `community-review-14-20260907` | W | 〔高速授課〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 殺老師 `community-review-14-20260907` | E | 〔觸手再生〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 殺老師 `community-review-14-20260907` | R | 完全防禦形態 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 殺老師 `community-review-14-20260907` | EX | 〔分身式教學〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 比利海靈頓 `community-review-15-20260907` | PASSIVE | 〔兄貴的氣勢〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 比利海靈頓 `community-review-15-20260907` | Q | 〔正面擒抱〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 比利海靈頓 `community-review-15-20260907` | W | 〔肌肉防線〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 比利海靈頓 `community-review-15-20260907` | E | 〔肩膀衝撞〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 比利海靈頓 `community-review-15-20260907` | R | 〔兄貴背摔〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 比利海靈頓 `community-review-15-20260907` | EX | 〔兄弟站起來〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魔法少女☆伊莉雅 `community-review-16-20260907` | PASSIVE | 〔紅寶石的支援〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 魔法少女☆伊莉雅 `community-review-16-20260907` | Q | 〔魔力砲擊〕 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 魔法少女☆伊莉雅 `community-review-16-20260907` | W | 〔魔力防壁〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魔法少女☆伊莉雅 `community-review-16-20260907` | E | 〔魔法少女飛行〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 魔法少女☆伊莉雅 `community-review-16-20260907` | R | 夢幻召喚・Saber | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魔法少女☆伊莉雅 `community-review-16-20260907` | EX | 限定展開・Excalibur | `skillshot` | line 5.86×4.80u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 3 ×2 × abilityRange 0.8 |
+| 安茲·烏爾·恭 `community-review-17-20260907` | PASSIVE | 〔情緒抑制〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 安茲·烏爾·恭 `community-review-17-20260907` | Q | 心臟掌握 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 安茲·烏爾·恭 `community-review-17-20260907` | W | 死亡騎士 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 安茲·烏爾·恭 `community-review-17-20260907` | E | 高階傳送 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 安茲·烏爾·恭 `community-review-17-20260907` | R | 墜落天空 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 安茲·烏爾·恭 `community-review-17-20260907` | EX | 死亡是所有生命的終點 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 吉爾伽美什 `community-review-18-20260907` | PASSIVE | 〔王的財庫〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 吉爾伽美什 `community-review-18-20260907` | Q | 王之財寶 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 吉爾伽美什 `community-review-18-20260907` | W | 天之鎖 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 吉爾伽美什 `community-review-18-20260907` | E | 〔黃金甲冑〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 吉爾伽美什 `community-review-18-20260907` | R | 天地乖離開闢之星 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 吉爾伽美什 `community-review-18-20260907` | EX | 〔王之財寶・齊射〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 桐谷和人 `community-review-19-20260907` | PASSIVE | 二刀流 | `—` | — | 🟣 PASSIVE | never cast |
+| 桐谷和人 `community-review-19-20260907` | Q | 〔雙劍交叉斬〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 桐谷和人 `community-review-19-20260907` | W | 〔劍技招架〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 桐谷和人 `community-review-19-20260907` | E | Sonic Leap | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 桐谷和人 `community-review-19-20260907` | R | Starburst Stream | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 桐谷和人 `community-review-19-20260907` | EX | The Eclipse | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 御坂美琴 `community-review-20-20260907` | PASSIVE | 〔電荷累積〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 御坂美琴 `community-review-20-20260907` | Q | 電擊之槍 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 御坂美琴 `community-review-20-20260907` | W | 〔連鎖放電〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 御坂美琴 `community-review-20-20260907` | E | 〔鐵砂防壁〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 御坂美琴 `community-review-20-20260907` | R | 超電磁砲 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 御坂美琴 `community-review-20-20260907` | EX | 〔電磁過載〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鹿目圓 `community-review-21-20260907` | PASSIVE | 〔希望的連結〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 鹿目圓 `community-review-21-20260907` | Q | 〔光之箭〕 | `skillshot` | line 5.86×2.93u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 1.83 ×2 × abilityRange 0.8 |
+| 鹿目圓 `community-review-21-20260907` | W | 〔希望之弓〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鹿目圓 `community-review-21-20260907` | E | 〔淨化之願〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鹿目圓 `community-review-21-20260907` | R | 〔願望箭雨〕 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 鹿目圓 `community-review-21-20260907` | EX | 圓環之理 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 菜月昴 `community-review-22-20260907` | PASSIVE | 〔記住這次失敗〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 菜月昴 `community-review-22-20260907` | Q | Shamac | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 菜月昴 `community-review-22-20260907` | W | 〔鞭繩牽制〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 菜月昴 `community-review-22-20260907` | E | 〔重新振作〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 菜月昴 `community-review-22-20260907` | R | 死亡回歸 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 菜月昴 `community-review-22-20260907` | EX | 〔重新選擇〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 坂田銀時 `community-review-23-20260907` | PASSIVE | 〔糖分補給〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 坂田銀時 `community-review-23-20260907` | Q | 〔洞爺湖・橫斬〕 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 坂田銀時 `community-review-23-20260907` | W | 〔草莓牛奶休息時間〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 坂田銀時 `community-review-23-20260907` | E | 〔萬事屋式反擊〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 坂田銀時 `community-review-23-20260907` | R | 〔白夜叉〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 坂田銀時 `community-review-23-20260907` | EX | 〔吐槽也是武器〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 奇犽 `community-review-24-20260907` | PASSIVE | 〔電力儲備〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 奇犽 `community-review-24-20260907` | Q | 落雷 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 奇犽 `community-review-24-20260907` | W | 肢曲 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 奇犽 `community-review-24-20260907` | E | 電光石火 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 奇犽 `community-review-24-20260907` | R | 神速・疾風迅雷 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 奇犽 `community-review-24-20260907` | EX | 〔充電釋放〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 一拳超人 `community-review-25-20260907` | PASSIVE | 〔興趣使然的英雄〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 一拳超人 `community-review-25-20260907` | Q | 普通拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 一拳超人 `community-review-25-20260907` | W | 連續普通拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 一拳超人 `community-review-25-20260907` | E | 〔趕上特賣〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 一拳超人 `community-review-25-20260907` | R | 認真系列・認真一拳 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 一拳超人 `community-review-25-20260907` | EX | 認真系列・認真反覆橫跳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 名偵探柯南 `community-review-26-20260907` | PASSIVE | 〔線索整理〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 名偵探柯南 `community-review-26-20260907` | Q | 足球射擊 | `skillshot` | line 5.86×2.93u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 1.83 ×2 × abilityRange 0.8 |
+| 名偵探柯南 `community-review-26-20260907` | W | 手錶型麻醉槍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 名偵探柯南 `community-review-26-20260907` | E | 渦輪引擎滑板 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 名偵探柯南 `community-review-26-20260907` | R | 〔真相只有一個〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 名偵探柯南 `community-review-26-20260907` | EX | 伸縮吊帶 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 庫洛魔法使 `community-review-27-20260907` | PASSIVE | 〔卡牌連結〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 庫洛魔法使 `community-review-27-20260907` | Q | 風牌 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 庫洛魔法使 `community-review-27-20260907` | W | 盾牌 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 庫洛魔法使 `community-review-27-20260907` | E | 翔牌 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 庫洛魔法使 `community-review-27-20260907` | R | 劍牌 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 庫洛魔法使 `community-review-27-20260907` | EX | 〔換牌：風與樹〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 艾莉絲·伯雷亞斯·格雷拉特 `community-review-28-20260907` | PASSIVE | 〔劍神流・先發制人〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 艾莉絲·伯雷亞斯·格雷拉特 `community-review-28-20260907` | Q | 〔猛進斬〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 艾莉絲·伯雷亞斯·格雷拉特 `community-review-28-20260907` | W | 〔鬥氣護身〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 艾莉絲·伯雷亞斯·格雷拉特 `community-review-28-20260907` | E | 〔逼近步〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 艾莉絲·伯雷亞斯·格雷拉特 `community-review-28-20260907` | R | 光之太刀 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 艾莉絲·伯雷亞斯·格雷拉特 `community-review-28-20260907` | EX | 〔狂劍追擊〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 芙莉蓮 `community-review-29-20260907` | PASSIVE | 魔力抑制 | `—` | — | 🟣 PASSIVE | never cast |
+| 芙莉蓮 `community-review-29-20260907` | Q | 一般攻擊魔法・Zoltraak | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 芙莉蓮 `community-review-29-20260907` | W | 防禦魔法 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 芙莉蓮 `community-review-29-20260907` | E | 飛行魔法 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 芙莉蓮 `community-review-29-20260907` | R | 〔葬送連射〕 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 芙莉蓮 `community-review-29-20260907` | EX | 變出花田的魔法 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 尼古貓貓 `community-review-30-20260907` | PASSIVE | 〔拖延症〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 尼古貓貓 `community-review-30-20260907` | Q | 〔菸灰缸飛過去〕 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 尼古貓貓 `community-review-30-20260907` | W | 〔煙霧瀰漫〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 尼古貓貓 `community-review-30-20260907` | E | 〔先溜再說〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 尼古貓貓 `community-review-30-20260907` | R | 〔房間大崩壞〕 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 尼古貓貓 `community-review-30-20260907` | EX | 〔今天真的不想動〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| SUN樂 `community-review-31-20260907` | PASSIVE | 〔糞作獵人的讀招〕 | `—` | — | 🟣 PASSIVE | never cast |
+| SUN樂 `community-review-31-20260907` | Q | Spiral Edge | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| SUN樂 `community-review-31-20260907` | W | Slide Move | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| SUN樂 `community-review-31-20260907` | E | Repel Counter | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| SUN樂 `community-review-31-20260907` | R | Accel | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| SUN樂 `community-review-31-20260907` | EX | 〔攻略完成〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿薩謝爾 `community-review-32-20260907` | PASSIVE | 淫奔 | `—` | — | 🟣 PASSIVE | never cast |
+| 阿薩謝爾 `community-review-32-20260907` | Q | 肩パンチ | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿薩謝爾 `community-review-32-20260907` | W | 流精群（ホワイトレイン） | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 阿薩謝爾 `community-review-32-20260907` | E | 闇ぱんち | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿薩謝爾 `community-review-32-20260907` | R | THE END OF SON | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿薩謝爾 `community-review-32-20260907` | EX | THE END OF SON〔終章〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 近衛刀太 `community-review-33-20260907` | PASSIVE | 〔不死者再生〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 近衛刀太 `community-review-33-20260907` | Q | 〔重力劍・橫掃〕 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 近衛刀太 `community-review-33-20260907` | W | 〔重量切換〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 近衛刀太 `community-review-33-20260907` | E | 〔踏地突進〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 近衛刀太 `community-review-33-20260907` | R | 〔不死者的再起〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 近衛刀太 `community-review-33-20260907` | EX | 〔重力劍・壓潰〕 | `skillshot` | line 5.86×4.80u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 3 ×2 × abilityRange 0.8 |
+| 高速婆婆 `community-review-34-20260907` | PASSIVE | 〔追上你了〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 高速婆婆 `community-review-34-20260907` | Q | 〔疾走爪擊〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 高速婆婆 `community-review-34-20260907` | W | 〔急轉彎〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 高速婆婆 `community-review-34-20260907` | E | 〔妖怪的咒印〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 高速婆婆 `community-review-34-20260907` | R | 〔全速追獵〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 高速婆婆 `community-review-34-20260907` | EX | 〔百公里衝撞〕 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 炭治郎 `community-review-35-20260907` | PASSIVE | 〔嗅覺・破綻辨識〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 炭治郎 `community-review-35-20260907` | Q | 水之呼吸・水面斬 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 炭治郎 `community-review-35-20260907` | W | 水之呼吸・水車 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 炭治郎 `community-review-35-20260907` | E | 〔呼吸調整〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 炭治郎 `community-review-35-20260907` | R | 火之神神樂・圓舞 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 炭治郎 `community-review-35-20260907` | EX | 〔呼吸切換〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鬼畜王蘭斯 `community-review-36-20260907` | PASSIVE | 〔自信過剩〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 鬼畜王蘭斯 `community-review-36-20260907` | Q | 〔蠻力斬擊〕 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 鬼畜王蘭斯 `community-review-36-20260907` | W | 〔本大爺還沒認真〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鬼畜王蘭斯 `community-review-36-20260907` | E | 〔霸王突進〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 鬼畜王蘭斯 `community-review-36-20260907` | R | Rance Attack／蘭斯攻擊 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 鬼畜王蘭斯 `community-review-36-20260907` | EX | 〔跟著本大爺衝〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 吉伊卡哇 `community-review-37-20260907` | PASSIVE | 〔雖然害怕還是努力〕 | `—` | — | 🟣 PASSIVE | never cast |
+| 吉伊卡哇 `community-review-37-20260907` | Q | 〔討伐叉刺擊〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 吉伊卡哇 `community-review-37-20260907` | W | 〔哇啊啊撤退〕 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 吉伊卡哇 `community-review-37-20260907` | E | 〔點心時間〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 吉伊卡哇 `community-review-37-20260907` | R | 〔鼓起勇氣討伐〕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 吉伊卡哇 `community-review-37-20260907` | EX | 〔一起加油〕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿拉丁 `b2-aladdin` | PASSIVE | 吹錯音先喘口氣 | `—` | — | 🟣 PASSIVE | never cast |
+| 阿拉丁 `b2-aladdin` | Q | 烏戈代班先派一位 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿拉丁 `b2-aladdin` | W | 樂團加演再請一位 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿拉丁 `b2-aladdin` | E | 團員到齊才打節拍 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 阿拉丁 `b2-aladdin` | R | 魔法音樂課吹整排 | `ground` | line 10.00×1.80u | 🟡 AMBIGUOUS | damageLine length 10 × width 1.8 (sim applies no abilityRange) — the capsule the damage query tests |
+| 阿拉丁 `b2-aladdin` | EX | 暖風模式先照顧同學 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿爾巴斯 `b2-albus` | PASSIVE | 速通途中順便回血 | `—` | — | 🟣 PASSIVE | never cast |
+| 阿爾巴斯 `b2-albus` | Q | 世界紀錄第一刀 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿爾巴斯 `b2-albus` | W | 已花冷卻才准跳段 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿爾巴斯 `b2-albus` | E | 這裡有捷徑 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 阿爾巴斯 `b2-albus` | R | 走捷徑才趕得上急救 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿爾巴斯 `b2-albus` | EX | 跳過劇情三段打王 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 波吉 `b2-bojji` | PASSIVE | 你揮空我就安心了 | `—` | — | 🟣 PASSIVE | never cast |
+| 波吉 `b2-bojji` | Q | 王子縮成迷你問號 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 波吉 `b2-bojji` | W | 王室搔癢暫停握刀 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 波吉 `b2-bojji` | E | 太高了我先繞過去 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 波吉 `b2-bojji` | R | 笑穴變成原地罰站 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 波吉 `b2-bojji` | EX | 勇氣不是肌肉量 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿箱＋拉蜜絲 `b2-boxxo` | PASSIVE | 撞壞機台保固啟動 | `—` | — | 🟣 PASSIVE | never cast |
+| 阿箱＋拉蜜絲 `b2-boxxo` | Q | 歡迎光臨飲料附憑證 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿箱＋拉蜜絲 `b2-boxxo` | W | 憑證兌換防撞贈品 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 阿箱＋拉蜜絲 `b2-boxxo` | E | 拉蜜絲搬店不加價 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 阿箱＋拉蜜絲 `b2-boxxo` | R | 搬家限定快閃補給站 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿箱＋拉蜜絲 `b2-boxxo` | EX | 退貨順便消毒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 艾爾瑪 `b2-elma` | PASSIVE | 物理疼痛換攻略魔力 | `—` | — | 🟣 PASSIVE | never cast |
+| 艾爾瑪 `b2-elma` | Q | 攻略說先扣自己血 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 艾爾瑪 `b2-elma` | W | 半血以下保固升級 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 艾爾瑪 `b2-elma` | E | 重劍攻略追加七十點 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 艾爾瑪 `b2-elma` | R | 照攻略抄的重擊 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 艾爾瑪 `b2-elma` | EX | 攻略漏寫帶補包 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 不死 `b2-fushi` | PASSIVE | 這個痛我記住了 | `—` | — | 🟣 PASSIVE | never cast |
+| 不死 `b2-fushi` | Q | 請溫柔敲擊測試 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 不死 `b2-fushi` | W | 把破掉的地方長回來 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 不死 `b2-fushi` | E | 記憶形狀先借一塊 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 不死 `b2-fushi` | R | 耐用形狀保固四秒 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 不死 `b2-fushi` | EX | 換一雙腿先跑路 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 哥布林殺手 `b2-goblin` | PASSIVE | 工安控制換安全帽 | `—` | — | 🟣 PASSIVE | never cast |
+| 哥布林殺手 `b2-goblin` | Q | 工地開工三次點名 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 哥布林殺手 `b2-goblin` | W | 把客人拉進施工區 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 哥布林殺手 `b2-goblin` | E | 工具箱灰塵遮眼 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 哥布林殺手 `b2-goblin` | R | 盲目亂闖請走緊急出口 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 哥布林殺手 `b2-goblin` | EX | 裝備便宜保命要緊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 凱茲 `b2-guts` | PASSIVE | 工傷先別打卡 | `—` | — | 🟣 PASSIVE | never cast |
+| 凱茲 `b2-guts` | Q | 這把劍不進垃圾車 | `ground` | line 9.00×1.50u | 🟡 AMBIGUOUS | damageLine length 9 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 凱茲 `b2-guts` | W | 自願加班同意書 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 凱茲 `b2-guts` | E | 工傷才能領補助 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 凱茲 `b2-guts` | R | 大型垃圾整排清運 | `ground` | circle r=1.46u | ✅ OK | radius 1.83 × abilityRange 0.8 |
+| 凱茲 `b2-guts` | EX | 安全帽只保護額頭 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 羽賀 `b2-haga` | PASSIVE | 重現工單才可報魔力 | `—` | — | 🟣 PASSIVE | never cast |
+| 羽賀 `b2-haga` | Q | BUG-001截圖存證 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 羽賀 `b2-haga` | W | 跳到有我截圖的當事人 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 羽賀 `b2-haga` | E | 先停止施法讓我重現 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 羽賀 `b2-haga` | R | 測試結束回收增益與魔力 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 羽賀 `b2-haga` | EX | 熱修補丁先消毒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 楓 `b2-kaede` | PASSIVE | 劍上又跳出更新通知 | `—` | — | 🟣 PASSIVE | never cast |
+| 楓 `b2-kaede` | Q | 安裝魔劍套件 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 楓 `b2-kaede` | W | 更新視窗全部穿透 | `ground` | line 9.00×1.50u | 🟡 AMBIGUOUS | damageLine length 9 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 楓 `b2-kaede` | E | 電池型魔法裝甲 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 楓 `b2-kaede` | R | 技能欄批次執行 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 楓 `b2-kaede` | EX | 卸載附魔清快取 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 伊藤開司 `b2-kaiji` | PASSIVE | 賭桌離場服務費 | `—` | — | 🟣 PASSIVE | never cast |
+| 伊藤開司 `b2-kaiji` | Q | 午餐錢全押這次 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 伊藤開司 `b2-kaiji` | W | 翻盤不是保證中獎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 伊藤開司 `b2-kaiji` | E | 不看牌先退桌 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 伊藤開司 `b2-kaiji` | R | 最後一把抽獎機 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 伊藤開司 `b2-kaiji` | EX | 地下勞動急救包 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 凱亞爾 `b2-keyaru` | PASSIVE | 病歷影印需要工本費 | `—` | — | 🟣 PASSIVE | never cast |
+| 凱亞爾 `b2-keyaru` | Q | 醫生先給自己掛號 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 凱亞爾 `b2-keyaru` | W | 病歷換職災保險 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 凱亞爾 `b2-keyaru` | E | 麻醉單請勿填錯 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 凱亞爾 `b2-keyaru` | R | 門診加號先救人 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 凱亞爾 `b2-keyaru` | EX | 電子帳單回饋魔力 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 如月電車 `b2-kisaragi` | PASSIVE | 列車延誤請攻擊客服 | `—` | — | 🟣 PASSIVE | never cast |
+| 如月電車 `b2-kisaragi` | Q | 逃票乘客請先集合 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 如月電車 `b2-kisaragi` | W | 緊急煞車先拉手閘 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 如月電車 `b2-kisaragi` | E | 解除手閘本車才出發 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 如月電車 `b2-kisaragi` | R | 如月末班車・乘客全數迷途 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 如月電車 `b2-kisaragi` | EX | 車門即將關閉請勿探頭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 克勞斯 `b2-klaus` | PASSIVE | 自動回覆我正在忙 | `—` | — | 🟣 PASSIVE | never cast |
+| 克勞斯 `b2-klaus` | Q | 已加入工作佇列 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 克勞斯 `b2-klaus` | W | 全部執行不要再問 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 克勞斯 `b2-klaus` | E | 更改辦公室位置 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 克勞斯 `b2-klaus` | R | 移動式背景工作 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 克勞斯 `b2-klaus` | EX | 強制結束順便保命 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蜘蛛子 `b2-kumoko` | PASSIVE | 租屋警報八隻眼 | `—` | — | 🟣 PASSIVE | never cast |
+| 蜘蛛子 `b2-kumoko` | Q | 玄關地墊有點黏 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 蜘蛛子 `b2-kumoko` | W | 毒牙代收房租 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 蜘蛛子 `b2-kumoko` | E | 房東來了躲牆角 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 蜘蛛子 `b2-kumoko` | R | 整個客廳都是我的網 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蜘蛛子 `b2-kumoko` | EX | 蛛絲押金換防護 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 幸運超人 `b2-luckyman` | PASSIVE | 剛好撿到零錢 | `—` | — | 🟣 PASSIVE | never cast |
+| 幸運超人 `b2-luckyman` | Q | 剛好香蕉皮滑了一下 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 幸運超人 `b2-luckyman` | W | 剛好拳頭在這裡 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 幸運超人 `b2-luckyman` | E | 剛好有張技能保單 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 幸運超人 `b2-luckyman` | R | 剛好天上掉贈品 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 幸運超人 `b2-luckyman` | EX | 沒那麼幸運先搭便車 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 深澄真 `b2-makoto` | PASSIVE | 大單成交順便回血 | `—` | — | 🟣 PASSIVE | never cast |
+| 深澄真 `b2-makoto` | Q | 試射前客人請後退 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 深澄真 `b2-makoto` | W | 站遠一點商品才夠痛 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 深澄真 `b2-makoto` | E | 本店定點營業範圍 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 深澄真 `b2-makoto` | R | 慢客人請停止抱怨 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 深澄真 `b2-makoto` | EX | 售後服務含急救 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 貓貓 `b2-maomao` | PASSIVE | 藥費按受療次數報銷 | `—` | — | 🟣 PASSIVE | never cast |
+| 貓貓 `b2-maomao` | Q | 試藥員本人先簽到 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 貓貓 `b2-maomao` | W | 先解毒再喝急救包 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 貓貓 `b2-maomao` | E | 樣本採好了別打翻 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 貓貓 `b2-maomao` | R | 憑樣本換一張處方 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 貓貓 `b2-maomao` | EX | 受療打五折警示 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 梅普露 `b2-maple` | PASSIVE | 客服固定金額回禮 | `—` | — | 🟣 PASSIVE | never cast |
+| 梅普露 `b2-maple` | Q | 防禦力輸入多一個零 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 梅普露 `b2-maple` | W | 盾後補餐退魔力 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 梅普露 `b2-maple` | E | 這個形狀看起來很耐打 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 梅普露 `b2-maple` | R | 怪物模式限定毒龍包 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 梅普露 `b2-maple` | EX | 大家躲我後面不要推 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 馬提亞斯 `b2-matthias` | PASSIVE | 老師題目真的過期了 | `—` | — | 🟣 PASSIVE | never cast |
+| 馬提亞斯 `b2-matthias` | Q | 護甲答案扣二十分 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 馬提亞斯 `b2-matthias` | W | 用鉛筆也能劍術考試 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 馬提亞斯 `b2-matthias` | E | 退回重寫保護欄 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 馬提亞斯 `b2-matthias` | R | 期末考禁止交頭接耳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 馬提亞斯 `b2-matthias` | EX | 重修請先看黑板 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 米瑟利 `b2-misery` | PASSIVE | 異界店主不包售後 | `—` | — | 🟣 PASSIVE | never cast |
+| 米瑟利 `b2-misery` | Q | 免費跑鞋條款另計 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 米瑟利 `b2-misery` | W | 七天鑑賞期不含眼睛 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 米瑟利 `b2-misery` | E | 店長先移去門後 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 米瑟利 `b2-misery` | R | 櫃檯保固不是無敵 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 米瑟利 `b2-misery` | EX | 小字條款稍後生效 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 岩谷尚文 `b2-naofumi` | PASSIVE | 隊友受傷我先回魔 | `—` | — | 🟣 PASSIVE | never cast |
+| 岩谷尚文 `b2-naofumi` | Q | 友軍通行證附贈盾牌 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 岩谷尚文 `b2-naofumi` | W | 憑通行證補一口血 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 岩谷尚文 `b2-naofumi` | E | 盾牌清空違停入口 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 岩谷尚文 `b2-naofumi` | R | 清完門口才能接隊友 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 岩谷尚文 `b2-naofumi` | EX | 糾察隊本人安全帽 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 青蛙劍士 Ned `b2-ned` | PASSIVE | 我真的是劍士不是坐騎 | `—` | — | 🟣 PASSIVE | never cast |
+| 青蛙劍士 Ned `b2-ned` | Q | 蛙跳出差交通費 | `ground` | circle r=1.46u | ✅ OK | radius 1.83 × abilityRange 0.8 |
+| 青蛙劍士 Ned `b2-ned` | W | 不是舌頭是近身劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 青蛙劍士 Ned `b2-ned` | E | 請退後不要問會不會呱 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 青蛙劍士 Ned `b2-ned` | R | 青蛙劍術會議沿線開 | `ground` | line 9.00×1.30u | 🟡 AMBIGUOUS | damageLine length 9 × width 1.3 (sim applies no abilityRange) — the capsule the damage query tests |
+| 青蛙劍士 Ned `b2-ned` | EX | 本體沒批假也能撤 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 諾爾 `b2-noor` | PASSIVE | 反彈成功才發收據 | `—` | — | 🟣 PASSIVE | never cast |
+| 諾爾 `b2-noor` | Q | 這招物理技能我能擋 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 諾爾 `b2-noor` | W | 新人拿收據換急救 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 諾爾 `b2-noor` | E | 先備好防護收據 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 諾爾 `b2-noor` | R | 收據換厚盾不找零 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 諾爾 `b2-noor` | EX | 把下一位考官拉近 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 鵺野鳴介 `b2-nube` | PASSIVE | 班導還不能下班 | `—` | — | 🟣 PASSIVE | never cast |
+| 鵺野鳴介 `b2-nube` | Q | 鬼手抓回來點名 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 鵺野鳴介 `b2-nube` | W | 老師先幫你擋著 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 鵺野鳴介 `b2-nube` | E | 符咒貼上禁止聊天 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 鵺野鳴介 `b2-nube` | R | 全班留下來補課 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鵺野鳴介 `b2-nube` | EX | 保健室先解除惡靈 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 歐菲 `b2-orphen` | PASSIVE | 催收電話無須長談 | `—` | — | 🟣 PASSIVE | never cast |
+| 歐菲 `b2-orphen` | Q | 我放出的光之催繳函 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 歐菲 `b2-orphen` | W | 利息可以再寄一次 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 歐菲 `b2-orphen` | E | 債務人請勿插話 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 歐菲 `b2-orphen` | R | 債主不用敲門 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 歐菲 `b2-orphen` | EX | 這筆急救算借你的 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 何布 `b2-popp` | PASSIVE | 撤退路線也是回魔路線 | `—` | — | 🟣 PASSIVE | never cast |
+| 何布 `b2-popp` | Q | 先幫你預熱 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 何布 `b2-popp` | W | 冷氣帳單換定身 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 何布 `b2-popp` | E | 隊友加油我先繞背 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 何布 `b2-popp` | R | 美拉佐瑪烤肉吃到飽 | `ground` | line 9.00×1.50u | 🟡 AMBIGUOUS | damageLine length 9 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 何布 `b2-popp` | EX | 撤退前先把隊友扶起來 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 蕾姆 `b2-rem` | PASSIVE | 負評客人我來回覆 | `—` | — | 🟣 PASSIVE | never cast |
+| 蕾姆 `b2-rem` | Q | 這位客人請留步 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 蕾姆 `b2-rem` | W | 鐵球拖把暫停你的普攻 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 蕾姆 `b2-rem` | E | 鬼化加班先扣血 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蕾姆 `b2-rem` | R | 半條命換急救包 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蕾姆 `b2-rem` | EX | 姊姊今天不在家 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 遠坂凜 `b2-rin` | PASSIVE | 普攻也要開發票 | `—` | — | 🟣 PASSIVE | never cast |
+| 遠坂凜 `b2-rin` | Q | 寶石預付款已扣款 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 遠坂凜 `b2-rin` | W | 刷卡成功請簽名 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 遠坂凜 `b2-rin` | E | 八極拳催款專線 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 遠坂凜 `b2-rin` | R | 刷爆卡才准退款 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 遠坂凜 `b2-rin` | EX | 退款只退生命值 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 闇影 `b2-shadow` | PASSIVE | 講完大招才想起防護 | `—` | — | 🟣 PASSIVE | never cast |
+| 闇影 `b2-shadow` | Q | 觀眾請往舞台靠攏 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 闇影 `b2-shadow` | W | 掌聲先等零點七秒 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 闇影 `b2-shadow` | E | 對鏡練習我是路人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 闇影 `b2-shadow` | R | I AM 加班到 ATOMIC | `ground` | line 9.00×1.50u | 🟡 AMBIGUOUS | damageLine length 9 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 闇影 `b2-shadow` | EX | 謝幕後閃到你背前 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 野原新之助 `b2-shinchan` | PASSIVE | 動感超人不用補習 | `—` | — | 🟣 PASSIVE | never cast |
+| 野原新之助 `b2-shinchan` | Q | 春日部接力棒快傳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 野原新之助 `b2-shinchan` | W | 玩具散落請勿奔跑 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 野原新之助 `b2-shinchan` | E | 小白帶我換條路 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 野原新之助 `b2-shinchan` | R | 全體一起玩鬼抓人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 野原新之助 `b2-shinchan` | EX | 玩具箱彈簧送客 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 辛巴達 `b2-sinbad` | PASSIVE | 剪綵也是一種續航 | `—` | — | 🟣 PASSIVE | never cast |
+| 辛巴達 `b2-sinbad` | Q | 合夥人早鳥紅利 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 辛巴達 `b2-sinbad` | W | 商會代表自備保險 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 辛巴達 `b2-sinbad` | E | 巡迴剪綵走捷徑 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 辛巴達 `b2-sinbad` | R | 七海規格產品示範 | `ground` | line 11.00×2.10u | 🟡 AMBIGUOUS | damageLine length 11 × width 2.1 (sim applies no abilityRange) — the capsule the damage query tests |
+| 辛巴達 `b2-sinbad` | EX | 合作夥伴急救條款 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 章魚嗶 `b2-takopi` | PASSIVE | 大家不要哭嗶 | `—` | — | 🟣 PASSIVE | never cast |
+| 章魚嗶 `b2-takopi` | Q | 和好緞帶先接回來 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 章魚嗶 `b2-takopi` | W | 抱抱罩尺寸有限嗶 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 章魚嗶 `b2-takopi` | E | 開心貼紙先貼對人 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 章魚嗶 `b2-takopi` | R | 道具說明書暖心頁 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 章魚嗶 `b2-takopi` | EX | 貼紙集滿換繃帶 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 托卡・史考特 `b2-touka` | PASSIVE | 工頭撤退有體力補貼 | `—` | — | 🟣 PASSIVE | never cast |
+| 托卡・史考特 `b2-touka` | Q | 英雄招募延時坑 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 托卡・史考特 `b2-touka` | W | 聖劍當釣竿使 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 托卡・史考特 `b2-touka` | E | 入坑紀錄蓋個章 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 托卡・史考特 `b2-touka` | R | 錄取地下室再送出口 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 托卡・史考特 `b2-touka` | EX | 工頭先下班 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 異世界舅舅 `b2-uncle` | PASSIVE | 結界客服退通話費 | `—` | — | 🟣 PASSIVE | never cast |
+| 異世界舅舅 `b2-uncle` | Q | 精靈把增益寄錯人 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 異世界舅舅 `b2-uncle` | W | 請按一撤回贈品 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 異世界舅舅 `b2-uncle` | E | 結界收據請保留 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 異世界舅舅 `b2-uncle` | R | 收據換一位代理客服 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 異世界舅舅 `b2-uncle` | EX | SEGA神諭直線超載 | `ground` | line 9.00×1.50u | 🟡 AMBIGUOUS | damageLine length 9 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 高遠夜霧 `b2-yogiri` | PASSIVE | 睡眠品質調查表 | `—` | — | 🟣 PASSIVE | never cast |
+| 高遠夜霧 `b2-yogiri` | Q | 下班通知已讀未回 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 高遠夜霧 `b2-yogiri` | W | 符合門檻才能結算 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 高遠夜霧 `b2-yogiri` | E | 枕頭要搬去安靜處 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 高遠夜霧 `b2-yogiri` | R | 全體不要吵我 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 高遠夜霧 `b2-yogiri` | EX | 通知換成勿擾模式 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 我妻善逸 `b2-zenitsu` | PASSIVE | 逃跑也算打卡 | `—` | — | 🟣 PASSIVE | never cast |
+| 我妻善逸 `b2-zenitsu` | Q | 瞇半秒就好 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 我妻善逸 `b2-zenitsu` | W | 雷之呼吸・補眠卡核銷 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 我妻善逸 `b2-zenitsu` | E | 鼾聲大到握不住武器 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 我妻善逸 `b2-zenitsu` | R | 霹靂三閃・已讀亂回 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 我妻善逸 `b2-zenitsu` | EX | 下班電梯不等人 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 卡爾瑟斯 `lol-karthus` | PASSIVE | 未竟尾聲 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 卡爾瑟斯 `lol-karthus` | Q | 暮點 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 卡爾瑟斯 `lol-karthus` | W | 亡途繫縛 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 卡爾瑟斯 `lol-karthus` | E | 荒蕪迴音 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 卡爾瑟斯 `lol-karthus` | R | 暮鐘終曲 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 卡爾瑟斯 `lol-karthus` | EX | 靜默幕衣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 李星 `lol-leesin` | PASSIVE | 回響拳 | `—` | — | 🟣 PASSIVE | never cast |
+| 李星 `lol-leesin` | Q | 聽雷探手 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 李星 `lol-leesin` | W | 定心護體 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 李星 `lol-leesin` | E | 震地迴響 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 李星 `lol-leesin` | R | 斷陣踢 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 李星 `lol-leesin` | EX | 逐響躍步 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 拉克絲 `lol-lux` | PASSIVE | 餘光 | `—` | — | 🟣 PASSIVE | never cast |
+| 拉克絲 `lol-lux` | Q | 稜光束縛 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 拉克絲 `lol-lux` | W | 折光護衣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 拉克絲 `lol-lux` | E | 流光之域 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 拉克絲 `lol-lux` | R | 破曉光路 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 拉克絲 `lol-lux` | EX | 引路星芒 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 好運姐 `lol-missfortune` | PASSIVE | 先聲奪人 | `—` | — | 🟣 PASSIVE | never cast |
+| 好運姐 `lol-missfortune` | Q | 回聲雙響 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 好運姐 `lol-missfortune` | W | 揚帆快步 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 好運姐 `lol-missfortune` | E | 緋帆彈雨 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 好運姐 `lol-missfortune` | R | 扇港齊射 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 好運姐 `lol-missfortune` | EX | 藏帆備彈 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 沃維克 `lol-warwick` | PASSIVE | 嗅血 | `—` | — | 🟣 PASSIVE | never cast |
+| 沃維克 `lol-warwick` | Q | 噬痕 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 沃維克 `lol-warwick` | W | 循血疾行 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 沃維克 `lol-warwick` | E | 驚獵嚎聲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 沃維克 `lol-warwick` | R | 獵衛封喉 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 沃維克 `lol-warwick` | EX | 血性護甲 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 齊勒斯 `lol-xerath` | PASSIVE | 逸散奧能 | `—` | — | 🟣 PASSIVE | never cast |
+| 齊勒斯 `lol-xerath` | Q | 星牢光路 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 齊勒斯 `lol-xerath` | W | 星核墜落 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 齊勒斯 `lol-xerath` | E | 奧能拘束 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 齊勒斯 `lol-xerath` | R | 星牢轟擊 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 齊勒斯 `lol-xerath` | EX | 回收奧能 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 犽宿 `lol-yasuo` | PASSIVE | 風行刃 | `—` | — | 🟣 PASSIVE | never cast |
+| 犽宿 `lol-yasuo` | Q | 斬風 | `skillshot` | line 5.86×4.40u | ✅ OK | delayed.advance 4×1.83（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 犽宿 `lol-yasuo` | W | 迎風架勢 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 犽宿 `lol-yasuo` | E | 踏風進擊 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
+| 犽宿 `lol-yasuo` | R | 天際斷章 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 犽宿 `lol-yasuo` | EX | 旋風縛步 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

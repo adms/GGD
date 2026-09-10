@@ -337,6 +337,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // the round-settle progress chart before this line existed; mid-combat
         // there was nothing on the wire to show.
         ss.mobKills = Math.min(world.mobKills.get(seat.entityId) ?? 0, 65535);
+        // ⭐⭐ 第十一回合的**換邊／旁觀身分**（GH#922）——⭐ 伺服器的權威答案。
+        //
+        // ⚠️⚠️ ⭐ 這一格**非送不可**，因為換邊在快照上**與復活長得一模一樣**：
+        //   `convertWipedTeamsToBosses()` 重用同一個 `entityId` 並把 `hp.alive`
+        //   設回 true ⇒ ⛔ 客戶端看到的是「死掉的人又站起來了」，
+        //   ⭐ 而那與「隊友用復活圈救了他」在**位元層級無法區分**。
+        // ⇒ ⭐ 在它出現之前客戶端只能用「我死過 ＋ 全隊都死過」去**推**，
+        //   ⛔ 而 `A 死 → B 用圈救 A → B 之後才死` 會把 A **誤報成王**。
+        ss.round11Role = ctl.round11RoleOnWire(seatId);
         // YOUR OWN ACTIVE STATUS EFFECTS (owner: 「我也看不出來自己暈眩還是
         // 發生什麼事情」). Two index-aligned arrays; polarity and display name
         // stay on the content doc, which the client already has.
