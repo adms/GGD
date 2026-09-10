@@ -33,7 +33,21 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 DEFAULT_SCAN = os.path.join(ROOT, "content", "assets", "models")
 # ⭐ 與 `HERO_MODEL_BUDGET` 同步 —— ⚠️ 那份是 TS，這裡是 python ⇒ 兩個住處。
 #    改上限時**兩邊都要動**，而 `--check` 會把不一致喊出來（見 _budget_drift）。
-BUDGET = {"tris": 28_000, "meshes": 6, "texEdge": 512}
+BUDGET = {"tris": 28_000, "meshes": 6, "texEdge": 256}
+#: ⭐ 兩個**量得出來**的貼圖例外 —— 它們不吃 `ArenaScene.SIGHTLINE_HEIGHT_CAP`(2.4 單位)，
+#: 在畫面上真的更大。⛔ 不是「重要模型」的白名單:每一列都寫得出螢幕像素高。
+#: 唯一真源在 `tools/model-budget/limits.ts` 的 `TEX_EDGE_EXEMPT`。
+TEX_EDGE_EXEMPT = {
+    "assets/models/hex/tower_": (512, "FADE_MODELS,不被壓矮 ⇒ 712 px"),
+}
+
+
+def tex_cap(path: str) -> int:
+    rel = os.path.relpath(os.path.abspath(path), os.path.join(ROOT, "content"))
+    for k, (edge, _why) in TEX_EDGE_EXEMPT.items():
+        if k in rel:
+            return edge
+    return BUDGET["texEdge"]
 BUDGET_TS = os.path.join(ROOT, "packages/shared/src/content/modelUpload/budget.ts")
 
 
@@ -207,8 +221,9 @@ def main() -> int:
             issues.append(f"⛔ 零長度片段 ×{len(s['zeroClips'])}：{s['zeroClips'][:2]}")
         if s["images"] and s["texEdge"] <= 8:
             issues.append("⛔ 貼圖整組 ≤8×8（＝佔位圖，八成是 BLP 沒查到）")
-        if s["texEdge"] > BUDGET["texEdge"]:
-            issues.append(f"⛔ 貼圖邊長 {s['texEdge']} > {BUDGET['texEdge']}")
+        cap = tex_cap(f)
+        if s["texEdge"] > cap:
+            issues.append(f"⛔ 貼圖邊長 {s['texEdge']} > {cap}")
         if s["tris"] > BUDGET["tris"]:
             issues.append(f"⛔ 三角面 {s['tris']:,} > {BUDGET['tris']:,}")
         if s["draws"] > BUDGET["meshes"]:

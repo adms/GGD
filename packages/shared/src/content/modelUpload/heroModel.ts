@@ -2,7 +2,7 @@ import { zModelDoc } from "../schema/model";
 import { contentSha256 } from "../import/jcs";
 import { inspectModelUpload, type InspectedModelUpload } from "./inspect";
 import { selectModelAnimations } from "./compose";
-import { normalizeUploadedModel } from "./normalize";
+import { normalizeUploadedModel, type ResizeImage } from "./normalize";
 import { HERO_MODEL_BUDGET } from "./budget";
 import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from "./heroModelSchema";
 export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
@@ -32,10 +32,10 @@ export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: st
 }
 
 /** Final bytes contain only clips explicitly mapped to GGD's six runtime states. */
-export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0) {
+export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0, options: { resizeImage?: ResizeImage } = {}) {
   // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
   // ⇒ 合併「畫起來一樣」的 primitive ＋ 丟掉長度為零的署名片段，⛔ 不要求作者自己先修。
-  const { bytes: source, report: normalized } = normalizeUploadedModel(rawSource);
+  const { bytes: source, report: normalized } = await normalizeUploadedModel(rawSource, { resizeImage: options.resizeImage });
   const indices = HERO_MODEL_STATES.map((state) => selections[state]);
   if (indices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
   const chosen = [...new Set(indices)];

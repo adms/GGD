@@ -32,7 +32,7 @@ describe("匯入模型的自動正規化", () => {
     const doubled = encodeUploadGlb(src.json, src.bin);
     expect((await inspectModelUpload(doubled)).meshes).toBe(before.meshes + 1);
 
-    const { bytes, report } = normalizeUploadedModel(doubled);
+    const { bytes, report } = await normalizeUploadedModel(doubled);
     expect(report.drawCalls).toEqual({ before: before.meshes + 1, after: before.meshes });
     const after = await inspectModelUpload(bytes);
     expect(after.meshes).toBe(before.meshes);
@@ -62,7 +62,7 @@ describe("匯入模型的自動正規化", () => {
       samplers: clip.samplers.map((s) => ({ ...s, input: zeroInput })),
     });
     const withSignature = encodeUploadGlb(src.json, src.bin);
-    const { bytes, report } = normalizeUploadedModel(withSignature);
+    const { bytes, report } = await normalizeUploadedModel(withSignature);
     expect(report.droppedZeroClips).toEqual(["未经允许禁止分享与使用"]);
     // ⭐ 而合法的片段一個都不能少
     const after = await inspectModelUpload(bytes);
@@ -84,12 +84,12 @@ it("★ 英雄貼圖的警戒邊長，相對 1080p 上一具英雄的螢幕佔�
   const heroPx = (HERO_WORLD_HEIGHT / (2 * MIN_DOLLY * Math.tan(FOV_RAD / 2))) * SCREEN_H;
   // 一具英雄約 heroPx 高、寬約 0.6 倍 ⇒ 螢幕佔用
   const screenPixels = heroPx * heroPx * 0.6;
-  const texels = HERO_MODEL_BUDGET.texEdge.warn ** 2;
-  const oversample = texels / screenPixels;
+  const oversample = HERO_MODEL_BUDGET.texEdge.limit ** 2 / screenPixels;
   // ⭐ 過取樣要落在 1–4 倍之間：低於 1 是糊掉，高於 4 是白花 VRAM
   //   （512² 是 7.0×、1024² 是 28×，兩個都在窗外）
   expect(oversample).toBeGreaterThan(1);
   expect(oversample).toBeLessThan(4);
-  // ⭐ 上限是警戒的兩倍（給真的需要細節的角色一格空間），⛔ 不是四倍
-  expect(HERO_MODEL_BUDGET.texEdge.limit).toBe(HERO_MODEL_BUDGET.texEdge.warn * 2);
+  // ⭐ owner 2026-09-10：「場景也是阿 不應該有貼圖超過256」⇒ 上限就是那條線本身，
+  //    ⛔ 沒有「英雄可以再大一級」的空間 —— 警戒不得高於上限。
+  expect(HERO_MODEL_BUDGET.texEdge.warn).toBeLessThanOrEqual(HERO_MODEL_BUDGET.texEdge.limit);
 });

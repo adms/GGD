@@ -93,7 +93,10 @@ const CHAMPION_MESH_SHARE = 0.25;
  * ⇒ PNG/JPEG 只縮**下載量**，VRAM 一個位元組都不會少。
  * ⭐ 真正能再省的只有 **KTX2/ASTC**（GPU 壓縮格式在 VRAM 裡保持壓縮，4–8×）。
  */
-const HERO_TEXTURE_EDGE = { warn: 256, limit: 512 } as const;
+//: ⚠️ owner 2026-09-10 逐字：「**場景也是阿 不應該有貼圖超過256**」
+//:    ⇒ 上限也是 256，⛔ 不再有「英雄可以到 512」的空間。
+//:    完整推導與它最緊的那個案例住 `tools/model-budget/limits.ts` 的 `SCREEN_TEXEL_EDGE`。
+const HERO_TEXTURE_EDGE = { warn: 256, limit: 256 } as const;
 export const HERO_MODEL_BUDGET = {
   tris: { warn: 16_000, limit: 28_000 },
   meshes: {

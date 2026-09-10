@@ -1,4 +1,5 @@
 import { encodeUploadGlb, parseUploadGlb, readFloatAccessor, type GlbDocument, type GlbPrimitive } from "./glb";
+import { HERO_MODEL_BUDGET } from "./budget";
 
 /**
  * 匯入模型的**正規化＋自動修正** —— ⭐ 後台與編輯器兩條匯入路徑都自動帶它。
@@ -25,13 +26,44 @@ import { encodeUploadGlb, parseUploadGlb, readFloatAccessor, type GlbDocument, t
  * ⛔ 它**不做**的事：減面、貼圖縮放、貼圖圖集。那些會改變畫面，屬於
  * `tools/model-budget/optimize.ts` 的離線批次（人工採用），⛔ 不是匯入時的自動修正。
  */
+/**
+ * ⭐ 縮圖器由**宿主注入** —— 因為兩個宿主的環境不一樣，⛔ 而共用碼不可以假設其中一個：
+ * · 編輯器跑在**瀏覽器 worker** ⇒ `createImageBitmap` + `OffscreenCanvas`（都有）
+ * · 後台 content-api 跑在 **Node** ⇒ 兩個都**沒有**（實測 undefined）⇒ 走 ffmpeg
+ *
+ * ⛔ 沒有注入時**不會**靜默放行：報告裡的 `texturesOverCap` 會列出超標的貼圖，
+ * 而 `heroModelBudgetIssues` 的 `texEdge` 那一條會把它擋成錯誤。
+ */
+export type ResizeImage = (bytes: Uint8Array, maxEdge: number) => Promise<Uint8Array | null>;
+
 export interface NormalizeReport {
   /** 合併前後的 draw call 數；相等代表沒有可合併的。 */
   drawCalls: { before: number; after: number };
   /** 被丟掉的零長度片段名（多半是作者署名）。 */
   droppedZeroClips: string[];
+  /** 縮過的貼圖：`[原邊長, 新邊長]`。 */
+  resizedTextures: [number, number][];
+  /** ⛔ 仍然超過上限的貼圖邊長（沒有注入縮圖器，或縮不動）。 */
+  texturesOverCap: number[];
   /** 位元組有沒有真的變 —— ⛔ false 時呼叫端應該沿用原本的 bytes。 */
   changed: boolean;
+}
+
+/** PNG / JPEG 的像素尺寸 —— ⭐ 只讀檔頭，⛔ 不解碼。 */
+export function imageSize(bytes: Uint8Array): { w: number; h: number } | null {
+  const v = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  if (bytes.length > 24 && v.getUint32(0) === 0x89504e47) return { w: v.getUint32(16), h: v.getUint32(20) };
+  if (bytes.length > 4 && v.getUint16(0) === 0xffd8) {
+    for (let at = 2; at + 9 < bytes.length;) {
+      if (v.getUint8(at) !== 0xff) { at++; continue; }
+      const marker = v.getUint8(at + 1);
+      if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+        return { h: v.getUint16(at + 5), w: v.getUint16(at + 7) };
+      }
+      at += 2 + v.getUint16(at + 2);
+    }
+  }
+  return null;
 }
 
 /** 材質的**渲染狀態**指紋：⛔ `name` 與 `extras` 是溯源資料，不進指紋。 */
@@ -53,7 +85,11 @@ function clipSpanSeconds(json: GlbDocument, bin: Uint8Array, clip: GlbDocument["
   return span;
 }
 
-export function normalizeUploadedModel(bytes: Uint8Array): { bytes: Uint8Array; report: NormalizeReport } {
+export async function normalizeUploadedModel(
+  bytes: Uint8Array,
+  options: { maxTextureEdge?: number; resizeImage?: ResizeImage } = {},
+): Promise<{ bytes: Uint8Array; report: NormalizeReport }> {
+  const cap = options.maxTextureEdge ?? HERO_MODEL_BUDGET.texEdge.limit;
   const { json, bin } = parseUploadGlb(bytes);
   const before = (json.nodes ?? []).reduce((n, node) =>
     n + (node.mesh === undefined ? 0 : json.meshes![node.mesh]!.primitives.length), 0);
@@ -69,9 +105,37 @@ export function normalizeUploadedModel(bytes: Uint8Array): { bytes: Uint8Array; 
     if (dropped.length) json.animations = kept;
   }
 
+  // ── ③ 貼圖縮到上限 ────────────────────────────────────────────────────────
+  // ⭐ owner 2026-09-10 逐字：「這個應該變成**上架前 後台＆編輯器的內建 script** 吧
+  //    避免上架到過大的貼圖」「**場景也是阿 不應該有貼圖超過256**」
+  // ⚠️ 縮圖只換 image 的位元組,⛔ 幾何、骨架、動畫一個位元組都不碰。
+  const resized: [number, number][] = [];
+  const overCap: number[] = [];
+  let texBin = bin;
+  const images = json.images ?? [];
+  if (images.length) {
+    const replacements = new Map<number, Uint8Array>();
+    for (const [i, image] of images.entries()) {
+      if (image.bufferView === undefined) continue;
+      const view = json.bufferViews[image.bufferView];
+      if (!view) continue;
+      const at = view.byteOffset ?? 0;
+      const raw = texBin.subarray(at, at + view.byteLength);
+      const size = imageSize(raw);
+      if (!size || Math.max(size.w, size.h) <= cap) continue;
+      const next = options.resizeImage ? await options.resizeImage(raw, cap) : null;
+      const got = next ? imageSize(next) : null;
+      if (!next || !got || Math.max(got.w, got.h) > cap) { overCap.push(Math.max(size.w, size.h)); continue; }
+      replacements.set(i, next);
+      resized.push([Math.max(size.w, size.h), Math.max(got.w, got.h)]);
+    }
+    if (replacements.size) texBin = rebuildWithImages(json, texBin, replacements);
+  }
+
   // ── ① 依「畫起來一樣」合併 primitive ──────────────────────────────────────
   // ⚠️ 只處理「單一 mesh 節點」的常見形狀：多個 mesh 節點各有自己的變換，
   //    幾何接起來會跑位 ⇒ ⛔ 不合併（回報裡看得出來 before===after）。
+  const bin2 = texBin;
   const meshNodes = (json.nodes ?? []).filter((n) => n.mesh !== undefined);
   const singleMesh = new Set(meshNodes.map((n) => n.mesh)).size === 1 && meshNodes.length === 1;
   if (singleMesh && json.meshes) {
@@ -82,19 +146,20 @@ export function normalizeUploadedModel(bytes: Uint8Array): { bytes: Uint8Array; 
       groups.set(key, [...groups.get(key) ?? [], prim]);
     }
     if (groups.size < mesh.primitives.length) {
-      const merged = mergeGroups(json, bin, [...groups.values()]);
+      const merged = mergeGroups(json, bin2, [...groups.values()]);
       if (merged) { mesh.primitives = merged.primitives; return finish(json, merged.bin); }
     }
   }
-  return finish(json, bin);
+  return finish(json, bin2);
 
   function finish(doc: GlbDocument, buffer: Uint8Array) {
     const after = (doc.nodes ?? []).reduce((n, node) =>
       n + (node.mesh === undefined ? 0 : doc.meshes![node.mesh]!.primitives.length), 0);
-    const changed = after !== before || dropped.length > 0;
+    const changed = after !== before || dropped.length > 0 || resized.length > 0;
     return {
       bytes: changed ? encodeUploadGlb(doc, buffer) : bytes,
-      report: { drawCalls: { before, after }, droppedZeroClips: dropped, changed },
+      report: { drawCalls: { before, after }, droppedZeroClips: dropped,
+                resizedTextures: resized, texturesOverCap: overCap, changed },
     };
   }
 }
@@ -177,4 +242,36 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
   let at = bin.byteLength;
   for (const chunk of tail) { merged.set(chunk, at); at += chunk.byteLength; }
   return { primitives, bin: merged };
+}
+
+/**
+ * 換掉指定 image 的位元組並重建 buffer。
+ *
+ * ⭐ 逐個 bufferView 原樣搬過去（只有被換掉的那幾個換內容）⇒ **每一個 accessor 的
+ * byteOffset 都要跟著新的 view 位移走**。⛔ 直接把新位元組塞回原位會讓後面所有
+ * view 的位移全錯，而那**不會有任何東西報錯** —— 它只是把模型畫成一團碎片。
+ */
+function rebuildWithImages(json: GlbDocument, bin: Uint8Array, replacements: Map<number, Uint8Array>): Uint8Array {
+  const byImage = new Map<number, Uint8Array>();
+  for (const [i, bytes] of replacements) {
+    const view = (json.images ?? [])[i]?.bufferView;
+    if (view !== undefined) byImage.set(view, bytes);
+  }
+  const chunks: Uint8Array[] = [];
+  let at = 0;
+  const views = json.bufferViews.map((view) => {
+    const swap = byImage.get(json.bufferViews.indexOf(view));
+    const data = swap ?? bin.subarray(view.byteOffset ?? 0, (view.byteOffset ?? 0) + view.byteLength);
+    const pad = (4 - at % 4) % 4;
+    if (pad) { chunks.push(new Uint8Array(pad)); at += pad; }
+    const next = { ...view, byteOffset: at, byteLength: data.byteLength };
+    chunks.push(data); at += data.byteLength;
+    return next;
+  });
+  json.bufferViews = views;
+  json.buffers = [{ byteLength: at }];
+  const out = new Uint8Array(at);
+  let cursor = 0;
+  for (const chunk of chunks) { out.set(chunk, cursor); cursor += chunk.byteLength; }
+  return out;
 }
