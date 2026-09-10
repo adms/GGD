@@ -79,6 +79,20 @@ def _load_aliases() -> list[dict]:
     return list((doc.get("idAliases") or {}).get("rows") or [])
 
 
+def _load_declared_skeletons() -> dict[str, dict]:
+    """⭐ 哪幾名**刻意或暫時**掛在引擎骨架上 —— 每一名帶一個能被反駁的理由。
+
+    ⛔ 這張表不是豁免名單，是**分類**：`by-design`（盤點表逐字「用 GGD 原版」）
+    與 `pending-conversion`（來源已查到、還沒轉檔）在 JSON 裡長得一模一樣，
+    ⭐ 而它們的**下一步完全不同** —— 前者已經做完了，後者是一張待辦。
+    """
+    if not BASELINE.exists():
+        return {}
+    doc = json.loads(BASELINE.read_text(encoding="utf-8"))
+    rows = (doc.get("skeletonPlaceholders") or {}).get("rows") or []
+    return {r["id"]: {k: v for k, v in r.items() if k != "id"} for r in rows}
+
+
 def _resolve_aliases(rows: list[dict], shipped: dict[str, dict]) -> tuple[dict, dict, list[dict]]:
     """⭐ **先驗那把鑰匙**（第〇·六守則 / GH#635），⛔ 不是拿 key 直接 join。
 
@@ -138,6 +152,7 @@ def audit(inventory: Path, repo: Path) -> dict:
     rows = parse_inventory(inventory)
     inv_ids = {r["heroId"] for r in rows}
     shipped = load_shipped(repo)
+    declared_skeletons = _load_declared_skeletons()
 
     # ── ⓪ ⭐ **先驗那把鑰匙** ───────────────────────────────────
     # ⛔ 兩邊的 id 不同命名空間時，直接 join 會把同一批人數兩次（正向一次、反向一次）。
@@ -170,6 +185,33 @@ def audit(inventory: Path, repo: Path) -> dict:
             continue
         reverse_gap.append(hid)
 
+    # ── ④ ⭐ **誰在用骨架** —— ⛔ 在此之前這一軸從來沒有人問過 ────────
+    #
+    # ⭐ AC 逐字：「盤點表標『待轉換』的那幾名，`modelKey` **明確標記為暫用**
+    # 並列進報告（⛔ 不靜靜給骨架）」。
+    #
+    # ⛔ 問題不是「有人用骨架」——`skeleton-by-design` 那幾名是 owner 在盤點表上
+    # 逐字寫「用 GGD 原版」的**決定**。問題是**兩者長得一模一樣**：
+    # 一個暫時的佔位與一個刻意的選擇，在 JSON 裡都只是 `champ.thorne`。
+    # ⇒ ⭐ 每一名用骨架的都必須在棘輪裡**宣告它是哪一種**，並附一個能被反駁的理由。
+    skeleton_model_keys = set(SKELETON.values())
+    undeclared, declared = [], []
+    for hid in sorted(community):
+        mk = community[hid].get("modelKey")
+        if mk not in skeleton_model_keys:
+            continue
+        row = declared_skeletons.get(hid)
+        if row is None:
+            undeclared.append({"id": hid, "modelKey": mk})
+        else:
+            declared.append({"id": hid, "modelKey": mk, **row})
+
+    # ⭐ 反方向也要走（形態⑫）：宣告了、而它今天**已經不用骨架了** ⇒ 那一列該退休。
+    stale_declarations = [
+        hid for hid in sorted(declared_skeletons)
+        if community.get(hid, {}).get("modelKey") not in skeleton_model_keys
+    ]
+
     return {
         "shippedLimit": shipped_limit,
         "denominators": {
@@ -188,6 +230,10 @@ def audit(inventory: Path, repo: Path) -> dict:
         "forwardGap": forward_gap,
         "reverseGap": reverse_gap,
         "aliasIssues": alias_issues,
+        # ⭐ ④ 骨架佔位這一軸 —— 兩個方向都印出來。
+        "skeletonUndeclared": undeclared,
+        "skeletonDeclared": declared,
+        "skeletonStaleDeclarations": stale_declarations,
     }
 
 

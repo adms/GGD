@@ -59,6 +59,11 @@ interface Audit {
   reverseGap: string[];
   /** ⭐ 別名**驗不過**的那幾筆（⛔ 它們不套用 —— 落差會照樣浮出來）。 */
   aliasIssues: Array<{ rowId: string; shippedId: string; reason: string; detail: string }>;
+  /** ⭐ 掛在引擎骨架上而**沒有被宣告**的 —— 一個靜靜的佔位。 */
+  skeletonUndeclared: Array<{ id: string; modelKey: string }>;
+  skeletonDeclared: Array<{ id: string; modelKey: string; kind: string; why: string }>;
+  /** ⭐ 反方向：宣告了、而它今天已經不用骨架了 ⇒ 那一列該退休。 */
+  skeletonStaleDeclarations: string[];
 }
 
 const BASELINE = JSON.parse(
@@ -189,5 +194,40 @@ describe("盤點表 ↔ 上架設定的雙向同步（GH#1165）", () => {
     // ⚠️ ⭐ 這一頭**沒有基準線** —— 出貨是我這邊控制得了的，
     //   ⛔ 沒有理由讓一名「表上不存在的英雄」留在出貨內容裡而不喊。
     expect(audit.reverseGap).toEqual([]);
+  });
+
+  // ⭐ AC 第 4 條（GH#1165）逐字：「盤點表標『待轉換』的那幾名，`modelKey`
+  // **明確標記為暫用**並列進報告（⛔ 不靜靜給骨架）」。
+  //
+  // ⛔ 缺陷的形狀不是「有人用骨架」—— `skeleton-by-design` 那幾名是決定。
+  // ⭐ 缺陷是**兩者長得一模一樣**：一個暫時的佔位與一個刻意的選擇，
+  // 在 JSON 裡都只是 `champ.thorne`。⇒ 每一名都要宣告它是哪一種。
+  it("⭐ 掛在骨架上的每一名都要**宣告理由** ⇒ 靜靜給骨架就 🔴", (ctx) => {
+    if (!audit) {
+      announceNotVerified();
+      ctx.skip();
+      return;
+    }
+    ctx.task.meta ??= {};
+    console.log(
+      [
+        `🦴 掛骨架 ${audit.skeletonDeclared.length} 名（全部有宣告）：`,
+        ...audit.skeletonDeclared.map((r) => `   · ${r.id} [${r.kind}] ${r.why}`),
+      ].join("\n"),
+    );
+    expect(
+      audit.skeletonUndeclared.map(
+        (r) =>
+          `${r.id} 用著 ${r.modelKey} 而**沒有宣告理由** ⇒ ` +
+          `到 roster-sync.baseline.json 的 skeletonPlaceholders.rows 補一列，` +
+          `kind 與一句引用得到盤點表的 why（⛔ 「還沒排到」不是理由）`,
+      ),
+    ).toEqual([]);
+    // ⭐ 反方向（形態⑫）：轉檔完成了卻忘了把那一列刪掉 ⇒ 也要紅。
+    expect(
+      audit.skeletonStaleDeclarations.map(
+        (id) => `${id} 今天已經有真模型了 ⇒ 從 skeletonPlaceholders.rows 刪掉那一列`,
+      ),
+    ).toEqual([]);
   });
 });
