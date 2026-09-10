@@ -1,0 +1,54 @@
+{
+ "schema": "ggd-model-atlas-ready@1",
+ "generatedBy": "tools/model-budget/optimize.ts --atlas (GH#1174)",
+ "note": "⛔ 這份**不是**註冊動作 —— 它是給 champion 檔的唯一寫入者用的清單。兩顆已在 content/ 就位、heroBody 已翻回 true、視覺 A/B 通過（亮像素差 -0.04% / -0.29%）。",
+ "backup": "docs/legacy/_overwrites/atlas_temp_20260910-230152",
+ "models": [
+  {
+   "heroId": "b2-aladdin",
+   "name": "阿拉丁",
+   "sourceModelKey": "ou99.473324",
+   "glbPath": "assets/models/ou99/ou99_473324.glb",
+   "before": {
+    "draws": 8,
+    "vramMB": 2.208,
+    "maxTextureEdge": 512,
+    "fileMB": 1.57
+   },
+   "after": {
+    "draws": 3,
+    "vramMB": 0.667,
+    "maxTextureEdge": 256,
+    "fileMB": 1.375,
+    "atlases": 2,
+    "quality": 0.483
+   },
+   "triangles": 7970,
+   "rigIdentical": true,
+   "sourceSha256Before": "748ea734fb8f800b617a7319a97d2bba7e7e9fb716bba1eb5ad7864c706b58ae"
+  },
+  {
+   "heroId": "b2-keyaru",
+   "name": "凱亞爾",
+   "sourceModelKey": "ou99.458777",
+   "glbPath": "assets/models/ou99/ou99_458777.glb",
+   "before": {
+    "draws": 7,
+    "vramMB": 2.167,
+    "maxTextureEdge": 512,
+    "fileMB": 2.168
+   },
+   "after": {
+    "draws": 2,
+    "vramMB": 0.667,
+    "maxTextureEdge": 256,
+    "fileMB": 1.935,
+    "atlases": 2,
+    "quality": 0.518
+   },
+   "triangles": 7003,
+   "rigIdentical": true,
+   "sourceSha256Before": "dba9f1101d96b28093a172387cd7fbc9c377c5a955116566b118c74f3adbf641"
+  }
+ ]
+}

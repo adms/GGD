@@ -65,6 +65,7 @@ import { checkRig, type RigCheck } from "./rig";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const VENDOR = path.join(HERE, ".optvendor");
 const DECIMATE_WORKER = path.join(HERE, "optimize", "decimate.mjs");
+const ATLAS_WORKER = path.join(HERE, "optimize", "atlas_pack.py");
 const VALIDATE_GLB = path.join(ROOT, "tools/w3x-import/validate_glb.mts");
 const DEFAULT_OUT = path.join(HERE, "optimized-out");
 
@@ -76,6 +77,8 @@ interface Args {
   out: string;
   apply: boolean;
   geometry: boolean;
+  atlas: boolean;
+  atlasQuality: number;
   texEdge: number | null;
   trisTarget: number | null;
   force: boolean;
@@ -95,6 +98,8 @@ function parseArgs(argv: string[]): Args {
     out: DEFAULT_OUT,
     apply: false,
     geometry: false,
+    atlas: false,
+    atlasQuality: 0.45,
     texEdge: null,
     trisTarget: null,
     force: false,
@@ -110,6 +115,8 @@ function parseArgs(argv: string[]): Args {
     } else if (t === "--out") a.out = path.resolve(argv[++i] ?? fail("--out needs a dir"));
     else if (t === "--apply") a.apply = true;
     else if (t === "--geometry") a.geometry = true;
+    else if (t === "--atlas") a.atlas = true;
+    else if (t === "--atlas-quality") a.atlasQuality = Number(argv[++i]);
     else if (t === "--tex-edge") a.texEdge = Number(argv[++i]);
     else if (t === "--tris-target") a.trisTarget = Number(argv[++i]);
     else if (t === "--force") a.force = true;
@@ -118,7 +125,7 @@ function parseArgs(argv: string[]): Args {
     else if (t === "--help" || t === "-h") {
       process.stdout.write(
         "usage: tsx tools/model-budget/optimize.ts <glb-or-dir>... [--role R] [--apply]\n" +
-          "  [--geometry] [--out DIR] [--tex-edge N] [--tris-target N] [--force] [--json] [--babylon-verify]\n" +
+          "  [--geometry] [--atlas] [--atlas-quality Q] [--out DIR] [--tex-edge N] [--tris-target N] [--force] [--json] [--babylon-verify]\n" +
           `roles: ${ROLE_NAMES.join(", ")}\n` +
           "default is a DRY RUN; nothing is written without --apply, and never in place.\n",
       );
@@ -152,6 +159,21 @@ interface GeoAction {
   ratio: number;
 }
 
+/**
+ * ⭐ 圖集 stage 要解的東西 **texture stage 結構上解不掉**：後者把每一張貼圖縮小，
+ * ⛔ 它一張都不會**減少** —— 而 draw call 數的是「有幾種畫法」，⛔ 不是貼圖多大。
+ * ⇒ 一顆「7 張不同貼圖」的模型不管縮到多小都還是 7 個 draw call。
+ *
+ * 規劃在 `optimize/atlas_pack.py`（它要真的解 PNG、量 UV 範圍、重排版面）；
+ * 這裡只記「要不要跑」與「目標是幾個 draw call」。
+ */
+interface AtlasAction {
+  fromDraws: number;
+  targetDraws: number;
+  edge: number;
+  quality: number;
+}
+
 interface Plan {
   file: string;
   outFile: string;
@@ -161,6 +183,7 @@ interface Plan {
   metrics: GlbMetrics;
   tex: TexAction[];
   geo: GeoAction | null;
+  atlas: AtlasAction | null;
   vramBefore: number;
   vramAfter: number;
   fileBytesBefore: number;
@@ -218,6 +241,18 @@ function planFile(file: string, args: Args): Plan {
     }
   }
 
+  // atlas target: only when asked, and only for models the mesh gate actually blocks.
+  // ⛔ 圖集**會改變畫面**（貼圖被重排、每一格被縮小），所以它⛔ 不是「順便做一下」——
+  // 沒有超過 draw call 上限的模型不跑它。
+  let atlas: AtlasAction | null = null;
+  if (args.atlas && gate && metrics.meshes > gate.meshes.limit) {
+    atlas = { fromDraws: metrics.meshes, targetDraws: gate.meshes.limit, edge: floorPow2(gate.texEdge.limit), quality: args.atlasQuality };
+  }
+
+  // ⛔ 圖集跑的時候**不要**再跑 texture stage：圖集自己就夾在 `--edge` 內，
+  //   而先 512→256 再 256→128 是**兩次**重取樣 —— 同一個結果，多糊一次。
+  if (atlas) tex.length = 0;
+
   const vramBefore = metrics.vramBytes;
   const vramSaved = tex.reduce((n, t) => n + (t.vramBefore - t.vramAfter), 0);
   const outFile = outPathFor(file, args.out);
@@ -230,10 +265,11 @@ function planFile(file: string, args: Args): Plan {
     metrics,
     tex,
     geo,
+    atlas,
     vramBefore,
     vramAfter: vramBefore - vramSaved,
     fileBytesBefore: metrics.fileBytes,
-    skip: tex.length === 0 && !geo ? "no-op" : "",
+    skip: tex.length === 0 && !geo && !atlas ? "no-op" : "",
   };
   return plan;
 }
@@ -245,6 +281,7 @@ function planKey(file: string, plan: Plan): string {
     src,
     tex: plan.tex.map((t) => ({ i: t.imageIndex, to: t.to })),
     geo: plan.geo ? { t: plan.geo.targetTris } : null,
+    atlas: plan.atlas ? { d: plan.atlas.targetDraws, e: plan.atlas.edge, q: plan.atlas.quality } : null,
     tool: TOOL_VERSION,
   };
   return sha256(Buffer.from(JSON.stringify(shape)));
@@ -281,6 +318,39 @@ function resizeImage(src: Buffer, srcFormat: string, nw: number, nh: number, out
 
 // ---- geometry (isolated gltf-transform + meshoptimizer) ---------------------
 
+/**
+ * ⭐ 找一個**真的載得動 Pillow** 的 python —— ⛔ 不是「PATH 上第一個 python3」。
+ *
+ * ⚠️ 這是量到的，⛔ 不是預防性的：這台機器的 node 跑在 **x64（Rosetta）**下，
+ * 而 `/usr/local/bin/python3` 是 universal binary ⇒ 它**繼承父行程的架構**，
+ * 於是同一條路徑在 shell 裡是 arm64（Pillow 載得動）、被 node spawn 出來卻是
+ * x86_64（`incompatible architecture (have 'arm64', need 'x86_64')`）。
+ * ⭐ 判準只有一個：**它 import 得動 PIL 嗎** —— ⛔ 不是它叫什麼名字、住在哪裡。
+ */
+let PY: { cmd: string; pre: string[] } | null = null;
+function pythonForAtlas(): { cmd: string; pre: string[] } {
+  if (PY) return PY;
+  const cands: { cmd: string; pre: string[] }[] = [
+    ...(process.env.GGD_PYTHON ? [{ cmd: process.env.GGD_PYTHON, pre: [] as string[] }] : []),
+    { cmd: "python3", pre: [] },
+    ...(process.platform === "darwin" ? [{ cmd: "arch", pre: ["-arm64", "python3"] }] : []),
+    { cmd: "/opt/homebrew/bin/python3", pre: [] },
+  ];
+  for (const c of cands) {
+    try {
+      // ⛔ 探針要 import **`PIL.Image`**,⛔ 不是 `PIL` —— 後者只載到純 python 的
+      //   `__init__.py`,⭐ 而壞掉的是原生的 `_imaging`。一個只驗到一半的探針會
+      //   **在它最需要說話的時候沉默**（它剛剛就這樣放行了一個載不動的 python）。
+      execFileSync(c.cmd, [...c.pre, "-c", "from PIL import Image; Image.new('RGBA',(2,2))"], { stdio: "ignore" });
+      PY = c;
+      return c;
+    } catch {
+      /* try the next one */
+    }
+  }
+  fail("no python3 on PATH can import Pillow (pip3 install pillow) — required for the atlas stage");
+}
+
 function geometryAvailable(): boolean {
   return fs.existsSync(path.join(VENDOR, "node_modules", "@gltf-transform", "functions")) || fs.existsSync(path.join(HERE, "optimize", "node_modules", "@gltf-transform", "functions"));
 }
@@ -292,13 +362,14 @@ interface Applied {
   wrote: boolean;
   skipped: "" | "up-to-date";
   texVerify: string | null; // null = passed (geometry untouched); else the diff
+  atlas: { atlases?: number; quality?: number; afterDraws?: number; skip?: string } | null;
   rig: RigCheck | null;
   rejected: string; // non-empty if the candidate was rejected and not written
   outBytes: number;
 }
 
 function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
-  const res: Applied = { plan, wrote: false, skipped: "", texVerify: null, rig: null, rejected: "", outBytes: 0 };
+  const res: Applied = { plan, wrote: false, skipped: "", texVerify: null, atlas: null, rig: null, rejected: "", outBytes: 0 };
   const key = planKey(plan.file, plan);
 
   if (!args.force && fs.existsSync(plan.outFile) && fs.existsSync(plan.sidecar)) {
@@ -360,6 +431,36 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
       workingFile = geoOut;
     }
 
+    // stage 3: texture atlas (⭐ 唯一能把 draw call 降下來的 stage —— 見 AtlasAction)
+    if (plan.atlas) {
+      const atlasOut = path.join(tmp, "atlas.glb");
+      const py = pythonForAtlas();
+      const raw = execFileSync(
+        py.cmd,
+        [...py.pre, ATLAS_WORKER, workingFile, "--out", atlasOut, "--edge", String(plan.atlas.edge),
+          "--max-draws", String(plan.atlas.targetDraws), "--quality", String(plan.atlas.quality)],
+        { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+      );
+      res.atlas = JSON.parse(raw);
+      if (!fs.existsSync(atlasOut)) {
+        res.rejected = `atlas stage produced nothing (${res.atlas?.skip ?? "no reason given"}) — candidate rejected`;
+        return res;
+      }
+      // ⭐ 兩個方向都要驗：draw call **真的**掉到線內,而且 rig 一根骨頭都沒動。
+      //   ⛔ 只驗前者 = 一個「數字好看但模型壞掉」的候選也會被寫出去。
+      const after = measureGlb(atlasOut);
+      res.rig = checkRig(plan.file, atlasOut, "same");
+      if (after.meshes > plan.atlas.targetDraws) {
+        res.rejected = `atlas stage left ${after.meshes} draw calls (target ${plan.atlas.targetDraws}) — candidate rejected`;
+        return res;
+      }
+      if (!res.rig.ok) {
+        res.rejected = `atlas stage broke the rig (${res.rig.reasons.join("; ")}) — candidate rejected, not written`;
+        return res;
+      }
+      workingFile = atlasOut;
+    }
+
     if (workingFile === plan.file) {
       // nothing was actually produced (no-op)
       return res;
@@ -370,6 +471,9 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
     fs.copyFileSync(workingFile, plan.outFile);
     res.outBytes = fs.statSync(plan.outFile).size;
     const finalMetrics = measureGlb(plan.outFile);
+    // ⭐ 收尾的 VRAM 一律**量出來的**：規劃階段只算得出 texture stage 的節省,
+    //   ⛔ 圖集要跑完才知道排成幾張。⇒ 摘要行報 plan 的估計值就是在說謊。
+    plan.vramAfter = finalMetrics.vramBytes;
     fs.writeFileSync(
       plan.sidecar,
       JSON.stringify(
@@ -382,8 +486,9 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
           generatedAt: new Date().toISOString(),
           textures: plan.tex.map((t) => ({ image: t.imageIndex, from: t.from, to: t.to })),
           geometry: plan.geo ? { fromTris: plan.geo.fromTris, targetTris: plan.geo.targetTris } : null,
-          before: { vramBytes: plan.vramBefore, fileBytes: plan.fileBytesBefore, triangles: plan.metrics.triangles },
-          after: { vramBytes: finalMetrics.vramBytes, fileBytes: finalMetrics.fileBytes, triangles: finalMetrics.triangles },
+          atlas: plan.atlas ? { ...plan.atlas, atlases: res.atlas?.atlases, quality: res.atlas?.quality } : null,
+          before: { vramBytes: plan.vramBefore, fileBytes: plan.fileBytesBefore, triangles: plan.metrics.triangles, drawCalls: plan.metrics.meshes },
+          after: { vramBytes: finalMetrics.vramBytes, fileBytes: finalMetrics.fileBytes, triangles: finalMetrics.triangles, drawCalls: finalMetrics.meshes },
           rig: res.rig,
           textureStageGeometryIdentical: res.texVerify === null && plan.tex.length > 0 ? true : undefined,
         },
@@ -432,7 +537,7 @@ function main(): void {
   }
 
   const plans = files.map((f) => planFile(f, args));
-  const actionable = plans.filter((p) => p.skip !== "no-op" && (p.tex.length > 0 || (p.geo && geomOK)));
+  const actionable = plans.filter((p) => p.skip !== "no-op" && (p.tex.length > 0 || !!p.atlas || (p.geo && geomOK)));
 
   // ---- dry run (default) ----
   if (!args.apply) {
@@ -444,7 +549,7 @@ function main(): void {
     process.stdout.write("(nothing is written without --apply, and never in place)\n\n");
     let vSave = 0;
     for (const p of plans) {
-      if (p.tex.length === 0 && !(p.geo && geomOK)) continue;
+      if (p.tex.length === 0 && !p.atlas && !(p.geo && geomOK)) continue;
       const rel = path.relative(process.cwd(), p.file);
       process.stdout.write(`• ${rel}  [role=${p.role}${p.roleSource === "flag" ? "" : ` (${p.roleSource})`}]\n`);
       for (const t of p.tex) {
@@ -459,6 +564,10 @@ function main(): void {
         );
       else if (p.geo && !geomOK)
         process.stdout.write(`    geometry: ${p.geo.fromTris} → ≤${p.geo.targetTris} tris  [SKIPPED — deps not installed]\n`);
+      if (p.atlas)
+        process.stdout.write(
+          `    atlas: ${p.atlas.fromDraws} → ≤${p.atlas.targetDraws} draw calls, ${p.atlas.edge}² 圖集 (quality ≥${p.atlas.quality}; 會 tile 的貼圖留在原位; rig 與面數驗過才採用)\n`,
+        );
       process.stdout.write(`    → out: ${path.relative(process.cwd(), p.outFile)}\n`);
       vSave += p.vramBefore - p.vramAfter;
     }
