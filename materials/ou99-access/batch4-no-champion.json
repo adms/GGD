@@ -1,0 +1,175 @@
+[
+ {
+  "sourceModelKey": "ou99.467258",
+  "label": "ou99「犬夜叉美男子武器特效版魔兽模型下载+动作」（替代造型）",
+  "kind": "alternate",
+  "character": "殺生丸",
+  "work": "犬夜叉美男子武器特效版魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-467258-1-1.html",
+  "targetCharacter": "殺生丸",
+  "heroIds": [
+   "godie-osam"
+  ],
+  "why": "⛔ **視覺不合格,⛔ 不提案註冊**（英雄卡是存在的）—— ⛔ **視覺不合格（量到的,⛔ 不是印象）**:2026-09-10 實拍 bbox 18.47×15.66×3.56,而角色本體的 Overhead 掛點只在 y=4.58 ⇒ 客戶端 `normalizedModelScale` 照**整份 bbox 高度**正規化（TARGET_HEIGHT 1.8 ÷ 15.66）⇒ 身體只畫到 **0.53u ≈ 一般英雄的 29%**。⚠️ 撐大 bbox 的是**永久可見的紫色斬擊拖尾** —— mdx 的 geoset 可見度動畫在轉檔時被丟棄,所以那段本來只在攻擊時出現的特效變成一直在。⭐ 同族的 ou99.463252 沒有這個問題（bbox 高 1.7）。"
+ },
+ {
+  "sourceModelKey": "ou99.472273",
+  "label": "ou99「机甲灭却者魔兽模型下载+动作」（替代造型）",
+  "kind": "alternate",
+  "character": "鋼彈",
+  "work": "机甲灭却者魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-472273-1-1.html",
+  "targetCharacter": "鋼彈",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.494307",
+  "label": "ou99「太空机器人」（替代造型）",
+  "kind": "alternate",
+  "character": "鋼彈",
+  "work": "太空机器人",
+  "reference": "https://www.ou99.com/thread-494307-1-1.html",
+  "targetCharacter": "鋼彈",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.493659",
+  "label": "ou99 帖 493659（替代造型）",
+  "kind": "alternate",
+  "character": "鋼彈",
+  "work": null,
+  "reference": "https://www.ou99.com/thread-493659-1-1.html",
+  "targetCharacter": "鋼彈",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.487482",
+  "label": "ou99「浪子剑豪绯村剑心 魔兽模型下载+动作」（本尊）",
+  "kind": "exact",
+  "character": "劍心",
+  "work": "浪子剑豪绯村剑心 魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-487482-1-1.html",
+  "targetCharacter": "劍心",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.470351",
+  "label": "ou99「心魔阿修罗浪客剑心魔兽模型下载+动作」（本尊）",
+  "kind": "exact",
+  "character": "劍心",
+  "work": "心魔阿修罗浪客剑心魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-470351-1-1.html",
+  "targetCharacter": "劍心",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.466278",
+  "label": "ou99「亚瑟王saber黑剑版魔兽模型下载+动作」（本尊）",
+  "kind": "exact",
+  "character": "黑化Saber",
+  "work": "亚瑟王saber黑剑版魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-466278-1-1.html",
+  "targetCharacter": "黑化Saber",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.495309",
+  "label": "ou99「泳装版黑Saber 魔兽模型下载+动作」（本尊）",
+  "kind": "exact",
+  "character": "黑化Saber",
+  "work": "泳装版黑Saber 魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-495309-1-1.html",
+  "targetCharacter": "黑化Saber",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.452782",
+  "label": "ou99「二狗子天刀铁碎牙犬夜叉特效角色」（本尊）",
+  "kind": "exact",
+  "character": "犬夜叉",
+  "work": "二狗子天刀铁碎牙犬夜叉特效角色",
+  "reference": "https://www.ou99.com/thread-452782-1-1.html",
+  "targetCharacter": "犬夜叉",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.312479",
+  "label": "ou99 帖 312479（替代造型）",
+  "kind": "alternate",
+  "character": "異形",
+  "work": null,
+  "reference": "https://www.ou99.com/thread-312479-1-1.html",
+  "targetCharacter": "異形",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.455144",
+  "label": "ou99 帖 455144（替代造型）",
+  "kind": "alternate",
+  "character": "瘋狂假面",
+  "work": null,
+  "reference": "https://www.ou99.com/thread-455144-1-1.html",
+  "targetCharacter": "瘋狂假面",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.480489",
+  "label": "ou99「伽椰子蜘蛛人 魔兽模型下载+动作」（替代造型）",
+  "kind": "alternate",
+  "character": "貞子",
+  "work": "伽椰子蜘蛛人 魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-480489-1-1.html",
+  "targetCharacter": "貞子",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.485012",
+  "label": "ou99「维罗妮卡机器人 魔兽模型下载+动作」（替代造型）",
+  "kind": "alternate",
+  "character": "阿強一號",
+  "work": "维罗妮卡机器人 魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-485012-1-1.html",
+  "targetCharacter": "阿強一號",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.496746",
+  "label": "ou99「哆啦A梦-胖虎」（本尊）",
+  "kind": "exact",
+  "character": "胖虎",
+  "work": "哆啦A梦-胖虎",
+  "reference": "https://www.ou99.com/thread-496746-1-1.html",
+  "targetCharacter": "胖虎",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.470467",
+  "label": "ou99「经典亚丝娜魔兽模型下载+动作」（本尊）",
+  "kind": "exact",
+  "character": "阿絲娜",
+  "work": "经典亚丝娜魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-470467-1-1.html",
+  "targetCharacter": "阿絲娜",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.472410",
+  "label": "ou99「白胡子老翁老爷爷魔兽模型下载+动作」（替代造型）",
+  "kind": "alternate",
+  "character": "揍敵客阿福",
+  "work": "白胡子老翁老爷爷魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-472410-1-1.html",
+  "targetCharacter": "揍敵客阿福",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ },
+ {
+  "sourceModelKey": "ou99.498407",
+  "label": "ou99「空手道旗袍男子 魔兽模型下载+动作」（替代造型）",
+  "kind": "alternate",
+  "character": "小當家",
+  "work": "空手道旗袍男子 魔兽模型下载+动作",
+  "reference": "https://www.ou99.com/thread-498407-1-1.html",
+  "targetCharacter": "小當家",
+  "why": "⛔ GGD 還沒有這個角色的英雄卡 ⇒ ⭐ 模型已入庫可被選擇,⛔ 但沒有英雄可以註冊。"
+ }
+]
