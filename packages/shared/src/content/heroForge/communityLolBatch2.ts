@@ -1,7 +1,8 @@
 import type { CommunityHeroExample } from "./communityExamples";
+import { withCommunityLolBatch2Presentation } from "./communityLolBatch2Presentation";
 
 /** Fourth-batch authoring candidates. These are not publication-ready kits. #1185 / #1187 */
-export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
+export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
   {
     "id": "sett",
     "name": "賽特",
@@ -14,9 +15,9 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：右拳攻速細分與按實際受傷量連續換算，簡化為交替追加及三層桶；不是反傷。",
       "Q：移速不限定朝敵人方向；無普攻重置。",
-      "W：重要簡化：中心／兩翼拆分改為窄真傷或寬物傷二選一；self 施放朝現有面向。",
+      "W：依施法者面向揮拳，保留中心真傷與兩側物傷；受擊蓄勢仍以三層桶及兩檔護盾/傷害表示，未按實際承傷量連續換算。",
       "E：未判斷左右同時有人；不憑空給必定暈眩。",
-      "R：待 root 驗 carry 釋放落點；傷害不按被抱者額外生命換算。",
+      "R：抓抱期間跟隨施法者，以現有地面位移表達帶行，終點結算範圍傷害；沒有垂直拋物線，傷害不按被抱者額外生命換算。",
       "EX：笑點是治療換取停拳，不改 QWER。"
     ],
     "moves": {
@@ -162,7 +163,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
       },
       "W": {
         "name": "獸魂轟拳",
-        "purpose": "朝面向揮拳並取得護盾；有三層恆毅時消耗換成真傷重拳。",
+        "purpose": "朝面向揮拳並取得護盾；中心真傷、兩側物傷，同一敵人只受一種傷害。消耗已有恆毅，三層時提高護盾與傷害。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "self",
@@ -191,40 +192,159 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
                 },
                 {
                   "kind": "damageLine",
-                  "damageType": "true",
                   "amount": {
                     "damageTier": "中"
                   },
                   "length": 5,
-                  "width": 1.2,
                   "aim": "facing",
                   "fromCaster": true,
-                  "includeOrigin": true
+                  "includeOrigin": true,
+                  "damageType": "true",
+                  "width": 1.2,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "$hero.w-center",
+                      "duration": 0.1,
+                      "sourceScope": "caster"
+                    }
+                  ]
+                },
+                {
+                  "kind": "damageLine",
+                  "amount": {
+                    "damageTier": "中"
+                  },
+                  "length": 5,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "damageType": "physical",
+                  "width": 2,
+                  "victimCondition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "$hero.w-center",
+                      "appliedBy": "self"
+                    }
+                  }
                 }
               ],
               "onMissing": [
                 {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 80,
-                    "ratios": []
-                  },
-                  "duration": 3,
-                  "stackKey": "$hero.w",
-                  "onExisting": "keepLarger",
-                  "absorbs": "all"
-                },
-                {
-                  "kind": "damageLine",
-                  "damageType": "physical",
-                  "amount": {
-                    "damageTier": "小"
-                  },
-                  "length": 5,
-                  "width": 2,
-                  "aim": "facing",
-                  "fromCaster": true,
-                  "includeOrigin": true
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "$hero.grit",
+                  "appliedBy": "self",
+                  "count": "all",
+                  "onConsumed": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 80,
+                        "ratios": []
+                      },
+                      "duration": 3,
+                      "stackKey": "$hero.w",
+                      "onExisting": "keepLarger",
+                      "absorbs": "all"
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "true",
+                      "width": 1.2,
+                      "onHitTargets": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "$hero.w-center",
+                          "duration": 0.1,
+                          "sourceScope": "caster"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "physical",
+                      "width": 2,
+                      "victimCondition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "$hero.w-center",
+                          "appliedBy": "self"
+                        }
+                      }
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 80,
+                        "ratios": []
+                      },
+                      "duration": 3,
+                      "stackKey": "$hero.w",
+                      "onExisting": "keepLarger",
+                      "absorbs": "all"
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "true",
+                      "width": 1.2,
+                      "onHitTargets": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "$hero.w-center",
+                          "duration": 0.1,
+                          "sourceScope": "caster"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "physical",
+                      "width": 2,
+                      "victimCondition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "$hero.w-center",
+                          "appliedBy": "self"
+                        }
+                      }
+                    }
+                  ]
                 }
               ]
             }
@@ -273,7 +393,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
       },
       "R": {
         "name": "嘆為觀止",
-        "purpose": "抱住單一敵人、前躍後摔地並緩速周圍。",
+        "purpose": "抱住單一敵人，朝目標方向帶行，移動結束後傷害並緩速周圍敵人。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "targeted",
@@ -294,27 +414,28 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
               "onCarrierDeath": "release"
             },
             {
-              "kind": "leap",
-              "applyTo": "self",
+              "kind": "dash",
               "mode": "toPoint",
-              "throwDistance": 4,
-              "apexHeight": 1,
-              "durationSec": 0.5,
-              "landRadius": 2.5,
-              "onLand": [
+              "speed": 8,
+              "maxDistance": 4,
+              "onEnd": [
                 {
-                  "kind": "damage",
+                  "kind": "damageArea",
                   "damageType": "physical",
                   "amount": {
                     "damageTier": "中"
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "$hero.r-slow",
-                  "duration": 1.5,
-                  "sourceScope": "caster",
-                  "moveSpeedMult": 0.6
+                  },
+                  "radius": 2.5,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "$hero.r-slow",
+                      "duration": 1.5,
+                      "sourceScope": "caster",
+                      "moveSpeedMult": 0.6
+                    }
+                  ]
                 }
               ]
             }
@@ -370,7 +491,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
       "Q：不額外給未被看見時群體恐懼。",
       "W：重大簡化：不是引導中斷系統；回血暫為每波每命中者固定量，末段斬殺未加入。",
       "E：弧形與中央命中改為窄直帶，整條帶吃沉默。",
-      "R：沒有草叢未視認額外恐懼；起手受控制與落地時序交 root 驗。",
+      "R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。",
       "EX：只會既有代理普攻，不是三具複製 QWER 的分身。"
     ],
     "moves": {
@@ -509,7 +630,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "ground",
-          "castTimeSec": 1.2,
+          "castTimeSec": 1,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -546,7 +667,8 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
           ]
         },
         "range": "大",
-        "cooldown": "極大"
+        "cooldown": "極大",
+        "cast": "極大"
       },
       "EX": {
         "name": "尖叫外包",
@@ -1638,7 +1760,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：計數60秒窗口；英雄取擊殺而非助攻參與。",
-      "Q：重大簡化：第二段是施法者當下前方判定，不是會返航追身的球；root可改固定凍結方向，但不能聲稱回程路徑已完成。",
+      "Q：已確認缺少往返彈道：第二段仍從施法者當下位置/面向重新判定，不能當作返航追身的球；列為來源核心缺口。",
       "W：每波重新選一人，沒有三顆獨立導引飛彈；仍保留近身自動攻擊用途。",
       "E：重大簡化：沒有charmed軸，故不是持續強制走向她，也不保證打斷所有位移。",
       "R：PENDING MAIN：需要一個有剩餘次數、窗口期限與重施放冷卻的狀態，不等同自動三段。 原單段params只為技術候選，不授權作最終替代。",
@@ -2129,7 +2251,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
         "cooldown": "大"
       }
     },
-    "modelKey": "community.body.ef3ab2e0012ef6267e1203b6b76161ecff30551c37740c1c"
+    "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488"
   },
   {
     "id": "velkoz",
@@ -2143,7 +2265,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：標記按施法者分離；每0.1秒最多觸發一次，全域節流非每敵獨立；衍生傷害不可遞迴疊自己。",
       "Q：重大簡化：沒有再按分裂、左右90度支彈；保留直線消耗。",
-      "W：第二次線判定的起點/面向可能隨施法者改變，root應優先凍結幾何或明示；無兩次充能。",
+      "W：已確認 delayed.point 不被 damageLine 當作幾何起點；第二段仍讀施法者當下位置/面向，缺固定裂痕及兩次充能，列為來源核心缺口。",
       "E：近遠受害者都同一小推移；沒有額外專用判斷。",
       "R：重大簡化：非可轉向可中斷的正式channel；不能宣稱沉默/移動會取消已排程射線。",
       "EX：會失去該目標R真傷資格，真有交換代價。"
@@ -2716,7 +2838,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：敵人/兵種重置差異先統一為受傷；不是戰鬥中固定秒回。",
-      "Q：未只清除slow；不以全體淨化冒充解除緩速。可接既有慢速類別驅散時再補。",
+      "Q：已確認現有 dispel 無慢速篩選，不能只解除既有減速；statusImmunity 只拒絕新掛載，列為來源核心缺口；不擴張成全淨化。",
       "W：重要簡化：暫未接韌性、後段減傷和擊殺永久雙抗。",
       "E：damageTier 是整段預算，由模板分攤，不能文案寫每波中級傷害。",
       "R：不做必殺保證；護盾/免死仍按現有傷害規則。",
@@ -2916,7 +3038,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = [
     },
     "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13"
   }
-] satisfies readonly CommunityHeroExample[];
+] satisfies readonly CommunityHeroExample[]).map(withCommunityLolBatch2Presentation);
 
 /** Source-critical mechanics are pending; the editor must not offer these as completed presets. */
 export const COMMUNITY_LOL_BATCH2_RELEASE_READY = false;

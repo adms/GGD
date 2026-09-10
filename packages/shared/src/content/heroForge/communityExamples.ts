@@ -1,11 +1,13 @@
 import { defaultAbilityMaxRank } from "../schema/ability";
 import type { TemplateDoc } from "../schema/template";
+import type { VfxScriptAuthoredDoc } from "../schema/vfxScript";
 import { archetypeForOrigin, ORIGIN_ATTACK_TYPE } from "../heroForge";
 import { HERO_PROJECT_SCHEMA, HERO_PLAN_SCHEMA, HERO_SECTION_IDS, HERO_SLOTS, type HeroSlot } from "./constants";
 import { zHeroSlotPlans, type Origin } from "./plan";
 import { defaultHeroPresentation } from "./presentation";
 import { zHeroProject, type HeroProject } from "./schema";
 import { pinHeroPlanTemplates } from "./templateVersions";
+import { contentSha256 } from "../import/jcs";
 
 type Band = "極小" | "小" | "中" | "大" | "極大";
 type Params = Record<string, unknown>;
@@ -32,6 +34,8 @@ export interface CommunityHeroExample {
   adaptations: readonly string[];
   sourceUrl: string;
   moves: Readonly<Record<HeroSlot, Move>>;
+  /** Optional authored cues; omitted recipes retain their original presentation bytes. */
+  authoredPresentation?: Partial<Record<HeroSlot, Pick<VfxScriptAuthoredDoc, "segments" | "notes" | "yields">>>;
 }
 
 // These are ordinary authoring recipes. No champion-specific runtime branch,
@@ -162,7 +166,13 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
 /** Compile an authoring recipe with its own identity and pinned template sources. */
 export function createCommunityHeroRecipe(recipe: CommunityHeroExample, projectId: string, templates: readonly TemplateDoc[], generatorVersion?: string): HeroProject {
   const catalog = new Map(templates.map((template) => [template.id, template]));
-  const withHeroId = <T,>(value: T): T => JSON.parse(JSON.stringify(value).replaceAll("$hero", projectId));
+  const withHeroId = <T,>(value: T): T => JSON.parse(JSON.stringify(value).replaceAll("$hero", projectId), (key, entry: unknown) => {
+    // Editor UUIDs can overflow shield's 48-character stackKey limit. Apply
+    // the same mapping to definitions and extendBuff.stackKey references;
+    // statusId and ability identity use their own full, unshortened IDs.
+    return key === "stackKey" && typeof entry === "string" && entry.length > 48
+      ? `stack-${contentSha256([projectId, entry]).slice(-42)}` : entry;
+  });
   const sourceLock = { canonicalId: null, versionId: null };
   const concept = `${recipe.summary}\n\n概念來源：LoL ${recipe.inspiration}\n${recipe.sourceUrl}\n\n本遊戲改編：\n${recipe.adaptations.map((text) => `• ${text}`).join("\n")}\n\n${recipe.modelKey ? "採用所選 GGD 模型與特效。" : "採用既有 GGD 模型與特效，外觀為驗收用替身。"}`;
   const presentation = defaultHeroPresentation();
@@ -173,7 +183,11 @@ export function createCommunityHeroRecipe(recipe: CommunityHeroExample, projectI
     if (!template || template.status !== "enabled") throw new Error(`${recipe.inspiration} ${slot} 的模板尚不可用：${definition.ref}`);
     const passive = slot === "PASSIVE";
     const abilityId = `${projectId}.${slot.toLowerCase()}`;
-    if (!passive) presentation.slots[slot].script = {
+    const authored = recipe.authoredPresentation?.[slot];
+    if (authored) presentation.slots[slot].script = {
+      schema: "vfx-script@1", id: abilityId, abilityId, ...withHeroId(authored),
+    };
+    else if (!passive) presentation.slots[slot].script = {
       schema: "vfx-script@1", id: abilityId, abilityId,
       segments: [{ kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
         { kind: "floatingText", on: "castEffect", text: definition.name, colorRgb: [210, 230, 255], durationSec: 0.7 },

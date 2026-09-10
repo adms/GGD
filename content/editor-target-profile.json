@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_c930787ae7d5",
+    "contentVersion": "cv_269b5e092a56",
     "collections": {
       "champions": {
         "hash": "555e12112faa",
@@ -46,8 +46,8 @@
         "count": 103
       },
       "models": {
-        "hash": "1486d674fbd2",
-        "count": 290
+        "hash": "0185dc594a57",
+        "count": 301
       },
       "vfx": {
         "hash": "7df129081586",
@@ -8376,11 +8376,11 @@
       }
     ]
   },
-  "assetManifestDigest": "5c2177cc89fb",
+  "assetManifestDigest": "fb510b145033",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2300,
-    "totalBytes": 248213914
+    "entries": 2359,
+    "totalBytes": 350830278
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8468,5 +8468,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "9fe2d0e3d09c"
+  "profileDigest": "eca45403f222"
 }

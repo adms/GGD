@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "1486d674fbd2",
+  "hash": "0185dc594a57",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -81,6 +81,18 @@
       "size": 461
     },
     {
+      "id": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+      "path": "models/community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70.json",
+      "hash": "b943ec6106d6",
+      "size": 469
+    },
+    {
+      "id": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+      "path": "models/community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13.json",
+      "hash": "d019e9f48dcc",
+      "size": 507
+    },
+    {
       "id": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
       "path": "models/community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c.json",
       "hash": "f7379bb557a1",
@@ -91,6 +103,12 @@
       "path": "models/community.body.212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df4.json",
       "hash": "45ab50998be2",
       "size": 455
+    },
+    {
+      "id": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+      "path": "models/community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa.json",
+      "hash": "7069cc3ca20d",
+      "size": 469
     },
     {
       "id": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
@@ -109,6 +127,12 @@
       "path": "models/community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e.json",
       "hash": "5f4be4141b26",
       "size": 455
+    },
+    {
+      "id": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+      "path": "models/community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99.json",
+      "hash": "824221094474",
+      "size": 522
     },
     {
       "id": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
@@ -255,6 +279,12 @@
       "size": 455
     },
     {
+      "id": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+      "path": "models/community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488.json",
+      "hash": "9be5addceb3b",
+      "size": 489
+    },
+    {
       "id": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
       "path": "models/community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905.json",
       "hash": "57d4c333776c",
@@ -271,6 +301,12 @@
       "path": "models/community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a.json",
       "hash": "c8a5ebbd8f3e",
       "size": 439
+    },
+    {
+      "id": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+      "path": "models/community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc.json",
+      "hash": "05e7a2a46d65",
+      "size": 505
     },
     {
       "id": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
@@ -291,10 +327,22 @@
       "size": 455
     },
     {
+      "id": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+      "path": "models/community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9.json",
+      "hash": "88dc90fc5871",
+      "size": 487
+    },
+    {
       "id": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
       "path": "models/community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f.json",
       "hash": "0f69a0272b58",
       "size": 471
+    },
+    {
+      "id": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+      "path": "models/community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e.json",
+      "hash": "abb5ddcf3d3f",
+      "size": 493
     },
     {
       "id": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
@@ -307,6 +355,18 @@
       "path": "models/community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b.json",
       "hash": "55da05d3ea5d",
       "size": 455
+    },
+    {
+      "id": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+      "path": "models/community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7.json",
+      "hash": "134357d318e8",
+      "size": 469
+    },
+    {
+      "id": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+      "path": "models/community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399.json",
+      "hash": "a5bb2f2a5c05",
+      "size": 485
     },
     {
       "id": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
@@ -343,6 +403,12 @@
       "path": "models/community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216.json",
       "hash": "e1037dc0c1f7",
       "size": 462
+    },
+    {
+      "id": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+      "path": "models/community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc.json",
+      "hash": "98fa31450054",
+      "size": 439
     },
     {
       "id": "imported.1hswd-01",

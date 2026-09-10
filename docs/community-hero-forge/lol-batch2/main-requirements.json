@@ -11,7 +11,8 @@
       ],
       "requiredOriginalCore": "一次開啟窗口內最多三次各自重新瞄準的短衝；擊殺參與可增加可重施放次數。",
       "missingMechanism": "需要一個有剩餘次數、窗口期限與重施放冷卻的狀態，不等同自動三段。",
-      "recastKind": "limited-recasts"
+      "recastKind": "limited-recasts",
+      "issueStatusAtCheck": "open"
     },
     {
       "id": "recast-thresh",
@@ -22,7 +23,8 @@
       ],
       "requiredOriginalCore": "第一段skillshot鉤命中後保留該受害者；僅在命中窗口內可二次按Q選擇飛向同一人。",
       "missingMechanism": "需要命中解鎖、目標綁定、失效/死亡處理與自願追入；不等同必中突進或自動追入。",
-      "recastKind": "hit-gated-followup"
+      "recastKind": "hit-gated-followup",
+      "issueStatusAtCheck": "open"
     },
     {
       "id": "recast-ornn",
@@ -33,7 +35,8 @@
       ],
       "requiredOriginalCore": "第一段羊朝施法者行進；第二次按R讓施法者衝撞羊並改向，第二段改為擊飛。",
       "missingMechanism": "需要跨施放保存同一代理物、碰撞事件、方向重定與二段payload；不等同再射一隻羊。",
-      "recastKind": "redirect-existing-projectile"
+      "recastKind": "redirect-existing-projectile",
+      "issueStatusAtCheck": "open"
     },
     {
       "id": "ally-voluntary-lantern",
@@ -47,7 +50,8 @@
         "tpl-teleport destination=rallyToCaster 的到施法者腳下位移 primitive",
         "applyStatus/shield 等到點效果；需要 Main 完成新交互接線後才可接"
       ],
-      "issue": "https://github.com/adms/GGD/issues/1189"
+      "issue": "https://github.com/adms/GGD/issues/1189",
+      "issueStatusAtCheck": "open"
     },
     {
       "id": "temporary-pillar-collision",
@@ -63,7 +67,8 @@
         "leap 移動與落地效果",
         "damageArea/knockback 可作撞擊後 payload，但目前無 collision-only 觸發"
       ],
-      "issue": "https://github.com/adms/GGD/issues/1190"
+      "issue": "https://github.com/adms/GGD/issues/1190",
+      "issueStatusAtCheck": "open"
     },
     {
       "id": "interruptible-sustained-channel",
@@ -80,10 +85,67 @@
         "damage/heal/damageLine 作 Main 引導生命週期下的 payload"
       ],
       "scopeNote": "稻草人 R 的前搖可沿用 castTime + 現有打斷；成功落地後群鴉領域不因本項一併要求持續引導。",
-      "issue": "https://github.com/adms/GGD/issues/1191"
+      "issue": "https://github.com/adms/GGD/issues/1191",
+      "issueStatusAtCheck": "open"
+    },
+    {
+      "id": "remaining-core-ahri-q",
+      "status": "pending-main",
+      "issue": "https://github.com/adms/GGD/issues/1197",
+      "slots": [
+        "ahri.Q"
+      ],
+      "requiredOriginalCore": "同一法球去程／回程與追身"
+    },
+    {
+      "id": "remaining-core-ahri-e",
+      "status": "pending-main",
+      "issue": "https://github.com/adms/GGD/issues/1197",
+      "slots": [
+        "ahri.E"
+      ],
+      "requiredOriginalCore": "迫使命中者朝來源行走"
+    },
+    {
+      "id": "remaining-core-thresh-r",
+      "status": "pending-main",
+      "issue": "https://github.com/adms/GGD/issues/1197",
+      "slots": [
+        "thresh.R"
+      ],
+      "requiredOriginalCore": "五段各自觸碰觸發並消失的邊界"
+    },
+    {
+      "id": "remaining-core-velkoz-q",
+      "status": "pending-main",
+      "issue": "https://github.com/adms/GGD/issues/1197",
+      "slots": [
+        "velkoz.Q"
+      ],
+      "requiredOriginalCore": "主彈當前位置左右分裂"
+    },
+    {
+      "id": "remaining-core-velkoz-w",
+      "status": "pending-main",
+      "issue": "https://github.com/adms/GGD/issues/1197",
+      "slots": [
+        "velkoz.W"
+      ],
+      "requiredOriginalCore": "固定裂痕雙段與槽位充能"
+    },
+    {
+      "id": "remaining-core-garen-q",
+      "status": "pending-main",
+      "issue": "https://github.com/adms/GGD/issues/1197",
+      "slots": [
+        "garen.Q"
+      ],
+      "requiredOriginalCore": "僅清除既有減速"
     }
   ],
   "excluded": [
     "Ashe E vision: replaced by Owner-approved delayed disarm"
-  ]
+  ],
+  "checkedAgainstMain": "6da992509",
+  "requiredSlotCount": 14
 }
