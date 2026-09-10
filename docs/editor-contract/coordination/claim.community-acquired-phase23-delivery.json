@@ -106,8 +106,22 @@
       ]
     },
     {
+      "kind": "confirmed",
+      "text": "Main 基線原有的 14 筆模型幾何警示已逐項分類：ou99.495015 與不可變版本的 prim1 是實際血泥並由 model doc 隱藏；ou99.458777 的手持燈具、ou99.474258 的細長配件，以及哆啦A夢 Spell One 道具群經真選角／施法預覽確認為合法幾何，均以尺寸、骨架及可反駁條件登記豁免。模型反向閘現在掃描 259 顆 GLB、22 處已宣告殘留幾何與 7 處已宣告離地分身，結果 0 問題。",
+      "commit": "29a85194851914616e1605c1fa5b4c5299131bd5",
+      "repro": {
+        "command": "pnpm models:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "content/models/ou99.495015.json",
+        "content/models/version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b.json",
+        "tools/model-census/gore_geoset.py"
+      ]
+    },
+    {
       "kind": "inferred",
-      "text": "全部 126 名要在同一正式服務完成，仍依賴本 PR、LoL 第二批 Draft PR #1193 及 Main 當下 target 合併。集中閘另會被 origin/main 既有的 14 筆模型幾何宣告，以及 #1170 尚未合併的核准語音 donor WAV 擋住，本分支不以假檔或跳過檢查偽造通過。P3-05 若要從可選且關閉提升為可發布推論，還需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。",
+      "text": "全部 126 名要在同一正式服務完成，仍依賴本 PR、LoL 第二批 Draft PR #1193 及 Main 當下 target 合併。集中閘目前只剩 #1170 尚未合併的核准語音 donor WAV；本分支不以假檔或跳過檢查偽造通過。P3-05 若要從可選且關閉提升為可發布推論，還需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。",
       "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
       "repro": {
         "command": "pnpm ai:release:metadata",
