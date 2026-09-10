@@ -36173,7 +36173,7 @@
       "resourceRole": "character-model-collection",
       "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2",
       "selectionClass": "community-mod",
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "registration-rejected-material-extensions-and-missing-clips",
@@ -36317,16 +36317,17 @@
         "path": "model-candidates.json",
         "sha256": "256aca011b585d8d87d58a858da89d11ec7eeb393b593c503d3920ea18727537"
       },
-      "verification": "保留v1與原300/Rays資料，另存1個480Hz落地/循環加工候選及1失敗實驗；69 joints、2 derived idle/run、0原生Rays動作。960Hz平地取樣的足部位置循環差為0、穿地改善；原片長不改，但IK/下沉/18%片尾混合改變姿態。測試外部移速4.522m/s不等於GGD速度，左腳短時速度尖峰及僵硬披風仍存在。Khronos0錯誤0警告、實際Babylon播放；攻擊/施法/受傷/死亡和GGD整合仍待補。 真實GGD元件載入通過，但註冊422；缺4狀態與材質擴充詳見独立GGD驗收來源。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
+      "verification": "保留v1與原300/Rays資料，另存1個480Hz落地/循環加工候選及1失敗實驗；69 joints、2 derived idle/run、0原生Rays動作。960Hz平地取樣的足部位置循環差為0、穿地改善；原片長不改，但IK/下沉/18%片尾混合改變姿態。測試外部移速4.522m/s不等於GGD速度，左腳短時速度尖峰及僵硬披風仍存在。Khronos0錯誤0警告、實際Babylon播放；攻擊/施法/受傷/死亡和GGD整合仍待補。 真實GGD元件載入通過，但註冊422；缺4狀態與材質擴充詳見独立GGD驗收來源。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "runtimeValidationSourceId": "parallel-community-lina-ggd-compatibility",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget-footloop-v2/853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909.zip",
         "bytes": 36383294,
         "sha256": "853289ad24d2f3e993cd18880a8d11955f51c25f5b245d59a3d4ba7474ede909",
-        "readbackVerified": false,
-        "status": "not-uploaded"
-      },
-      "runtimeValidationSourceId": "parallel-community-lina-ggd-compatibility"
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      }
     },
     {
       "id": "lol-local-native-pcm16-recovery-round19",
