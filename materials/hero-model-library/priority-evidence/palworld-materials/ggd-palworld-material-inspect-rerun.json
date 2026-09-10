@@ -1,0 +1,100 @@
+{
+  "schema": "ggd.palworld.material-inspect-fresh-review@1",
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "readOnlySourceModels": true,
+  "tools": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/inspect.ts",
+      "sha256": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/glb.ts",
+      "sha256": "daaa10f7e0d9caa47fbb394bb920af9ad6bca8aa53dcc5f7f96eddc4a816598a"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "99a05abcb803576e41f5896f9275c436cc40e32a96ebfdd4ddba6d3163696111"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared/src/content/modelUpload/budget.ts",
+      "sha256": "9601a77659df93610d8c047f811b0cf065f5ebf935aab399e7d7eccf8635e25f"
+    }
+  ],
+  "limits": {
+    "tris": {
+      "warn": 16000,
+      "limit": 28000
+    },
+    "meshes": {
+      "warn": 3,
+      "limit": 6
+    },
+    "texEdge": {
+      "warn": 256,
+      "limit": 256
+    },
+    "channels": {
+      "warn": 300,
+      "limit": 500
+    }
+  },
+  "rows": [
+    {
+      "id": "opgg-palworld-jetragon.material-bound-256-v1",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+      "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+      "bytes": 4297580,
+      "passed": true,
+      "triangles": 8468,
+      "drawPrimitives": 3,
+      "clipCount": 29,
+      "maxClipChannels": 225,
+      "maxTextureEdge": 256,
+      "budget": {
+        "errors": [],
+        "warnings": []
+      },
+      "recordedReceiptBudgetMatches": true,
+      "hashMatchesCandidate": true
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+      "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09",
+      "bytes": 13224512,
+      "passed": true,
+      "triangles": 23928,
+      "drawPrimitives": 3,
+      "clipCount": 2,
+      "maxClipChannels": 435,
+      "maxTextureEdge": 256,
+      "budget": {
+        "errors": [],
+        "warnings": [
+          "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+          "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+        ]
+      },
+      "recordedReceiptBudgetMatches": true,
+      "hashMatchesCandidate": true
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-256-v1",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+      "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+      "bytes": 2148052,
+      "passed": true,
+      "triangles": 5798,
+      "drawPrimitives": 3,
+      "clipCount": 33,
+      "maxClipChannels": 129,
+      "maxTextureEdge": 256,
+      "budget": {
+        "errors": [],
+        "warnings": []
+      },
+      "recordedReceiptBudgetMatches": true,
+      "hashMatchesCandidate": true
+    }
+  ]
+}

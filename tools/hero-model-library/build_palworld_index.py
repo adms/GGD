@@ -24,6 +24,27 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def model_components(data, repo=ROOT):
+    """Expose verified component copies without inventing hero/runtime registration."""
+    result = []
+    for character in data['characters']:
+        for candidate in character['modelCandidates']:
+            if not candidate.get('componentReady'):
+                continue
+            assert candidate.get('runtimeSelectable') is False
+            assert candidate.get('defaultEligible') is False
+            relative = candidate['gitPath']
+            expected = 'content/assets/models/community/' + candidate['sha256'] + '.glb'
+            assert relative == expected, 'Unexpected component path: ' + relative
+            path = repo / relative
+            assert path.is_file() and path.stat().st_size == candidate['bytes']
+            assert sha(path) == candidate['sha256'], 'Changed component: ' + relative
+            result.append(dict(candidate, characterIdentity=character['backlogIdentity'],
+                characterName=character['name'], gitAbsolutePath=str(path.resolve()),
+                ggdHeroImplemented=False, runtimeDropdownRegistered=False))
+    return result
+
+
 def build(workspace):
     paths = [BASE / 'download-sources.json', BASE / 'public-source-files.json',
              BASE / 'design-backlog/sources-supplemental.json', BASE / 'palworld/character-settings.json']
@@ -75,8 +96,9 @@ def build(workspace):
             audioSourceId=audio_id, audioFiles=audio_files, audioBackup=audio_source['backup'],
             settingsForms=forms, spokenDialogueCount=0, standaloneVfxAcquired=False,
             skillSpecificSfxAcquired=False, ggdHeroImplemented=False,
-            runtimeSelectable=False, status='source-reserve-pending-standardization'))
-    return dict(schema='ggd-palworld-three-resource-index@1',
+            runtimeSelectable=False, status=('model-components-available-pending-hero-design-and-binding'
+                if any(m.get('componentReady') for m in models) else 'source-reserve-pending-standardization')))
+    result = dict(schema='ggd-palworld-three-resource-index@1',
         inputs=[dict(gitPath=str(path.relative_to(ROOT)), sha256=sha(path)) for path in paths],
         characterCount=len(characters), modelSourceCount=sum(len(c['modelSources']) for c in characters),
         preservedModelFileCount=sum(len(c['modelCandidates']) for c in characters),
@@ -87,12 +109,16 @@ def build(workspace):
             'Creature cries are sound effects, not Japanese or English spoken dialogue.',
             'PalDB settings are community snapshots, not original game DataTables or GGD abilities.',
             'Khronos structural validation does not prove material fidelity or GGD runtime acceptance.'])
+    components = model_components(result)
+    result['gitModelComponentCount'] = len(components)
+    result['gitModelComponents'] = components
+    return result
 
 
 def render(data):
     lines = ['# ' + TITLE, '',
         '固定入口；模型、動作、叫聲與角色／技能設定可由同名 JSON 查詢。三位均已列入 [已取得模型待設計英雄](../已取得模型待設計英雄.md)。', '',
-        '來源與半成品已保留本機並備份 S3 `legacy/`，僅供人工指定使用。完成標準化與 GGD 驗收後，所有來源版本都要成為獨立可選項；目前尚未登記為可切換成品。', '',
+        '來源與半成品已保留本機並備份 S3 `legacy/`，僅供人工指定使用。材質綁定及資源限制通過的模型元件另放 Git；英雄設計、六態綁定及後台選項尚待完成，不能以元件入庫代表英雄已上架。', '',
         '| 角色 | 模型來源 | 動作 | 叫聲 | 設定資料 |',
         '|---|---|---|---|---|']
     for c in data['characters']:
@@ -105,13 +131,37 @@ def render(data):
                        'Blightstar_Calamity_Zenara_%26_Astralym': '高難度首領'}
         forms = '；'.join(f"{form_labels.get(f['form'], f['form'])}：{len(f['activeSkills'])} 條技能" for f in c['settingsForms'])
         lines.append(f"| {c['name']}／{c['englishName']} | {source_links} | {motion} | 6 段非語言叫聲 | {forms} |")
-    lines += ['', '保留全部原始、解壓與修正版模型檔；這些版本不是不同角色。空渦龍的 `Carrying` 與 `Carrying_Start` 內容相同；枯星龍的 `HaloCutter_Loop_Ring` 為固定姿勢。搗蛋貓另有 AtlasForge 的單一待機版本。', '',
+    lines += ['', f"全部保留 {data['preservedModelFileCount']} 個原始、解壓與材質版本，其中 {data['gitModelComponentCount']} 份模型元件可從 Git 取得。這些版本不是不同角色。空渦龍的 `Carrying` 與 `Carrying_Start` 內容相同；枯星龍的 `HaloCutter_Loop_Ring` 為固定姿勢。搗蛋貓另有 AtlasForge 的單一待機版本。", '',
+        '## Git 模型元件', '',
+        '固定共用入口 `materials/asset-library/current-resources.json → modelComponents`。此處只表示可重用模型元件；原生完整動作版及所有半成品仍保留於下方。', '',
+        '| 角色 | Git 模型檔 | 本版動作條目 | 限制 |', '|---|---|---|---|']
+    for c in data['gitModelComponents']:
+        limitations = c.get('limitations', [])
+        if isinstance(limitations, str):
+            limitations = [limitations]
+        lines.append(f"| {c['characterName']} | [{c['id']}](<{c['gitAbsolutePath']}>) | {c.get('animationClipCount', c.get('nativeAnimationCount', 0))} | "
+            + '；'.join(str(x).replace('|', '／') for x in limitations + ['待英雄設計、六態與後台綁定']) + ' |')
+    lines += ['',
         '## 本機直接取用', '', '音訊事件包含 Normal、Joy、Anger、Sorrow、Pain、Death；MP3 與 WAV 編碼副本不重複計為新叫聲。', '']
     for c in data['characters']:
         lines += ['### ' + c['name'], '',
             '模型檔與 SHA：同名 JSON 的 `characters[] → modelCandidates`。全部來源根目錄：', '']
         for s in c['modelSources']:
             lines.append(f"- [{s['label']} 本機資料夾](<{s['absoluteLocalRoot']}>)；[來源]({s['sourceUrl']})")
+        lines += ['', '| 保留版本 | 動作條目 | 處理狀態 | 本機檔案 |', '|---|---|---|---|']
+        for m in c['modelCandidates']:
+            stage = m['readiness'].lower()
+            if m.get('componentReady'):
+                label = '材質與限制檢查通過；待英雄綁定'
+            elif 'diagnostic' in stage:
+                label = '診斷中間檔保留；採用後續修正版'
+            elif stage.startswith('material-bound'):
+                label = '材質已綁定；資源限制／英雄綁定待處理'
+            elif 'material' in stage:
+                label = '待材質／GGD 標準化'
+            else:
+                label = '來源／修正版保留；待 GGD 標準化'
+            lines.append(f"| {m.get('label', m['id'])} | {m.get('animationClipCount', m.get('nativeAnimationCount', 0))} | {label} | [{Path(m['path']).name}](<{m['absolutePath']}>) |")
         lines += ['', '| 事件 | 本機音訊 |', '|---|---|']
         for a in c['audioFiles']:
             event = a.get('event') or a.get('label') or a.get('eventName') or Path(a['path']).stem
@@ -119,7 +169,7 @@ def render(data):
         lines += ['', 'S3 音訊來源備份：`' + c['audioBackup']['s3Uri'] + '`。', '']
     lines += ['## 設定與待完成項目', '',
         '[角色與技能設定 JSON](character-settings.json) 保留 5 份資料頁、34 條技能與空渦龍／搗蛋貓各 5 階夥伴技能。枯星龍一般資料沒有學習技能列；兩個首領形態各 8 條，分別保存。', '',
-        '尚待完成材質綁定、GGD 骨架／動作限制驗收及後台成品選項。未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；叫聲可先作設計素材。', '',
+        '三份 256px 元件已完成材質綁定及 GGD 結構／資源限制檢查；枯星龍此版只有 Idle／Walk，完整 58 動作版另外保留。原作材質特殊著色差異、表情及完整动作播放仍須逐項驗收；三角色尚待英雄設計、六態映射及後台成品選項。未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；叫聲可先作設計素材。', '',
         '維護：更新來源與補充身份索引後，執行 `python3 tools/hero-model-library/build_palworld_index.py --workspace ..`；加 `--check` 檢查文件是否與來源一致。', '']
     return '\n'.join(lines)
 

@@ -1,0 +1,34 @@
+{
+  "schema": "ggd-palworld-preview-verification@1",
+  "scope": "Existing preview images visually inspected again in this session; no new rendering or full motion acceptance.",
+  "images": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/babylon-idle-walk-256-final/idle-front.png",
+      "sha256": "f5e56c706e4ed3d86a18f74cb811c6e3c6aff7708f4268db01a4f915a27d9bf1",
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-materials/previews/astralym-idle.png",
+      "bytes": 162226
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/render-v1/idle-middle.png",
+      "sha256": "00e4ca56c4a329c76a784b4cf702004d2219d67c6a3481df41214cb08cb19cd6",
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-materials/previews/cattiva-idle.png",
+      "bytes": 333732
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/evidence/contact-256.jpg",
+      "sha256": "92ade3d9e90806aaa8350102234f0f23d0dd7f588d4d0766ece362b68fb44f15",
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-materials/previews/jetragon-contact.jpg",
+      "bytes": 141402
+    }
+  ],
+  "findings": [
+    "Jetragon contact sheet: attached body, limbs and wing elements visible in selected views and actions.",
+    "Astralym idle frame: body, face, cyan details and ribbon attachments visible.",
+    "Cattiva idle frame: pink body, blue eyes, facial texture and yellow belly visible."
+  ],
+  "remaining": [
+    "Original shader and expression fidelity",
+    "All motion playback and native death",
+    "Hero design, six-state mapping, backend selection and deployment"
+  ]
+}

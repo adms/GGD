@@ -1,0 +1,29 @@
+{
+  "schema": "ggd-model-material-visual-review@1",
+  "reviewer": "root",
+  "scope": "Three rendered preview files only; this is not complete motion review or production selection acceptance.",
+  "images": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/babylon-idle-walk-256-final/idle-front.png",
+      "sha256": "f5e56c706e4ed3d86a18f74cb811c6e3c6aff7708f4268db01a4f915a27d9bf1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/render-v1/idle-middle.png",
+      "sha256": "00e4ca56c4a329c76a784b4cf702004d2219d67c6a3481df41214cb08cb19cd6"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/evidence/contact-256.jpg",
+      "sha256": "92ade3d9e90806aaa8350102234f0f23d0dd7f588d4d0766ece362b68fb44f15"
+    }
+  ],
+  "observations": [
+    "Astralym: body, eyes and cyan emission visible; no obvious separated mesh in the inspected idle frame.",
+    "Cattiva: pink body, blue eyes, yellow belly and facial texture visible in inspected idle frame.",
+    "Jetragon: front/side/back and selected action frames show cyan body and pink wing elements; no obvious disjoint limbs in the displayed contact sheet."
+  ],
+  "pending": [
+    "Full material parity with original renderer",
+    "Native death and six-state binding",
+    "Backend choice registration and in-game acceptance"
+  ]
+}

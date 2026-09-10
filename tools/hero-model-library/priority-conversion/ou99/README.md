@@ -1,6 +1,6 @@
 # OU99 2026-09-10 轉換與驗收程式歸檔
 
-這裡保存當次實際執行的原始程式，檔名與內容保持原樣。模型、原生 ZIP、圖片、解析 JSON、輸入清單與大型驗收資料不包含在此工具目錄。程式內有當次工作區、日期與 `/private/tmp` 的固定路徑；它們是可追溯的執行來源，不是乾淨 clone 即可執行的獨立套件，也不會代為下載缺少的素材。
+這裡保存當次執行程式及其維護用重跑副本。除下方記錄的兩份 lint 修正外，檔名與內容維持原樣。模型、原生 ZIP、圖片、解析 JSON、輸入清單與大型驗收資料不包含在此工具目錄。程式內有當次工作區、日期與 `/private/tmp` 的固定路徑；它們是可追溯的執行來源，不是乾淨 clone 即可執行的獨立套件，也不會代為下載缺少的素材。
 
 ## 本次補齊的程式
 
@@ -37,3 +37,9 @@
 - WebGL server 使用 macOS `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`，透過 `/usr/bin/arch -arm64` 啟動、獨立臨時 profile、SwiftShader、localhost HTTP；需要允許本機連線與瀏覽器程序。它不使用個人瀏覽器 profile。server 預期 `/private/tmp/<同名渲染程式>-bundle.js` 已存在；生成 bundle 屬暫存編譯產物，本目錄只保留原始碼。
 
 執行入口通常是 `python -P <程式.py>`、`node --import tsx <程式.mts>` 或 `node <程式.mjs>`；瀏覽器 `.mjs` 必須經 server 與 bundle 執行，不能直接當 Node 腳本。Python／TypeScript 程式的工作目錄、固定路徑及 self-copy `/private/tmp` 檔案也必須先核對。若要重跑，使用新的輸出 root、暫存 profile、報告檔名與重新核驗的輸入；多數腳本採 `mkdir(exist_ok=False)`／`flag:wx`，不允許覆寫已凍結證據。請在新的工作副本調整路徑，不改這批原始程式或舊收據來配合新結果。
+
+## 重跑副本的 lint 修正
+
+`ggd-ou99-priority10-front.mjs` 與 `ggd-ou99-priority10-visual.mjs` 各移除一個恆真的 `if(true)`，保留原本必定執行的區塊、變數作用域、逐姿勢包圍盒與鏡頭計算。這兩份 Git 工作副本的 SHA 因此不同於 2026-09-10 已封存原件；`replay-patches.json` 記錄原件絕對路徑、原件與重跑副本的 SHA／大小及精確修改。歷史 `outputs/` 原件、file-manifest、截圖與收據全部保留，不更新成重跑副本的 SHA。
+
+重跑這兩份渲染程式時，先將本目錄的維護副本放入對應 `/private/tmp/<檔名>`，再從同一份程式建立 bundle；配套 server 的 self-copy 才會把本次實際使用的版本歸檔到新的輸出資料夾。既有凍結輸出不因 lint 修正重新宣稱經過渲染驗收。

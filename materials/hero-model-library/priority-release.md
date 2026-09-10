@@ -2,6 +2,10 @@
 
 **Main 優先合併 81 名（37＋37＋7）**：逐角色成品與缺口請讀 [81英雄優先合併清單.md](81英雄優先合併清單.md)，程序讀 [priority-81-handoff.json](priority-81-handoff.json)。所有角色仍列於 [全角色模型盤點.md](全角色模型盤點.md)。
 
+帕魯材質批次新增空渦龍、枯星龍、搗蛋貓三份 256px Git 模型元件，中央入口為 `current-resources.json → modelComponents`。本批七個材質版本與原有十五個來源／修正版全部保留，共二十二版；四份轉換備份的 433 個成員已與本機保存的完整 S3 讀回檔逐檔核對。空渦龍元件有 29 條動作條目／28 種不同內容，搗蛋貓 33 條；枯星龍元件只有 Idle／Walk，完整 58 條目版仍為儲備。尚未建立三角色的 GGD 英雄定義、六態綁定或後台選項；本批新增音效、語音與特效成品均為零。模型與三份可檢視的預覽見 [帕魯索引](palworld/帕魯三角色素材索引.md) 及 [預覽核對](priority-evidence/palworld-materials/preview-verification.json)。
+
+此批亦防止兩種誤發布：轉換整合須通過固定模型與現行契約雜湊驗證，中央索引發布檢查須核對實際 Git blob，不能只因本機有檔而通過。二十七項針對性測試及六项索引／成品檢查通過；全專案三項要求檢查仍有失敗，精確命令、日誌雜湊與原因見 [本批驗證](priority-evidence/palworld-materials/validation.json)。
+
 本分支已合入 Main `e36a5acda352`（保留前次合併及本批來源）。81 名的 **283 個版本引用／245 個不同凍結模型文件**均經實際 `ModelVersions.verify` 和 SHA 驗證；Main 的 60 個版本引用與本分支原 222 個版本引用完整保留，另新增開司 MOD 成品版本。15 個既有手動預設、11 個指定加工副本未改，來源分類及候選均保留。完整性稽核 0 失敗、0 警告：[收據](priority-evidence/kaiji-community/final-integrity.json)。
 
 74 名已有 **1,016 個 Git 戰鬥音訊成品**：308 個來源重用、708 個合成。74 名核心 9 類齊備，原 Main 快照為 73 名擴展 11 類齊備；本分支新增如月列車的山手線關門廣播（嘲諷）及 JR 發車旋律（勝利），目前 74 名擴展 11 類齊備，共 **1,018 個成品**（來源重用 310、合成 708）；不能把來源標籤當成已確認原角聲優。其餘 7 名 LOL 有 **4,927 個日本語 WAV 儲備**，本機可立即讀取，仍待戰鬥類別綁定。精確成品路徑、SHA、合成／原來源及缺口見 [81 名最新合併索引](priority-81-handoff.json)；[原 Main 音訊稽核](priority-evidence/main-81-handoff/audio/per-hero.json) 保留為 1,016 檔基準。
@@ -12,7 +16,7 @@
 
 合併另外修復 JPEG 縮圖後 MIME 不符，以及移除零長動畫後可能選错片段；既有 36 項相關測試通過；另修復 ffmpeg PNG 縮圖的 0:1 像素比例，兩個真實縮圖回歸案例驗證修正前失败、修正後通過，RGB 像素不變。固定來源索引同步 Main 已正規化模型，原取得 SHA 仍釘選至原 Git commit，沒有重寫原始收據或凍結版本。
 
-發布完整檢查以 [最新驗證](priority-evidence/dai-vearn-20260911/validation.json) 為準；歷史日誌保留於各批 evidence，不代表目前全部通過。這是 **分支交付**，尚待 Main 審查合併與部署。
+發布完整檢查以 [本批驗證](priority-evidence/palworld-materials/validation.json) 為準；[前批驗證](priority-evidence/dai-vearn-20260911/validation.json) 及歷史日誌保留，不代表目前全部通過。這是 **分支交付**，尚待 Main 審查合併與部署。
 
 本工作流負責轉換、驗收、版本及中央索引；來源工作流負責取得與初步分析，Main 負責審查合併及部署。成品、程式、設定、索引和文件進 Git；原始與半成品進 S3 `legacy/`，本機全保留。未做 S3 讀回的原包仍為待備份，不以本次 Git 推送宣稱完成。
 

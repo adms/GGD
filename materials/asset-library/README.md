@@ -124,6 +124,8 @@ Source 2 VPK 使用 [ValveResourceFormat 20.0](https://github.com/ValveResourceF
 python3 tools/hero-model-library/inventory.py
 python3 tools/hero-model-library/inventory.py --check
 python3 tools/hero-model-library/check-index.py
+# 成品加入 Git 暫存區後，驗證中央入口及元件的實際 Git blob；防止被 ignore 的本機檔漏交付。
+python3 tools/hero-model-library/current_resource_index.py --check --check-git
 # 指定這台 Mac 的工作區時，才同時更新兩份本機 Markdown 副本：
 python3 tools/hero-model-library/inventory.py --workspace ..
 ```

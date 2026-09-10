@@ -1,0 +1,105 @@
+{
+  "schema": "ggd.cattiva.material-256-handoff@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1",
+  "glb": {
+    "path": "result/body.glb",
+    "bytes": 2148052,
+    "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+  },
+  "candidate": {
+    "path": "candidate.json",
+    "bytes": 3385,
+    "sha256": "d2950f8200a515cfc3f482ad2019b2523edc48a1014307e585691d2edd54fc12"
+  },
+  "normalizedBy": "GGD normalizeUploadedModel + resizeImageWithFfmpeg",
+  "animationCount": 33,
+  "jointCount": 43,
+  "embeddedTextures": 5,
+  "allTextureEdges": 256,
+  "allAccessorBytesUnchanged": true,
+  "verifiedAccessorCount": 3358,
+  "allSourceAnimationJsonUnchanged": true,
+  "proceduralAnimationsAdded": 0,
+  "droppedSourceClips": 0,
+  "budget": {
+    "triangles": 5798,
+    "meshes": 3,
+    "maxTextureEdge": 256,
+    "maxClipChannels": 129,
+    "clipCount": 33,
+    "issues": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "currentLimits": {
+    "tris": {
+      "warn": 16000,
+      "limit": 28000
+    },
+    "meshes": {
+      "warn": 3,
+      "limit": 6
+    },
+    "texEdge": {
+      "warn": 256,
+      "limit": 256
+    },
+    "channels": {
+      "warn": 300,
+      "limit": 500
+    }
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 2,
+    "numInfos": 3,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+        "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+        "severity": 1,
+        "pointer": "/meshes/0/primitives/2/material"
+      },
+      {
+        "code": "NODE_SKINNED_MESH_NON_ROOT",
+        "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+        "severity": 1,
+        "pointer": "/nodes/43"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3349"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3351"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3353"
+      }
+    ],
+    "truncated": false
+  },
+  "babylonMovingClipCount": 33,
+  "actualWebglShots": 66,
+  "visualReview": {
+    "scope": "900px Idle and contact sheet 2 (12 clips, 24 snapshots)",
+    "finding": "Texture bindings, face and skin visible; expected loss of high-frequency fur detail at 256px; no gross corruption observed in reviewed frames.",
+    "gameplayAcceptance": "pending"
+  },
+  "backendRegistration": "not-performed",
+  "centralFilesChanged": false,
+  "gitChanged": false,
+  "highResolutionSourcePreserved": true,
+  "notes": "Frozen before authorized S3 backup; S3 receipts are stored outside both conversion roots."
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/model-design-audits/palworld-material-integration-20260911/c49401304973c8f9cd6c3d605ebdee56f5c58adbe5655623df2fd46cc0951c5d.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/model-design-audits/palworld-material-integration-20260911/c49401304973c8f9cd6c3d605ebdee56f5c58adbe5655623df2fd46cc0951c5d.files.json",
+  "archiveSha256": "c49401304973c8f9cd6c3d605ebdee56f5c58adbe5655623df2fd46cc0951c5d",
+  "archiveBytes": 312438,
+  "fileCount": 15,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/palworld-material-integration-20260911",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/palworld-material-integration-20260911/497eebc3fd7bcdd8f7513218ac2c5ed1f401d4fdd6e4cd544a1018b5befbc6ea/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/palworld-material-integration-20260911/497eebc3fd7bcdd8f7513218ac2c5ed1f401d4fdd6e4cd544a1018b5befbc6ea/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/palworld-material-integration-20260911/497eebc3fd7bcdd8f7513218ac2c5ed1f401d4fdd6e4cd544a1018b5befbc6ea/manifest.json"
+}

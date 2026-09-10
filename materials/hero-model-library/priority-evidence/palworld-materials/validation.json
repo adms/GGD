@@ -1,0 +1,141 @@
+{
+  "schema": "ggd-palworld-material-batch-validation@1",
+  "baseCommit": "b5fd4fd0bbd5f10cdf37692408d1c2980f49f301",
+  "originMainObserved": "ad23b2fe5ea81c2758bd0cd4ff72d22626a6caf4",
+  "assetChecks": [
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/build_palworld_index.py",
+        "--workspace",
+        "..",
+        "--check"
+      ],
+      "exitCode": 0,
+      "localLog": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/asset-check-0.log",
+      "logSha256": "417a1785f7be3798e668bae4e66f4d0ee0dda2ec4484145e3cdcd45a42627b8f"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/inventory.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "localLog": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/asset-check-1.log",
+      "logSha256": "f27166418d9ce7b7420463a8558f3e797f9dcb996294877c8a78b185b31e31ea"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/build_model_design_backlog.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "localLog": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/asset-check-2.log",
+      "logSha256": "d27c4ad0ec187b52947102f436b88feda85564ef4bdb30a511dce8afb866c1d4"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/build_priority81_handoff.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "localLog": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/asset-check-3.log",
+      "logSha256": "e0af3e280c4e56539caf791495feecdc5ad0c2c47d91cbfd554fd288c8c9ce57"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/current_resource_index.py",
+        "--check",
+        "--check-git"
+      ],
+      "exitCode": 0,
+      "localLog": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/asset-check-4.log",
+      "logSha256": "a7acad919fd7907aed4a0677146fbd4d0d33eadd744867df49684a1864e0a03d"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/check-index.py"
+      ],
+      "exitCode": 0,
+      "localLog": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/asset-check-5.log",
+      "logSha256": "d06207a868861ad0006deca976d9782f52e9abc66be0985e69b26607b5224206"
+    }
+  ],
+  "unitTests": {
+    "palworldAdmissionAndGitPublication": 14,
+    "inventory": 5,
+    "candidateQuery": 3,
+    "priorityIntegration": 5,
+    "totalPassed": 27
+  },
+  "requiredProjectChecks": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/skills-check-unsandboxed.log",
+      "logSha256": "5e9e6af066ca8a9510510213883cb0b69cc5d0717ea39c14c66b47dcffa354f4"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 1,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/editor-accept-release-unsandboxed.log",
+      "logSha256": "6c379d276f1e2dc796bd14b864d22fc1e7120f051c35a71c9c1ac064925cd66c"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 1,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/integration-validation-20260911/coord-check-unsandboxed.log",
+      "logSha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    }
+  ],
+  "projectCheckFailures": {
+    "skills:check": "message-ledger records from 2026-09-10 have unresolved ticket mappings",
+    "editor:accept:release": "Skill Forge capability-only expectation differs from current 47 skill catalog",
+    "coord:check": "claim.editor-form-receipts differs from merged origin/main with unchanged contract fingerprint"
+  },
+  "preservedUnrelatedChanges": [
+    "docs/legacy/_overwrites/_ledger.tsv",
+    "docs/legacy/_overwrites/overwrite_temp_20260910-223134/",
+    "docs/legacy/_overwrites/overwrite_temp_20260911-024729/"
+  ],
+  "newModelComponents": 3,
+  "newMaterialVariants": 7,
+  "preservedMaterialAndSourceVariants": 22,
+  "newAudioFinished": 0,
+  "newVfxFinished": 0,
+  "heroDefinitionsCreated": 0,
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false,
+  "s3OriginalEvidence": "Four original conversion archives have saved full Get receipts; 433 members rechecked locally. No new remote readback of those historical archives in this batch.",
+  "validationLogsBackup": {
+    "gitReceiptPath": "materials/hero-model-library/priority-evidence/palworld-materials/publication-evidence-s3-backup.json",
+    "sha256": "b71493ef4246c26088bab9d9afb134c99d618b160cf8d276958e45af2846fca0",
+    "fullRemoteGetAndEveryFileVerified": true
+  },
+  "scopedLint": {
+    "fileCount": 19,
+    "errors": 0,
+    "warnings": 4,
+    "gitEvidencePath": "materials/hero-model-library/priority-evidence/palworld-materials/lint.json",
+    "sha256": "4c5b1a1131890d23b9cb0479988cbd75b7b2cbf51a6148fa506dfbc8458a83f2",
+    "resolvedPriorPrErrors": 6
+  },
+  "formatCheck": {
+    "command": "git diff --cached --check",
+    "exitCode": 2,
+    "preservedSourceWhitespace": [
+      {
+        "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/bundle-render.mjs",
+        "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/tools/bundle-render.mjs",
+        "sha256": "3bb0a20759125bcca5bda8042162f4eb715f64762e9a516d66977cac909044e8",
+        "line": 2,
+        "note": "Single existing trailing space retained to preserve byte-identical frozen source replay."
+      }
+    ]
+  }
+}
