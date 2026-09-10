@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T04:43:29+08:00",
-  "inputsSha256": "a4cd85498bf0571c8458687b47eada13f975f3c355a96f1e57b5455f5903aff1",
+  "generatedAt": "2026-09-11T05:01:51+08:00",
+  "inputsSha256": "8bd4a7a5c30de8fab71b9f68fb8cfbfff1b5d38e8bebe5a8afe03e43c8857f54",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -63569,7 +63569,7 @@
       },
       {
         "id": "parallel-ps-jstars-sample",
-        "target": "J-Stars 原生角色 009 壓縮容器樣本（身份待核）",
+        "target": "J-Stars 原生角色 009：貝吉達 Vegeta（內部索引已辨識；完整解碼待處理）",
         "heroIds": [],
         "ownerEntryIds": [],
         "url": "https://archive.vg-resource.com/post-576089.html",
@@ -63594,11 +63594,22 @@
         },
         "sourceGame": "J-Stars Victory VS+",
         "platform": "PS3（作者標示，待核）",
+        "characterIdentity": {
+          "nativeCharacterId": "009",
+          "name": "貝吉達",
+          "nameOriginal": "ベジータ / Vegeta",
+          "status": "internal-index-name-observed-not-visually-confirmed",
+          "evidence": "405,220-byte 部分 STPK 索引含 009_vegeta_01p_PS3_texture.srd、009_vegeta_01p_PS3.srd、009_vegeta_01p_PS3_ability.srd 與 009_vegeta_stream_jp_lps_PS3.pak；m 容器標頭宣告 671,808 bytes，故不視為完整原生解碼或視覺身份驗證。"
+        },
         "discoveryChannel": "game-resource-forum",
         "assetKinds": [
-          "native-container"
+          "native-container",
+          "partial-native-index",
+          "texture-reference",
+          "animation-reference",
+          "audio-reference"
         ],
-        "verification": "完整 3,164,342-byte 原包已取得並安全解出 character_model_009_i/m/v.pak；三檔以 $CMP 開頭。尚未解析出模型、貼圖或骨架，角色身份與遊戲版本未獨立核實，不算本尊模型已備妥。",
+        "verification": "完整 3,164,342-byte 原包已取得並安全解出 character_model_009_i/m/v.pak；三檔以 $CMP 開頭且 SHA-256 已逐檔核對。2026-09-11 以 QuickBMS 0.12.0 與公開 cmp_scz.bms 重跑：i、v 皆因 SIGBUS（訊號 10）中止；m 雖產出 STPK，實際 405,220 bytes 不等於標頭宣告 671,808 bytes。部分 STPK 索引可辨識 native ID 009 為貝吉達／Vegeta，並引用貼圖、表情、能力與 JP 串流容器；但模型、貼圖、骨架、動作、特效與音訊皆未完整擷取或驗收，不算本尊模型已備妥。",
         "files": [
           {
             "path": "original/SAMPLE PAK FILES.7z",
@@ -63609,6 +63620,29 @@
         "nativeContainerCount": 3,
         "modelCount": null,
         "characterIdentityVerified": false,
+        "analysis": {
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-009-20260911-v2/analysis.json",
+          "schema": "ggd-jstars-009-analysis@1",
+          "quickBms": {
+            "version": "0.12.0 (official macOS package build 2022-08-24)",
+            "sha256": "b0de6d55029bd00cd7cbb7ef1ad2509352c5bcd5c2ffa65d7dafbe9666997694",
+            "scriptSha256": "587f8af589765fb1823a700a6c248a72256171556d66fa30ea853bd13841ea23"
+          },
+          "completeNativeDecode": false,
+          "standardizedModel": false,
+          "visualValidation": false,
+          "backendRegistered": false,
+          "runtimeSelectable": false,
+          "missing": [
+            "完整原生解碼",
+            "模型與貼圖擷取",
+            "骨架與蒙皮驗證",
+            "原生動作擷取",
+            "特效擷取",
+            "JP 串流音訊擷取與聽審",
+            "GGD 角色對應、後台選項及實際切換驗收"
+          ]
+        },
         "publicationStatus": "s3-legacy-readback-verified",
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jstars-sample/5c48f8f511f1c03036da531a65003c2cac93edc99ba2420b3b64f33f536dc95f.zip",
@@ -63616,7 +63650,61 @@
           "sha256": "5c48f8f511f1c03036da531a65003c2cac93edc99ba2420b3b64f33f536dc95f",
           "readbackVerified": true,
           "usage": "manual-only legacy backup; not runtime-ready"
-        }
+        },
+        "supplementalDeliveries": [
+          {
+            "id": "jstars-009-analysis-20260911-v1",
+            "sourceId": "parallel-ps-jstars-sample",
+            "resourceRole": "integration-evidence-backup",
+            "localPath": "GGD-Asset-Library/conversions/jstars-009-20260911-v1",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-009-20260911-v1/a0e8d02c30828b610f9db000fba945a0121bc30afd042f91818253140866071f/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-009-20260911-v1/a0e8d02c30828b610f9db000fba945a0121bc30afd042f91818253140866071f/readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-009-20260911-v1/a1fea9a671231ad07f0b98aacc1894ea701e80fc397958fc4e56d84a624ce4a5.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-009-20260911-v1/a1fea9a671231ad07f0b98aacc1894ea701e80fc397958fc4e56d84a624ce4a5.files.json",
+            "bytes": 6247147,
+            "sha256": "a1fea9a671231ad07f0b98aacc1894ea701e80fc397958fc4e56d84a624ce4a5",
+            "fileCount": 10,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-009-20260911-v1/a0e8d02c30828b610f9db000fba945a0121bc30afd042f91818253140866071f/receipt.json",
+            "receiptSha256": "d9583873ff1727264973ae781c635281aa9553d5c44e7b7af9cefca6a9832a25",
+            "manifestSha256": "e1723b9e4636112712987c0fdd1b4a17159fd7d89003d1f1759052484ee61f61",
+            "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "jstars-009-analysis-20260911-v2",
+            "sourceId": "parallel-ps-jstars-sample",
+            "resourceRole": "integration-evidence-backup",
+            "localPath": "GGD-Asset-Library/conversions/jstars-009-20260911-v2",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-009-20260911-v2/3be6fdbc17bd93cb2763783545d433694de5b188a60a90202e8eb84c1a56d443/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-009-20260911-v2/3be6fdbc17bd93cb2763783545d433694de5b188a60a90202e8eb84c1a56d443/readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-009-20260911-v2/6ff8ca6e8b1b9e7c34a294ae24c771d35879d6bf7ee552aadb68d80dc551f9fc.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-009-20260911-v2/6ff8ca6e8b1b9e7c34a294ae24c771d35879d6bf7ee552aadb68d80dc551f9fc.files.json",
+            "bytes": 6247158,
+            "sha256": "6ff8ca6e8b1b9e7c34a294ae24c771d35879d6bf7ee552aadb68d80dc551f9fc",
+            "fileCount": 10,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-009-20260911-v2/3be6fdbc17bd93cb2763783545d433694de5b188a60a90202e8eb84c1a56d443/receipt.json",
+            "receiptSha256": "a9d7fe82166461eebdadf622cf898493955e7c17aa9ded4728a1129d21eb4308",
+            "manifestSha256": "d89e2e6e15d6817dedcd168540a4e19ff4c1674a52c14a60dd4a20ad67adb0ed",
+            "s3Use": "backup-only-not-runtime-entry"
+          }
+        ]
       },
       {
         "id": "parallel-ns-ultimate14",
