@@ -1,0 +1,4082 @@
+{
+ "schema": "ggd-hero-model-download-sources@1",
+ "ownerPriority": "use-ready-300-first",
+ "receivedAt": "2026-09-10",
+ "ownerInstruction": "如果你300英雄已經有了 那預設就300英雄 因為下載要錢",
+ "inputSha256": "137a1c9b8c0aa64c3b045ca91b840e15e9161e9a784aa106817303b0201341d1",
+ "scope": "已有可用300英雄模型：預設沿用300，付費来源暫緩；缺可用300模型：使用者清單為最高優先下載來源。尚未取得／轉換的網址不進可用預設。",
+ "entries": [
+  {
+   "id": "owner-model-001",
+   "target": "初號機",
+   "heroIds": [
+    "godie-e00r"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:498341",
+     "submittedUrl": "https://www.ou99.com/thread-498341-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-002",
+   "target": "哆啦A夢",
+   "heroIds": [
+    "godie-n00b"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:496905",
+     "submittedUrl": "https://www.ou99.com/thread-496905-1-2.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-003",
+   "target": "貞子",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:480489",
+     "submittedUrl": "https://www.ou99.com/thread-480489-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-004",
+   "target": "阿強一號",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:485012",
+     "submittedUrl": "https://www.ou99.com/thread-485012-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-005",
+   "target": "拳四郎",
+   "heroIds": [
+    "godie-umal"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "變身保持放大皮卡丘"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:464696",
+     "submittedUrl": "https://www.ou99.com/thread-464696-1-70.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ],
+   "preserve": {
+    "heroId": "godie-u00l",
+    "instruction": "變身保持放大皮卡丘；此下载來源只對應拳四郎人型本體"
+   }
+  },
+  {
+   "id": "owner-model-006",
+   "target": "獵人 西索",
+   "heroIds": [
+    "community-review-07-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497211",
+     "submittedUrl": "https://www.ou99.com/thread-497211-1-3.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-007",
+   "target": "狼與辛香料 赫蘿",
+   "heroIds": [
+    "community-review-09-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:468771",
+     "submittedUrl": "https://www.ou99.com/thread-468771-1-49.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-008",
+   "target": "轉生史萊姆 利姆路",
+   "heroIds": [
+    "community-review-11-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457280",
+     "submittedUrl": "https://www.ou99.com/forum.php?mod=viewthread&tid=457280",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-009",
+   "target": "暗殺教室 殺老師",
+   "heroIds": [
+    "community-review-14-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:472112",
+     "submittedUrl": "https://www.ou99.com/thread-472112-1-41.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-010",
+   "target": "比利海靈頓",
+   "heroIds": [
+    "community-review-15-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457123",
+     "submittedUrl": "https://www.ou99.com/thread-457123-1-139.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-011",
+   "target": "藥師少女的獨語 貓貓",
+   "heroIds": [
+    "b2-maomao"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:467165",
+     "submittedUrl": "https://www.ou99.com/thread-467165-1-56.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-012",
+   "target": "去死團的逆襲 死之王",
+   "heroIds": [
+    "godie-u00k"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:459087",
+     "submittedUrl": "https://www.ou99.com/thread-459087-1-34.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-013",
+   "target": "胖虎",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:496746",
+     "submittedUrl": "https://www.ou99.com/thread-496746-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-014",
+   "target": "轉生蜘蛛 蜘蛛子",
+   "heroIds": [
+    "b2-kumoko"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:478121",
+     "submittedUrl": "https://www.ou99.com/thread-478121-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-015",
+   "target": "鬼滅之刃 善逸",
+   "heroIds": [
+    "b2-zenitsu"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:454069",
+     "submittedUrl": "https://www.ou99.com/thread-454069-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1399,
+      "priceRmb": 13.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-016",
+   "target": "鬼滅之刃 炭治郎",
+   "heroIds": [
+    "community-review-35-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:466002",
+     "submittedUrl": "https://www.ou99.com/thread-466002-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-017",
+   "target": "去死團的逆襲 熊貓",
+   "heroIds": [
+    "godie-h02k"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:463344",
+     "submittedUrl": "https://www.ou99.com/thread-463344-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-018",
+   "target": "志志雄真實",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:476060",
+     "submittedUrl": "https://www.ou99.com/thread-476060-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-019",
+   "target": "月光下的異世界之旅 深澄真",
+   "heroIds": [
+    "b2-makoto"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:478642",
+     "submittedUrl": "https://www.ou99.com/thread-478642-1-71.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-020",
+   "target": "吉伊卡哇",
+   "heroIds": [
+    "community-review-37-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:459617",
+     "submittedUrl": "https://www.ou99.com/thread-459617-1-199.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-021",
+   "target": "烙印勇士 凱茲",
+   "heroIds": [
+    "b2-guts"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:460977",
+     "submittedUrl": "https://www.ou99.com/thread-460977-1-184.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-022",
+   "target": "刀劍神域 阿絲娜",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:470467",
+     "submittedUrl": "https://www.ou99.com/thread-470467-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-023",
+   "target": "HUNTER×HUNTER 傑・富力士",
+   "heroIds": [
+    "godie-u034",
+    "godie-ucrl"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:458241",
+     "submittedUrl": "https://www.ou99.com/thread-458241-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 799,
+      "priceRmb": 7.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-024",
+   "target": "HUNTER×HUNTER 揍敵客阿福",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:472410",
+     "submittedUrl": "https://www.ou99.com/thread-472410-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ],
+   "mappingNote": "清單寫「揍敵客阿福」；現有角色為揍敵客桀諾，尚未認定為同一角色。"
+  },
+  {
+   "id": "owner-model-025",
+   "target": "神龍之謎 巴恩大魔王(變身後)",
+   "heroIds": [
+    "godie-ubal"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "變身後"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457883",
+     "submittedUrl": "https://www.ou99.com/thread-457883-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ],
+   "mappingNote": "同一巴恩角色的不同外觀候選；目前沒有分離的變身角色 ID。"
+  },
+  {
+   "id": "owner-model-026",
+   "target": "神龍之謎 巴恩大魔王(變身前)",
+   "heroIds": [
+    "godie-ubal"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "變身前"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:472035",
+     "submittedUrl": "https://www.ou99.com/thread-472035-1-98.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ],
+   "mappingNote": "同一巴恩角色的不同外觀候選；目前沒有分離的變身角色 ID。"
+  },
+  {
+   "id": "owner-model-027",
+   "target": "我要招架一切 諾爾",
+   "heroIds": [
+    "b2-noor"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:453949",
+     "submittedUrl": "https://www.ou99.com/thread-453949-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1199,
+      "priceRmb": 11.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-028",
+   "target": "勇者死了 托卡・史考特",
+   "heroIds": [
+    "b2-touka"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:459257",
+     "submittedUrl": "https://www.ou99.com/thread-459257-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-029",
+   "target": "中華一番 小當家",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:498407",
+     "submittedUrl": "https://www.ou99.com/thread-498407-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-030",
+   "target": "犬夜叉",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:452782",
+     "submittedUrl": "https://www.ou99.com/thread-452782-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1099,
+      "priceRmb": 10.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-031",
+   "target": "芙莉蓮",
+   "heroIds": [
+    "community-review-29-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457780",
+     "submittedUrl": "https://www.ou99.com/thread-457780-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-032",
+   "target": "JoJo冒險野郎 空條承太郎",
+   "heroIds": [
+    "community-review-04-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497213",
+     "submittedUrl": "https://www.ou99.com/thread-497213-1-13.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-033",
+   "target": "魔笛 MAGI 阿拉丁",
+   "heroIds": [
+    "b2-aladdin"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:473324",
+     "submittedUrl": "https://www.ou99.com/thread-473324-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-034",
+   "target": "去死去死團的逆襲 白木卡迪那",
+   "heroIds": [
+    "godie-e00s",
+    "godie-e010"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:470225",
+     "submittedUrl": "https://www.ou99.com/thread-470225-1-107.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-035",
+   "target": "盾之勇者成名錄 岩谷尚文",
+   "heroIds": [
+    "b2-naofumi"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "刀劍移除"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:470782",
+     "submittedUrl": "https://www.ou99.com/thread-470782-1-104.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-036",
+   "target": "轉生成自動販賣機 阿箱＋拉蜜絲",
+   "heroIds": [
+    "b2-boxxo"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "外加一個白色矩形販賣機在背後"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:491448",
+     "submittedUrl": "https://www.ou99.com/thread-491448-1-32.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-037",
+   "target": "魔笛 MAGI 辛巴達",
+   "heroIds": [
+    "b2-sinbad"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:491497",
+     "submittedUrl": "https://www.ou99.com/thread-491497-1-32.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-038",
+   "target": "魔術士歐菲",
+   "heroIds": [
+    "b2-orphen"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:496452",
+     "submittedUrl": "https://www.ou99.com/thread-496452-1-16.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-039",
+   "target": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+   "heroIds": [
+    "b2-klaus"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:487487",
+     "submittedUrl": "https://www.ou99.com/thread-487487-1-46.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-040",
+   "target": "靈異教師神眉 鵺野鳴介",
+   "heroIds": [
+    "b2-nube"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:487484",
+     "submittedUrl": "https://www.ou99.com/thread-487484-1-47.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-041",
+   "target": "去死去死團的逆襲 黑人牙膏",
+   "heroIds": [
+    "godie-ogld"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:495978",
+     "submittedUrl": "https://www.ou99.com/thread-495978-1-18.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-042",
+   "target": "臭作",
+   "heroIds": [
+    "godie-o030",
+    "godie-orkn"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:456546",
+     "submittedUrl": "https://www.ou99.com/thread-456546-1-240.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-043",
+   "target": "異世界舅舅",
+   "heroIds": [
+    "b2-uncle"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:454482",
+     "submittedUrl": "https://www.ou99.com/thread-454482-1-265.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1199,
+      "priceRmb": 11.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-044",
+   "target": "洛克人",
+   "heroIds": [
+    "community-review-05-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:287871",
+     "submittedUrl": "https://www.ou99.com/thread-287871-1-716.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 799,
+      "priceRmb": 7.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-045",
+   "target": "KOF 八神庵",
+   "heroIds": [
+    "community-review-02-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:313646",
+     "submittedUrl": "https://www.ou99.com/thread-313646-1-624.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-046",
+   "target": "我想成為影之強者",
+   "heroIds": [
+    "b2-shadow"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:481732",
+     "submittedUrl": "https://www.ou99.com/thread-481732-1-62.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-047",
+   "target": "尼古貓貓",
+   "heroIds": [
+    "community-review-30-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:498214",
+     "submittedUrl": "https://www.ou99.com/thread-498214-1-7.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-048",
+   "target": "重騎士以遊戲知識開無雙 艾爾瑪",
+   "heroIds": [
+    "b2-elma"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:472038",
+     "submittedUrl": "https://www.ou99.com/thread-472038-1-98.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-049",
+   "target": "去死去死團的逆襲 至尊學長「飛鼠先生」",
+   "heroIds": [
+    "godie-udea"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:469191",
+     "submittedUrl": "https://www.ou99.com/thread-469191-1-111.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-050",
+   "target": "Re:從零開始的異世界生活 菜月昴",
+   "heroIds": [
+    "community-review-22-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:311294",
+     "submittedUrl": "https://www.ou99.com/thread-311294-1-694.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1999,
+      "priceRmb": 19.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-051",
+   "target": "UQHOLDER 近衛刀太",
+   "heroIds": [
+    "community-review-33-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:470087",
+     "submittedUrl": "https://www.ou99.com/thread-470087-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-052",
+   "target": "膽大黨 高速婆婆",
+   "heroIds": [
+    "community-review-34-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:458013",
+     "submittedUrl": "https://www.ou99.com/thread-458013-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-053",
+   "target": "鬼畜王蘭斯",
+   "heroIds": [
+    "community-review-36-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:493578",
+     "submittedUrl": "https://www.ou99.com/thread-493578-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-054",
+   "target": "這個世界漏洞百出 羽賀",
+   "heroIds": [
+    "b2-haga"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:495015",
+     "submittedUrl": "https://www.ou99.com/thread-495015-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-055",
+   "target": "回復術士的重來人生 凱亞爾",
+   "heroIds": [
+    "b2-keyaru"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "斗篷綠色、頭髮黃色"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:458777",
+     "submittedUrl": "https://www.ou99.com/thread-458777-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-056",
+   "target": "異世界転移魔法剣士 楓",
+   "heroIds": [
+    "b2-kaede"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:474258",
+     "submittedUrl": "https://www.ou99.com/thread-474258-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-057",
+   "target": "失格紋的最強賢者 馬提亞斯",
+   "heroIds": [
+    "b2-matthias"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:465884",
+     "submittedUrl": "https://www.ou99.com/thread-465884-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-058",
+   "target": "賭博默示錄 伊藤開司",
+   "heroIds": [
+    "b2-kaiji"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457710",
+     "submittedUrl": "https://www.ou99.com/thread-457710-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 799,
+      "priceRmb": 7.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-059",
+   "target": "致不滅的你 不死",
+   "heroIds": [
+    "b2-fushi"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:467227",
+     "submittedUrl": "https://www.ou99.com/thread-467227-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-060",
+   "target": "蠟筆小新 野原新之助",
+   "heroIds": [
+    "b2-shinchan"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457874",
+     "submittedUrl": "https://www.ou99.com/thread-457874-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-061",
+   "target": "AVARTH 青蛙劍士 Ned",
+   "heroIds": [
+    "b2-ned"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:456917",
+     "submittedUrl": "https://www.ou99.com/thread-456917-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-062",
+   "target": "幸運超人",
+   "heroIds": [
+    "b2-luckyman"
+   ],
+   "category": "primary",
+   "ownerNotes": [
+    "胸口補寫大吉"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:457594",
+     "submittedUrl": "https://www.ou99.com/thread-457594-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-063",
+   "target": "科學超電磁砲 御坂美琴",
+   "heroIds": [
+    "community-review-20-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:283718",
+     "submittedUrl": "https://www.ou99.com/thread-283718-1-718.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 799,
+      "priceRmb": 7.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-064",
+   "target": "異形",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:312479",
+     "submittedUrl": "https://www.ou99.com/thread-312479-1-687.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-065",
+   "target": "Fate 遠坂凜",
+   "heroIds": [
+    "b2-rin"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:310996",
+     "submittedUrl": "https://www.ou99.com/thread-310996-1-697.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-066",
+   "target": "Fate Berserker",
+   "heroIds": [
+    "godie-hapm"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:328403",
+     "submittedUrl": "https://www.ou99.com/thread-328403-1-516.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-067",
+   "target": "魯魯修",
+   "heroIds": [
+    "community-review-10-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:413694",
+     "submittedUrl": "https://www.ou99.com/thread-413694-1-376.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1399,
+      "priceRmb": 13.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-068",
+   "target": "瘋狂假面",
+   "heroIds": [],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:455144",
+     "submittedUrl": "https://www.ou99.com/thread-455144-1-258.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-069",
+   "target": "獵人 奇犽",
+   "heroIds": [
+    "community-review-24-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497400",
+     "submittedUrl": "https://www.ou99.com/thread-497400-1-12.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-070",
+   "target": "英雄王吉爾伽美什",
+   "heroIds": [
+    "community-review-18-20260907"
+   ],
+   "category": "primary",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497746",
+     "submittedUrl": "https://www.ou99.com/thread-497746-1-10.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-071",
+   "target": "殺生丸",
+   "heroIds": [
+    "godie-osam"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:463252",
+     "submittedUrl": "https://www.ou99.com/thread-463252-1-160.html"
+    },
+    {
+     "sourceId": "ou99:474798",
+     "submittedUrl": "https://www.ou99.com/thread-474798-1-86.html"
+    },
+    {
+     "sourceId": "ou99:467258",
+     "submittedUrl": "https://www.ou99.com/thread-467258-1-123.html"
+    }
+   ]
+  },
+  {
+   "id": "owner-model-072",
+   "target": "索隆",
+   "heroIds": [
+    "godie-u01u",
+    "godie-udre"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:454064",
+     "submittedUrl": "https://www.ou99.com/thread-454064-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1199,
+      "priceRmb": 11.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:455488",
+     "submittedUrl": "https://www.ou99.com/thread-455488-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 699,
+      "priceRmb": 6.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-073",
+   "target": "夜神月",
+   "heroIds": [
+    "godie-emns"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:451392",
+     "submittedUrl": "https://www.ou99.com/thread-451392-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1499,
+      "priceRmb": 14.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:433442",
+     "submittedUrl": "https://www.ou99.com/thread-433442-1-335.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 599,
+      "priceRmb": 5.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-074",
+   "target": "鋼彈",
+   "heroIds": [],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:472273",
+     "submittedUrl": "https://www.ou99.com/thread-472273-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:494307",
+     "submittedUrl": "https://www.ou99.com/thread-494307-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:493659",
+     "submittedUrl": "https://www.ou99.com/thread-493659-1-24.html"
+    }
+   ]
+  },
+  {
+   "id": "owner-model-075",
+   "target": "魯夫",
+   "heroIds": [
+    "godie-u00n",
+    "godie-u00o"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497129",
+     "submittedUrl": "https://www.ou99.com/thread-497129-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:497483",
+     "submittedUrl": "https://www.ou99.com/thread-497483-1-12.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-076",
+   "target": "賽菲洛斯",
+   "heroIds": [
+    "godie-u00j"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:474312",
+     "submittedUrl": "https://www.ou99.com/thread-474312-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:453337",
+     "submittedUrl": "https://www.ou99.com/thread-453337-1-280.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-077",
+   "target": "夏娜",
+   "heroIds": [
+    "godie-e008"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:478203",
+     "submittedUrl": "https://www.ou99.com/thread-478203-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-078",
+   "target": "劍心",
+   "heroIds": [],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:487482",
+     "submittedUrl": "https://www.ou99.com/thread-487482-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:470351",
+     "submittedUrl": "https://www.ou99.com/thread-470351-1-106.html"
+    }
+   ]
+  },
+  {
+   "id": "owner-model-079",
+   "target": "呂布",
+   "heroIds": [
+    "godie-h01u"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:487191",
+     "submittedUrl": "https://www.ou99.com/thread-487191-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:407884",
+     "submittedUrl": "https://www.ou99.com/thread-407884-1-384.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1299,
+      "priceRmb": 12.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:498472",
+     "submittedUrl": "https://www.ou99.com/thread-498472-1-6.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-080",
+   "target": "桔梗",
+   "heroIds": [
+    "godie-hvwd"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:406299",
+     "submittedUrl": "https://www.ou99.com/thread-406299-1-388.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1999,
+      "priceRmb": 19.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-081",
+   "target": "皮卡丘",
+   "heroIds": [
+    "godie-o02l",
+    "godie-ofar"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497398",
+     "submittedUrl": "https://www.ou99.com/thread-497398-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:478915",
+     "submittedUrl": "https://www.ou99.com/thread-478915-1-70.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-082",
+   "target": "七龍珠 孫悟空",
+   "heroIds": [
+    "godie-o00x",
+    "godie-ogrh"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:499084",
+     "submittedUrl": "https://www.ou99.com/thread-499084-1-2.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:497131",
+     "submittedUrl": "https://www.ou99.com/thread-497131-1-14.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-083",
+   "target": "BLEACH 黑崎一護",
+   "heroIds": [
+    "godie-h01n",
+    "godie-h01o"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:497434",
+     "submittedUrl": "https://www.ou99.com/thread-497434-1-12.html"
+    }
+   ]
+  },
+  {
+   "id": "owner-model-084",
+   "target": "Fate Saber",
+   "heroIds": [
+    "godie-e002",
+    "godie-e00l"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:463625",
+     "submittedUrl": "https://www.ou99.com/thread-463625-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:462157",
+     "submittedUrl": "https://www.ou99.com/thread-462157-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:464207",
+     "submittedUrl": "https://www.ou99.com/thread-464207-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 599,
+      "priceRmb": 5.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:464483",
+     "submittedUrl": "https://www.ou99.com/thread-464483-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:486403",
+     "submittedUrl": "https://www.ou99.com/thread-486403-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:478062",
+     "submittedUrl": "https://www.ou99.com/thread-478062-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:467889",
+     "submittedUrl": "https://www.ou99.com/thread-467889-1-25.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:487742",
+     "submittedUrl": "https://www.ou99.com/thread-487742-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:497018",
+     "submittedUrl": "https://www.ou99.com/thread-497018-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:272513",
+     "submittedUrl": "https://www.ou99.com/thread-272513-1-724.html"
+    },
+    {
+     "sourceId": "ou99:433987",
+     "submittedUrl": "https://www.ou99.com/thread-433987-1-332.html"
+    },
+    {
+     "sourceId": "ou99:498517",
+     "submittedUrl": "https://www.ou99.com/thread-498517-1-5.html"
+    },
+    {
+     "sourceId": "ou99:498515",
+     "submittedUrl": "https://www.ou99.com/thread-498515-1-5.html"
+    },
+    {
+     "sourceId": "ou99:496859",
+     "submittedUrl": "https://www.ou99.com/thread-496859-1-15.html"
+    },
+    {
+     "sourceId": "ou99:483692",
+     "submittedUrl": "https://www.ou99.com/thread-483692-1-56.html"
+    },
+    {
+     "sourceId": "ou99:482763",
+     "submittedUrl": "https://www.ou99.com/thread-482763-1-59.html"
+    },
+    {
+     "sourceId": "ou99:471669",
+     "submittedUrl": "https://www.ou99.com/thread-471669-1-100.html"
+    },
+    {
+     "sourceId": "ou99:468447",
+     "submittedUrl": "https://www.ou99.com/thread-468447-1-115.html"
+    }
+   ]
+  },
+  {
+   "id": "owner-model-085",
+   "target": "Fate 黑化Saber",
+   "heroIds": [],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "needs-roster-mapping",
+   "sources": [
+    {
+     "sourceId": "ou99:466278",
+     "submittedUrl": "https://www.ou99.com/thread-466278-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:495309",
+     "submittedUrl": "https://www.ou99.com/thread-495309-1-7.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:466278",
+     "submittedUrl": "https://www.ou99.com/thread-466278-1-130.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ],
+   "mappingNote": "現有 Saber 的 alternate 是風王結界形態，不能直接當作黑化 Saber。"
+  },
+  {
+   "id": "owner-model-086",
+   "target": "魔法老師 依文潔琳",
+   "heroIds": [
+    "godie-n003",
+    "godie-n01g"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:470426",
+     "submittedUrl": "https://www.ou99.com/thread-470426-1-21.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:482609",
+     "submittedUrl": "https://www.ou99.com/thread-482609-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:312566",
+     "submittedUrl": "https://www.ou99.com/thread-312566-1-682.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:470426",
+     "submittedUrl": "https://www.ou99.com/thread-470426-1-106.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-087",
+   "target": "初音未來",
+   "heroIds": [
+    "godie-o02p"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:487887",
+     "submittedUrl": "https://www.ou99.com/thread-487887-1-16.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:463318",
+     "submittedUrl": "https://www.ou99.com/thread-463318-1-159.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:497433",
+     "submittedUrl": "https://www.ou99.com/thread-497433-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:491161",
+     "submittedUrl": "https://www.ou99.com/thread-491161-1-34.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-088",
+   "target": "魔力小馬 蒼月潮",
+   "heroIds": [
+    "godie-hpb1"
+   ],
+   "category": "optional",
+   "ownerNotes": [
+    "頭髮改成黑色, 褲子藍色"
+   ],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:462013",
+     "submittedUrl": "https://www.ou99.com/thread-462013-1-172.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 999,
+      "priceRmb": 9.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:465205",
+     "submittedUrl": "https://www.ou99.com/thread-465205-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:495084",
+     "submittedUrl": "https://www.ou99.com/thread-495084-1-20.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "owner-model-089",
+   "target": "火影忍者 宇志波佐助",
+   "heroIds": [
+    "godie-edem"
+   ],
+   "category": "optional",
+   "ownerNotes": [],
+   "mappingStatus": "mapped",
+   "sources": [
+    {
+     "sourceId": "ou99:463198",
+     "submittedUrl": "https://www.ou99.com/thread-463198-1-160.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:454858",
+     "submittedUrl": "https://www.ou99.com/thread-454858-1-1.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 1499,
+      "priceRmb": 14.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    },
+    {
+     "sourceId": "ou99:479248",
+     "submittedUrl": "https://www.ou99.com/thread-479248-1-69.html",
+     "memberAccessCheck": {
+      "scope": "member-visible-page",
+      "userGroup": "偶久至尊会员",
+      "gate": "payment-required",
+      "priceYuanbao": 899,
+      "priceRmb": 8.99,
+      "note": "⚠️ 訪客檢查的 paymentRequirement=not-visible ⛔ 不等於免費 —— 會員身分才看得到付費門。",
+      "checkedAt": "2026-09-10T03:46:14+08:00"
+     }
+    }
+   ]
+  }
+ ],
+ "sources": [
+  {
+   "id": "ou99:498341",
+   "canonicalUrl": "https://www.ou99.com/thread-498341-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-498341-1-1.html"
+   ],
+   "accessStatus": "reply-required",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started",
+   "pageTitle": "星际剑客 魔兽模型下载+动作",
+   "pageNote": "已讀頁面要求登入後回覆才能顯示下載內容；標題未寫初號機，須取得模型後再核對身分。",
+   "checkedAt": "2026-09-10"
+  },
+  {
+   "id": "ou99:496905",
+   "canonicalUrl": "https://www.ou99.com/thread-496905-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-496905-1-2.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:480489",
+   "canonicalUrl": "https://www.ou99.com/thread-480489-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-480489-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:485012",
+   "canonicalUrl": "https://www.ou99.com/thread-485012-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-485012-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:464696",
+   "canonicalUrl": "https://www.ou99.com/thread-464696-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-464696-1-70.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497211",
+   "canonicalUrl": "https://www.ou99.com/thread-497211-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497211-1-3.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:468771",
+   "canonicalUrl": "https://www.ou99.com/thread-468771-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-468771-1-49.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457280",
+   "canonicalUrl": "https://www.ou99.com/thread-457280-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/forum.php?mod=viewthread&tid=457280"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:472112",
+   "canonicalUrl": "https://www.ou99.com/thread-472112-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-472112-1-41.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457123",
+   "canonicalUrl": "https://www.ou99.com/thread-457123-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-457123-1-139.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:467165",
+   "canonicalUrl": "https://www.ou99.com/thread-467165-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-467165-1-56.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:459087",
+   "canonicalUrl": "https://www.ou99.com/thread-459087-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-459087-1-34.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:496746",
+   "canonicalUrl": "https://www.ou99.com/thread-496746-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-496746-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:478121",
+   "canonicalUrl": "https://www.ou99.com/thread-478121-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-478121-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:454069",
+   "canonicalUrl": "https://www.ou99.com/thread-454069-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-454069-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:466002",
+   "canonicalUrl": "https://www.ou99.com/thread-466002-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-466002-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:463344",
+   "canonicalUrl": "https://www.ou99.com/thread-463344-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-463344-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:476060",
+   "canonicalUrl": "https://www.ou99.com/thread-476060-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-476060-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:478642",
+   "canonicalUrl": "https://www.ou99.com/thread-478642-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-478642-1-71.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:459617",
+   "canonicalUrl": "https://www.ou99.com/thread-459617-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-459617-1-199.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:460977",
+   "canonicalUrl": "https://www.ou99.com/thread-460977-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-460977-1-184.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:470467",
+   "canonicalUrl": "https://www.ou99.com/thread-470467-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-470467-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:458241",
+   "canonicalUrl": "https://www.ou99.com/thread-458241-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-458241-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:472410",
+   "canonicalUrl": "https://www.ou99.com/thread-472410-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-472410-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457883",
+   "canonicalUrl": "https://www.ou99.com/thread-457883-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-457883-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:472035",
+   "canonicalUrl": "https://www.ou99.com/thread-472035-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-472035-1-98.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:453949",
+   "canonicalUrl": "https://www.ou99.com/thread-453949-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-453949-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:459257",
+   "canonicalUrl": "https://www.ou99.com/thread-459257-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-459257-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:498407",
+   "canonicalUrl": "https://www.ou99.com/thread-498407-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-498407-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:452782",
+   "canonicalUrl": "https://www.ou99.com/thread-452782-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-452782-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457780",
+   "canonicalUrl": "https://www.ou99.com/thread-457780-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-457780-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497213",
+   "canonicalUrl": "https://www.ou99.com/thread-497213-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497213-1-13.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:473324",
+   "canonicalUrl": "https://www.ou99.com/thread-473324-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-473324-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:470225",
+   "canonicalUrl": "https://www.ou99.com/thread-470225-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-470225-1-107.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:470782",
+   "canonicalUrl": "https://www.ou99.com/thread-470782-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-470782-1-104.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:491448",
+   "canonicalUrl": "https://www.ou99.com/thread-491448-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-491448-1-32.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:491497",
+   "canonicalUrl": "https://www.ou99.com/thread-491497-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-491497-1-32.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:496452",
+   "canonicalUrl": "https://www.ou99.com/thread-496452-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-496452-1-16.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:487487",
+   "canonicalUrl": "https://www.ou99.com/thread-487487-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-487487-1-46.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:487484",
+   "canonicalUrl": "https://www.ou99.com/thread-487484-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-487484-1-47.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:495978",
+   "canonicalUrl": "https://www.ou99.com/thread-495978-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-495978-1-18.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:456546",
+   "canonicalUrl": "https://www.ou99.com/thread-456546-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-456546-1-240.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:454482",
+   "canonicalUrl": "https://www.ou99.com/thread-454482-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-454482-1-265.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:287871",
+   "canonicalUrl": "https://www.ou99.com/thread-287871-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-287871-1-716.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:313646",
+   "canonicalUrl": "https://www.ou99.com/thread-313646-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-313646-1-624.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:481732",
+   "canonicalUrl": "https://www.ou99.com/thread-481732-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-481732-1-62.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:498214",
+   "canonicalUrl": "https://www.ou99.com/thread-498214-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-498214-1-7.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:472038",
+   "canonicalUrl": "https://www.ou99.com/thread-472038-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-472038-1-98.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:469191",
+   "canonicalUrl": "https://www.ou99.com/thread-469191-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-469191-1-111.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:311294",
+   "canonicalUrl": "https://www.ou99.com/thread-311294-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-311294-1-694.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:470087",
+   "canonicalUrl": "https://www.ou99.com/thread-470087-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-470087-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:458013",
+   "canonicalUrl": "https://www.ou99.com/thread-458013-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-458013-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:493578",
+   "canonicalUrl": "https://www.ou99.com/thread-493578-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-493578-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:495015",
+   "canonicalUrl": "https://www.ou99.com/thread-495015-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-495015-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:458777",
+   "canonicalUrl": "https://www.ou99.com/thread-458777-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-458777-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:474258",
+   "canonicalUrl": "https://www.ou99.com/thread-474258-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-474258-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:465884",
+   "canonicalUrl": "https://www.ou99.com/thread-465884-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-465884-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457710",
+   "canonicalUrl": "https://www.ou99.com/thread-457710-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-457710-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:467227",
+   "canonicalUrl": "https://www.ou99.com/thread-467227-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-467227-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457874",
+   "canonicalUrl": "https://www.ou99.com/thread-457874-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-457874-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:456917",
+   "canonicalUrl": "https://www.ou99.com/thread-456917-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-456917-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:457594",
+   "canonicalUrl": "https://www.ou99.com/thread-457594-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-457594-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:283718",
+   "canonicalUrl": "https://www.ou99.com/thread-283718-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-283718-1-718.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:312479",
+   "canonicalUrl": "https://www.ou99.com/thread-312479-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-312479-1-687.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:310996",
+   "canonicalUrl": "https://www.ou99.com/thread-310996-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-310996-1-697.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:328403",
+   "canonicalUrl": "https://www.ou99.com/thread-328403-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-328403-1-516.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:413694",
+   "canonicalUrl": "https://www.ou99.com/thread-413694-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-413694-1-376.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:455144",
+   "canonicalUrl": "https://www.ou99.com/thread-455144-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-455144-1-258.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497400",
+   "canonicalUrl": "https://www.ou99.com/thread-497400-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497400-1-12.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497746",
+   "canonicalUrl": "https://www.ou99.com/thread-497746-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497746-1-10.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:463252",
+   "canonicalUrl": "https://www.ou99.com/thread-463252-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-463252-1-160.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:474798",
+   "canonicalUrl": "https://www.ou99.com/thread-474798-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-474798-1-86.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:467258",
+   "canonicalUrl": "https://www.ou99.com/thread-467258-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-467258-1-123.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:454064",
+   "canonicalUrl": "https://www.ou99.com/thread-454064-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-454064-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:455488",
+   "canonicalUrl": "https://www.ou99.com/thread-455488-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-455488-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:451392",
+   "canonicalUrl": "https://www.ou99.com/thread-451392-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-451392-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:433442",
+   "canonicalUrl": "https://www.ou99.com/thread-433442-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-433442-1-335.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:472273",
+   "canonicalUrl": "https://www.ou99.com/thread-472273-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-472273-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:494307",
+   "canonicalUrl": "https://www.ou99.com/thread-494307-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-494307-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:493659",
+   "canonicalUrl": "https://www.ou99.com/thread-493659-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-493659-1-24.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497129",
+   "canonicalUrl": "https://www.ou99.com/thread-497129-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497129-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497483",
+   "canonicalUrl": "https://www.ou99.com/thread-497483-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497483-1-12.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:474312",
+   "canonicalUrl": "https://www.ou99.com/thread-474312-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-474312-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:453337",
+   "canonicalUrl": "https://www.ou99.com/thread-453337-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-453337-1-280.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:478203",
+   "canonicalUrl": "https://www.ou99.com/thread-478203-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-478203-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:487482",
+   "canonicalUrl": "https://www.ou99.com/thread-487482-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-487482-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:470351",
+   "canonicalUrl": "https://www.ou99.com/thread-470351-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-470351-1-106.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:487191",
+   "canonicalUrl": "https://www.ou99.com/thread-487191-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-487191-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:407884",
+   "canonicalUrl": "https://www.ou99.com/thread-407884-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-407884-1-384.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:498472",
+   "canonicalUrl": "https://www.ou99.com/thread-498472-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-498472-1-6.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:406299",
+   "canonicalUrl": "https://www.ou99.com/thread-406299-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-406299-1-388.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497398",
+   "canonicalUrl": "https://www.ou99.com/thread-497398-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497398-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:478915",
+   "canonicalUrl": "https://www.ou99.com/thread-478915-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-478915-1-70.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:499084",
+   "canonicalUrl": "https://www.ou99.com/thread-499084-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-499084-1-2.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497131",
+   "canonicalUrl": "https://www.ou99.com/thread-497131-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497131-1-14.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497434",
+   "canonicalUrl": "https://www.ou99.com/thread-497434-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497434-1-12.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:463625",
+   "canonicalUrl": "https://www.ou99.com/thread-463625-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-463625-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:462157",
+   "canonicalUrl": "https://www.ou99.com/thread-462157-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-462157-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:464207",
+   "canonicalUrl": "https://www.ou99.com/thread-464207-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-464207-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:464483",
+   "canonicalUrl": "https://www.ou99.com/thread-464483-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-464483-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:486403",
+   "canonicalUrl": "https://www.ou99.com/thread-486403-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-486403-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:478062",
+   "canonicalUrl": "https://www.ou99.com/thread-478062-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-478062-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:467889",
+   "canonicalUrl": "https://www.ou99.com/thread-467889-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-467889-1-25.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:487742",
+   "canonicalUrl": "https://www.ou99.com/thread-487742-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-487742-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497018",
+   "canonicalUrl": "https://www.ou99.com/thread-497018-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497018-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:272513",
+   "canonicalUrl": "https://www.ou99.com/thread-272513-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-272513-1-724.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:433987",
+   "canonicalUrl": "https://www.ou99.com/thread-433987-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-433987-1-332.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:498517",
+   "canonicalUrl": "https://www.ou99.com/thread-498517-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-498517-1-5.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:498515",
+   "canonicalUrl": "https://www.ou99.com/thread-498515-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-498515-1-5.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:496859",
+   "canonicalUrl": "https://www.ou99.com/thread-496859-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-496859-1-15.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:483692",
+   "canonicalUrl": "https://www.ou99.com/thread-483692-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-483692-1-56.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:482763",
+   "canonicalUrl": "https://www.ou99.com/thread-482763-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-482763-1-59.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:471669",
+   "canonicalUrl": "https://www.ou99.com/thread-471669-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-471669-1-100.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:468447",
+   "canonicalUrl": "https://www.ou99.com/thread-468447-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-468447-1-115.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:466278",
+   "canonicalUrl": "https://www.ou99.com/thread-466278-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-466278-1-1.html",
+    "https://www.ou99.com/thread-466278-1-130.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:495309",
+   "canonicalUrl": "https://www.ou99.com/thread-495309-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-495309-1-7.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:470426",
+   "canonicalUrl": "https://www.ou99.com/thread-470426-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-470426-1-21.html",
+    "https://www.ou99.com/thread-470426-1-106.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:482609",
+   "canonicalUrl": "https://www.ou99.com/thread-482609-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-482609-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:312566",
+   "canonicalUrl": "https://www.ou99.com/thread-312566-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-312566-1-682.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:487887",
+   "canonicalUrl": "https://www.ou99.com/thread-487887-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-487887-1-16.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:463318",
+   "canonicalUrl": "https://www.ou99.com/thread-463318-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-463318-1-159.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:497433",
+   "canonicalUrl": "https://www.ou99.com/thread-497433-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-497433-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:491161",
+   "canonicalUrl": "https://www.ou99.com/thread-491161-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-491161-1-34.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:462013",
+   "canonicalUrl": "https://www.ou99.com/thread-462013-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-462013-1-172.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:465205",
+   "canonicalUrl": "https://www.ou99.com/thread-465205-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-465205-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:495084",
+   "canonicalUrl": "https://www.ou99.com/thread-495084-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-495084-1-20.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:463198",
+   "canonicalUrl": "https://www.ou99.com/thread-463198-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-463198-1-160.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:454858",
+   "canonicalUrl": "https://www.ou99.com/thread-454858-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-454858-1-1.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  },
+  {
+   "id": "ou99:479248",
+   "canonicalUrl": "https://www.ou99.com/thread-479248-1-1.html",
+   "submittedUrls": [
+    "https://www.ou99.com/thread-479248-1-69.html"
+   ],
+   "accessStatus": "not-checked",
+   "downloadStatus": "not-downloaded",
+   "identityStatus": "owner-target-unverified",
+   "conversionStatus": "not-started"
+  }
+ ],
+ "memberAccessMergedAt": "2026-09-10T03:46:14+08:00",
+ "memberAccessMergedBy": "main-session：至尊会员實測價格 + 已驗證下載/轉換鏈路（見 materials/ou99-access/）"
+}

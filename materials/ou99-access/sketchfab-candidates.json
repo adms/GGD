@@ -1,0 +1,437 @@
+{
+ "schema": "ggd-candidate-sources@1",
+ "usage": "⭐ 候選歸檔：依全角色模型盤點.md「候選群包含該角色已記錄的全部可用選項與未通過轉換項目」。⛔ 這些都**尚未下載**，也**不是**可用預設；登記目的是讓它們成為後台可選項之一，避免平行工作流重複查找。",
+ "provider": "sketchfab（公開 API 查詢，授權欄位由 API 回傳）",
+ "producedBy": "main-session",
+ "producedAt": "2026-09-10T13:46:40+08:00",
+ "searchScope": "45 組尚無來源的角色；Sketchfab downloadable=true",
+ "findings": {
+  "queried": 45,
+  "withResults": 29,
+  "nameMatchedCharacter": 17,
+  "downloadable": 17,
+  "withAnimation": 1,
+  "note": "⚠️ 16/17 是靜態網格（animationCount=0）——「模型＋動作」這個門檻過不了"
+ },
+ "sources": [
+  {
+   "id": "sketchfab-bded5cb74e91",
+   "provider": "sketchfab",
+   "targetCharacter": "貞子",
+   "heroIds": [],
+   "modelName": "The_ring_ghost_lady",
+   "viewerUrl": "https://sketchfab.com/3d-models/bded5cb74e91408bbb78f97e534c4deb",
+   "uid": "bded5cb74e91408bbb78f97e534c4deb",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "9c51ed3085414d19a1c5bd40141782",
+   "faceCount": 996215,
+   "vertexCount": 540632,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫",
+    "faceCount 過高，超出英雄模型預算，需減面"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-a439a90d3527",
+   "provider": "sketchfab",
+   "targetCharacter": "阿強一號",
+   "heroIds": [],
+   "modelName": "T200 Dieselpunk Mech - Freebie",
+   "viewerUrl": "https://sketchfab.com/3d-models/a439a90d35274f94888f46a138f30615",
+   "uid": "a439a90d35274f94888f46a138f30615",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Valentin Winkelmann",
+   "faceCount": 194560,
+   "vertexCount": 99178,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-0fa4c6a20044",
+   "provider": "sketchfab",
+   "targetCharacter": "死之王",
+   "heroIds": [
+    "godie-u00k"
+   ],
+   "modelName": "Skeletal Lich King in Bone Crown and Robes",
+   "viewerUrl": "https://sketchfab.com/3d-models/0fa4c6a200444b4abc108a9b0b9edae6",
+   "uid": "0fa4c6a200444b4abc108a9b0b9edae6",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Pigcraft",
+   "faceCount": 1893142,
+   "vertexCount": 946077,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫",
+    "faceCount 過高，超出英雄模型預算，需減面"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-9808b77a3881",
+   "provider": "sketchfab",
+   "targetCharacter": "胖虎",
+   "heroIds": [],
+   "modelName": "Gian",
+   "viewerUrl": "https://sketchfab.com/3d-models/9808b77a3881453295385e8b937144c8",
+   "uid": "9808b77a3881453295385e8b937144c8",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "dannilloboyy",
+   "faceCount": 76928,
+   "vertexCount": 38170,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-388c32305158",
+   "provider": "sketchfab",
+   "targetCharacter": "熊貓",
+   "heroIds": [
+    "godie-h02k"
+   ],
+   "modelName": "Panda",
+   "viewerUrl": "https://sketchfab.com/3d-models/388c3230515848cb9c07724f2230af43",
+   "uid": "388c3230515848cb9c07724f2230af43",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Assets 4 Games",
+   "faceCount": 930,
+   "vertexCount": 808,
+   "animationCount": 1,
+   "rigged": true,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-67171ba268ce",
+   "provider": "sketchfab",
+   "targetCharacter": "吉伊卡哇",
+   "heroIds": [
+    "community-review-37-20260907"
+   ],
+   "modelName": "Chiikawa",
+   "viewerUrl": "https://sketchfab.com/3d-models/67171ba268ce4ab6a7f3f94db9c9a8eb",
+   "uid": "67171ba268ce4ab6a7f3f94db9c9a8eb",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "x2w-soda",
+   "faceCount": 12976,
+   "vertexCount": 6490,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-d67e3f3d1bdd",
+   "provider": "sketchfab",
+   "targetCharacter": "阿箱＋拉蜜絲",
+   "heroIds": [
+    "b2-boxxo"
+   ],
+   "modelName": "Nuka Cola Vending Machine",
+   "viewerUrl": "https://sketchfab.com/3d-models/d67e3f3d1bdd4a4e8b63c489cd55a5fc",
+   "uid": "d67e3f3d1bdd4a4e8b63c489cd55a5fc",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "gunduzhan",
+   "faceCount": 8116,
+   "vertexCount": 4191,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-3398e67bf04c",
+   "provider": "sketchfab",
+   "targetCharacter": "臭作",
+   "heroIds": [
+    "godie-o030",
+    "godie-orkn"
+   ],
+   "modelName": "Stylized 3D Character Model of a Businessman",
+   "viewerUrl": "https://sketchfab.com/3d-models/3398e67bf04c4f7284ca7853587acc03",
+   "uid": "3398e67bf04c4f7284ca7853587acc03",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Muntashir Al-Abid",
+   "faceCount": 56953,
+   "vertexCount": 28468,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-7f1691bba7a8",
+   "provider": "sketchfab",
+   "targetCharacter": "影之強者",
+   "heroIds": [
+    "b2-shadow"
+   ],
+   "modelName": "Cid Kagenou",
+   "viewerUrl": "https://sketchfab.com/3d-models/7f1691bba7a841cc9edbc0d1a0466a5e",
+   "uid": "7f1691bba7a841cc9edbc0d1a0466a5e",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Rave.exe",
+   "faceCount": 1103568,
+   "vertexCount": 561532,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫",
+    "faceCount 過高，超出英雄模型預算，需減面"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-85751b390d1b",
+   "provider": "sketchfab",
+   "targetCharacter": "尼古貓貓",
+   "heroIds": [
+    "community-review-30-20260907"
+   ],
+   "modelName": "Cat Girl",
+   "viewerUrl": "https://sketchfab.com/3d-models/85751b390d1b458ba405320415b33d36",
+   "uid": "85751b390d1b458ba405320415b33d36",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Assets 4 Games",
+   "faceCount": 1680,
+   "vertexCount": 1864,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-2343cc4a52be",
+   "provider": "sketchfab",
+   "targetCharacter": "艾爾瑪",
+   "heroIds": [
+    "b2-elma"
+   ],
+   "modelName": "Heavy Knight",
+   "viewerUrl": "https://sketchfab.com/3d-models/2343cc4a52be4f1eaa64c995886f8273",
+   "uid": "2343cc4a52be4f1eaa64c995886f8273",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "JakeHoughton",
+   "faceCount": 69952,
+   "vertexCount": 31606,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-e62df3069541",
+   "provider": "sketchfab",
+   "targetCharacter": "飛鼠先生",
+   "heroIds": [
+    "godie-udea"
+   ],
+   "modelName": "Ainz Ooal Gown",
+   "viewerUrl": "https://sketchfab.com/3d-models/e62df306954144fbb613c6fc3b04e682",
+   "uid": "e62df306954144fbb613c6fc3b04e682",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "affifuddin.y.hidayat",
+   "faceCount": 44382,
+   "vertexCount": 43727,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-994932a4c446",
+   "provider": "sketchfab",
+   "targetCharacter": "高速婆婆",
+   "heroIds": [
+    "community-review-34-20260907"
+   ],
+   "modelName": "DANDADAN - Okarun Turbo Granny (3D Model) + DL",
+   "viewerUrl": "https://sketchfab.com/3d-models/994932a4c4464439983f936d1cf5784e",
+   "uid": "994932a4c4464439983f936d1cf5784e",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "HiGuys920",
+   "faceCount": 39781,
+   "vertexCount": 20333,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-0af0c15e9471",
+   "provider": "sketchfab",
+   "targetCharacter": "青蛙劍士 Ned",
+   "heroIds": [
+    "b2-ned"
+   ],
+   "modelName": "Sir Frog - Chrono Trigger",
+   "viewerUrl": "https://sketchfab.com/3d-models/0af0c15e947143be8fab274841764bf1",
+   "uid": "0af0c15e947143be8fab274841764bf1",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "Adrian Carter",
+   "faceCount": 167256,
+   "vertexCount": 84742,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-29b88bd5e481",
+   "provider": "sketchfab",
+   "targetCharacter": "異形",
+   "heroIds": [],
+   "modelName": "ALIEN",
+   "viewerUrl": "https://sketchfab.com/3d-models/29b88bd5e48145d59b7a248e9f9608a8",
+   "uid": "29b88bd5e48145d59b7a248e9f9608a8",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "EdDeasy",
+   "faceCount": 36850,
+   "vertexCount": 18739,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-5121af7f44b5",
+   "provider": "sketchfab",
+   "targetCharacter": "鋼彈",
+   "heroIds": [],
+   "modelName": "Gundam Mecha",
+   "viewerUrl": "https://sketchfab.com/3d-models/5121af7f44b540eeacd2cc8daa4491e3",
+   "uid": "5121af7f44b540eeacd2cc8daa4491e3",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "ROHIT3DMODELS",
+   "faceCount": 28249,
+   "vertexCount": 14709,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "generic-proxy",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  },
+  {
+   "id": "sketchfab-7cf86ff91fb8",
+   "provider": "sketchfab",
+   "targetCharacter": "孫悟空",
+   "heroIds": [
+    "godie-o00x",
+    "godie-ogrh"
+   ],
+   "modelName": "445-1-1 Goku SLS",
+   "viewerUrl": "https://sketchfab.com/3d-models/7cf86ff91fb84cc09df6b50ab41cbfb2",
+   "uid": "7cf86ff91fb84cc09df6b50ab41cbfb2",
+   "license": "CC Attribution",
+   "attributionRequired": true,
+   "author": "vampiregrodon",
+   "faceCount": 360042,
+   "vertexCount": 179909,
+   "animationCount": 0,
+   "rigged": false,
+   "identityStatus": "likeness",
+   "downloadStatus": "not-downloaded",
+   "conversionStatus": "not-started",
+   "blockers": [
+    "animationCount=0：靜態網格，⛔ 無動作，需另接骨架與動畫",
+    "faceCount 過高，超出英雄模型預算，需減面"
+   ],
+   "checkedAt": "2026-09-10T13:46:40+08:00"
+  }
+ ]
+}

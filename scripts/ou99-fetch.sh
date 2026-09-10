@@ -48,20 +48,23 @@ for arg in "$@"; do
           "https://www.ou99.com/forum.php?mod=viewthread&tid=${tid}" || true)"
   if [ -z "$page" ]; then echo "⛔ $tid 讀不到帖子頁" >&2; fail=$((fail+1)); continue; fi
 
-  # ⚠️ 站是 GBK。只取「附件是壓縮檔」那一個 aid（⛔ 不是預覽圖那個）
-  aid="$(printf '%s' "$page" \
-        | tr '>' '\n' \
-        | grep -iE 'mod=attachment' \
-        | grep -oE 'aid=[A-Za-z0-9%=_-]+' \
-        | sed 's/^aid=//' | tail -1 || true)"
-
-  # 更穩：找「檔名含 .zip/.rar/.7z」的那個連結
-  aid_zip="$(printf '%s' "$page" \
-        | perl -0777 -ne 'while(/href="forum\.php\?mod=attachment&amp;aid=([^"]+)"[^>]*>([^<]*\.(?:zip|rar|7z))</gi){print "$1\n"}' \
-        | head -1 || true)"
-  [ -n "$aid_zip" ] && aid="$aid_zip"
-  [ -n "$aid" ] || { echo "⛔ $tid 沒有附件連結（未購買？或只有預覽圖）" >&2; fail=$((fail+1)); continue; }
-  aid="${aid//&amp;/&}"
+  # ⚠️ 站是 GBK，且附件連結有 &amp; 與巢狀標籤 ⇒ ⛔ 不要用 shell 正則，交給 python
+  aid="$(printf '%s' "$page" | /usr/local/bin/python3 -c '
+import sys, re
+h = sys.stdin.buffer.read().decode("gbk", "replace")
+# 每個 <a href="forum.php?mod=attachment&aid=XXX" ...>連結文字</a>
+links = re.findall(r"href=\"(forum\.php\?mod=attachment&(?:amp;)?aid=[^\"]+)\"[^>]*>(.*?)</a>", h, re.S)
+best = None
+for href, text in links:
+    t = re.sub(r"<[^>]+>", "", text).strip()
+    if re.search(r"\.(zip|rar|7z)\s*$", t, re.I):      # ⭐ 壓縮檔優先
+        best = href; break
+if best is None and links:                              # ⛔ 沒有壓縮檔就不猜,回空
+    best = ""
+if best:
+    m = re.search(r"aid=([^&\"]+)", best.replace("&amp;", "&"))
+    print(m.group(1) if m else "")
+')"
 
   # ① 取 302 的 Location（⛔ 不 follow —— follow 會因為 Content-Disposition 而中斷）
   loc="$(curl -sS -D - -o /dev/null \
