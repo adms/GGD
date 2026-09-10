@@ -78,8 +78,36 @@
       ]
     },
     {
+      "kind": "confirmed",
+      "text": "Skill Forge 功能目錄現有 60 份文件／56 個主題，涵蓋第二批已出貨的 consumeStatus、evasion、spendHealth、pull、chance 與 8 個被動事件；視覺證據維持原本 47 份文件／43 個主題，沒有把功能覆蓋誤變成額外錄影範圍。技能形狀閘對 907 支技能／58 份模板已通過。",
+      "commit": "242500f229d5a877b4a5bdf27ef22f4631f1abcd",
+      "repro": {
+        "command": "pnpm shapes:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/forge/skillAcceptanceCatalog.ts",
+        "tools/skill-templates/shape_axes.json",
+        "docs/editor-contract/ggd-skill-shapes.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Editor 完整測試在目前分支為 91 個檔案通過，595 項通過、1 項依既定條件跳過。技能施放判定測試改由當下 abilities index 對帳 907 份技能；已成正式內容的阿薩謝爾測試夾具使用獨立 projectId，不再嘗試佔用官方身分。",
+      "commit": "e0b4008c9bdf959fd4d6a605c3d6cfcadfef7c69",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor test",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/vfx-forge/actionAnimationPrinciples.test.ts",
+        "apps/editor/src/hero/HeroSlotEditor.test.tsx",
+        "apps/editor/src/hero/catalog.test.ts"
+      ]
+    },
+    {
       "kind": "inferred",
-      "text": "全部 126 名要在同一正式服務完成，仍依賴本 PR、LoL 第二批 Draft PR #1193 及 Main 當下 target 合併。P3-05 若要從可選且關閉提升為可發布推論，還需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。",
+      "text": "全部 126 名要在同一正式服務完成，仍依賴本 PR、LoL 第二批 Draft PR #1193 及 Main 當下 target 合併。集中閘另會被 origin/main 既有的 14 筆模型幾何宣告，以及 #1170 尚未合併的核准語音 donor WAV 擋住，本分支不以假檔或跳過檢查偽造通過。P3-05 若要從可選且關閉提升為可發布推論，還需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。",
       "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
       "repro": {
         "command": "pnpm ai:release:metadata",
@@ -88,7 +116,8 @@
       "evidence": [
         "apps/editor-desktop/resources/ai/release-gate-manifest.json",
         "apps/editor-desktop/resources/ai/runtime-manifest.json",
-        "docs/全自動鑄造編輯器進度temp202609091000.md"
+        "docs/全自動鑄造編輯器進度temp202609091000.md",
+        "docs/editor-contract/社群英雄126名上架狀態.md"
       ]
     }
   ],
@@ -96,7 +125,7 @@
     "請 Main 審查並合併本 PR；34 名請在合併後依當下 content target 由既有 Editor／平台流程重建必要 ZIP、投稿、核准與發布，不要直接搬生成 JSON 進正式覆蓋層。",
     "請與 Draft PR #1193 的 LoL 第二批 11 名一併安排合併；兩張 PR 合併後，以同一正式服務名單確認 126 名的目前發布版本及單英雄 rollback。",
     "P2-05 若要正式發行，請由持有者配置簽章、Team ID、Windows publisher 與 stable feed。P3-05 若要啟用推論，請提供兩個核准硬體 target 的 E8 收據與 runtime artifact；在此之前保留 released=false。",
-    "#1206 與 #1212 已在本分支完成；PR 推送後 Codex 會附 commit、測試與畫面證據並關票。#1205 要等 34 名正式發布後才可關閉。"
+    "#1206、#1212 與 #1214 已在本分支完成；PR 推送後 Codex 會附 commit 與測試證據並關票。#1205 要等 34 名正式發布後才可關閉。"
   ],
   "ownerQuotes": [
     {
