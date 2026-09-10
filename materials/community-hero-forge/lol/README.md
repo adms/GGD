@@ -1,5 +1,7 @@
 # 七名 LoL 英雄來源
 
+> **目前正式版（2026-09-10）**：正式站已上架 `lol-warwick`、`lol-karthus`、`lol-lux`、`lol-yasuo`、`lol-missfortune`、`lol-leesin`、`lol-xerath`，全部在營運白名單。現行模型是 `community.body.*`，對應 `content/assets/models/community/<SHA>.glb`，詳見 [現行模型補交收據](../receipts/live-model-git-delivery.json)。這批現行 GLB 已補入本分支，待 Main 合併部署修復缺檔。下方 `community-concept-*`、`community.lol.*` 與 `rebuild.mts` 是早期來源快照，保留供追溯，**不要直接當成新英雄重複投稿或覆蓋正式版**。
+
 七份完整 `HeroProject`，每名 PASSIVE／Q／W／E／R／EX 六槽。名称保留沃維克、卡爾瑟斯、拉克絲、犽宿、好運姐、李星、齊勒斯；穩定 `projectId`／`heroId` 為 `community-concept-<英文名>`，不冒充還原舊瀏覽器的隨機草稿 ID。
 
 技能配方直接來自 `packages/shared/src/content/heroForge/communityExamples.ts` 的 `createCommunityHeroExample`，模型選用沿 Editor 的 `editHeroProject` API。七份 `models/*.json` 原樣複製既有 `docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/`，沒有修改技能、模板、模型比例或動畫對應。專案內的配方文字與模板快照完整保留；配方中的舊替身說明是歷史來源文字，實際本體以 `presentation.modelKey` 和本目錄模型文件為準。
