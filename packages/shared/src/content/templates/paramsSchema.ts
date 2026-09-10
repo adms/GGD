@@ -1,3 +1,4 @@
+import { zAbilityRecast } from "../schema/recast";
 /**
  * 鑄技工坊 — runtime param-schema synthesis.
  *
@@ -47,6 +48,7 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
     }
     case "scaling":
       return zScaling;
+    case "recast": return zAbilityRecast;
     case "effects":
       return z.array(zEffectDef).min(1).max(64);
     case "hooks":

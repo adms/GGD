@@ -1,0 +1,1355 @@
+{
+  "schema": "ggd-batch-verifier-verification@1",
+  "issue": 1143,
+  "sourceCommit": "d635f8fcfe371e6c7f6214d46288c33c4efd3a79",
+  "unitTests": {
+    "command": "python3 tools/community-hero-forge/test_verify_authoring_batch.py -v",
+    "tests": 9,
+    "exitCode": 0,
+    "logSha256": "d7c62a03d5fb121c8433de228128fb75d05dd42057b84001a08fa6a42cb90243"
+  },
+  "runs": [
+    {
+      "run": "batch-verifier-first",
+      "reportSha256": "2c3bcfcf17740ffd2efa62c5f1fc3781bc143e9d5f388e2cc57cdd5cb1ca93c8",
+      "head": "d635f8fcfe371e6c7f6214d46288c33c4efd3a79",
+      "sourceFingerprint": "7c4e9df0a81f3fc511f609eff672036fc962ff6005b7fe2b2fa12d8dde8c8c52",
+      "exitCode": 2,
+      "counts": {
+        "heroes": 37,
+        "slots": 222,
+        "slotsWithPassingBehaviorSuite": 16,
+        "slotsWithoutBehaviorSuite": 206
+      },
+      "modelBytes": "not-checked",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9b9fe640c1c8a59f6dd8c1dec9aea4475ebfc2df96a45369cbcafad7aa10b097",
+          "log": "compile-and-models.log",
+          "logSha256": "832ddfaafee179aa9c1e8351cdc9ebc5f4a87fc7850dd04f808b27f567daea6c",
+          "seconds": 2.1,
+          "reused": false
+        },
+        {
+          "id": "behavior-implemented-mechanisms",
+          "argv": [
+            "pnpm",
+            "exec",
+            "vitest",
+            "run",
+            "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+            "--pool=threads",
+            "--minWorkers=1",
+            "--maxWorkers=1"
+          ],
+          "exitCode": 0,
+          "fingerprint": "fec951343197847ca4d0322838ecbc2dc4b630896f1abb039a99c8ad36758ed3",
+          "log": "behavior-implemented-mechanisms.log",
+          "logSha256": "40f2dd0b37ab5e7f56cc875dc7e649bcb6a90777965fc546e5650213f7c46188",
+          "seconds": 12.61,
+          "reused": false
+        }
+      ]
+    },
+    {
+      "run": "batch-verifier-one-hero",
+      "reportSha256": "dcac9f471b4a9acc8435a20351627ba679783335cd6bbbb2e65b7c07c978e115",
+      "head": "d635f8fcfe371e6c7f6214d46288c33c4efd3a79",
+      "sourceFingerprint": "801dc4f41668a36ca6e2ec6ac220d3eca15748f376a143f7aaabf195c0e36808",
+      "exitCode": 2,
+      "counts": {
+        "heroes": 1,
+        "slots": 6,
+        "slotsWithPassingBehaviorSuite": 0,
+        "slotsWithoutBehaviorSuite": 6
+      },
+      "modelBytes": "not-checked",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/private/tmp/ggd-community-mechanism-fixes/batch-one-hero"
+          ],
+          "exitCode": 0,
+          "fingerprint": "8b3d6341ee10a47e45aa58f1aba505bc5d6967a9576ec5da35cfc35f5340cb9b",
+          "log": "compile-and-models.log",
+          "logSha256": "23c9b48a5d37f6196157c98421048bc1d41e7fe690496fc0733b9d7c3316fac8",
+          "seconds": 1.62,
+          "reused": false
+        }
+      ]
+    },
+    {
+      "run": "batch-verifier-release",
+      "reportSha256": "b662394bc31623f79649ae4bddb215a57f8b12f9a2cb73eda1f68d9476000885",
+      "head": "d635f8fcfe371e6c7f6214d46288c33c4efd3a79",
+      "sourceFingerprint": "7c4e9df0a81f3fc511f609eff672036fc962ff6005b7fe2b2fa12d8dde8c8c52",
+      "exitCode": 1,
+      "counts": {
+        "heroes": 37,
+        "slots": 222,
+        "slotsWithPassingBehaviorSuite": 16,
+        "slotsWithoutBehaviorSuite": 206
+      },
+      "modelBytes": "verified",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "skills",
+          "argv": [
+            "pnpm",
+            "skills:check"
+          ],
+          "exitCode": 1,
+          "fingerprint": "bf2ff5e75e611296d413c6bbf46a638067de44da2b5fc2650f334c89b660c6ef",
+          "log": "skills.log",
+          "logSha256": "e3d274795a8664bb555eed87b298a794e8e1173ba5c70f03f852bd1282a1441d",
+          "seconds": 84.97,
+          "reused": false
+        },
+        {
+          "id": "editor",
+          "argv": [
+            "pnpm",
+            "editor:accept:release"
+          ],
+          "exitCode": 1,
+          "fingerprint": "f17e44acba54a351a7e0c0755061ac4adbed22fbf88af7a0809579eb949040cf",
+          "log": "editor.log",
+          "logSha256": "9db3296e12ca88b3b0ed713a408703cca7d93c3dc89845e130e70e9e28d419da",
+          "seconds": 179.3,
+          "reused": false
+        },
+        {
+          "id": "coord",
+          "argv": [
+            "pnpm",
+            "coord:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "768f718a8920668271f598f13488270e407aa1e17b43a1b0879dd4e1dd0c1177",
+          "log": "coord.log",
+          "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+          "seconds": 3.25,
+          "reused": false
+        },
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+            "--release-root",
+            "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+          ],
+          "exitCode": 0,
+          "fingerprint": "c0f29ec35a5c6aa63a72fa42ed9907d8443b2e6b7ba49856fcb8dcb195a15ec8",
+          "log": "compile-and-models.log",
+          "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+          "seconds": 6.41,
+          "reused": false
+        },
+        {
+          "id": "behavior-implemented-mechanisms",
+          "argv": [
+            "pnpm",
+            "exec",
+            "vitest",
+            "run",
+            "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+            "--pool=threads",
+            "--minWorkers=1",
+            "--maxWorkers=1"
+          ],
+          "exitCode": 0,
+          "fingerprint": "fec951343197847ca4d0322838ecbc2dc4b630896f1abb039a99c8ad36758ed3",
+          "log": "behavior-implemented-mechanisms.log",
+          "logSha256": "40f2dd0b37ab5e7f56cc875dc7e649bcb6a90777965fc546e5650213f7c46188",
+          "seconds": 12.61,
+          "reused": true
+        },
+        {
+          "id": "skills-tiers-apply-check",
+          "argv": [
+            "pnpm",
+            "tiers:apply:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "901875793f3b3a70f32e39f74ae2c457e7ef564b0f327fc4306b1c751e83b929",
+          "log": "skills-tiers-apply-check.log",
+          "logSha256": "bc7fedd653d35624411566de8b25768f0897c0fd3af574b86dd8a615c8e78f90",
+          "seconds": 0.62,
+          "reused": false
+        },
+        {
+          "id": "skills-spec-check",
+          "argv": [
+            "pnpm",
+            "spec:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "808be0117e81e18102eba99aa5a3ecfc84f7682a20609b47df091268a523e279",
+          "log": "skills-spec-check.log",
+          "logSha256": "86d8acbe51d8682b9294ee8c055b9cce9786b533cc4bcbf080b0759109a89cc7",
+          "seconds": 2.5,
+          "reused": false
+        },
+        {
+          "id": "skills-overview-check",
+          "argv": [
+            "pnpm",
+            "overview:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "19a6d347adb3be2c0282e96069df30b987bb31d3b00d005af7d1331ecb5da116",
+          "log": "skills-overview-check.log",
+          "logSha256": "53edc4bf9a4ead0d6d090070ca3fe421a7dd19484af1e1087d542758921fac37",
+          "seconds": 1.86,
+          "reused": false
+        },
+        {
+          "id": "skills-tiers-check",
+          "argv": [
+            "pnpm",
+            "tiers:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "711f1c9c39ef1cfe2f473bc43e35dfae601382093dad5ddbd1a2a59c5e631355",
+          "log": "skills-tiers-check.log",
+          "logSha256": "7f49b94083329b758db55e9ee28f9dcfc13de447693df65a6381e3d212977e3a",
+          "seconds": 2.18,
+          "reused": false
+        },
+        {
+          "id": "skills-mana-audit-check",
+          "argv": [
+            "pnpm",
+            "mana:audit:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "3b7fe9127b6abff65ed031e1643309eb251953857b83141525d2f972c33332f5",
+          "log": "skills-mana-audit-check.log",
+          "logSha256": "79a4d17682f37ae570c9443e378d9334645b6b6746cf23cff02b9d999d8909a1",
+          "seconds": 2.19,
+          "reused": false
+        },
+        {
+          "id": "skills-typecat-check",
+          "argv": [
+            "pnpm",
+            "typecat:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "26776fa4fac21a8a415ad28a891a2d35a77f03b1e85ec2e4bc0e2ce02e5060fe",
+          "log": "skills-typecat-check.log",
+          "logSha256": "0eaa10155a19e88158e76713aac3478ddb6743151afb19242d33d44447008a82",
+          "seconds": 1.57,
+          "reused": false
+        },
+        {
+          "id": "skills-skillforge-audit-check",
+          "argv": [
+            "pnpm",
+            "skillforge:audit:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "e5691c2212d42f2a1f9634f35dbbed99c960bc9bbf1f714c38cc1150cef49184",
+          "log": "skills-skillforge-audit-check.log",
+          "logSha256": "15f7ea264838f43c457619c74c7b262680bfb86023ba23921d245f943c0d7a5a",
+          "seconds": 1.47,
+          "reused": false
+        },
+        {
+          "id": "skills-skillforge-visual-review-check",
+          "argv": [
+            "pnpm",
+            "skillforge:visual-review:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "aa168251ca7495c2a03d01593d455b8200e7ddafd551769b1cae1a6eda10f31e",
+          "log": "skills-skillforge-visual-review-check.log",
+          "logSha256": "f7a2744cba60fe9549e411e2a9ba4117d30003c9395c80f8cf9f41f3a2ea5fde",
+          "seconds": 0.67,
+          "reused": false
+        },
+        {
+          "id": "skills-skillforge-visual-sheets-check",
+          "argv": [
+            "pnpm",
+            "skillforge:visual-sheets:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5b1c9bf7f267f1045dae155f8dd584c9cd20a8748cbae56c47257cb1c524958c",
+          "log": "skills-skillforge-visual-sheets-check.log",
+          "logSha256": "c7bf7bf6aa504c396f34d6b419dcce6d42d43806efebccb46436f02dfe17240f",
+          "seconds": 0.68,
+          "reused": false
+        },
+        {
+          "id": "skills-skillforge-visual-advisory-check",
+          "argv": [
+            "pnpm",
+            "skillforge:visual-advisory:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "46318c022616abe2a25e3d6e352985348746987e85cf98971b61dafc01a903df",
+          "log": "skills-skillforge-visual-advisory-check.log",
+          "logSha256": "8703367942974a8cb1ee9d1cbaa9968cddf22a3f86d2aec89d87d9aa2ba8bd0f",
+          "seconds": 0.62,
+          "reused": false
+        },
+        {
+          "id": "skills-vfxforge-handback-check",
+          "argv": [
+            "pnpm",
+            "vfxforge:handback:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ee4c11cd2e7b7c9cf2a27c3c83357f3b2bc214f534aeaa9abccc0fd6ac4d606b",
+          "log": "skills-vfxforge-handback-check.log",
+          "logSha256": "c7f1df763b5c28c65df3d31dfe7270ac53fe82deadecb828c051a56fb4779881",
+          "seconds": 1.0,
+          "reused": false
+        },
+        {
+          "id": "skills-editorcov-check",
+          "argv": [
+            "pnpm",
+            "editorcov:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "4d6042555ef68daae588ca9b3cd78f35d5d82091099cb74ec06d58e0dce1b733",
+          "log": "skills-editorcov-check.log",
+          "logSha256": "d8d3349f9625b45b9f23edd4a050f5edc80c313f6fab34837fd1c9edee236512",
+          "seconds": 1.75,
+          "reused": false
+        },
+        {
+          "id": "skills-bricks-check",
+          "argv": [
+            "pnpm",
+            "bricks:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5b4ac5c11cbd4e0a3c07e14f829d44b181e01de6e3d0585c0caec65ec693cf25",
+          "log": "skills-bricks-check.log",
+          "logSha256": "81b897c13fb4195fc236eaf7ea439f21323f06718df585b12563b0b7d4d104e3",
+          "seconds": 1.97,
+          "reused": false
+        },
+        {
+          "id": "skills-assets-manifest-check",
+          "argv": [
+            "pnpm",
+            "assets:manifest:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "67da478d280899e1450b2125220cabeafa23349871ec3085733d151081aeb326",
+          "log": "skills-assets-manifest-check.log",
+          "logSha256": "4b562fbd237c124257d68933af62ba7c26d11bea45cada56538108de990fcb03",
+          "seconds": 1.58,
+          "reused": false
+        },
+        {
+          "id": "skills-jasstpl-check",
+          "argv": [
+            "pnpm",
+            "jasstpl:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ce386d5679e64a8b5b736501308d01ac7ec371841fa2fb761eddb8dc92339132",
+          "log": "skills-jasstpl-check.log",
+          "logSha256": "e88cdb7f8c1ff03d9a7b0b0e4243f1f3cf3e7b27595d6f60ef2c9efef17f8d2b",
+          "seconds": 0.62,
+          "reused": false
+        },
+        {
+          "id": "skills-caps-check",
+          "argv": [
+            "pnpm",
+            "caps:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "f22f5cfcb2960cfe98775253b88b2398868371b5faeee2f7811ad05fad770e19",
+          "log": "skills-caps-check.log",
+          "logSha256": "2fb092b5a7eb73e5b51346ab258553b200421f55101d00af316e1d4d6df94101",
+          "seconds": 1.59,
+          "reused": false
+        },
+        {
+          "id": "skills-collections-check",
+          "argv": [
+            "pnpm",
+            "collections:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "2a16fcd10992cb386d51c6074883294e469a078f8a53b612a1571c2abdf26e2e",
+          "log": "skills-collections-check.log",
+          "logSha256": "4d4e8301e4ca324fbdd526de4c18a4610dffe57842c4994633f929b26b9d649d",
+          "seconds": 1.64,
+          "reused": false
+        },
+        {
+          "id": "skills-skillremake-docs-check",
+          "argv": [
+            "pnpm",
+            "skillremake:docs:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "22bbb9d14e3e3184cc66863e80086eec833f5d28e5cb781534bb615d90ef99a2",
+          "log": "skills-skillremake-docs-check.log",
+          "logSha256": "d8c86acc73bc999d43869a7e861902cfaba71f3a7513b6b14da44d4a30ab7f35",
+          "seconds": 4.28,
+          "reused": false
+        },
+        {
+          "id": "skills-skillremake-json-check",
+          "argv": [
+            "pnpm",
+            "skillremake:json:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "3f81250bea94bb9226aa56dc909391cf25e29b62e10acb9d08f2a506a7d89db4",
+          "log": "skills-skillremake-json-check.log",
+          "logSha256": "ab3ceeceb1649f40261f9c3b8b918276b7e9e0e758dce9f34209c06999f62d52",
+          "seconds": 4.29,
+          "reused": false
+        },
+        {
+          "id": "skills-skillremake-provenance-check",
+          "argv": [
+            "pnpm",
+            "skillremake:provenance:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "94cebfc7e5c862cd6bea52551bec9bf1573c298185d7695e173bf3f812e9eb26",
+          "log": "skills-skillremake-provenance-check.log",
+          "logSha256": "d656126090677ea7723731afb050300373ae76ce7dec81856718c6435fc8e934",
+          "seconds": 0.56,
+          "reused": false
+        },
+        {
+          "id": "skills-grail-wishes-check",
+          "argv": [
+            "pnpm",
+            "grail:wishes:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "4416cf750f44809ce3f1ff1c1f40901c2bd01caf9cfb3b69eec37caa8bc471a8",
+          "log": "skills-grail-wishes-check.log",
+          "logSha256": "2e5ddcdb122cc1fe1adadf9b66c2280ed119b507ba2ca10e9e60c2769f7c5bd3",
+          "seconds": 0.55,
+          "reused": false
+        },
+        {
+          "id": "skills-contract-numbers-check",
+          "argv": [
+            "pnpm",
+            "contract:numbers:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "902ea22057f55b8381f8df85646c6a4b81db94d293048e8c47f0bd5656b5b460",
+          "log": "skills-contract-numbers-check.log",
+          "logSha256": "0819936447ebe602a59e8a816bd0f33811a625fd5a6996ab43fb341a14d4a52c",
+          "seconds": 0.62,
+          "reused": false
+        },
+        {
+          "id": "skills-atlas-check",
+          "argv": [
+            "pnpm",
+            "atlas:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "a8b67ad941a81bc89cb2cab546ab06f69d1aa1deee46c41e0d69b100959b066a",
+          "log": "skills-atlas-check.log",
+          "logSha256": "78f38cf94121c953ab5ea54658e7d223e626b3187490a425a8a145533c386709",
+          "seconds": 2.23,
+          "reused": false
+        },
+        {
+          "id": "skills-treasure-csv-check",
+          "argv": [
+            "pnpm",
+            "treasure:csv:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ccbeab1e5b496ca375850e3a3e839ce94bb938472f0c25ece6c21a7eb31d41c5",
+          "log": "skills-treasure-csv-check.log",
+          "logSha256": "0a1dd95f4d75ee1170c83c7e3fb5b900afb655d5ee6bf6a782de2364853825b3",
+          "seconds": 0.57,
+          "reused": false
+        },
+        {
+          "id": "skills-docs-readme-check",
+          "argv": [
+            "pnpm",
+            "docs:readme:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "547dcf2c59a7fd800897cb06d41aaeeea08c401d2ef3734f07b6ad45e438cd66",
+          "log": "skills-docs-readme-check.log",
+          "logSha256": "0ab052844868afbf3e0de6b34ee1f80e812b0e8fc95708f70d90b402a0048406",
+          "seconds": 0.67,
+          "reused": false
+        },
+        {
+          "id": "skills-docs-status-check",
+          "argv": [
+            "pnpm",
+            "docs:status:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "d44e572753d665eacc1d98603b9b2a4ce92c67e4a36b602095dba16bae9f16ee",
+          "log": "skills-docs-status-check.log",
+          "logSha256": "e9f50303ddcf245bc5393d0ef60f10d1a0efe1c0811ef49e7b319ea05c7a587a",
+          "seconds": 0.56,
+          "reused": false
+        },
+        {
+          "id": "skills-roster-check",
+          "argv": [
+            "pnpm",
+            "roster:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ed871d0942f9c9bd32b9cc2fe21ad0246d4a75dd3120ef899c4a731543f4f1b9",
+          "log": "skills-roster-check.log",
+          "logSha256": "71996c022510cef9977589c743c786db12653edcca0544a1f957c4bfb083ad55",
+          "seconds": 1.11,
+          "reused": false
+        },
+        {
+          "id": "skills-pitch-check",
+          "argv": [
+            "pnpm",
+            "pitch:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "6641e863bb4ce1ca4d9db8785e017c4864366f8ac809faa68b9573b79aba2ee4",
+          "log": "skills-pitch-check.log",
+          "logSha256": "d36eaa316e1eaeed88e1cda9712cc34fb10c5edd66b17e2fb82f1d1c03116d50",
+          "seconds": 1.36,
+          "reused": false
+        },
+        {
+          "id": "skills-newhero-check",
+          "argv": [
+            "pnpm",
+            "newhero:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "cae7d3fea76a91bc611c53fddc84fe99957104c3f25ec52ce2e1b11d2f3cc1f0",
+          "log": "skills-newhero-check.log",
+          "logSha256": "821fd01f952b2bdef50eefebad02be5a2acef2e4e0020a1caa1d8d6e6bbbbb79",
+          "seconds": 1.37,
+          "reused": false
+        },
+        {
+          "id": "skills-lowdmg-check",
+          "argv": [
+            "pnpm",
+            "lowdmg:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "945b2ccfc75b8cef5744736e1f887b563e0576feb9922141e481c439d542cf00",
+          "log": "skills-lowdmg-check.log",
+          "logSha256": "788f88e563ca97c594bbfd7f4dc9ab5802afb59c150e48e62c909f7254c3bd18",
+          "seconds": 1.2,
+          "reused": false
+        },
+        {
+          "id": "skills-anchors-check",
+          "argv": [
+            "pnpm",
+            "anchors:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "d704a77eae4a7d9b0ec7f56d2674c48b3b345df018b8b8f28de88c227b3bba18",
+          "log": "skills-anchors-check.log",
+          "logSha256": "e5cda6ff2a23910f8ef55141e839171959e2bb1df85afd8472f23cc1ae9accdc",
+          "seconds": 1.15,
+          "reused": false
+        },
+        {
+          "id": "skills-statcaps-check",
+          "argv": [
+            "pnpm",
+            "statcaps:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "b520a3cd81bfdfd2fd1298d1af23240fb8591f43f6c7a62a11ee9e713eeb6a40",
+          "log": "skills-statcaps-check.log",
+          "logSha256": "a88d0b985a130593bd0a9c078a4c26d6ff1554d68d3e86e1ac5df32f5921c9d3",
+          "seconds": 1.16,
+          "reused": false
+        },
+        {
+          "id": "skills-apconv-plan-check",
+          "argv": [
+            "pnpm",
+            "apconv:plan:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "babecffd7f6ab4f6e6a9c9d0c80a71d0c02e41a9a47639e1f3a1dda47fd35827",
+          "log": "skills-apconv-plan-check.log",
+          "logSha256": "b5f6343460aa243e2bdfe2047d9c7663db0ff5b5d7871bf0c486387d0e763fa1",
+          "seconds": 0.67,
+          "reused": false
+        },
+        {
+          "id": "skills-apconv-check",
+          "argv": [
+            "pnpm",
+            "apconv:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "05cc88d45d96052618b22bc47f09399e85a1fa28fa174c4dba49768ccf656d93",
+          "log": "skills-apconv-check.log",
+          "logSha256": "eb24d28cd28da12bff8889ec968fbb5b9a6b7a703086e44214eb2878b3d224a5",
+          "seconds": 0.6,
+          "reused": false
+        },
+        {
+          "id": "skills-apdmg-check",
+          "argv": [
+            "pnpm",
+            "apdmg:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "1cd868a78f0be0022070befdf75d405a0de362d69217c4e500861d6606654c8c",
+          "log": "skills-apdmg-check.log",
+          "logSha256": "0f6843a5556f41233eef3d0006c1223a5fdf8996acbf7adf6e19bd1b75ee4a4a",
+          "seconds": 1.58,
+          "reused": false
+        },
+        {
+          "id": "skills-board-check",
+          "argv": [
+            "pnpm",
+            "board:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "858b3af11604e537349cf5179d487377395b8ea7529e92b6918b4b0c1aceadd8",
+          "log": "skills-board-check.log",
+          "logSha256": "869e28abba319723cb75d4731f21f79cefc82716eab3a85d020af8602c0c2b9d",
+          "seconds": 0.61,
+          "reused": false
+        },
+        {
+          "id": "skills-msgledger-check",
+          "argv": [
+            "pnpm",
+            "msgledger:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "fdce66f9b58c7356d8f60f39e6709852524dedea0d2a174addb38ae4af2f9255",
+          "log": "skills-msgledger-check.log",
+          "logSha256": "34cceb5d24caebf53dd8c413b96a7d1e1e6b4cb86224f17fa1232d84144f925c",
+          "seconds": 11.18,
+          "reused": false
+        },
+        {
+          "id": "skills-skillnorm-check",
+          "argv": [
+            "pnpm",
+            "skillnorm:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "e5fd2724ccb2a94e7adb42dc94add360d1f4ea9016086d079f08539e37c2f82d",
+          "log": "skills-skillnorm-check.log",
+          "logSha256": "c7cdf5063adb4ee92b976ddf8f90bcb081b69f24521bac2234a4618941683e71",
+          "seconds": 2.28,
+          "reused": false
+        },
+        {
+          "id": "skills-speedtiers-check",
+          "argv": [
+            "pnpm",
+            "speedtiers:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "fc16be91f7f1d49888d494b040438f23e652cc87b2d5367fc1397c5d3b7053ad",
+          "log": "skills-speedtiers-check.log",
+          "logSha256": "51e4de3eaff2fae6547e3f6a1a3e497a4d842b95731bdb44870b1ec9de5cc93b",
+          "seconds": 1.16,
+          "reused": false
+        },
+        {
+          "id": "skills-jasscombo-check",
+          "argv": [
+            "pnpm",
+            "jasscombo:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "2783c511d89b9d128d99a2e6790974347d1073661625d41f98cde6b0968cab26",
+          "log": "skills-jasscombo-check.log",
+          "logSha256": "9594402837362aa1e218a6e8cc753d84efde0835f4cdced44d7db433f991ecd1",
+          "seconds": 0.61,
+          "reused": false
+        },
+        {
+          "id": "skills-vfxbind-check",
+          "argv": [
+            "pnpm",
+            "vfxbind:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "32664eec3c543895850686265b2a11a6da6a9ecf6cacc9b4662b60414a98b647",
+          "log": "skills-vfxbind-check.log",
+          "logSha256": "80e41ba1ce4158c07eee1b59c8fed72471e06e5942df2fa65d5af0d05672dc37",
+          "seconds": 0.61,
+          "reused": false
+        },
+        {
+          "id": "skills-models-check",
+          "argv": [
+            "pnpm",
+            "models:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5c29e363146a590032ead79718bce34e2c392c28190f739ae735d3ec887cc893",
+          "log": "skills-models-check.log",
+          "logSha256": "5aa519ce72c9b5cd0bb085e4458c6d442c3099e122ce8533969f2e3aee76ddc9",
+          "seconds": 0.9,
+          "reused": false
+        },
+        {
+          "id": "skills-lod-check",
+          "argv": [
+            "pnpm",
+            "lod:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "e8d431cbc435e1a7ba7a2f593d147097df5bcc6f2d7839edc553f8d54314338e",
+          "log": "skills-lod-check.log",
+          "logSha256": "81a6b213369cf381a62570f9424d043d48c36d9b20147500f557f1f849344488",
+          "seconds": 0.61,
+          "reused": false
+        },
+        {
+          "id": "skills-audit-check",
+          "argv": [
+            "pnpm",
+            "audit:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "00d4aae7dcd019c8292b2cb767bd437ff7068caa2f8d98d0569c7faed270b165",
+          "log": "skills-audit-check.log",
+          "logSha256": "86de0724cf8571c73fd8962e5e11aa8c99a269db5aaa8724094e0aeb1e8dc1f5",
+          "seconds": 1.0,
+          "reused": false
+        },
+        {
+          "id": "skills-echoloop-check",
+          "argv": [
+            "pnpm",
+            "echoloop:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9f374c983c3a1f6df8218301b117536b0f64e27403fbcc84bcef6b2856493101",
+          "log": "skills-echoloop-check.log",
+          "logSha256": "9a2ceae0cbdf4b0d8f416c2fbea0973ba233427b56c9f2459797e61e6fffc63c",
+          "seconds": 1.21,
+          "reused": false
+        },
+        {
+          "id": "skills-templates-check",
+          "argv": [
+            "pnpm",
+            "templates:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "c1fce96f4d8a044dee4717ab05600060145e90948b0a32b4dfb69aa0b6f73fd0",
+          "log": "skills-templates-check.log",
+          "logSha256": "61e8e123a14b026e182295354ab9d2f6c1f0718b237e06f8a1b96d79236a06a2",
+          "seconds": 0.61,
+          "reused": false
+        },
+        {
+          "id": "skills-prose-check",
+          "argv": [
+            "pnpm",
+            "prose:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "f875cd5853b49a98ad18aab9c8d04ee4d79b40889dcedad7d883691be56c376d",
+          "log": "skills-prose-check.log",
+          "logSha256": "334de9778b8ead5cdfdc78b5b51bce5a5725ff9f4cd1253f134e7472c54584c6",
+          "seconds": 2.3,
+          "reused": false
+        },
+        {
+          "id": "skills-sfxbind-check",
+          "argv": [
+            "pnpm",
+            "sfxbind:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "49274a88acb923c4a4b935951c0f7baa73bafeb1f04fdf9ed0009b08bca3e346",
+          "log": "skills-sfxbind-check.log",
+          "logSha256": "19a0a4b8942369d2e0125c12a968fa0e704201b64701b2fcd1084fec2c83310f",
+          "seconds": 0.57,
+          "reused": false
+        },
+        {
+          "id": "skills-shapes-check",
+          "argv": [
+            "pnpm",
+            "shapes:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ef82f67a8359239f891e4bbcea4f7edabed9149b7350785ca75e9cc74f1b3651",
+          "log": "skills-shapes-check.log",
+          "logSha256": "b0f10079d17164662c1571bcc68794c9829f5384ce970aea665c7dc72752db41",
+          "seconds": 0.62,
+          "reused": false
+        },
+        {
+          "id": "skills-beam-check",
+          "argv": [
+            "pnpm",
+            "beam:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "7402c67bbbbd261abe510368445ffab78b07fadd785f7826ea8da8e7db90af81",
+          "log": "skills-beam-check.log",
+          "logSha256": "3711297c53c5f8e4d04f187b232418dc78df83cfab620d253b5a95a7e1419da3",
+          "seconds": 0.67,
+          "reused": false
+        },
+        {
+          "id": "skills-archetypes-check",
+          "argv": [
+            "pnpm",
+            "archetypes:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "85974aca5f4203986730c36fd4d23e04d52ca1062ac43912ff74edd358387e87",
+          "log": "skills-archetypes-check.log",
+          "logSha256": "b9fc5ff6d364d229f48fa88b1ac58d706f21e43d0f7f7d17395344574ede4278",
+          "seconds": 1.26,
+          "reused": false
+        },
+        {
+          "id": "skills-enableaudit-check",
+          "argv": [
+            "pnpm",
+            "enableaudit:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "18f04ba5f236cd77b283c07dd66461d4d5eb913edfd43f8a1c9dae71ef397b7b",
+          "log": "skills-enableaudit-check.log",
+          "logSha256": "12c269c7784ecbe25a2802955c016ae611c93ad4e9db76219c8a4cde252f2154",
+          "seconds": 0.72,
+          "reused": false
+        },
+        {
+          "id": "skills-review-check",
+          "argv": [
+            "pnpm",
+            "review:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ab37c388436bfe5a5c0bb341d100d42b0462df110c57a99a2a718b16d0c12996",
+          "log": "skills-review-check.log",
+          "logSha256": "bcce25b9357e6310237a782673a9deffae47f4abf0e4061acb7f5f86601803c7",
+          "seconds": 2.34,
+          "reused": false
+        },
+        {
+          "id": "skills-declshape-check",
+          "argv": [
+            "pnpm",
+            "declshape:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "dde334b94b5d44bc4d2449abb36b64c8764c3f468c1356582e517e87a3c4620f",
+          "log": "skills-declshape-check.log",
+          "logSha256": "5be5c2ad5ce829e1e0992c006583353d074a364eec30d7c1d0a8c26b7b61cab3",
+          "seconds": 1.15,
+          "reused": false
+        },
+        {
+          "id": "skills-decor-check",
+          "argv": [
+            "pnpm",
+            "decor:check"
+          ],
+          "exitCode": 1,
+          "fingerprint": "25e1c94360b4882a21fe03b9b3ccd86d2822048ca919583dabaab01e0d05d738",
+          "log": "skills-decor-check.log",
+          "logSha256": "4a586d261e15bb0d467b29bce631baf2fd41ea367efe49e2996a9cbc486bcde9",
+          "seconds": 2.9,
+          "reused": false
+        },
+        {
+          "id": "skills-speedlists-check",
+          "argv": [
+            "pnpm",
+            "speedlists:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "3fe4803b4c90fd963bd193e6e06e9758f9715ea0c9ccd87d4350807472ad9257",
+          "log": "skills-speedlists-check.log",
+          "logSha256": "c76a7c943be50f89565621eb95df193a2cae35a7bdd52ce80b03db8390a0f615",
+          "seconds": 2.07,
+          "reused": false
+        },
+        {
+          "id": "skills-locust-check",
+          "argv": [
+            "pnpm",
+            "locust:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "eccb6cfede7c2177993543b9d6536754f13fb84ba8e98886f12249425b05fe68",
+          "log": "skills-locust-check.log",
+          "logSha256": "68471fcac14e710db435475c555c6cc172cf1fc54b4c0fb8ee7d67e72ee92c37",
+          "seconds": 0.83,
+          "reused": false
+        },
+        {
+          "id": "skills-w3a-check",
+          "argv": [
+            "pnpm",
+            "w3a:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "2335383f3cdf6ea1708563b4405e6d800019efb3116ec1adc3d4a96ea2b4f1c4",
+          "log": "skills-w3a-check.log",
+          "logSha256": "81d680c9cf17536ee0d1c4bdd4c8d660cfd835da572ed45157b3b31c1b9e2ba5",
+          "seconds": 1.63,
+          "reused": false
+        },
+        {
+          "id": "skills-board-roll-check",
+          "argv": [
+            "pnpm",
+            "board:roll:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "1fee403a486834889a871ba183f1a184f9a7844ec97e4e9fd048dd76f7dab328",
+          "log": "skills-board-roll-check.log",
+          "logSha256": "a66bf5d75d03c97f34f3096659bf1b29d04fce82fe17a67e8fb9e7a0e6e32b76",
+          "seconds": 0.71,
+          "reused": false
+        },
+        {
+          "id": "skills-ruleslip-check",
+          "argv": [
+            "pnpm",
+            "ruleslip:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "c377a594295995cef826bb9e9120decc297c76d0d172fe66642b1301019baaf1",
+          "log": "skills-ruleslip-check.log",
+          "logSha256": "55ac74ceb133842dd66a8fe9e5873f1548ef016275aa2467ebf5bf0358801128",
+          "seconds": 0.61,
+          "reused": false
+        },
+        {
+          "id": "skills-receipt-check",
+          "argv": [
+            "pnpm",
+            "receipt:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "ff26394f38ad3b2c377f93f9d8c04f9fa37538e36dcd6a2720c7ee636aa03d06",
+          "log": "skills-receipt-check.log",
+          "logSha256": "681517f82027535a6b6650bce8dc1cf3ea77d242cbb256f9d533a1ef83ae1eb5",
+          "seconds": 1.27,
+          "reused": false
+        },
+        {
+          "id": "skills-handback-check",
+          "argv": [
+            "pnpm",
+            "handback:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "a5ed2d8c681e4f3f118e8c1e0d41fc4962f00b625967fc860aef9a0bf540be83",
+          "log": "skills-handback-check.log",
+          "logSha256": "fe3edaa8e36fdd20841a009b891e6b18474c646e46960572da39d3316dbe6e97",
+          "seconds": 1.16,
+          "reused": false
+        },
+        {
+          "id": "skills-clipdeg-check",
+          "argv": [
+            "pnpm",
+            "clipdeg:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "d1ba38a3a6820115f14a278b7264df2a2079f778036a218c0bb6ec958d0f29bd",
+          "log": "skills-clipdeg-check.log",
+          "logSha256": "d58d492f7dead8e61dfbdef88015a9af7413546bc2861a7b6c8c9bec9d0c289f",
+          "seconds": 1.27,
+          "reused": false
+        },
+        {
+          "id": "skills-apcoeffdiff-check",
+          "argv": [
+            "pnpm",
+            "apcoeffdiff:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9de4ec592e684191c8c74be15863e7ce66fa6fb917926d05177ad8fb887ae1a1",
+          "log": "skills-apcoeffdiff-check.log",
+          "logSha256": "012085c593a85a370c07f32740e2bf4ad00297da63a007d0a3f492f9c18a14e4",
+          "seconds": 1.43,
+          "reused": false
+        },
+        {
+          "id": "skills-appearance-check",
+          "argv": [
+            "pnpm",
+            "appearance:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9eac95653ff819c83002326703823dd15dfca3f345fa723e7cf99c2f53edaea8",
+          "log": "skills-appearance-check.log",
+          "logSha256": "703b7b86c745b98d539642ed67400e39367f90063ca1bd7995e20e1a2a972429",
+          "seconds": 1.76,
+          "reused": false
+        },
+        {
+          "id": "skills-ptokens-check",
+          "argv": [
+            "pnpm",
+            "ptokens:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "e3ad7bcf8d809e617c43489e70974340d001bc6c551c1266c7bfe26b6fe2d562",
+          "log": "skills-ptokens-check.log",
+          "logSha256": "0f77cc98828c455596a2aed4c2372d53094b6c86ec1cca07bad9b278e3d44931",
+          "seconds": 1.7,
+          "reused": false
+        },
+        {
+          "id": "skills-coord-check",
+          "argv": [
+            "pnpm",
+            "coord:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "768f718a8920668271f598f13488270e407aa1e17b43a1b0879dd4e1dd0c1177",
+          "log": "skills-coord-check.log",
+          "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+          "seconds": 3.02,
+          "reused": false
+        }
+      ]
+    },
+    {
+      "run": "batch-verifier-release-final",
+      "reportSha256": "f074fd992b7b2402bc10325f03ba034812c71606a63801f9f890baf7f83a6637",
+      "head": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+      "sourceFingerprint": "e2bae9c858b291ab4731c1e59ac7ba7b6bd8c2a0e6fb8067a1e50686b6183bdd",
+      "exitCode": 2,
+      "counts": {
+        "heroes": 37,
+        "slots": 222,
+        "slotsWithPassingBehaviorSuite": 16,
+        "slotsWithoutBehaviorSuite": 206
+      },
+      "modelBytes": "verified",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "skills",
+          "argv": [
+            "pnpm",
+            "skills:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9800e121577bfe87fc4e1e82af4d484349484a0831ec1cdfa2cf4b61838e65f8",
+          "log": "skills.log",
+          "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+          "seconds": 111.96,
+          "reused": false
+        },
+        {
+          "id": "editor",
+          "argv": [
+            "pnpm",
+            "editor:accept:release"
+          ],
+          "exitCode": 0,
+          "fingerprint": "621073ac04ba47a04a69f92b8779f4020df3aa2e4a41fc111b0ec84f7770df7e",
+          "log": "editor.log",
+          "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+          "seconds": 191.8,
+          "reused": false
+        },
+        {
+          "id": "coord",
+          "argv": [
+            "pnpm",
+            "coord:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5a91998c9e9c66377e9b993944ba62e6fb147b108cf415155ce6c0d858d837ef",
+          "log": "coord.log",
+          "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+          "seconds": 4.48,
+          "reused": false
+        },
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+            "--release-root",
+            "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+          ],
+          "exitCode": 0,
+          "fingerprint": "1020396da1a7c3a61fa145e603590d2b36ee9df6a4c0380c05785d45f9ed064a",
+          "log": "compile-and-models.log",
+          "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+          "seconds": 7.77,
+          "reused": false
+        },
+        {
+          "id": "behavior-implemented-mechanisms",
+          "argv": [
+            "pnpm",
+            "exec",
+            "vitest",
+            "run",
+            "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+            "--pool=threads",
+            "--minWorkers=1",
+            "--maxWorkers=1"
+          ],
+          "exitCode": 0,
+          "fingerprint": "742b96195c508a63ed00834f7e7546bbfbe0dc0586b87bc218dfa640cd9b1467",
+          "log": "behavior-implemented-mechanisms.log",
+          "logSha256": "04478ccd43aacfa43bb4cf7b905242d2f6c1f87fa8ad40fc53681be5ae031f82",
+          "seconds": 15.26,
+          "reused": false
+        }
+      ]
+    },
+    {
+      "run": "batch-verifier-release-cached",
+      "reportSha256": "0e0d3d96a38479c3a195a211f6710743c87eafd087243419a9f0a7c30e99c2f1",
+      "head": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+      "sourceFingerprint": "e2bae9c858b291ab4731c1e59ac7ba7b6bd8c2a0e6fb8067a1e50686b6183bdd",
+      "exitCode": 2,
+      "counts": {
+        "heroes": 37,
+        "slots": 222,
+        "slotsWithPassingBehaviorSuite": 16,
+        "slotsWithoutBehaviorSuite": 206
+      },
+      "modelBytes": "verified",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "skills",
+          "argv": [
+            "pnpm",
+            "skills:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9800e121577bfe87fc4e1e82af4d484349484a0831ec1cdfa2cf4b61838e65f8",
+          "log": "skills.log",
+          "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+          "seconds": 111.96,
+          "reused": true
+        },
+        {
+          "id": "editor",
+          "argv": [
+            "pnpm",
+            "editor:accept:release"
+          ],
+          "exitCode": 0,
+          "fingerprint": "621073ac04ba47a04a69f92b8779f4020df3aa2e4a41fc111b0ec84f7770df7e",
+          "log": "editor.log",
+          "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+          "seconds": 191.8,
+          "reused": true
+        },
+        {
+          "id": "coord",
+          "argv": [
+            "pnpm",
+            "coord:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5a91998c9e9c66377e9b993944ba62e6fb147b108cf415155ce6c0d858d837ef",
+          "log": "coord.log",
+          "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+          "seconds": 4.48,
+          "reused": true
+        },
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+            "--release-root",
+            "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+          ],
+          "exitCode": 0,
+          "fingerprint": "1020396da1a7c3a61fa145e603590d2b36ee9df6a4c0380c05785d45f9ed064a",
+          "log": "compile-and-models.log",
+          "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+          "seconds": 5.68,
+          "reused": false
+        },
+        {
+          "id": "behavior-implemented-mechanisms",
+          "argv": [
+            "pnpm",
+            "exec",
+            "vitest",
+            "run",
+            "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+            "--pool=threads",
+            "--minWorkers=1",
+            "--maxWorkers=1"
+          ],
+          "exitCode": 0,
+          "fingerprint": "742b96195c508a63ed00834f7e7546bbfbe0dc0586b87bc218dfa640cd9b1467",
+          "log": "behavior-implemented-mechanisms.log",
+          "logSha256": "04478ccd43aacfa43bb4cf7b905242d2f6c1f87fa8ad40fc53681be5ae031f82",
+          "seconds": 15.26,
+          "reused": true
+        }
+      ]
+    }
+  ],
+  "releaseFailureRepairs": [
+    {
+      "check": "skills-decor-check",
+      "failure": "corpusFiles 2526 vs 2528",
+      "repair": "bash scripts/genrun.sh decor:build; no classification or knob changes"
+    },
+    {
+      "check": "editor/fullCoverageMatchesContract",
+      "failure": "conditionLeafField/radius missing in exported editor surface",
+      "repair": "Register radius already rendered and exercised by NearbyCombatFields; focused 39 tests pass",
+      "focusedLogSha256": "88b8288a3419be138714ce2ff74bcc263f337fe2266d97465cfd8f31f15426c3"
+    }
+  ],
+  "interpretation": [
+    "First run: 37 heroes / 222 slots; 68 actual behavior tests; 16 slots mapped, 206 not mapped in this new registry.",
+    "One-hero/six-slot reduced fixture verifies variable batch size; it is not the second batch.",
+    "Release diagnostic reused verified behavior result, reread all 37 model bindings/34 distinct files, and collected all independent skills child results after failure.",
+    "Exit 2 means automated checks passed with uncovered slots, not original-design or visual completion."
+  ],
+  "finalReleaseChecks": {
+    "sourceCommit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+        "seconds": 111.96
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+        "seconds": 191.8
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+        "seconds": 4.48
+      }
+    ],
+    "editorTests": 593,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "messageLedger": "skills log: 2026-09-08 all 18 messages matched tickets; existing pending visual-review records remain pending"
+  },
+  "secondBatch": "not-delivered-or-tested",
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "formalPublication": false,
+  "cachedReleaseReplay": {
+    "wallSeconds": 6.47,
+    "consoleLogSha256": "189939123c92652861449c647da7465d673e740d07c2d23c4b1563deb1097434",
+    "reusedJobs": [
+      "skills",
+      "editor",
+      "coord",
+      "behavior-implemented-mechanisms"
+    ],
+    "rereadJobs": [
+      "compile-and-models"
+    ],
+    "note": "Job seconds retained in reused receipts describe their original execution; 6.47 seconds is the newly measured wall time for this cache replay."
+  }
+}

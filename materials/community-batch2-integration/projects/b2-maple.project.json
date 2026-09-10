@@ -1,0 +1,789 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-maple",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "梅普露",
+    "concept": "怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "客服固定金額回禮",
+      "Q": "防禦力輸入多一個零",
+      "W": "盾後補餐退魔力",
+      "E": "這個形狀看起來很耐打",
+      "R": "怪物模式限定毒龍包",
+      "EX": "大家躲我後面不要推"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-maple.plan",
+    "title": "梅普露",
+    "summary": "怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "坦克",
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f": {
+        "id": "tpl-on-hit-react",
+        "schema": "template@1",
+        "name": "受擊反應",
+        "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+        "family": "on-hit-react",
+        "status": "enabled",
+        "params": {
+          "chance": {
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "reflectDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                30
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "reflectRadius": {
+            "type": "number",
+            "default": 900,
+            "min": 100,
+            "max": 1200,
+            "unit": "wc3u",
+            "optional": true,
+            "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 60,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "hooks"
+        ],
+        "gapScore": 7,
+        "exemplar": {
+          "skill": "20-04 Avalon",
+          "jass": "A0CT"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f550107820b19e43ef6525": {
+        "id": "tpl-transform",
+        "schema": "template@1",
+        "name": "變身",
+        "description": "換一具身體（`championForm`）—— 英雄卡的 `transform.counterpartId` 那一份。`形態` 選 `alternate`（變過去）／`base`（變回來）／`toggle`（同一格按第二次就切回去，風王結界／紮根那一族）；`持續秒數` 清空 = 永不逾時（toggle 那四支就是）。⭐ **強化住在這一支技能裡，⛔ 不在變身身體的卡上**（owner 2026-08-13：「我決定變身所有的屬性改變都用技能標籤組合到該變身技能中就好，所以屬性不用多一份考量，都是一樣」）⇒ `增益` 那一格填 modifiers（清空 = 純換身體，出貨 9 支就是），`增益秒數` 是它自己的長度 —— ⚠️ 它**不一定等於**變身的長度（出貨 90-002 妙蛙花變身 18 秒而 AD 加成只有 6 秒）。`狀態` 那一格是伴隨的 buff/debuff 節點（38-00 邪眼那一族）。⛔ **這一族不發 `targetsEnemies`**（可組合鍵，文件自己的值站著），⛔ 也不管變身身體長什麼樣、換不換技能組 —— 那些住在 `content/champions/<變身態>.json`。⚠️ 逐階不同長度的（w3a `ahdu` 一階一格，例 06-04）今天填不進來：`持續秒數` 是單一數字槽。",
+        "family": "transform",
+        "status": "enabled",
+        "params": {
+          "to": {
+            "type": "enum",
+            "default": "alternate",
+            "values": [
+              "alternate",
+              "base",
+              "toggle"
+            ],
+            "origin": "census: 出貨 24 支帶 championForm 的手寫技能逐節點數 —— `alternate` **20**、`toggle` 4（20-01 誓約勝利之劍 ×2 · 70-00 白木老樹精 ×2）、`base` 0。"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": 6,
+            "min": 0.1,
+            "max": 120,
+            "unit": "s",
+            "optional": true,
+            "origin": "derived: exemplar 58-04（content/abilities/godie-ofar.r.json）`effects[0].durationSec` 逐位元 6。⚠️ 這是 w3a `ahdu`；⛔ **不是**中位數（20 支 alternate 的分佈 6/7/8/10/15/18/20 很散，取 exemplar 那一支）。清空 = 永不逾時（toggle 那四支）。"
+          },
+          "modifiers": {
+            "type": "statModifiers",
+            "optional": true
+          },
+          "buffDurationSec": {
+            "type": "number",
+            "default": 6,
+            "min": 0.1,
+            "max": 120,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 11 支「變身＋增益」的 applyBuff.duration —— **6 秒 4 支**（04-002 · 42-002 · 90-002 · 77-03 rank1）是最多的一格，其餘 7/8/15/20 各 1–3 支。⚠️ 它有預設是**必要的**：`增益` 填了而這一格空著時，展開器會用它 —— ⛔ 沒有預設就是擲例外（＝一份表單存得起來、載入時整支技能降級成沒有效果）。"
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.667,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "derived: exemplar 58-04（godie-ofar.r）`castTimeSec` 0.667；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "championForm",
+          "applyBuff",
+          "applyStatus"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作的 `ahdu`／`uabi` 對照見 content/champions/<變身態>.json 的 transform.triggerAbility"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "客服固定金額回禮",
+        "purpose": "「客服固定金額回禮！」\n受到傷害時，每 3 秒對攻擊者回禮一次極小魔法傷害；是固定傷害，不宣稱百分比反彈。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-maple.passive.card1",
+            "template": {
+              "ref": "tpl-on-hit-react",
+              "params": {
+                "reflectDamage": {
+                  "damageTier": "極小"
+                },
+                "damageType": "magic",
+                "internalCooldown": 3
+              },
+              "contentSha256": "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "防禦力輸入多一個零",
+        "purpose": "「防禦力輸入多一個零！」\n自己得到 260 全傷害護盾 3 秒，保護自己不等於保護隊友。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-maple.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 260
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "盾後補餐退魔力",
+        "purpose": "「盾後補餐退魔力！」\n保護料理：回復自己 120，若最近 4 秒用過 Q，另外回復最大魔力 10%。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-maple.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 120
+                    },
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.1,
+                    "applyTo": "self",
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "Q",
+                      "withinSec": 4
+                    }
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "這個形狀看起來很耐打",
+        "purpose": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-maple.e.card1",
+            "template": {
+              "ref": "tpl-transform",
+              "params": {
+                "to": "alternate",
+                "durationSec": 4,
+                "castTimeSec": 0.1,
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "flat",
+                    "value": 25
+                  }
+                ],
+                "buffDurationSec": 4
+              },
+              "contentSha256": "sha256:c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f550107820b19e43ef6525"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "怪物模式限定毒龍包",
+        "purpose": "「怪物模式限定毒龍包！」\n怪物模式才給敵人 3 秒 poison 與每秒極小魔法 DOT；本體模式只有小級咬擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-maple.r.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "dot",
+                    "amountPerTick": {
+                      "damageTier": "極小"
+                    },
+                    "damageType": "magic",
+                    "intervalSec": 1,
+                    "durationSec": 3,
+                    "stacking": "refresh",
+                    "onCasterDeath": "stop",
+                    "condition": {
+                      "kind": "form",
+                      "subject": "self",
+                      "form": "alternate"
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "poison",
+                    "duration": 3,
+                    "applyTo": "target",
+                    "condition": {
+                      "kind": "form",
+                      "subject": "self",
+                      "form": "alternate"
+                    }
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "大家躲我後面不要推",
+        "purpose": "「大家躲我後面不要推！」\n隊友回復 100 與 100 護盾 2 秒；不疊加永久防禦。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-maple.ex.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 100
+                    },
+                    "applyTo": "target"
+                  },
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 100
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-maple.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-maple.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-maple.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-maple.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-maple.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-maple.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-maple.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-maple.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-maple.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-maple.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

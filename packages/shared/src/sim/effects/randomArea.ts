@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * `randomArea` —— **隨機落點排程器**（計畫 §12 G4 的 `scheduler.random-area@1`）。
  *
@@ -233,6 +234,7 @@ export function randomAreaSystem(world: SimWorld): void {
   let anyDone = false;
   // 陣列 = 插入序 = 全序（不迭代 Map）。
   for (const wave of q) {
+    if (isTimeStopped(world, wave.caster)) continue;
     // 決鬥已經結束的分區不再落下 —— 與 `dotTick` 對 `settledZones` 的處置逐字
     // 相同（#100/#216：回合結束後還在扣血是玩家看得見的缺陷）。
     if (world.settledZones.has(wave.zone)) {

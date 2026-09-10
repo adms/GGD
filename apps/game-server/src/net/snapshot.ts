@@ -1,3 +1,8 @@
+import { isTimeStopped } from "@ggd/shared/sim/timeStop";
+import { Abilities } from "@ggd/shared/sim/content/registry";
+import { abilityInstanceFor } from "@ggd/shared/sim/abilities/innateActive";
+import { recastView } from "@ggd/shared/sim/abilities/recast";
+import { abilityMotionSnapshot } from "@ggd/shared/sim/movement/abilityMotion";
 /**
  * snapshot — projects the SimWorld + controller state into the Colyseus schema.
  * The ONE publish seam: a quantized binary channel can replace the entities map
@@ -370,12 +375,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;
         setArray(ss.abilityRanks, [ab.slots.Q.rank, ab.slots.W.rank, ab.slots.E.rank, ab.slots.R.rank]);
-        setArray(ss.cooldowns, [
-          ab.slots.Q.cooldownRemainingTicks,
-          ab.slots.W.cooldownRemainingTicks,
-          ab.slots.E.cooldownRemainingTicks,
-          ab.slots.R.cooldownRemainingTicks,
-        ]);
+        const recasts = CASTABLE_SLOTS.map(slot => {
+          const inst = abilityInstanceFor(ab, slot);
+          return inst ? recastView(world, ss.entityId as EntityId, inst, Abilities.get(inst.abilityId)) :
+            { stage: 0, windowTicks: 0, cooldownTicks: 0, free: false };
+        });
+        setArray(ss.cooldowns, recasts.slice(0, 4).map(r => r.cooldownTicks));
+        setArray(ss.recastStages, recasts.map(r => r.stage));
+        setArray(ss.recastWindows, recasts.map(r => Math.min(65535, r.windowTicks)));
+        ss.recastFreeMask = recasts.reduce((mask, r, i) => r.free ? mask | (1 << i) : mask, 0);
         // ⭐【開關型技能開著沒有】GH#546 —— 風王結界那一族。
         //
         // ⚠️ 在這一行存在之前，`SeatState.toggleMask` 的**寫端一個都沒有**：欄位在
@@ -397,7 +405,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         if (ab.exSlot) {
           ss.exAbilityId = ab.exSlot.abilityId;
           ss.exRank = ab.exSlot.rank;
-          ss.exCooldown = ab.exSlot.cooldownRemainingTicks;
+          ss.exCooldown = recasts[4]!.cooldownTicks;
         } else {
           ss.exAbilityId = "";
           ss.exRank = 0;
@@ -406,7 +414,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // 天生技 (6th slot). Only the cooldown rides the wire — which innate the
         // hero owns follows from championId, and its rank is 1 from spawn. 0
         // both for a permanent 被動 innate and for the 3 heroes with no NN-00.
-        ss.passiveCooldown = ab.passiveSlot?.cooldownRemainingTicks ?? 0;
+        ss.passiveCooldown = recasts[5]!.cooldownTicks;
       }
     }
 
@@ -449,14 +457,23 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       state.entities.set(key, es);
     }
     es.id = id;
+    Object.assign(es, abilityMotionSnapshot(world, id));
     es.x = t.pos.x;
     es.z = t.pos.z;
     es.fx = t.facing.x;
     es.fz = t.facing.z;
     es.zone = t.zone;
 
+    const field = world.timeStop.get(id);
+    if (field) {
+      es.kind = ENTITY_KIND.TIME_STOP; es.seatId = -1; es.key = "prop.time-stop";
+      es.hp = Math.max(0, field.expiresAtTick - world.tick); es.maxHp = 0;
+      es.shield = field.radius; es.mana = field.team; es.maxMana = 0; es.alive = true; es.flags = 0;
+      continue;
+    }
     const proj = world.projectile.get(id);
     if (proj) {
+      es.flags = isTimeStopped(world, id) ? ENTITY_FLAG.TIME_STOPPED : 0;
       es.kind = ENTITY_KIND.PROJECTILE;
       es.seatId = -1;
       es.key = proj.projectileId;
@@ -576,6 +593,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         es.flags = 0;
         continue;
       }
+      const trap = world.trap.get(id);
+      if (trap) {
+        es.kind = ENTITY_KIND.TRAP;
+        es.seatId = -1; es.key = "prop.trap";
+        es.hp = trap.armedAtTick <= world.tick ? 1 : 0; es.maxHp = 0;
+        es.mana = world.team.get(id)?.teamId ?? -1; es.maxMana = 0;
+        es.shield = trap.radius; es.alive = true; es.flags = 0;
+        continue;
+      }
       const mob = world.mob.get(id);
       if (mob) {
         // ROGUELITE MOB (task #215 喪標麥可). A MONSTER-team neutral that MOVES.
@@ -631,6 +657,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // ⚠️ 沒有覆寫時**顯式寫回 0**（下面那個 `|` 的左運算元就是 0 起頭）：
         // `EntityState` 物件是**重用**的，上一格留下的 bit 不會自己消失。
         es.flags =
+          (isTimeStopped(world, id) ? ENTITY_FLAG.TIME_STOPPED : 0) |
           (mob.kind === "special" || mob.kind === "boss" ? ENTITY_FLAG.MOB_ELITE : 0) |
           (isCarried(world, id) ? ENTITY_FLAG.CARRIED : 0) |
           teamOverrideFlagsFor(mindControlTeamOf(world, id));
@@ -671,7 +698,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         );
       }
       // status flags for animation/UI
-      let flags = 0;
+      let flags = isTimeStopped(world, id) ? ENTITY_FLAG.TIME_STOPPED : 0;
       const nav = world.nav.get(id);
       if (nav?.override) flags |= ENTITY_FLAG.DASHING;
       const ab = world.abilities.get(id);

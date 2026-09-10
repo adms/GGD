@@ -19,6 +19,9 @@ import { describe, expect, it } from "vitest";
 
 const REPO = join(import.meta.dirname, "../../../..");
 const SCRIPT = join(REPO, "scripts/release-note-players.sh");
+// 沿用 playerNoteReadsShippedCommits 的固定維護區間，避免 PR 的功能提交混入 fixture。
+const SINCE = "v0.41.2";
+const UNTIL = "v0.41.3";
 
 /** ⭐ 用一支假 `gh` 餵一張受控的票 —— 跑的仍是**出貨的那支腳本**。 */
 function runWith(playerLine: string | null, extraEnv: Record<string, string> = {}): {
@@ -26,7 +29,7 @@ function runWith(playerLine: string | null, extraEnv: Record<string, string> = {
   out: string;
 } {
   const dir = mkdtempSync(join(tmpdir(), "ggd-pn-"));
-  const head = execFileSync("git", ["rev-parse", "HEAD"], { cwd: REPO, encoding: "utf8" }).trim();
+  const head = execFileSync("git", ["rev-parse", `${UNTIL}^{commit}`], { cwd: REPO, encoding: "utf8" }).trim();
   const marker = [
     "## 🧭 進度標記", "", "| | |", "|---|---|", "| **狀態** | `完成` |",
     `| **commit** | ${head} |`, "", "**基線（動手之前它今天的行為）**：測試用",
@@ -45,11 +48,8 @@ function runWith(playerLine: string | null, extraEnv: Record<string, string> = {
       `  *"issue view"*) cat <<'J'\n${payload}\nJ\n  ;;\nesac\n`,
   );
   chmodSync(join(dir, "gh"), 0o755);
-  const since = execFileSync("git", ["describe", "--tags", "--abbrev=0", "HEAD^"], {
-    cwd: REPO, encoding: "utf8",
-  }).trim();
   try {
-    const out = execFileSync("bash", [SCRIPT, "--since", since, "--until", "HEAD"], {
+    const out = execFileSync("bash", [SCRIPT, "--since", SINCE, "--until", UNTIL], {
       cwd: REPO, encoding: "utf8", timeout: 60_000,
       env: {
         ...process.env,

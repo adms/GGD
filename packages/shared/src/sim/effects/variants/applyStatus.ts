@@ -6,9 +6,13 @@
  */
 import type { StatusId } from "../../../ids";
 import type { RankScalar } from "../../perRank";
+import type { MarkLethalRule } from "../../combat/lethalSave";
+import type { MarkResetPolicy } from "../../marks";
 
 export interface ApplyStatusVariant {
   kind: "applyStatus";
+  /** Explicitly create a target-side named counter instead of a transient status. Existing counters retain their save history. */
+  grantMark?: { max: number; resetOn: MarkResetPolicy; lethal?: MarkLethalRule };
   /** Keep refreshes and stack adjustments separate for each caster. */
   sourceScope?: "caster";
   statusId: StatusId;

@@ -1,0 +1,41 @@
+{
+  "issue": 1159,
+  "firstHead": "4b2f9f15f4b08c9e47363fb6b276aaf5865d9a20",
+  "mergeCommit": "f7763ef99d7c225ccdcebd19c2c09ac65e1714f6",
+  "firstIsAncestor": true,
+  "preservedHeroProjects": 81,
+  "sourceDelta": "The five batch-specific local proof helpers are byte-for-byte the same cross-branch differences as a520fdafe versus 6807d0a95. All new fixes are identical; no new cross-branch code difference.",
+  "baselinePair": [
+    "a520fdafede600faa26d4f20649df813fed0c64a",
+    "6807d0a95e325ad466becafc809e846ea08d116d"
+  ],
+  "checks": {
+    "decor": 0,
+    "legacyIndex": 0,
+    "coordination": {
+      "exitCode": 0,
+      "packets": 33
+    }
+  },
+  "logSha256": {
+    "ggd-mvp-ci-second-decor.txt": "e2aee63c7128daecb5c752320cf13d5572733aa7f46964c0e256bdbeb466bb02",
+    "ggd-mvp-ci-second-legacy.txt": "35cac845966a7b17b9632419b7ceab9241ddf75b86d52e267be2a64f57f0f96b",
+    "ggd-mvp-ci-second-coord.txt": "64fb89488922182160bb6eb420facb43294dbb6e82bd52595d48a1064a723f2f"
+  },
+  "reusedValidation": "First branch focused tests/typecheck/Editor build for identical fixes, recorded in materials/community-hero-forge/receipts/mvp-ci-fixtures-budget.json. No new recording/replay or hero design work.",
+  "remaining": "New-head CI, real announcement rows, Main review/merge, production deployment and 81 authenticated publications; not complete.",
+  "followup": {
+    "firstHead": "649cc00325a0f9f1e433beb8028a32af8573e695",
+    "mergeCommit": "91cc6fc094ab2a2d1cb5afb776a24bed2c1c9072",
+    "sourceCommit": "62cad6f5c",
+    "firstIsAncestor": true,
+    "preservedProjectCount": 81,
+    "newCrossBranchSourceDifference": false,
+    "coordination": {
+      "exitCode": 0,
+      "packets": 33
+    },
+    "reusedFocusedTests": 18,
+    "remaining": "Real v0.42.26/v0.43.4 delivery records, new-head CI, Main review/merge and formal deployment/publication."
+  }
+}

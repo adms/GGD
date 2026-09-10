@@ -1,0 +1,930 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 2,
+  "projectId": "community-review-31-20260907",
+  "sourceSha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "read",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-31-20260907.read",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            },
+            "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+          }
+        },
+        {
+          "instanceId": "engagement",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "victim": "enemy",
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-31-20260907.engaged",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-31-20260907.engaged",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "victim": "enemy",
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-31-20260907.engaged",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-31-20260907.engaged",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onEvade",
+                  "victim": "enemy",
+                  "target": "event",
+                  "evadeSource": "defender",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-31-20260907.engaged",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-31-20260907.engaged",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onBlock",
+                  "victim": "enemy",
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-31-20260907.engaged",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-31-20260907.engaged",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
+      "note": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  }
+                },
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-31-20260907.countered",
+                  "appliedBy": "self",
+                  "count": 1,
+                  "onConsumed": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "stackKey": "community-review-31-20260907.slide",
+                  "maxStacks": 1,
+                  "duration": 0.3,
+                  "modifiers": [
+                    {
+                      "stat": "evasion",
+                      "op": "flat",
+                      "value": 0.8
+                    }
+                  ],
+                  "evasionScope": {
+                    "abilities": true
+                  },
+                  "hooks": [
+                    {
+                      "on": "onEvade",
+                      "evadeSource": "thisSource",
+                      "evadeDuring": "dash",
+                      "target": "self",
+                      "effects": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-31-20260907.read",
+                          "applyTo": "self",
+                          "stacks": 1,
+                          "duration": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 8,
+                  "maxDistance": 2.4
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
+      "note": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "range": 3
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "stackKey": "community-review-31-20260907.parry",
+                  "maxStacks": 1,
+                  "duration": 0.45,
+                  "modifiers": [],
+                  "block": {
+                    "chance": 1,
+                    "fraction": 1,
+                    "damageTypes": [
+                      "physical",
+                      "magic"
+                    ],
+                    "internalCooldown": 1
+                  },
+                  "hooks": [
+                    {
+                      "on": "onBlock",
+                      "victim": "enemy",
+                      "target": "event",
+                      "blockSource": "thisSource",
+                      "maxTriggers": 1,
+                      "onConsumed": "detachSource",
+                      "effects": [
+                        {
+                          "kind": "applyBuff",
+                          "statusId": "community-review-31-20260907.countered",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-31-20260907.countered",
+                          "maxStacks": 1,
+                          "duration": 2,
+                          "modifiers": [],
+                          "dispellable": false
+                        },
+                        {
+                          "kind": "knockback",
+                          "distance": 1,
+                          "speed": 10,
+                          "subtractGap": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
+      "note": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0,
+        "cooldown": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "manaCost": [
+          50,
+          50,
+          50,
+          50
+        ],
+        "range": 0
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.2,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "stackKey": "community-review-31-20260907.accel",
+                  "maxStacks": 1,
+                  "duration": 3,
+                  "modifiers": [
+                    {
+                      "stat": "ms",
+                      "op": "pctAdd",
+                      "value": 0.25
+                    },
+                    {
+                      "stat": "as",
+                      "op": "pctAdd",
+                      "value": 0.25
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        },
+        {
+          "instanceId": "r-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.2,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "duration": 3,
+                  "modifiers": [
+                    {
+                      "stat": "armor",
+                      "op": "pctAdd",
+                      "value": -0.25
+                    },
+                    {
+                      "stat": "mr",
+                      "op": "pctAdd",
+                      "value": -0.25
+                    }
+                  ]
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "脫防具跑比較快",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n新增代價：加速三秒護甲魔抗各降低25%；格擋／精準滑步失敗更危險，讀招來源與上限不變。\n三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
+      "note": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n新增代價：加速三秒護甲魔抗各降低25%；格擋／精準滑步失敗更危險，讀招來源與上限不變。\n三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.2,
+        "cooldown": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "manaCost": [
+          90,
+          90,
+          90,
+          90
+        ],
+        "range": 0
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.35,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "大",
+                    "ratios": []
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。",
+      "note": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.35,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "range": 3,
+        "statusCost": {
+          "statusId": "community-review-31-20260907.read",
+          "count": 3
+        },
+        "requiredTargetStatus": {
+          "statusId": "community-review-31-20260907.engaged",
+          "appliedBy": "self",
+          "minStacks": 1
+        }
+      }
+    }
+  },
+  "templateVersions": {
+    "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+      "id": "tpl-mark-stacks",
+      "schema": "template@1",
+      "name": "具名標記-層數與免死",
+      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+      "family": "mark-stacks",
+      "status": "enabled",
+      "params": {
+        "markId": {
+          "type": "docRef",
+          "default": "godie-hapm.passive"
+        },
+        "initial": {
+          "type": "number",
+          "default": 12,
+          "min": 0,
+          "max": 999,
+          "unit": "count"
+        },
+        "max": {
+          "type": "number",
+          "default": 12,
+          "min": 1,
+          "max": 999,
+          "unit": "count"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": -1,
+          "min": -1,
+          "max": 600,
+          "unit": "s"
+        },
+        "resetOn": {
+          "type": "enum",
+          "default": "match",
+          "values": [
+            "match",
+            "round",
+            "never"
+          ]
+        },
+        "perStackLost": {
+          "type": "statModifiers",
+          "optional": true,
+          "default": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.1
+            },
+            {
+              "stat": "maxHealth",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ]
+        },
+        "lethalMode": {
+          "type": "enum",
+          "default": "save",
+          "values": [
+            "save",
+            "none"
+          ]
+        },
+        "lethalConsume": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 999,
+          "unit": "count"
+        },
+        "surviveHpPct": {
+          "type": "number",
+          "default": 0.01,
+          "min": 0.01,
+          "max": 1,
+          "unit": "ratio"
+        },
+        "lethalDamageTypes": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "physicalMagic",
+            "physical",
+            "magic",
+            "true"
+          ]
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 30,
+          "unit": "s"
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": 1.5,
+          "min": 0.1,
+          "max": 30,
+          "unit": "s"
+        },
+        "invulnerableScope": {
+          "type": "enum",
+          "default": "damageAndControl",
+          "values": [
+            "damageAndControl",
+            "damageOnly"
+          ]
+        },
+        "restoreHealthPct": {
+          "type": "number",
+          "optional": true,
+          "default": 0.5,
+          "min": 0,
+          "max": 1,
+          "unit": "ratio"
+        },
+        "aoeRadius": {
+          "type": "number",
+          "default": 6,
+          "min": 0,
+          "max": 12
+        },
+        "knockbackDistance": {
+          "type": "number",
+          "optional": true,
+          "default": 4,
+          "min": 0.1,
+          "max": 20
+        },
+        "knockbackSpeed": {
+          "type": "number",
+          "default": 16,
+          "min": 1,
+          "max": 40
+        },
+        "knockbackFrom": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ]
+        },
+        "stunSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0.5,
+          "min": 0.034,
+          "max": 20,
+          "unit": "s"
+        },
+        "stunStatusId": {
+          "type": "docRef",
+          "default": "trial-stun"
+        }
+      },
+      "requires": [
+        "marks",
+        "invulnerable",
+        "knockback",
+        "applyStatus"
+      ],
+      "gapScore": 8,
+      "exemplar": {
+        "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+        "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+      }
+    },
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "id": "tpl-effect-sequence",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    }
+  }
+}

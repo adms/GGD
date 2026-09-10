@@ -42,6 +42,9 @@
 #
 # Both halves are required — the files without the nginx location, or the
 # location without the files, serves nothing. That is intentional.
+# The explicit compose.community.yaml overlay now supplies both halves for
+# community authoring. It mounts only nginx/community/editor.conf; production
+# content CRUD remains disabled and submissions use authenticated Platform APIs.
 
 FROM node:22-alpine AS build
 RUN corepack enable
@@ -86,6 +89,8 @@ COPY apps/content-api/src/ apps/content-api/src/
 COPY content/assets/audio/wc3/PROVENANCE.json content/assets/audio/wc3/
 # Offline Editor image staging validates against the shipped default policy.
 COPY content/config/icon-upload.json content/config/
+# The browser model-upload worker statically imports the shipped model budget.
+COPY content/config/model-lod.json content/config/
 # ---- tools/ 的跨界 import（GH#682/#683,2026-08-25）--------------------------
 # SkillListsPage 靜態 import 產生器的 lists.json（md 與後台頁**同一份**資料 ——
 # 第〇·四守則的單一住處,所以它非在建置脈絡不可）。同一條閘現在也掃 tools/。
@@ -178,7 +183,7 @@ RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_S
  && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/admin" build \
  && mkdir -p /dist-out/editor \
  && if [ "${GGD_INCLUDE_EDITOR}" = "1" ]; then \
-      echo "edge build: INCLUDING the content editor at /editor/ — this image must NOT be deployed publicly." >&2; \
+      echo "edge build: INCLUDING the static editor; use only the dev or explicit community route, never expose production content-api." >&2; \
       pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/. /dist-out/editor/; \
     else \
       echo "edge build: content editor OMITTED (task #241). Pass --build-arg GGD_INCLUDE_EDITOR=1 for a dev image." >&2; \

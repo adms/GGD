@@ -1,0 +1,714 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-naofumi",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "岩谷尚文",
+    "concept": "盾之勇者｜盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "隊友受傷我先回魔",
+      "Q": "友軍通行證附贈盾牌",
+      "W": "憑通行證補一口血",
+      "E": "盾牌清空違停入口",
+      "R": "清完門口才能接隊友",
+      "EX": "糾察隊本人安全帽"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-naofumi.plan",
+    "title": "岩谷尚文",
+    "summary": "盾之勇者｜盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "硬輔",
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "隊友受傷我先回魔",
+        "purpose": "「隊友受傷我先回魔！」\n同隊友軍受傷時自身回復最大魔力 3%，每 3 秒一次；不自動替隊友承受整發傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-naofumi.passive.card1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAllyDamaged",
+                    "effects": [
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.03,
+                        "applyTo": "self"
+                      }
+                    ],
+                    "internalCooldown": 3,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "友軍通行證附贈盾牌",
+        "purpose": "「友軍通行證附贈盾牌！」\n指定隊友獲得 240 護盾 3 秒及 spell-shield 通行標記；標記只供後招辨識，不自帶免控。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-naofumi.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 240
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "spell-shield",
+                    "duration": 3,
+                    "applyTo": "target"
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "憑通行證補一口血",
+        "purpose": "「憑通行證補一口血！」\n消耗該隊友的通行標記，追加 200 治療；沒有標記不兌換，先前的護盾仍按原到期時間運作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-naofumi.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "spell-shield",
+                    "count": "all",
+                    "subject": "target",
+                    "onConsumed": [
+                      {
+                        "kind": "heal",
+                        "amount": {
+                          "flat": 200
+                        },
+                        "applyTo": "target"
+                      }
+                    ]
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "盾牌清空違停入口",
+        "purpose": "「盾牌清空違停入口！」\n盾擊把敵人推離 3 單位並造成小級物理傷害；接人前先清空門口。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-naofumi.e.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 3,
+                    "speed": 12,
+                    "from": "caster",
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "清完門口才能接隊友",
+        "purpose": "「清完門口才能接隊友！」\n先給指定隊友 80 治療；最近 4 秒清過門口，額外把隊友瞬移到自己旁邊，抵達給 180 護盾 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-naofumi.r.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 80
+                    },
+                    "applyTo": "target"
+                  },
+                  {
+                    "kind": "blink",
+                    "shape": "single",
+                    "to": "caster",
+                    "applyTo": "target",
+                    "onArrive": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 180
+                        },
+                        "duration": 2,
+                        "absorbs": "all",
+                        "stackKey": "b2-protection",
+                        "onExisting": "keepLarger"
+                      }
+                    ],
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "E",
+                      "withinSec": 4
+                    }
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "糾察隊本人安全帽",
+        "purpose": "「糾察隊本人安全帽！」\n自己得到 150 護盾 2 秒，與 Q 的友盾分開計數。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-naofumi.ex.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 150
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-naofumi.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-naofumi.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-naofumi.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-naofumi.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-naofumi.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-naofumi.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-naofumi.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-naofumi.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-naofumi.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-naofumi.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

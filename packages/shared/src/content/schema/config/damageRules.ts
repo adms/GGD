@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DEFAULT_DAMAGE_RULES } from "../../../sim/damageRules";
 
 /**
  * `config.wounds@1` —— 【重創】的全域規則（A6，#278）。
@@ -9,7 +10,7 @@ import { z } from "zod";
  * 因為「這一支技能的重創有多重」本來就該逐支不同。
  */
 /**
- * `config.damage-rules@1` —— 傷害規則。今天只有一格：**沒寫型別時用哪一種**。
+ * `config.damage-rules@1` —— 傷害規則：預設型別、範圍傷害人數與排行榜門檻。
  *
  * owner 2026-08-05：「請把技能傷害預設都改成 AP 傷害」。
  * ⚠️ 在此之前 `damageType` 是**必填**，所以這是新增一個預設而不是改掉一個。
@@ -33,6 +34,12 @@ export const zConfigDamageRulesDoc = z
     id: z.literal("damage-rules"),
     schema: z.literal("config.damage-rules@1"),
     note: z.string().optional(),
+    /** 舊 overlay 可以省略；normalizer 使用出貨預設。 */
+    spreadMaxTargetsCap: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER).optional().describe(
+      "@zh 範圍傷害最多命中人數\n" +
+      "@note 同時限制圓形擴散與直線傷害：技能省略人數時用這一格，明填更多時也會夾到這一格；明填較少仍照技能。出貨 {{出貨值}}。提高會允許一發命中更多敵人，降低會減少命中人數。數值上界只是可精確表示的整數界線，不是建議值或一般誤植保證。存檔後須重啟 game-server shard，套用於其後新開的比賽。\n" +
+      "範圍傷害的全域人數上限，同時是技能省略 maxTargets 時的預設。",
+    ),
     /**
      * GH#658 的門檻。省略 = {@link DEFAULT_ONE_SHOT_PCT_OF_MAX_HP}。
      * ⚠️ 必須 `.optional()`：線上已經有 `config.damage-rules@1` 的耐久覆蓋層，
@@ -68,5 +75,6 @@ export const SHIPPED_DAMAGE_RULES: ConfigDamageRulesDoc = {
   id: "damage-rules",
   schema: "config.damage-rules@1",
   defaultAbilityDamageType: "magic",
+  spreadMaxTargetsCap: DEFAULT_DAMAGE_RULES.spreadMaxTargetsCap,
   oneShotPctOfMaxHp: DEFAULT_ONE_SHOT_PCT_OF_MAX_HP,
 };

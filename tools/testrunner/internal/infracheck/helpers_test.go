@@ -163,7 +163,7 @@ type nginxContainer struct {
 
 // startNginx boots the edge config in a real unprivileged-nginx container.
 // dev=true also mounts nginx/dev/ at /etc/nginx/ggd-dev (the dev profile).
-func startNginx(t *testing.T, dev bool) *nginxContainer {
+func startNginx(t *testing.T, dev bool, extraFragments ...string) *nginxContainer {
 	t.Helper()
 	if !haveDocker(t) {
 		t.Skip("docker unavailable — cannot verify the nginx edge config here")
@@ -203,6 +203,9 @@ func startNginx(t *testing.T, dev bool) *nginxContainer {
 	}
 	if dev {
 		args = append(args, "-v", filepath.Join(root, "nginx", "dev")+":/etc/nginx/ggd-dev:ro")
+	}
+	for _, fragment := range extraFragments {
+		args = append(args, "-v", filepath.Join(root, "nginx", fragment)+":/etc/nginx/ggd-"+fragment+":ro")
 	}
 	args = append(args, nginxImage)
 

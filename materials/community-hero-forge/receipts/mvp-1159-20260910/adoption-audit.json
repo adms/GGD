@@ -1,0 +1,599 @@
+{
+  "scope": "Current static census + 37 accepted project-matched service ZIPs; no runtime or production adoption claim",
+  "rows": [
+    {
+      "key": "enum:abilities.effects[]#applyBuff.hooks[].on=onAllyProtected",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-21-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/21.zip!/compiled/abilities/community-review-21-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/on",
+      "value": "\"onAllyProtected\""
+    },
+    {
+      "key": "enum:abilities.effects[]#applyBuff.hooks[].on=onAttackAttempt",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-23-20260907.passive",
+        "abilities/community-review-24-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/23.zip!/compiled/abilities/community-review-23-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/on",
+      "value": "\"onAttackAttempt\""
+    },
+    {
+      "key": "enum:abilities.effects[]#applyBuff.hooks[].on=onBlock",
+      "group": "A:accepted-community",
+      "compiledDocs": 10,
+      "examples": [
+        "abilities/community-review-02-20260907.w",
+        "abilities/community-review-04-20260907.e",
+        "abilities/community-review-23-20260907.e"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.w.json",
+      "jsonPointer": "/effects/0/hooks/0/on",
+      "value": "\"onBlock\""
+    },
+    {
+      "key": "enum:abilities.effects[]#applyBuff.hooks[].on=onObservedCombat",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-26-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/on",
+      "value": "\"onObservedCombat\""
+    },
+    {
+      "key": "enum:abilities.effects[]#applyBuff.hooks[].on=onSummonHit",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-01-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/on",
+      "value": "\"onSummonHit\""
+    },
+    {
+      "key": "field:abilities.allowApproach",
+      "group": "A:accepted-community",
+      "compiledDocs": 9,
+      "examples": [
+        "abilities/community-review-02-20260907.ex",
+        "abilities/community-review-04-20260907.ex",
+        "abilities/community-review-04-20260907.q"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.ex.json",
+      "jsonPointer": "/allowApproach",
+      "value": "false"
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.block.facingArcDegrees",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-04-20260907.e",
+        "champions/community-review-04-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/04.zip!/compiled/abilities/community-review-04-20260907.e.json",
+      "jsonPointer": "/effects/0/block/facingArcDegrees",
+      "value": "120"
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.drive",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-26-20260907.e",
+        "champions/community-review-26-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.e.json",
+      "jsonPointer": "/effects/0/drive",
+      "value": "{\"accelSec\":0.3,\"brakeSec\":0.2,\"sharpTurnDot\":0.5,\"sharpTurnSpeed\":0.3,\"turnFactor\":0.2}"
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.evasionScope",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-31-20260907.w",
+        "champions/community-review-31-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/31.zip!/compiled/abilities/community-review-31-20260907.w.json",
+      "jsonPointer": "/effects/0/evasionScope",
+      "value": "{\"abilities\":true}"
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].blockSource",
+      "group": "A:accepted-community",
+      "compiledDocs": 8,
+      "examples": [
+        "abilities/community-review-02-20260907.w",
+        "abilities/community-review-04-20260907.e",
+        "abilities/community-review-23-20260907.e"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.w.json",
+      "jsonPointer": "/effects/0/hooks/0/blockSource",
+      "value": "\"thisSource\""
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].damageConnected",
+      "group": "A:accepted-community",
+      "compiledDocs": 15,
+      "examples": [
+        "abilities/community-review-02-20260907.passive",
+        "abilities/community-review-02-20260907.r",
+        "abilities/community-review-03-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/damageConnected",
+      "value": "true"
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].evadeChannel",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-24-20260907.r",
+        "champions/community-review-24-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/24.zip!/compiled/abilities/community-review-24-20260907.r.json",
+      "jsonPointer": "/effects/1/hooks/1/evadeChannel",
+      "value": "\"basic\""
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].evadeDuring",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-31-20260907.w",
+        "champions/community-review-31-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/31.zip!/compiled/abilities/community-review-31-20260907.w.json",
+      "jsonPointer": "/effects/0/hooks/0/evadeDuring",
+      "value": "\"dash\""
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].evadeSource",
+      "group": "A:accepted-community",
+      "compiledDocs": 7,
+      "examples": [
+        "abilities/community-review-24-20260907.r",
+        "abilities/community-review-24-20260907.w",
+        "abilities/community-review-31-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/24.zip!/compiled/abilities/community-review-24-20260907.r.json",
+      "jsonPointer": "/effects/1/hooks/1/evadeSource",
+      "value": "\"defender\""
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].observedEvent",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-26-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/observedEvent",
+      "value": "\"basicHit\""
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.hooks[].stationaryForSec",
+      "group": "A:accepted-community",
+      "compiledDocs": 3,
+      "examples": [
+        "abilities/community-review-30-20260907.passive",
+        "abilities/community-review-35-20260907.e",
+        "champions/community-review-35-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/30.zip!/compiled/abilities/community-review-30-20260907.passive.json",
+      "jsonPointer": "/passive/ranks/0/hooks/0/stationaryForSec",
+      "value": "1"
+    },
+    {
+      "key": "field:abilities.effects[]#applyBuff.vision.revealed",
+      "group": "A:accepted-community",
+      "compiledDocs": 3,
+      "examples": [
+        "abilities/community-review-26-20260907.r",
+        "abilities/community-review-35-20260907.passive",
+        "champions/community-review-26-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.r.json",
+      "jsonPointer": "/effects/0/vision/revealed",
+      "value": "true"
+    },
+    {
+      "key": "field:abilities.effects[]#applyStatus.grantMark",
+      "group": "A:accepted-community",
+      "compiledDocs": 6,
+      "examples": [
+        "abilities/community-review-21-20260907.ex",
+        "abilities/community-review-23-20260907.e",
+        "abilities/community-review-23-20260907.passive"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/21.zip!/compiled/abilities/community-review-21-20260907.ex.json",
+      "jsonPointer": "/effects/0/grantMark",
+      "value": "{\"lethal\":{\"aoeEffects\":[],\"aoeRadius\":0,\"consume\":1,\"damageTypes\":[\"physical\",\"magic\",\"true\"],\"internalCooldown\":0,\"maxSavesPerRound\":1,\"restoreMode\":\"restore\",\"selfEffects\":[{\"durationSec\":0.5,\"kind\":\"invulnerable\"}],\"surviveHpPct\":0.05},\"max\":1,\"resetOn\":\"round\"}"
+    },
+    {
+      "key": "field:abilities.effects[]#applyStatus.grantMark.lethal.maxSavesPerRound",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-21-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/21.zip!/compiled/abilities/community-review-21-20260907.ex.json",
+      "jsonPointer": "/effects/0/grantMark/lethal/maxSavesPerRound",
+      "value": "1"
+    },
+    {
+      "key": "field:abilities.effects[]#chainLightning.retargetOnLost",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-20-20260907.w",
+        "champions/community-review-20-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/20.zip!/compiled/abilities/community-review-20-20260907.w.json",
+      "jsonPointer": "/effects/0/onConsumed/0/retargetOnLost",
+      "value": "true"
+    },
+    {
+      "key": "field:abilities.effects[]#damageArea.arcHalfAngleCos",
+      "group": "A:accepted-community",
+      "compiledDocs": 11,
+      "examples": [
+        "abilities/community-review-02-20260907.e",
+        "abilities/community-review-03-20260907.w",
+        "abilities/community-review-23-20260907.q"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.e.json",
+      "jsonPointer": "/effects/0/arcHalfAngleCos",
+      "value": "0.5"
+    },
+    {
+      "key": "field:abilities.effects[]#damageArea.fromCaster",
+      "group": "A:accepted-community",
+      "compiledDocs": 12,
+      "examples": [
+        "abilities/community-review-02-20260907.e",
+        "abilities/community-review-02-20260907.w",
+        "abilities/community-review-03-20260907.w"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.e.json",
+      "jsonPointer": "/effects/0/fromCaster",
+      "value": "true"
+    },
+    {
+      "key": "field:abilities.effects[]#damageLine.fromSummonSlot",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-01-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.ex.json",
+      "jsonPointer": "/effects/0/fromSummonSlot",
+      "value": "\"Q\""
+    },
+    {
+      "key": "field:abilities.effects[]#dash.onHit",
+      "group": "A:accepted-community",
+      "compiledDocs": 6,
+      "examples": [
+        "abilities/community-review-02-20260907.r",
+        "abilities/community-review-03-20260907.r",
+        "abilities/community-review-28-20260907.r"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.r.json",
+      "jsonPointer": "/effects/1/onHit",
+      "value": "[{\"amount\":{\"damageTier\":\"極小\",\"flat\":200,\"perRank\":[0,150,300]},\"damageType\":\"physical\",\"kind\":\"damage\"}]"
+    },
+    {
+      "key": "field:abilities.effects[]#dash.onTouch",
+      "group": "A:accepted-community",
+      "compiledDocs": 8,
+      "examples": [
+        "abilities/community-review-03-20260907.e",
+        "abilities/community-review-08-20260907.w",
+        "abilities/community-review-34-20260907.q"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/03.zip!/compiled/abilities/community-review-03-20260907.e.json",
+      "jsonPointer": "/effects/0/onTouch",
+      "value": "[{\"amount\":{\"damageTier\":\"小\",\"flat\":500,\"perRank\":[0,250,500,750]},\"damageType\":\"physical\",\"kind\":\"damage\"}]"
+    },
+    {
+      "key": "field:abilities.effects[]#dash.stopOnHit",
+      "group": "A:accepted-community",
+      "compiledDocs": 7,
+      "examples": [
+        "abilities/community-review-02-20260907.r",
+        "abilities/community-review-03-20260907.r",
+        "abilities/community-review-28-20260907.e"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.r.json",
+      "jsonPointer": "/effects/1/stopOnHit",
+      "value": "\"enemy\""
+    },
+    {
+      "key": "field:abilities.effects[]#dash.touchScope",
+      "group": "A:accepted-community",
+      "compiledDocs": 4,
+      "examples": [
+        "abilities/community-review-03-20260907.e",
+        "abilities/community-review-35-20260907.w",
+        "champions/community-review-03-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/03.zip!/compiled/abilities/community-review-03-20260907.e.json",
+      "jsonPointer": "/effects/0/touchScope",
+      "value": "\"enemy\""
+    },
+    {
+      "key": "field:abilities.effects[]#dispel.statusTag",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-37-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/37.zip!/compiled/abilities/community-review-37-20260907.ex.json",
+      "jsonPointer": "/effects/0/effects/0/statusTag",
+      "value": "\"fear\""
+    },
+    {
+      "key": "field:abilities.effects[]#shield.breakOnMove",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-30-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/30.zip!/compiled/abilities/community-review-30-20260907.ex.json",
+      "jsonPointer": "/effects/0/breakOnMove",
+      "value": "true"
+    },
+    {
+      "key": "field:abilities.effects[]#summon.targetOnSpawn",
+      "group": "A:accepted-community",
+      "compiledDocs": 3,
+      "examples": [
+        "abilities/community-review-01-20260907.q",
+        "abilities/community-review-01-20260907.w",
+        "champions/community-review-01-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.q.json",
+      "jsonPointer": "/effects/0/targetOnSpawn",
+      "value": "true"
+    },
+    {
+      "key": "field:abilities.interruptible",
+      "group": "C:implicit-default",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:abilities.passive.ranks[].drive",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:abilities.passive.ranks[].evasionScope",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:abilities.recast",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-02-20260907.e"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.e.json",
+      "jsonPointer": "/recast",
+      "value": "{\"cost\":\"first\",\"minIntervalSec\":0.2,\"stages\":[{\"effects\":[{\"amount\":{\"damageTier\":\"極小\",\"flat\":200,\"perRank\":[0,150,300,450]},\"arcHalfAngleCos\":0.5,\"damageType\":\"physical\",\"fromCaster\":true,\"includeOrigin\":true,\"kind\":\"damageArea\",\"radius\":2.75}]},{\"effects\":[{\"amount\":{\"damageTier\":\"小\",\"flat\":500,\"perRank\":[0,375,750,1125]},\"arcHalfAngleCos\":0.5,\"damageType\":\"physical\",\"fromCaster\":true,\"includeOrigin\":true,\"kind\":\"damageArea\",\"radius\":2.75}]}],\"windowSec\":1.2}"
+    },
+    {
+      "key": "field:abilities.requiredSummonSlot",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-01-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.ex.json",
+      "jsonPointer": "/requiredSummonSlot",
+      "value": "\"Q\""
+    },
+    {
+      "key": "field:abilities.requiredTargetStatus",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-28-20260907.ex",
+        "abilities/community-review-31-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/28.zip!/compiled/abilities/community-review-28-20260907.ex.json",
+      "jsonPointer": "/requiredTargetStatus",
+      "value": "{\"appliedBy\":\"self\",\"statusId\":\"community-review-28-20260907.recent-hit\"}"
+    },
+    {
+      "key": "field:augments.drive",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:augments.evasionScope",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:champions.abilities.*.allowApproach",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "champions/community-review-04-20260907",
+        "champions/community-review-35-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/04.zip!/compiled/champions/community-review-04-20260907.json",
+      "jsonPointer": "/abilities/Q/allowApproach",
+      "value": "false"
+    },
+    {
+      "key": "field:champions.abilities.*.interruptible",
+      "group": "C:implicit-default",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:champions.abilities.*.recast",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "champions/community-review-02-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/champions/community-review-02-20260907.json",
+      "jsonPointer": "/abilities/E/recast",
+      "value": "{\"cost\":\"first\",\"minIntervalSec\":0.2,\"stages\":[{\"effects\":[{\"amount\":{\"damageTier\":\"極小\",\"flat\":200,\"perRank\":[0,150,300,450]},\"arcHalfAngleCos\":0.5,\"damageType\":\"physical\",\"fromCaster\":true,\"includeOrigin\":true,\"kind\":\"damageArea\",\"radius\":2.75}]},{\"effects\":[{\"amount\":{\"damageTier\":\"小\",\"flat\":500,\"perRank\":[0,375,750,1125]},\"arcHalfAngleCos\":0.5,\"damageType\":\"physical\",\"fromCaster\":true,\"includeOrigin\":true,\"kind\":\"damageArea\",\"radius\":2.75}]}],\"windowSec\":1.2}"
+    },
+    {
+      "key": "field:champions.abilities.*.requiredSummonSlot",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:champions.abilities.*.requiredTargetStatus",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].blockSource",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].damageConnected",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].evadeChannel",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].evadeDuring",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].evadeSource",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].observedEvent",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "field:items.passive[].stationaryForSec",
+      "group": "B:shared-authoring-surface",
+      "compiledDocs": 0,
+      "examples": [],
+      "witness": "",
+      "jsonPointer": "",
+      "value": ""
+    },
+    {
+      "key": "variant:abilities.effects[]#interruptCast",
+      "group": "A:accepted-community",
+      "compiledDocs": 1,
+      "examples": [
+        "abilities/community-review-23-20260907.ex"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/23.zip!/compiled/abilities/community-review-23-20260907.ex.json",
+      "jsonPointer": "/effects/1/kind",
+      "value": "\"interruptCast\""
+    },
+    {
+      "key": "variant:abilities.effects[]#timeStop",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-04-20260907.r",
+        "champions/community-review-04-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/04.zip!/compiled/abilities/community-review-04-20260907.r.json",
+      "jsonPointer": "/effects/0/kind",
+      "value": "\"timeStop\""
+    },
+    {
+      "key": "variant:abilities.effects[]#trap",
+      "group": "A:accepted-community",
+      "compiledDocs": 2,
+      "examples": [
+        "abilities/community-review-01-20260907.e",
+        "champions/community-review-01-20260907"
+      ],
+      "witness": "/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.e.json",
+      "jsonPointer": "/effects/0/kind",
+      "value": "\"trap\""
+    }
+  ]
+}

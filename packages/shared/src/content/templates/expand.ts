@@ -369,6 +369,7 @@ export function missingCaps(reqs: readonly string[]): string[] {
 
 export interface ExpandResult {
   castType: CastType;
+  recast?: import("../../sim/content/defs").AbilityDef["recast"];
   effects: EffectDef[];
   radius?: number;
   /**
@@ -1457,9 +1458,11 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     return {
       castType: values.castType as CastType,
       castTimeSec: num(t, p, "castTimeSec"),
-      radius: num(t, p, "radius"),
+      // Zero is the template's non-area setting, not an invalid ability radius.
+      ...(num(t, p, "radius") > 0 ? { radius: num(t, p, "radius") } : {}),
       targetsEnemies: str(t, p, "side") === "enemies",
       effects: values.effects as EffectDef[],
+      ...(values.recast ? { recast: structuredClone(values.recast) as ExpandResult["recast"] } : {}),
     };
   },
   "event-passive": (t, p) => {
@@ -3254,6 +3257,7 @@ export function denormalizeTemplateBinding(
  */
 const STACK_SCALAR_KEYS = [
   "castType",
+  "recast",
   "radius",
   // ⭐ 2026-09-02 —— 見 `ExpandResult.range` 的理由。
   "range",
@@ -3656,7 +3660,7 @@ export function expandStackOrThrow(
  *   量到（2026-09-06，160 份出貨模板文件 standalone 93＋內嵌 67）：這一組**沒有一份**
  *   文件的值會與 HEAD 不同 —— 既有模板技能展開逐位元同 HEAD。
  */
-const SHAPE_KEYS = ["castType", "effects", "radius"] as const;
+const SHAPE_KEYS = ["castType", "effects", "radius", "recast"] as const;
 const COMPOSABLE_KEYS = [
   "castTimeSec",
   "targetsEnemies",

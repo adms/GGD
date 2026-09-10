@@ -1,0 +1,14 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-09T18:12Z","branch":"codex/community-batch2-integration","head":"14746985e7e1","originMain":"bbc62a06df8e","dirty":true,"worktreeChangeCount":531,"handbackMainCommit":null,"coverageFingerprint":"acaf3ce0dc89","capabilityFingerprint":"abedce92","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+PASS Skill Forge
+PASS VFX Forge
+PASS VFX texture × blendMode contract (5 tests)
+PASS Editor typecheck
+PASS Editor full tests (604 tests)
+PASS Editor production build
+PASS Editor acceptance complete; human visual verdict remains required for art direction/original-scene fidelity

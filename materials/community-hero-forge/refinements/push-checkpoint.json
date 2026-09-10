@@ -1,0 +1,33 @@
+{
+  "schema": "ggd-community-push-checkpoint@1",
+  "documentCommit": "c5a6a81fc967c0740f16b80a02b5580c70d49823",
+  "checks": [
+    {
+      "name": "skills-before-merge",
+      "exitCode": 1,
+      "logSha256": "1592ddee417e949225eb1b3879e039acde85d2dd989104b730837d46c48c60ff",
+      "note": "Decoration census stale after tracking new source files; regenerated with official generator."
+    },
+    {
+      "name": "skills-after-merge",
+      "exitCode": 1,
+      "logSha256": "44897c4f623902d2627b5f115ccd7f5dd30f501c60f367451b1fb1d1faea844b",
+      "note": "Type catalog generated artifacts are stale; remains unresolved."
+    },
+    {
+      "name": "editor-release",
+      "exitCode": 1,
+      "logSha256": "af6fcfb53e899ad4dd823f0b7b1e041f708c049864a81db780dd61edfef19f32",
+      "note": "Full Editor tests failed in contract/field coverage; build step was not reached."
+    }
+  ],
+  "focusedMechanismTests": {
+    "files": 5,
+    "tests": 57,
+    "exitCode": 0,
+    "sourceCommit": "67848cf34"
+  },
+  "readyForMerge": false,
+  "originalDesignAcceptance": "incomplete",
+  "issue": 1132
+}

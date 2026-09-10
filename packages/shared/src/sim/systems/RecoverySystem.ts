@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * RecoverySystem — ages the caster's post-resolve commitment (後搖) and applies
  * the same interrupts a cast gets. See `abilities/abilityRecovery.ts` for the
@@ -32,6 +33,7 @@ import type { SimWorld } from "../SimWorld";
 
 export function recoveryDecaySystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
     const rec = ab.recovery;
     if (!rec) continue;
 

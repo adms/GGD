@@ -1,3 +1,4 @@
+import { RecastBadge, recastFree } from "../recastView";
 /**
  * AbilityBar — the SIX-slot bar, left to right:
  *
@@ -621,7 +622,7 @@ export function AbilityBar(): React.JSX.Element | null {
               {/* cooldown chrome — the same overlay stack every tile on every
                   surface wears (ui/components/CooldownChrome). Only an active
                   innate can ever be on cooldown. */}
-              <CooldownChrome cd={innateCd} fontSize={m.s(20)} />
+              <CooldownChrome cd={innateCd} fontSize={m.s(20)} /><RecastBadge seat={seat} slot={INNATE_SLOT} />
               {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
               <PassiveIcdChip slot={INNATE_SLOT} size={m.s(9)} />
               {/* ⭐ 三態框：開啟中 / 就緒 / 什麼都不畫（ui/abilityReadyFrame）。
@@ -632,7 +633,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 state={{
                   pressable: castableInnate,
                   offCooldown: !innateCd.onCd,
-                  manaOk: localMana >= (innate.manaCost ?? 0),
+                  manaOk: recastFree(seat, INNATE_SLOT) || localMana >= (innate.manaCost ?? 0),
                   toggleOn: seatToggleOn(seat, INNATE_SLOT),
                 }}
               />
@@ -749,7 +750,7 @@ export function AbilityBar(): React.JSX.Element | null {
                   走**每一階**，而「3 級才出現的 gate」正是點下去之前要知道的事。 */}
               <AbilityConditionMark def={ability} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
-              <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              <CooldownChrome cd={cd} fontSize={m.s(20)} /><RecastBadge seat={seat} slot={slot} />
               {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
               <PassiveIcdChip slot={slot} size={m.s(9)} />
               {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
@@ -759,7 +760,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 state={{
                   pressable: !passive,
                   offCooldown: !cd.onCd,
-                  manaOk: localMana >= manaMeta,
+                  manaOk: recastFree(seat, slot) || localMana >= manaMeta,
                   learned,
                   toggleOn: seatToggleOn(seat, slot),
                 }}
@@ -883,7 +884,7 @@ export function AbilityBar(): React.JSX.Element | null {
               {/* 條件角標（GH#556）—— EX 的 gate 住在 def 上，`exSlotView` 是投影。 */}
               <AbilityConditionMark def={exDef} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
-              <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              <CooldownChrome cd={cd} fontSize={m.s(20)} /><RecastBadge seat={seat} slot={"EX"} />
               {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
               <PassiveIcdChip slot={"EX"} size={m.s(9)} />
               {/* ⭐ 三態框（EX 金） */}
@@ -892,7 +893,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 state={{
                   pressable: !exPassive,
                   offCooldown: !cd.onCd,
-                  manaOk: localMana >= (ex.manaCost ?? 0),
+                  manaOk: recastFree(seat, "EX") || localMana >= (ex.manaCost ?? 0),
                   toggleOn: seatToggleOn(seat, "EX"),
                 }}
               />

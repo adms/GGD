@@ -1,0 +1,954 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-18-20260907",
+  "revision": 14,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "吉爾伽美什",
+    "concept": "吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n視覺方向：金色門環、寶物白金軌跡、天之鎖金線、Ea 紅色旋流。\n以 GGD 砲手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔王的財庫〕",
+      "Q": "王之財寶",
+      "W": "天之鎖",
+      "E": "〔黃金甲冑〕",
+      "R": "天地乖離開闢之星",
+      "EX": "〔王之財寶・齊射〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 14,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-18-20260907.plan",
+    "title": "吉爾伽美什",
+    "summary": "吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n視覺方向：金色門環、寶物白金軌跡、天之鎖金線、Ea 紅色旋流。\n以 GGD 砲手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "砲手",
+    "archetype": "marksman",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "小",
+      "mr": "小",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "大",
+      "ad": "大",
+      "ap": "中",
+      "as": "小",
+      "healthRegen": "小",
+      "manaRegen": "中",
+      "range": "大"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔王的財庫〕",
+        "purpose": "【核准惡搞改編】R真正命中敵人後自己回復8%魔力，每次施法一次；空放不退款。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-parody-1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onDamageDealt",
+                    "effects": [
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.08,
+                        "applyTo": "self"
+                      }
+                    ],
+                    "internalCooldown": 0,
+                    "target": "self",
+                    "abilitySlot": "R",
+                    "damageSource": "ability",
+                    "oncePerCast": true
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "王之財寶",
+        "purpose": "【核准惡搞改編】刷卡驗資：指定敌人小級魔法傷害，另扣目標120魔力；不足只扣剩餘量。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "q-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "spendMana",
+                    "amount": {
+                      "flat": 120
+                    },
+                    "applyTo": "target"
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "餘額不足也敢見本王",
+                    "applyTo": "victim",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "天之鎖",
+        "purpose": "【核准惡搞改編】富人護盾：120護盾；自己魔力超過50%再加100護盾，同一來源採較大值不無限疊。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "w-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-18-20260907.protection",
+                    "onExisting": "keepLarger"
+                  },
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 220
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-18-20260907.protection",
+                    "onExisting": "keepLarger",
+                    "condition": {
+                      "kind": "stat",
+                      "subject": "self",
+                      "stat": "mp",
+                      "mode": "percent",
+                      "op": ">",
+                      "value": 0.5
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔黃金甲冑〕",
+        "purpose": "【核准惡搞改編】排隊請後退：敵人推離三格，不再给一片無關的自己護盾。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "knockback",
+                    "distance": 3,
+                    "speed": 12,
+                    "from": "caster",
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "天地乖離開闢之星",
+        "purpose": "【核准惡搞改編】逾期手續費：中級魔法傷害，目標魔力低於50%再追加小級傷害。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "中"
+                    }
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    },
+                    "condition": {
+                      "kind": "stat",
+                      "subject": "target",
+                      "stat": "mp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.5
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔王之財寶・齊射〕",
+        "purpose": "【核准惡搞改編】回收贈品：移除目標最近一項可驅散增益，魔法打擊小級。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "buff",
+                    "pools": {
+                      "buffs": true
+                    },
+                    "count": 1,
+                    "order": "newest"
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "byteSize": 834460,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "sourceAssetId": "300heroes:d568447cc4f61f5d9a44f07a",
+      "sourceCharacter": "吉尔伽美什",
+      "sourceWork": "Fate/stay night",
+      "relationship": "exact",
+      "notes": "同角色英雄王金甲本體；來源角色 ID 104 的官方主模型路徑為 099.x，保留該明確證據而不製造數字檔名關聯。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-18-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-18-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-18-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-18-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-18-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-18-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-18-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-18-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-18-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-18-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+        "byteSize": 834460,
+        "mediaType": "model/gltf-binary",
+        "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d",
+    "name": "吉爾伽美什",
+    "identity": "作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。",
+    "ownerText": "### 18｜吉爾伽美什\n\n作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n- **PASSIVE｜〔王的財庫〕**：技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。\n- **Q｜王之財寶**：開啟三個門，依序發射武器。\n- **W｜天之鎖**：射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。\n- **E｜〔黃金甲冑〕**：提供短效護盾，降低正面承受的爆發。\n- **R｜天地乖離開闢之星**：以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。\n- **EX｜〔王之財寶・齊射〕**：消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。\n\n**審查重點**：門、武器與命中判定分開計數；驗證同目標多彈傷害預算、鎖鏈解除、蓄力中斷與特效併發成本。\n\n",
+    "reviewText": "門、武器與命中判定分開計數；驗證同目標多彈傷害預算、鎖鏈解除、蓄力中斷與特效併發成本。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔王的財庫〕",
+        "ownerDescription": "技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。",
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需每次施法一次財庫能量與 EX 消耗。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ]
+      },
+      "Q": {
+        "name": "王之財寶",
+        "ownerDescription": "開啟三個門，依序發射武器。",
+        "baselineBehavior": "在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "requiredRefinement": "目前三發落點打擊；需三門武器投射物及門的掛點。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ]
+      },
+      "W": {
+        "name": "天之鎖",
+        "ownerDescription": "射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。",
+        "requiredRefinement": "鎖足可作基礎控制；需超距解鎖、鎖鏈端點。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ]
+      },
+      "E": {
+        "name": "〔黃金甲冑〕",
+        "ownerDescription": "提供短效護盾，降低正面承受的爆發。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-18-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "requiredRefinement": "目前全方向盾；缺正面條件。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ]
+      },
+      "R": {
+        "name": "天地乖離開闢之星",
+        "ownerDescription": "以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "Ea 造型、蓄力層與單一總傷害預算需補。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ]
+      },
+      "EX": {
+        "name": "〔王之財寶・齊射〕",
+        "ownerDescription": "消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。",
+        "baselineBehavior": "在指定區域依序落下 12 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "requiredRefinement": "12 發已有限；需扣財庫能量及武器多樣外觀。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\nR真正命中敵人後自己回復8%魔力，每次施法一次；空放不退款。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "Q": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n刷卡驗資：指定敌人小級魔法傷害，另扣目標120魔力；不足只扣剩餘量。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "W": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n富人護盾：120護盾；自己魔力超過50%再加100護盾，同一來源採較大值不無限疊。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "E": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n排隊請後退：敵人推離三格，不再给一片無關的自己護盾。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n逾期手續費：中級魔法傷害，目標魔力低於50%再追加小級傷害。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n回收贈品：移除目標最近一項可驅散增益，魔法打擊小級。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 14,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "5dc5b9a4fab83b40e64c3c36a077584180ce21095979beec780fff05e95471ad",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

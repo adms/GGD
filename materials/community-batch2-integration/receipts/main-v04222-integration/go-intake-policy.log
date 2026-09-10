@@ -1,0 +1,34 @@
+=== RUN   TestHeroIntakePolicyReadsMainConfigAndLiveOverlay
+--- PASS: TestHeroIntakePolicyReadsMainConfigAndLiveOverlay (0.04s)
+=== RUN   TestHeroIntakePolicyLegacyConfigKeepsOriginalArchiveLimit
+--- PASS: TestHeroIntakePolicyLegacyConfigKeepsOriginalArchiveLimit (0.00s)
+=== RUN   TestUgcEnabledGatesEveryRegisteredSubmissionWrite
+2026/09/09 22:44:16 WARN auth: registrations are AUTO-APPROVED — a new account can play immediately addr=:0 why="GGD_REQUIRE_APPROVAL is off, or unset with a loopback-only listen address" harden="set GGD_REQUIRE_APPROVAL=1 if anything (nginx, a tunnel, a proxy) forwards to this platform from outside"
+2026/09/09 22:44:16 WARN friend: 管理員預設好友 shipped policy is unreadable — using the built-in defaults path=/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/config/admin-friend.json err="open /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/config/admin-friend.json: no such file or directory" enabled=true backfillExisting=true
+2026/09/09 22:44:16 WARN wallet: champion crystal prices disagree with the cost the client button displays — players will be shown the wrong number clientLabelCost=300 mismatched=[vex] fix="keep championPrices at the client constant, or update CRYSTAL_UNLOCK_COST in apps/client/src/ui/panels/champselect/walletMeta.ts"
+2026/09/09 22:44:16 INFO wallet: 水晶 meta-progression freeStarters=2 unlockable=1 unlockCost=300 perMatchGrant="[120 45 35 30]"
+2026/09/09 22:44:16 WARN curation: no content/_legacy tree found — the whitelist legacy gate is INERT, so a retired champion/item/ability can stay checked in the operator whitelist lookedIn=/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/_legacy
+2026/09/09 22:44:16 WARN curation: no content/champions tree found — the whitelist TRANSFORM gate is INERT, so a 變身態 can stay checked in the operator whitelist (it is unpickable in game either way) lookedIn=/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/champions switch=GGD_CURATION_TRANSFORM_GATE
+2026/09/09 22:44:16 INFO contentoverlay: no durable content overlay on this host path=/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/001/content-overlay/overlay.json
+2026/09/09 22:44:16 WARN opsenv: cannot read the match config; ops page falls back to compiled defaults path=/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/config/config.match.json err="open /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/config/config.match.json: no such file or directory"
+2026/09/09 22:44:17 INFO opsenv: derived match length startingTeamHealth=20 fromContent=false meanRounds=11.6 typical=31m0s allRoundsFullLength=31m0s blindDeadline=30m0s livenessGrace=3m0s
+2026/09/09 22:44:17 WARN matchstats: content manifest unreadable — records will carry no content version stamp path=/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/manifest.json err="open /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/TestUgcEnabledGatesEveryRegisteredSubmissionWrite3845772190/002/manifest.json: no such file or directory"
+2026/09/09 22:44:17 WARN auth: registration is OPEN — anyone who can reach this platform can create an account addr=:0 why="GGD_REQUIRE_INVITE is off, or unset with a loopback-only listen address" harden="set GGD_REQUIRE_INVITE=1 if anything (nginx, a tunnel, a proxy) forwards to this platform from outside"
+2026/09/09 22:44:17 INFO match reaper started interval=1m0s livenessGrace=3m0s blindDeadline=30m0s worstCaseDetection=4m0s
+2026/09/09 22:44:17 INFO friend: 管理員預設好友 skipped for a new account — no administrator to link to yet accountId=01M23A0WGS4BDZQV2TKZ5435K8 err="friend: 0 administrator accounts exist, so 管理員預設好友 needs adminAccountId set in the console: friend: no administrator account could be resolved"
+    ugcgate_routes_test.go:259: 刻意不受總開關管：PUT /api/v1/hero-model-assets/{sha256} —— 服務層已擋（SaveModelAsset）
+    ugcgate_routes_test.go:259: 刻意不受總開關管：POST /api/v1/hero-submissions/{id}/withdraw —— 撤回讓佇列變短，⛔ 不是收新的
+    ugcgate_routes_test.go:259: 刻意不受總開關管：POST /api/v1/hero-works/draft —— 本機草稿，⛔ 不送審
+    ugcgate_routes_test.go:259: 刻意不受總開關管：POST /api/v1/hero-works/{id}/draft-versions/{version}/restore —— 歷程還原，⛔ 沒有進佇列
+    ugcgate_routes_test.go:268: 要守的（玩家打得到的投稿寫入路）：POST /api/v1/hero-import/build → github.com/ggd/platform/internal/submissions.(*HeroHandlers).build-fm
+    ugcgate_routes_test.go:268: 要守的（玩家打得到的投稿寫入路）：POST /api/v1/hero-import/inspect → github.com/ggd/platform/internal/submissions.(*HeroHandlers).inspect-fm
+    ugcgate_routes_test.go:268: 要守的（玩家打得到的投稿寫入路）：POST /api/v1/hero-submissions → github.com/ggd/platform/internal/submissions.(*HeroHandlers).submit-fm
+    ugcgate_routes_test.go:268: 要守的（玩家打得到的投稿寫入路）：POST /api/v1/submissions → github.com/ggd/platform/internal/submissions.(*Handlers).submit-fm
+    ugcgate_routes_test.go:271: 豁免（admin 把關,⛔ 不是 ugc.enabled 把關）：POST /api/v1/admin/hero-submissions/{id}/decide → github.com/ggd/platform/internal/submissions.(*HeroHandlers).decide-fm
+    ugcgate_routes_test.go:271: 豁免（admin 把關,⛔ 不是 ugc.enabled 把關）：POST /api/v1/admin/hero-submissions/{id}/publish → github.com/ggd/platform/internal/submissions.(*HeroHandlers).publish-fm
+    ugcgate_routes_test.go:271: 豁免（admin 把關,⛔ 不是 ugc.enabled 把關）：POST /api/v1/admin/hero-works/{id}/unpublish → github.com/ggd/platform/internal/submissions.(*HeroHandlers).unpublish-fm
+    ugcgate_routes_test.go:271: 豁免（admin 把關,⛔ 不是 ugc.enabled 把關）：POST /api/v1/submissions/{id}/decide → github.com/ggd/platform/internal/submissions.(*Handlers).decide-fm
+    ugcgate_routes_test.go:271: 豁免（admin 把關,⛔ 不是 ugc.enabled 把關）：POST /api/v1/submissions/{id}/promote → github.com/ggd/platform/internal/submissions.(*Handlers).promote-fm
+--- PASS: TestUgcEnabledGatesEveryRegisteredSubmissionWrite (0.22s)
+PASS
+ok  	github.com/ggd/platform/internal/server	1.292s

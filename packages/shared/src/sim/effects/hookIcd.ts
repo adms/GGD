@@ -89,6 +89,7 @@ export function hookIcdTicks(world: SimWorld, src: ModifierSource, hook: HookDef
  */
 export function invalidateHookLedgers(src: ModifierSource): void {
   src.hookLastFired = undefined;
+  src.hookStillness = undefined;
   src.hookLastFiredBySlot = undefined;
   src.hookFireCount = undefined;
   src.hookFireCountByTarget = undefined;

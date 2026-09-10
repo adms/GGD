@@ -62,18 +62,17 @@ export interface RoundGrant {
 /**
  * 寶具貨架那一區塊**解析完**的樣子 —— 從 `SimWorld` 那一格推導，⛔ 不重打形狀。
  *
- * config 那一份（`LegendaryShelfConfig`）有兩格是 `.optional()`（線上舊 override
- * 沒有它們），而 sim 讀的是必填的四格；`legendaryShelfRules` 就是這兩者之間
+ * config 那一份（`LegendaryShelfConfig`）有 `.optional()` 欄位（線上舊 override
+ * 沒有它們），而 sim 讀的是必填欄位；`legendaryShelfRules` 就是這兩者之間
  * **唯一**的一道解析。
  */
 export type LegendaryShelfRules = SimWorld["legendaryShelf"];
 
 /**
- * `config.arena-rules@1` 的 `legendaryShelf` → sim 讀得懂的四格。
+ * `config.arena-rules@1` 的 `legendaryShelf` → sim 讀得懂的必填欄位。
  *
- * ⚠️ 缺席的欄位拿的是**引擎常數**（`DEFAULT_SELL_REFUND_PCT` / 空表），也就是
- * `SimWorld` 自己的預設值 —— 所以「舊 override 少一格」與「沒有接線」得到的是
- * 同一個結果，⛔ 不會有第三種行為。
+ * ⚠️ 缺席的欄位保留既有相容值：退款率拿 `DEFAULT_SELL_REFUND_PCT`，隨機限定表
+ * 拿空表；`swapWhenFull` 沿用 `SimWorld` 的 false，舊 override 不會自動開啟換裝。
  */
 export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRules {
   return {

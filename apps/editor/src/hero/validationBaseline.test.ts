@@ -6,6 +6,21 @@ import { bundledHeroCatalog, createHeroCatalog } from "./catalog";
 import { validateHero } from "./validation";
 import { adoptHeroGenerator } from "./projectModel";
 import { DEFAULT_HERO_SCENARIO_SETUP } from "@ggd/shared/content/heroForge/scenarioSetup";
+import { communityCombatFixture } from "../../../../packages/shared/testkit/communityCombatFixture";
+import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
+
+it("Editor and trusted package earn Conan target clues through the same live combat preparation", () => {
+  registerSkeletonContent(); const r = communityCombatFixture("26");
+  const before = structuredClone(r.project);
+  const preview = validateHero(r.project, bundledHeroCatalog);
+  expect(preview.errors).toEqual([]);
+  expect(preview.scenarios.find(s => s.slot === "R")!.resourceCost).toMatchObject({ before: 1, after: 0 });
+  const packaged = compileHeroPackageProject(r.project, r.source.catalog);
+  const receipt = packaged.scenarios as { slots: unknown[]; kit: unknown };
+  expect(preview.scenarios.map(heroScenarioProjection)).toEqual(receipt.slots);
+  expect(heroKitScenarioProjection(preview.kit!)).toEqual(receipt.kit);
+  expect(r.project).toEqual(before);
+});
 
 it("previews generated forms on the same paired-body baseline as the trusted package", () => {
   const catalog = shippedHeroCatalog(), project = heroPackageProject(catalog, "editor-form-proof");

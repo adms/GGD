@@ -1,0 +1,1635 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 3,
+  "projectId": "community-review-02-20260907",
+  "sourceSha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d",
+  "slots": {
+    "E": {
+      "products": [
+        {
+          "instanceId": "rekka-three-inputs",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "radius": 2.75,
+                  "arcHalfAngleCos": 0.5,
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "recast": {
+                "windowSec": 1.2,
+                "minIntervalSec": 0.2,
+                "cost": "first",
+                "stages": [
+                  {
+                    "effects": [
+                      {
+                        "kind": "damageArea",
+                        "fromCaster": true,
+                        "includeOrigin": true,
+                        "radius": 2.75,
+                        "arcHalfAngleCos": 0.5,
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "effects": [
+                      {
+                        "kind": "damageArea",
+                        "fromCaster": true,
+                        "includeOrigin": true,
+                        "radius": 2.75,
+                        "arcHalfAngleCos": 0.5,
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n葵花以三次獨立方向輸入執行三段近身打擊；每段解算後 0.2 秒至 1.2 秒內可接下一段。一次按鍵只打一段，連按不跳段；逾時、硬控制、沉默、恐懼、束縛、死亡或對決結束取消接續。只在第一段支付魔力與技能冷卻，冷卻在接續期間繼續流逝；末段結束回到剩餘冷卻。每段重新選方向、驗合法目標與施法資格；揮空仍占該段。專用三段動作與紫炎畫面尚未完成。",
+      "note": "本次保留核心並核對定位、代價、反制。八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n葵花以三次獨立方向輸入執行三段近身打擊；每段解算後 0.2 秒至 1.2 秒內可接下一段。一次按鍵只打一段，連按不跳段；逾時、硬控制、沉默、恐懼、束縛、死亡或對決結束取消接續。只在第一段支付魔力與技能冷卻，冷卻在接續期間繼續流逝；末段結束回到剩餘冷卻。每段重新選方向、驗合法目標與施法資格；揮空仍占該段。專用三段動作與紫炎畫面尚未完成。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "大",
+        "manaCostTier": "小",
+        "rangeTier": "小"
+      }
+    },
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "violet-flame-hits",
+          "template": {
+            "ref": "tpl-event-passive",
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "abilitySlot": "Q",
+                  "victim": "enemy",
+                  "target": "event",
+                  "oncePerCast": true,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-02-20260907.last-q",
+                      "appliedBy": "self"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-02-20260907.violet-flame",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "condition": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-02-20260907.violet-flame",
+                        "appliedBy": "self",
+                        "minStacks": 3
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-w",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-e",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-r",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-ex",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-q",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "abilitySlot": "W",
+                  "victim": "enemy",
+                  "target": "event",
+                  "oncePerCast": true,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-02-20260907.last-w",
+                      "appliedBy": "self"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-02-20260907.violet-flame",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "condition": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-02-20260907.violet-flame",
+                        "appliedBy": "self",
+                        "minStacks": 3
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-q",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-e",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-r",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-ex",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-w",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "abilitySlot": "E",
+                  "victim": "enemy",
+                  "target": "event",
+                  "oncePerCast": true,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-02-20260907.last-e",
+                      "appliedBy": "self"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-02-20260907.violet-flame",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "condition": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-02-20260907.violet-flame",
+                        "appliedBy": "self",
+                        "minStacks": 3
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-q",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-w",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-r",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-ex",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-e",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "abilitySlot": "R",
+                  "victim": "enemy",
+                  "target": "event",
+                  "oncePerCast": true,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-02-20260907.last-r",
+                      "appliedBy": "self"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-02-20260907.violet-flame",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "condition": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-02-20260907.violet-flame",
+                        "appliedBy": "self",
+                        "minStacks": 3
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-q",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-w",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-e",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-ex",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-r",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "abilitySlot": "EX",
+                  "victim": "enemy",
+                  "target": "event",
+                  "oncePerCast": true,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-02-20260907.last-ex",
+                      "appliedBy": "self"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-02-20260907.violet-flame",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.violet-flame",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "condition": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-02-20260907.violet-flame",
+                        "appliedBy": "self",
+                        "minStacks": 3
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-q",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-w",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-e",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-r",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false,
+                      "stacks": -999
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-02-20260907.last-ex",
+                      "duration": 4,
+                      "sourceScope": "caster",
+                      "dispellable": false
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n不同主動技能對同一敵人的有效命中（HP 或盾吸收）交替累積四秒紫炎，上限三層；同次多段／多目標最多記一次，同一技能連續命中不加層。各敵人及施法者分開記錄，換目標不繼承層數；R 或 EX 最後一擊消耗該敵人身上自己的全部紫炎，每層追加一次極小魔法傷害。普攻、空招、免疫、反傷及衍生傷害不集氣，回合結束清除。",
+      "note": "本次保留核心並核對定位、代價、反制。八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n不同主動技能對同一敵人的有效命中（HP 或盾吸收）交替累積四秒紫炎，上限三層；同次多段／多目標最多記一次，同一技能連續命中不加層。各敵人及施法者分開記錄，換目標不繼承層數；R 或 EX 最後一擊消耗該敵人身上自己的全部紫炎，每層追加一次極小魔法傷害。普攻、空招、免疫、反傷及衍生傷害不集氣，回合結束清除。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.15,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.void",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n沿施法方向前進的一顆紫色投射物，在第一個合法敵人碰撞後消失，只結算一次小級魔法傷害；友军與其他對決排除。地形遵循 GGD 技能通行規則。現有紫色彈為代理，貼地火焰外觀與專用動作待驗。",
+      "note": "本次保留核心並核對定位、代價、反制。八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n沿施法方向前進的一顆紫色投射物，在第一個合法敵人碰撞後消失，只結算一次小級魔法傷害；友军與其他對決排除。地形遵循 GGD 技能通行規則。現有紫色彈為代理，貼地火焰外觀與專用動作待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "中",
+        "manaCostTier": "小",
+        "rangeTier": "中"
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-02-20260907.counter-window",
+                  "stackKey": "community-review-02-20260907.counter-window",
+                  "sourceScope": "caster",
+                  "maxStacks": 1,
+                  "duration": 0.45,
+                  "dispellable": false,
+                  "modifiers": [],
+                  "applyTo": "self",
+                  "block": {
+                    "chance": 1,
+                    "fraction": 1,
+                    "damageTypes": [
+                      "physical",
+                      "magic"
+                    ],
+                    "internalCooldown": 1
+                  },
+                  "hooks": [
+                    {
+                      "on": "onBlock",
+                      "victim": "enemy",
+                      "target": "event",
+                      "blockSource": "thisSource",
+                      "maxTriggers": 1,
+                      "onConsumed": "detachSource",
+                      "effects": [
+                        {
+                          "kind": "knockback",
+                          "distance": 1,
+                          "speed": 10,
+                          "subtractGap": false,
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "damageArea",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "radius": 2.5,
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "onHitTargetsMode": "perTarget",
+                  "onHitTargets": [
+                    {
+                      "kind": "knockback",
+                      "distance": 1,
+                      "speed": 10,
+                      "subtractGap": false
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "instanceId": "w-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "slow25",
+                  "duration": 0.8,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.75
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "鬼燒要擺Pose",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n新增代價：鬼燒擺姿勢0.8秒自身減速25%；原格擋與推離不變。\n原地施放一次 2.5 格上升火焰打擊並有限推離一格，不跳向落點；0.45 秒內以本次來源格擋第一個物理／魔法攻擊，近身攻擊者被再推離一格。沒有長時間無敵；火焰柱與迎擊動作仍待實際畫面驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n新增代價：鬼燒擺姿勢0.8秒自身減速25%；原格擋與推離不變。\n原地施放一次 2.5 格上升火焰打擊並有限推離一格，不跳向落點；0.45 秒內以本次來源格擋第一個物理／魔法攻擊，近身攻擊者被再推離一格。沒有長時間無敵；火焰柱與迎擊動作仍待實際畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "中",
+        "manaCostTier": "小",
+        "rangeTier": "中"
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.4,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-02-20260907.r-contact",
+                  "stackKey": "community-review-02-20260907.r-contact",
+                  "sourceScope": "caster",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "dispellable": false,
+                  "modifiers": [],
+                  "applyTo": "self",
+                  "hooks": [
+                    {
+                      "on": "onDamageDealt",
+                      "abilitySlot": "R",
+                      "damageSource": "ability",
+                      "damageConnected": true,
+                      "victim": "enemy",
+                      "target": "event",
+                      "oncePerCast": true,
+                      "maxTriggers": 1,
+                      "onConsumed": "detachSource",
+                      "effects": [
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.18,
+                          "stopOnCasterDeath": true,
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "極小"
+                              },
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              }
+                            },
+                            {
+                              "kind": "delayed",
+                              "shape": "single",
+                              "delaySec": 0.18,
+                              "stopOnCasterDeath": true,
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              },
+                              "effects": [
+                                {
+                                  "kind": "damage",
+                                  "damageType": "physical",
+                                  "amount": {
+                                    "damageTier": "極小"
+                                  },
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                },
+                                {
+                                  "kind": "delayed",
+                                  "shape": "single",
+                                  "delaySec": 0.18,
+                                  "stopOnCasterDeath": true,
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  },
+                                  "effects": [
+                                    {
+                                      "kind": "damage",
+                                      "damageType": "physical",
+                                      "amount": {
+                                        "damageTier": "極小"
+                                      },
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    },
+                                    {
+                                      "kind": "delayed",
+                                      "shape": "single",
+                                      "delaySec": 0.18,
+                                      "stopOnCasterDeath": true,
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      },
+                                      "effects": [
+                                        {
+                                          "kind": "damage",
+                                          "damageType": "magic",
+                                          "amount": {
+                                            "damageTier": "小"
+                                          },
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        },
+                                        {
+                                          "kind": "consumeStatus",
+                                          "shape": "single",
+                                          "statusId": "community-review-02-20260907.violet-flame",
+                                          "appliedBy": "self",
+                                          "count": 3,
+                                          "onConsumed": [
+                                            {
+                                              "kind": "damage",
+                                              "damageType": "magic",
+                                              "amount": {
+                                                "damageTier": "極小"
+                                              },
+                                              "condition": {
+                                                "kind": "distance",
+                                                "op": "<=",
+                                                "value": 3
+                                              }
+                                            },
+                                            {
+                                              "kind": "damage",
+                                              "damageType": "magic",
+                                              "amount": {
+                                                "damageTier": "極小"
+                                              },
+                                              "condition": {
+                                                "kind": "distance",
+                                                "op": "<=",
+                                                "value": 3
+                                              }
+                                            },
+                                            {
+                                              "kind": "damage",
+                                              "damageType": "magic",
+                                              "amount": {
+                                                "damageTier": "極小"
+                                              },
+                                              "condition": {
+                                                "kind": "distance",
+                                                "op": "<=",
+                                                "value": 3
+                                              }
+                                            }
+                                          ],
+                                          "onMissing": [
+                                            {
+                                              "kind": "consumeStatus",
+                                              "shape": "single",
+                                              "statusId": "community-review-02-20260907.violet-flame",
+                                              "appliedBy": "self",
+                                              "count": 2,
+                                              "onConsumed": [
+                                                {
+                                                  "kind": "damage",
+                                                  "damageType": "magic",
+                                                  "amount": {
+                                                    "damageTier": "極小"
+                                                  },
+                                                  "condition": {
+                                                    "kind": "distance",
+                                                    "op": "<=",
+                                                    "value": 3
+                                                  }
+                                                },
+                                                {
+                                                  "kind": "damage",
+                                                  "damageType": "magic",
+                                                  "amount": {
+                                                    "damageTier": "極小"
+                                                  },
+                                                  "condition": {
+                                                    "kind": "distance",
+                                                    "op": "<=",
+                                                    "value": 3
+                                                  }
+                                                }
+                                              ],
+                                              "onMissing": [
+                                                {
+                                                  "kind": "consumeStatus",
+                                                  "shape": "single",
+                                                  "statusId": "community-review-02-20260907.violet-flame",
+                                                  "appliedBy": "self",
+                                                  "count": 1,
+                                                  "onConsumed": [
+                                                    {
+                                                      "kind": "damage",
+                                                      "damageType": "magic",
+                                                      "amount": {
+                                                        "damageTier": "極小"
+                                                      },
+                                                      "condition": {
+                                                        "kind": "distance",
+                                                        "op": "<=",
+                                                        "value": 3
+                                                      }
+                                                    }
+                                                  ],
+                                                  "condition": {
+                                                    "kind": "distance",
+                                                    "op": "<=",
+                                                    "value": 3
+                                                  }
+                                                }
+                                              ],
+                                              "condition": {
+                                                "kind": "distance",
+                                                "op": "<=",
+                                                "value": 3
+                                              }
+                                            }
+                                          ],
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        },
+                                        {
+                                          "kind": "applyStatus",
+                                          "statusId": "community-review-02-20260907.r-complete",
+                                          "duration": 1.2,
+                                          "sourceScope": "caster",
+                                          "dispellable": false,
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 14,
+                  "maxDistance": 7,
+                  "stopOnHit": "enemy",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n0.4 秒起手後向前突進七格；第一個敵人承受實際 HP／盾命中才開始三次近身物理連擊及一次紫炎終結，每段隔 0.18 秒並重查三格距離，失去原目標即不再排下一段，不另尋敵。最後一擊消耗自身紫炎並開啟同一敵人 1.2 秒豺華窗口。死亡／對決結束停止；空放、牆阻及免疫不開始連擊。專用連擊／紫炎爆破畫面待驗。",
+      "note": "本次保留核心並核對定位、代價、反制。八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n0.4 秒起手後向前突進七格；第一個敵人承受實際 HP／盾命中才開始三次近身物理連擊及一次紫炎終結，每段隔 0.18 秒並重查三格距離，失去原目標即不再排下一段，不另尋敵。最後一擊消耗自身紫炎並開啟同一敵人 1.2 秒豺華窗口。死亡／對決結束停止；空放、牆阻及免疫不開始連擊。專用連擊／紫炎爆破畫面待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "rangeTier": "中"
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-02-20260907.r-complete",
+                  "appliedBy": "self",
+                  "count": 1,
+                  "onConsumed": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "condition": {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      }
+                    },
+                    {
+                      "kind": "delayed",
+                      "shape": "single",
+                      "delaySec": 0.15,
+                      "stopOnCasterDeath": true,
+                      "condition": {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "極小"
+                          },
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          }
+                        },
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.15,
+                          "stopOnCasterDeath": true,
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "極小"
+                              },
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              }
+                            },
+                            {
+                              "kind": "delayed",
+                              "shape": "single",
+                              "delaySec": 0.15,
+                              "stopOnCasterDeath": true,
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              },
+                              "effects": [
+                                {
+                                  "kind": "damage",
+                                  "damageType": "magic",
+                                  "amount": {
+                                    "damageTier": "小"
+                                  },
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                },
+                                {
+                                  "kind": "consumeStatus",
+                                  "shape": "single",
+                                  "statusId": "community-review-02-20260907.violet-flame",
+                                  "appliedBy": "self",
+                                  "count": 3,
+                                  "onConsumed": [
+                                    {
+                                      "kind": "damage",
+                                      "damageType": "magic",
+                                      "amount": {
+                                        "damageTier": "極小"
+                                      },
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    },
+                                    {
+                                      "kind": "damage",
+                                      "damageType": "magic",
+                                      "amount": {
+                                        "damageTier": "極小"
+                                      },
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    },
+                                    {
+                                      "kind": "damage",
+                                      "damageType": "magic",
+                                      "amount": {
+                                        "damageTier": "極小"
+                                      },
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    }
+                                  ],
+                                  "onMissing": [
+                                    {
+                                      "kind": "consumeStatus",
+                                      "shape": "single",
+                                      "statusId": "community-review-02-20260907.violet-flame",
+                                      "appliedBy": "self",
+                                      "count": 2,
+                                      "onConsumed": [
+                                        {
+                                          "kind": "damage",
+                                          "damageType": "magic",
+                                          "amount": {
+                                            "damageTier": "極小"
+                                          },
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        },
+                                        {
+                                          "kind": "damage",
+                                          "damageType": "magic",
+                                          "amount": {
+                                            "damageTier": "極小"
+                                          },
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        }
+                                      ],
+                                      "onMissing": [
+                                        {
+                                          "kind": "consumeStatus",
+                                          "shape": "single",
+                                          "statusId": "community-review-02-20260907.violet-flame",
+                                          "appliedBy": "self",
+                                          "count": 1,
+                                          "onConsumed": [
+                                            {
+                                              "kind": "damage",
+                                              "damageType": "magic",
+                                              "amount": {
+                                                "damageTier": "極小"
+                                              },
+                                              "condition": {
+                                                "kind": "distance",
+                                                "op": "<=",
+                                                "value": 3
+                                              }
+                                            }
+                                          ],
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        }
+                                      ],
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    }
+                                  ],
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "condition": {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      }
+                    },
+                    {
+                      "kind": "delayed",
+                      "shape": "single",
+                      "delaySec": 0.15,
+                      "stopOnCasterDeath": true,
+                      "condition": {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "極小"
+                          },
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          }
+                        },
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.15,
+                          "stopOnCasterDeath": true,
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小"
+                              },
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              }
+                            },
+                            {
+                              "kind": "consumeStatus",
+                              "shape": "single",
+                              "statusId": "community-review-02-20260907.violet-flame",
+                              "appliedBy": "self",
+                              "count": 3,
+                              "onConsumed": [
+                                {
+                                  "kind": "damage",
+                                  "damageType": "magic",
+                                  "amount": {
+                                    "damageTier": "極小"
+                                  },
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                },
+                                {
+                                  "kind": "damage",
+                                  "damageType": "magic",
+                                  "amount": {
+                                    "damageTier": "極小"
+                                  },
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                },
+                                {
+                                  "kind": "damage",
+                                  "damageType": "magic",
+                                  "amount": {
+                                    "damageTier": "極小"
+                                  },
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                }
+                              ],
+                              "onMissing": [
+                                {
+                                  "kind": "consumeStatus",
+                                  "shape": "single",
+                                  "statusId": "community-review-02-20260907.violet-flame",
+                                  "appliedBy": "self",
+                                  "count": 2,
+                                  "onConsumed": [
+                                    {
+                                      "kind": "damage",
+                                      "damageType": "magic",
+                                      "amount": {
+                                        "damageTier": "極小"
+                                      },
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    },
+                                    {
+                                      "kind": "damage",
+                                      "damageType": "magic",
+                                      "amount": {
+                                        "damageTier": "極小"
+                                      },
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    }
+                                  ],
+                                  "onMissing": [
+                                    {
+                                      "kind": "consumeStatus",
+                                      "shape": "single",
+                                      "statusId": "community-review-02-20260907.violet-flame",
+                                      "appliedBy": "self",
+                                      "count": 1,
+                                      "onConsumed": [
+                                        {
+                                          "kind": "damage",
+                                          "damageType": "magic",
+                                          "amount": {
+                                            "damageTier": "極小"
+                                          },
+                                          "condition": {
+                                            "kind": "distance",
+                                            "op": "<=",
+                                            "value": 3
+                                          }
+                                        }
+                                      ],
+                                      "condition": {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      }
+                                    }
+                                  ],
+                                  "condition": {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  }
+                                }
+                              ],
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n可獨立指定三格內敵人，支付自身魔力與冷卻，進行三段近身追擊；若同一敵人持有自己八稚女完成後 1.2 秒窗口，原子消耗該窗口並改為四段接續。不是 recentCast 假窗口；R 未完成、逾時、別人完成或改打別人都只走獨立版。每段重查原目標與三格距離，不再追打離場者；最後一击消耗自己紫炎。兩分支只執行一個，不返還或重置 EX 冷卻。專用演出待驗。",
+      "note": "本次保留核心並核對定位、代價、反制。八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n可獨立指定三格內敵人，支付自身魔力與冷卻，進行三段近身追擊；若同一敵人持有自己八稚女完成後 1.2 秒窗口，原子消耗該窗口並改為四段接續。不是 recentCast 假窗口；R 未完成、逾時、別人完成或改打別人都只走獨立版。每段重查原目標與三格距離，不再追打離場者；最後一击消耗自己紫炎。兩分支只執行一個，不返還或重置 EX 冷卻。專用演出待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "極大",
+        "manaCostTier": "大",
+        "range": 3,
+        "allowApproach": false
+      }
+    }
+  },
+  "templateVersions": {
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    },
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    }
+  }
+}

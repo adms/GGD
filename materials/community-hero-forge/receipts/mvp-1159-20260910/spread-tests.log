@@ -1,0 +1,19 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+ ✓ packages/shared/src/ops/codeOnlyKnobs.test.ts (4 tests) 94ms
+ ✓ packages/shared/src/sim/effects/damageArea.test.ts (31 tests) 683ms
+ ✓ apps/admin/src/configForms.test.ts (20 tests) 269ms
+(node:33262) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/admin/src/configFormsSave.test.ts (15 tests) 425ms
+ ✓ packages/shared/src/sim/damageRules.test.ts (5 tests) 58ms
+ ✓ packages/shared/src/sim/effects/damageLine.test.ts (13 tests) 28ms
+ ✓ apps/admin/src/configFormsShippedProse.test.ts (1 test) 30ms
+
+ Test Files  7 passed (7)
+      Tests  89 passed (89)
+   Start at  00:36:05
+   Duration  15.41s (transform 3.00s, setup 0ms, collect 10.02s, tests 1.59s, environment 1ms, prepare 636ms)
+

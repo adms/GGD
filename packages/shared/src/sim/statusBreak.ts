@@ -35,6 +35,7 @@ export function breakStatusesOnDamage(
   victim: EntityId,
   amount: number,
 ): number {
+  if (!(amount > 0)) return 0;
   const st = world.status.get(victim);
   if (!st || st.effects.length === 0) return 0;
   // 快路徑：絕大多數實體身上沒有任何一筆標了這一格，而這支函式**每一發傷害

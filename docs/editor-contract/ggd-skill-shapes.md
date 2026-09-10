@@ -52,26 +52,26 @@ owner 技能模板群組 **⑨** 逐字：
 | 11 | 迴圈＋持續＋多段 | **7** | 6 | tpl-area-strike・tpl-drain-leech | 沿用（1 支還沒接） |
 | 12 | 等待＋路徑 | **6** | 1 | tpl-single-strike | 沿用（5 支還沒接） |
 | 13 | 等待＋持續＋續效特效＋路徑 | **5** | 2 | tpl-projectile-strike | 沿用（3 支還沒接） |
-| 14 | 等待＋迴圈＋持續＋多段＋路徑 | **5** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 8 份較不貼合） |
+| 14 | 等待＋迴圈＋持續＋多段＋路徑 | **5** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 9 份較不貼合） |
 | 15 | 持續＋續效特效＋多段＋路徑 | **4** | 3 | tpl-projectile-strike・tpl-proxy-cast | 沿用（1 支還沒接） |
 | 16 | 持續＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-mark-stacks・tpl-pull-throw（另有 2 份較不貼合） |
-| 17 | 等待＋迴圈＋持續＋多段 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-growth-charge・tpl-random-barrage（另有 2 份較不貼合） |
+| 17 | 等待＋迴圈＋持續＋多段 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-effect-sequence・tpl-growth-charge・tpl-random-barrage（另有 2 份較不貼合） |
 | 18 | 等待＋迴圈＋持續＋續效特效 | **4** | 2 | tpl-periodic-field | 沿用（2 支還沒接） |
 | 19 | 多段＋路徑 | **3** | 3 | tpl-line-sweep・tpl-orbit-array | ✅ 全部接上了 |
 | 20 | 等待＋續效特效 | **3** | 2 | tpl-area-strike・tpl-single-strike | 沿用（1 支還沒接） |
 | 21 | 等待＋迴圈＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 3 份較不貼合） |
-| 22 | 迴圈＋持續＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 6 份較不貼合） |
+| 22 | 迴圈＋持續＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 7 份較不貼合） |
 | 23 | 等待＋多段＋路徑 | **2** | 1 | tpl-area-strike | 沿用（1 支還沒接） |
 | 24 | 等待＋持續＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-mark-stacks・tpl-pull-throw（另有 3 份較不貼合） |
 | 25 | 等待＋迴圈 | **2** | 0 | — | 併進既有模板的參數 |
-| 26 | 等待＋迴圈＋持續＋續效特效＋多段 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher（另有 4 份較不貼合） |
-| 27 | 等待＋迴圈＋持續＋續效特效＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-dragon-quake（另有 20 份較不貼合） |
+| 26 | 等待＋迴圈＋持續＋續效特效＋多段 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher（另有 5 份較不貼合） |
+| 27 | 等待＋迴圈＋持續＋續效特效＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-dragon-quake（另有 21 份較不貼合） |
 | 28 | 等待＋迴圈＋續效特效 | **2** | 0 | — | 併進既有模板的參數 |
 | 29 | 續效特效＋多段＋路徑 | **2** | 1 | tpl-heal | 沿用（1 支還沒接） |
 | 30 | 迴圈 | **2** | 0 | — | 併進既有模板的參數 |
 | 31 | 迴圈＋多段 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage |
 | 32 | 迴圈＋持續＋續效特效＋路徑 | **2** | 2 | tpl-projectile-strike | ✅ 全部接上了 |
-| 33 | 等待＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-mark-stacks・tpl-pull-throw（另有 3 份較不貼合） |
+| 33 | 等待＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-effect-sequence・tpl-mark-stacks（另有 4 份較不貼合） |
 | 34 | 等待＋持續＋續效特效 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-ally-shield・tpl-charge-resource |
 | 35 | 等待＋續效特效＋多段＋路徑 | **1** | 1 | tpl-area-strike | ✅ 全部接上了 |
 | 36 | 等待＋續效特效＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-line-blast・tpl-locust-strike・tpl-locust-travel（另有 2 份較不貼合） |
@@ -258,7 +258,7 @@ owner 技能模板群組 **⑨** 逐字：
 | `tpl-dragon-quake` | 動地剁落點環 | enabled | 15 | **0** | 等待＋持續＋續效特效＋多段＋路徑 | — |
 | `tpl-dragon-serpent` | 多實例龍形推進 | enabled | 17 | **0** | 等待＋續效特效＋多段＋路徑 | — |
 | `tpl-dragon-shockwave` | 沿路衝擊波 | draft | 9 | **0** | 等待＋迴圈＋續效特效＋路徑 | — |
-| `tpl-effect-sequence` | 自訂效果序列 | enabled | 5 | **0** | — | — |
+| `tpl-effect-sequence` | 自訂效果序列 | enabled | 6 | **0** | 持續＋多段 | — |
 | `tpl-event-passive` | 自訂事件被動 | enabled | 1 | **0** | — | — |
 | `tpl-global-rule` | 全場規則 | draft | 0 | **0** | — | — |
 | `tpl-ground-nova` | 原地震波 | enabled | 4 | **0** | — | — |
@@ -299,7 +299,7 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | 多段 | **6** | `tpl-area-strike`・`tpl-drain-leech` | enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 6 支接上去（改內容，⛔ 不必動引擎） |
 
 ⚠️ **另一個方向的浪費**：有 **25** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
-　`tpl-ally-shield`(6格/enabled)・`tpl-beam-roll`(21格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-charge-resource`(6格/enabled)・`tpl-combo-finisher`(13格/enabled)・`tpl-dragon-quake`(15格/enabled)・`tpl-dragon-serpent`(17格/enabled)・`tpl-dragon-shockwave`(9格/draft)・`tpl-effect-sequence`(5格/enabled)・`tpl-growth-charge`(9格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-locust-line`(11格/enabled)・`tpl-locust-orb`(12格/enabled)・`tpl-locust-strike`(11格/enabled)・`tpl-locust-swarm`(12格/enabled)・`tpl-locust-travel`(11格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-pull-throw`(12格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-spend-resource`(6格/enabled)・`tpl-teleport`(6格/enabled)
+　`tpl-ally-shield`(6格/enabled)・`tpl-beam-roll`(21格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-charge-resource`(6格/enabled)・`tpl-combo-finisher`(13格/enabled)・`tpl-dragon-quake`(15格/enabled)・`tpl-dragon-serpent`(17格/enabled)・`tpl-dragon-shockwave`(9格/draft)・`tpl-effect-sequence`(6格/enabled)・`tpl-growth-charge`(9格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-locust-line`(11格/enabled)・`tpl-locust-orb`(12格/enabled)・`tpl-locust-strike`(11格/enabled)・`tpl-locust-swarm`(12格/enabled)・`tpl-locust-travel`(11格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-pull-throw`(12格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-spend-resource`(6格/enabled)・`tpl-teleport`(6格/enabled)
 
 ⛔ 它們與上表是**同一個問題的兩半**：一邊有技能在等機制，一邊有機制在等技能。
 

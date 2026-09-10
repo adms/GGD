@@ -1,0 +1,2406 @@
+{
+  "schema": "ggd-two-batch-publication-handoff@1",
+  "assembledFromFinalReceiptAt": "2026-09-09T13:29:01.988Z",
+  "scope": "Publication receipt inventory for two separate isolated local platforms; not production deployment or complete hero gameplay/visual acceptance.",
+  "summary": {
+    "heroCount": 74,
+    "uniqueWorkIds": 74,
+    "slotCount": 444,
+    "batchCount": 2,
+    "isolatedPublicationPassed": 74,
+    "singleSharedServiceAcceptance": false,
+    "productionDeploymentConfirmed": false,
+    "allHeroesGameplayAccepted": false,
+    "allSlotsGameplayAccepted": false,
+    "allHeroesVisualAccepted": false
+  },
+  "constraints": {
+    "firstBatch": "Uses committed historical receipts at 2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b; this round did not rebuild or republish batch 1.",
+    "secondBatch": "All 37 packages rebuilt against aligned 8099 current target, then submitted and administrator-published again; attributed source restoration passed.",
+    "differentServiceTargets": "8098 uses cv_b9b47052d2e3; 8099 uses cv_d3b33838b6cc. These receipts do not prove a unified 74-hero deployment.",
+    "models": "Preserve current bindings and proxy assets; Owner will consolidate model mappings later. No model identity, retargeting or visual completion is inferred from file existence.",
+    "release": "Main review and merge, integrated runtime acceptance and formal deployment remain distinct release steps.",
+    "gameplay": "This table does not attest gameplay. Any separate two-seat sample on batch 2 must not be expanded to all 74 heroes or all 444 slots."
+  },
+  "batches": [
+    {
+      "id": "batch1",
+      "heroCount": 37,
+      "slotCount": 222,
+      "publicationStatus": "passed",
+      "environment": "isolated-local",
+      "origin": "http://127.0.0.1:8098/api/v1",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "rebuiltAndPublishedThisRound": false,
+      "publicationFinishedAt": "2026-09-09T09:28:10.576Z",
+      "pullRequest": "https://github.com/adms/GGD/pull/1135",
+      "pullRequestStatusAtHandoff": "open-draft",
+      "buildReceipt": "batch1.build",
+      "publicationReceipt": "batch1.publication"
+    },
+    {
+      "id": "batch2",
+      "heroCount": 37,
+      "slotCount": 222,
+      "publicationStatus": "passed",
+      "environment": "isolated-local",
+      "origin": "http://127.0.0.1:8099/api/v1",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "rebuiltAndPublishedThisRound": true,
+      "publicationFinishedAt": "2026-09-09T13:29:01.988Z",
+      "pullRequest": "https://github.com/adms/GGD/pull/1153",
+      "pullRequestStatusAtHandoff": "open-draft",
+      "buildReceipt": "batch2.build",
+      "publicationReceipt": "batch2.publication"
+    }
+  ],
+  "receipts": {
+    "batch1.publication": {
+      "location": "https://github.com/adms/GGD/blob/2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b/materials/community-hero-forge/refinements/parody-publication-proof.json",
+      "sha256": "05d820dd0864a4c9769f5f648d895a68751d941b908ef62b75d1b1029cc06eea",
+      "gitCommit": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "localBytesEqualGitBlob": true
+    },
+    "batch1.build": {
+      "location": "https://github.com/adms/GGD/blob/2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b/materials/community-hero-forge/refinements/parody-service-proof.json",
+      "sha256": "f76c013514b1e9ebf5980d7e46072d2d14ef25a6b83145d25105c312cc70dcfa",
+      "gitCommit": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "localBytesEqualGitBlob": true
+    },
+    "batch2.publication": {
+      "location": "receipts/aligned-current/publication-proof.json",
+      "sha256": "0c53efc38e4b9b10f403fbbf2998003865a5ed51822edec3c591158449ff55af"
+    },
+    "batch2.build": {
+      "location": "receipts/aligned-current/service-proof.json",
+      "sha256": "a7ea4bae2c7878c88a3289a5bb2420b09ec5afd14f5ca6d37371cd1fa333b03d"
+    }
+  },
+  "secondBatchSourceLock": {
+    "path": "source-lock.json",
+    "sha256": "e2c1f713066291b1846905b5fd08e70ef89ed47e44c598219336949877f91abf",
+    "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5",
+    "upstreamPullRequest": "https://github.com/adms/GGD/pull/1144"
+  },
+  "verification": {
+    "firstBatchReceiptsEqualCommittedGitBlobs": true,
+    "publicationBuildDigestMatches": 74,
+    "sixSlotBuildRows": 74,
+    "secondBatchSourceFileSha256Matches": 37,
+    "secondBatchSourceSlotKeys": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "uniqueWorkIdsAcrossBatches": 74
+  },
+  "heroes": [
+    {
+      "batch": "batch1",
+      "workId": "community-review-01-20260907",
+      "name": "武藤遊戲",
+      "slotCount": 6,
+      "packageDigest": "sha256:82987ae59b77080d28f5f9f7ef7f43d266a990d7802bb229b3683b7e599b353f",
+      "versionId": "sha256:82987ae59b77080d28f5f9f7ef7f43d266a990d7802bb229b3683b7e599b353f",
+      "publicationRevision": 3,
+      "submissionId": "hero-ccbc984bc3175b9334113e7956e076b37f2a5b467d23ddee0c9ea2354c6",
+      "sourceDigest": "sha256:3834b3fba5214d45b41240122eb06119d938705b5f20f91c96863c35cc649e36",
+      "archiveSha256": "fea445145ede215fa792e65010d50a1b5ff0adc7c32c10a8f75e849dbe99c6fc",
+      "modelSha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/0"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/0"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-02-20260907",
+      "name": "八神庵",
+      "slotCount": 6,
+      "packageDigest": "sha256:69f9e76a121ceb3845dd93aa0f84356d781dbbc830201e48899375308ce9ccd8",
+      "versionId": "sha256:69f9e76a121ceb3845dd93aa0f84356d781dbbc830201e48899375308ce9ccd8",
+      "publicationRevision": 6,
+      "submissionId": "hero-f2f0b48aa3b2ec7eecac0814495e406475871f158487dc8b0f383855f39",
+      "sourceDigest": "sha256:5f04938fd41d395885655e625289fd9589a8490f016ca444079b209799846744",
+      "archiveSha256": "91e817fcee93ad93e8697c98b28d6cd974214d31695555f8bf5f1ed61b45eee2",
+      "modelSha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/1"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/1"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-03-20260907",
+      "name": "不知火舞",
+      "slotCount": 6,
+      "packageDigest": "sha256:774e66c51d8e07675d1a40d776da775b1028db5d2dceafed4b7e34b53178566f",
+      "versionId": "sha256:774e66c51d8e07675d1a40d776da775b1028db5d2dceafed4b7e34b53178566f",
+      "publicationRevision": 6,
+      "submissionId": "hero-d69b060ce577b3fd2920796bc1be0657e4121caec1159265fa349dbe855",
+      "sourceDigest": "sha256:e9340b8a61c21437e041f3cd6aba8170bd1b83df5badb98fef62ac2e3b916758",
+      "archiveSha256": "ba20a228118926abdb8073d22f117389252c55ff8164e676f2742836146d24ef",
+      "modelSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/2"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/2"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-04-20260907",
+      "name": "空條承太郎",
+      "slotCount": 6,
+      "packageDigest": "sha256:b39fb6730d0d3308fd208d6e355b3201c60f9855b53840a0c442e1a96399456f",
+      "versionId": "sha256:b39fb6730d0d3308fd208d6e355b3201c60f9855b53840a0c442e1a96399456f",
+      "publicationRevision": 6,
+      "submissionId": "hero-6107f8596e512b987fad9dfc55b58aa6d0ce6ccea31d5678e7f2de321e1",
+      "sourceDigest": "sha256:1bd9ad6e645a45031f88b1295295c2808eeea2df22368737e20bee3e6580c617",
+      "archiveSha256": "3719f5ea06880d2a1ba7b7706828f050fa2262571c72e9e3bc63c15191ec7284",
+      "modelSha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/3"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/3"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-05-20260907",
+      "name": "洛克人",
+      "slotCount": 6,
+      "packageDigest": "sha256:f1f8aa9b6f739b32bc73fac294c49cd062f1089107da4fb3044e74c1a23043d4",
+      "versionId": "sha256:f1f8aa9b6f739b32bc73fac294c49cd062f1089107da4fb3044e74c1a23043d4",
+      "publicationRevision": 6,
+      "submissionId": "hero-097b528b71237b316686d161504c3014005860b5f2be5c72142213ef08c",
+      "sourceDigest": "sha256:b85dd5ee658697323ded8bd3d211f75872fa21912c64bc5c298cd0e817ffca22",
+      "archiveSha256": "090134ea137cc313906bd393a23e1a0a709dc74f3085c09f513f9457083e6be5",
+      "modelSha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/4"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/4"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-06-20260907",
+      "name": "卡比",
+      "slotCount": 6,
+      "packageDigest": "sha256:c8806eaaf364a10a884ef9d24e19f5c57e30d5c115f124a715062576e4466707",
+      "versionId": "sha256:c8806eaaf364a10a884ef9d24e19f5c57e30d5c115f124a715062576e4466707",
+      "publicationRevision": 6,
+      "submissionId": "hero-d47a51da4ac88af464fa0dd8cae50a8753f3b1525a73ec6120ce6be77da",
+      "sourceDigest": "sha256:151888cf9c7c83277b6e5841162557c293a0515108608f4b09862a29221ab99d",
+      "archiveSha256": "fa0b01a073bd72dab86df378442ed50de41dac3cf4b5bd559ae7e9a8e7da34e2",
+      "modelSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/5"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/5"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-07-20260907",
+      "name": "西索",
+      "slotCount": 6,
+      "packageDigest": "sha256:6d5030ea653672fb467f4df662eedbaea17f7991dc51ae4989badabc571aa28e",
+      "versionId": "sha256:6d5030ea653672fb467f4df662eedbaea17f7991dc51ae4989badabc571aa28e",
+      "publicationRevision": 6,
+      "submissionId": "hero-44cfb8bc0faa7befb890ddd36dad7db52b810ee55b53f7897e706f58c99",
+      "sourceDigest": "sha256:b6755502e9555824c68d077bf6ac8932285e08b299b7a241ee3c7a98d6b6ce10",
+      "archiveSha256": "6822fb07c435a2d36feebd53d6d47f29b6a4d1a8dd865067fe90e86aab79a3c8",
+      "modelSha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/6"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/6"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-08-20260907",
+      "name": "米卡莎",
+      "slotCount": 6,
+      "packageDigest": "sha256:bb7eb8e8a49dab3393737fba86bb318f6daac7b3966c79a2b682f661d4dc41ee",
+      "versionId": "sha256:bb7eb8e8a49dab3393737fba86bb318f6daac7b3966c79a2b682f661d4dc41ee",
+      "publicationRevision": 6,
+      "submissionId": "hero-2a5776d6f4ea0720b5c1359ffcbafd5dae035525dde5997e241a65e7d18",
+      "sourceDigest": "sha256:06dd9f1d40bcff3296373ff782b8b932278113130db437b47e2d3c6eb485f1ab",
+      "archiveSha256": "48e76b0efa44aa84f9b4bf1d02758f76ce6fb3b4283d957c847192a57a25c10f",
+      "modelSha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/7"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/7"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "slotCount": 6,
+      "packageDigest": "sha256:580f2c90986746c41ab753866f9682ad9508885a7c023bb71c7e9f9f70b57e34",
+      "versionId": "sha256:580f2c90986746c41ab753866f9682ad9508885a7c023bb71c7e9f9f70b57e34",
+      "publicationRevision": 6,
+      "submissionId": "hero-000132b30e37d86544991c904069487c06f54ebfb6bafd6ca9bd19dd42b",
+      "sourceDigest": "sha256:950266d3b9a7f24286f2456be1b74c3132ea11040ca83865d93cb82475d3483b",
+      "archiveSha256": "36c216c75d774a1b0f970eac5363f8861b50e5ac95047d7754ceb4c71ccbb2e5",
+      "modelSha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/8"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/8"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-10-20260907",
+      "name": "魯路修",
+      "slotCount": 6,
+      "packageDigest": "sha256:2d917821dce40b583526b01b45fb17ecc4adf7ea73841109128609f1f0f079ee",
+      "versionId": "sha256:2d917821dce40b583526b01b45fb17ecc4adf7ea73841109128609f1f0f079ee",
+      "publicationRevision": 6,
+      "submissionId": "hero-c892d65add0c6cc79ec68f7e8f019cade77617bd0c428fb51540cc60de7",
+      "sourceDigest": "sha256:99a92b17348fa9f920023fcf3c33ad0b8e98f01b817865da6a3c3856d337509b",
+      "archiveSha256": "1c3370face2e7e9bfaa71f580126473a5f6a1eac92fc2b1ef93cf71ef4704436",
+      "modelSha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/9"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/9"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-11-20260907",
+      "name": "利姆路",
+      "slotCount": 6,
+      "packageDigest": "sha256:1ef1dd27373ec656bd6897994c158e056e9e73659efe592b6b3686e890dcb349",
+      "versionId": "sha256:1ef1dd27373ec656bd6897994c158e056e9e73659efe592b6b3686e890dcb349",
+      "publicationRevision": 6,
+      "submissionId": "hero-456f7e86701afa91d9bb1cc1023b708642ca559a5c43ae8258231b027e7",
+      "sourceDigest": "sha256:1ed614f214eab42e42d271ec1a806b5b553795bff9353ad7e240d0ed0c43a9e7",
+      "archiveSha256": "2a3ad3cbf5bd09ddaa74ffdc3221469c2b79dab4df8a8f87e973e19dd94e0c7e",
+      "modelSha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/10"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/10"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-12-20260907",
+      "name": "衛宮士郎",
+      "slotCount": 6,
+      "packageDigest": "sha256:76581c8649447276ef3624d592a17305f65aba70f5bb0864a6d2ea2e4ab2fb41",
+      "versionId": "sha256:76581c8649447276ef3624d592a17305f65aba70f5bb0864a6d2ea2e4ab2fb41",
+      "publicationRevision": 6,
+      "submissionId": "hero-3c83c650326664e8fe6e043ca3f231c6900ba079112025256d93be325bd",
+      "sourceDigest": "sha256:5bea186597bf0148a8f52e9dd319f80c2cd9db4bf5374661acd922ba2d0ae6b7",
+      "archiveSha256": "c04e38e03faccee1c17a7a2b76e44b57c83a2aa86f1014b2b75fd37ddacda613",
+      "modelSha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/11"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/11"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-13-20260907",
+      "name": "朝田詩乃",
+      "slotCount": 6,
+      "packageDigest": "sha256:bbc83b8034f15b068b63b84d62e4774ab79a83a801d5941e0e64e466149fa26e",
+      "versionId": "sha256:bbc83b8034f15b068b63b84d62e4774ab79a83a801d5941e0e64e466149fa26e",
+      "publicationRevision": 6,
+      "submissionId": "hero-f0aed4233f71a38b973ad609b61b57b11a95b80e4957e5d2ed92d9c4296",
+      "sourceDigest": "sha256:34059319b01a73df7b5c34b805b51dbd5a1dac164a0c752d549cad304abb8819",
+      "archiveSha256": "900b47ca0a412061df1008fbdde972b03c3bf5b216dc28c0d68c3a3468861e18",
+      "modelSha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/12"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/12"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-14-20260907",
+      "name": "殺老師",
+      "slotCount": 6,
+      "packageDigest": "sha256:41998c01ac78b49e3d4a2a034cd11fafb157eccc025fe06fd0e70ffb2b327382",
+      "versionId": "sha256:41998c01ac78b49e3d4a2a034cd11fafb157eccc025fe06fd0e70ffb2b327382",
+      "publicationRevision": 6,
+      "submissionId": "hero-44a693ad1c386af98d8e9da2f10c3de79c1f83d92ae7bb525c64d56a8c6",
+      "sourceDigest": "sha256:8a7c523544b2d1ead2640e6aefe7b4a8fc892ae79798ee8b27a8c9b3332fddbe",
+      "archiveSha256": "b721471bfc225e5446d34b27dc42c13c84197ab356bae5146a41c43b123cdbd8",
+      "modelSha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/13"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/13"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "slotCount": 6,
+      "packageDigest": "sha256:35d3bcc612f20c382f89232ead8d66c59c537c330ef0da977bd09f759fcc202d",
+      "versionId": "sha256:35d3bcc612f20c382f89232ead8d66c59c537c330ef0da977bd09f759fcc202d",
+      "publicationRevision": 6,
+      "submissionId": "hero-2739d34acae9924240a3484e14a624822a18e6c5c2597f90d26296d51ce",
+      "sourceDigest": "sha256:0e4fc319db27b90a6211cc83802484beb6feddfde7fc238e1cc9d106a19961f7",
+      "archiveSha256": "ef28fea14164a8b0a885c384ecad3bb485d5b3bdc93f8f341758dbd4dd76d2cd",
+      "modelSha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/14"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/14"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-16-20260907",
+      "name": "魔法少女☆伊莉雅",
+      "slotCount": 6,
+      "packageDigest": "sha256:b2c9d229984114edfef405f38c92b18c9bf4a13609e73818d84cc755ea1eb693",
+      "versionId": "sha256:b2c9d229984114edfef405f38c92b18c9bf4a13609e73818d84cc755ea1eb693",
+      "publicationRevision": 6,
+      "submissionId": "hero-47a1e548ab46e3257dc950f3cdda83bcf8a4279afe5e79ba34991fa627e",
+      "sourceDigest": "sha256:05eb9a94ede2dc07e78c152c31dc4292501c67b81b1c1306b38bcb40b44947f2",
+      "archiveSha256": "16aeb5778590544a25d0833f29820be61b72eaf9ca56a92e5a3703c621547aa1",
+      "modelSha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/15"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/15"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-17-20260907",
+      "name": "安茲·烏爾·恭",
+      "slotCount": 6,
+      "packageDigest": "sha256:853d11e6cd4b68a117c7d7dc220a3acc69f961b6e316162e9d7e34168921cef6",
+      "versionId": "sha256:853d11e6cd4b68a117c7d7dc220a3acc69f961b6e316162e9d7e34168921cef6",
+      "publicationRevision": 6,
+      "submissionId": "hero-2d267c6fa809165d4ba00e4705577694cad5ddf1e15339c7f0242f2bbbc",
+      "sourceDigest": "sha256:b0949d31945d65b76b219dd9adeb12e3918d2de0b48699f2a2ba284e6c10f41d",
+      "archiveSha256": "df10ef2b0e6eeb9e9876a62113a809e52e1d87d554632561eb32d2711e00a4dd",
+      "modelSha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/16"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/16"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-18-20260907",
+      "name": "吉爾伽美什",
+      "slotCount": 6,
+      "packageDigest": "sha256:ca2c934a641c8e8704603321558361264eed845dd352e199b459acb7d44d2e07",
+      "versionId": "sha256:ca2c934a641c8e8704603321558361264eed845dd352e199b459acb7d44d2e07",
+      "publicationRevision": 6,
+      "submissionId": "hero-ff500b851a06cc1f14bf0ea207f1dd8989dd1246e1d0062a085f4c105f0",
+      "sourceDigest": "sha256:7bd1aad39ba87e9743afdf9e78d2be2a85572806c75f7e1a009f0aa27e605762",
+      "archiveSha256": "707ef18c50a4ab510d5b301103ca79037109cf4c352e75a94d0008f38efdeee6",
+      "modelSha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/17"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/17"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-19-20260907",
+      "name": "桐谷和人",
+      "slotCount": 6,
+      "packageDigest": "sha256:46038521ab116f0a5e695ae0c6a139161b576283930afb9489941e0a250a21a5",
+      "versionId": "sha256:46038521ab116f0a5e695ae0c6a139161b576283930afb9489941e0a250a21a5",
+      "publicationRevision": 6,
+      "submissionId": "hero-e8973a786169dadf0272bc3765d042224a8245a22f6dcc8ce42a412e81f",
+      "sourceDigest": "sha256:48bd8fc72452e6b06a0bf33d48dbcf59826e407d0228760be1a92dc0494fc89f",
+      "archiveSha256": "05583634fa4749af1d366894c714c6a9f317cc72efaa434f24e09f48c3fe7208",
+      "modelSha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/18"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/18"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-20-20260907",
+      "name": "御坂美琴",
+      "slotCount": 6,
+      "packageDigest": "sha256:b69d2b184063f19b5ae9e37964a51fa8045b592901b0cbec8e36eabf8f490138",
+      "versionId": "sha256:b69d2b184063f19b5ae9e37964a51fa8045b592901b0cbec8e36eabf8f490138",
+      "publicationRevision": 6,
+      "submissionId": "hero-3a040bfdf7c9974eb34cdbd911de3e28751760c88302003a6a9fb772fb9",
+      "sourceDigest": "sha256:6f453b226d21454d3244f1c8ddf94093a9805f4a30c512692beb13aa9037f1ff",
+      "archiveSha256": "16c0f777330e985b6d1d9683f37154f2f02ce099c525e4a0a3aac202628ece45",
+      "modelSha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/19"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/19"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-21-20260907",
+      "name": "鹿目圓",
+      "slotCount": 6,
+      "packageDigest": "sha256:028970e2c34193d503dc8f58754ea5a68fed48ddf1543104b722e2f4e066974b",
+      "versionId": "sha256:028970e2c34193d503dc8f58754ea5a68fed48ddf1543104b722e2f4e066974b",
+      "publicationRevision": 6,
+      "submissionId": "hero-0ce3d7e09b33d48d2a7f76d870bc2da9c5b79249bb8ff31c3b98bf6f88d",
+      "sourceDigest": "sha256:ace1011a6383d0cb8cca8533767fdbdaed60910f79c0d68d1143389463dbcaec",
+      "archiveSha256": "a68aad692c673afaf0c12d8af85e1ef21530444a87208e9381fec68f28013df2",
+      "modelSha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/20"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/20"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "slotCount": 6,
+      "packageDigest": "sha256:95e6afbb6615407e5ff13858196ab73a5b4a086714df25232aacb00c160829a0",
+      "versionId": "sha256:95e6afbb6615407e5ff13858196ab73a5b4a086714df25232aacb00c160829a0",
+      "publicationRevision": 6,
+      "submissionId": "hero-267b54bdf0e832d6107f0e1d61f3552e6e8f5b573a04a1fb1c8ed5b07b9",
+      "sourceDigest": "sha256:f33cfe3cfcaaf6fa29201f209dfd6318f4ba60df1560df526ac907e3fd46e209",
+      "archiveSha256": "47e5a58532652f9a008aaa8b9863c9796ee87f390df902446bdd6f67aa710086",
+      "modelSha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/21"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/21"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-23-20260907",
+      "name": "坂田銀時",
+      "slotCount": 6,
+      "packageDigest": "sha256:c464f30886e6a87c9aa4f737e76fc89ac94cdd077e0a0e32fbfb0dbb9c1ca72e",
+      "versionId": "sha256:c464f30886e6a87c9aa4f737e76fc89ac94cdd077e0a0e32fbfb0dbb9c1ca72e",
+      "publicationRevision": 3,
+      "submissionId": "hero-cf069a586dbf41eb60eceb21a613cc9b49e78524298a4f6d1e3571e1554",
+      "sourceDigest": "sha256:9b0565275cfca53cf5c39e1ea1c8e8940b21650aefff42eb1a4b4fcf84da13d1",
+      "archiveSha256": "0dc727a8dffeb998ffcfc95f57d4fb948212fd0d393a0ce28f1a7a5c22f2c620",
+      "modelSha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/22"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/22"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-24-20260907",
+      "name": "奇犽",
+      "slotCount": 6,
+      "packageDigest": "sha256:d7726452bea1172de0a29475a6bb3f2f53b06ef20e170199c5b17db52b748e0e",
+      "versionId": "sha256:d7726452bea1172de0a29475a6bb3f2f53b06ef20e170199c5b17db52b748e0e",
+      "publicationRevision": 3,
+      "submissionId": "hero-948db7cfcebc23338741c2fe4e5cdde317c910da5177768055328b90510",
+      "sourceDigest": "sha256:b053a177540e713a3a322c5b8a97100e592a80bef5dcba232d39876dc5e801a1",
+      "archiveSha256": "2188f13c760e0b474a7e3319aaf94d2b9d983b732aac98c18be88d3f4de24ab9",
+      "modelSha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/23"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/23"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-25-20260907",
+      "name": "一拳超人",
+      "slotCount": 6,
+      "packageDigest": "sha256:1b479feaae7bc1df3a44f7a1b42d401cd30bd11790a02aa88e1d603e24b79c4b",
+      "versionId": "sha256:1b479feaae7bc1df3a44f7a1b42d401cd30bd11790a02aa88e1d603e24b79c4b",
+      "publicationRevision": 6,
+      "submissionId": "hero-54ecaed5f54a4485abb97b40db74a7bf792b9e797f2680ce40567801d17",
+      "sourceDigest": "sha256:400606707077260285d81f6c05f5c0f70f79f854cdb052cf5a98a0e548250808",
+      "archiveSha256": "7bcdc872128de5464c74b28e33703ecd03d173b32c7fd27d33b19863bbf52920",
+      "modelSha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/24"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/24"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-26-20260907",
+      "name": "名偵探柯南",
+      "slotCount": 6,
+      "packageDigest": "sha256:84e7e3959d65e0e111d7adba766092b28dd429281063ea6d6670364ebb779125",
+      "versionId": "sha256:84e7e3959d65e0e111d7adba766092b28dd429281063ea6d6670364ebb779125",
+      "publicationRevision": 6,
+      "submissionId": "hero-25b09932fb2fde3d3bdbee5ea2d8218b5fce403256a152e61fea75ac13b",
+      "sourceDigest": "sha256:a00d7e7d54ac2777ac688cb7fd4694ca0887ca23afcb7b69bf3c0bcf42b91d8b",
+      "archiveSha256": "db08ebb952f689a72e85954709035313d7cb3a1918406ce9a9845e492a5cc2a3",
+      "modelSha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/25"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/25"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-27-20260907",
+      "name": "庫洛魔法使",
+      "slotCount": 6,
+      "packageDigest": "sha256:18fee4ef46f7166c9434d0ca4064326d6b719a3690b730dbc558af4cd40d1f1d",
+      "versionId": "sha256:18fee4ef46f7166c9434d0ca4064326d6b719a3690b730dbc558af4cd40d1f1d",
+      "publicationRevision": 6,
+      "submissionId": "hero-d5e4c1f1a8198857b53ff5f67d4b83ae2df56be0420d76a86f77a22a50c",
+      "sourceDigest": "sha256:32aa98543d3a191b53dd50c7f5ff0a6f8e739f6d9cd6e2f58ed5d9f9c4160e47",
+      "archiveSha256": "f177049f07a0a00bba3f46f7daabb0a8f471590687bc661ac0d9071ad96a2f8e",
+      "modelSha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/26"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/26"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-28-20260907",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "slotCount": 6,
+      "packageDigest": "sha256:4964b954701a7235ce16d328372995d1ce00f31005d8ee947aa9cee9debce0b7",
+      "versionId": "sha256:4964b954701a7235ce16d328372995d1ce00f31005d8ee947aa9cee9debce0b7",
+      "publicationRevision": 3,
+      "submissionId": "hero-fb968a4f3218b6b12d1d88d57a15c66b7390ed08e5f56533ac39488e5e8",
+      "sourceDigest": "sha256:8dfa07aae7fa41d19a6886df280c36c0730c2f7d9fb3eee1639b42a66147bee0",
+      "archiveSha256": "c06409068fc66103ce5944e81a9ee0dae1ab003f57cac4899e40016840e36623",
+      "modelSha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/27"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/27"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-29-20260907",
+      "name": "芙莉蓮",
+      "slotCount": 6,
+      "packageDigest": "sha256:42603d0744b5fbb566c49e55a6edeaa6e6bece8a28ca3c43c7a7688d9f4eb195",
+      "versionId": "sha256:42603d0744b5fbb566c49e55a6edeaa6e6bece8a28ca3c43c7a7688d9f4eb195",
+      "publicationRevision": 6,
+      "submissionId": "hero-31cddbff86adf46c7e58b906e34c756d4ea5d5bdd98cd95e8f56ddf8051",
+      "sourceDigest": "sha256:a35d7643a297c73a5c29c48cd416799bf8c5412aeeb9f5ce86549db7389d8f69",
+      "archiveSha256": "2d256c0508932d3cd3ed34a349c21852da82e145db42db550fd4b18a8ef18f88",
+      "modelSha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/28"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/28"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "slotCount": 6,
+      "packageDigest": "sha256:90e7331529cb0e45ae71070ecf60abd365b01d559fce7882f763de84596c31a0",
+      "versionId": "sha256:90e7331529cb0e45ae71070ecf60abd365b01d559fce7882f763de84596c31a0",
+      "publicationRevision": 6,
+      "submissionId": "hero-43cfa1ba144d39ec7b8a0c788ed1d9785cfc5aed9dfb634b2b8ee61bb57",
+      "sourceDigest": "sha256:2460e9f722d647a5b1bad15227519fbbcb740d8ad53363118defa0e1ac37f965",
+      "archiveSha256": "0e41a93b6216cc47cc5f6a7bcc1e9c69449bbdeaeb4f39bb380b541507a6daa5",
+      "modelSha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/29"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/29"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-31-20260907",
+      "name": "SUN樂",
+      "slotCount": 6,
+      "packageDigest": "sha256:ee09e3de60a786ab75a0fdde91db8e078fa248ff69e11fe277e3dded32cbf5dd",
+      "versionId": "sha256:ee09e3de60a786ab75a0fdde91db8e078fa248ff69e11fe277e3dded32cbf5dd",
+      "publicationRevision": 3,
+      "submissionId": "hero-4b8b29b160ad0e1652ca432c8d5b85369d4a73eac6308ead0bf1f9c3b27",
+      "sourceDigest": "sha256:3cafe25192a5dbe32add15c54046acaad86a61b5d980f885d7603fca692850e7",
+      "archiveSha256": "ccaddbd0eab48d077c66596addea783b26d1f11dd0139e01402410c73c24ae5a",
+      "modelSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/30"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/30"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-32-20260907",
+      "name": "阿薩謝爾",
+      "slotCount": 6,
+      "packageDigest": "sha256:7c7c4e6a71d45f1c501b6dbe35821f39cc779bed249eb128b6786d69f164834c",
+      "versionId": "sha256:7c7c4e6a71d45f1c501b6dbe35821f39cc779bed249eb128b6786d69f164834c",
+      "publicationRevision": 6,
+      "submissionId": "hero-6000c9205b177d0549f8fa0650d6aacb3b8b7d72d0121b1a14ce51b32d3",
+      "sourceDigest": "sha256:81091265e8b691df282177094ad6dc46274d15a07d48ffd511e9058f9d9cb347",
+      "archiveSha256": "38ee0aba57e69881b719587a8cc42038c096eb40d6b295536f9d574caa3b8f93",
+      "modelSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/31"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/31"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "slotCount": 6,
+      "packageDigest": "sha256:2b024b490bf4d09ce79e5aee1fd870217a67bed9be83b19a144322b98ff73648",
+      "versionId": "sha256:2b024b490bf4d09ce79e5aee1fd870217a67bed9be83b19a144322b98ff73648",
+      "publicationRevision": 6,
+      "submissionId": "hero-7af1927ab75b79b736956f41d81c45f1187f5a12a545c0734bac5685b5b",
+      "sourceDigest": "sha256:6e889a323f57399407c164a30896b557fb1989c7e95ceb6b7b4bb20a89d5462a",
+      "archiveSha256": "200020969f1ff5ffc591baff1e9f67ef044c25a5dfe0ce9bbbfa6629b4caf78e",
+      "modelSha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/32"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/32"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "slotCount": 6,
+      "packageDigest": "sha256:fe5052a0b2bc39865e48fe51d9d75f23bab59c47aeb9d770e4dff10ccfb3c885",
+      "versionId": "sha256:fe5052a0b2bc39865e48fe51d9d75f23bab59c47aeb9d770e4dff10ccfb3c885",
+      "publicationRevision": 6,
+      "submissionId": "hero-2554675ae2bba05dce36da7172785136e069ccc3f77d705b71453a91c34",
+      "sourceDigest": "sha256:00f24fa75cce0c48562ab39c280db36a4b1646631555f7f2181862d3d09d654a",
+      "archiveSha256": "546ff265136490624f15f3634ad4ce6d03f3e37d7249406642683f256bd82aba",
+      "modelSha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/33"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/33"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-35-20260907",
+      "name": "炭治郎",
+      "slotCount": 6,
+      "packageDigest": "sha256:72a476940ccdfee6b37c0cba943e618ab04031d427b1c6e1964e207495342af2",
+      "versionId": "sha256:72a476940ccdfee6b37c0cba943e618ab04031d427b1c6e1964e207495342af2",
+      "publicationRevision": 6,
+      "submissionId": "hero-209ee0a193ffd22ac82573e3d17cdb7960fa4574ddd4d9a14a2cc1ba52a",
+      "sourceDigest": "sha256:b6dc85724e55b6f0d681afb4c77240660e040bf7aa5c17fd1852ce4c497a3732",
+      "archiveSha256": "f049466aa171d4ce3d7e7cd2560a281a27495d20ded12946bba1b613491853f0",
+      "modelSha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/34"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/34"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "slotCount": 6,
+      "packageDigest": "sha256:e92cd25bbd1b8d69f303ff3ed8b8d626de3692f0fc621f85656c2438326d9b28",
+      "versionId": "sha256:e92cd25bbd1b8d69f303ff3ed8b8d626de3692f0fc621f85656c2438326d9b28",
+      "publicationRevision": 6,
+      "submissionId": "hero-2aa0d628e5687718b6f7b7e51efab2d342be49c5e886b241870278e9541",
+      "sourceDigest": "sha256:2197a0b0d13caa22fa28a76febd40ae30d119dcb3d430f5232685ce11841eccc",
+      "archiveSha256": "449e07d23612830c5a82d708efd26a325b88c40d8b704ecb916f49763f2adcc8",
+      "modelSha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/35"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/35"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch1",
+      "workId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "slotCount": 6,
+      "packageDigest": "sha256:3315adc00e0304c006cc4a3e4e02292a3c0c72b85ecf412df818400b50ba14db",
+      "versionId": "sha256:3315adc00e0304c006cc4a3e4e02292a3c0c72b85ecf412df818400b50ba14db",
+      "publicationRevision": 6,
+      "submissionId": "hero-5e780ccf16516c381c9be0349a21f540824e5b05d9914586f1dbdb624bc",
+      "sourceDigest": "sha256:18e93e776bb62faaba67b6b6ce445def96604cf0e82b89cb31679deec4bc24c8",
+      "archiveSha256": "3e44d77701f1262a4e2bcf5cec385020e6f8ed782a0e130fb28701d1b358585a",
+      "modelSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_b9b47052d2e3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch1.publication",
+        "jsonPointer": "/results/36"
+      },
+      "buildReceipt": {
+        "id": "batch1.build",
+        "jsonPointer": "/results/36"
+      },
+      "attributedSourceRestored": true
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-aladdin",
+      "name": "阿拉丁",
+      "slotCount": 6,
+      "packageDigest": "sha256:d210953b06cc955d9fb53c3810d564a31daa64186dfcc66d0e35ebe57c418fe8",
+      "versionId": "sha256:d210953b06cc955d9fb53c3810d564a31daa64186dfcc66d0e35ebe57c418fe8",
+      "publicationRevision": 6,
+      "submissionId": "hero-d10a96a9defab0a05dec01c73eca92104939a1bb13083e5d64a60c593fa",
+      "sourceDigest": "sha256:42d367fd6d71677b7e1363bb30adeb18e8b008b4923c4c5e5b238f261e6ffa4e",
+      "archiveSha256": "202c59f5a8c1e46f388654d5e25c69eea721b3a581b6b1546520a25db921f40c",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/0"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/0"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-aladdin.project.json",
+        "sha256": "309675b52b41ac3cf9eb0c5ae1490f183b89eb3c798f2641fae2e376de3f32c9",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-albus",
+      "name": "阿爾巴斯",
+      "slotCount": 6,
+      "packageDigest": "sha256:a6296ce712c0f7cda2a15bb6dcc9365a4a0e754dceff7c5b6596ec1cec452a89",
+      "versionId": "sha256:a6296ce712c0f7cda2a15bb6dcc9365a4a0e754dceff7c5b6596ec1cec452a89",
+      "publicationRevision": 6,
+      "submissionId": "hero-66b528c0b7a028c85fb089387c4b914778cbf0bef0f2d1bf629af53af1c",
+      "sourceDigest": "sha256:200aab6a3a6bd95e3e950b2148a7c0ce858c552628248940ac9ad5a88a08772e",
+      "archiveSha256": "ce4f1e89ca19a9c597aa1d851b21dbfe3a079e4d12b26cdceecb4a1a53384647",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/1"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/1"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-albus.project.json",
+        "sha256": "4c4af9a3a4a07dc0481cdd3de438f8be7b58028a1c4597ac24fc17bb56e3d2f7",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-bojji",
+      "name": "波吉",
+      "slotCount": 6,
+      "packageDigest": "sha256:c4d1a3c117457f06c20de8e678495f59e8ce4a65600fe20b3e30135e04b0eb44",
+      "versionId": "sha256:c4d1a3c117457f06c20de8e678495f59e8ce4a65600fe20b3e30135e04b0eb44",
+      "publicationRevision": 6,
+      "submissionId": "hero-258c4bb867cb31e8ca5ab8269367149d272b435f09f22b0027685ae6373",
+      "sourceDigest": "sha256:19956a5126e44d5b86afcd2fe9728ac0c15b59627bfdb39b9471b6c4baabbe45",
+      "archiveSha256": "b542077be3eb89cfdf76b6371332eecc2151a739782c1dbea6aa60e176fbfb44",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/2"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/2"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-bojji.project.json",
+        "sha256": "2458acfb83b7d9709577225576bd78d3cc1a358a600949d5cc869cf090a4da1d",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "slotCount": 6,
+      "packageDigest": "sha256:892647cc78ee09546d627106664fc57789f2e29ce9c09ea6dc87309379613b7d",
+      "versionId": "sha256:892647cc78ee09546d627106664fc57789f2e29ce9c09ea6dc87309379613b7d",
+      "publicationRevision": 6,
+      "submissionId": "hero-237bf0eae471d1dcc4677c451963043e5fdb2222887da43a8afbd4edcb7",
+      "sourceDigest": "sha256:571ba727da0fdfd0db252d0c35edd31c69e684e9908d17970f181ec3bbfc2b0c",
+      "archiveSha256": "66c1fd0f6bc0f3518cea4b7af7da62a04f097edfe03e3282ef06b3c8187c83a4",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/3"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/3"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-boxxo.project.json",
+        "sha256": "44eda2885d758657eb30b9605641a17d2850f78b5c54855d920fe0a13d5981a5",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-elma",
+      "name": "艾爾瑪",
+      "slotCount": 6,
+      "packageDigest": "sha256:47cb5ebd20ac225fa03d64a9c1a836f6220d07d9f43c6c61bfebba4439cd82fc",
+      "versionId": "sha256:47cb5ebd20ac225fa03d64a9c1a836f6220d07d9f43c6c61bfebba4439cd82fc",
+      "publicationRevision": 6,
+      "submissionId": "hero-11cf213d82715efda18c7755f816c2fc21d000399a9ae94e87d50ce4eb6",
+      "sourceDigest": "sha256:24ff427fe566fcc3f54e16dd9ddd568b9158d1939abb4e9f6947ba1ea364c3b9",
+      "archiveSha256": "d311b52208a91d6917e5d415d73ce1b67d5cbe8c0220d84a3540f1d980dd0fbb",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/4"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/4"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-elma.project.json",
+        "sha256": "1ae81c776d1e297178ab76c2e8b18a91ac97d14d370747d79f548ad6d4f08907",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-fushi",
+      "name": "不死",
+      "slotCount": 6,
+      "packageDigest": "sha256:3b70541ae8eb7608584f113f5a4d20b6eea383b3fd87c4720057348ce64dec94",
+      "versionId": "sha256:3b70541ae8eb7608584f113f5a4d20b6eea383b3fd87c4720057348ce64dec94",
+      "publicationRevision": 6,
+      "submissionId": "hero-c1975489f9389e8520903a56ac3967f2f85f1c65b4f4109a59d3abd79d4",
+      "sourceDigest": "sha256:70f09254f860141e99e9d46851b7443581c68271474ccf83de963f0abc46711f",
+      "archiveSha256": "efafb88726f6f773112d3f8b1fd9d0a64f40684744b9f1ab7cc4067cc3ca6cf2",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/5"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/5"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-fushi.project.json",
+        "sha256": "dabcd743c6ebd745c509c3a5091a8b7dea4af0603cc124527e5c303c6e732632",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-goblin",
+      "name": "哥布林殺手",
+      "slotCount": 6,
+      "packageDigest": "sha256:d9be713c6df23c1f4fdcbb738de396454c48fa1d36b30e018a3b576d555d7538",
+      "versionId": "sha256:d9be713c6df23c1f4fdcbb738de396454c48fa1d36b30e018a3b576d555d7538",
+      "publicationRevision": 6,
+      "submissionId": "hero-4320a7cdf7552c5b26a00a86924516fdf2a0fb7ea61ab3c50bf23638dc5",
+      "sourceDigest": "sha256:aa47bedb7170e6b2032de0a9d38da9acad550ac4f64fe40260414b1d64fd5186",
+      "archiveSha256": "b3065c8caa0c6e89996cf67470fb15640205301f90dbf1edf8fbbdf250d60e14",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/6"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/6"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-goblin.project.json",
+        "sha256": "f2dbefda3c6bef9d658382d9fffb44826496a0b08903b02574c6a017b4894ec6",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-guts",
+      "name": "凱茲",
+      "slotCount": 6,
+      "packageDigest": "sha256:28315cc151e1b345c5e54df595b4533e38e07bd220a92f7d258babc32b14663f",
+      "versionId": "sha256:28315cc151e1b345c5e54df595b4533e38e07bd220a92f7d258babc32b14663f",
+      "publicationRevision": 6,
+      "submissionId": "hero-c899f46e27cea0223754a922e0bbbe1a9eb0166c33f5b8554083691e3f6",
+      "sourceDigest": "sha256:4e9a1afa51fe8fdb32b75ff2f4140d06d62aa0d08ba8b5fc2381f3867bde6445",
+      "archiveSha256": "76f1b2e17e814c286b2a22cbe08b1e1ad522cb61d6419b57159ac66e7532cb83",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/7"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/7"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-guts.project.json",
+        "sha256": "1fb7ee5c15f6f24942a25a8597e386b3089a065b8d073d14aa264d850f0e7995",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-haga",
+      "name": "羽賀",
+      "slotCount": 6,
+      "packageDigest": "sha256:eb3dcd57b830e95bb096c73bd0ca5a951695696fb40bffb1815a495b36274445",
+      "versionId": "sha256:eb3dcd57b830e95bb096c73bd0ca5a951695696fb40bffb1815a495b36274445",
+      "publicationRevision": 6,
+      "submissionId": "hero-de9515e7a7b8c463554412b4bdd81d74b8a7c975409797a5a1951785fec",
+      "sourceDigest": "sha256:757eda703f504318c012ffe3c062fe45c0ece8e7e4aacfcc3dfa725cdbbe2734",
+      "archiveSha256": "876c4e1d4e8dcab80c262b4538b7f187777d404f7d0aff0aeaabacd1e917533a",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/8"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/8"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-haga.project.json",
+        "sha256": "0fa3263b2beef67aa954e17a9b56576924dddc7ddbf79eee8b1eeff932f2695b",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-kaede",
+      "name": "楓",
+      "slotCount": 6,
+      "packageDigest": "sha256:dceb4c5db32112812037de205798210063d5abe3b7ff1c36d0dbd7b59e038e8f",
+      "versionId": "sha256:dceb4c5db32112812037de205798210063d5abe3b7ff1c36d0dbd7b59e038e8f",
+      "publicationRevision": 6,
+      "submissionId": "hero-82e90b6d6937e882973682b04440805d04a9190df67a55c184a02c889ec",
+      "sourceDigest": "sha256:1abc28166a52cf4c17691c0a4fd2a37efb526429e077bd89088a6dee29ee5650",
+      "archiveSha256": "97a012272e0f936bebf48230d7fb004d8d723ffa2afdc9cbcbf70a0bd5994a9f",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/9"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/9"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-kaede.project.json",
+        "sha256": "9fbd5fdf47fc0b362d24c7c1bd25856d403757d6cfb72ba6ead87a192a12b43d",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-kaiji",
+      "name": "伊藤開司",
+      "slotCount": 6,
+      "packageDigest": "sha256:71d87f5a4b7812fe9a1b0d42328d21fa253f30432d163901a17cec0874910216",
+      "versionId": "sha256:71d87f5a4b7812fe9a1b0d42328d21fa253f30432d163901a17cec0874910216",
+      "publicationRevision": 6,
+      "submissionId": "hero-ecedf58b6dceff982abce0ad350e3c1acdc7e411d7cc27c2ae8ba58f4a8",
+      "sourceDigest": "sha256:a8ec05cb0bceeffd3d483e0ae70dc45727f8c26c760562d5d841af48fd9fb05e",
+      "archiveSha256": "2aa592d6e25cc38a53171b41bbfca09ecd5155e37d3ef2465274f78b4b930618",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/10"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/10"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-kaiji.project.json",
+        "sha256": "8e2a313cbe67cd66760b651799f739effdc457f441f7f3ff37f1293c03b2ec45",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-keyaru",
+      "name": "凱亞爾",
+      "slotCount": 6,
+      "packageDigest": "sha256:2e63a0b046050ab4988a1e013898db77f2c1224086ff63ed22acfa4c07d146d9",
+      "versionId": "sha256:2e63a0b046050ab4988a1e013898db77f2c1224086ff63ed22acfa4c07d146d9",
+      "publicationRevision": 6,
+      "submissionId": "hero-05f84143bae75b64c2d289ef533dbc547c88d921a9036c555f56516fa8f",
+      "sourceDigest": "sha256:53254424ed9df63d9695f4064db33db4e49b3330637ac00faf6bd6de9a8c957d",
+      "archiveSha256": "ceb37464aa6fc5567dd32cb4d81bfc66f1f22277310dd2caa4cbe881e89f7c1d",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/11"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/11"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-keyaru.project.json",
+        "sha256": "3545f86f385310f43da9294b54d262f765673e112bd2fcc2305df4469c391de2",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-kisaragi",
+      "name": "如月電車",
+      "slotCount": 6,
+      "packageDigest": "sha256:52bedd5e4c7cfc920c95bae27c8133e7ff13a911c6a0158eb88771a96b2c141e",
+      "versionId": "sha256:52bedd5e4c7cfc920c95bae27c8133e7ff13a911c6a0158eb88771a96b2c141e",
+      "publicationRevision": 6,
+      "submissionId": "hero-6b9fbbe541608232c48c4a6ed4dd82983dc6048d951e5d646bcbf625199",
+      "sourceDigest": "sha256:771b9ac58a6404c302e4a1e4c4c7c26de0be46c9231d63a4b446390b30e846ff",
+      "archiveSha256": "24574dc39489a87ca9b88822cd15902ffd9992acc3b47a471b485ad1e5066bb0",
+      "modelSha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/12"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/12"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-kisaragi.project.json",
+        "sha256": "72d30f5117fbb5a6c5c5790a01270f56009b89104281e68a0d1011db5890cc37",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-klaus",
+      "name": "克勞斯",
+      "slotCount": 6,
+      "packageDigest": "sha256:ba96e82b56ca4bef67ac7704dbae818f8b8e95eab2b981ecda0b027b70bce272",
+      "versionId": "sha256:ba96e82b56ca4bef67ac7704dbae818f8b8e95eab2b981ecda0b027b70bce272",
+      "publicationRevision": 6,
+      "submissionId": "hero-42fd016e52b2a8fd569c2fac66a877fd3c426783896f0e5e4fc74b4accc",
+      "sourceDigest": "sha256:9ad1076b74197546858a47b52d013d4047fbd2b5a3a01cea9319d6c072551ac9",
+      "archiveSha256": "f606331cca69a1375205a94b501e88c6cc47f0c745f658c15b27754f1b41561c",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/13"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/13"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-klaus.project.json",
+        "sha256": "4d910f6040219cc9784241d33fc8ebf01b46d8cabd862cfa2529fed3732fffe9",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-kumoko",
+      "name": "蜘蛛子",
+      "slotCount": 6,
+      "packageDigest": "sha256:48933b2d64b12b44a2065fdf1f8065890430daa6b014e3b43e9ba754306797cb",
+      "versionId": "sha256:48933b2d64b12b44a2065fdf1f8065890430daa6b014e3b43e9ba754306797cb",
+      "publicationRevision": 6,
+      "submissionId": "hero-c1695536163fcb6a5fc773ecf602faae8a1aaaf5d11594f8f8df43207e4",
+      "sourceDigest": "sha256:944e4e951eb99633d7bd517a7784056448725fde66a373102adfc21b661518c2",
+      "archiveSha256": "62ded7cc1474611123da32442c899afce13c170a03f2302681f4bc51e8a57985",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/14"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/14"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-kumoko.project.json",
+        "sha256": "a6f26785079d75c8efa44ea70da4cce4b2e8fa7e9b39810976530983460fb5c9",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-luckyman",
+      "name": "幸運超人",
+      "slotCount": 6,
+      "packageDigest": "sha256:fce76f7e56318908c0a1f90f3764b3d7995f7f624ad24b153d35db68a34082c7",
+      "versionId": "sha256:fce76f7e56318908c0a1f90f3764b3d7995f7f624ad24b153d35db68a34082c7",
+      "publicationRevision": 6,
+      "submissionId": "hero-ec5e7462d59a347371bc8e6dc128d65c015601cb0550f6189db10ad852c",
+      "sourceDigest": "sha256:7b1f3c3b313e81339845abad8551d62b0ec83d1861d244a371d058114c3e494c",
+      "archiveSha256": "df5751e47ab1676cfafa66ca2a95e77252d285c5aba70eb2841794ee6d4c4588",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/15"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/15"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-luckyman.project.json",
+        "sha256": "769d099cac943a6b5683d878c9bdc97d113569b1a522eb26ef531a498ffa82f8",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-makoto",
+      "name": "深澄真",
+      "slotCount": 6,
+      "packageDigest": "sha256:10bf9bb1ecf7572f8c7f8437a04068c9640c71add9845a8d6d3c026ff781fa43",
+      "versionId": "sha256:10bf9bb1ecf7572f8c7f8437a04068c9640c71add9845a8d6d3c026ff781fa43",
+      "publicationRevision": 6,
+      "submissionId": "hero-389d714bce7015dc65e73d27f5fcd0c4e71b5dd0d54767c1c1dbc4ec114",
+      "sourceDigest": "sha256:59867be5abd34bc2982905bade4db389f047b94f1d1db4253835002ac58c86c4",
+      "archiveSha256": "e1bcc7907c4ba3f7515517daac77bf66270cd45194c3c5257a0f58341af93029",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/16"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/16"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-makoto.project.json",
+        "sha256": "7bfe7ad38d6872f28253ac250cabcdf0d60c7448749f519572bc7d1594fce05b",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-maomao",
+      "name": "貓貓",
+      "slotCount": 6,
+      "packageDigest": "sha256:0d593418996184f7597b0feeecd1cf8df85cb99557f2c2fd3a40a04de586974d",
+      "versionId": "sha256:0d593418996184f7597b0feeecd1cf8df85cb99557f2c2fd3a40a04de586974d",
+      "publicationRevision": 6,
+      "submissionId": "hero-75d55590c90058d5e29b22ca9db731620bb657fa449b75b822d1b3bb072",
+      "sourceDigest": "sha256:2ae504f98fada81668bab362c9b5967e8d96d96982b77b667d3a122014e5f2bf",
+      "archiveSha256": "941163da740c5917ed9fac16a785464e14898db426e93f4a7c5da1128f06085a",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/17"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/17"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-maomao.project.json",
+        "sha256": "f4e3906077ffd59b2c0ef3bc70062cdfed259c7d431aed6389e5338450311483",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-maple",
+      "name": "梅普露",
+      "slotCount": 6,
+      "packageDigest": "sha256:dcec008f89647ce1380da5a26bf7ed2fac652f56cc0616191c8cc0e719464597",
+      "versionId": "sha256:dcec008f89647ce1380da5a26bf7ed2fac652f56cc0616191c8cc0e719464597",
+      "publicationRevision": 6,
+      "submissionId": "hero-692cd029efae73b6104ef0184ebe0eaa62a41a1c0cfc827e9e21a01aa18",
+      "sourceDigest": "sha256:be9171d3b8a4ca01593b72a99df12f2ab808920cc37d316ebf4e73b42d37e71f",
+      "archiveSha256": "69586c22515fd4e6a8082de29c7e382c501bbcae587fe5e3b818c49553cdd818",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/18"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/18"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-maple.project.json",
+        "sha256": "6e50eecf4718b04986a39c0b34c155f32271fde971ed8a6f00a77f48cc3f27ec",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-matthias",
+      "name": "馬提亞斯",
+      "slotCount": 6,
+      "packageDigest": "sha256:71c6af0707024790c5bb6971a3f4317af189ab972e5ff143dae3d15394a1f884",
+      "versionId": "sha256:71c6af0707024790c5bb6971a3f4317af189ab972e5ff143dae3d15394a1f884",
+      "publicationRevision": 6,
+      "submissionId": "hero-160cb72e09d453ac62a00a52c84e8ac238f839015eb95dd48ca877f8453",
+      "sourceDigest": "sha256:8016a14c4e561655d226dcf6965baf05cf1397d2c4c6fb1e2afba4d244a0acef",
+      "archiveSha256": "a8df3a1aa51c8921102cbba45099d54d4c0c27f23b79ff42b25ef966fb24f8e1",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/19"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/19"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-matthias.project.json",
+        "sha256": "d09950fdf56f79501f9f3a05f3399b96851099aadf6b42fcc2fda9a77e9e0a8f",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-misery",
+      "name": "米瑟利",
+      "slotCount": 6,
+      "packageDigest": "sha256:a23c8788cbd10976e831eb1f3ebabb9fa22a7e77f300fbb89fe082ec49d7821d",
+      "versionId": "sha256:a23c8788cbd10976e831eb1f3ebabb9fa22a7e77f300fbb89fe082ec49d7821d",
+      "publicationRevision": 6,
+      "submissionId": "hero-09e0e999a0e251681504a94da405c0e106c86dd2db2066e5803e8bc7b7d",
+      "sourceDigest": "sha256:09971a6c58467902ef1cb5c3f88c3f78ed89f6341aaa08904916c37a62ef2d88",
+      "archiveSha256": "11d3069ba6c3f65ac3b88b0c821bdaaec208ab7bb44ea6a7b87d429bba10b974",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/20"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/20"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-misery.project.json",
+        "sha256": "8e9e1ce35942bdbb1693a4f5de8dd9cad9887e9b8968be9d4b176374c5c577b1",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-naofumi",
+      "name": "岩谷尚文",
+      "slotCount": 6,
+      "packageDigest": "sha256:a3e7f049b17ff9c02ce52aa544edf776695f47ec91c2fdfdf55fd1802dfc854a",
+      "versionId": "sha256:a3e7f049b17ff9c02ce52aa544edf776695f47ec91c2fdfdf55fd1802dfc854a",
+      "publicationRevision": 6,
+      "submissionId": "hero-d82006a1507e04dc55f36aeb8197e86559bc9ddb86a0063892eaeee6446",
+      "sourceDigest": "sha256:80f8e04abaf20209dc12adf9df9f8ce6bafb9e897cfcd7bb4cb57109d5641156",
+      "archiveSha256": "2432cc4bfe96df3939aaae0a9244e7dc04ba63a97aacf1a833b11198d1b3b94b",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/21"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/21"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-naofumi.project.json",
+        "sha256": "2f2bdef3d8013974e37efa1727ade770b2010e609609ee6bd6a8b89eb7a89dc9",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "slotCount": 6,
+      "packageDigest": "sha256:3a584cab19bc6d4f9d1a01c83108707f4a75e3e218b79ebd9164652fc20dbb2f",
+      "versionId": "sha256:3a584cab19bc6d4f9d1a01c83108707f4a75e3e218b79ebd9164652fc20dbb2f",
+      "publicationRevision": 6,
+      "submissionId": "hero-fd3a5e55e9c3da91f0d3f49fbea7be0fa6813910557b1c7605fa0921d3b",
+      "sourceDigest": "sha256:70bf4cf95471a051d122bf3b94c11c07d210526eaa33b1c9188029d7d58c8af4",
+      "archiveSha256": "79aa11adb274572a10d52f75a5d5f0ab1ba973459cfc23e6f05b9f94e7684440",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/22"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/22"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-ned.project.json",
+        "sha256": "f4cfd2415bebab354baf2e7ef7959a23aafa9deb7010622b9a2a5c11347b052d",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-noor",
+      "name": "諾爾",
+      "slotCount": 6,
+      "packageDigest": "sha256:796c05db68b81688a808ae2b1c97a69f2a348709856e4a31e2afd302f7eec286",
+      "versionId": "sha256:796c05db68b81688a808ae2b1c97a69f2a348709856e4a31e2afd302f7eec286",
+      "publicationRevision": 6,
+      "submissionId": "hero-d66e9a30837bf8196bd7a115fe60ae10d5b375592d7d4ffcf69878dfc43",
+      "sourceDigest": "sha256:af5cf18b94b2e8c678e3995ca6c4eb931587bdc3fff9b7513da375dc395084f8",
+      "archiveSha256": "4415b01b3ac63b4107b72d284d3edacb88cc276c5293a8d9cb0c8509e442f641",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/23"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/23"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-noor.project.json",
+        "sha256": "e1dc48d1283ff74267370ec4f8f64cd218259ce63700dba49681fe5ceda8d95b",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-nube",
+      "name": "鵺野鳴介",
+      "slotCount": 6,
+      "packageDigest": "sha256:8bc996b3ffc2329aa5ce215d274056d5f209b8b3c028e2754271a7bc8c1ef83f",
+      "versionId": "sha256:8bc996b3ffc2329aa5ce215d274056d5f209b8b3c028e2754271a7bc8c1ef83f",
+      "publicationRevision": 6,
+      "submissionId": "hero-70e1c7eccc36bece427c4943fcd765fc8094e7694a309a88bf948e54a4c",
+      "sourceDigest": "sha256:667e81c4cd58ec87e606deb555ed319f65d854a9cb7cb229b00cefcc5a0055d3",
+      "archiveSha256": "c2abbe7a14ef67361e50f2ce21084ec8a8bfe97bd09ad1fb6efb0881de223aa3",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/24"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/24"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-nube.project.json",
+        "sha256": "1e95e27e86acb513c02c17420156e3b1fe16782c698c14c4bf0a504bd39c128c",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-orphen",
+      "name": "歐菲",
+      "slotCount": 6,
+      "packageDigest": "sha256:dfec4c00f8bb2d1b5898da9fc343d4cb7df805ce57316b5262adc02c16c41593",
+      "versionId": "sha256:dfec4c00f8bb2d1b5898da9fc343d4cb7df805ce57316b5262adc02c16c41593",
+      "publicationRevision": 6,
+      "submissionId": "hero-3b1808e4ca85e30be252930ebd9ed5db5008eae3f9ffd3f072f4700fe2b",
+      "sourceDigest": "sha256:344a1cbd6785706d3f1816e28524d152e2133788f13035ee0b47b1f88dc42b0c",
+      "archiveSha256": "e7f70f2b0e25641a5c7dab858874215afc517761985c981b63584754fbf5cfa2",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/25"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/25"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-orphen.project.json",
+        "sha256": "d89db45bb87d66208fb1b953294c2ebd16221c0085b3669ed7291fc6ff9c61cd",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-popp",
+      "name": "何布",
+      "slotCount": 6,
+      "packageDigest": "sha256:19b2e8a07410e2417fd409b6094afb1e6d3e02f850f351cda864a0267bcd6038",
+      "versionId": "sha256:19b2e8a07410e2417fd409b6094afb1e6d3e02f850f351cda864a0267bcd6038",
+      "publicationRevision": 6,
+      "submissionId": "hero-0ceba82eceda04dc7d865e4e9b078ae40a0163e1a5ca1d3b770be3fa1ea",
+      "sourceDigest": "sha256:7c261000df14a9bef820bc7f4a60926d2994eab770a51631bc014c86edf4da3b",
+      "archiveSha256": "9e0e449c89810170c57ec7cc2659da3ef0264a4381e1a6c2e8a637ca4845cc45",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/26"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/26"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-popp.project.json",
+        "sha256": "3360e704d25d6ecf45ac3f4656015fe6c7b6f371cd52667da9725a87bf6d6d91",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-rem",
+      "name": "蕾姆",
+      "slotCount": 6,
+      "packageDigest": "sha256:9bd0a5f5e991fe8efd6f57a89d80c847cc3349ce9b3e3237f93169d60e3e1035",
+      "versionId": "sha256:9bd0a5f5e991fe8efd6f57a89d80c847cc3349ce9b3e3237f93169d60e3e1035",
+      "publicationRevision": 6,
+      "submissionId": "hero-497dfca78334a61307f3ae51502cb85337b33a8b880b860eec43ccab966",
+      "sourceDigest": "sha256:347092e2e105dedf9ea4cf201152b1b0741025fc03396786cd437863d148ae0c",
+      "archiveSha256": "4d75283d8c74c06e344ce9684ce0f20ae8e86d49ac9a276d17c14d052eb2d3fe",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/27"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/27"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-rem.project.json",
+        "sha256": "cd7b460e44a3cb19ea320480c0035be8d817accd007b0418af42468491d40966",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-rin",
+      "name": "遠坂凜",
+      "slotCount": 6,
+      "packageDigest": "sha256:304da9901aa2718af3be9e7c49e439a032777609795e030ec2d5944ac1c7f3e8",
+      "versionId": "sha256:304da9901aa2718af3be9e7c49e439a032777609795e030ec2d5944ac1c7f3e8",
+      "publicationRevision": 6,
+      "submissionId": "hero-923f1670dba915ad4d773bc07baeeafafc99d99807624af198d82c9c0b4",
+      "sourceDigest": "sha256:8ed16848b400e8bc269dd4ac9dde85635df888a9f051a47ecdfce82030fd9c8e",
+      "archiveSha256": "6646d93421a8b3e3100d1654acd72d6a19852f213d7034b1ba68506cefc17fce",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/28"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/28"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-rin.project.json",
+        "sha256": "5ec624045b4964390e5bb3fd8be3ac9aa65948cbd622018c13c1ddc04484eff3",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-shadow",
+      "name": "闇影",
+      "slotCount": 6,
+      "packageDigest": "sha256:6203a267ea4d9175625e4785545f33d308cbd2824c66a7f8814d4406e8851681",
+      "versionId": "sha256:6203a267ea4d9175625e4785545f33d308cbd2824c66a7f8814d4406e8851681",
+      "publicationRevision": 6,
+      "submissionId": "hero-f1ec0d1ea061fd9ecbbc1ed46216422c2817ab08c96bbe534e76129b588",
+      "sourceDigest": "sha256:948703ebbb386f470b05b591308f6eef41251cfd90e5830e7fadee937fd8dcfc",
+      "archiveSha256": "af163858b2f416d0d63ce8f765911cb162da965a118826b55100e009946556d3",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/29"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/29"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-shadow.project.json",
+        "sha256": "666ac8dcb9938dccdfad9ba1df8cf81b762aeebab1ed38dc278a41dd5e9d6975",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-shinchan",
+      "name": "野原新之助",
+      "slotCount": 6,
+      "packageDigest": "sha256:5a6e4c3bf52b0cfadb25d0648b156b84450c876c225e0e1a24b94f75e8b307b6",
+      "versionId": "sha256:5a6e4c3bf52b0cfadb25d0648b156b84450c876c225e0e1a24b94f75e8b307b6",
+      "publicationRevision": 6,
+      "submissionId": "hero-57acae692bc60a0e8faf6b0a379ad7697079450ebd19dce86d92ed4f957",
+      "sourceDigest": "sha256:803f300fe128cdc821f8bd8ab1e84a6cdef26f5aa6ca92653b176a59f4507a85",
+      "archiveSha256": "705054b3944927923066742fe9ec41cf19d1b80ce67397eed8928ff76b71b0c0",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/30"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/30"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-shinchan.project.json",
+        "sha256": "a86edee5fa8c85d73f902a9531b5bd724f610e768906ff42f4babe79d172c42c",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-sinbad",
+      "name": "辛巴達",
+      "slotCount": 6,
+      "packageDigest": "sha256:3e5ad2740df31786235c2503aa23ad295f703ea18c9b547630f4861f13e02016",
+      "versionId": "sha256:3e5ad2740df31786235c2503aa23ad295f703ea18c9b547630f4861f13e02016",
+      "publicationRevision": 6,
+      "submissionId": "hero-b41514d33cdc116949d8a7cef8f214ffcb1a18e680df8f85cc6c4874aa2",
+      "sourceDigest": "sha256:4e22ba4bcab2a449e03b67edee1e533873f8e3ec715c8245028056d46ce77a30",
+      "archiveSha256": "e29e75f47b2e0559d55d399bff9c545f9e679cc76948627b048cc3851ce249a8",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/31"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/31"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-sinbad.project.json",
+        "sha256": "fb92f5d05bc12cf18adafb2bea08111b4d693ecdf8713eb81bcccf5eaaebac22",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-takopi",
+      "name": "章魚嗶",
+      "slotCount": 6,
+      "packageDigest": "sha256:52bb27439a1658aeaaf5872e08f3f03bd595d4e0608e3b49da4e91b3263ae062",
+      "versionId": "sha256:52bb27439a1658aeaaf5872e08f3f03bd595d4e0608e3b49da4e91b3263ae062",
+      "publicationRevision": 6,
+      "submissionId": "hero-3f591c0706ba3fad62fc0183c818709178ed7e3ef2ad8456fdd1b265490",
+      "sourceDigest": "sha256:f10b60688e82406828e534d5001e7a8ab5a58d2721ba5ed4b68dac9a36509893",
+      "archiveSha256": "5c95c61b390b0747ce5cb185eedde98b2a525ff134edb6f904c7d2f58084f100",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/32"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/32"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-takopi.project.json",
+        "sha256": "83d659f572137a43a51bbdd9cb85355e95c207a6eb84abbd1dbb98ebc085131b",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-touka",
+      "name": "托卡・史考特",
+      "slotCount": 6,
+      "packageDigest": "sha256:1ff6dc7139346227edcd7fbecf81d8e58839b4bcbd5d4eff53e7000d257f14e4",
+      "versionId": "sha256:1ff6dc7139346227edcd7fbecf81d8e58839b4bcbd5d4eff53e7000d257f14e4",
+      "publicationRevision": 6,
+      "submissionId": "hero-27a82f941ae8865232f2e544ab4aed8321607f3ea3d4f6146f64f4db01e",
+      "sourceDigest": "sha256:9c1667f56e4ff7d25b1e3c71e435757ac5d97a1ced9e43aa81dfaac0fd07a999",
+      "archiveSha256": "c46c857c4965d64afe360c0181a9d9709e74cefd4d4fef7b136d4cb6949c80ac",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/33"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/33"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-touka.project.json",
+        "sha256": "5d2d3e71d6689a0196693bef25a06161610b33f7eed02e544f52817c3da73f68",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-uncle",
+      "name": "異世界舅舅",
+      "slotCount": 6,
+      "packageDigest": "sha256:f9751fe505e336dd71555abee1cc8ecb869937cff446a935439839129d881ca0",
+      "versionId": "sha256:f9751fe505e336dd71555abee1cc8ecb869937cff446a935439839129d881ca0",
+      "publicationRevision": 6,
+      "submissionId": "hero-7f58e891b944850ad0dad971650f260f1084e757efbbdf017519220c3a1",
+      "sourceDigest": "sha256:e15d8a6528f3e761ad2d068a904a2b0eb32429d32999b665b82401ef11c7db4b",
+      "archiveSha256": "8db66981c4cb11805fea0934221219203d680ee4d16b753ca91ddcdf53136165",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/34"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/34"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-uncle.project.json",
+        "sha256": "10f3ee700b22bb1afcdf94c73ab7cd95e59ffbd773a6563cc9d206cfe47d2bf8",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-yogiri",
+      "name": "高遠夜霧",
+      "slotCount": 6,
+      "packageDigest": "sha256:b34ecc5d9e90fcd402fcf44a89f149dd65ccfe2c802e227ea50c0ee91018e554",
+      "versionId": "sha256:b34ecc5d9e90fcd402fcf44a89f149dd65ccfe2c802e227ea50c0ee91018e554",
+      "publicationRevision": 6,
+      "submissionId": "hero-2d358ea1fe6be69c47ebfb9792a14eaefcfeb9c549fb7cd7735a06cb61a",
+      "sourceDigest": "sha256:6fa2257d1c13656c719d6476c14f118bfdacd56d628c446343be1cdaf46549d9",
+      "archiveSha256": "d511a0a041270aa455dc6a8f247c3e3f5f606aa483200d1cbb6208b203e1bb72",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/35"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/35"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-yogiri.project.json",
+        "sha256": "8e95c491552530f87f02c097a587a23038166c813423363a4668be7710294383",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    },
+    {
+      "batch": "batch2",
+      "workId": "b2-zenitsu",
+      "name": "我妻善逸",
+      "slotCount": 6,
+      "packageDigest": "sha256:3ab46aef5f38c88fe96e7fcd2a3f17b93580d1488ce698c0896f9b64b064a203",
+      "versionId": "sha256:3ab46aef5f38c88fe96e7fcd2a3f17b93580d1488ce698c0896f9b64b064a203",
+      "publicationRevision": 6,
+      "submissionId": "hero-b8a76a3d88ac9ea65c4f847cd8c36e58245383d9b6537e0e3689eafecf4",
+      "sourceDigest": "sha256:aae4c7018fbbace132df7472270ef244a1b1cd95ea6dc96b2a6f5c795eb961c5",
+      "archiveSha256": "c0021df7d75ea4b1420bab65c2a8e98cdb3acdd36b8602144254421936f557e9",
+      "modelSha256": null,
+      "target": {
+        "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+        "contentVersion": "cv_d3b33838b6cc",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "publicationReceipt": {
+        "id": "batch2.publication",
+        "jsonPointer": "/results/36"
+      },
+      "buildReceipt": {
+        "id": "batch2.build",
+        "jsonPointer": "/results/36"
+      },
+      "attributedSourceRestored": true,
+      "source": {
+        "path": "projects/b2-zenitsu.project.json",
+        "sha256": "6138042e3725eef6b65bf46b0cd52fe8cefdd4ebf34765f65962fb51142d9614",
+        "lock": "source-lock.json",
+        "upstreamCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5"
+      }
+    }
+  ]
+}

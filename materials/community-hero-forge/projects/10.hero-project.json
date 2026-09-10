@@ -1,0 +1,952 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-10-20260907",
+  "revision": 14,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "魯路修",
+    "concept": "魯路修 社群英雄功能驗收稿。作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。\n\n視覺方向：紅色 Geass 眼形、棋盤格區域、黑紅戰術標記；控制完成要有清楚復原提示。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔戰局推演〕",
+      "Q": "〔戰術射擊〕",
+      "W": "〔集中火力〕",
+      "E": "〔撤退指令〕",
+      "R": "絕對遵守的 Geass",
+      "EX": "〔Checkmate〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 14,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-10-20260907.plan",
+    "title": "魯路修",
+    "summary": "魯路修 社群英雄功能驗收稿。作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。\n\n視覺方向：紅色 Geass 眼形、棋盤格區域、黑紅戰術標記；控制完成要有清楚復原提示。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "軟輔",
+    "archetype": "fighter",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "大",
+      "ad": "小",
+      "ap": "中",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "大",
+      "range": "中"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+        "id": "tpl-blink",
+        "schema": "template@1",
+        "name": "純位移瞬移",
+        "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+        "family": "blink",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.467,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+          "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔戰局推演〕",
+        "purpose": "【核准惡搞改編】發出W命令後自己減速50%兩秒；隊友衝鋒，總指揮還在開會。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-parody-1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAbilityCast",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "slow50",
+                        "duration": 2,
+                        "applyTo": "self",
+                        "sourceScope": "caster",
+                        "moveSpeedMult": 0.5
+                      }
+                    ],
+                    "internalCooldown": 0,
+                    "target": "self",
+                    "abilitySlot": "W"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "〔戰術射擊〕",
+        "purpose": "【核准惡搞改編】先點名：指定敵人減速25%三秒；並不永久控制對方。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "q-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow25",
+                    "duration": 3,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 0.75
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔集中火力〕",
+        "purpose": "【核准惡搞改編】指定隊友攻擊力+20三秒；四秒內點名過Q再增加移速40%。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "w-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "target",
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "ad",
+                        "op": "flat",
+                        "value": 20
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "rage",
+                    "duration": 3,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 1.4,
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "Q",
+                      "withinSec": 4
+                    }
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "你去，我開會",
+                    "applyTo": "victim",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔撤退指令〕",
+        "purpose": "【核准惡搞改編】遠端加班保險，指定隊友180護盾三秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 180
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-10-20260907.protection",
+                    "onExisting": "keepLarger"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "絕對遵守的 Geass",
+        "purpose": "【核准惡搞改編】命令執行後才能喊撤退：最近四秒用過W，自己周圍三格敵人恐懼0.8秒。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "delayed",
+                    "shape": "circle",
+                    "delaySec": 0.1,
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "fear",
+                        "duration": 0.8,
+                        "applyTo": "target",
+                        "sourceScope": "caster",
+                        "feared": true
+                      }
+                    ],
+                    "stopOnCasterDeath": true,
+                    "radius": 3,
+                    "side": "enemies",
+                    "targetMode": "reresolve",
+                    "anchor": "caster",
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "W",
+                      "withinSec": 4
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔Checkmate〕",
+        "purpose": "【核准惡搞改編】總指揮緊急離席，瞬移到合法指定點。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex-parody-1",
+            "template": {
+              "ref": "tpl-blink",
+              "params": {
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "byteSize": 890368,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "sourceAssetId": "300heroes:33317960eca2c46de312fce2",
+      "sourceCharacter": "鲁路修",
+      "sourceWork": "Code Geass 反叛的魯路修",
+      "relationship": "exact",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+    },
+    "championIcon": "assets/icons/champions/sela.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-10-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-10-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                191,
+                20,
+                59
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-10-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-10-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                191,
+                20,
+                59
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-10-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-10-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                191,
+                20,
+                59
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-10-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-10-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                191,
+                20,
+                59
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-10-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-10-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                191,
+                20,
+                59
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+        "byteSize": 890368,
+        "mediaType": "model/gltf-binary",
+        "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c",
+    "name": "魯路修",
+    "identity": "作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。",
+    "ownerText": "### 10｜魯路修\n\n作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。\n\n- **PASSIVE｜〔戰局推演〕**：友軍命中自己的戰術標記時累積指揮層數，同一技能多段命中只計一次。\n- **Q｜〔戰術射擊〕**：中距離單發射擊，對帶標記目標造成額外傷害。\n- **W｜〔集中火力〕**：標記一個可見敵人，讓下一次友軍有效命中獲得追加效果。\n- **E｜〔撤退指令〕**：為附近友軍提供朝安全方向移動時的短效加速。\n- **R｜絕對遵守的 Geass**：在視線成立後，命令一名敵人沿合法路徑朝指定位置移動，持續約 1 秒。每名目標每回合只能成功受此命令一次；控制免疫或視線失敗時不記為成功。\n- **EX｜〔Checkmate〕**：消耗指揮層數，對已標記區域發動有預警的戰術打擊。\n\n**審查重點**：驗證視線、命令成功紀錄、路徑失效、淨化與控制恢復；不允許命令玩家購物、交出資產或執行任意指令。\n\n",
+    "reviewText": "驗證視線、命令成功紀錄、路徑失效、淨化與控制恢復；不允許命令玩家購物、交出資產或執行任意指令。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔戰局推演〕",
+        "ownerDescription": "友軍命中自己的戰術標記時累積指揮層數，同一技能多段命中只計一次。",
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需友軍命中戰術標記與施法去重指揮層數。",
+        "refinementContracts": [
+          "M01",
+          "M08",
+          "M12"
+        ]
+      },
+      "Q": {
+        "name": "〔戰術射擊〕",
+        "ownerDescription": "中距離單發射擊，對帶標記目標造成額外傷害。",
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "requiredRefinement": "缺戰術標記額外傷害。",
+        "refinementContracts": [
+          "M01",
+          "M08",
+          "M12"
+        ]
+      },
+      "W": {
+        "name": "〔集中火力〕",
+        "ownerDescription": "標記一個可見敵人，讓下一次友軍有效命中獲得追加效果。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "requiredRefinement": "固定緩速；需標記與下一次友軍命中消耗。",
+        "refinementContracts": [
+          "M01",
+          "M08",
+          "M12"
+        ]
+      },
+      "E": {
+        "name": "〔撤退指令〕",
+        "ownerDescription": "為附近友軍提供朝安全方向移動時的短效加速。",
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "requiredRefinement": "目前只加速自身；需朝安全方向移動的友軍條件。",
+        "refinementContracts": [
+          "M01",
+          "M08",
+          "M12"
+        ]
+      },
+      "R": {
+        "name": "絕對遵守的 Geass",
+        "ownerDescription": "在視線成立後，命令一名敵人沿合法路徑朝指定位置移動，持續約 1 秒。每名目標每回合只能成功受此命令一次；控制免疫或視線失敗時不記為成功。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。",
+        "requiredRefinement": "單體 0.8 秒暈眩不能代替 Geass；需視線、強制合法移動與每目標每回合成功一次。",
+        "refinementContracts": [
+          "M01",
+          "M08",
+          "M12"
+        ]
+      },
+      "EX": {
+        "name": "〔Checkmate〕",
+        "ownerDescription": "消耗指揮層數，對已標記區域發動有預警的戰術打擊。",
+        "baselineBehavior": "指定落點半徑 300 wc3u 的一次中級範圍傷害。",
+        "requiredRefinement": "缺指揮層數消耗。",
+        "refinementContracts": [
+          "M01",
+          "M08",
+          "M12"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會\n發出W命令後自己減速50%兩秒；隊友衝鋒，總指揮還在開會。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "Q": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會\n先點名：指定敵人減速25%三秒；並不永久控制對方。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "W": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會\n指定隊友攻擊力+20三秒；四秒內點名過Q再增加移速40%。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "E": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會\n遠端加班保險，指定隊友180護盾三秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會\n命令執行後才能喊撤退：最近四秒用過W，自己周圍三格敵人恐懼0.8秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會\n總指揮緊急離席，瞬移到合法指定點。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 14,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "14d29687a566107b3af8f0808046242d7f9b31d48be4d84d0aaba6d98b10d508",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

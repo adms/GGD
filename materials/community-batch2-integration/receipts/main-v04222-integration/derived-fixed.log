@@ -1,0 +1,81 @@
+
+> ggd@0.0.0 docs:readme /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh docs:readme docs:readme:raw
+
+🔓 隔離區:解鎖 454 份（追蹤 860,缺 0）
+
+> ggd@0.0.0 docs:readme:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/reference/gen_readme_lists.py
+
+contentVersion cv_322fb549d540
+  README:roster       49 open rows  (replaced)
+  README:abilities   293 open rows  (replaced)
+  README:items       130 open rows  (replaced)
+  README:grail        60 open rows  (replaced)
+  README:mechanics    92 open rows  (replaced)
+  README:arenas       13 open rows  (replaced)
+  README:combat-env   39 open rows  (replaced)
+  README:stat-bands  110 open rows  (replaced)
+  README:tiers        15 open rows  (replaced)
+  docs/reference/roster.md   (wrote)
+  docs/reference/abilities.md (wrote)
+  docs/reference/items.md    (wrote)
+  docs/reference/grail-wishes.md (wrote)
+  docs/reference/mechanics.md (wrote)
+wrote README.md — 2077 lines, 184025 bytes (179.7 KB)
+🔒 隔離區:上鎖 455 份（追蹤 860,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: docs:readme 完成（產物已重新上鎖）
+
+> ggd@0.0.0 contract:numbers /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh contract:numbers contract:numbers:raw
+
+🔓 隔離區:解鎖 455 份（追蹤 860,缺 0）
+
+> ggd@0.0.0 contract:numbers:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/editor-contract/gen_contract_numbers.py
+
+✓ 寫入 技能編輯器引擎須知 20260811.md — contract-caps(replaced), contract-ap-damage(replaced), contract-range(replaced), contract-normalized(replaced), contract-bands(replaced), contract-tiers(replaced), contract-effects(replaced), contract-sharding(replaced)
+🔒 隔離區:上鎖 455 份（追蹤 860,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: contract:numbers 完成（產物已重新上鎖）
+
+> ggd@0.0.0 docs:readme:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/reference/gen_readme_lists.py --check
+
+README.md + docs/reference/*.md up to date with contentVersion cv_322fb549d540
+
+> ggd@0.0.0 contract:numbers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/editor-contract/gen_contract_numbers.py --check
+
+✓ 2 份文件的 9 個產生區塊都是最新的
+
+> ggd@0.0.0 iconplan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/icon-gen/src/plan.py --check
+
+icon-gen plan  (content digest 4dc14d7e8ea57c6c)
+  family         docs   have   drop  blocked  generate
+  champions        71     71      0        0         0
+  abilities       421    421      0        0         0
+  items           142    142      0        0         0
+  TOTAL           634    634      0        0         0
+
+  generate = tier1 0 (live surface today) + tier2 0
+
+  dropped, by rule:
+  blocked, by rule:
+
+  why the art is missing (importer's own resolution):
+
+  ⚠ live-surface files NOT found (veto may be too narrow):
+    data/curation/whitelist.json
+
+✓ content/config/icon-plan.json 是最新的
+
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+
+decor:check OK（1983 格旋鈕 · A 45 · B 9）
+
+> ggd@0.0.0 board:roll:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/board-roll.sh --check
+
+✓ 戰情表 戰情版-20260909.md：窗 2026-09-03 → 2026-09-09 · 292 則 · 52 張票 · 未對票 2

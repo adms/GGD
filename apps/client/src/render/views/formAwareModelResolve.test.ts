@@ -166,7 +166,7 @@ const ALT_WC3_GLB = `${BLIZZARD_LOCAL_GLB_PREFIX}H00W.glb`;
  */
 const JET_BASE = "godie-ucrl";
 const JET_ALT = "godie-u034";
-const JET_BASE_KEY = "champ.thorne";
+const JET_BASE_KEY = "imported.herobiggon";
 const JET_ALT_KEY = "imported.herobiggon";
 
 /** 61 克勞薩 —— 唯一一對 w3u 給兩半**不同**模型路徑的,缺省即繼承的實測對象。 */
@@ -553,10 +553,12 @@ const isStandin = (glb: string | null): boolean =>
   typeof glb === "string" && glb.startsWith(STOCK_CHAMPION_GLB_PREFIX);
 
 describe("#223 26 對的出貨普查(這是量測,不是引用)", () => {
-  it("寫反的那兩句:穿共用替身的是本體,不是變身態", () => {
-    expect(shippedModelKey("godie-ucrl"), "#06 本體").toBe("champ.thorne");
-    expect(shippedModelKey("godie-u034"), "#06 變身態").toBe("imported.herobiggon");
-    expect(isStandin(shippedGlb("imported.herobiggon")), "變身態不是替身").toBe(false);
+  it("傑富力士兩態共用 imported 身體；克勞薩兩態穿不同替身", () => {
+    // Main 107626f90 replaced the base stand-in; the green→grey tint guard
+    // above must now exercise identical model keys across the FORM change.
+    expect(shippedModelKey(JET_BASE), "#06 本體").toBe(JET_BASE_KEY);
+    expect(shippedModelKey(JET_ALT), "#06 變身態").toBe(JET_ALT_KEY);
+    expect(isStandin(shippedGlb(JET_BASE_KEY)), "兩態都不是替身").toBe(false);
     // #61 兩半都穿替身,但**不是同一個**替身 —— 舊文案寫「都是 champ.thorne」,
     // 而 champ.thorne 只有本體穿。
     expect(shippedModelKey(KRAUSER_BASE), "#61 本體").toBe(KRAUSER_BASE_KEY);

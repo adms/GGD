@@ -1,0 +1,17 @@
+{
+  "schema": "ggd-local-live-match-environment@1",
+  "platform": "http://127.0.0.1:8099",
+  "game": "http://127.0.0.1:2579",
+  "importer": "http://127.0.0.1:8826",
+  "platformPid": 34893,
+  "gamePid": 34896,
+  "importerPid": 34876,
+  "dataDirectory": "/private/tmp/ggd-model-upload-acceptance/batch2-current-acceptance/data",
+  "importDirectory": "/private/tmp/ggd-model-upload-acceptance/batch2-current-acceptance/imports",
+  "priorImportHistoryCopied": true,
+  "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+  "runtimeRoot": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3",
+  "simulationOverrides": false,
+  "loopbackBindOnly": true,
+  "productionModified": false
+}

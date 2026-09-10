@@ -1,0 +1,22 @@
+{
+  "schema": "ggd-runtime-overlay-alignment@1",
+  "oldImporterPlatform": 8098,
+  "gamePlatform": 8099,
+  "newImporterPort": 8826,
+  "differences": [
+    {
+      "path": "docs/config/ugc/maxBytes",
+      "before": 262144,
+      "after": 4194304
+    }
+  ],
+  "previousContentVersion": "cv_b9b47052d2e3",
+  "currentContentVersion": "cv_d3b33838b6cc",
+  "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+  "oldOverlaySha256": "00912118f400d39ae2c72c3e0b8cd4a6202d15da4bdcf9c0dc0f7b98e755070f",
+  "newOverlaySha256": "9c602fc694084a5f947f32d44ec1031fb0499f1a48a720238118ae8974eafecf",
+  "sourceProjectsChanged": false,
+  "action": "Preserve previous import history; rebuild and publish new versions against the game platform overlay.",
+  "compatibilityGuardBypassed": false,
+  "priorFailure": "failed-overlay-mismatch.json"
+}

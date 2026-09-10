@@ -1,0 +1,558 @@
+
+> ggd@0.0.0 skills:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm typecat:check && pnpm skillforge:audit:check && pnpm skillforge:visual-review:check && pnpm skillforge:visual-sheets:check && pnpm skillforge:visual-advisory:check && pnpm vfxforge:handback:check && pnpm editorcov:check && pnpm bricks:check && pnpm assets:manifest:check && pnpm jasstpl:check && pnpm caps:check && pnpm collections:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm lod:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm iconplan:check && pnpm formreceipts:check && pnpm beam:check && pnpm archetypes:check && pnpm enableaudit:check && pnpm review:check && pnpm declshape:check && pnpm decor:check && pnpm speedlists:check && pnpm locust:check && pnpm w3a:check && pnpm board:roll:check && pnpm ruleslip:check && pnpm receipt:check && pnpm handback:check && pnpm clipdeg:check && pnpm apcoeffdiff:check && pnpm decor:check && pnpm appearance:check && pnpm ptokens:check && pnpm coord:check
+
+
+> ggd@0.0.0 tiers:apply:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-remake/apply_tiers.py --check
+
+收進級距：0 / 421 份直接編的技能文件（產生器擁有的 15 位英雄由 batch1.py 套用同一個 tierize）
+英雄卡內嵌鏡射：0 份
+
+> ggd@0.0.0 spec:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/skill-spec/gen_spec.ts --check
+
+[content-cache] Redis 連不上（127.0.0.1:6379）⇒ 退回檔案層
+✅ 技能規則說明是最新的（4745 行）
+
+> ggd@0.0.0 overview:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/innate-legendary/gen_overview.ts --check
+
+✅ 固有能力及寶具總覽是最新的（3179 行）
+
+> ggd@0.0.0 tiers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/skill-tiers/gen_tiers.ts --check
+
+✅ 技能級距文件是最新的
+
+> ggd@0.0.0 mana:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/mana-audit/gen_mana_audit.ts --check
+
+✅ 魔力回復例外清單是最新的
+
+> ggd@0.0.0 typecat:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/type-catalog/gen.ts --check
+
+✓ type 目錄是新的（47 可挑 · 1 待接線 · 9 空殼）
+
+> ggd@0.0.0 skillforge:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node --import tsx tools/skill-forge/audit-42x46.ts --check
+
+PASS Skill acceptance receipt current · 43/47
+(node:92050) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> ggd@0.0.0 skillforge:visual-review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/skill-forge/build-visual-review-packet.mjs --check
+
+PASS human review packet · 12 pages / 47 documents · 4e2f1e4734ed83a2 · advisory stale
+
+> ggd@0.0.0 skillforge:visual-sheets:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/skill-forge/build-visual-contact-sheets.mjs --check
+
+PASS 47 chronological visual contact sheets are current
+
+> ggd@0.0.0 skillforge:visual-advisory:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/skill-forge/build-codex-visual-advisory.mjs --check
+
+PASS Codex advisory · 46/47 documents · current 0 / stale 46 · awaiting capture 0 · awaiting review 1 · null/10
+
+> ggd@0.0.0 vfxforge:handback:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node --import tsx tools/vfx-forge/build-template-handback.mjs --check
+
+PASS Editor VFX template handback f420fd65f1cf (21 recipes)
+
+> ggd@0.0.0 editorcov:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/editor-contract/gen_editor_coverage.ts --check
+
+✓ ggd-editor-coverage.json 是新鮮的
+
+> ggd@0.0.0 bricks:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/brick-census/gen.ts --check
+
+bricks:check OK
+(node:92279) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> ggd@0.0.0 assets:manifest:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/asset-manifest/gen.ts --check
+
+assets:manifest:check OK
+
+> ggd@0.0.0 jasstpl:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/jass-template-map/gen.mjs --check
+
+
+> ggd@0.0.0 caps:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/capability-export/export.ts --check
+
+能力清單是最新的（指紋 daccedce）
+
+> ggd@0.0.0 collections:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/collections-gen/gen.ts --check
+
+collections:check OK（16 個 collection · apps/platform/internal/contentoverlay/collections_gen.go）
+
+> ggd@0.0.0 skillremake:docs:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-remake/refresh_docs.py --check
+
+§13.10 是最新的
+檔頭指紋行 是最新的
+
+> ggd@0.0.0 skillremake:json:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-remake/batch1.py --check
+
+⚠️  12-03 的變身被**明示**放掉：B-4 owner 2026-08-12 尚未裁決（志狼退場 or 變身換綁別的槽）
+ℹ️  帶 [變身]/[切換] 標籤但沒有第二具身體（buff 形態，不換身體）：15-02、15-03、15-04
+championForm：5 支（w3x 觸發技 6 支，明示放掉 1 支）
+變身態作者：6 對　產生器擁有 0　明示手編 6（閘＝abilityCodeParityForms.test.ts）
+── 機制差異報表：2 支與舊出貨文件不同 ──
+  godie-hapm.w: 沿用 invulnerable
+  godie-hapm.ex: 沿用 invulnerable
+── A-6 明示退場的欄位：50 份文件 ──
+  godie-e002.e: castTimeSec
+  godie-e002.r: castTimeSec
+  godie-e002.w: castTimeSec
+  godie-e00r.r: castTimeSec
+  godie-e00s.e: castTimeSec
+  godie-e00s.passive: castTimeSec
+  godie-e00s.q: castTimeSec
+  godie-e00s.r: castTimeSec
+  godie-e00w.e: castTimeSec
+  godie-e00w.q: castTimeSec、template
+  godie-e00w.r: castTimeSec、template
+  godie-edem.e: castTimeSec
+  godie-edem.ex: castTimeSec、template
+  godie-edem.q: castTimeSec、template
+  godie-edem.w: castTimeSec、template
+  godie-efur.e: castTimeSec、template
+  godie-efur.q: castTimeSec
+  godie-efur.r: castTimeSec
+  godie-efur.w: castTimeSec
+  godie-emfr.e: castTimeSec
+  godie-emfr.ex: castTimeSec
+  godie-emfr.q: castTimeSec
+  godie-emfr.r: castTimeSec
+  godie-emfr.w: castTimeSec
+  godie-emns.e: castTimeSec、template
+  godie-emns.ex: castTimeSec
+  godie-emns.passive: castTimeSec
+  godie-emns.q: castTimeSec
+  godie-emns.r: castTimeSec
+  godie-ewar.ex: castTimeSec
+  godie-ewar.q: castTimeSec
+  godie-ewar.r: castTimeSec
+  godie-ewar.w: castTimeSec
+  godie-h00l.q: castTimeSec、template
+  godie-h00l.r: castTimeSec
+  godie-h00l.w: castTimeSec
+  godie-h01n.e: castTimeSec
+  godie-h01n.q: castTimeSec
+  godie-h01n.r: castTimeSec
+  godie-h01n.w: castTimeSec
+  godie-h01u.e: castTimeSec
+  godie-h01u.r: castTimeSec
+  godie-h01u.w: castTimeSec、template
+  godie-h02k.ex: castTimeSec
+  godie-h02v.q: castTimeSec
+  godie-h02v.r: castTimeSec
+  godie-hapm.ex: castTimeSec
+  godie-hapm.q: castTimeSec
+  godie-hapm.r: castTimeSec
+  godie-hapm.w: castTimeSec
+── 五級距全轉：138 格 / 51 支 ──
+  godie-e002.e: range-tier 14.0→12.0（極大）；range 14.0→12.0（極大）；damage (None, None, [350.0, 550.0, 750.0, 950.0])→1000.0（中）；mana [250.0, 350.0, 450.0, 550.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e002.r: mana [150.0, 250.0, 350.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-e002.w: mana-free [50.0, 100.0, 150.0, 200.0]→0.0（非主動傷害技⇒免魔）
+  godie-e00r.ex: cooldown [150.0]→60.0（單體/極大/超過上限⇒夾）
+  godie-e00r.passive: cooldown [150.0]→60.0（單體/極大/超過上限⇒夾）
+  godie-e00r.r: range-tier 8.25→8.0（大）；range 8.25→8.0（大）；damage (None, None, [750.0, 1200.0, 1650.0])→1500.0（大）；cooldown [90.0, 90.0, 90.0]→60.0（單體/極大/超過上限⇒夾）；mana [350.0, 500.0, 650.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e00s.e: mana-free [100.0, 150.0, 150.0, 250.0]→0.0（非主動傷害技⇒免魔）
+  godie-e00s.passive: cooldown [15.0]→30.0（變身/極小/低於下限⇒夾）
+  godie-e00s.q: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [150.0, 300.0, 450.0, 600.0])→500.0（小）；mana [250.0, 300.0, 350.0, 400.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e00s.r: damage (None, None, [250.0, 350.0, 450.0])→500.0（小）；damage (None, None, [250.0, 350.0, 450.0])→500.0（小）；mana [240.0, 420.0, 600.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e00w.e: mana-free [90.0, 180.0, 270.0, 360.0]→0.0（非主動傷害技⇒免魔）
+  godie-e00w.q: damage (None, None, [200.0, 300.0, 400.0, 500.0])→500.0（小）；cooldown [40.0, 40.0, 40.0, 40.0]→45.0（範圍/小/傷害級距 小⇒往後靠）；mana [75.0, 110.0, 145.0, 180.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-e00w.r: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [600.0, 800.0, 1000.0])→1000.0（中）；cooldown [70.0, 70.0, 70.0]→60.0（範圍/中/傷害級距 中⇒往前靠）；mana [150.0, 225.0, 300.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-edem.e: range-tier 12.83→12.0（極大）；range 12.83→12.0（極大）；damage (None, None, [400.0, 500.0, 600.0, 700.0])→500.0（小）；mana [120.0, 185.0, 250.0, 315.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-edem.ex: mana [650.0]→576.0（收進耗魔級距 大（首階參照））
+  godie-edem.q: range-tier 14.67→12.0（極大）；range 14.67→12.0（極大）；damage (None, None, [250.0, 350.0, 450.0, 550.0])→500.0（小）；mana [150.0, 190.0, 230.0, 240.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-edem.w: damage (None, None, [75.0, 150.0, 225.0, 300.0])→200.0（極小）；mana [70.0, 120.0, 170.0, 220.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-efur.e: damage (None, None, [150.0, 250.0, 350.0, 450.0])→500.0（小）；mana [120.0, 180.0, 240.0, 300.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-efur.q: range-tier 4.0→4.5（小）；range 4.0→4.5（小）；cooldown [4.0, 3.0, 2.0, 1.0]→6.0（單體/極小/低於下限⇒夾）
+  godie-efur.r: damage (None, None, [150.0, 200.0, 250.0])→200.0（極小）；mana [150.0, 200.0, 250.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-efur.w: range-tier 2.0→3.0（極小）；range 2.0→3.0（極小）；damage (None, None, [40.0, 60.0, 80.0, 100.0])→200.0（極小）；mana [60.0, 90.0, 120.0, 150.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-emfr.e: damage (None, None, [60.0, 90.0, 120.0, 150.0])→200.0（極小）；damage (None, None, [100.0, 150.0, 200.0, 250.0])→200.0（極小）；cooldown [55.0, 55.0, 55.0, 55.0]→45.0（範圍/小/傷害級距 極小⇒往前靠）；mana [180.0, 260.0, 340.0, 420.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-emfr.q: range-tier 6.42→6.0（中）；range 6.42→6.0（中）；damage (None, None, [250.0, 350.0, 450.0, 550.0])→500.0（小）；mana [175.0, 275.0, 375.0, 475.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-emfr.r: damage (None, None, [150.0, 225.0, 300.0])→200.0（極小）；mana [200.0, 400.0, 600.0]→144.0（收進耗魔級距 小（首階參照））；ms-bonus 1.0→1.0（大）
+  godie-emfr.w: damage (None, None, [30.0, 45.0, 60.0, 75.0])→200.0（極小）；mana [120.0, 180.0, 240.0, 300.0]→144.0（收進耗魔級距 小（首階參照））；ms-bonus 0.2→0.2（小）
+  godie-emns.e: range-tier 12.0→12.0（極大）；damage (None, None, [650.0, 750.0, 850.0, 950.0])→1000.0（中）；cooldown [60.0, 50.0, 40.0, 30.0]→30.0（範圍/極小/低於下限⇒夾）；mana [150.0, 250.0, 350.0, 450.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-emns.ex: range-tier 5.29→6.0（中）；range 5.29→6.0（中）；cooldown [120.0]→60.0（單體/極大/超過上限⇒夾）；mana-free [450.0]→0.0（非主動傷害技⇒免魔）
+  godie-emns.q: range-tier 12.0→12.0（極大）；mana-free [150.0, 200.0, 250.0, 300.0]→0.0（非主動傷害技⇒免魔）
+  godie-emns.r: range-tier 12.0→12.0（極大）；cooldown [35.0, 35.0, 35.0]→30.0（單體/中/傷害級距 極小⇒往前靠）；mana [150.0, 250.0, 350.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-ewar.ex: range-tier 2.0→3.0（極小）；range 2.0→3.0（極小）；damage (None, 1800.0, None)→2000.0（極大）；mana [600.0]→576.0（收進耗魔級距 大（首階參照））
+  godie-ewar.q: range-tier 4.0→4.5（小）；range 4.0→4.5（小）；damage (None, None, [150.0, 283.0, 350.0, 350.0])→200.0（極小）；cooldown [12.0, 12.0, 12.0, 12.0]→6.0（單體/極小/傷害級距 極小⇒往前靠）；mana [30.0, 57.0, 83.0, 90.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-ewar.r: radius 6.0→8.0（大）；damage (None, None, [550.0, 750.0, 950.0])→1000.0（中）；mana [250.0, 350.0, 450.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-ewar.w: mana-free [50.0, 100.0, 150.0, 200.0]→0.0（非主動傷害技⇒免魔）
+  godie-h00l.ex: cooldown [120.0]→60.0（單體/極大/超過上限⇒夾）
+  godie-h00l.q: damage (None, None, [150.0, 250.0, 350.0, 450.0])→500.0（小）；mana [100.0, 150.0, 200.0, 250.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h00l.r: mana-free [120.0, 150.0, 180.0]→0.0（非主動傷害技⇒免魔）
+  godie-h00l.w: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [150.0, 250.0, 350.0, 450.0])→500.0（小）；mana [50.0, 75.0, 100.0, 125.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h01n.e: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [450.0, 600.0, 750.0, 900.0])→1000.0（中）；cooldown [55.0, 55.0, 55.0, 55.0]→45.0（單體/大/傷害級距 中⇒往前靠）；mana [250.0, 350.0, 450.0, 550.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-h01n.q: range-tier 9.17→8.0（大）；range 9.17→8.0（大）；mana-free [60.0, 80.0, 100.0, 120.0]→0.0（非主動傷害技⇒免魔）
+  godie-h01n.r: mana-free [100.0, 200.0, 300.0]→0.0（非主動傷害技⇒免魔）
+  godie-h01n.w: range-tier 4.5→4.5（小）；damage (None, None, [200.0, 350.0, 500.0, 650.0])→500.0（小）；mana [80.0, 160.0, 240.0, 320.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h01u.e: range-tier 10.0→8.0（大）；range 10.0→8.0（大）；damage (None, None, [150.0, 200.0, 250.0, 300.0])→200.0（極小）；mana [150.0, 200.0, 250.0, 300.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-h01u.r: cooldown [90.0, 90.0, 90.0]→60.0（單體/極大/超過上限⇒夾）；mana-free [250.0, 400.0, 550.0]→0.0（非主動傷害技⇒免魔）
+  godie-h01u.w: damage (None, None, [120.0, 220.0, 320.0, 420.0])→500.0（小）；mana [90.0, 180.0, 270.0, 360.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h02k.ex: range-tier 5.29→6.0（中）；range 5.29→6.0（中）；cooldown [10.0]→6.0（單體/極小/傷害級距 極小⇒往前靠）；mana-free [666.0]→0.0（非主動傷害技⇒免魔）
+  godie-h02v.q: mana-free [160.0, 220.0, 280.0, 340.0]→0.0（非主動傷害技⇒免魔）
+  godie-h02v.r: mana-free [300.0, 420.0, 540.0]→0.0（非主動傷害技⇒免魔）
+  godie-hapm.ex: range-tier 5.29→6.0（中）；range 5.29→6.0（中）；cooldown [120.0]→60.0（單體/極大/超過上限⇒夾）；mana [400.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-hapm.q: mana-free [100.0, 140.0, 180.0, 220.0]→0.0（非主動傷害技⇒免魔）
+  godie-hapm.r: damage (None, None, [600.0, 1000.0, 1400.0])→1500.0（大）；mana [400.0, 600.0, 800.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-hapm.w: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [350.0, 450.0, 550.0, 650.0])→500.0（小）；mana [70.0, 95.0, 120.0, 145.0]→72.0（收進耗魔級距 極小（首階參照））
+── GH#375 純視覺彈道 → spawnVfx：6 支 ──
+  godie-e002.e: imported.wave → fx.wave.physical
+  godie-e00r.r: imported.wave.ki → fx.wave.ki
+  godie-e00s.q: imported.wave.arcane → fx.wave.arcane
+  godie-h01n.q: imported.bolt.void → fx.prim.void.bolt
+  godie-h01u.r: imported.wave.physical → fx.wave.physical
+  godie-h01u.w: imported.wave.physical → fx.wave.physical
+── B1-B 兄弟酬載折進 onHitTargets：13 個節點 / 9 支 ──
+  15-01: damageLine←applyStatus
+  45-002: damageArea←applyStatus、damageArea←applyStatus、damageArea←dot
+  45-01: damageArea←applyStatus、damageArea←dot
+  45-02: damageArea←applyStatus
+  60-01: damageArea←knockback
+  70-03: damageArea←applyStatus
+  77-01: damageArea←knockback
+  79-01: damageArea←applyStatus
+  92-04: damageArea←applyStatus、damageArea←applyStatus
+
+─── B1 閘清單（⚠️ 不擋出貨，是待填清單）───
+  M·dash 酬載在起跳瞬間結算（沒有 onEnd） —— 4 支
+     45-03(damageLine,spawnModelFx) · 79-01(applyBuff,damageArea,spawnVfx) · 80-03(damageLine) · 52-04(damageArea)
+  M·說明有時序用語但 effects 全是平行兄弟 —— 1 支
+     52-00(隨後)
+  O·ground 但沒有圓（多半是線/跳躍，正常） —— 5 支
+     20-03(damageLine,floatingText,spawnModelFx,spawnVfx) · 59-04(damageLine,spawnModelFx,spawnVfx) · 15-01(damageLine) · 79-03(damageLine,spawnModelFx) · 52-02(invulnerable,leap)
+  O·借到頂層 radiusTier —— 1 支
+     79-01(極小)
+標籤閘：90 支的標籤全部找得到對應機制（含 5 筆有理由的豁免）
+產生器印記一致：90 支
+
+> ggd@0.0.0 skillremake:provenance:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-remake/stamp_provenance.py --check
+
+provenance 齊了：421 份（owner-spec 91 / w3x-import 330）
+
+> ggd@0.0.0 grail:wishes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/grail-wishes/build_wishes.py --check
+
+✅ 60 份聖杯願望與 CSV 母本一致
+
+> ggd@0.0.0 contract:numbers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/editor-contract/gen_contract_numbers.py --check
+
+✓ 2 份文件的 9 個產生區塊都是最新的
+
+> ggd@0.0.0 atlas:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/engine-atlas/atlas.ts --check
+
+✓ engine atlas 是最新的
+
+> ggd@0.0.0 treasure:csv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/economy/gen_treasure_csv.py --check
+
+✓ 寶具總表_EX三階.csv 是最新的
+
+> ggd@0.0.0 docs:readme:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/reference/gen_readme_lists.py --check
+
+README.md + docs/reference/*.md up to date with contentVersion cv_6e59127f4b4f
+
+> ggd@0.0.0 docs:status:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/status/gen_status.py --check
+
+gen_status --check: OK — 286 tasks (✅218 🔄15 ⬜53) from ~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c
+
+> ggd@0.0.0 roster:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/roster-guard/check.ts
+
+
+> ggd@0.0.0 pitch:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/w3x-import/build_pitch.py --check
+
+合併 34 支 —— 動畫量到 31 支（優先）· w3a 推到 3 支 · 兩邊都沒有 1 支
+✅ content 是最新的
+
+> ggd@0.0.0 newhero:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/newhero/gen.ts --check
+
+✅ docs/new-hero-defaults.json 是最新的；30 組預設值全部通過自己的警示（語料 293 支技能）。
+
+> ggd@0.0.0 lowdmg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/low-damage/gen.ts --check
+
+✅ docs/傷害偏低警告清單.md 是最新的（語料 293 支技能）。
+
+> ggd@0.0.0 anchors:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/balance-anchors/gen.ts --check
+
+✔ anchors 產物都是最新的（母體 49 張卡 · 純基礎 LV30 中位 2776.2 · 引擎最終 12304.8）
+
+> ggd@0.0.0 statcaps:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/stat-caps/gen_stat_caps.ts --check
+
+✔ statcaps 三份產物都是最新的（母體 49、錨點 LV30）
+
+> ggd@0.0.0 apconv:plan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/ap-conversion/gen.py --check
+
+✅ AP 換算計畫是最新的（56 支 / 73 條）
+
+> ggd@0.0.0 apconv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/ap-conversion/apply.py --check
+
+[apconv] 開關 enabled=True mode=replace physical=keepDamageType rounding=halfUp step=10% ap/點=0.25
+[apconv] 語料 56 支（產生器擁有 2，直接編 JSON 54）
+[apconv] check OK
+
+> ggd@0.0.0 apdmg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/ap-damage-scaling/gen.ts --check
+
+[apdmg] ✅ 2 份產物都是最新的；三個住處一致
+
+> ggd@0.0.0 board:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/board/gen_board.py --check
+
+ggd-board.html is current
+
+> ggd@0.0.0 msgledger:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/message-ledger.sh --check
+
+✓ 逐則對票 2026-09-08：18 則訊息全部有列、全部對到票
+⏳ 漏了 21:14 · 2026-09-09  補發完成 —— v0.41.0 → v0.42.17 共 24 個版本，每一版都發到 Discord 了。 逐版重讀 commit 挖真內容…
+⏳ 漏了 21:15 · 2026-09-09  補發完成 —— v0.41.0 → v0.42.17 共 24 個版本，每一版都發到 Discord 了。 逐版重讀 commit 挖真內容…
+⏳ 漏了 21:15 · 2026-09-09  請找根因 你是不是被什麼污染或缺少什麼案例引導 請修正…
+⏳ 未對票 docs/_daily/2026-09-09.md:26  03:21  4 ok…
+⏳ 未對票 docs/_daily/2026-09-09.md:27  17:00  你從 v0.41 開始就在打混 請你修正根因 後補每一板的內容出來…
+⏳ 上面 3 則漏列 + 2 列未對票是**今天（2026-09-09）**的 —— 這條 session 還在跑,transcript 還在長 ⇒ ⛔ **不擋**。
+   收工/發版時硬檢查它：`bash scripts/message-ledger.sh --check --date 2026-09-09`（或 GGD_LEDGER_STRICT_TODAY=1）
+
+> ggd@0.0.0 skillnorm:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/skill-normalize/gen.ts --check
+
+✓ 技能正規化總閘：四項全過，文件是最新的
+
+> ggd@0.0.0 speedtiers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/speed-growth/gen.ts --check
+
+[speedtiers] 母體 49 位（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"））
+[speedtiers] 梯子 A　總開關 on
+[speedtiers] 移動速度 級別分佈：極小 49
+[speedtiers] 攻擊速度 交給**出身表**（config.stat-normalization@1 的 appliesTo） ⇒ 這一支不敲 asGrowthTier，卡上舊的那一行已刪除
+[speedtiers] check OK
+
+> ggd@0.0.0 jasscombo:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/jass-combo/extract.py --check
+
+OK: 2 份產物與 war3map.j 一致
+
+> ggd@0.0.0 vfxbind:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/vfx-bind/scan.py --check --strict
+
+綁定 58 支技能 / 未綁 132 份 fx.w3x.* emitter 文件
+投射物 1 顆接上原作飛彈 / 20 顆沒接(每一顆都帶理由)
+  MISSING   godie-e002.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e008.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00l.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00w.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00x.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h01n.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h01o.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h020.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hapm.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hapm.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hart.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hjai.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hpb1.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-huth.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hvsh.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hvwd.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-n01c.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-nbbc.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-o00x.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-ogrh.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-osam.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00h.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00j.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00n.q —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00n.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00o.q —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00o.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00v.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u010.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u01u.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u034.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-ucrl.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-udea.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-udre.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-uvng.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  EXTRA     godie-u01u.q —— promoted 有、推導沒有 ⇒ 人工裁決(閘 1/3 沒過但有人看過證據)。⛔ 這不是缺陷,列出來只是為了「沒有一列是無人知曉的」
+  EXTRA     godie-udre.q —— promoted 有、推導沒有 ⇒ 人工裁決(閘 1/3 沒過但有人看過證據)。⛔ 這不是缺陷,列出來只是為了「沒有一列是無人知曉的」
+✅ 綁定表與證據一致
+
+> ggd@0.0.0 models:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/model-census/gore_geoset.py --check
+
+check: 147 顆 .glb、20 處已宣告、7 處已宣告的離地分身、0 個問題
+
+> ggd@0.0.0 lod:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/lod-gen/gen_lod.py --manifest-only --check
+
+✓ _lod.json 與磁碟上的 83 顆模型一致（逐位元組）
+
+> ggd@0.0.0 audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-audit/audit.py --check
+
+✅ docs/技能模板驗收標準.md 與產生器同步（421 支）
+
+> ggd@0.0.0 echoloop:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/balance-alert/echoLoop.ts --check
+
+⚠️  回音迴圈偵測（echo-loop-feedback）—— 「調了等於白調」
+   出貨：一發「極大」＝血條 24.1% · 4.1 發送走 LV30 中位
+
+   旋鈕                       傷害端     生命端     佔血條   判定
+   damageDealt                動       —       動   ⭐ 真的旋鈕
+   abilityPower               動       —       動   ⭐ 真的旋鈕
+   maxHealth                  —       動       動   ⭐ 真的旋鈕
+   strToMaxHealth             動       動       動   ⭐ 真的旋鈕
+   intToAbilityPower          動       —       動   ⭐ 真的旋鈕
+
+✔ 沒有回音迴圈：每一個碰得到傷害或生命的旋鈕，佔血條都跟著動。
+
+> ggd@0.0.0 templates:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/ability-templates/gen.py --check
+
+✅ 模板語料與 content/ 一致(ability-templates.csv · ability-templates.md)
+
+> ggd@0.0.0 prose:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/card-prose/apply_placeholders.ts --check
+
+待轉 0 份
+
+> ggd@0.0.0 sfxbind:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/sfx-bind/build_bindings.py --check
+
+ability-sfx-cues.json / UNPORTED_SFX_LEDGER.json / SUGGESTED_SFX_KEYS.json 都是最新的
+  52 cues · 0 bindings · 19 unmatched · 26 unported
+
+> ggd@0.0.0 shapes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md
+
+✅ 421 支技能、58 份模板，覆蓋與新鮮度都過
+
+> ggd@0.0.0 iconplan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/icon-gen/src/plan.py --check
+
+icon-gen plan  (content digest 4dc14d7e8ea57c6c)
+  family         docs   have   drop  blocked  generate
+  champions        71     71      0        0         0
+  abilities       421    421      0        0         0
+  items           142    142      0        0         0
+  TOTAL           634    634      0        0         0
+
+  generate = tier1 0 (live surface today) + tier2 0
+
+  dropped, by rule:
+  blocked, by rule:
+
+  why the art is missing (importer's own resolution):
+
+  ⚠ live-surface files NOT found (veto may be too narrow):
+    data/curation/whitelist.json
+
+✓ content/config/icon-plan.json 是最新的
+
+> ggd@0.0.0 formreceipts:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/skill-forge/build-editor-form-receipts.mjs --check
+
+PASS editor form receipts · 175 total · 170 renderable · 5 missing
+
+> ggd@0.0.0 beam:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/beam-orient/scan.py --check
+
+beam-orient --check: ①7 份宣告 · ②12 份被會動的節點引用（0 份沒有結論）· 共 0 條
+
+> ggd@0.0.0 archetypes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/hero-archetypes/build.ts --check
+
+✅ 兩份產物都是最新的（母體 49 位）。
+
+> ggd@0.0.0 enableaudit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/review/build-enable-audit.mjs --check
+
+✓ enable-audit 預算是最新的（725 個 id · 2175 列）
+
+> ggd@0.0.0 review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/review/check.mjs
+
+[review:check] pending 343 / 資產 1249（Tier0 906 · 已審 0）
+  · [risk 39] model:imported.heromusashimiyamoto —— 25 支上架技能引用（R/EX ×2 加權後 risk 39）；未審
+  · [risk 28] vfx:fx.prim.void.explosion-lg —— 15 支上架技能引用（R/EX ×2 加權後 risk 28）；未審
+  · [risk 21] vfx:fx.prim.void.pulse-lg —— 11 支上架技能引用（R/EX ×2 加權後 risk 21）；未審
+  · [risk 20] vfx:fx.prim.lightning.beam-lg —— 6 支上架技能引用（R/EX ×2 加權後 risk 12）；抱怨族「閃電/雷電」+4；抱怨族「光束砲/蝗蟲群 beam-roll」+4；未審
+  · [risk 18] vfx:fx.prim.fire.explosion-lg —— 11 支上架技能引用（R/EX ×2 加權後 risk 18）；未審
+  審查頁：http://localhost:39527/asset-review.html（pnpm dev 起 client 後）
+[review:check] 🎙 語音 51 位（ladder n=8 · 灰區 0 對進 HITL）
+  ⚠️ 分離度**判不了**：量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／1275 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）
+     ⛔ 「一對都沒選出來」不等於「沒問題」—— 它等於這一族今天沒有量尺。
+[review:check] 功能批 37（待批核 29 · 已確認 0 · 已否決 0 · 未登記 8）—— ⛔ 預設不擋部署
+  · pending beam_visual-proof_20260824-2240 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · unregistered beamshape_visual-proof_20260827-0600 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · pending beamtruth_visual-proof_20260826-1200 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending beamverify_visual-proof_20260826-1200 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending crescent_visual-proof_20260825-2130 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 de5ad2b7 **一個宣稱檔案都沒碰到**（推導出 14 個，含 abilities）—— 這個錨錯了 ⇒ 「證據比修復早」的比對在這一批上不成立
+  · pending dagger_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending dragonslave_visual-proof_20260827 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending dragonslave_visual-proof_20260827-0030 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending dragonslave_visual-proof_20260827-fixed —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending firering_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending goku_visual-proof_20260825-0200 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending kenshiro_visual-proof_20260827 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending penta_visual-proof_20260825-2300 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending quad_visual-proof_20260825-2200 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending stockglow_visual-proof_20260826-1520 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending stuckescape_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending tail_visual-proof_20260826-0000 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · unregistered vfx-forge-eight-skill_visual-proof_20260902-0233 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_asset_backdrop_visual-proof_20260901-0639 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260901-0640 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260902-1015 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260902-1047 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260902-1131 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260903-0511 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · pending weather_rain_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  📅 證據時間身分：⚠️ 比修復早 0 批 · ℹ️ 判不了 23 批（報告沒寫拍於哪個 HEAD）
+     ⛔ 判不了的那些**補不回來** —— 捕捉發生在工作樹上，git 只給得出上界。
+     ⭐ 往後的報告會自動蓋 HEAD（`bash scripts/visual-proof.sh --new`）。
+  🎯 修復錨：⚠️ 錨錯 4 批 · ℹ️ 驗不了 15 批
+     判準是 **diff 碰到的檔案**，⛔ 不是 commit 訊息（訊息會說謊 —— tools/review/fix-anchor.mjs 檔頭）。
+     「驗不了」多半是那一批沒登記 --abilities ⇒ 推導不出它的出貨面（渲染端看不到）。
+  功能審查頁：http://localhost:39527/feature-review.html
+[review:check] 🔐 分署 OK：材料 docs/_review/material/ · 結果 docs/_review/verdicts/{local,live}.json
+
+> ggd@0.0.0 declshape:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/declared-shape/gen.ts --check
+
+declshape:check OK（421 支技能）
+
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+
+⛔ ggd-config-decoration-census.json · ggd-config-decoration-census.md 過期了 —— 跑 `pnpm decor:build` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.
+ ELIFECYCLE  Command failed with exit code 1.

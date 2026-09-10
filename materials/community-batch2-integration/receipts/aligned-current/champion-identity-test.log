@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+ ✓ packages/shared/src/content/championIdentity.test.ts (14 tests) 94ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  21:15:24
+   Duration  1.49s (transform 256ms, setup 0ms, collect 318ms, tests 94ms, environment 0ms, prepare 130ms)
+

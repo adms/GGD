@@ -1,0 +1,93 @@
+{
+  "schema": "ggd-card-variant-verification@1",
+  "issue": 1139,
+  "sourceCommit": "4b1822a12a2be22992126a622d689b9f293b3b48",
+  "refinementVersion": 3,
+  "refinementSha256": "3466f8ac3fc55d29536730633e5cb9107519a7327b79b1a90823ebaa92f1bfb9",
+  "tests": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardVariants.test.ts src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/content/heroForge/communityRefinements/azazel.test.ts src/content/heroForge/templateVersions.test.ts src/content/heroForge/productInstances.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "testFiles": 6,
+    "tests": 57,
+    "logSha256": "a267fa112aee40f2cf870ebe15ab787657f78fd6b26957e58763d821daa0eca1"
+  },
+  "typecheck": {
+    "command": "pnpm --filter @ggd/shared typecheck",
+    "testedCommit": "09ad92837808a0fe7dfac2558e1b9be248124cb8",
+    "exitCode": 0,
+    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  },
+  "mutations": {
+    "schema": "ggd-card-variant-mutations@1",
+    "sourceSha256": "3466f8ac3fc55d29536730633e5cb9107519a7327b79b1a90823ebaa92f1bfb9",
+    "originalRestored": true,
+    "checks": [
+      {
+        "mutation": "tree-q-damages",
+        "exitCode": 1,
+        "detected": true,
+        "logSha256": "49241eb288f40e4a84ced39e31d0d3a025eddaaf16b542b1421d877d63be1af4"
+      },
+      {
+        "mutation": "tree-card-not-counted",
+        "exitCode": 1,
+        "detected": true,
+        "logSha256": "6b29f9fcf4e3c3522b4a6a099269c3bef1535ba3733bab5be45c43677a47dc47"
+      }
+    ]
+  },
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 6,
+    "onAttackPassivesRemaining": 29,
+    "boundModelsVerified": 37,
+    "distinctModelFiles": 34,
+    "logSha256": "f86a8c22364081007e9663d0cc33a1cf8a739c7c4e12bc651108484faa8da5db"
+  },
+  "ui": "unverified",
+  "originalDesignAcceptance": "incomplete",
+  "remaining": [
+    "card face and dynamic icon state",
+    "sword basic attack and weapon restoration",
+    "fly-card presentation",
+    "other original requirements in issue 1132"
+  ],
+  "formalPublication": false,
+  "explicitPushGuard": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardVariants.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "tests": 9,
+    "logSha256": "3dc979e4a42662e91bf50fdbd1f000d70965dedfff450c03c91dfcdb08f01ff5",
+    "assertion": "Wind Q must create an authored knockback override, not only the generic damage impact."
+  },
+  "releaseChecks": {
+    "startedTogetherAt": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
+    "initialEnvironmentFailure": "skills and Editor were denied tsx local IPC by the sandbox; rerun in the approved normal local environment.",
+    "generatedArtifactRepair": "Official decor:build updated source census from 2525 to 2526 after adding the handoff restoration tool; no gameplay configuration changed.",
+    "checks": [
+      {
+        "command": "pnpm editor:accept:release",
+        "testedCommit": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
+        "exitCode": 0,
+        "logSha256": "f0227e17bd649c528bfd0de4a29e96b5150d2d8c4748881a3f48a0738bf008b1"
+      },
+      {
+        "command": "pnpm skills:check",
+        "testedCommit": "09ad92837808a0fe7dfac2558e1b9be248124cb8",
+        "exitCode": 0,
+        "logSha256": "fe9f93a6aa404d8ac95fc8d65b0083c4aa403f59f4a2a94e309dace4be2babf5"
+      },
+      {
+        "command": "pnpm coord:check",
+        "testedCommit": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+      }
+    ],
+    "editorTests": 592,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "evidenceReuse": "Between the Editor run and final skills run only a focused push assertion, its receipt, and the official source-count census changed; application and authoring source remained identical."
+  }
+}

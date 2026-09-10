@@ -1,0 +1,119 @@
+{
+  "schema": "ggd-electric-charge-verification@1",
+  "issue": 1140,
+  "sourceCommit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+  "refinementVersion": 1,
+  "refinementSha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc",
+  "regression": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/electricCharge.test.ts src/sim/effects/chainLightning.test.ts src/content/schema/effects/variantMirrorsSchema.test.ts src/content/heroForge/communityRefinements/cardVariants.test.ts src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/content/heroForge/communityRefinements/azazel.test.ts src/content/heroForge/templateVersions.test.ts src/content/heroForge/productInstances.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "testFiles": 9,
+    "tests": 80,
+    "logSha256": "8420f80ee0b6bc3f0412b2e82819605d3f39c07f3741b00dfa17732b58296719",
+    "sourceNote": "Same production and refinement source; a missing crit:false in the test-only basic damage packet was fixed afterward, then all 16 electric tests and typecheck passed again."
+  },
+  "finalFocusedTests": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/electricCharge.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "tests": 16,
+    "logSha256": "4e44680b69f79b1f3c9f8df60d94ac8e1a0b3fbd05e9747f9861fefb34ad6ce1"
+  },
+  "typecheck": {
+    "command": "pnpm --filter @ggd/shared typecheck",
+    "exitCode": 0,
+    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  },
+  "mutations": {
+    "schema": "ggd-electric-charge-mutations@1",
+    "sourceSha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc",
+    "hookSourceSha256": "fa28c2491ef840dce48b8a4c2ff97dda34999f58c5a4175477ecab9648622f9e",
+    "checks": [
+      {
+        "mutation": "bypass-cast-credit-dedup",
+        "exitCode": 1,
+        "detected": true,
+        "logSha256": "7d77d8b5a54665cf2aefe9269efb4ab287b6db1989ec9cf1ef7b48435a64deae",
+        "observedFailure": "Interleaved W/Q earned 3 charges instead of 2; only this test failed (15 passed). Slot attribution remained active."
+      },
+      {
+        "mutation": "remove-ex-status-cost",
+        "exitCode": 1,
+        "detected": true,
+        "logSha256": "6194d1f74ff681f976e0ceaee223fee6831e5774f2d8bf12bf03899a047855ca",
+        "observedFailure": "Zero-charge EX returned ok instead of rejecting, and prepared overload amounts no longer matched spent charges."
+      }
+    ],
+    "originalRestored": true
+  },
+  "testConditions": [
+    "Real HeroProject -> pinned templates -> compiler -> SimWorld casts.",
+    "Fixture-only durable targets and disabled ordinary damage knockback keep geometry stable.",
+    "Interleaved W/Q case uses the existing hitstop.scale=0 owner setting; other cases retain default hitstop."
+  ],
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 11,
+    "onAttackPassivesRemaining": 28,
+    "originalRecipesUnchanged": 37,
+    "boundModelsUnchanged": 37,
+    "changedProjectNumbers": [
+      "20"
+    ],
+    "distinctModelFiles": 34,
+    "logSha256": "3a37837125fa59852619875b8225e2108493474d8e56c3a9711e6fd831b8e1d4",
+    "sharedRestore": {
+      "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts --release-root <restored-release-13956d93b> --output <new-directory>",
+      "exitCode": 0,
+      "boundModelsVerified": 37,
+      "distinctModelFiles": 34,
+      "logSha256": "0a308e6a827e8c2e12b956dd075d87246c33bbcc7236b1d0ff3b55e24add851a",
+      "networkOperations": 0
+    }
+  },
+  "ui": "unverified",
+  "originalDesignAcceptance": "incomplete",
+  "formalPublication": false,
+  "remaining": [
+    "Original coin model and toss animation",
+    "Iron-sand shield-break particles",
+    "Full UI/game visual acceptance, current-service ZIP and formal publication",
+    "Other original requirements in issue 1132"
+  ],
+  "releaseChecks": {
+    "firstBatchCommit": "38c6e344959c",
+    "testedCommit": "e23c0123f5deba3e66766a2f604a3dab413294ab",
+    "checks": [
+      {
+        "command": "pnpm skills:check",
+        "exitCode": 0,
+        "logSha256": "e811e7ead0d0404de0653b0c8123a5c26f5566691229035bdc6f8f4d6ed1ae5c"
+      },
+      {
+        "command": "pnpm editor:accept:release",
+        "exitCode": 0,
+        "logSha256": "52c2d606f925d26bf1a65d97d4d68ac0ae5a64eb387ce4cb25b4e03315a3258e"
+      },
+      {
+        "command": "pnpm coord:check",
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+      }
+    ],
+    "editorTests": 592,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "repairs": "Official generators refreshed schema-dependent specification, acceptance, overview, engine-note and atlas receipts. Editor README contract values were updated. No test requirement or existing human visual verdict was weakened.",
+    "census": {
+      "checks": 67,
+      "passedBeforeRepairs": 64,
+      "failedBeforeRepairs": [
+        "overview:check",
+        "skillremake:docs:check",
+        "atlas:check"
+      ],
+      "resultsSha256": "50c9d94e900288fd09b94b5705b3c023f52de24305b20a1c9c6dc9fb51ac8f57"
+    },
+    "ledgerBoundary": "skills:check passed under its existing in-progress-day policy; 11 current-day transcript entries were reported as pending and nonblocking. This is not a strict whole-project message-ledger closeout or a formal release."
+  }
+}

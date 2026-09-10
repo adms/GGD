@@ -1,0 +1,30 @@
+🔓 隔離區:解鎖 434 份（追蹤 867,缺 0）
+
+> ggd@0.0.0 content:build:indexes-only /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> pnpm --filter @ggd/shared content:build
+
+
+> @ggd/shared@0.0.0 content:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared
+> tsx scripts/buildIndexes.ts
+
+  champions        71 doc(s)  6546aa88bd6d
+  abilities       421 doc(s)  35a6502b6cc8
+  items           142 doc(s)  b199535ee141
+  augments         91 doc(s)  e003b299e8a9
+  projectiles      21 doc(s)  952cffc4b28b
+  status-effects   51 doc(s)  7219076b5f8e
+  loot-tables       3 doc(s)  50b52195cd4a
+  arenas           13 doc(s)  ee5870b2c76d
+  maps              7 doc(s)  51237ab2fd5f
+  config          103 doc(s)  a15268910aac
+  models          156 doc(s)  a385fd978ca5
+  vfx             702 doc(s)  7df129081586
+  skins             5 doc(s)  3d1095f3da83
+  ability-templates  58 doc(s)  7bafff281be0
+  vfx-scripts      10 doc(s)  3d945d196d0a
+  vfx-subtypes      4 doc(s)  356bb93fc4d8
+contentVersion: cv_2d236381d68a
+editor-target-profile.json  digest=e0461b53527a
+bundle.json:    1858 doc(s)  2819449 B raw  599753 B gzip-9  394762 B brotli-11
+🔒 隔離區:上鎖 462 份（追蹤 867,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: content:build 完成（產物已重新上鎖）

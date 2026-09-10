@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { STATUS_TAG_MIN_LEN, STATUS_TAG_MAX_LEN } from "../../../sim/content/condition";
 import type { EffectDef } from "../../../sim/effects/effect";
 import {
   EFFECT_COMMON_SHAPE,
@@ -14,6 +15,8 @@ export const zDispel =
 z
   .object({
     kind: z.literal("dispel"),
+    statusTag: z.string().min(STATUS_TAG_MIN_LEN).max(STATUS_TAG_MAX_LEN).optional()
+      .describe("只清除帶此標籤的狀態（包含實際控場旗標）；使用時必須明確只選 status 池，仍遵守可驅散與數量限制。"),
     ...EFFECT_COMMON_SHAPE,
     /**
      * ⭐ **E1 硬約束（owner 核准）：新 kind 一律帶 `shape`。**
@@ -95,4 +98,7 @@ export const refine = (
   ctx: z.RefinementCtx,
 ): void => {
   refineDispelShape(e, ctx);
+  if (e.statusTag !== undefined && (e.pools?.status !== true || e.pools.dot === true || e.pools.shields === true || e.pools.buffs === true)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["pools"], message: "statusTag 必須明確只選 status 池；不能過濾沒有狀態標籤的其他池。" });
+  }
 };

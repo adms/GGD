@@ -1,0 +1,67 @@
+[
+  {
+    "path": "editor-release-before-readme-fix.log",
+    "sha256": "23a5d31dbd10d742ae9cccf8bb010483c6f2365bd7a2b547005dd186ab5a0d64",
+    "bytes": 7377
+  },
+  {
+    "path": "editor-readme-fixed.log",
+    "sha256": "4bf42e8f225add56e3ff82e8d64745cc55ff2726f69d7441fc079a796f244b74",
+    "bytes": 354
+  },
+  {
+    "path": "editor-build.log",
+    "sha256": "778aa0a161ecd110efab1b7f71df28268a1f9234e0a132b6397e2c1fbed0c540",
+    "bytes": 13071
+  },
+  {
+    "path": "room-pool-before-fix.log",
+    "sha256": "1cfe3e2ced070f6839715b2f7c53e7999455eb2cb0eb902812c356e714d18441",
+    "bytes": 3218
+  },
+  {
+    "path": "room-pool-fixed.log",
+    "sha256": "d19796f8bd6524fe246c3879e98e57c87820492d6fa67cf8472fabf789b5d968",
+    "bytes": 1819
+  },
+  {
+    "path": "go-intake-policy.log",
+    "sha256": "0cf85723f5f9c4d0816cbf1808e18b5f61091afddc30d869b0234dc8fa7040b1",
+    "bytes": 6735
+  },
+  {
+    "path": "coord.log",
+    "sha256": "dac0915569ca8d16e3bef05fd3f177e66cc1240523b770420ff2383c382b576b",
+    "bytes": 6094
+  },
+  {
+    "path": "skills-prefix.log",
+    "sha256": "d470ecd2a1f1584694ef89f23cf264270dd6ac5530ef208a2c3dd68f0ddd3c6f",
+    "bytes": 5843
+  },
+  {
+    "path": "skills-middle.log",
+    "sha256": "278bd927fb3b793e8c8ec28fca878bd6c8bc4f8374d1a4a80b2a1e793e475093",
+    "bytes": 15787
+  },
+  {
+    "path": "skills-tail.log",
+    "sha256": "bc1d441f03ee39f1e7c0f2da39ed0cd0719b86b67530489f4ae99abe81bcaba2",
+    "bytes": 36850
+  },
+  {
+    "path": "derived-fixed.log",
+    "sha256": "e8041c78f6361d724dff946994685c8f2e353d8e0f683da566f742671a144b17",
+    "bytes": 4017
+  },
+  {
+    "path": "target-final.log",
+    "sha256": "1ab3aaab36454e0c687cee3a2987e818937e3004c6aa9607ad2da4b123d67abc",
+    "bytes": 4185
+  },
+  {
+    "path": "main-followup-resolver.log",
+    "sha256": "ca132db779cf95ea040c537b040426afbd16929929b4b5b12d93ac49999f58f2",
+    "bytes": 57
+  }
+]

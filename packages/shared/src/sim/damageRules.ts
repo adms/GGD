@@ -1,5 +1,5 @@
 /**
- * 傷害規則（`config.damage-rules@1`）—— 今天只有一格：**技能傷害的預設型別**。
+ * 傷害規則（`config.damage-rules@1`）—— 技能傷害的預設型別與範圍傷害人數上限。
  *
  * owner 2026-08-05：「請把技能傷害預設都改成 AP 傷害」。
  *
@@ -27,6 +27,7 @@
  * 而 WC3 原作裡那種組合很常見。
  */
 import type { DamageType } from "./effects/effect";
+import { SPREAD_MAX_TARGETS } from "./effects/spreadLimits";
 
 /** `content/config/damage-rules.json` 的文件 id。 */
 export const DAMAGE_RULES_DOC_ID = "damage-rules";
@@ -38,6 +39,8 @@ export interface DamageRules {
    * 出貨 `magic`（owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
    */
   defaultAbilityDamageType: DamageType;
+  /** damageArea / damageLine 省略 maxTargets 時的值，也是明填值的全域上限。 */
+  spreadMaxTargetsCap: number;
 }
 
 /**
@@ -48,6 +51,7 @@ export interface DamageRules {
  */
 export const DEFAULT_DAMAGE_RULES: DamageRules = Object.freeze({
   defaultAbilityDamageType: "magic",
+  spreadMaxTargetsCap: SPREAD_MAX_TARGETS,
 });
 
 const TYPES: readonly DamageType[] = ["physical", "magic", "true"];
@@ -58,10 +62,15 @@ const TYPES: readonly DamageType[] = ["physical", "magic", "true"];
  */
 export function normalizeDamageRules(raw: unknown): DamageRules {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return DEFAULT_DAMAGE_RULES;
-  const t = (raw as { defaultAbilityDamageType?: unknown }).defaultAbilityDamageType;
-  return TYPES.includes(t as DamageType)
-    ? { defaultAbilityDamageType: t as DamageType }
-    : DEFAULT_DAMAGE_RULES;
+  const r = raw as { defaultAbilityDamageType?: unknown; spreadMaxTargetsCap?: unknown };
+  const t = r.defaultAbilityDamageType;
+  const cap = r.spreadMaxTargetsCap;
+  return {
+    defaultAbilityDamageType: TYPES.includes(t as DamageType)
+      ? t as DamageType : DEFAULT_DAMAGE_RULES.defaultAbilityDamageType,
+    spreadMaxTargetsCap: typeof cap === "number" && Number.isSafeInteger(cap) && cap >= 1
+      ? cap : DEFAULT_DAMAGE_RULES.spreadMaxTargetsCap,
+  };
 }
 
 /** 從 `config.damage-rules@1` 文件讀出來。缺文件 = 出貨預設。 */

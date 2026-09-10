@@ -1,0 +1,394 @@
+{
+  "schema": "ggd-community-replay-proof@1",
+  "matchId": "m_01M235Q6BHMA3367DNSAKQBF1W",
+  "recordedDigest": "sha256:5572699d4abf35c9d7ee0688a6d12d25cb439ee8685019d94621940d123ab0ed",
+  "status": "passed",
+  "startedAt": "2026-09-09T13:29:59.498Z",
+  "limits": "Actual HTTP and replay socket; no browser, visual or complete-match settlement acceptance.",
+  "requests": [
+    {
+      "path": "/auth/login",
+      "status": 200,
+      "milliseconds": 57
+    },
+    {
+      "path": "/admin/replays/m_01M235Q6BHMA3367DNSAKQBF1W",
+      "status": 200,
+      "milliseconds": 73
+    },
+    {
+      "path": "/admin/replays/m_01M235Q6BHMA3367DNSAKQBF1W/ticket",
+      "status": 200,
+      "milliseconds": 11
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W",
+      "status": 200,
+      "milliseconds": 15
+    },
+    {
+      "path": "/content-overlay/bundle",
+      "status": 200,
+      "milliseconds": 5
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-aladdin",
+      "status": 200,
+      "milliseconds": 167
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-albus",
+      "status": 200,
+      "milliseconds": 155
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-bojji",
+      "status": 200,
+      "milliseconds": 140
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-boxxo",
+      "status": 200,
+      "milliseconds": 147
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-elma",
+      "status": 200,
+      "milliseconds": 139
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-fushi",
+      "status": 200,
+      "milliseconds": 144
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-goblin",
+      "status": 200,
+      "milliseconds": 140
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-guts",
+      "status": 200,
+      "milliseconds": 146
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-haga",
+      "status": 200,
+      "milliseconds": 153
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-kaede",
+      "status": 200,
+      "milliseconds": 149
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-kaiji",
+      "status": 200,
+      "milliseconds": 161
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-keyaru",
+      "status": 200,
+      "milliseconds": 160
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-kisaragi",
+      "status": 200,
+      "milliseconds": 143
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-klaus",
+      "status": 200,
+      "milliseconds": 161
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-kumoko",
+      "status": 200,
+      "milliseconds": 141
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-luckyman",
+      "status": 200,
+      "milliseconds": 144
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-makoto",
+      "status": 200,
+      "milliseconds": 135
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-maomao",
+      "status": 200,
+      "milliseconds": 202
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-maple",
+      "status": 200,
+      "milliseconds": 143
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-matthias",
+      "status": 200,
+      "milliseconds": 144
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-misery",
+      "status": 200,
+      "milliseconds": 147
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-naofumi",
+      "status": 200,
+      "milliseconds": 157
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-ned",
+      "status": 200,
+      "milliseconds": 166
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-noor",
+      "status": 200,
+      "milliseconds": 166
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-nube",
+      "status": 200,
+      "milliseconds": 151
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-orphen",
+      "status": 200,
+      "milliseconds": 144
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-popp",
+      "status": 200,
+      "milliseconds": 162
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-rem",
+      "status": 200,
+      "milliseconds": 154
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-rin",
+      "status": 200,
+      "milliseconds": 176
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-shadow",
+      "status": 200,
+      "milliseconds": 199
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-shinchan",
+      "status": 200,
+      "milliseconds": 177
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-sinbad",
+      "status": 200,
+      "milliseconds": 188
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-takopi",
+      "status": 200,
+      "milliseconds": 184
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-touka",
+      "status": 200,
+      "milliseconds": 152
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-uncle",
+      "status": 200,
+      "milliseconds": 152
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-yogiri",
+      "status": 200,
+      "milliseconds": 142
+    },
+    {
+      "path": "/replay-content/m_01M235Q6BHMA3367DNSAKQBF1W/heroes/b2-zenitsu",
+      "status": 200,
+      "milliseconds": 155
+    }
+  ],
+  "compatibility": {
+    "compatible": true,
+    "refusal": null,
+    "truncated": false
+  },
+  "replayReservation": {
+    "status": 200,
+    "milliseconds": 27,
+    "transport": "Native fetch over the same public matchmaking route; Node SDK HTTP agent socket timeout attempt retained separately."
+  },
+  "refusals": [],
+  "divergences": [],
+  "recordedEnd": {
+    "footer": {
+      "t": "footer",
+      "endedAt": "2026-09-09T13:29:58.157Z",
+      "finalTick": 986,
+      "rounds": 1,
+      "faultCount": 0,
+      "finalWorldDigest": 525486616,
+      "finalHostDigest": 2538769309,
+      "teams": [
+        {
+          "teamId": 0,
+          "lives": 18,
+          "placement": 3
+        },
+        {
+          "teamId": 1,
+          "lives": 20,
+          "placement": 1
+        },
+        {
+          "teamId": 2,
+          "lives": 18,
+          "placement": 4
+        },
+        {
+          "teamId": 3,
+          "lives": 20,
+          "placement": 2
+        }
+      ]
+    },
+    "checkpointCount": 987,
+    "lastCheckpointTick": 986,
+    "lateClientStateTick": 992,
+    "limits": "The live room continues idle ticks while the platform acknowledges settlement; the sealed footer is the recorded endpoint."
+  },
+  "lastStatus": {
+    "matchId": "m_01M235Q6BHMA3367DNSAKQBF1W",
+    "startedAt": "2026-09-09T13:29:14.745Z",
+    "tick": 987,
+    "lastTick": 986,
+    "playing": false,
+    "speed": 1,
+    "seeking": false,
+    "finished": false,
+    "truncated": false,
+    "rounds": [
+      {
+        "tick": 0,
+        "phase": "champSelect",
+        "round": 0
+      },
+      {
+        "tick": 3,
+        "phase": "intermission",
+        "round": 1
+      },
+      {
+        "tick": 153,
+        "phase": "combat",
+        "round": 1
+      },
+      {
+        "tick": 806,
+        "phase": "resolution",
+        "round": 1
+      },
+      {
+        "tick": 986,
+        "phase": "matchEnd",
+        "round": 1
+      }
+    ],
+    "contentVersion": "cv_d3b33838b6cc",
+    "buildStamp": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+    "seats": [
+      {
+        "seatId": 0,
+        "teamId": 0,
+        "displayName": "model-reviewer",
+        "isBot": false
+      },
+      {
+        "seatId": 1,
+        "teamId": 0,
+        "displayName": "model-author",
+        "isBot": false
+      },
+      {
+        "seatId": 2,
+        "teamId": 0,
+        "displayName": "Bot 2",
+        "isBot": true
+      },
+      {
+        "seatId": 3,
+        "teamId": 1,
+        "displayName": "Bot 3",
+        "isBot": true
+      },
+      {
+        "seatId": 4,
+        "teamId": 1,
+        "displayName": "Bot 4",
+        "isBot": true
+      },
+      {
+        "seatId": 5,
+        "teamId": 1,
+        "displayName": "Bot 5",
+        "isBot": true
+      },
+      {
+        "seatId": 6,
+        "teamId": 2,
+        "displayName": "Bot 6",
+        "isBot": true
+      },
+      {
+        "seatId": 7,
+        "teamId": 2,
+        "displayName": "Bot 7",
+        "isBot": true
+      },
+      {
+        "seatId": 8,
+        "teamId": 2,
+        "displayName": "Bot 8",
+        "isBot": true
+      },
+      {
+        "seatId": 9,
+        "teamId": 3,
+        "displayName": "Bot 9",
+        "isBot": true
+      },
+      {
+        "seatId": 10,
+        "teamId": 3,
+        "displayName": "Bot 10",
+        "isBot": true
+      },
+      {
+        "seatId": 11,
+        "teamId": 3,
+        "displayName": "Bot 11",
+        "isBot": true
+      }
+    ]
+  },
+  "selectedSeats": [
+    {
+      "accountId": "01M22KB9WZHV661WRKPG0HT8H4",
+      "championId": "b2-maomao"
+    },
+    {
+      "accountId": "01M22KB9YVJDHGDQ19EFEB6HMJ",
+      "championId": "b2-kisaragi"
+    }
+  ],
+  "finishedAt": "2026-09-09T13:30:10.330Z"
+}

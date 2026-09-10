@@ -1,0 +1,318 @@
+{
+  "schema": "ggd-community-batch-source-lock@1",
+  "sourceRepository": "adms/GGD",
+  "sourcePullRequest": 1144,
+  "sourceCommit": "cd5e98945908448b404eb7fc045a23c282be2ce5",
+  "heroes": [
+    {
+      "id": "b2-aladdin",
+      "name": "阿拉丁",
+      "path": "projects/b2-aladdin.project.json",
+      "sha256": "309675b52b41ac3cf9eb0c5ae1490f183b89eb3c798f2641fae2e376de3f32c9",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-aladdin.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-albus",
+      "name": "阿爾巴斯",
+      "path": "projects/b2-albus.project.json",
+      "sha256": "4c4af9a3a4a07dc0481cdd3de438f8be7b58028a1c4597ac24fc17bb56e3d2f7",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-albus.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-bojji",
+      "name": "波吉",
+      "path": "projects/b2-bojji.project.json",
+      "sha256": "2458acfb83b7d9709577225576bd78d3cc1a358a600949d5cc869cf090a4da1d",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-bojji.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "path": "projects/b2-boxxo.project.json",
+      "sha256": "44eda2885d758657eb30b9605641a17d2850f78b5c54855d920fe0a13d5981a5",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-boxxo.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-elma",
+      "name": "艾爾瑪",
+      "path": "projects/b2-elma.project.json",
+      "sha256": "1ae81c776d1e297178ab76c2e8b18a91ac97d14d370747d79f548ad6d4f08907",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-elma.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-fushi",
+      "name": "不死",
+      "path": "projects/b2-fushi.project.json",
+      "sha256": "dabcd743c6ebd745c509c3a5091a8b7dea4af0603cc124527e5c303c6e732632",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-fushi.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-goblin",
+      "name": "哥布林殺手",
+      "path": "projects/b2-goblin.project.json",
+      "sha256": "f2dbefda3c6bef9d658382d9fffb44826496a0b08903b02574c6a017b4894ec6",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-goblin.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-guts",
+      "name": "凱茲",
+      "path": "projects/b2-guts.project.json",
+      "sha256": "1fb7ee5c15f6f24942a25a8597e386b3089a065b8d073d14aa264d850f0e7995",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-guts.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-haga",
+      "name": "羽賀",
+      "path": "projects/b2-haga.project.json",
+      "sha256": "0fa3263b2beef67aa954e17a9b56576924dddc7ddbf79eee8b1eeff932f2695b",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-haga.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-kaede",
+      "name": "楓",
+      "path": "projects/b2-kaede.project.json",
+      "sha256": "9fbd5fdf47fc0b362d24c7c1bd25856d403757d6cfb72ba6ead87a192a12b43d",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kaede.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "path": "projects/b2-kaiji.project.json",
+      "sha256": "8e2a313cbe67cd66760b651799f739effdc457f441f7f3ff37f1293c03b2ec45",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kaiji.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-keyaru",
+      "name": "凱亞爾",
+      "path": "projects/b2-keyaru.project.json",
+      "sha256": "3545f86f385310f43da9294b54d262f765673e112bd2fcc2305df4469c391de2",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-keyaru.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "如月電車",
+      "path": "projects/b2-kisaragi.project.json",
+      "sha256": "72d30f5117fbb5a6c5c5790a01270f56009b89104281e68a0d1011db5890cc37",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kisaragi.project.json",
+      "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c"
+    },
+    {
+      "id": "b2-klaus",
+      "name": "克勞斯",
+      "path": "projects/b2-klaus.project.json",
+      "sha256": "4d910f6040219cc9784241d33fc8ebf01b46d8cabd862cfa2529fed3732fffe9",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-klaus.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-kumoko",
+      "name": "蜘蛛子",
+      "path": "projects/b2-kumoko.project.json",
+      "sha256": "a6f26785079d75c8efa44ea70da4cce4b2e8fa7e9b39810976530983460fb5c9",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kumoko.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-luckyman",
+      "name": "幸運超人",
+      "path": "projects/b2-luckyman.project.json",
+      "sha256": "769d099cac943a6b5683d878c9bdc97d113569b1a522eb26ef531a498ffa82f8",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-luckyman.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-makoto",
+      "name": "深澄真",
+      "path": "projects/b2-makoto.project.json",
+      "sha256": "7bfe7ad38d6872f28253ac250cabcdf0d60c7448749f519572bc7d1594fce05b",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-makoto.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "path": "projects/b2-maomao.project.json",
+      "sha256": "f4e3906077ffd59b2c0ef3bc70062cdfed259c7d431aed6389e5338450311483",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maomao.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-maple",
+      "name": "梅普露",
+      "path": "projects/b2-maple.project.json",
+      "sha256": "6e50eecf4718b04986a39c0b34c155f32271fde971ed8a6f00a77f48cc3f27ec",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maple.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-matthias",
+      "name": "馬提亞斯",
+      "path": "projects/b2-matthias.project.json",
+      "sha256": "d09950fdf56f79501f9f3a05f3399b96851099aadf6b42fcc2fda9a77e9e0a8f",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-matthias.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-misery",
+      "name": "米瑟利",
+      "path": "projects/b2-misery.project.json",
+      "sha256": "8e9e1ce35942bdbb1693a4f5de8dd9cad9887e9b8968be9d4b176374c5c577b1",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-misery.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "path": "projects/b2-naofumi.project.json",
+      "sha256": "2f2bdef3d8013974e37efa1727ade770b2010e609609ee6bd6a8b89eb7a89dc9",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-naofumi.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "path": "projects/b2-ned.project.json",
+      "sha256": "f4cfd2415bebab354baf2e7ef7959a23aafa9deb7010622b9a2a5c11347b052d",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-ned.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-noor",
+      "name": "諾爾",
+      "path": "projects/b2-noor.project.json",
+      "sha256": "e1dc48d1283ff74267370ec4f8f64cd218259ce63700dba49681fe5ceda8d95b",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-noor.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-nube",
+      "name": "鵺野鳴介",
+      "path": "projects/b2-nube.project.json",
+      "sha256": "1e95e27e86acb513c02c17420156e3b1fe16782c698c14c4bf0a504bd39c128c",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-nube.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-orphen",
+      "name": "歐菲",
+      "path": "projects/b2-orphen.project.json",
+      "sha256": "d89db45bb87d66208fb1b953294c2ebd16221c0085b3669ed7291fc6ff9c61cd",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-orphen.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-popp",
+      "name": "何布",
+      "path": "projects/b2-popp.project.json",
+      "sha256": "3360e704d25d6ecf45ac3f4656015fe6c7b6f371cd52667da9725a87bf6d6d91",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-popp.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-rem",
+      "name": "蕾姆",
+      "path": "projects/b2-rem.project.json",
+      "sha256": "cd7b460e44a3cb19ea320480c0035be8d817accd007b0418af42468491d40966",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-rem.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-rin",
+      "name": "遠坂凜",
+      "path": "projects/b2-rin.project.json",
+      "sha256": "5ec624045b4964390e5bb3fd8be3ac9aa65948cbd622018c13c1ddc04484eff3",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-rin.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-shadow",
+      "name": "闇影",
+      "path": "projects/b2-shadow.project.json",
+      "sha256": "666ac8dcb9938dccdfad9ba1df8cf81b762aeebab1ed38dc278a41dd5e9d6975",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-shadow.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "path": "projects/b2-shinchan.project.json",
+      "sha256": "a86edee5fa8c85d73f902a9531b5bd724f610e768906ff42f4babe79d172c42c",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-shinchan.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "path": "projects/b2-sinbad.project.json",
+      "sha256": "fb92f5d05bc12cf18adafb2bea08111b4d693ecdf8713eb81bcccf5eaaebac22",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-sinbad.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-takopi",
+      "name": "章魚嗶",
+      "path": "projects/b2-takopi.project.json",
+      "sha256": "83d659f572137a43a51bbdd9cb85355e95c207a6eb84abbd1dbb98ebc085131b",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-takopi.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-touka",
+      "name": "托卡・史考特",
+      "path": "projects/b2-touka.project.json",
+      "sha256": "5d2d3e71d6689a0196693bef25a06161610b33f7eed02e544f52817c3da73f68",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-touka.project.json",
+      "modelKey": "champ.thorne"
+    },
+    {
+      "id": "b2-uncle",
+      "name": "異世界舅舅",
+      "path": "projects/b2-uncle.project.json",
+      "sha256": "10f3ee700b22bb1afcdf94c73ab7cd95e59ffbd773a6563cc9d206cfe47d2bf8",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-uncle.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-yogiri",
+      "name": "高遠夜霧",
+      "path": "projects/b2-yogiri.project.json",
+      "sha256": "8e95c491552530f87f02c097a587a23038166c813423363a4668be7710294383",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-yogiri.project.json",
+      "modelKey": "champ.sela"
+    },
+    {
+      "id": "b2-zenitsu",
+      "name": "我妻善逸",
+      "path": "projects/b2-zenitsu.project.json",
+      "sha256": "6138042e3725eef6b65bf46b0cd52fe8cefdd4ebf34765f65962fb51142d9614",
+      "sourcePath": "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-zenitsu.project.json",
+      "modelKey": "champ.thorne"
+    }
+  ],
+  "heroCount": 37,
+  "slotCount": 222,
+  "modelPolicy": "Preserve source models; Owner will consolidate character model mapping later.",
+  "upstreamGenerator": "tools/editor-acceptance/batch2-37/build.mjs",
+  "auxiliarySources": [
+    {
+      "path": "decisions.json",
+      "sha256": "7d7b907ae80c267c6880888a9bdd9bc814d915c29d0f70274b8a00bf0dc253b3"
+    },
+    {
+      "path": "identity-sources.json",
+      "sha256": "a487d9dc5ee77887fc61a77c2a743874ca56d63cba891e573b6578b389735a16"
+    }
+  ]
+}

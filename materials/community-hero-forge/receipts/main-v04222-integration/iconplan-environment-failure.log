@@ -1,0 +1,25 @@
+
+> ggd@0.0.0 iconplan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> python3 tools/icon-gen/src/plan.py --check
+
+icon-gen plan  (content digest 4dc14d7e8ea57c6c)
+  family         docs   have   drop  blocked  generate
+  champions        71     71      0        0         0
+  abilities       421    421      0        0         0
+  items           142    142      0        0         0
+  TOTAL           634    634      0        0         0
+
+  generate = tier1 0 (live surface today) + tier2 0
+
+  dropped, by rule:
+  blocked, by rule:
+
+  why the art is missing (importer's own resolution):
+
+  ⚠ live-surface files NOT found (veto may be too narrow):
+    data/curation/whitelist.json
+ ELIFECYCLE  Command failed with exit code 1.
+
+⛔ content/config/icon-plan.json 過期（或被手改）——⭐ 它是 `iconplan:build` 的產物。
+  → 跑 `bash scripts/genrun.sh iconplan:build` 然後 `git add content/config/icon-plan.json`。
+  ⛔ 不要手改：下一次重生成會把它蓋回去,而那個「又不一樣了」看起來像**新的**錯。

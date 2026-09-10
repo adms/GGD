@@ -17,25 +17,40 @@ import { readTargetProfileFacts } from "../../apps/editor/src/export-center/expo
 
 const { values } = parseArgs({ options: {
   handoff: { type: "string" }, out: { type: "string" },
+  "projects-dir": { type: "string" }, "model-dir": { type: "string" },
   "platform-port": { type: "string" }, username: { type: "string" },
 } });
 assert.equal(process.env.GGD_LOCAL_COMMUNITY_PROOF, "disposable-local-only", "Explicit local acceptance opt-in is required.");
-assert(values.handoff && values.out && values.username && process.env.GGD_LOCAL_PROOF_PASSWORD);
+assert(Boolean(values.handoff) !== Boolean(values["projects-dir"]), "Select one handoff or directory of immutable .project.json sources.");
+assert(values.out && values.username && process.env.GGD_LOCAL_PROOF_PASSWORD);
 const port = Number(values["platform-port"]);
 assert(Number.isInteger(port) && port > 0 && port < 65536);
 const origin = `http://127.0.0.1:${port}/api/v1`;
-const input = path.resolve(values.handoff), output = path.resolve(values.out);
+const input = path.resolve(values.handoff ?? values["projects-dir"]!), output = path.resolve(values.out);
 assert(output !== input && !output.startsWith(input + path.sep), "Evidence must use a new directory outside the input handoff.");
-const index = JSON.parse(await fs.readFile(path.join(input, "index.json"), "utf8"));
-assert.equal(index.heroCount, 37); assert.equal(index.slotCount, 222); assert.equal(index.heroes.length, 37);
 const safe = (relative: string) => {
   assert(!path.isAbsolute(relative) && !relative.includes("\\") && relative.split("/").every(part => part && part !== "." && part !== ".."));
   return path.join(input, relative);
 };
-const rows = await Promise.all(index.heroes.map(async (row: { name: string; project: string; recipe: string }) => ({
-  ...row, projectText: await fs.readFile(safe(row.project), "utf8"), recipeText: await fs.readFile(safe(row.recipe), "utf8"),
-})));
-importHeroHandoffBatch(JSON.stringify(index), new Map(rows.flatMap(row => [[row.project, row.projectText], [row.recipe, row.recipeText]] as [string, string][])));
+let rows: { name: string; project: string; projectText: string }[];
+if (values.handoff) {
+  const index = JSON.parse(await fs.readFile(path.join(input, "index.json"), "utf8"));
+  assert.equal(index.heroCount, 37); assert.equal(index.slotCount, 222); assert.equal(index.heroes.length, 37);
+  const entries = await Promise.all(index.heroes.map(async (row: { name: string; project: string; recipe: string }) => ({
+    ...row, projectText: await fs.readFile(safe(row.project), "utf8"), recipeText: await fs.readFile(safe(row.recipe), "utf8"),
+  })));
+  importHeroHandoffBatch(JSON.stringify(index), new Map(entries.flatMap(row => [[row.project, row.projectText], [row.recipe, row.recipeText]] as [string, string][])));
+  rows = entries;
+} else {
+  rows = await Promise.all((await fs.readdir(input)).filter(name => name.endsWith(".project.json")).sort().map(async project => {
+    const projectText = await fs.readFile(safe(project), "utf8");
+    const raw = JSON.parse(projectText), parsed = zHeroProject.parse(raw);
+    assert.deepEqual(parsed, raw, "Adoption must not silently add, strip or rewrite source fields.");
+    return { name: parsed.brief.name, project, projectText };
+  }));
+  assert.equal(rows.length, 37);
+  assert.equal(new Set(rows.map(row => JSON.parse(row.projectText).projectId)).size, rows.length);
+}
 await fs.mkdir(output); // Refuse to replace any previous run, including failures.
 let token = "";
 async function request(route: string, body?: unknown) {
@@ -72,10 +87,10 @@ try {
     try {
       const project = zHeroProject.parse(JSON.parse(row.projectText));
       assert.equal(project.brief.name, row.name);
-      assert(project.sourceDesign && project.acceptedPlan && project.presentation.uploadedModel);
+      assert(project.acceptedPlan);
       for (const slot of HERO_SLOTS) assert(project.acceptedPlan.slots[slot]);
       const model = project.presentation.uploadedModel;
-      const bytes = new Uint8Array(await fs.readFile(path.join(input, "models", model.sha256 + ".glb")));
+      const bytes = model ? new Uint8Array(await fs.readFile(path.join(values["model-dir"] ?? path.join(input, "models"), model.sha256 + ".glb"))) : undefined;
       const source = buildHeroSourcePackage(project, [], target, bytes);
       const sourceZip = (await buildRuntimePackageZip(packageZipInput(source, project.projectId))).bytes;
       const archive = new Uint8Array(await (await request("/hero-import/build", sourceZip)).arrayBuffer());
@@ -87,14 +102,18 @@ try {
       assert.equal(pkg.manifest.base.contentVersion, target.contentVersion);
       assert.equal(pkg.manifest.migrationFingerprint, target.migrationFingerprint);
       assert.equal(pkg.manifest.authoringProcessor.fingerprint, target.processorFingerprint);
-      const restoredModel = pkg.assets.find(asset => asset.path === uploadedHeroModelPath(model));
-      assert.deepEqual(restoredModel?.bytes, bytes, "Runtime model bytes must survive the service round trip.");
+      if (model) {
+        const restoredModel = pkg.assets.find(asset => asset.path === uploadedHeroModelPath(model));
+        assert.deepEqual(restoredModel?.bytes, bytes, "Runtime model bytes must survive the service round trip.");
+      }
       const inspection = await (await request("/hero-import/inspect", archive)).json();
-      const stem = path.basename(row.project, ".hero-project.json");
+      const stem = path.basename(row.project).replace(/\.(?:hero-)?project\.json$/, "");
       await fs.writeFile(path.join(output, stem + ".zip"), archive);
       await fs.writeFile(path.join(output, stem + ".inspection.json"), JSON.stringify(inspection, null, 2) + "\n");
       Object.assign(item, { status: "passed", projectId: project.projectId, sourceDigest: contentSha256(project),
-        sourceDesignDigest: contentSha256(project.sourceDesign), modelSha256: model.sha256,
+        sourceFileSha256: await binarySha256(new TextEncoder().encode(row.projectText)),
+        ...(project.sourceDesign ? { sourceDesignDigest: contentSha256(project.sourceDesign) } : {}),
+        modelKey: project.presentation.modelKey, modelSha256: model?.sha256 ?? null,
         packageDigest: pkg.manifest.packageDigest, archiveSha256: await binarySha256(archive), archiveBytes: archive.length,
         runtimeDocuments: pkg.compiled.length, validationDocuments: pkg.validation.length, assets: pkg.assets.length,
         archive: stem + ".zip", inspection: stem + ".inspection.json", slots: HERO_SLOTS.length,

@@ -1,0 +1,886 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-rem",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "蕾姆",
+    "concept": "Re:從零開始｜女僕服務包含拖地與拖走客人。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "負評客人我來回覆",
+      "Q": "這位客人請留步",
+      "W": "鐵球拖把暫停你的普攻",
+      "E": "鬼化加班先扣血",
+      "R": "半條命換急救包",
+      "EX": "姊姊今天不在家"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-rem.plan",
+    "title": "蕾姆",
+    "summary": "Re:從零開始｜女僕服務包含拖地與拖走客人。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "狂戰",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f": {
+        "id": "tpl-on-hit-react",
+        "schema": "template@1",
+        "name": "受擊反應",
+        "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+        "family": "on-hit-react",
+        "status": "enabled",
+        "params": {
+          "chance": {
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "reflectDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                30
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "reflectRadius": {
+            "type": "number",
+            "default": 900,
+            "min": 100,
+            "max": 1200,
+            "unit": "wc3u",
+            "optional": true,
+            "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 60,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "hooks"
+        ],
+        "gapScore": 7,
+        "exemplar": {
+          "skill": "20-04 Avalon",
+          "jass": "A0CT"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "min": 0.05,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "dot": {
+            "type": "dot",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "id": "tpl-charge-push",
+        "schema": "template@1",
+        "name": "衝鋒推撞",
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "family": "charge-push",
+        "status": "enabled",
+        "params": {
+          "dashDistance": {
+            "type": "number",
+            "default": 600,
+            "min": 100,
+            "max": 1309,
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "type": "number",
+            "default": 0.4,
+            "min": 0.05,
+            "max": 2,
+            "unit": "s"
+          },
+          "apexHeight": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 600,
+            "unit": "wc3h"
+          },
+          "radius": {
+            "type": "number",
+            "default": 300,
+            "min": 50,
+            "max": 900,
+            "unit": "wc3u"
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "physical",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "pushDistance": {
+            "type": "number",
+            "default": 400,
+            "min": 50,
+            "max": 1090,
+            "unit": "wc3u",
+            "optional": true
+          },
+          "pushSpeed": {
+            "type": "number",
+            "default": 872,
+            "min": 100,
+            "max": 2181,
+            "unit": "wc3u"
+          },
+          "pushFrom": {
+            "type": "enum",
+            "default": "facing",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 600,
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "gapScore": 5,
+        "exemplar": {
+          "skill": "38-01 邪王炎殺劍",
+          "jass": "A0OG"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "負評客人我來回覆",
+        "purpose": "「負評客人我來回覆！」\n每 3 秒受傷可對攻擊者反擊一次小級物理傷害；固定反擊，不按來襲傷害比例返還。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-rem.passive.card1",
+            "template": {
+              "ref": "tpl-on-hit-react",
+              "params": {
+                "reflectDamage": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
+                "internalCooldown": 3
+              },
+              "contentSha256": "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "這位客人請留步",
+        "purpose": "「這位客人請留步！」\n拖把鉤拉指定敵人到身邊 1 單位外，不傷害；受地形與位移規則限制。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-rem.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "pull",
+                    "shape": "single",
+                    "destination": "caster",
+                    "speed": 18,
+                    "stopDistance": 1
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "鐵球拖把暫停你的普攻",
+        "purpose": "「鐵球拖把暫停你的普攻！」\n小級鐵球打擊；距離不超過 2.5 才繳械 1.5 秒（numbness 旗標），遠客人不列入清場。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-rem.w.card1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+            }
+          },
+          {
+            "instanceId": "b2-rem.w.card2",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 1.5,
+                    "applyTo": "target",
+                    "disarmed": true,
+                    "condition": {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 2.5
+                    }
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "鬼化加班先扣血",
+        "purpose": "「鬼化加班先扣血！」\n鬼化加班：支付最大生命 12%，至少保留 1 HP；攻擊力 +35 持續 3 秒，沒有免費回血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-rem.e.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "spendHealth",
+                    "amount": {
+                      "flat": 0
+                    },
+                    "pctMaxHealth": 0.12,
+                    "minimumHp": 1
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "ad",
+                        "op": "flat",
+                        "value": 35
+                      }
+                    ]
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "半條命換急救包",
+        "purpose": "「半條命換急救包！」\n任何情況都得到 100 護盾 2 秒；生命低於 50% 時額外回復 240，不要求一定先用鬼化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-rem.r.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 100
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  },
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 240
+                    },
+                    "applyTo": "self",
+                    "condition": {
+                      "kind": "stat",
+                      "subject": "self",
+                      "stat": "hp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.5
+                    }
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "姊姊今天不在家",
+        "purpose": "「姊姊今天不在家！」\n向前衝鋒，落地打擊並推離人群；不是真實家務清潔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-rem.ex.card1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "dashDistance": 200,
+                "dashDurationSec": 0.4,
+                "radius": 150,
+                "damage": {
+                  "damageTier": "小"
+                },
+                "pushDistance": 100,
+                "pushSpeed": 600,
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-rem.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-rem.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-rem.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-rem.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-rem.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-rem.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-rem.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-rem.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-rem.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-rem.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

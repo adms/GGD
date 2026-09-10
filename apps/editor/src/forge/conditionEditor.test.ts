@@ -644,3 +644,19 @@ describe("ConditionEditor facing controls", () => {
     expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
   });
 });
+
+
+describe("ConditionEditor nearby combat controls", () => {
+  it("edits subject, range and time and preserves the compiled condition", () => {
+    const h = open({ kind: "distance", op: "<=", value: 2.5 });
+    h.enter(h.field("cond.g0.c0.kind"), "nearbyCombat");
+    expect(bus.value).toEqual({ kind: "nearbyCombat", subject: "self", radius: 5, withinSec: 2 });
+    h.enter(h.field("cond.g0.c0.subject"), "target");
+    h.enter(h.field("cond.g0.c0.radius"), "4"); h.enter(h.field("cond.g0.c0.withinSec"), "3");
+    expect(bus.value).toEqual({ kind: "nearbyCombat", subject: "target", radius: 4, withinSec: 3 });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+    expect(derivedSentence(h)).toContain("4 格內其他存活友軍");
+    h.enter(h.field("cond.g0.c0.withinSec"), "0");
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+  });
+});

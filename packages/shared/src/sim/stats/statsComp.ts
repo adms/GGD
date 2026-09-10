@@ -51,6 +51,8 @@ export interface AbilityInstance {
   abilityId: AbilityId;
   rank: number; // 0 = not learned
   cooldownRemainingTicks: number;
+  recast?: { abilityId: AbilityId; rank: number; nextStage: number; readyAt: number; expiresAt: number };
+
 }
 
 /**
@@ -85,6 +87,9 @@ export interface CastState {
    * silently stops working for whoever set the flag second.
    */
   hpAtStart: number;
+  /** Authored movement/hit-sensitive channels only. */
+  posAtStart?: Vec2;
+  hitSinceStart?: boolean;
   /**
    * ⭐ GH#1086 —— 這一次施放是第幾 tick **提交**的（按下那一刻）。
    * `CastResolveSystem` 把它放進 `EffectContext.castCommitTick`，`recentCast` 拿它當基準
@@ -99,6 +104,10 @@ export interface CastState {
    * 解算端再問只會永遠得到 false。有它 ⇒ 解算端直接跑它，⛔ 不再增幅第二次。
    */
   effects?: EffectDef[];
+  /** Selected input stage before augment/commit baking; retained in resolve mode. */
+  recastStage?: number;
+  stageEffects?: EffectDef[];
+
 }
 
 /**

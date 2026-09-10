@@ -460,6 +460,7 @@ export class ChampionView {
   private flashActive = false;
   /** hitstop: freeze this model's animation until this time (sim-synced). */
   private hitstopUntilMs = 0;
+  private timeStopped = false;
   /** follow-through span of the in-flight cast (set by `beginCast`). */
   private castTailMs = 0;
   /** true while the body is offset by the hitstop micro-shiver (needs a reset). */
@@ -1324,6 +1325,11 @@ export class ChampionView {
    * as impact. Only the animation clip freezes; the imperative position write
    * keeps flowing, so knockback still slides.
    */
+  setTimeStopped(stopped: boolean, dtMs: number): void {
+    this.timeStopped = stopped;
+    if (stopped) this.anim.hold(dtMs);
+  }
+
   setHitstop(ms: number, nowMs: number): void {
     if (!(ms > 0)) return;
     const prevEnd = this.hitstopUntilMs;
@@ -1546,8 +1552,8 @@ export class ChampionView {
     this.applyStealth(state === "death");
     if (this.updateDissolve(state, nowMs)) return;
     this.applyAirborne(); // #247 fly height + temporary scale (see below)
-    const frozen = nowMs < this.hitstopUntilMs; // hitstop window
-    this.applyHitstopShiver(nowMs, frozen); // 破碎 buzz on the frozen body
+    const frozen = this.timeStopped || nowMs < this.hitstopUntilMs; // hitstop window
+    this.applyHitstopShiver(nowMs, frozen && !this.timeStopped); // 破碎 buzz on the frozen body
     if (this.clipAnimator?.hasClips) {
       this.clipAnimator.setFrozen(frozen); // freeze/unfreeze the clip
       if (!frozen) {

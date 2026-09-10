@@ -1,0 +1,1098 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-22-20260907",
+  "revision": 14,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "菜月昴",
+    "concept": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔記住這次失敗〕",
+      "Q": "Shamac",
+      "W": "〔鞭繩牽制〕",
+      "E": "〔重新振作〕",
+      "R": "死亡回歸",
+      "EX": "〔重新選擇〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 14,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-22-20260907.plan",
+    "title": "菜月昴",
+    "summary": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "硬輔",
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "大",
+      "maxHealth": "大",
+      "maxMana": "中",
+      "ad": "中",
+      "ap": "小",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "range": "小"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "id": "tpl-mark-stacks",
+        "schema": "template@1",
+        "name": "具名標記-層數與免死",
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "family": "mark-stacks",
+        "status": "enabled",
+        "params": {
+          "markId": {
+            "type": "docRef",
+            "default": "godie-hapm.passive"
+          },
+          "initial": {
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999,
+            "unit": "count"
+          },
+          "max": {
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 600,
+            "unit": "s"
+          },
+          "resetOn": {
+            "type": "enum",
+            "default": "match",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "perStackLost": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.1
+              },
+              {
+                "stat": "maxHealth",
+                "op": "pctAdd",
+                "value": 0.1
+              }
+            ],
+            "optional": true
+          },
+          "lethalMode": {
+            "type": "enum",
+            "default": "save",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "lethalConsume": {
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "surviveHpPct": {
+            "type": "number",
+            "default": 0.01,
+            "min": 0.01,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "lethalDamageTypes": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "default": 1.5,
+            "min": 0.1,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "type": "enum",
+            "default": "damageAndControl",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "restoreHealthPct": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 1,
+            "unit": "ratio",
+            "optional": true
+          },
+          "aoeRadius": {
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          "knockbackDistance": {
+            "type": "number",
+            "default": 4,
+            "min": 0.1,
+            "max": 20,
+            "optional": true
+          },
+          "knockbackSpeed": {
+            "type": "number",
+            "default": 16,
+            "min": 1,
+            "max": 40
+          },
+          "knockbackFrom": {
+            "type": "enum",
+            "default": "caster",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "stunSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0.034,
+            "max": 20,
+            "unit": "s",
+            "optional": true
+          },
+          "stunStatusId": {
+            "type": "docRef",
+            "default": "trial-stun"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+        "id": "tpl-blink",
+        "schema": "template@1",
+        "name": "純位移瞬移",
+        "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+        "family": "blink",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.467,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+          "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔記住這次失敗〕",
+        "purpose": "【核准惡搞改編】每回合一張免死卡，受致命傷消耗後保留15%生命並0.5秒免傷；無死亡回溯、無永久疊屬性。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-parody-1",
+            "template": {
+              "ref": "tpl-mark-stacks",
+              "params": {
+                "markId": "community-review-22-20260907.second-chance",
+                "initial": 1,
+                "max": 1,
+                "durationSec": -1,
+                "resetOn": "round",
+                "perStackLost": [],
+                "lethalMode": "save",
+                "lethalConsume": 1,
+                "surviveHpPct": 0.15,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 0.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0,
+                "aoeRadius": 0,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
+              },
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "Shamac",
+        "purpose": "【核准惡搞改編】我很有用：小級物理打擊，敵人減速20%兩秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "q-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow20",
+                    "duration": 2,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 0.8
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔鞭繩牽制〕",
+        "purpose": "【核准惡搞改編】逞強代班：自己付最大生命20%至少留1HP，队友拿220護盾三秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "w-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "spendHealth",
+                    "amount": {
+                      "flat": 0
+                    },
+                    "pctMaxHealth": 0.2,
+                    "minimumHp": 1
+                  },
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 220
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-22-20260907.protection",
+                    "onExisting": "keepLarger"
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "我真的沒事",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔重新振作〕",
+        "purpose": "【核准惡搞改編】哭著找人：120護盾，自己減速20%兩秒，保護仍有代價。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-22-20260907.protection",
+                    "onExisting": "keepLarger"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow20",
+                    "duration": 2,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 0.8
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "死亡回歸",
+        "purpose": "【核准惡搞改編】討拍急救：回復100；生命低於50%再回復260。討拍時自己一秒不能普攻。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 260
+                    },
+                    "applyTo": "self",
+                    "condition": {
+                      "kind": "stat",
+                      "subject": "self",
+                      "stat": "hp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.5
+                    }
+                  },
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 100
+                    },
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 1,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "disarmed": true
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔重新選擇〕",
+        "purpose": "【核准惡搞改編】逃跑不算讀檔，瞬移到合法落點；不補回免死卡。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex-parody-1",
+            "template": {
+              "ref": "tpl-blink",
+              "params": {
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "byteSize": 691776,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "sourceAssetId": "300heroes:64db6774e13416da32390b5b",
+      "sourceCharacter": "夜斗",
+      "sourceWork": "流浪神差／野良神",
+      "relationship": "style-proxy",
+      "notes": "以黑髮、黑色運動服青年造型暫代菜月昴；實際為夜斗。未選其神劍，不代表死亡回歸機制已完成。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-22-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-22-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-22-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-22-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-22-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-22-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-22-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-22-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-22-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-22-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9.glb",
+        "byteSize": 691776,
+        "mediaType": "model/gltf-binary",
+        "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc",
+    "name": "菜月昴",
+    "identity": "作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。",
+    "ownerText": "### 22｜菜月昴\n\n作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n- **PASSIVE｜〔記住這次失敗〕**：完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。\n- **Q｜Shamac**：製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。\n- **W｜〔鞭繩牽制〕**：中短距離鞭擊，命中後小幅牽引。\n- **E｜〔重新振作〕**：提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n- **R｜死亡回歸**：施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n- **EX｜〔重新選擇〕**：R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。\n\n**審查重點**：這是 GGD 個人回復版死亡回歸。驗證非法舊位置、連續致死、R/EX 同幀競爭，以及生命回復不重置技能、獎勵或其他角色狀態。\n\n",
+    "reviewText": "這是 GGD 個人回復版死亡回歸。驗證非法舊位置、連續致死、R/EX 同幀競爭，以及生命回復不重置技能、獎勵或其他角色狀態。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔記住這次失敗〕",
+        "ownerDescription": "完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。",
+        "baselineBehavior": "本場一層免死標記，首次致死消耗並回復 15% 生命，保護 0.5 秒。",
+        "requiredRefinement": "本場免死不是死亡回歸；需與 R／EX 共用存檔並合法顯示致死來源。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ]
+      },
+      "Q": {
+        "name": "Shamac",
+        "ownerDescription": "製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "requiredRefinement": "固定緩速不代表黑霧感官／命中干擾。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ]
+      },
+      "W": {
+        "name": "〔鞭繩牽制〕",
+        "ownerDescription": "中短距離鞭擊，命中後小幅牽引。",
+        "baselineBehavior": "拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。",
+        "requiredRefinement": "抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ]
+      },
+      "E": {
+        "name": "〔重新振作〕",
+        "ownerDescription": "提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-22-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "requiredRefinement": "需自己及附近一名友軍。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ]
+      },
+      "R": {
+        "name": "死亡回歸",
+        "ownerDescription": "施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。",
+        "requiredRefinement": "目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ]
+      },
+      "EX": {
+        "name": "〔重新選擇〕",
+        "ownerDescription": "R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":80,\"ratios\":[]},\"applyTo\":\"self\"}]。",
+        "requiredRefinement": "目前立即恢復 80 生命；需主動消耗 R 同一快照且不得重置冷卻。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍\n每回合一張免死卡，受致命傷消耗後保留15%生命並0.5秒免傷；無死亡回溯、無永久疊屬性。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "Q": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍\n我很有用：小級物理打擊，敵人減速20%兩秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "W": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍\n逞強代班：自己付最大生命20%至少留1HP，队友拿220護盾三秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "E": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍\n哭著找人：120護盾，自己減速20%兩秒，保護仍有代價。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍\n討拍急救：回復100；生命低於50%再回復260。討拍時自己一秒不能普攻。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍\n逃跑不算讀檔，瞬移到合法落點；不補回免死卡。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 14,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "85f6e27605fa8c5a1aa036f92dc43ca666200664b0871ac5402c4bec32195d14",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

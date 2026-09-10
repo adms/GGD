@@ -155,7 +155,7 @@ describe("ship:check 看門狗（GH#858）", () => {
     expect(existsSync(join(REPO, rel))).toBe(true);
   });
 
-  it("★ 地板抬高了 —— 一支正常 283s 的 suite ⛔ 不可以被判死", () => {
+  it("★ 地板要高於帳本內正常結束、無 hung 的 suite 耗時", () => {
     // ⭐ 從**帳本**推導,⛔ 不抄一個字面值（那會是第二個住處,而且它一定過期）。
     const led = JSON.parse(readFileSync(join(REPO, "docs/_data/deploy-timings.json"), "utf8")) as {
       runs: { stages: { name: string; ms: number }[] }[];
@@ -164,6 +164,7 @@ describe("ship:check 看門狗（GH#858）", () => {
     for (const r of led.runs) {
       for (const s of r.stages) {
         // ⚠️ 被砍過的那幾筆名字帶「hung」⇒ 它們是另一個 key,⛔ 不算進「正常要多久」。
+        // code 1 也保留：正常結束且回報測試失敗、無 hung 的 suite，不能由誤殺蓋掉真紅。
         if (/^ship:vitest /.test(s.name) && !s.name.includes("hung")) healthy.push(s.ms);
       }
     }
@@ -173,7 +174,7 @@ describe("ship:check 看門狗（GH#858）", () => {
     expect(floor, "找不到看門狗地板").toBeGreaterThan(0);
     expect(
       floor,
-      `地板 ${(floor / 60000).toFixed(0)}m 低於帳本量到的最慢一支健康 suite ` +
+      `地板 ${(floor / 60000).toFixed(0)}m 低於帳本量到的最慢一支正常結束、無 hung 的 suite ` +
         `${(worstHealthy / 1000).toFixed(0)}s —— 那就是 08-28 連續四次誤殺的形狀（假紅蓋掉真紅）。`,
     ).toBeGreaterThan(worstHealthy);
   });

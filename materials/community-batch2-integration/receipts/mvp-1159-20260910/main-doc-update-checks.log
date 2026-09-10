@@ -1,0 +1,18 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+ ✓ packages/shared/src/ops/docsCiteRealCommands.test.ts (4 tests) 119ms
+ ✓ packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts (3 tests) 86ms
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  00:53:00
+   Duration  1.77s (transform 127ms, setup 0ms, collect 588ms, tests 204ms, environment 0ms, prepare 144ms)
+
+
+> ggd@0.0.0 board:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/board/gen_board.py --check
+
+ggd-board.html is current
+[{"command": ["pnpm", "exec", "vitest", "run", "packages/shared/src/ops/docsCiteRealCommands.test.ts", "packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts", "--maxWorkers=1", "--minWorkers=1"], "exitCode": 0}, {"command": ["pnpm", "board:check"], "exitCode": 0}]

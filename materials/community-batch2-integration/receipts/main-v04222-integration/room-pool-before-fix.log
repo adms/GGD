@@ -1,0 +1,54 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+stderr | apps/game-server/src/curation/communityRoomPool.test.ts > GH#1025 Scope C —— 社群內容預設只進社群房 (community-room-pool) > ⭐ 官方房（房主沒選 ⇒ 預設）**選不到**社群英雄，官方英雄不受影響
+[server-ops] could not reach the platform at http://localhost:8080/api/v1/server-ops — FAILING SAFE to the last known good table (admin 系統運維 settings NOT re-read). [TypeError: fetch failed] {
+  [cause]: AggregateError: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+
+stderr | apps/game-server/src/curation/communityRoomPool.test.ts > GH#1025 Scope C —— 社群內容預設只進社群房 (community-room-pool) > ⭐ 官方房（房主沒選 ⇒ 預設）**選不到**社群英雄，官方英雄不受影響
+[base-bonus] could not reach the platform at http://localhost:8080/api/v1/content-overlay/bundle — FAILING SAFE to the content default (an admin 基礎加成 edit made since this shard booted is NOT in this match). [TypeError: fetch failed] {
+  [cause]: AggregateError: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+
+ ❯ apps/game-server/src/curation/communityRoomPool.test.ts (4 tests | 1 failed) 207ms
+   × GH#1025 Scope C —— 社群內容預設只進社群房 (community-room-pool) > ⭐ 官方房（房主沒選 ⇒ 預設）**選不到**社群英雄，官方英雄不受影響 134ms
+     → ⛔ 社群英雄出現在官方房 —— `applyContentPool` 那一行斷了: expected true to be false // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/game-server/src/curation/communityRoomPool.test.ts > GH#1025 Scope C —— 社群內容預設只進社群房 (community-room-pool) > ⭐ 官方房（房主沒選 ⇒ 預設）**選不到**社群英雄，官方英雄不受影響
+AssertionError: ⛔ 社群英雄出現在官方房 —— `applyContentPool` 那一行斷了: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ apps/game-server/src/curation/communityRoomPool.test.ts:116:7
+    114|       r.ctl.whitelist.allowsChampion("thorne"),
+    115|       "⛔ 社群英雄出現在官方房 —— `applyContentPool` 那一行斷了",
+    116|     ).toBe(false);
+       |       ^
+    117|     // ⭐ 權威那一道閘（偽造／重放的 SELECT_CHAMPION 也走它）真的擋得住…
+    118|     expect(r.ctl.selectChampion(asSeatId(0), "thorne")).toEqual({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  22:43:50
+   Duration  5.79s (transform 3.49s, setup 0ms, collect 5.02s, tests 207ms, environment 0ms, prepare 127ms)
+

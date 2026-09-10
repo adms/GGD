@@ -1,0 +1,12 @@
+🔓 隔離區:解鎖 459 份（追蹤 864,缺 0）
+
+> ggd@0.0.0 board:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh board:build board:build:raw
+
+
+> ggd@0.0.0 board:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/board/gen_board.py
+
+✓ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/docs/_release/ggd-board.html（1446 行）
+🔒 隔離區:上鎖 459 份（追蹤 864,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: board:build 完成（產物已重新上鎖）

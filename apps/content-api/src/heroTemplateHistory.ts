@@ -1,3 +1,4 @@
+import { resolveShippedTemplateVersion } from "@ggd/shared/content/templates/shippedHistory";
 import { contentSha256, canonicalizeJcs } from "@ggd/shared/content/import/jcs";
 import { zTemplateDoc, type TemplateDoc } from "@ggd/shared/content/schema/template";
 import { ImportStore } from "./importStore";
@@ -21,7 +22,7 @@ export function retainHeroTemplates(store: ImportStore, templates: Iterable<unkn
 export function readHeroTemplateVersion(store: ImportStore, id: string, digest: string): TemplateDoc | undefined {
   if (!/^sha256:[a-f0-9]{64}$/.test(digest)) return undefined;
   const bytes = store.readWorkFile(workId(id), digest, "template.json");
-  if (!bytes) return undefined;
+  if (!bytes) return resolveShippedTemplateVersion(id, digest);
   const template = zTemplateDoc.parse(JSON.parse(bytes.toString("utf8")));
   if (template.id !== id || contentSha256(template) !== digest) throw new Error("模板歷史內容與版本不一致");
   return template;

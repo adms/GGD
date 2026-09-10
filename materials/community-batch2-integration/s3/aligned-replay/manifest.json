@@ -1,0 +1,30 @@
+{
+  "schema": "ggd-community-materials-archive@1",
+  "purpose": "audited-resource-supplement",
+  "sources": [
+    "ggd-batch2-live-match-02/replays"
+  ],
+  "files": [
+    {
+      "path": "ggd-batch2-live-match-02/replays/m_01M235Q6BHMA3367DNSAKQBF1W.jsonl.gz",
+      "bytes": 35709,
+      "sha256": "43611dfc1d00b8905e8d12706ba527b3477395f8fa40af0cd53cdaf0fa97a8ac",
+      "mode": 420
+    }
+  ],
+  "parts": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 35754,
+      "sha256": "7f582146e496c968f5a2bcf8d74e4efd3dff2bc51b6aa0e42fcf61245606ff65"
+    }
+  ],
+  "excluded": [],
+  "summary": {
+    "files": 1,
+    "uniquePayloads": 1,
+    "bytes": 35709,
+    "compressedBytes": 35754,
+    "redactedFiles": 0
+  }
+}

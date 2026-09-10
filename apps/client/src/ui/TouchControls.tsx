@@ -1,3 +1,4 @@
+import { RecastBadge, recastFree } from "./recastView";
 /**
  * TouchControls — the touch HUD chrome (iPhone landscape): floating virtual
  * joystick on the left, Q/W/E/R ability arc + big basic-attack button on the
@@ -340,14 +341,14 @@ export function TouchControls(): React.JSX.Element | null {
                 {stripAbilityNumber(ability.name)}
               </div>
               {/* cooldown chrome — the shared radial wipe + number + ready bloom */}
-              <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              <CooldownChrome cd={cd} fontSize={m.s(20)} /><RecastBadge seat={seat} slot={slot} />
               {/* ⭐ 三態框 —— 被動的 pressable 是 false ⇒ 永遠不亮就緒框 */}
               <AbilityTileFrame
                 rgb={READY_RGB_ACTIVE}
                 state={{
                   pressable: !passive,
                   offCooldown: !cd.onCd,
-                  manaOk: localMana >= (ability.manaCost[Math.max(0, rank - 1)] ?? 0),
+                  manaOk: recastFree(seat, slot) || localMana >= (ability.manaCost[Math.max(0, rank - 1)] ?? 0),
                   learned,
                   toggleOn: seatToggleOn(seat, slot),
                 }}
@@ -444,14 +445,14 @@ export function TouchControls(): React.JSX.Element | null {
             {/* cooldown chrome. Before #219 the touch EX painted the dark rect
                 and NO NUMBER at all — the phone could see that the EX was down
                 but never how long for. Same component as every other tile. */}
-            <CooldownChrome cd={cd} fontSize={m.s(20)} />
+            <CooldownChrome cd={cd} fontSize={m.s(20)} /><RecastBadge seat={seat} slot={"EX"} />
             {/* ⭐ 三態框 —— 被動的 pressable 是 false ⇒ 永遠不亮就緒框 */}
             <AbilityTileFrame
               rgb={READY_RGB_EX}
               state={{
                 pressable: !exPassive,
                 offCooldown: !cd.onCd,
-                manaOk: localMana >= (ex.manaCost ?? 0),
+                manaOk: recastFree(seat, "EX") || localMana >= (ex.manaCost ?? 0),
                 toggleOn: seatToggleOn(seat, "EX"),
               }}
             />
@@ -543,14 +544,14 @@ export function TouchControls(): React.JSX.Element | null {
                 must be readable on the phone too or the button looks ready for
                 its whole 40 s. Before #219 this tile showed the dark rect and
                 NO NUMBER; it now speaks the same language as every other. */}
-            <CooldownChrome cd={cd} fontSize={m.s(20)} />
+            <CooldownChrome cd={cd} fontSize={m.s(20)} /><RecastBadge seat={seat} slot={INNATE_SLOT} />
             {/* ⭐ 三態框 —— 純被動不亮就緒框，但它**可以**是開著的（70-00 紮根） */}
             <AbilityTileFrame
               rgb={READY_RGB_PASSIVE}
               state={{
                 pressable: castable,
                 offCooldown: !cd.onCd,
-                manaOk: localMana >= (innate.manaCost ?? 0),
+                manaOk: recastFree(seat, INNATE_SLOT) || localMana >= (innate.manaCost ?? 0),
                 toggleOn: seatToggleOn(seat, INNATE_SLOT),
               }}
             />

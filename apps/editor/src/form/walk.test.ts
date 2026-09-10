@@ -17,7 +17,6 @@ import {
 import {
   SPREAD_MAX_FALLOFF,
   SPREAD_MAX_RADIUS,
-  SPREAD_MAX_TARGETS,
   SPREAD_MIN_FALLOFF,
 } from "@ggd/shared/sim/effects/spreadLimits";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -130,6 +129,28 @@ describe("walkZod widget kinds (editor-01)", () => {
 });
 
 describe("discriminated EffectDef union (editor-02)", () => {
+  it("does not expand unselected recursive variants, retaining paths and default values when selected", () => {
+    let expanded = 0;
+    const schema = z.discriminatedUnion("kind", [
+      z.object({ kind: z.literal("simple"), amount: z.number().min(2) }),
+      z.object({ kind: z.literal("nested"), payload: z.lazy(() => {
+        expanded++; return z.object({ amount: z.number().min(3), note: z.string().optional() });
+      }) }),
+    ]);
+    const node = walkZod(schema, "effect") as UIDiscriminatedUnion;
+    expect(node.variants.map(variant => variant.tag)).toEqual(["simple", "nested"]);
+    expect(defaultForVariant(node, "simple")).toEqual({ kind: "simple", amount: 2 });
+    expect(expanded).toBe(0);
+    const nested = node.variants.find(variant => variant.tag === "nested")!;
+    expect(nested.fields[0]).toMatchObject({ path: "effect.payload", kind: "object" });
+    expect(defaultForVariant(node, "nested")).toEqual({ kind: "nested", payload: { amount: 3 } });
+    expect(nested.fields).toBe(nested.fields);
+    expect(expanded).toBe(1);
+    // A second form has its own tree, so editing/reordering one cannot affect it.
+    const second = walkZod(schema, "other") as UIDiscriminatedUnion;
+    expect(second.variants[1]!.fields[0]!.path).toBe("other.payload");
+    expect(second.variants[1]!.fields).not.toBe(nested.fields);
+  });
   it("renders variant cards keyed by kind, recursion depth-capped", () => {
     cover("editor-walker-union");
     const ability = walkZod(zAbilityDoc, "", "Ability");
@@ -231,6 +252,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "grantXp",
         "floatingText",
         "heal",
+        "interruptCast", // active interruptible wind-up, not a stun
         "invulnerable", // lane P3 — 無敵
         "knockback", // lane P4 — 擊退
         "leap", // task #247
@@ -255,6 +277,8 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "spendHealth",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
         "summon", // lane P2 — 召喚物
+        "timeStop",
+        "trap", // #1132: renderer, runtime, wire and nested preview are implemented.
         "taunt", // [嘲弄] —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)
         // ── Lane 1（2026-08-08）的四個新 kind ────────────────────────────
         // 四個同一天進來，而且**四個都是**同一個形狀的實例（`shape` + 決策欄位）。
@@ -358,9 +382,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
    *
    * `damageArea` reaching the tag list only proves the walker SAW it. Two
    * things a designer actually needs, neither implied by the tag:
-   *   • the three 擴散 knobs arrive as bounded number widgets, carrying the
-   *     REAL caps out of sim/effects/spreadLimits.ts — those caps are
-   *     mis-parse guards (w3x lengths are ~54.5× GGD units, so a pasted
+   *   • the 擴散 knobs arrive as bounded number widgets. Radius and falloff
+   *     carry their semantic caps; maxTargets carries the safe-integer
+   *     representation limit, while damage-rules owns its runtime policy.
+   *     Radius guards mis-parsed w3x lengths (~54.5× GGD units, so a pasted
    *     `Area: 450` becomes a field-covering circle), and a widget with no
    *     `max` lets exactly that paste through the form;
    *   • switching a card to `damageArea` produces a document the shipping
@@ -397,10 +422,12 @@ describe("discriminated EffectDef union (editor-02)", () => {
       int: true,
       optional: true,
       min: 1,
-      max: SPREAD_MAX_TARGETS,
+      max: Number.MAX_SAFE_INTEGER,
     });
     expect(f.get("canCrit")).toMatchObject({ kind: "boolean", optional: true });
     expect(f.get("includeOrigin")).toMatchObject({ kind: "boolean", optional: true });
+    expect(f.get("fromCaster")).toMatchObject({ kind: "boolean", optional: true });
+    expect(f.get("arcHalfAngleCos")).toMatchObject({ kind: "number", optional: true, min: 0, max: 1 });
 
     // The card switch hands the server something it accepts. `damageArea` has
     // no ref fields, so a clean parse is reachable without a human picking

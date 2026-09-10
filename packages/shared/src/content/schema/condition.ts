@@ -27,6 +27,7 @@
  * `conditionDepth` from the sim module so the two cannot drift.
  */
 import { z } from "zod";
+import { COMBAT_WITHIN_MIN_SEC, COMBAT_WITHIN_MAX_SEC, COMBAT_RADIUS_MAX } from "../../sim/content/condition";
 import type { AbilityId, ItemId, StatusId } from "../../ids";
 // ⭐⭐ **兩條 lane 的合併（2026-09-02）—— 兩邊都對而且互補。**
 //
@@ -389,7 +390,15 @@ export const zFormLeaf = z
   })
   .strict();
 
+export const zNearbyCombatLeaf = z.object({
+  kind: z.literal("nearbyCombat"),
+  subject: zConditionSubject,
+  radius: z.number().positive().max(COMBAT_RADIUS_MAX).describe("主體中心到其他存活友軍中心的距離；排除自己與跨區單位。"),
+  withinSec: z.number().min(COMBAT_WITHIN_MIN_SEC).max(COMBAT_WITHIN_MAX_SEC).describe("敵對命中造成生命或護盾損失後，仍視為交戰的秒數。"),
+}).strict();
+
 export const zConditionLeaf = z.union([
+  zNearbyCombatLeaf,
   zChanceLeaf,
   zStatLeaf,
   zKindLeaf,

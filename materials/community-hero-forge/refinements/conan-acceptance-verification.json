@@ -1,0 +1,222 @@
+{
+  "schema": "ggd-target-resource-acceptance-verification@1",
+  "issue": 1132,
+  "baseHead": "abd1d7d7ff66feed0c372cb6a7538d3cf436deeb",
+  "previousReceipt": "conan-mobility-verification.json",
+  "changes": [
+    "Enable real combat events in both shared authoring scenarios. Reuse configured practice inert seats so empty frames do not auto-acquire.",
+    "Target-resource abilities run a bounded real opponent attack then hold before casting; no target status or clue is injected. Preserve HP, MP, position and status after preparation.",
+    "Editor provides auto/idle/attack fixture selection and actual resource counts. Preparation and prior-cast frames extend the replay duration.",
+    "Editor and trusted package compiler use identical single-slot and kit projections.",
+    "Pump real scene frames while the paused Forge waits for the PBR lookup; rendered outcome recorded separately."
+  ],
+  "checks": {
+    "before": {
+      "testsFailed": 3,
+      "reason": "Default R and kit rejected; idle option not available."
+    },
+    "intermediateFailures": [
+      "Combat enabled exposed enemy auto-acquisition during nominally idle frames; corrected using actual practice inert seats.",
+      "First inert-seat setup assumed mobRules was non-null; corrected using registered arena config and its normal converter."
+    ],
+    "targetResourceAndEditorParity": {
+      "exitCode": 0,
+      "tests": 12,
+      "files": 2,
+      "cases": [
+        "Real opponent basic hit earns one own clue and R consumes it.",
+        "Idle opponent earns none and R rejects without mana cost.",
+        "Absent observer passive cannot manufacture a clue despite actual opponent damage.",
+        "Three-clue cost rejects one earned clue without partial debit.",
+        "Whole kit positive accepted; idle negative still rejects R.",
+        "Editor and trusted package compilation return identical six-slot and kit projections."
+      ]
+    },
+    "sharedRegression": {
+      "exitCode": 0,
+      "testsPassed": 345,
+      "testsSkipped": 1,
+      "files": 31
+    },
+    "typechecks": {
+      "shared": 0,
+      "editor": 0
+    },
+    "build": {
+      "editor": 0
+    },
+    "renderLifecycleRegression": {
+      "exitCode": 0,
+      "tests": 25,
+      "files": 3,
+      "note": "Shader registration, model adoption lifecycle and NullEngine replay; not a rendered PBR verdict."
+    }
+  },
+  "logs": {
+    "conan-acceptance-before": {
+      "path": "conan-acceptance-before.log",
+      "sha256": "9b80e89b024b07eaae06341a54874ae8a15f2747845b8025cf447a38a36e392d"
+    },
+    "conan-acceptance-after": {
+      "path": "conan-acceptance-after.log",
+      "sha256": "d69f63c8aa7249e97c2f5812e6947a0901d0f264260f6a85a3b45c5df87f7a50"
+    },
+    "conan-acceptance-controlled": {
+      "path": "conan-acceptance-controlled.log",
+      "sha256": "2981d03caaa2e4a06e626c130c78255f566ecdd61f5beef423041b9c422a59ce"
+    },
+    "conan-acceptance-controlled-02": {
+      "path": "conan-acceptance-controlled-02.log",
+      "sha256": "21ebb80f17af76660f8459d4b4333e88335d0392a38b2cce2eff51ca48f8d1b7"
+    },
+    "conan-acceptance-parity": {
+      "path": "conan-acceptance-parity.log",
+      "sha256": "a442723b46f4c740e6cdd32e5562d224da14b371930efaf9c62d5ad3d2e654e7"
+    },
+    "conan-acceptance-regression": {
+      "path": "conan-acceptance-regression.log",
+      "sha256": "d3fe0f9f1659e431393ff82e5a929f8c89ddf0cc689671ce5c9b3597bcdef91b"
+    },
+    "conan-acceptance-shared-typecheck": {
+      "path": "conan-acceptance-shared-typecheck.log",
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "conan-acceptance-editor-typecheck": {
+      "path": "conan-acceptance-editor-typecheck.log",
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "conan-acceptance-build": {
+      "path": "conan-acceptance-build.log",
+      "sha256": "7d41d9999cbc148b5c73b0fc1c6bd98db3292abcc0db573717d916727f4e7873"
+    },
+    "conan-acceptance-render-regression": {
+      "path": "conan-acceptance-render-regression.log",
+      "sha256": "d64b9a989b45fdfc7bcf84c084a53ebff2f132cbeddc249041990f315e07c8c6"
+    }
+  },
+  "preserved": {
+    "heroProjects": 37,
+    "originalRecipes": 37,
+    "refinements": true,
+    "models": true,
+    "note": "No changes to recipe, refinement, model binding, accepted generator version or project revision; changes are in the common verification driver and UI."
+  },
+  "coverage": {
+    "mappedSlots": 39,
+    "unmappedSlots": 183,
+    "genericOnAttackPassives": 23
+  },
+  "browser": {
+    "status": "failed",
+    "origin": "http://127.0.0.1:5198",
+    "source": "production build after scenario and PBR render-pump edits; service revision not attested by browser",
+    "importedHeroes": 1,
+    "passedMotionFrames": 0,
+    "reason": "PBR lookup still not ready; both actor statuses remain fallback. Adding a render pump alone did not resolve it.",
+    "uiObserved": [
+      "Real one-hero folder import with attached model succeeded.",
+      "Editor displayed six-slot compile/simulation passed.",
+      "Opponent preparation selector visible; E completed and emitted actual abilityMotion events."
+    ],
+    "notChecked": [
+      "R selected interactive positive/idle toggle",
+      "interactive playback after material load",
+      "nine motion screenshots",
+      "full batch rendered acceptance",
+      "current-service ZIP and submission/publication"
+    ],
+    "localDraftRevisionObserved": 16,
+    "localDraftNote": "Screenshot only; imported source project14 is unchanged in Git, local import/generator adoption advanced browser draft.",
+    "diagnosticTextSha256": "612e45f5b782ded429bf4737851b8f4d6c095f5c30c75bc989cea694230f2025",
+    "logSha256": "5ab7c893088da34f0e4d6864cf90d011135648467bc17795905aa90f0d6d78cf",
+    "image": {
+      "uri": "s3://ggd-390630837668-ap-east-2-an/community-hero-forge/evidence/conan-acceptance/diagnostic/ff84ab8b98763944cbc0b40866731ae13b83c2e2a3f2386ec8ed02b43c43480b.png",
+      "sha256": "ff84ab8b98763944cbc0b40866731ae13b83c2e2a3f2386ec8ed02b43c43480b",
+      "bytes": 308898,
+      "downloadSha256Verified": true,
+      "classification": "failed-acceptance-diagnostic"
+    },
+    "environmentNote": "Headless Chrome SwiftShader; release checks overlapped this capture. Not a device performance result.",
+    "initialLaunchFailure": "First capture failed because sandbox prevented preview port listen; same localhost preview started with permitted escalation."
+  },
+  "originalDesignAcceptance": "incomplete",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "sourceCommit": "00c50debe",
+  "finalBatch": {
+    "head": "c6f1fc737dbdfb6111cbee3ba3c533cc9ae1dc2e",
+    "sourceFingerprint": "5eda23b70837b98e1647f0cd06f135a538849340c78e06f9fc9045112bb28ad9",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 39,
+      "slotsWithoutBehaviorSuite": 183
+    },
+    "modelBytes": "verified",
+    "reportSha256": "c2a107cef7204557ec855b845d69fce1ae3aa21709e7e953392c2904c9545fe3",
+    "editorTests": 600,
+    "registeredTests": 234,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "0abf862107f420060a7b87c139ea434ba773082718cfe5593e3cf3a25d55848f"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "0670ed085ded9dccfcc7ed6b10187d01f6532a9c012940f2401a820f449ee291"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "7cb63d0337841d781457a64d5bfe29b59bd803e5545386d5d72f0a38d55e039b"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "dda307fa967b7354d16c98489331d76f7552526bad22c0b45cbb76874a920562"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "7e46670a094f68997014fa989689833864bc4b91e87181843bab5dc2d9b86de3"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "68618a7593ebb236756490065e5d76d6965918469bdec020712027bc17f00af0"
+      }
+    ],
+    "meaning": "All executed checks passed; exit 2 retains 183 unmapped slots. No original-design, rendered-image or publication verdict."
+  },
+  "isolatedBrdfProbe": {
+    "ready": true,
+    "milliseconds": 551,
+    "frames": 3,
+    "size": [
+      256,
+      256
+    ],
+    "midpoint": [
+      0.0220184326171875,
+      0.85107421875,
+      0.23095703125,
+      1
+    ],
+    "logSha256": "6d7bc73675b94861e6cc014fd637ad47adf180a6f3c4cdb7300c2a8007471837",
+    "scope": "Same installed Babylon GetEnvironmentBRDFTexture, Engine/Scene and real render pump in a temporary localhost page with fresh Chrome SwiftShader. This proves only isolated lookup readiness; full Editor failure cause is not established."
+  }
+}

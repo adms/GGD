@@ -1,0 +1,141 @@
+{
+  "recordedAt": "2026-09-09T23:02+08:00",
+  "mainBaseline": "0de629f9e8c68b508deda71b0614890f47da0157",
+  "mainTag": "v0.42.22",
+  "publishedTogether": false,
+  "productionDeploymentVerified": false,
+  "modelsReassigned": false,
+  "newMechanismsOrTemplates": false,
+  "targetService": "pending-owner-selection",
+  "pending": [
+    "Main review and merge PR #1135, then #1153 integration",
+    "Select one target service; check effective submit/discover and UGC limits",
+    "Build against that service target, submit/review/publish and verify normal play"
+  ],
+  "preservedSources": {
+    "first37": {
+      "comparedWith": "2cdc3f902",
+      "paths": [
+        "materials/community-hero-forge/projects",
+        "materials/community-hero-forge/refinements"
+      ],
+      "unchanged": true
+    },
+    "second37": {
+      "comparedWith": "66172c84",
+      "paths": [
+        "materials/community-batch2-integration/projects",
+        "materials/community-batch2-integration/source-lock.json"
+      ],
+      "unchanged": true
+    }
+  },
+  "branches": {
+    "first37": {
+      "head": "01c52633ca400afa69f42135ffb17a0981c8dcc6",
+      "evidenceDirectory": "materials/community-hero-forge/receipts/main-v04222-integration",
+      "profile": {
+        "path": "content/editor-target-profile.json",
+        "sha256": "cee937ad8420432552fc214bc9c30f9b5c99fc32ff7da85f8d5f244ee62bcc8f",
+        "profileDigest": "1a43a132f17a",
+        "assetManifestDigest": "0d2f73b17d27",
+        "migrationFingerprint": "c37d2130403e"
+      }
+    },
+    "second37": {
+      "head": "251785352a47dac7c2b361b3f06b81326ceaaac9",
+      "evidenceDirectory": "materials/community-batch2-integration/receipts/main-v04222-integration",
+      "profile": {
+        "path": "content/editor-target-profile.json",
+        "sha256": "5cdb1826fe94180ccfde2c927ccbd0daa9240b11587fb5e2d549fc8694078dbb",
+        "profileDigest": "e7a467578114",
+        "assetManifestDigest": "0d2f73b17d27",
+        "migrationFingerprint": "79d7bc384d11"
+      }
+    }
+  },
+  "checks": {
+    "first37": {
+      "editorRelease": {
+        "exitCode": 0,
+        "tests": 604
+      },
+      "acceptedMechanics": {
+        "exitCode": 0,
+        "tests": 107
+      },
+      "roomPool": {
+        "exitCode": 0,
+        "tests": 4
+      },
+      "coord": {
+        "exitCode": 0,
+        "packets": 27
+      },
+      "skills": {
+        "mode": "original aggregate prefix plus remaining original commands",
+        "notFullyPassing": true,
+        "remainingFailure": "iconplan:check: missing local data/curation/whitelist.json"
+      }
+    },
+    "second37": {
+      "editorRelease": {
+        "exitCode": 1,
+        "failure": "readmeContract only; fixed and targeted rerun passed",
+        "aggregateRerunAfterFix": false
+      },
+      "readmeContract": {
+        "exitCode": 0,
+        "tests": 1
+      },
+      "editorBuild": {
+        "exitCode": 0
+      },
+      "roomPool": {
+        "exitCode": 0,
+        "tests": 4
+      },
+      "goIntakePolicy": {
+        "exitCode": 0,
+        "tests": 3
+      },
+      "coord": {
+        "exitCode": 0,
+        "packets": 27
+      },
+      "skills": {
+        "mode": "original aggregate prefix plus remaining original commands; stale derived outputs fixed via generators",
+        "notFullyPassing": true,
+        "remainingFailure": "iconplan:check: missing local data/curation/whitelist.json"
+      }
+    }
+  },
+  "effectiveServicePolicyNotYetVerified": {
+    "sourceBaseline": "v0.42.22",
+    "ugcEnabled": true,
+    "communityRoomOnly": false,
+    "uiSubmit": false,
+    "uiDiscover": false,
+    "shippedDailyLimit": 20,
+    "shippedPendingLimit": 5,
+    "generalArchiveLimitBytes": 262144,
+    "heroModelMaxBytesInShippedDocument": null,
+    "ownerAcceptedDailyLimit": 100,
+    "ownerAcceptedPendingLimit": 50,
+    "note": "Read effective service overlays before publishing; no production policy changed by this work."
+  },
+  "mainFollowUp": {
+    "mergedMain": "d078070252fd883fac0a1ff2b73adf19e8542be9",
+    "tag": "v0.42.25",
+    "reason": "Resolve observed PR conflicts and retain Main equivalent #1155 fix",
+    "issue1155": {
+      "state": "CLOSED",
+      "closedAt": "2026-09-09T15:01:25Z",
+      "mainFix": "a6041c941758d23b7f434710b32f12a00b2599cc"
+    },
+    "priorRuntimeEvidenceReused": true,
+    "fullSuiteRerun": false,
+    "normalRoomTestSource": "Exact Main version",
+    "boardCheck": 0
+  }
+}

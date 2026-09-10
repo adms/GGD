@@ -1,0 +1,30 @@
+node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/service-proof.json
+{"heroes":37,"slots":222,"sourceFilesUnchanged":true,"serviceReceipts":37,"localPublicationReceipts":0,"matchedRoomPublicationPins":0,"liveSelectedHeroes":0,"fullMatchSettlementVerified":false,"recordedReplayVerified":false,"productionDeploymentVerified":false,"modelReplacementDeferred":true}
+exitCode=0
+node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/service-proof.json --publication-proof materials/community-batch2-integration/receipts/publication-proof.json
+{"heroes":37,"slots":222,"sourceFilesUnchanged":true,"serviceReceipts":37,"localPublicationReceipts":37,"matchedRoomPublicationPins":0,"liveSelectedHeroes":0,"fullMatchSettlementVerified":false,"recordedReplayVerified":false,"productionDeploymentVerified":false,"modelReplacementDeferred":true}
+exitCode=0
+node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/aligned-current/service-proof.json --publication-proof materials/community-batch2-integration/receipts/aligned-current/publication-proof.json --game-proof materials/community-batch2-integration/receipts/aligned-current/current-match.json --replay-proof materials/community-batch2-integration/receipts/aligned-current/current-replay.json
+{"heroes":37,"slots":222,"sourceFilesUnchanged":true,"serviceReceipts":37,"localPublicationReceipts":37,"matchedRoomPublicationPins":37,"liveSelectedHeroes":2,"fullMatchSettlementVerified":true,"recordedReplayVerified":true,"productionDeploymentVerified":false,"modelReplacementDeferred":true}
+exitCode=0
+pnpm exec vitest run packages/shared/src/ops/codeOnlyKnobs.test.ts packages/shared/src/sim/damageRules.test.ts packages/shared/src/sim/effects/damageArea.test.ts packages/shared/src/sim/effects/damageLine.test.ts apps/admin/src/configForms.test.ts apps/admin/src/configFormsSave.test.ts apps/admin/src/configFormsShippedProse.test.ts --maxWorkers=1 --minWorkers=1
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+ ✓ packages/shared/src/ops/codeOnlyKnobs.test.ts (4 tests) 211ms
+ ✓ packages/shared/src/sim/effects/damageArea.test.ts (31 tests) 1258ms
+ ✓ apps/admin/src/configForms.test.ts (20 tests) 430ms
+(node:34035) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/admin/src/configFormsSave.test.ts (15 tests) 497ms
+ ✓ packages/shared/src/sim/damageRules.test.ts (5 tests) 124ms
+ ✓ packages/shared/src/sim/effects/damageLine.test.ts (13 tests) 87ms
+ ✓ apps/admin/src/configFormsShippedProse.test.ts (1 test) 68ms
+
+ Test Files  7 passed (7)
+      Tests  89 passed (89)
+   Start at  02:13:23
+   Duration  31.91s (transform 6.65s, setup 0ms, collect 21.08s, tests 2.68s, environment 2ms, prepare 1.39s)
+
+exitCode=0

@@ -1,0 +1,1097 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-12-20260907",
+  "revision": 14,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "衛宮士郎",
+    "concept": "衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔武器解析〕",
+      "Q": "干將・莫邪",
+      "W": "〔投影・飛劍〕",
+      "E": "〔強化・踏步〕",
+      "R": "無限劍製",
+      "EX": "〔投影・迎擊〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 14,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-12-20260907.plan",
+    "title": "衛宮士郎",
+    "summary": "衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "法鬥",
+    "archetype": "mage",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "ad": "中",
+      "ap": "大",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "range": "小"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "min": 0.05,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "dot": {
+            "type": "dot",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
+        "id": "tpl-random-barrage",
+        "schema": "template@1",
+        "name": "亂數彈幕轟炸",
+        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+        "family": "random-barrage",
+        "status": "enabled",
+        "params": {
+          "count": {
+            "type": "number",
+            "default": 9,
+            "min": 2,
+            "max": 100,
+            "unit": "count"
+          },
+          "intervalSec": {
+            "type": "number",
+            "default": 0.1,
+            "min": 0.04,
+            "max": 0.6,
+            "unit": "s"
+          },
+          "impactDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "impactRadius": {
+            "type": "number",
+            "default": 320,
+            "min": 50,
+            "max": 900,
+            "unit": "wc3u"
+          },
+          "scatterRadius": {
+            "type": "number",
+            "default": 225,
+            "min": 0,
+            "max": 1500,
+            "unit": "wc3u"
+          },
+          "payout": {
+            "type": "enum",
+            "default": "perImpact",
+            "values": [
+              "perImpact",
+              "onceAtCast"
+            ]
+          },
+          "openingDamage": {
+            "type": "scaling",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "74-03 闇之天使",
+          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔武器解析〕",
+        "purpose": "【核准惡搞改編】自己的護盾實際破裂後取得保固單四秒，每兩秒一次；空放護盾不給。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-parody-1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onShieldBroken",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "rage",
+                        "duration": 4,
+                        "applyTo": "self",
+                        "sourceScope": "caster"
+                      }
+                    ],
+                    "internalCooldown": 2,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "干將・莫邪",
+        "purpose": "【核准惡搞改編】投影小刀小級物理打擊；消耗保固單追加小級劍擊並回復5%魔力。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "q-parody-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+            }
+          },
+          {
+            "instanceId": "q-parody-2",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "rage",
+                    "count": "all",
+                    "subject": "self",
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      },
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.05,
+                        "applyTo": "self"
+                      },
+                      {
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "保固換新！",
+                        "applyTo": "victim",
+                        "durationSec": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔投影・飛劍〕",
+        "purpose": "【核准惡搞改編】廉價投影盾：只有40吸收量、持續三秒。敵人不打破就拿不到退貨單。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "w-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 40
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-12-20260907.protection",
+                    "onExisting": "keepLarger"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔強化・踏步〕",
+        "purpose": "【核准惡搞改編】把鍋鏟當劍丟：小級打擊並定身0.6秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "root",
+                    "duration": 0.6,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "root": true
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "無限劍製",
+        "purpose": "【核准惡搞改編】廚房劍雨，三發小級物理傷害；不召喚永久武器庫。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-random-barrage",
+              "params": {
+                "count": 3,
+                "intervalSec": 0.3,
+                "impactDamage": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
+                "impactRadius": 100,
+                "scatterRadius": 100,
+                "payout": "perImpact",
+                "castTimeSec": 0
+              },
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔投影・迎擊〕",
+        "purpose": "【核准惡搞改編】保固也能折現：消耗同一張保固單回復220生命，和Q只能選一邊。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "rage",
+                    "count": "all",
+                    "subject": "self",
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "heal",
+                        "amount": {
+                          "flat": 220
+                        },
+                        "applyTo": "self"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "byteSize": 1001788,
+      "clipMap": {
+        "idle": "single_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_b",
+        "hurt": "single_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "sourceAssetId": "300heroes:234e90fbb7002fcae4985063",
+      "sourceCharacter": "卫宫",
+      "sourceWork": "Fate/stay night",
+      "relationship": "alternate",
+      "notes": "採用 Archer／EMIYA 英靈衛宮造型，作為使用者允許的 UBW 士郎互通版本；遊戲名稱與原稿保留。受傷用途暫共用待機。"
+    },
+    "championIcon": "assets/icons/champions/sela.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-12-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-12-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.slash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                247,
+                99,
+                51
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-12-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-12-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                247,
+                99,
+                51
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-12-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-12-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                247,
+                99,
+                51
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-12-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-12-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                247,
+                99,
+                51
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-12-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-12-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                247,
+                99,
+                51
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+        "byteSize": 1001788,
+        "mediaType": "model/gltf-binary",
+        "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc",
+    "name": "衛宮士郎",
+    "identity": "作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。",
+    "ownerText": "### 12｜衛宮士郎\n\n作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n- **PASSIVE｜〔武器解析〕**：近戰交鋒累積解析層數，降低下一次投影的資源消耗；有最低消耗限制。\n- **Q｜干將・莫邪**：投影雙劍進行近身交叉斬擊。\n- **W｜〔投影・飛劍〕**：將有限數量的投影劍射向指定方向。\n- **E｜〔強化・踏步〕**：短距離移動並強化下一次近戰命中。\n- **R｜無限劍製**：展開有期限的劍域，強化 W 並在固定節奏追加投影劍；領域不改寫地圖邊界。\n- **EX｜〔投影・迎擊〕**：投影武器攔截一次正面攻擊，成功後開啟一次反擊。\n\n**審查重點**：投影武器具有期限與數量上限，不生成永久背包物品；驗證劍域退出、死亡清理及武器模型掛點。避免混入 HF 的移植手臂設定。\n\n",
+    "reviewText": "投影武器具有期限與數量上限，不生成永久背包物品；驗證劍域退出、死亡清理及武器模型掛點。避免混入 HF 的移植手臂設定。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔武器解析〕",
+        "ownerDescription": "近戰交鋒累積解析層數，降低下一次投影的資源消耗；有最低消耗限制。",
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需近戰解析層與投影最低資源消耗。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M12"
+        ]
+      },
+      "Q": {
+        "name": "干將・莫邪",
+        "ownerDescription": "投影雙劍進行近身交叉斬擊。",
+        "baselineBehavior": "2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "requiredRefinement": "雙劍掛點與交叉斬動畫待製。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M12"
+        ]
+      },
+      "W": {
+        "name": "〔投影・飛劍〕",
+        "ownerDescription": "將有限數量的投影劍射向指定方向。",
+        "baselineBehavior": "在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "requiredRefinement": "目前定點三發落劍；需按方向投影飛劍。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M12"
+        ]
+      },
+      "E": {
+        "name": "〔強化・踏步〕",
+        "ownerDescription": "短距離移動並強化下一次近戰命中。",
+        "baselineBehavior": "向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "requiredRefinement": "缺下一次近戰強化。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M12"
+        ]
+      },
+      "R": {
+        "name": "無限劍製",
+        "ownerDescription": "展開有期限的劍域，強化 W 並在固定節奏追加投影劍；領域不改寫地圖邊界。",
+        "baselineBehavior": "指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。",
+        "requiredRefinement": "目前領域傷害；需領域内 W 強化、投影劍生成與退出還原。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M12"
+        ]
+      },
+      "EX": {
+        "name": "〔投影・迎擊〕",
+        "ownerDescription": "投影武器攔截一次正面攻擊，成功後開啟一次反擊。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-12-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "requiredRefinement": "需一次正面迎擊成功後反擊窗口。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M12"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍\n自己的護盾實際破裂後取得保固單四秒，每兩秒一次；空放護盾不給。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "Q": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍\n投影小刀小級物理打擊；消耗保固單追加小級劍擊並回復5%魔力。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "W": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍\n廉價投影盾：只有40吸收量、持續三秒。敵人不打破就拿不到退貨單。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "E": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍\n把鍋鏟當劍丟：小級打擊並定身0.6秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍\n廚房劍雨，三發小級物理傷害；不召喚永久武器庫。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍\n保固也能折現：消耗同一張保固單回復220生命，和Q只能選一邊。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 14,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "80a06492a4d8b3d47409910625af5e894643e622ea081a449a233f17ec7f0080",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

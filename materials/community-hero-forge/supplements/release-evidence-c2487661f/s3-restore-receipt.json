@@ -1,0 +1,11 @@
+{
+  "schema": "ggd-release-evidence-restore@1",
+  "status": "passed",
+  "sourceCommit": "c2487661f7ea34998e91f4e96219b102c4ddbf2a",
+  "manifestSha256": "951ec5960bab5f736dbd3e149cde08ea100d04bbb269ead68c20d39b43edabe9",
+  "downloadedParts": 1,
+  "restoredFiles": 2840,
+  "verifiedBytes": 46707219,
+  "allCommittedBytesMatched": true,
+  "scope": "Fresh S3 download and exact immutable evidence bytes, not new gameplay or production publication"
+}

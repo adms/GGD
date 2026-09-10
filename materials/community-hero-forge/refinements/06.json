@@ -1,0 +1,606 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "projectId": "community-review-06-20260907",
+  "sourceSha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAbilityCast",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "ingredient",
+                      "duration": 4,
+                      "applyTo": "self",
+                      "sourceScope": "caster"
+                    }
+                  ],
+                  "internalCooldown": 0,
+                  "target": "self",
+                  "abilitySlot": "Q"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】Q進食成功施法後取得一份食材四秒；刷新一份，不累積無限餐點。",
+      "note": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血\nQ進食成功施法後取得一份食材四秒；刷新一份，不累積無限餐點。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "effects",
+        "radiusTier",
+        "rangeTier",
+        "castTimeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "pull",
+                  "shape": "single",
+                  "destination": "caster",
+                  "speed": 12,
+                  "stopDistance": 1.5
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "slow40",
+                  "duration": 2,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.6
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】把指定敵人拉到身前1.5格，自己吃撐減速40%兩秒；不消滅敵方英雄。",
+      "note": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血\n把指定敵人拉到身前1.5格，自己吃撐減速40%兩秒；不消滅敵方英雄。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-06-20260907.q",
+        "abilityId": "community-review-06-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              122,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "ingredient",
+                  "count": "all",
+                  "subject": "self",
+                  "appliedBy": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    },
+                    {
+                      "kind": "knockback",
+                      "distance": 4,
+                      "speed": 12,
+                      "from": "caster",
+                      "subtractGap": false,
+                      "uncontrollable": false
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "不好吃！",
+                      "applyTo": "victim",
+                      "durationSec": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】吐星星：消耗自己食材，對指定敵人小級打擊並推開四格；消耗後不能立刻拿同一份補血。",
+      "note": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血\n吐星星：消耗自己食材，對指定敵人小級打擊並推開四格；消耗後不能立刻拿同一份補血。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-06-20260907.w",
+        "abilityId": "community-review-06-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              122,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-blink",
+            "params": {
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】圓滾滾飄走，合法瞬移；不複製對手模型或技能。",
+      "note": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血\n圓滾滾飄走，合法瞬移；不複製對手模型或技能。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-06-20260907.e",
+        "abilityId": "community-review-06-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.dash",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              122,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "delaySec": 0.7,
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "中"
+                      }
+                    }
+                  ],
+                  "stopOnCasterDeath": true,
+                  "radius": 2,
+                  "side": "enemies",
+                  "targetMode": "reresolve",
+                  "anchor": "point"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】鍋蓋落地：0.7秒後重選落點兩格敵人造成中級傷害；跑開即可躲。",
+      "note": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血\n鍋蓋落地：0.7秒後重選落點兩格敵人造成中級傷害；跑開即可躲。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-06-20260907.r",
+        "abilityId": "community-review-06-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.nova",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              122,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "ingredient",
+                  "count": "all",
+                  "subject": "self",
+                  "appliedBy": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 240
+                      },
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "下午茶取消戰鬥",
+                      "applyTo": "self",
+                      "durationSec": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】消化：消耗同一份食材回復240生命；這回合的星星就當午餐吃掉。",
+      "note": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血\n消化：消耗同一份食材回復240生命；這回合的星星就當午餐吃掉。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-06-20260907.ex",
+        "abilityId": "community-review-06-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              122,
+              179
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "version": 1,
+  "templateVersions": {
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    },
+    "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+      "id": "tpl-blink",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    }
+  }
+}

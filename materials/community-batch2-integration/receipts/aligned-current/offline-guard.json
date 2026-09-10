@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-receipt-negative-check@1",
+  "case": "reject-offline-target",
+  "command": [
+    "node",
+    "tools/community-hero-forge/check-batch2-integration.mjs",
+    "--service-proof",
+    "/private/tmp/ggd-batch2-offline-mutant.json"
+  ],
+  "exitCode": 1,
+  "expectedExitCode": 1,
+  "status": "passed"
+}

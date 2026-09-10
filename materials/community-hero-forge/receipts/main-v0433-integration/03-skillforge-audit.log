@@ -1,0 +1,14 @@
+🔓 隔離區:解鎖 462 份（追蹤 867,缺 0）
+
+> ggd@0.0.0 skillforge:audit /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/genrun.sh skillforge:audit skillforge:audit:raw
+
+
+> ggd@0.0.0 skillforge:audit:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> node --import tsx tools/skill-forge/audit-42x46.ts
+
+WROTE docs/_reports/editor-skill-acceptance-42x46.json · 43/47
+(node:62090) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+🔒 隔離區:上鎖 462 份（追蹤 867,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: skillforge:audit 完成（產物已重新上鎖）

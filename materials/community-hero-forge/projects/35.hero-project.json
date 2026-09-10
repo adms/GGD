@@ -1,0 +1,1608 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-35-20260907",
+  "revision": 16,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "炭治郎",
+    "concept": "炭治郎 社群英雄功能驗收稿。作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n視覺方向：青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔嗅覺・破綻辨識〕",
+      "Q": "水之呼吸・水面斬",
+      "W": "水之呼吸・水車",
+      "E": "〔呼吸調整〕",
+      "R": "火之神神樂・圓舞",
+      "EX": "〔呼吸切換〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 16,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 15,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 15,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 15,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 15,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-35-20260907.plan",
+    "title": "炭治郎",
+    "summary": "炭治郎 社群英雄功能驗收稿。作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n視覺方向：青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "鬥士",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "ad": "大",
+      "ap": "小",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "range": "小"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "id": "tpl-mark-stacks",
+        "schema": "template@1",
+        "name": "具名標記-層數與免死",
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "family": "mark-stacks",
+        "status": "enabled",
+        "params": {
+          "markId": {
+            "type": "docRef",
+            "default": "godie-hapm.passive"
+          },
+          "initial": {
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999,
+            "unit": "count"
+          },
+          "max": {
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 600,
+            "unit": "s"
+          },
+          "resetOn": {
+            "type": "enum",
+            "default": "match",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "perStackLost": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.1
+              },
+              {
+                "stat": "maxHealth",
+                "op": "pctAdd",
+                "value": 0.1
+              }
+            ],
+            "optional": true
+          },
+          "lethalMode": {
+            "type": "enum",
+            "default": "save",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "lethalConsume": {
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "surviveHpPct": {
+            "type": "number",
+            "default": 0.01,
+            "min": 0.01,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "lethalDamageTypes": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "default": 1.5,
+            "min": 0.1,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "type": "enum",
+            "default": "damageAndControl",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "restoreHealthPct": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 1,
+            "unit": "ratio",
+            "optional": true
+          },
+          "aoeRadius": {
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          "knockbackDistance": {
+            "type": "number",
+            "default": 4,
+            "min": 0.1,
+            "max": 20,
+            "optional": true
+          },
+          "knockbackSpeed": {
+            "type": "number",
+            "default": 16,
+            "min": 1,
+            "max": 40
+          },
+          "knockbackFrom": {
+            "type": "enum",
+            "default": "caster",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "stunSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0.034,
+            "max": 20,
+            "unit": "s",
+            "optional": true
+          },
+          "stunStatusId": {
+            "type": "docRef",
+            "default": "trial-stun"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+        }
+      },
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔嗅覺・破綻辨識〕",
+        "purpose": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n呼吸為独立六層資源，開局及回合還原為六層。真正防禦方迴避近身敵人攻擊後，對該敵人留下自己來源的兩秒破綻與可見狀態；Q/W/R 有效刀技命中（含盾吸收）才消耗自己的標記一次追加極小物理傷害。普攻、失手、空按位移、反傷不消耗。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "breath",
+            "template": {
+              "ref": "tpl-mark-stacks",
+              "params": {
+                "markId": "community-review-35-20260907.breath",
+                "initial": 6,
+                "max": 6,
+                "durationSec": -1,
+                "resetOn": "round",
+                "perStackLost": [],
+                "lethalMode": "none",
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
+              },
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          },
+          {
+            "instanceId": "scent",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onEvade",
+                    "evadeSource": "defender",
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 3
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-35-20260907.opening",
+                        "stackKey": "community-review-35-20260907.opening",
+                        "maxStacks": 1,
+                        "sourceScope": "caster",
+                        "duration": 2,
+                        "modifiers": [],
+                        "vision": {
+                          "revealed": true
+                        },
+                        "hooks": [
+                          {
+                            "on": "onRoundStart",
+                            "target": "self",
+                            "effects": [
+                              {
+                                "kind": "consumeStatus",
+                                "shape": "single",
+                                "subject": "self",
+                                "statusId": "community-review-35-20260907.opening",
+                                "count": "all",
+                                "onConsumed": [
+                                  {
+                                    "kind": "spawnVfx",
+                                    "vfxId": "fx.prim.ice.pulse-sm",
+                                    "at": "self",
+                                    "durationSec": 0.2
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageDealt",
+                    "damageSource": "ability",
+                    "damageConnected": true,
+                    "oncePerCast": true,
+                    "abilitySlot": "Q",
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-35-20260907.opening",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "target",
+                        "statusId": "community-review-35-20260907.opening",
+                        "appliedBy": "self",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小",
+                              "ratios": []
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageDealt",
+                    "damageSource": "ability",
+                    "damageConnected": true,
+                    "oncePerCast": true,
+                    "abilitySlot": "W",
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-35-20260907.opening",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "target",
+                        "statusId": "community-review-35-20260907.opening",
+                        "appliedBy": "self",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小",
+                              "ratios": []
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageDealt",
+                    "damageSource": "ability",
+                    "damageConnected": true,
+                    "oncePerCast": true,
+                    "abilitySlot": "R",
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-35-20260907.opening",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "target",
+                        "statusId": "community-review-35-20260907.opening",
+                        "appliedBy": "self",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小",
+                              "ratios": []
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onRoundStart",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.breathing",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "spawnVfx",
+                            "vfxId": "fx.prim.ice.pulse-sm",
+                            "at": "self",
+                            "durationSec": 0.2
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.burden",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "spawnVfx",
+                            "vfxId": "fx.prim.ice.pulse-sm",
+                            "at": "self",
+                            "durationSec": 0.2
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDeath",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.breathing",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "spawnVfx",
+                            "vfxId": "fx.prim.ice.pulse-sm",
+                            "at": "self",
+                            "durationSec": 0.2
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.burden",
+                        "count": "all",
+                        "onConsumed": [
+                          {
+                            "kind": "spawnVfx",
+                            "vfxId": "fx.prim.ice.pulse-sm",
+                            "at": "self",
+                            "durationSec": 0.2
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "水之呼吸・水面斬",
+        "purpose": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n便當加熱刀：同一 Q 的水式是穩定横斬，火式改為較強横斬但越砍越喘，累積兩秒移速負擔每層8%、上限三層。兩式都耗一層呼吸、共用同一Q冷卻；切換不洗冷卻，調息回呼吸，敵人可趁負擔期拉開距離。依2026-09-09惡搞簡化原則，取消火式額外呼吸成本，不新增引擎欄位。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 3,
+          "allowApproach": false,
+          "manaCostTier": "小",
+          "cooldownTier": "小",
+          "statusCost": {
+            "statusId": "community-review-35-20260907.breath",
+            "count": 1
+          }
+        },
+        "products": [
+          {
+            "instanceId": "q",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.2,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "fromCaster": true,
+                    "radius": 3,
+                    "includeOrigin": true,
+                    "arcHalfAngleCos": 0.5,
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": []
+                    },
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.fire",
+                        "minStacks": 1,
+                        "appliedBy": "self"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "damageArea",
+                    "fromCaster": true,
+                    "radius": 3,
+                    "includeOrigin": true,
+                    "arcHalfAngleCos": 0.5,
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "中",
+                      "ratios": []
+                    },
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-35-20260907.fire",
+                      "minStacks": 1,
+                      "appliedBy": "self"
+                    }
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "statusId": "community-review-35-20260907.burden",
+                    "stackKey": "community-review-35-20260907.burden",
+                    "duration": 2,
+                    "maxStacks": 3,
+                    "modifiers": [
+                      {
+                        "stat": "ms",
+                        "op": "pctAdd",
+                        "value": -0.08
+                      }
+                    ],
+                    "dispellable": false,
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-35-20260907.fire",
+                      "minStacks": 1,
+                      "appliedBy": "self"
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.ice.pulse-sm",
+                    "at": "self",
+                    "durationSec": 0.35,
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.fire",
+                        "minStacks": 1,
+                        "appliedBy": "self"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.wind.slash",
+                    "at": "self",
+                    "durationSec": 0.35,
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-35-20260907.fire",
+                        "minStacks": 1,
+                        "appliedBy": "self"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.fire.slash",
+                    "at": "self",
+                    "durationSec": 0.35,
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-35-20260907.fire",
+                      "minStacks": 1,
+                      "appliedBy": "self"
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "水之呼吸・水車",
+        "purpose": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n向瞄準方向推進最多三格，沿路每個敵人只結算一次水車刀擊，受牆與邊界約束，不直接傳送。耗一層呼吸；死亡或路徑停止後不再補發接觸。旋轉與武器演出仍另驗。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 3,
+          "allowApproach": false,
+          "manaCostTier": "小",
+          "cooldownTier": "小",
+          "statusCost": {
+            "statusId": "community-review-35-20260907.breath",
+            "count": 1
+          }
+        },
+        "products": [
+          {
+            "instanceId": "w",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.15,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 8,
+                    "maxDistance": 3,
+                    "touchScope": "enemy",
+                    "onTouch": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小",
+                          "ratios": []
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔呼吸調整〕",
+        "purpose": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n保留完整呼吸規則，調息提示對應真正靜止回得較快，火刀的負擔仍有代價。\n三秒調息：啟動立即基礎回復一層、之後每半秒回復一層；實際連續靜止半秒且最近1.1秒未有效受擊時，每半秒再回復一層，均受六層上限。移動或受擊降低效率而非免費回滿魔力，碰壁不等於實際移動。耗費一般魔力與自己的冷卻，不改姿態；回合開始與死亡清除舊調息，避免快速切回合沿用。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 0,
+          "allowApproach": false,
+          "manaCostTier": "小",
+          "cooldownTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "e",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "statusId": "community-review-35-20260907.breathing",
+                    "stackKey": "community-review-35-20260907.breathing",
+                    "duration": 3,
+                    "maxStacks": 1,
+                    "modifiers": [],
+                    "hooks": [
+                      {
+                        "on": "onInterval",
+                        "target": "self",
+                        "internalCooldown": 0.5,
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "community-review-35-20260907.breath",
+                            "applyTo": "self",
+                            "stacks": 1,
+                            "duration": 1
+                          }
+                        ]
+                      },
+                      {
+                        "on": "onInterval",
+                        "target": "self",
+                        "internalCooldown": 0.5,
+                        "stationaryForSec": 0.5,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-35-20260907.disturbed",
+                            "minStacks": 1
+                          }
+                        },
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "community-review-35-20260907.breath",
+                            "applyTo": "self",
+                            "stacks": 1,
+                            "duration": 1
+                          }
+                        ]
+                      },
+                      {
+                        "on": "onDamageTaken",
+                        "damageConnected": true,
+                        "target": "self",
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "applyTo": "self",
+                            "sourceScope": "caster",
+                            "statusId": "community-review-35-20260907.disturbed",
+                            "duration": 1.1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          },
+          {
+            "instanceId": "e-parody",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "便當太辣！站好吹涼！",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "火之神神樂・圓舞",
+        "purpose": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n0.65秒可受控制中斷的蓄勢後，以前方120度單次火之神刀斬；施法開始消耗三層呼吸及較高魔力，未足額不扣費。刀斬仍按施放方向與結算時距離判定，使用後增加負擔；不建立永久燃燒地形。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 3,
+          "allowApproach": false,
+          "manaCostTier": "大",
+          "cooldownTier": "大",
+          "statusCost": {
+            "statusId": "community-review-35-20260907.breath",
+            "count": 3
+          }
+        },
+        "products": [
+          {
+            "instanceId": "r",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.65,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "fromCaster": true,
+                    "radius": 3,
+                    "includeOrigin": true,
+                    "arcHalfAngleCos": 0.5,
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "大",
+                      "ratios": []
+                    }
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "statusId": "community-review-35-20260907.burden",
+                    "stackKey": "community-review-35-20260907.burden",
+                    "duration": 2,
+                    "maxStacks": 3,
+                    "modifiers": [
+                      {
+                        "stat": "ms",
+                        "op": "pctAdd",
+                        "value": -0.08
+                      }
+                    ],
+                    "dispellable": false
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔呼吸切換〕",
+        "purpose": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n水／火便當模式切換：水式穩定，火式傷害更高但附加短暫負擔；兩式耗一層呼吸，共用原Q實例、冷卻與資源。換回水不消掉負擔，回合開始回水式。可用既有調息回復後再接刀技；不建立水域或燃燒地形。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 0,
+          "allowApproach": false,
+          "cooldownTier": "極小",
+          "manaCost": [
+            0
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "subject": "self",
+                    "statusId": "community-review-35-20260907.fire",
+                    "appliedBy": "self",
+                    "count": "all",
+                    "onConsumed": [
+                      {
+                        "kind": "spawnVfx",
+                        "vfxId": "fx.prim.ice.pulse-sm",
+                        "at": "self",
+                        "durationSec": 0.3
+                      }
+                    ],
+                    "onMissing": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "sourceScope": "caster",
+                        "statusId": "community-review-35-20260907.fire",
+                        "stackKey": "community-review-35-20260907.fire",
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "dispellable": false,
+                        "maxStacks": 1,
+                        "modifiers": []
+                      },
+                      {
+                        "kind": "spawnVfx",
+                        "vfxId": "fx.prim.fire.pulse-sm",
+                        "at": "self",
+                        "durationSec": 0.3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "byteSize": 1249564,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "sourceAssetId": "300heroes:19ab89526d5a6812479cb932",
+      "sourceCharacter": "灶门炭治郎",
+      "sourceWork": "鬼滅之刃",
+      "relationship": "exact",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-35-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-35-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-35-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-35-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-35-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-35-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-35-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-35-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                128,
+                38
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.fire.slash",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                255,
+                128,
+                38
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-35-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-35-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+        "byteSize": 1249564,
+        "mediaType": "model/gltf-binary",
+        "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c",
+    "name": "炭治郎",
+    "identity": "作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。",
+    "ownerText": "### 35｜炭治郎\n\n作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n- **PASSIVE｜〔嗅覺・破綻辨識〕**：成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。\n- **Q｜水之呼吸・水面斬**：前方橫斬，適合穩定輸出。\n- **W｜水之呼吸・水車**：旋轉斬擊並進行短距離位移。\n- **E｜〔呼吸調整〕**：短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。\n- **R｜火之神神樂・圓舞**：明顯蓄勢後的高傷害斬擊，消耗較多呼吸資源。\n- **EX｜〔呼吸切換〕**：讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。\n\n**審查重點**：姿態切換保留冷卻及資源；驗證嗅覺標記的可見性、呼吸不足與高負擔狀態。水火演出不自動生成永久水域或燃燒地形。\n\n",
+    "reviewText": "姿態切換保留冷卻及資源；驗證嗅覺標記的可見性、呼吸不足與高負擔狀態。水火演出不自動生成永久水域或燃燒地形。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔嗅覺・破綻辨識〕",
+        "ownerDescription": "成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。",
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需有效閃避後近身破綻標記與下一刀消耗。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M07"
+        ]
+      },
+      "Q": {
+        "name": "水之呼吸・水面斬",
+        "ownerDescription": "前方橫斬，適合穩定輸出。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "需水面斬前方橫弧，目前四段直線。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M07"
+        ]
+      },
+      "W": {
+        "name": "水之呼吸・水車",
+        "ownerDescription": "旋轉斬擊並進行短距離位移。",
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "requiredRefinement": "需水車旋轉斬与武器動作。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M07"
+        ]
+      },
+      "E": {
+        "name": "〔呼吸調整〕",
+        "ownerDescription": "短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。",
+        "requiredRefinement": "標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M07"
+        ]
+      },
+      "R": {
+        "name": "火之神神樂・圓舞",
+        "ownerDescription": "明顯蓄勢後的高傷害斬擊，消耗較多呼吸資源。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "需火之神單次高傷斬與呼吸高消耗。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M07"
+        ]
+      },
+      "EX": {
+        "name": "〔呼吸切換〕",
+        "ownerDescription": "讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。",
+        "baselineBehavior": "自身取得 3 秒增益：ad +15%。",
+        "requiredRefinement": "固定 AD 增益不是切換；需水／火 Q 版本、共用冷卻与負擔。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M07"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n呼吸為独立六層資源，開局及回合還原為六層。真正防禦方迴避近身敵人攻擊後，對該敵人留下自己來源的兩秒破綻與可見狀態；Q/W/R 有效刀技命中（含盾吸收）才消耗自己的標記一次追加極小物理傷害。普攻、失手、空按位移、反傷不消耗。",
+    "Q": "本次保留核心並核對定位、代價、反制。炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n便當加熱刀：同一 Q 的水式是穩定横斬，火式改為較強横斬但越砍越喘，累積兩秒移速負擔每層8%、上限三層。兩式都耗一層呼吸、共用同一Q冷卻；切換不洗冷卻，調息回呼吸，敵人可趁負擔期拉開距離。依2026-09-09惡搞簡化原則，取消火式額外呼吸成本，不新增引擎欄位。 水式沿用冰色脈衝及風斬，火式沿用火斬，跟隨實際姿態條件；屬既有素材改編。",
+    "W": "本次保留核心並核對定位、代價、反制。炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n向瞄準方向推進最多三格，沿路每個敵人只結算一次水車刀擊，受牆與邊界約束，不直接傳送。耗一層呼吸；死亡或路徑停止後不再補發接觸。旋轉與武器演出仍另驗。",
+    "E": "本次保留核心並核對定位、代價、反制。炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n保留完整呼吸規則，調息提示對應真正靜止回得較快，火刀的負擔仍有代價。\n三秒調息：啟動立即基礎回復一層、之後每半秒回復一層；實際連續靜止半秒且最近1.1秒未有效受擊時，每半秒再回復一層，均受六層上限。移動或受擊降低效率而非免費回滿魔力，碰壁不等於實際移動。耗費一般魔力與自己的冷卻，不改姿態；回合開始與死亡清除舊調息，避免快速切回合沿用。",
+    "R": "本次保留核心並核對定位、代價、反制。炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n0.65秒可受控制中斷的蓄勢後，以前方120度單次火之神刀斬；施法開始消耗三層呼吸及較高魔力，未足額不扣費。刀斬仍按施放方向與結算時距離判定，使用後增加負擔；不建立永久燃燒地形。",
+    "EX": "本次保留核心並核對定位、代價、反制。炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n水／火便當模式切換：水式穩定，火式傷害更高但附加短暫負擔；兩式耗一層呼吸，共用原Q實例、冷卻與資源。換回水不消掉負擔，回合開始回水式。可用既有調息回復後再接刀技；不建立水域或燃燒地形。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 16,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 15,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 15,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 15,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 15,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 16,
+      "digest": "26c9a4f17ddfba51a56784b6ff72659208813c578f3f31dbc36581ee84f7dbfa",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

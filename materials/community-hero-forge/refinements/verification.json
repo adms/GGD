@@ -1,0 +1,57 @@
+{
+  "schema": "ggd-community-mechanism-checkpoint@1",
+  "issue": 1132,
+  "originalDesignAcceptance": "incomplete",
+  "changedSlots": [
+    "21.W",
+    "27.W",
+    "37.EX"
+  ],
+  "checks": [
+    {
+      "name": "friendly-protection-and-regressions",
+      "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/content/heroForge/communityRefinements/azazel.test.ts src/content/heroForge/templateVersions.test.ts src/content/heroForge/productInstances.test.ts src/content/templates/expand.test.ts",
+      "exitCode": 0,
+      "files": 5,
+      "tests": 57,
+      "logSha256": "f83dd9eb24746053b8bf9e7a2b936143c887a535cd788980f0c7e524bf2622b3"
+    },
+    {
+      "name": "shared-typecheck",
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "exitCode": 0,
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  ],
+  "mutationChecks": {
+    "status": "passed",
+    "meaning": "Both original targeting regressions are detected",
+    "cases": [
+      {
+        "mutation": "side=enemies",
+        "exitCode": 1,
+        "expectedFailures": 2,
+        "logSha256": "1107bba714ca8c246368ac7c616de582dee9be5632cec6101c6da8e7ac242fd3"
+      },
+      {
+        "mutation": "castType=self",
+        "exitCode": 1,
+        "expectedFailures": 2,
+        "logSha256": "bea4d885f24e8d6c083497ac199dfc086468de9964a2121a7ad6119d49f63cc1"
+      }
+    ]
+  },
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 3,
+    "modelsFromVerifiedPreviousZip": true,
+    "compileAllSlots": "passed"
+  },
+  "uiImport": {
+    "status": "unverified",
+    "reason": "CUA file chooser timed out before selecting the folder"
+  },
+  "currentServiceZip": "not-rebuilt",
+  "published": false
+}

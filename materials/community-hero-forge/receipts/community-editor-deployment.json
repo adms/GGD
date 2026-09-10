@@ -1,0 +1,48 @@
+{
+  "issue": 1150,
+  "sourceCommit": "2c232970f3bbdb36fa77f97870b95b5b1113c726",
+  "scope": "Existing community Editor deployment only. No new hero templates, mechanisms, model matching or VFX adjustments.",
+  "validation": [
+    {
+      "command": "pnpm exec go -C tools/testrunner test ./internal/infracheck -run '^(TestContentEditorNotExposedInProduction|TestNginxCommunityEditorRoutes|TestNginxEdgeRouting)$' -count=1",
+      "exitCode": 0,
+      "proof": "Actual nginx container: default production excludes Editor; community /editor, /editor/, /editor/hero-forge and /editor/works serve Editor; content-api remains unproxied; hero APIs route to Platform."
+    },
+    {
+      "command": "docker build --target build --build-arg GGD_INCLUDE_EDITOR=1 --build-arg GGD_BUILD_STAMP=8dd6e3784-community-editor-check -f docker/edge.Dockerfile -t ggd-community-editor-build:local-mvp .",
+      "exitCode": 0,
+      "proof": "Opt-in Editor bundle built; image contains nonempty /dist-out/editor/index.html and index.html.gz."
+    },
+    {
+      "command": "pnpm --filter @ggd/editor exec vitest run src/readmeContract.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0
+    }
+  ],
+  "compose": {
+    "exitCode": 0,
+    "editorIncluded": true,
+    "communityRouteMount": "/etc/nginx/ggd-community/editor.conf",
+    "readOnly": true,
+    "devRoutesMounted": false,
+    "privateImporterHostPorts": 0,
+    "contentApiDeployed": false,
+    "credentials": "required inputs replaced with explicit test placeholders; --env-file /dev/null; no deployment credentials saved"
+  },
+  "localLogSha256": {
+    "ggd-mvp-community-editor-routing.txt": "fcd69db50911dff23e9f73e0d5e818123cf749a2bf611c03a817d15a7eb5ccfb",
+    "ggd-mvp-community-editor-build.txt": "126429d7b7b6b7eacb731a3f8788b4879647104b055bc484747eac357a302b3d",
+    "ggd-mvp-community-editor-readme.txt": "031259fd2ee0fcd81a4727d25357f5069007cdf144b3f789844dacb04fa4f298",
+    "ggd-mvp-community-editor-packet-repro.txt": "41f1f3cc92fdad12b809ec9dfec136d39f33edd1763e792929ef8e19e5d66f2d"
+  },
+  "preserved": "All accepted 81 hero project files untouched. Existing hero acceptance remains valid; no claim of live publication.",
+  "deployment": "Main review/merge and normal release required. Community overlay must be included and edge rebuilt. Sign in before building/submitting; production content CRUD remains disabled.",
+  "openBlockers": [
+    "Main review/merge and actual deployment",
+    "Existing everyTagAnnounced failure: v0.42.26 and v0.43.4 missing real announcement records",
+    "Formal authenticated Editor/Admin import and publication of 81 heroes, followed by minimum game check"
+  ]
+}

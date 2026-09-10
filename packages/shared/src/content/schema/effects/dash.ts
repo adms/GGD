@@ -13,6 +13,12 @@ z
     kind: z.literal("dash"),
     ...EFFECT_COMMON_SHAPE,
     mode: z.enum(["forward", "toPoint"]),
+    stopOnHit: z.enum(["enemy", "enemyChampion"]).optional().describe("掃過第一個合法敵方身體即停；可限英雄。先受地形阻擋，不穿牆取目標。省略維持一般衝刺。"),
+    onHit: z.array(z.lazy(() => zEffectDef)).min(1).max(DASH_ON_END_MAX_EFFECTS).optional()
+      .describe("只對衝刺實際接觸的第一個敵人結算一次；空放或只撞牆不執行。須搭配 stopOnHit。"),
+    onTouch: z.array(z.lazy(() => zEffectDef)).min(1).max(DASH_ON_END_MAX_EFFECTS).optional()
+      .describe("沿實際突進路線逐人觸發一次，繼續位移至地形或距離終點。不可與 stopOnHit 同用。"),
+    touchScope: z.enum(["enemy", "enemyChampion"]).optional().describe("沿途接觸的對象；預設 enemy。須搭配 onTouch。"),
     /**
      * u/s。⚠️ 這個上界是 **MIS-PARSE 護欄**（w3x 的 1000 貼進來），⛔ 不是安全上限 ——
      * 真正的天花板是註冊期推導的 `maxSpeed`（`content/displacementTiers.ts`），
@@ -74,10 +80,10 @@ z
      * 看不見的失敗。
      */
     onEndOn: z
-      .enum(["always", "completed"])
+      .enum(["always", "completed", "resolved"])
       .optional()
       .describe(
-        "被地形擋下來的衝刺算不算衝完：always（預設，照樣揮出）或 completed（只有跑完距離才揮）。",
+        "結束條件：always（預設，包含中斷）、completed（走滿距離）、resolved（實際移動後因距離、地形或敵人接觸正常停止，排除被取代／取消）。",
       ),
     /** ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = false（同 randomArea 的同名欄位）。 */
     onEndWhenDead: z
@@ -86,3 +92,9 @@ z
       .describe("衝刺途中陣亡還要不要跑結束效果。留空＝不跑。"),
   })
   .strict();
+
+export const refine = (dash: z.infer<typeof zDash>, ctx: z.RefinementCtx): void => {
+  if (dash.onTouch && dash.stopOnHit) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["onTouch"], message: "onTouch 與 stopOnHit 互斥，請選擇沿途或接觸停止。" });
+  if (dash.touchScope && !dash.onTouch) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["touchScope"], message: "touchScope 必須搭配 onTouch。" });
+  if (dash.onHit && !dash.stopOnHit) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["onHit"], message: "衝刺 onHit 必須指定 stopOnHit。" });
+};

@@ -1,0 +1,67 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-batch2-integration",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "25675874184bafc80010c49122f67fd44c212db7",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "第二批37名隔離投稿發布完成，保留原稿與現有模型",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "37名222槽原始HeroProject及決策資料以SHA固定，未變更名稱、acceptedPlan、sections或模型。當下隔離服務37份重建與inspect通過；此命令核對已提交原稿與服務收據，不宣稱重新執行SimWorld或正式部署。",
+      "repro": {
+        "command": "node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/service-proof.json",
+        "expectedExit": 0
+      },
+      "commit": "4f578ee8bbc9c63f350b7c1514e83ff2dbb11472",
+      "evidence": [
+        "materials/community-batch2-integration/source-lock.json",
+        "materials/community-batch2-integration/receipts/service-proof.json",
+        "materials/community-batch2-integration/README.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "37份隔離草稿、投稿、管理員發布與跨帳號署名ZIP下載全部完成，來源與ZIP摘要逐名一致；37份ZIP已經S3上傳並重新下載核對SHA-256。正式站未部署。",
+      "repro": {
+        "command": "node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/service-proof.json --publication-proof materials/community-batch2-integration/receipts/publication-proof.json",
+        "expectedExit": 0
+      },
+      "commit": "4f578ee8bbc9",
+      "evidence": [
+        "materials/community-batch2-integration/receipts/publication-proof.json",
+        "materials/community-batch2-integration/receipts/s3-readback.json",
+        "materials/community-batch2-integration/s3/s3-location.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "第二批依遊戲平台overlay重建37份並發布新版，普通房間固定全部37個版本；兩名測試玩家完成W施法、斷線重連與正常結算，固定回放檢查到錄影結尾。這條命令核對收據關係，不重跑遊戲，亦不宣稱74名全技能或畫面驗收。",
+      "repro": {
+        "command": "node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/aligned-current/service-proof.json --publication-proof materials/community-batch2-integration/receipts/aligned-current/publication-proof.json --game-proof materials/community-batch2-integration/receipts/aligned-current/current-match.json --replay-proof materials/community-batch2-integration/receipts/aligned-current/current-replay.json",
+        "expectedExit": 0
+      },
+      "commit": "27486675b84085dbbd3997419aa0ad37cf90fd55",
+      "evidence": [
+        "materials/community-batch2-integration/receipts/aligned-current/overlay-alignment.json",
+        "materials/community-batch2-integration/receipts/aligned-current/current-match.json",
+        "materials/community-batch2-integration/receipts/aligned-current/current-replay.json",
+        "materials/community-batch2-integration/two-batch-handoff.json"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "晚點我會再統一整理模型對應的部分"
+    }
+  ],
+  "asks": [
+    "沿 GH#1147 與 GH#1150 審查；目前範圍為第一批37、第二批37及七名LoL，共81名／486槽。模型重新配對依Owner指示延後，先保留已接受綁定。",
+    "本分支預先整合 PR #1135 的 d9f1611ced70eaf9fc0eebd75a375d8563b9e00a，解決兩批依序合併的22個衝突。請先審查合併 #1135，再合併本PR；Main固定基準為bbc62a06df8eb7910e7a30304770f3fb03f01f2f。生成文件由既有產生器重建，81份專案保留各自父提交位元組。",
+    "上述claims保留隔離服務歷史證據及原始commit；本次對齊契約指紋不代表重新執行隔離發布、遊戲或回放。當前合併檢查及限制見 materials/community-batch2-integration/receipts/mvp-1159-20260910/cross-pr-integration.json。",
+    "仍待 #1159 的v0.42.26實際公告補正、CI、Main審查合併與正式部署。正式站https://ggd.adms.ai仍需既有帳號登入、讀取真正target與政策，依已授權100每日／50待審設定完成81名投稿、審查與正式發布；不以本機編譯或歷史隔離發布宣告完成。"
+  ]
+}

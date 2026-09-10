@@ -26,7 +26,7 @@ import { registerEffectDefSchema, zEffectDef } from "./_shared";
 
 import { zDamage, refine as refine_damage } from "./damage";
 import { zDamageArea } from "./damageArea";
-import { zDamageLine } from "./damageLine";
+import { zDamageLine, refine as refine_damageLine } from "./damageLine";
 import { zGrantAttribute, refine as refine_grantAttribute } from "./grantAttribute";
 import { zRevive } from "./revive";
 import { zHeal } from "./heal";
@@ -37,13 +37,16 @@ import { zCycleBuff } from "./cycleBuff";
 import { zRestore } from "./restore";
 import { zSpendHealth } from "./spendHealth";
 import { zSpendMana } from "./spendMana";
-import { zDash } from "./dash";
+import { zInterruptCast } from "./interruptCast";
+import { zDash, refine as refine_dash } from "./dash";
 import { zLeap } from "./leap";
 import { zBlink, refine as refine_blink } from "./blink";
 import { zChampionForm } from "./championForm";
 import { zSpawnProjectile } from "./spawnProjectile";
 import { zSpawnVfx, refine as refine_spawnVfx } from "./spawnVfx";
 import { zDot, refine as refine_dot } from "./dot";
+import { zTimeStop } from "./timeStop";
+import { zTrap, refine as refine_trap } from "./trap";
 import { zSummon, refine as refine_summon } from "./summon";
 import { zInvulnerable } from "./invulnerable";
 import { zKnockback, refine as refine_knockback } from "./knockback";
@@ -88,6 +91,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zRestore,
   zSpendHealth,
   zSpendMana,
+  zInterruptCast,
   zDash,
   zLeap,
   zBlink,
@@ -95,6 +99,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zSpawnProjectile,
   zSpawnVfx,
   zDot,
+  zTimeStop,
+  zTrap,
   zSummon,
   zInvulnerable,
   zKnockback,
@@ -150,7 +156,9 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   comboStrikes: refine_comboStrikes,
   convertTeam: refine_convertTeam,
   damage: refine_damage,
+  damageLine: refine_damageLine,
   delayed: refine_delayed,
+  dash: refine_dash,
   devour: refine_devour,
   dispel: refine_dispel,
   dot: refine_dot,
@@ -170,6 +178,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   spawnModelFx: refine_spawnModelFx,
   spawnVfx: refine_spawnVfx,
   swapResource: refine_swapResource,
+  trap: refine_trap,
   summon: refine_summon,
   weightedBranch: refine_weightedBranch,
   consumeStatus: refine_consumeStatus,

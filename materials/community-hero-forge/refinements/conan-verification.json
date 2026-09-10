@@ -1,0 +1,249 @@
+{
+  "schema": "ggd-conan-verification@1",
+  "issue": 1132,
+  "sourceCommit": "50a821472197fe480deb09b4f37b6bbfbd205f13",
+  "refinementVersion": 1,
+  "refinementSha256": "fbcf85d3830526f4328d478e9bea1f6ee26fc0782811238d34cec9fc14851b7f",
+  "regression": {
+    "exitCode": 0,
+    "tests": 237,
+    "files": 18,
+    "conanTests": 22,
+    "logSha256": "5d8b2bd019762ddf43106e48b54062305688b7b2cff6e2fd93d7dc5351a5d998",
+    "scope": "Conan and all existing community refinements including Azazel repeated same-source curse reversal, plus sleep, stealth, full vision, status costs, hooks, source grants and purity."
+  },
+  "typechecks": [
+    {
+      "package": "shared",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    {
+      "package": "editor",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/editor typecheck",
+      "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    {
+      "package": "client",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/client typecheck",
+      "logSha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    {
+      "package": "game-server",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/game-server typecheck",
+      "logSha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    }
+  ],
+  "typecheckScope": "Typechecks precede the final one-line control-extension fix and its additional test; final Editor release gate validates the integrated tree.",
+  "mutations": [
+    {
+      "mutation": "observation-kind-filter",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "exitCode": 1,
+      "logSha256": "08d05633648ee60a6ab6baa3e93b137ee40d8f0aca5783aef6df0238e1f82385",
+      "detected": true
+    },
+    {
+      "mutation": "target-resource-debit",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "exitCode": 1,
+      "logSha256": "43ff2b717644013f78c33b893d6620e7c98c62f59df580af91adab736cd0fb83",
+      "detected": true
+    },
+    {
+      "mutation": "zero-damage-sleep",
+      "file": "packages/shared/src/sim/statusBreak.ts",
+      "exitCode": 1,
+      "logSha256": "5a978edf2c6d9ebd0d6e266574a163bb6ffb2ba3909a5e8838d7ebf88f32d009",
+      "detected": true
+    },
+    {
+      "mutation": "reveal-visibility",
+      "file": "packages/shared/src/sim/stealth.ts",
+      "exitCode": 1,
+      "logSha256": "d9d86cc9fef49febaeb543ed8344537817a0deaf58e308b26e19626673c2f633",
+      "detected": true
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      {
+        "hero": "26",
+        "previousRevision": 12,
+        "revision": 13
+      }
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesUnchanged": 37,
+    "modelBindingsUnchanged": 37
+  },
+  "batchCoverage": {
+    "heroes": 37,
+    "slots": 222,
+    "mappedBehaviorSlots": 37,
+    "unmappedBehaviorSlots": 185,
+    "genericOnAttackPassives": 23
+  },
+  "initialFailures": [
+    "Target cost field was initially inserted under toggle upkeep; moved to statusCost before successful compile.",
+    "Seen-event IDs initially contained uppercase characters; normalized to legal lowercase IDs.",
+    "Immunity fixture needed applyTo=target.",
+    "Actual zero damage and shield-only hits woke sleeping targets; fixed positive HP damage guard and verified through the real damage pipeline."
+  ],
+  "semantics": [
+    "Each visible hostile champion is observed only inside the same active unsettled duel, respecting stealth and map sight.",
+    "Four event categories each count once per observed enemy and observer per round; at most three stored clues. Consuming clues does not erase seen categories; ordinary death/revive does not reset round sources.",
+    "R consumes only the selected target clues applied by this caster; illegal or unfunded casts pay nothing. Legal cast interrupted before effect does not refund.",
+    "R reveal preserves the underlying stealth clock, expires or dispels with its source and stops across duel zones; same caster refreshes one weakness source.",
+    "Q and W use real first-collision projectiles. W causes no direct damage; subsequent positive HP loss wakes it, zero damage and shield-only absorption do not."
+  ],
+  "knownLimits": [
+    "E skateboard steering/collision/stop states and EX valid-target-or-anchor bounded pull remain unfinished.",
+    "Football, needle/watch, skating, dedicated models/animations/VFX/audio and rendered visual acceptance remain pending; Q/W still use an existing bolt proxy.",
+    "All-hero original-design acceptance, current-service ZIP and formal publication remain incomplete."
+  ],
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "controlRefreshRegression": {
+    "beforeFixCommit": "63badb5afef229c557574ded348b8f70b308d78b",
+    "failedTests": 1,
+    "passingTests": 21,
+    "beforeLogSha256": "c1a418d74ea28f4f68bb99c4082923b9bb6b4b525810122b8438ae75f65e11ed",
+    "fixedCommit": "50a821472197fe480deb09b4f37b6bbfbd205f13",
+    "result": "Effective visible control extension now counts, unchanged expiry does not."
+  },
+  "releaseVerification": {
+    "testedHead": "2572fcd9c547debe091c28a1e088fa22fa858649",
+    "workingTreeClean": true,
+    "command": "python3 tools/community-hero-forge/verify-authoring-batch.py --batch-dir materials/community-hero-forge --release --jobs 3 --release-root <existing-model-release> --output <new-directory>",
+    "reportSha256": "97a62cb86079c4bc8f155ce6313bfc78ce703eb1179610c0a33b93f6598334cc",
+    "sourceFingerprint": "b0bd49a88fe19567fe23bd705330b853b2da430edb994ef8da848ceb5b00d5f4",
+    "exitCode": 2,
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 37,
+      "slotsWithoutBehaviorSuite": 185
+    },
+    "editorTests": 595,
+    "registeredBehaviorTests": 161,
+    "editorProductionBuild": "passed",
+    "jobs": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "cc9d59ddc70d013be3f8cbaf52dc256b66fbd3decab6467cb16a4cf85ba7a3f1",
+        "log": "skills.log",
+        "logSha256": "e634141794d60a71f6bdce407793d580a20a12df411bb870b19a9c2c1d799aa8",
+        "seconds": 97.07,
+        "reused": false
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "fingerprint": "d21dfef3a92d8f3be4f97914114faf2e3e7726d0dc06cfe47bda28cdc355a3e5",
+        "log": "editor.log",
+        "logSha256": "c2d3320c286484211f7cd1f31d99e0eb9b875c607681c77932eec12b48c2a43c",
+        "seconds": 221.64,
+        "reused": false
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "8f790cc02a4c1e550e767d5ffe051639c531c89378f71b6774cc9ed632f19e98",
+        "log": "coord.log",
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.1,
+        "reused": false
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "fingerprint": "6830d632e5186423b1a27d7fc5543a117d81dbaca6944df6c9af052acfca5799",
+        "log": "compile-and-models.log",
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 5.98,
+        "reused": false
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "fab3f4822b23953fadae398419f11437d5c73baa189b66013c0f6ca9a56e47c7",
+        "log": "behavior-implemented-mechanisms.log",
+        "logSha256": "bcbec1031e99bbd8de8374b4eece38d8df79dcbaf787d0a7614255a32da62836",
+        "seconds": 21.55,
+        "reused": false
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "apps/client/src/render/views/TrapView.test.ts",
+          "apps/editor/src/vfx-forge/TrapReplay.test.ts",
+          "apps/game-server/src/net/trapWire.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "e377d4d24541fa841e30a14b78f78a8e9ed0fd61748a5b84b3d525e98978e764",
+        "log": "behavior-trap-view-and-transport.log",
+        "logSha256": "ff78ea2ba2a967478364254f1ec8c99521a30d9ab974fa0f3e9e7e9ce8ee4aa9",
+        "seconds": 5.31,
+        "reused": false
+      }
+    ],
+    "scope": "All registered mechanical checks pass; 185 slots still have no registered behavior suite. Full design, original art, rendered visual acceptance and current-service publication remain incomplete. This receipt commit is later than the tested head."
+  }
+}

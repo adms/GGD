@@ -47,7 +47,7 @@ import type { BlockGrant } from "../combat/block";
 import type { CritStrikeGrant } from "../combat/critStrike";
 import type { DamageTypeOverride } from "../combat/damageTypeOverride";
 import type { AttrGrant } from "./attributes";
-import { sourceGrants } from "./sourceGrants";
+import { sourceGrants, hasSourceGrant } from "./sourceGrants";
 import { Stat } from "./statTypes";
 import { ModOp } from "./modifiers";
 import { SOURCE_GRANT_SHAPE } from "../../content/schema/effect";
@@ -189,6 +189,7 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         // ⭐ 2026-08-09 (S11)：飛行是第五格。這一行是這條守衛的**維護點** ——
         // 新增一格授權而忘了在這裡餵它，兩個方向的比對就會紅並指名那個鍵。
         flight: { hoverHeight: 1.2, ignoreUnits: true },
+        evasionScope: { abilities: true, trueDamage: false },
         // ⭐ 2026-08-12：穿透是第六格（LoL 四段的段③④）。同上，這一行就是維護點。
         penetration: { scope: "basic", armorPct: 1 },
         // ⭐ 2026-08-18 (GH#355)：型別連擊免疫是第七格（史萊姆裝）。同上。
@@ -198,6 +199,7 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         //    與 `sourceGrants()`，但沒進這個夾具，於是兩個方向的比對逐鍵指名它。
         //    ⛔ 正解就是補這一行，不是放寬斷言。
         vision: { stealthFadeDelaySec: 3, trueSightRadius: 24 },
+        drive: { accelSec: 0.3, brakeSec: 0.2, turnFactor: 0.2, sharpTurnDot: 0.5, sharpTurnSpeed: 0.3 },
         // ⭐ 2026-08-24 (GH#656)：選擇性狀態免疫是第十三格（殭屍王免 CC 但可被
         //    吸血/暴擊/淨化）。同上，這一行是維護點 —— 這條守衛照它自己的設計
         //    又紅了一次（lane C 落了格、夾具沒餵），⛔ 正解是補這一行不是放寬。
@@ -223,5 +225,10 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());
+  });
+  it("recognizes an evasion-scope-only source and preserves both explicit channel flags", () => {
+    const parsed = SOURCE_GRANT_SHAPE.evasionScope.parse({ abilities: true, trueDamage: false });
+    expect(hasSourceGrant({ evasionScope: parsed })).toBe(true);
+    expect(sourceGrants({ evasionScope: parsed })).toEqual({ evasionScope: { abilities: true, trueDamage: false } });
   });
 });

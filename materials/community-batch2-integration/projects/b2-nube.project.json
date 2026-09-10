@@ -1,0 +1,802 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-nube",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "鵺野鳴介",
+    "concept": "靈異教師神眉｜抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "班導還不能下班",
+      "Q": "鬼手抓回來點名",
+      "W": "老師先幫你擋著",
+      "E": "符咒貼上禁止聊天",
+      "R": "全班留下來補課",
+      "EX": "保健室先解除惡靈"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-nube.plan",
+    "title": "鵺野鳴介",
+    "summary": "靈異教師神眉｜抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "硬輔",
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937": {
+        "id": "tpl-apply-status",
+        "schema": "template@1",
+        "name": "只上狀態",
+        "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+        "family": "apply-status",
+        "status": "enabled",
+        "params": {
+          "status": {
+            "type": "applyStatus",
+            "default": {
+              "statusId": "root",
+              "duration": 1.5,
+              "root": true
+            },
+            "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+          },
+          "radius": {
+            "type": "number",
+            "default": 327,
+            "min": 50,
+            "max": 1500,
+            "unit": "wc3u",
+            "optional": true,
+            "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.833,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [
+          "applyStatus"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+          "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+        }
+      },
+      "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856": {
+        "id": "tpl-heal",
+        "schema": "template@1",
+        "name": "回血",
+        "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+        "family": "heal",
+        "status": "enabled",
+        "params": {
+          "target": {
+            "type": "enum",
+            "default": "ally",
+            "values": [
+              "self",
+              "ally"
+            ],
+            "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+          },
+          "amount": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                50,
+                85,
+                120,
+                155
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.465
+                }
+              ]
+            },
+            "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+          },
+          "applyTo": {
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ],
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.067,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "班導還不能下班",
+        "purpose": "「班導還不能下班！」\n友軍受到傷害後，自己回復最大魔力 6%，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-nube.passive.card1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAllyDamaged",
+                    "effects": [
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.06,
+                        "applyTo": "self"
+                      }
+                    ],
+                    "internalCooldown": 3,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "鬼手抓回來點名",
+        "purpose": "「鬼手抓回來點名！」\n對指定敵人造成極小傷害並向自己拉近 3 單位；這是既有 knockback 拉向模式，不是空中抓取。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-nube.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 3,
+                    "speed": 12,
+                    "from": "pull",
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "老師先幫你擋著",
+        "purpose": "「老師先幫你擋著！」\n指定友軍取得 210 點全傷害護盾 3 秒；確實放在該友軍身上。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-nube.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 210
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "符咒貼上禁止聊天",
+        "purpose": "「符咒貼上禁止聊天！」\n指定敵人施加 magic-break 與 silenced 旗標 2.5 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-nube.e.card1",
+            "template": {
+              "ref": "tpl-apply-status",
+              "params": {
+                "status": {
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "silenced": true
+                },
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 15,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "全班留下來補課",
+        "purpose": "「全班留下來補課！」\n對自身周圍半徑 2.5 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-nube.r.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "radius": 2.5,
+                    "includeOrigin": true,
+                    "amount": {
+                      "damageTier": "小"
+                    },
+                    "damageType": "magic",
+                    "maxTargets": 6,
+                    "onHitTargets": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "root",
+                        "duration": 1.5,
+                        "applyTo": "target",
+                        "root": true
+                      }
+                    ],
+                    "onHitTargetsMode": "perTarget"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "保健室先解除惡靈",
+        "purpose": "「保健室先解除惡靈！」\n治療指定友軍 120 生命並解除可驅散負面效果；不是對死亡單位復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-nube.ex.card1",
+            "template": {
+              "ref": "tpl-heal",
+              "params": {
+                "target": "ally",
+                "amount": {
+                  "flat": 120
+                },
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
+            }
+          },
+          {
+            "instanceId": "b2-nube.ex.card2",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "debuff",
+                    "pools": {
+                      "status": true,
+                      "dot": true,
+                      "buffs": true
+                    },
+                    "count": 3,
+                    "order": "newest"
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-nube.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-nube.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-nube.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-nube.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-nube.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-nube.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-nube.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-nube.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-nube.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-nube.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

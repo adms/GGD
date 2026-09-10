@@ -1,3 +1,6 @@
+import { expireMovedShields } from "./combat/movementShield";
+import { timeStopSystem, forgetTimeStopsFor, digestTimeStops } from "./timeStop";
+import { pauseTimeStopClocks } from "./timeStopClocks";
 import { digestCastCredits } from "./content/castLedger";
 /**
  * SimWorld — the deterministic authoritative world. A pure function of
@@ -140,6 +143,8 @@ import {
 } from "./systems/GuardianSystem";
 import { objectiveSystem, type ObjectiveRules } from "./systems/ObjectiveSystem";
 import { mobSystem } from "./systems/MobSystem";
+import { trapSystem } from "./traps";
+import { digestTraps } from "./trapState";
 import { summonSystem } from "./summons";
 import { championFormSystem } from "./systems/ChampionFormSystem";
 
@@ -314,6 +319,9 @@ export class SimWorld {
    * death. Deterministic (tick-stamped), transient, NOT part of the digest.
    */
   readonly recentDamagers = new Map<EntityId, Map<EntityId, number>>();
+  /** Latest hostile HP/shield impact, both participants. Bounded by live entities;
+   * read by nearbyCombat, cleared on fresh body/round/despawn and digested. */
+  readonly combatActivity = new Map<EntityId, number>();
 
   /** Multikill streak bookkeeping per killer (tick of last kill + streak len). */
   readonly killTracking = new Map<EntityId, { lastKillTick: number; streak: number }>();
@@ -1100,6 +1108,8 @@ export class SimWorld {
    * against its own cap and pays 20 gold per kill from that ledger. Putting
    * summons there would quietly rewrite the roguelike economy.
    */
+  readonly timeStop = new Map<EntityId, import("./timeStop").TimeStopField>();
+  readonly trap = new Map<EntityId, import("./trapState").TrapComp>();
   readonly summon = new Map<EntityId, import("./effects/summon").SummonComp>();
 
   /**
@@ -1500,6 +1510,8 @@ export class SimWorld {
   }
 
   destroy(id: EntityId): void {
+    forgetTimeStopsFor(this, id);
+    this.timeStop.delete(id);
     // #288 — CAPTURED BEFORE `this.champion.delete(id)` fifteen lines down. The
     // `bossDamage` sweep at the bottom needs to know whether this entity could
     // ever have appeared as a DAMAGER, and by the time it runs the component is
@@ -1583,6 +1595,7 @@ export class SimWorld {
     this.deathWard.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
+    this.combatActivity.delete(id);
     this.killTracking.delete(id);
     // 連殺 combo: a recycled entityId must never inherit a stale chain — the
     // same defensive contract every other per-entity store here follows.
@@ -1595,6 +1608,7 @@ export class SimWorld {
     // being true the moment P1/P2/P3 merge, at which point nobody would think
     // to come back and add three deletes here.
     this.dot.delete(id);
+    this.trap.delete(id);
     this.summon.delete(id);
     this.invulnerable.delete(id);
     // 隱形/真視: same defensive contract. A recycled entityId that inherited a
@@ -1650,6 +1664,7 @@ export class SimWorld {
       // Revive circles are GROUND AREA, not bodies: keeping them out of the
       // broad-phase is what makes them structurally untargetable (every
       // ability/projectile query walks this grid) and non-colliding.
+      if (this.timeStop.has(id)) continue;
       if (this.reviveCircle.has(id)) continue;
       // Dropped coins are LOOT lying on the floor, not bodies: out of the
       // broad-phase means structurally untargetable (every ability/projectile
@@ -1679,6 +1694,8 @@ export class SimWorld {
   step(intents: ReadonlyMap<SeatId, IntentFrame>): void {
     this.events.length = 0;
     this.rebuildGrid();
+    timeStopSystem(this);
+    pauseTimeStopClocks(this);
 
     // FIXED system order — the client prediction replays this exact order.
     championFormSystem(this); //  0a. 變身 (task #249): expire timed forms and
@@ -1796,6 +1813,7 @@ export class SimWorld {
     //                               揮出來的傷害要在**同一 tick** 被減傷、記分、
     //                               結算，否則整招晚一個 tick 而畫面上看不出來。
     //                             佇列空的時候是 STRICT no-op（effects/dashOnEnd.ts）。
+    trapSystem(this);
     basicAttackSystem(this); // 6. autos on attack targets in range
     toggleUpkeepSystem(this); // 6a. 【切換】維持成本 + MP 不足自動關閉
     //                             (`abilities/toggle.ts`). 20-01 風王結界
@@ -1828,6 +1846,7 @@ export class SimWorld {
     //                             the SAME tick it came due. Queued after the
     //                             drain it would land one tick late, every tick,
     //                             for the whole burn. See effects/dotTick.ts.
+    expireMovedShields(this); // Actual movement ends only opted-in stationary shields.
     intervalHookSystem(this); // 7d. 週期觸發 (`onInterval` hooks): 43-00 觀音大士
     //                             每 10 秒的護盾、03-00 相轉移裝甲的常駐魔免、
     //                             52-00 十二道試煉每秒的生命流失。
@@ -1867,6 +1886,7 @@ export class SimWorld {
     //                             (no-op unless armed + combatActive); runs BEFORE
     //                             deathSystem so its kills resolve THIS tick (#132)
     deathSystem(this); // 9. deaths, kill credit, xp/gold
+    timeStopSystem(this); // Discard a dead owner's queued hits before any same-tick revival.
     flowerSystem(this); //   9b. flower burst on death + spawn cadence (no-op unless armed)
     reviveSystem(this); //   9c. revive circles: drop on death, channel, revive/expire
     //                             (no-op unless armed; consumes this tick's deaths)
@@ -1954,6 +1974,7 @@ export class SimWorld {
     //                             the same shape stealthSystem/flightSystem
     //                             already pay (sim/stats/resourceStats.ts ②).
     statRecomputeSystem(this); // 11. late recompute for same-tick attaches
+    expireMovedShields(this); // Also capture late hook teleports before snapshots.
     accumulateTimeAlive(this); // 12. match-stat time-alive (combat-gated)
 
     this.tick++;
@@ -1996,6 +2017,15 @@ export class SimWorld {
       if (hp) {
         mix(hp.hp);
         mix(hp.mana);
+        for (const shield of hp.shields) {
+          if (shield.moveBreakAnchor && shield.expiresAtTick > this.tick) {
+            const a = shield.moveBreakAnchor; mix(4003); mix(a.x); mix(a.z); mix(a.y); mix(a.zone);
+            mix(shield.amount); mix(shield.expiresAtTick);
+          }
+          if (!shield.credits?.length || shield.expiresAtTick <= this.tick) continue;
+          mix(shield.expiresAtTick);
+          for (const credit of shield.credits) { mix(credit.source ?? -1); mix(credit.amount); }
+        }
       }
       // combat-juice freeze state is part of world state (a desync in either
       // shows up here as well as in the positions it gates)
@@ -2008,12 +2038,41 @@ export class SimWorld {
       // divergence three ticks later. 0 when free, which is the overwhelmingly
       // common case, so a pre-feature world hashes identically.
       mix(this.abilities.get(id)?.recovery?.ticksLeft ?? 0);
+      const recastAbilities = this.abilities.get(id);
+      if (recastAbilities) {
+        for (const [i, inst] of [...Object.values(recastAbilities.slots), recastAbilities.exSlot, recastAbilities.passiveSlot].entries()) {
+          if (!inst?.recast) continue;
+          mix(4010); mix(i); mix(inst.recast.rank); mix(inst.recast.nextStage);
+          mix(inst.recast.readyAt); mix(inst.recast.expiresAt); mix(inst.cooldownRemainingTicks);
+          for (const c of inst.recast.abilityId) mix(c.charCodeAt(0));
+        }
+      }
+      const sensitiveCast = this.abilities.get(id)?.cast;
+      if (sensitiveCast?.recastStage !== undefined) { mix(4011); mix(sensitiveCast.recastStage); }
+      if (sensitiveCast?.posAtStart) {
+        mix(4001); mix(id); mix(sensitiveCast.ticksLeft);
+        mix(sensitiveCast.posAtStart.x); mix(sensitiveCast.posAtStart.z);
+        mix(sensitiveCast.hitSinceStart ? 1 : 0);
+      }
       for (const s of this.status.get(id)?.effects ?? []) {
         if (s.applierId !== undefined && s.expiresAtTick > this.tick) {
           mixOwned(id, 1, s.applierId, s.sourceId, s.statusId, s.expiresAtTick, s.stacks);
         }
       }
       for (const s of this.stats.get(id)?.sources ?? []) {
+        s.hookStillness?.forEach((sample, hi) => {
+          if (!sample) return;
+          mix(4002); mix(id); for (const c of s.id) mix(c.charCodeAt(0)); mix(hi);
+          mix(sample.x); mix(sample.z); mix(sample.y); mix(sample.zone); mix(sample.tick); mix(sample.since); mix(sample.round);
+        });
+        if (s.drive && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
+          mix(id); for (const c of s.id) mix(c.charCodeAt(0));
+          mix(s.expiresAtTick ?? -1); mix(s.drive.accelSec); mix(s.drive.brakeSec);
+          mix(s.drive.turnFactor); mix(s.drive.sharpTurnDot); mix(s.drive.sharpTurnSpeed);
+        }
+        if (s.vision?.revealed === true && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
+          mixOwned(id, 3, s.applierId ?? id, s.id, "revealed", s.expiresAtTick, s.stacks);
+        }
         if (s.applierId !== undefined && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
           mixOwned(id, 2, s.applierId, s.id, s.statusId ?? "", s.expiresAtTick, s.stacks);
         }
@@ -2028,6 +2087,17 @@ export class SimWorld {
       // pre-feature world and break the #191 disarmed-golden canary for no
       // information gain. `id` is re-mixed alongside so "entity 7 targets 9"
       // can never collide with "entity 9 targets 7".
+      const motionNav = this.nav.get(id), drive = motionNav?.drive;
+      if (drive) {
+        mix(id); for (const c of drive.sourceId + drive.phase) mix(c.charCodeAt(0));
+        mix(drive.zone); mix(drive.rate); mix(drive.dir.x); mix(drive.dir.z);
+      }
+      const motionOv = motionNav?.override;
+      if (motionOv && motionOv.kind !== "leap" && motionOv.grapple) {
+        const g = motionOv.grapple;
+        mix(id); mix(g.caster); mix(g.target ?? -1); mix(g.zone); mix(g.range); mix(g.stopDistance);
+        mix(g.anchor.x); mix(g.anchor.z); mix(motionOv.remaining); mix(motionOv.speed);
+      }
       const at = this.nav.get(id)?.attackTarget;
       if (at !== null && at !== undefined) {
         mix(id);
@@ -2092,6 +2162,9 @@ export class SimWorld {
           const st = bag.get(markId)!;
           mix(st.count);
           mix(st.spent);
+          if (st.lethal?.maxSavesPerRound !== undefined) {
+            mix(st.savesThisRound ?? 0); mix(st.expiresAtTick); mix(st.lastSavedTick ?? -1);
+          }
         }
       }
       // GH#289 reserved stores. Folded in NOW, before their lanes land, so that
@@ -2131,6 +2204,7 @@ export class SimWorld {
       if (sm) {
         mix(id);
         mix(sm.ownerId);
+        if (sm.slot) { mix(0x534c4f54); for (let i = 0; i < sm.slot.length; i++) mix(sm.slot.charCodeAt(i)); }
         // A permanent summon stores +Infinity, which `Math.round(n * 4096)`
         // turns into NaN and the bit ops then into 0 — deterministic, but it
         // would collide with tick 0. Hash the PERMANENCE as its own -1 marker.
@@ -2312,6 +2386,11 @@ export class SimWorld {
         mix(byAttacker.get(attacker)!);
       }
     }
+    for (const id of [...this.combatActivity.keys()].sort((a, b) => a - b)) {
+      mix(id); mix(this.combatActivity.get(id)!);
+    }
+    digestTimeStops(this, mix);
+    digestTraps(this, mix);
     digestCastCredits(this, mix);
     mix(this.rng.state);
     mix(this.tick);

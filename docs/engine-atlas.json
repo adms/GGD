@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "daccedce",
+  "capabilityFingerprint": "abedce92",
   "counts": {
-    "effectKinds": 49,
-    "hookEvents": 33,
-    "conditionLeafKinds": 10,
+    "effectKinds": 52,
+    "hookEvents": 38,
+    "conditionLeafKinds": 11,
     "templateFamilies": 47,
-    "effectFields": 274,
+    "effectFields": 291,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -462,6 +462,7 @@
     "時間": [
       "addSec",
       "amountPerTick",
+      "armDelaySec",
       "delaySec",
       "duration",
       "durationSec",
@@ -478,6 +479,7 @@
     ],
     "疊層與標記": [
       "exclusiveOnExisting",
+      "grantMark",
       "markStatusId",
       "maxStacks",
       "onExisting",
@@ -515,6 +517,7 @@
       "grantGold",
       "grantXp",
       "heal",
+      "interruptCast",
       "invulnerable",
       "knockback",
       "leap",
@@ -537,6 +540,8 @@
       "summon",
       "swapResource",
       "taunt",
+      "timeStop",
+      "trap",
       "weightedBranch"
     ],
     "hookEvents": [
@@ -544,7 +549,10 @@
       "onAbilityHit",
       "onAllyDamaged",
       "onAllyDeath",
+      "onAllyProtected",
+      "onAttackAttempt",
       "onBasicAttack",
+      "onBlock",
       "onBossSpawn",
       "onBoundaryTouch",
       "onCrowdControlApplied",
@@ -560,6 +568,7 @@
       "onInterval",
       "onKill",
       "onLethalDamage",
+      "onObservedCombat",
       "onOverheal",
       "onProjectileExpire",
       "onReflectSuccess",
@@ -571,6 +580,7 @@
       "onStatCapReached",
       "onStatusApplied",
       "onStunned",
+      "onSummonHit",
       "onUltimateCast",
       "onUltimateHit"
     ],
@@ -582,6 +592,7 @@
       "form",
       "kind",
       "learned",
+      "nearbyCombat",
       "recentCast",
       "stat",
       "status"

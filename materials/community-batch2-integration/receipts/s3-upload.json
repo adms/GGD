@@ -1,0 +1,44 @@
+{
+  "schema": "ggd-community-materials-s3-receipt@1",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "manifestSha256": "c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565",
+  "prefix": "community-hero-forge/c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565/",
+  "objects": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "f871d0267eead4d309a222db04ed54a866cdbb68bdfadff3c060d403eeb5a16a",
+      "key": "community-hero-forge/c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565/payload.tar.gz.part000",
+      "etag": "\"aafa2772359e7df0cce2e9f41a4e3b66\"",
+      "checksumSHA256": "+HHQJn7q1NMJoiLbBO1UqGbNu2i9+t/zwGDUA+61oWo="
+    },
+    {
+      "path": "payload.tar.gz.part001",
+      "bytes": 33554432,
+      "sha256": "dd51bcacfcca958b7269edafc5376ba166c7c2fd589dbde1634f101744e46909",
+      "key": "community-hero-forge/c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565/payload.tar.gz.part001",
+      "etag": "\"787d9b3ecd911fbe9d1fd8cf752911fd\"",
+      "checksumSHA256": "3VG8rPzKlYtyae2vxTdroWbHwv1Ynb3hY08QF0TkaQk="
+    },
+    {
+      "path": "payload.tar.gz.part002",
+      "bytes": 9046211,
+      "sha256": "e007539ae25fdbcc121890d728091094f3156adf3e24851ca2dd34fc6dbebe38",
+      "key": "community-hero-forge/c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565/payload.tar.gz.part002",
+      "etag": "\"01941b00faae9b1ffd7ab775ff01524c\"",
+      "checksumSHA256": "4AdTmuJf28wSGJDXKAkQlPMVat8+JIUcot00/G2+vjg="
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 8052,
+      "sha256": "c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565",
+      "key": "community-hero-forge/c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565/manifest.json",
+      "etag": "\"44c43effb8496e180a17bac92f4679d1\"",
+      "checksumSHA256": "xhwHGU1tC9hSfllBbz863UxeLs/PCJuPrePjxdWARWU="
+    }
+  ],
+  "parts": 3,
+  "partBytes": 76155075
+}

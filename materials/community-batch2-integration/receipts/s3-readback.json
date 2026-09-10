@@ -1,0 +1,192 @@
+{
+  "schema": "ggd-batch-resource-readback@1",
+  "manifestSha256": "c61c07194d6d0bd8527e59416f3f3add4c5e2ecfcf089b8fade3e3c5d5804565",
+  "verifiedFiles": 37,
+  "files": [
+    {
+      "path": "ggd-batch2-service-01/b2-aladdin.zip",
+      "sha256": "b865b206b2b4c49ccbc39ddea614b2e5d740f6a476e0a05b0e254ff8c3379aa7",
+      "bytes": 3059893
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-albus.zip",
+      "sha256": "27815f0cdee1573335b8fd630a22b1e6848aa670ac8458a9c9a89d8272bf521a",
+      "bytes": 3008278
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-bojji.zip",
+      "sha256": "ed20520b0473ec1d5ab97f0a99c3b7e2fb619ac5a379ff1493156b30d1dd29db",
+      "bytes": 2997327
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-boxxo.zip",
+      "sha256": "12250c0b9c50d37f01041e65032ad0a758a152279c2519449aa7c921576f0b0f",
+      "bytes": 2980736
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-elma.zip",
+      "sha256": "a000d81e9135e94202e8f1f6bda46ecbe91269ac79636e41c0bc0a980757efb4",
+      "bytes": 2958017
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-fushi.zip",
+      "sha256": "3a5526bbcb44160f559cc123732f81db0255cc7d808b0fca8331ae944909ccb3",
+      "bytes": 2967176
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-goblin.zip",
+      "sha256": "065c875a7dafec1f2f8ad9c58005d38f2c5cf6c9bed5b059217314d591a97e17",
+      "bytes": 2954116
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-guts.zip",
+      "sha256": "c3d9695a347fb66e5e26d6d72498977e3373679ec4ce7d1ec7b5c81f310b8cc1",
+      "bytes": 3064097
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-haga.zip",
+      "sha256": "8a9b5c2f74d13ec2a94970f9c5721382dc61e8dc16603116519810a5b4ed5d34",
+      "bytes": 2919733
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-kaede.zip",
+      "sha256": "843eaa9e648d71709b7c079724a4eab79240fa2fae498902e88c30877b69fed4",
+      "bytes": 3037007
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-kaiji.zip",
+      "sha256": "3a70f422200e0bd207fe5965be2068cd2695dc75e159cba4fdfbb14542a937c9",
+      "bytes": 2927085
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-keyaru.zip",
+      "sha256": "a89202e6187a70eb510b61571458a04945045aa6d87911aaefc5ac0c6f1ce969",
+      "bytes": 2931094
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-kisaragi.zip",
+      "sha256": "07b69af98ec57ed3faa997e6e01a46099d34e5a0edc62ef99e70f6086747b8d7",
+      "bytes": 3002167
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-klaus.zip",
+      "sha256": "2287df9f506a8420cc447913d33b61b90ea67a43225f75945bff52205b750bbf",
+      "bytes": 3068642
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-kumoko.zip",
+      "sha256": "44b6d95d857fb72ee8d5b4640ea32fbd145609794a1c28141f8864815a29111c",
+      "bytes": 2988119
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-luckyman.zip",
+      "sha256": "2916e91b79ff631ea84bd2bbb1addb7787d830601a2ac2f516d65c7ac6d0246b",
+      "bytes": 2989095
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-makoto.zip",
+      "sha256": "972e3a7b97fe357053812d2877949b78b616bbaec1547e536bbda9200f18e7f2",
+      "bytes": 3014937
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-maomao.zip",
+      "sha256": "36becca754eb8f03b7de281bfde5e3eea6dbac317f806e57ea5a0288bb08461a",
+      "bytes": 2937195
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-maple.zip",
+      "sha256": "f04c2a05c550dba28219be8a7d7ffd0eff7b041cf2651f023a68cd65119c7846",
+      "bytes": 2948487
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-matthias.zip",
+      "sha256": "57b74fb795d2e288664896d992e865f467909191dc42fbca906968bc54e87f5e",
+      "bytes": 2940234
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-misery.zip",
+      "sha256": "fe343ae4bee57e6bd128038d174cc0936b0d36413c6a405fd746c8cdddc6f0ba",
+      "bytes": 2963173
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-naofumi.zip",
+      "sha256": "37f46bd159f4aaecf2c0f2f92acaaec71eb500840af6d8452bbd9211ee829433",
+      "bytes": 2916820
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-ned.zip",
+      "sha256": "37aa2e0a3572fb27c799019100ca2b3e2b64d1add0d4ea52f05e257d408af20e",
+      "bytes": 3100766
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-noor.zip",
+      "sha256": "29326c594e2a6fd12227e74a91ba7ea154462a779b0f8f641ada57ebe4dbf335",
+      "bytes": 2953542
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-nube.zip",
+      "sha256": "2954ca10c72aa9b0dc0c38ffee623a91ab12d0da502904f67807417086387997",
+      "bytes": 2933047
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-orphen.zip",
+      "sha256": "ebfb6dc0dd1cdf4f2df489b1c5f2e5f3516576c414455fbf046cf2e38a5b6cee",
+      "bytes": 3083170
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-popp.zip",
+      "sha256": "6f3dd0b48cde38f3b68595edf30dce4920cffed281b3c0a2d42d3ed1762dfcbe",
+      "bytes": 3112537
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-rem.zip",
+      "sha256": "c4386b3446e95e99730b808edb3cf02e3622fc7b1f9e4e7548bb334a947059e0",
+      "bytes": 3087178
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-rin.zip",
+      "sha256": "8d3fbbae854252a6e1c8afe56b1c34052696d794164689f4684810f418f4b63a",
+      "bytes": 3051191
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-shadow.zip",
+      "sha256": "78fd247f089588b414b29214636f561dc1f265e1ce45f2636193b50346220984",
+      "bytes": 3054822
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-shinchan.zip",
+      "sha256": "2adf8762b96f45af50285660388dce728739b7b213dd784e32ca8e927ee769d2",
+      "bytes": 2977851
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-sinbad.zip",
+      "sha256": "76b025d4583d0b5be49305c1b692027a2ed1c57fd3253c38e7749b21084e8518",
+      "bytes": 3070972
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-takopi.zip",
+      "sha256": "553453ec0a40cd46f8cae66fb32b9f51615b9242d06e67a9c0b7fc416257853f",
+      "bytes": 2978192
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-touka.zip",
+      "sha256": "f8020bd64722af72a5a643801b732545aee3e1d9175c61ad68540e3abfc0f7e9",
+      "bytes": 3029484
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-uncle.zip",
+      "sha256": "264067f55e228fb7657f09eb0dcd4443c8a96e829c619605d71639a1a7e481c8",
+      "bytes": 3019140
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-yogiri.zip",
+      "sha256": "7c69b6e9487e1f19e8d48fa76b6cec83ab5e18c2d89c530b2bfbf2d5da6c9f54",
+      "bytes": 2970947
+    },
+    {
+      "path": "ggd-batch2-service-01/b2-zenitsu.zip",
+      "sha256": "24772f0ae6979b222feaceb5bf3947f17cf5b67f09a11b4105743209de8f8eb0",
+      "bytes": 3009839
+    }
+  ]
+}

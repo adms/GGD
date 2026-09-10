@@ -1,0 +1,226 @@
+[
+  {
+    "command": "pnpm jasstpl:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm caps:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm collections:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm skillremake:docs:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm skillremake:json:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm skillremake:provenance:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm grail:wishes:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm contract:numbers:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm atlas:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm treasure:csv:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm docs:readme:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm docs:status:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm roster:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm pitch:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm newhero:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm lowdmg:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm anchors:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm statcaps:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm apconv:plan:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm apconv:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm apdmg:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm board:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm msgledger:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm skillnorm:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm speedtiers:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm jasscombo:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm vfxbind:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm models:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm lod:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm audit:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm echoloop:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm templates:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm prose:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm sfxbind:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm shapes:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm iconplan:check",
+    "exitCode": 1
+  },
+  {
+    "command": "pnpm formreceipts:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm beam:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm archetypes:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm enableaudit:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm review:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm declshape:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm decor:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm speedlists:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm locust:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm w3a:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm board:roll:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm ruleslip:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm receipt:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm handback:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm clipdeg:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm apcoeffdiff:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm decor:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm appearance:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm ptokens:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm coord:check",
+    "exitCode": 0
+  }
+]

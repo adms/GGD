@@ -1,0 +1,18 @@
+🔓 隔離區:解鎖 456 份（追蹤 861,缺 0）
+✓ 2026-09-09：17 則訊息,補了 3 列（其餘已經有列）
+⚠️ 新列的票號是**推出來**的;推不出來的是 `⏸ 未對票` —— 去填掉,⛔ 留著 `pnpm msgledger:check` 會紅
+  ⏭ GGD_LEDGER_NO_REGEN=1 ⇒ 沒有重生成 board（收工記得 `bash scripts/genrun.sh board:roll` ＋ `board:build`）
+✓ 2026-09-10：0 則訊息,補了 0 列（其餘已經有列）
+  ✓ docs/_daily/2026-09-09.md 03:21 → `1129`（1 列）
+  ⏭ GGD_LEDGER_NO_REGEN=1 ⇒ 沒有重生成 board（收工記得 `bash scripts/genrun.sh board:roll` ＋ `board:build`）
+  ✓ docs/_daily/2026-09-09.md 17:00 → `1159`（1 列）
+  ⏭ GGD_LEDGER_NO_REGEN=1 ⇒ 沒有重生成 board（收工記得 `bash scripts/genrun.sh board:roll` ＋ `board:build`）
+  ✓ docs/_daily/2026-09-09.md 21:14 → `— 既有公告補發成果回報，未新增工作`（1 列）
+  ⏭ GGD_LEDGER_NO_REGEN=1 ⇒ 沒有重生成 board（收工記得 `bash scripts/genrun.sh board:roll` ＋ `board:build`）
+  ✓ docs/_daily/2026-09-09.md 21:15 → `1159`（1 列）
+  ⏭ GGD_LEDGER_NO_REGEN=1 ⇒ 沒有重生成 board（收工記得 `bash scripts/genrun.sh board:roll` ＋ `board:build`）
+  ✓ docs/_daily/2026-09-09.md 23:53 → `1147 1150 1151`（1 列）
+  ⏭ GGD_LEDGER_NO_REGEN=1 ⇒ 沒有重生成 board（收工記得 `bash scripts/genrun.sh board:roll` ＋ `board:build`）
+🔒 隔離區:上鎖 456 份（追蹤 861,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+  ✓ 重生成 board:roll（帳本是它的輸入）
+  ✓ 重生成 board:build（帳本是它的輸入）

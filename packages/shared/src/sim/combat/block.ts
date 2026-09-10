@@ -1,3 +1,4 @@
+import { evaluateCondition } from "../content/condition";
 /**
  * ═══════════════════════════════════════════════════════════════════════════
  *  格擋 — ONE source-carried gate for four items that promise three mechanics
@@ -217,6 +218,8 @@ export type BlockLethalBasis = "hp" | "hpAndShields";
  * 擋下,不是在下游被靜默夾掉)。
  */
 export interface BlockGrant {
+  /** Optional frontal arc. Missing attacker or unusable facing fails closed. */
+  facingArcDegrees?: number;
   /**
    * 這個格擋對哪些傷害型別生效。**必填、明列**,`[]` 不合法。
    *
@@ -352,6 +355,8 @@ function emitBlockVfx(world: SimWorld, target: EntityId, b: BlockGrant): void {
   });
 }
 
+export interface SuccessfulBlock { sourceId: string; amount: number }
+
 export function blockCutFor(
   world: SimWorld,
   target: EntityId,
@@ -359,14 +364,16 @@ export function blockCutFor(
   impact: number,
   currentHp: number,
   eligibleShield: number,
+  successful?: SuccessfulBlock[],
+  attacker?: EntityId,
 ): number {
   if (!(impact > 0)) return 0;
   const sc = world.stats.get(target);
   if (!sc) return 0; // 建築/花/投射物沒有 StatsComp —— 依構造沒有格擋
   const stacking: BlockStacking = world.blockRules.stacking;
   return stacking === "best"
-    ? bestBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield)
-    : chainBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield);
+    ? bestBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield, successful, attacker)
+    : chainBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield, successful, attacker);
 }
 
 /**
@@ -383,6 +390,8 @@ function chainBlockCut(
   impact: number,
   currentHp: number,
   eligibleShield: number,
+  successful?: SuccessfulBlock[],
+  attacker?: EntityId,
 ): number {
   let remaining = impact;
   for (const src of sources) {
@@ -390,6 +399,7 @@ function chainBlockCut(
     if (b === undefined) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     if (!b.damageTypes.includes(type)) continue;
+    if (b.facingArcDegrees !== undefined && (attacker === undefined || !evaluateCondition(world, { kind: "facing", subject: "self", arcDegrees: b.facingArcDegrees }, { self: target, target: attacker }))) continue;
     // ⭐ GH#650 —— 系統倍率（`config.block@1.chanceMult`，出貨 1.0 ＝ 逐位元不變）。
     //   ⚠️ ⭐ 乘在 **clamp 之前**是承重的：先夾再乘會讓一格 0.6 的機率
     //   乘 2 之後變成 1.2 而 `blockOnCooldown` 之後的 `rng.chance(1.2)` 恆真 ——
@@ -412,7 +422,9 @@ function chainBlockCut(
     if (!world.rng.chance(chance)) continue; // 抽輸不重置冷卻
     src.blockLastFired = world.tick; // 只有真的擋中才記時間,而且是絕對 tick
     emitBlockVfx(world, target, b); // ⭐ GH#650 —— 擋中的那一瞬間
-    remaining -= remaining * fraction;
+    const cut = remaining * fraction;
+    successful?.push({ sourceId: src.id, amount: cut });
+    remaining -= cut;
     // 整發都被擋光了,鏈就到此為止 —— 沒有「剩餘」可以繼續算,而讓後面的來源
     // 對 0 傷害抽籤只會白燒它們的冷卻與一次 draw。
     if (!(remaining > 0)) return impact;
@@ -437,6 +449,8 @@ function bestBlockCut(
   impact: number,
   currentHp: number,
   eligibleShield: number,
+  successful?: SuccessfulBlock[],
+  attacker?: EntityId,
 ): number {
   let bestChance = 0;
   let bestFraction = 0;
@@ -447,6 +461,7 @@ function bestBlockCut(
     if (b === undefined) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     if (!b.damageTypes.includes(type)) continue;
+    if (b.facingArcDegrees !== undefined && (attacker === undefined || !evaluateCondition(world, { kind: "facing", subject: "self", arcDegrees: b.facingArcDegrees }, { self: target, target: attacker }))) continue;
     if (b.lethalOnly === true) {
       const pool =
         (b.lethalBasis ?? "hpAndShields") === "hp" ? currentHp : currentHp + eligibleShield;
@@ -476,5 +491,7 @@ function bestBlockCut(
   // product can never exceed `impact` and there is deliberately NO second clamp
   // here — see the note on `clamp01` for the mutation run that proved one was
   // dead code.
-  return impact * bestFraction;
+  const cut = impact * bestFraction;
+  successful?.push({ sourceId: winner.id, amount: cut });
+  return cut;
 }

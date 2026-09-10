@@ -1,0 +1,13 @@
+🔓 隔離區:解鎖 459 份（追蹤 864,缺 0）
+
+> ggd@0.0.0 board:roll /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh board:roll board:roll:raw
+
+
+> ggd@0.0.0 board:roll:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/board-roll.sh
+
+🔗 固定入口：GGD戰情版.md → docs/_release/戰情版-20260910.md
+✓ 七天窗已是最新：2026-09-04 → 2026-09-10 · 256 則
+🔒 隔離區:上鎖 459 份（追蹤 864,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: board:roll 完成（產物已重新上鎖）

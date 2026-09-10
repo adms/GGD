@@ -1,0 +1,41 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/packages/shared
+
+ ✓ src/content/championIdentity.test.ts (14 tests) 104ms
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/tools/asset-manifest/gen.ts:148
+      throw new Error(
+            ^
+
+Error: ⛔ assets-offdisk.json 的 "assets/models/community/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.glb" **自我矛盾**：檔名說 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa，欄位說 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb。
+   ⭐ 內容定址的路徑，檔名就是它的 sha —— 兩者不合表示這份宣告是編的。
+    at loadOffDisk (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/tools/asset-manifest/gen.ts:148:13)
+    at build (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/tools/asset-manifest/gen.ts:183:19)
+    at missing (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/tools/asset-manifest/gen.ts:240:31)
+    at Object.<anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/tools/asset-manifest/gen.ts:263:1)
+    at Module._compile (node:internal/modules/cjs/loader:1829:14)
+    at Object.transformer (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/register-BoI6-WNn.cjs:9:3252)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:327:3)
+
+Node.js v25.9.0
+ ✓ src/ops/playerNoteNoRepeat.test.ts (3 tests) 2529ms
+   ✓ 同一句玩家公告⛔不發第二次（2026-09-09 量到，同一天兩次） > ① 帳本上沒有 ⇒ ⭐ 照常發 1020ms
+   ✓ 同一句玩家公告⛔不發第二次（2026-09-09 量到，同一天兩次） > ② 帳本上已經有 ⇒ ⛔ 不重複發，⭐ 但要說出來 757ms
+   ✓ 同一句玩家公告⛔不發第二次（2026-09-09 量到，同一天兩次） > ③ 而它仍然發得出**這一版的**維護句（⭐ 證明②不是把公告整個關掉） 751ms
+ ✓ src/content/shippedIconsAreCurrentStyle.test.ts (2 tests) 151ms
+ ✓ src/ops/announceLedgerUpdatesOnForce.test.ts (3 tests) 181ms
+⛔ 1 個被引用的資產**不存在**：
+  assets/models/community/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.glb
+ ✓ src/content/assetsOffDiskDeclaration.test.ts (4 tests) 5145ms
+   ✓ 不在 git 裡的資產：宣告驗得起來（owner 2026-09-08 「不要進 git 但存 S3」） > ② 自我矛盾的宣告 ⇒ ⛔ 當場擋下並指名那一筆 1614ms
+   ✓ 不在 git 裡的資產：宣告驗得起來（owner 2026-09-08 「不要進 git 但存 S3」） > ③ 換成**空**宣告 ⇒ main 仍然綠（⭐ 證明①不是靠這份宣告撐著） 1995ms
+   ✓ 不在 git 裡的資產：宣告驗得起來（owner 2026-09-08 「不要進 git 但存 S3」） > ④ **沒有宣告**的缺席資產 ⇒ ⛔ 仍然 fail-loud 並指名它 1532ms
+ ✓ src/ops/batch2BoundaryMatrix.test.ts (4 tests) 39ms
+
+ Test Files  6 passed (6)
+      Tests  30 passed (30)
+   Start at  20:18:49
+   Duration  7.06s (transform 374ms, setup 0ms, collect 558ms, tests 8.15s, environment 1ms, prepare 475ms)
+

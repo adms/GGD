@@ -141,7 +141,7 @@ export function moveWithCollision(
   const slide = slideVelocity(delta, n);
   if (lenSq(slide) <= 1e-12) return; // dead-on: no tangential component to keep
   body.pos = { x: start.x + slide.x, z: start.z + slide.z };
-  relax(body, zone);
+  relax(body, zone, obstacles);
 }
 
 /**

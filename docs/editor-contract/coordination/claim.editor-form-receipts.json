@@ -5,12 +5,12 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
-  "contractFingerprint": "9f3ab477601fa13e",
-  "title": "Editor 175 顆積木的 React 操作與回讀：170 通過、5 不可用",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "Editor 184 顆積木的 React 操作與回讀：179 通過、5 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，175 顆積木中 170 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，184 顆積木中 179 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,30 +26,30 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "6b55e5354fe728fd64d6dcfc8255ce69903b10660d0db1953c51474dc0d29db3",
-    "capabilityFingerprint": "daccedce",
+    "brickInputSha256": "07b16994cf4970309245c5fc87c7cafdcef4874767dedf69f13c7b5224889dd0",
+    "capabilityFingerprint": "abedce92",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "9f3ab477601fa13ef95c4a4cd5136c2461faa27d77942a49490bf8d08fdbbcff"
+    "typeCatalogSha256": "e2850e24ab2e78a19a3bd41b75b0ae087d210fe98385fa0faacc3d0b046120f5"
   },
   "summary": {
-    "total": 175,
-    "renderable": 170,
+    "total": 184,
+    "renderable": 179,
     "missing": 5,
-    "parameterEdited": 106,
+    "parameterEdited": 109,
     "byLayer": {
       "effect": {
-        "total": 49,
-        "renderable": 49,
+        "total": 52,
+        "renderable": 52,
         "missing": 0
       },
       "hook": {
-        "total": 33,
-        "renderable": 33,
+        "total": 38,
+        "renderable": 38,
         "missing": 0
       },
       "leaf": {
-        "total": 10,
-        "renderable": 10,
+        "total": 11,
+        "renderable": 11,
         "missing": 0
       },
       "model-preset": {
@@ -139,8 +139,18 @@
           "optional": true
         },
         {
+          "name": "drive",
+          "type": "object",
+          "optional": true
+        },
+        {
           "name": "duration",
           "type": "number",
+          "optional": true
+        },
+        {
+          "name": "evasionScope",
+          "type": "object",
           "optional": true
         },
         {
@@ -276,7 +286,7 @@
       "surface": "ability.effects[].kind=applyBuff",
       "renderable": true,
       "reason": null,
-      "controlCount": 88,
+      "controlCount": 103,
       "editedPath": "value.duration",
       "parameterEdited": true,
       "roundTrip": true,
@@ -342,6 +352,11 @@
         {
           "name": "forceClip",
           "type": "string",
+          "optional": true
+        },
+        {
+          "name": "grantMark",
+          "type": "object",
           "optional": true
         },
         {
@@ -424,8 +439,8 @@
       "surface": "ability.effects[].kind=applyStatus",
       "renderable": true,
       "reason": null,
-      "controlCount": 33,
-      "editedPath": "value.clipTimeScale",
+      "controlCount": 47,
+      "editedPath": "value.grantMark.max",
       "parameterEdited": true,
       "roundTrip": true,
       "browserVerified": false
@@ -723,6 +738,11 @@
           "optional": true
         },
         {
+          "name": "retargetOnLost",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "revisit",
           "type": "boolean",
           "optional": true
@@ -749,7 +769,7 @@
       "surface": "ability.effects[].kind=chainLightning",
       "renderable": true,
       "reason": null,
-      "controlCount": 28,
+      "controlCount": 29,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -1227,6 +1247,11 @@
           "type": "object"
         },
         {
+          "name": "arcHalfAngleCos",
+          "type": "number",
+          "optional": true
+        },
+        {
           "name": "canCrit",
           "type": "boolean",
           "optional": true
@@ -1249,6 +1274,11 @@
         {
           "name": "falloff",
           "type": "number",
+          "optional": true
+        },
+        {
+          "name": "fromCaster",
+          "type": "boolean",
           "optional": true
         },
         {
@@ -1325,7 +1355,7 @@
       "surface": "ability.effects[].kind=damageArea",
       "renderable": true,
       "reason": null,
-      "controlCount": 23,
+      "controlCount": 26,
       "editedPath": "value.amount.flat",
       "parameterEdited": true,
       "roundTrip": true,
@@ -1371,6 +1401,19 @@
         {
           "name": "fromCaster",
           "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "fromSummonSlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
           "optional": true
         },
         {
@@ -1438,7 +1481,7 @@
       "surface": "ability.effects[].kind=damageLine",
       "renderable": true,
       "reason": null,
-      "controlCount": 24,
+      "controlCount": 25,
       "editedPath": "value.amount.flat",
       "parameterEdited": true,
       "roundTrip": true,
@@ -1488,7 +1531,8 @@
           "type": "enum",
           "values": [
             "always",
-            "completed"
+            "completed",
+            "resolved"
           ],
           "optional": true
         },
@@ -1498,8 +1542,36 @@
           "optional": true
         },
         {
+          "name": "onHit",
+          "type": "array",
+          "optional": true
+        },
+        {
+          "name": "onTouch",
+          "type": "array",
+          "optional": true
+        },
+        {
           "name": "speed",
           "type": "number"
+        },
+        {
+          "name": "stopOnHit",
+          "type": "enum",
+          "values": [
+            "enemy",
+            "enemyChampion"
+          ],
+          "optional": true
+        },
+        {
+          "name": "touchScope",
+          "type": "enum",
+          "values": [
+            "enemy",
+            "enemyChampion"
+          ],
+          "optional": true
         }
       ],
       "adminForm": true,
@@ -1510,7 +1582,7 @@
       "surface": "ability.effects[].kind=dash",
       "renderable": true,
       "reason": null,
-      "controlCount": 9,
+      "controlCount": 11,
       "editedPath": "value.speed",
       "parameterEdited": true,
       "roundTrip": true,
@@ -1824,6 +1896,11 @@
             "enemies"
           ],
           "optional": true
+        },
+        {
+          "name": "statusTag",
+          "type": "string",
+          "optional": true
         }
       ],
       "adminForm": true,
@@ -1834,7 +1911,7 @@
       "surface": "ability.effects[].kind=dispel",
       "renderable": true,
       "reason": null,
-      "controlCount": 16,
+      "controlCount": 17,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -2538,6 +2615,34 @@
       "browserVerified": false
     },
     {
+      "id": "interruptCast",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "shape",
+          "type": "literal"
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=interruptCast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
       "id": "invulnerable",
       "layer": "effect",
       "params": [
@@ -3171,6 +3276,11 @@
           "optional": true
         },
         {
+          "name": "grapple",
+          "type": "object",
+          "optional": true
+        },
+        {
           "name": "maxTargets",
           "type": "number",
           "optional": true
@@ -3220,7 +3330,7 @@
       "surface": "ability.effects[].kind=pull",
       "renderable": true,
       "reason": null,
-      "controlCount": 19,
+      "controlCount": 25,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -3546,6 +3656,11 @@
         {
           "name": "amount",
           "type": "object"
+        },
+        {
+          "name": "breakOnMove",
+          "type": "literal",
+          "optional": true
         },
         {
           "name": "condition",
@@ -4177,7 +4292,8 @@
           "type": "enum",
           "values": [
             "skip",
-            "replaceOldest"
+            "replaceOldest",
+            "retarget"
           ],
           "optional": true
         },
@@ -4193,6 +4309,11 @@
         {
           "name": "spread",
           "type": "number",
+          "optional": true
+        },
+        {
+          "name": "targetOnSpawn",
+          "type": "boolean",
           "optional": true
         },
         {
@@ -4223,7 +4344,7 @@
       "surface": "ability.effects[].kind=summon",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 33,
       "editedPath": "value.count",
       "parameterEdited": true,
       "roundTrip": true,
@@ -4391,6 +4512,112 @@
       "browserVerified": false
     },
     {
+      "id": "timeStop",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "durationSec",
+          "type": "number"
+        },
+        {
+          "name": "maxQueuedHits",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "radius",
+          "type": "number"
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=timeStop",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "trap",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "armDelaySec",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "cancelAttack",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "durationSec",
+          "type": "number"
+        },
+        {
+          "name": "maxAlive",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "onOwnerDeath",
+          "type": "enum",
+          "values": [
+            "despawn",
+            "persist"
+          ],
+          "optional": true
+        },
+        {
+          "name": "onTrigger",
+          "type": "array"
+        },
+        {
+          "name": "radius",
+          "type": "number"
+        },
+        {
+          "name": "triggerAt",
+          "type": "enum",
+          "values": [
+            "attacker",
+            "victim"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=trap",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 12,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
       "id": "weightedBranch",
       "layer": "effect",
       "params": [
@@ -4476,6 +4703,14 @@
           "optional": true
         },
         {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "chance",
           "type": "number",
           "optional": true
@@ -4505,6 +4740,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -4545,6 +4785,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -4569,6 +4835,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -4577,6 +4854,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -4589,6 +4867,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -4601,6 +4882,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -4647,6 +4929,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -4681,7 +4968,7 @@
       "surface": "ability hook.on=onAbilityCast",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -4701,6 +4988,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -4734,6 +5029,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -4774,6 +5074,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -4798,6 +5124,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -4806,6 +5143,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -4818,6 +5156,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -4830,6 +5171,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -4876,6 +5218,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -4910,7 +5257,7 @@
       "surface": "ability hook.on=onAbilityHit",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -4930,6 +5277,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -4963,6 +5318,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -5003,6 +5363,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -5027,6 +5413,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5035,6 +5432,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -5047,6 +5445,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5059,6 +5460,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -5105,6 +5507,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -5139,7 +5546,7 @@
       "surface": "ability hook.on=onAllyDamaged",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5159,6 +5566,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -5192,6 +5607,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -5232,6 +5652,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -5256,6 +5702,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5264,6 +5721,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -5276,6 +5734,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5288,6 +5749,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -5334,6 +5796,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -5368,14 +5835,14 @@
       "surface": "ability hook.on=onAllyDeath",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
       "browserVerified": false
     },
     {
-      "id": "onBasicAttack",
+      "id": "onAllyProtected",
       "layer": "hook",
       "params": [
         {
@@ -5388,6 +5855,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -5421,6 +5896,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -5461,6 +5941,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -5485,6 +5991,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5493,6 +6010,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -5505,6 +6023,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5517,6 +6038,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -5563,6 +6085,589 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "event",
+            "allies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "victim",
+          "type": "enum",
+          "values": [
+            "champion",
+            "mob",
+            "any",
+            "enemyChampion",
+            "allyChampion",
+            "enemy"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onAllyProtected",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 39,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "onAttackAttempt",
+      "layer": "hook",
+      "params": [
+        {
+          "name": "abilitySlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "chance",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "chanceFrom",
+          "type": "object",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "consumeOn",
+          "type": "enum",
+          "values": [
+            "fire"
+          ],
+          "optional": true
+        },
+        {
+          "name": "critSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
+          "optional": true
+        },
+        {
+          "name": "damageCrit",
+          "type": "enum",
+          "values": [
+            "any",
+            "crit",
+            "nonCrit"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "effects",
+          "type": "array"
+        },
+        {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "internalCooldownScope",
+          "type": "enum",
+          "values": [
+            "source",
+            "perAbilitySlot"
+          ],
+          "optional": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "maxTriggers",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
+          "name": "on",
+          "type": "enum",
+          "values": [
+            "onUltimateCast",
+            "onUltimateHit",
+            "onCrowdControlApplied",
+            "onCrowdControlReceived",
+            "onHeal",
+            "onAllyProtected",
+            "onOverheal",
+            "onAllyDamaged",
+            "onProjectileExpire",
+            "onBoundaryTouch",
+            "onDashOrBlink",
+            "onLethalDamage",
+            "onStatCapReached",
+            "onRoundStart",
+            "onRoundEnd",
+            "onAbilityCast",
+            "onAbilityHit",
+            "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onStunned",
+            "onInterval",
+            "onReflectSuccess",
+            "onBossSpawn",
+            "onFireRingIgnite",
+            "onGuardianDown",
+            "onDeath",
+            "onRevive",
+            "onEvade",
+            "onBlock",
+            "onShieldGained",
+            "onShieldBroken",
+            "onAllyDeath",
+            "onStatusApplied"
+          ]
+        },
+        {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "enum",
+          "values": [
+            "stop",
+            "detachSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "perTarget",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "event",
+            "allies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "victim",
+          "type": "enum",
+          "values": [
+            "champion",
+            "mob",
+            "any",
+            "enemyChampion",
+            "allyChampion",
+            "enemy"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onAttackAttempt",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 39,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "onBasicAttack",
+      "layer": "hook",
+      "params": [
+        {
+          "name": "abilitySlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "chance",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "chanceFrom",
+          "type": "object",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "consumeOn",
+          "type": "enum",
+          "values": [
+            "fire"
+          ],
+          "optional": true
+        },
+        {
+          "name": "critSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
+          "optional": true
+        },
+        {
+          "name": "damageCrit",
+          "type": "enum",
+          "values": [
+            "any",
+            "crit",
+            "nonCrit"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "effects",
+          "type": "array"
+        },
+        {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "internalCooldownScope",
+          "type": "enum",
+          "values": [
+            "source",
+            "perAbilitySlot"
+          ],
+          "optional": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "maxTriggers",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
+          "name": "on",
+          "type": "enum",
+          "values": [
+            "onUltimateCast",
+            "onUltimateHit",
+            "onCrowdControlApplied",
+            "onCrowdControlReceived",
+            "onHeal",
+            "onAllyProtected",
+            "onOverheal",
+            "onAllyDamaged",
+            "onProjectileExpire",
+            "onBoundaryTouch",
+            "onDashOrBlink",
+            "onLethalDamage",
+            "onStatCapReached",
+            "onRoundStart",
+            "onRoundEnd",
+            "onAbilityCast",
+            "onAbilityHit",
+            "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onStunned",
+            "onInterval",
+            "onReflectSuccess",
+            "onBossSpawn",
+            "onFireRingIgnite",
+            "onGuardianDown",
+            "onDeath",
+            "onRevive",
+            "onEvade",
+            "onBlock",
+            "onShieldGained",
+            "onShieldBroken",
+            "onAllyDeath",
+            "onStatusApplied"
+          ]
+        },
+        {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "enum",
+          "values": [
+            "stop",
+            "detachSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "perTarget",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -5597,14 +6702,14 @@
       "surface": "ability hook.on=onBasicAttack",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
       "browserVerified": false
     },
     {
-      "id": "onBossSpawn",
+      "id": "onBlock",
       "layer": "hook",
       "params": [
         {
@@ -5617,6 +6722,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -5650,6 +6763,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -5690,6 +6808,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -5714,6 +6858,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5722,6 +6877,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -5734,6 +6890,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5746,6 +6905,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -5792,6 +6952,300 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "event",
+            "allies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "victim",
+          "type": "enum",
+          "values": [
+            "champion",
+            "mob",
+            "any",
+            "enemyChampion",
+            "allyChampion",
+            "enemy"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onBlock",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 39,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "onBossSpawn",
+      "layer": "hook",
+      "params": [
+        {
+          "name": "abilitySlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "chance",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "chanceFrom",
+          "type": "object",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "consumeOn",
+          "type": "enum",
+          "values": [
+            "fire"
+          ],
+          "optional": true
+        },
+        {
+          "name": "critSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
+          "optional": true
+        },
+        {
+          "name": "damageCrit",
+          "type": "enum",
+          "values": [
+            "any",
+            "crit",
+            "nonCrit"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "effects",
+          "type": "array"
+        },
+        {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "internalCooldownScope",
+          "type": "enum",
+          "values": [
+            "source",
+            "perAbilitySlot"
+          ],
+          "optional": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "maxTriggers",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
+          "name": "on",
+          "type": "enum",
+          "values": [
+            "onUltimateCast",
+            "onUltimateHit",
+            "onCrowdControlApplied",
+            "onCrowdControlReceived",
+            "onHeal",
+            "onAllyProtected",
+            "onOverheal",
+            "onAllyDamaged",
+            "onProjectileExpire",
+            "onBoundaryTouch",
+            "onDashOrBlink",
+            "onLethalDamage",
+            "onStatCapReached",
+            "onRoundStart",
+            "onRoundEnd",
+            "onAbilityCast",
+            "onAbilityHit",
+            "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onStunned",
+            "onInterval",
+            "onReflectSuccess",
+            "onBossSpawn",
+            "onFireRingIgnite",
+            "onGuardianDown",
+            "onDeath",
+            "onRevive",
+            "onEvade",
+            "onBlock",
+            "onShieldGained",
+            "onShieldBroken",
+            "onAllyDeath",
+            "onStatusApplied"
+          ]
+        },
+        {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "enum",
+          "values": [
+            "stop",
+            "detachSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "perTarget",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -5826,7 +7280,7 @@
       "surface": "ability hook.on=onBossSpawn",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5846,6 +7300,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -5879,6 +7341,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -5919,6 +7386,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -5943,6 +7436,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5951,6 +7455,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -5963,6 +7468,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5975,6 +7483,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -6021,6 +7530,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -6055,7 +7569,7 @@
       "surface": "ability hook.on=onBoundaryTouch",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6075,6 +7589,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -6108,6 +7630,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -6148,6 +7675,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -6172,6 +7725,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6180,6 +7744,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -6192,6 +7757,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6204,6 +7772,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -6250,6 +7819,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -6284,7 +7858,7 @@
       "surface": "ability hook.on=onCrowdControlApplied",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6304,6 +7878,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -6337,6 +7919,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -6377,6 +7964,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -6401,6 +8014,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6409,6 +8033,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -6421,6 +8046,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6433,6 +8061,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -6479,6 +8108,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -6513,7 +8147,7 @@
       "surface": "ability hook.on=onCrowdControlReceived",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6533,6 +8167,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -6566,6 +8208,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -6606,6 +8253,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -6630,6 +8303,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6638,6 +8322,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -6650,6 +8335,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6662,6 +8350,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -6708,6 +8397,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -6742,7 +8436,7 @@
       "surface": "ability hook.on=onDamageDealt",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6762,6 +8456,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -6795,6 +8497,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -6835,6 +8542,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -6859,6 +8592,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6867,6 +8611,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -6879,6 +8624,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6891,6 +8639,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -6937,6 +8686,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -6971,7 +8725,7 @@
       "surface": "ability hook.on=onDamageTaken",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6991,6 +8745,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -7024,6 +8786,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -7064,6 +8831,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -7088,6 +8881,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7096,6 +8900,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -7108,6 +8913,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7120,6 +8928,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -7166,6 +8975,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -7200,7 +9014,7 @@
       "surface": "ability hook.on=onDashOrBlink",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7220,6 +9034,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -7253,6 +9075,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -7293,6 +9120,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -7317,6 +9170,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7325,6 +9189,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -7337,6 +9202,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7349,6 +9217,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -7395,6 +9264,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -7429,7 +9303,7 @@
       "surface": "ability hook.on=onDeath",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7449,6 +9323,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -7482,6 +9364,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -7522,6 +9409,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -7546,6 +9459,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7554,6 +9478,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -7566,6 +9491,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7578,6 +9506,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -7624,6 +9553,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -7658,7 +9592,7 @@
       "surface": "ability hook.on=onEvade",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7678,6 +9612,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -7711,6 +9653,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -7751,6 +9698,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -7775,6 +9748,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7783,6 +9767,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -7795,6 +9780,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7807,6 +9795,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -7853,6 +9842,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -7887,7 +9881,7 @@
       "surface": "ability hook.on=onFireRingIgnite",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7907,6 +9901,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -7940,6 +9942,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -7980,6 +9987,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -8004,6 +10037,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8012,6 +10056,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -8024,6 +10069,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8036,6 +10084,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -8082,6 +10131,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -8116,7 +10170,7 @@
       "surface": "ability hook.on=onGuardianDown",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8136,6 +10190,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -8169,6 +10231,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -8209,6 +10276,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -8233,6 +10326,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8241,6 +10345,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -8253,6 +10358,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8265,6 +10373,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -8311,6 +10420,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -8345,7 +10459,7 @@
       "surface": "ability hook.on=onHeal",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8365,6 +10479,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -8398,6 +10520,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -8438,6 +10565,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -8462,6 +10615,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8470,6 +10634,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -8482,6 +10647,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8494,6 +10662,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -8540,6 +10709,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -8574,7 +10748,7 @@
       "surface": "ability hook.on=onInterval",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8594,6 +10768,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -8627,6 +10809,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -8667,6 +10854,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -8691,6 +10904,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8699,6 +10923,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -8711,6 +10936,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8723,6 +10951,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -8769,6 +10998,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -8803,7 +11037,7 @@
       "surface": "ability hook.on=onKill",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8823,6 +11057,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -8856,6 +11098,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -8896,6 +11143,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -8920,6 +11193,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8928,6 +11212,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -8940,6 +11225,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8952,6 +11240,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -8998,6 +11287,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -9032,14 +11326,14 @@
       "surface": "ability hook.on=onLethalDamage",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
       "browserVerified": false
     },
     {
-      "id": "onOverheal",
+      "id": "onObservedCombat",
       "layer": "hook",
       "params": [
         {
@@ -9052,6 +11346,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -9085,6 +11387,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -9125,6 +11432,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -9149,6 +11482,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9157,6 +11501,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -9169,6 +11514,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9181,6 +11529,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -9227,6 +11576,300 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "event",
+            "allies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "victim",
+          "type": "enum",
+          "values": [
+            "champion",
+            "mob",
+            "any",
+            "enemyChampion",
+            "allyChampion",
+            "enemy"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onObservedCombat",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 39,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "onOverheal",
+      "layer": "hook",
+      "params": [
+        {
+          "name": "abilitySlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "chance",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "chanceFrom",
+          "type": "object",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "consumeOn",
+          "type": "enum",
+          "values": [
+            "fire"
+          ],
+          "optional": true
+        },
+        {
+          "name": "critSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
+          "optional": true
+        },
+        {
+          "name": "damageCrit",
+          "type": "enum",
+          "values": [
+            "any",
+            "crit",
+            "nonCrit"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "effects",
+          "type": "array"
+        },
+        {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "internalCooldownScope",
+          "type": "enum",
+          "values": [
+            "source",
+            "perAbilitySlot"
+          ],
+          "optional": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "maxTriggers",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
+          "name": "on",
+          "type": "enum",
+          "values": [
+            "onUltimateCast",
+            "onUltimateHit",
+            "onCrowdControlApplied",
+            "onCrowdControlReceived",
+            "onHeal",
+            "onAllyProtected",
+            "onOverheal",
+            "onAllyDamaged",
+            "onProjectileExpire",
+            "onBoundaryTouch",
+            "onDashOrBlink",
+            "onLethalDamage",
+            "onStatCapReached",
+            "onRoundStart",
+            "onRoundEnd",
+            "onAbilityCast",
+            "onAbilityHit",
+            "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onStunned",
+            "onInterval",
+            "onReflectSuccess",
+            "onBossSpawn",
+            "onFireRingIgnite",
+            "onGuardianDown",
+            "onDeath",
+            "onRevive",
+            "onEvade",
+            "onBlock",
+            "onShieldGained",
+            "onShieldBroken",
+            "onAllyDeath",
+            "onStatusApplied"
+          ]
+        },
+        {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "enum",
+          "values": [
+            "stop",
+            "detachSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "perTarget",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -9261,7 +11904,7 @@
       "surface": "ability hook.on=onOverheal",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9281,6 +11924,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -9314,6 +11965,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -9354,6 +12010,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -9378,6 +12060,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9386,6 +12079,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -9398,6 +12092,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9410,6 +12107,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -9456,6 +12154,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -9490,7 +12193,7 @@
       "surface": "ability hook.on=onProjectileExpire",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9510,6 +12213,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -9543,6 +12254,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -9583,6 +12299,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -9607,6 +12349,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9615,6 +12368,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -9627,6 +12381,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9639,6 +12396,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -9685,6 +12443,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -9719,7 +12482,7 @@
       "surface": "ability hook.on=onReflectSuccess",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9739,6 +12502,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -9772,6 +12543,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -9812,6 +12588,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -9836,6 +12638,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9844,6 +12657,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -9856,6 +12670,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9868,6 +12685,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -9914,6 +12732,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -9948,7 +12771,7 @@
       "surface": "ability hook.on=onRevive",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9968,6 +12791,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -10001,6 +12832,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -10041,6 +12877,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -10065,6 +12927,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10073,6 +12946,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -10085,6 +12959,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10097,6 +12974,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -10143,6 +13021,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -10177,7 +13060,7 @@
       "surface": "ability hook.on=onRoundEnd",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10197,6 +13080,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -10230,6 +13121,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -10270,6 +13166,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -10294,6 +13216,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10302,6 +13235,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -10314,6 +13248,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10326,6 +13263,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -10372,6 +13310,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -10406,7 +13349,7 @@
       "surface": "ability hook.on=onRoundStart",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10426,6 +13369,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -10459,6 +13410,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -10499,6 +13455,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -10523,6 +13505,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10531,6 +13524,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -10543,6 +13537,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10555,6 +13552,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -10601,6 +13599,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -10635,7 +13638,7 @@
       "surface": "ability hook.on=onShieldBroken",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10655,6 +13658,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -10688,6 +13699,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -10728,6 +13744,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -10752,6 +13794,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10760,6 +13813,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -10772,6 +13826,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10784,6 +13841,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -10830,6 +13888,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -10864,7 +13927,7 @@
       "surface": "ability hook.on=onShieldGained",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10884,6 +13947,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -10917,6 +13988,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -10957,6 +14033,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -10981,6 +14083,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10989,6 +14102,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -11001,6 +14115,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11013,6 +14130,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -11059,6 +14177,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -11093,7 +14216,7 @@
       "surface": "ability hook.on=onStatCapReached",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11113,6 +14236,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -11146,6 +14277,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -11186,6 +14322,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -11210,6 +14372,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11218,6 +14391,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -11230,6 +14404,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11242,6 +14419,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -11288,6 +14466,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -11322,7 +14505,7 @@
       "surface": "ability hook.on=onStatusApplied",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11342,6 +14525,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -11375,6 +14566,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -11415,6 +14611,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -11439,6 +14661,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11447,6 +14680,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -11459,6 +14693,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11471,6 +14708,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -11517,6 +14755,11 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -11551,14 +14794,14 @@
       "surface": "ability hook.on=onStunned",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
       "browserVerified": false
     },
     {
-      "id": "onUltimateCast",
+      "id": "onSummonHit",
       "layer": "hook",
       "params": [
         {
@@ -11571,6 +14814,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -11604,6 +14855,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -11644,6 +14900,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -11668,6 +14950,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11676,6 +14969,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -11688,6 +14982,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11700,6 +14997,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -11746,6 +15044,300 @@
             "magic",
             "true"
           ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "event",
+            "allies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "victim",
+          "type": "enum",
+          "values": [
+            "champion",
+            "mob",
+            "any",
+            "enemyChampion",
+            "allyChampion",
+            "enemy"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onSummonHit",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 39,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "onUltimateCast",
+      "layer": "hook",
+      "params": [
+        {
+          "name": "abilitySlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "chance",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "chanceFrom",
+          "type": "object",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "consumeOn",
+          "type": "enum",
+          "values": [
+            "fire"
+          ],
+          "optional": true
+        },
+        {
+          "name": "critSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
+          "optional": true
+        },
+        {
+          "name": "damageCrit",
+          "type": "enum",
+          "values": [
+            "any",
+            "crit",
+            "nonCrit"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "effects",
+          "type": "array"
+        },
+        {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "internalCooldownScope",
+          "type": "enum",
+          "values": [
+            "source",
+            "perAbilitySlot"
+          ],
+          "optional": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "maxTriggers",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
+          "name": "on",
+          "type": "enum",
+          "values": [
+            "onUltimateCast",
+            "onUltimateHit",
+            "onCrowdControlApplied",
+            "onCrowdControlReceived",
+            "onHeal",
+            "onAllyProtected",
+            "onOverheal",
+            "onAllyDamaged",
+            "onProjectileExpire",
+            "onBoundaryTouch",
+            "onDashOrBlink",
+            "onLethalDamage",
+            "onStatCapReached",
+            "onRoundStart",
+            "onRoundEnd",
+            "onAbilityCast",
+            "onAbilityHit",
+            "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onStunned",
+            "onInterval",
+            "onReflectSuccess",
+            "onBossSpawn",
+            "onFireRingIgnite",
+            "onGuardianDown",
+            "onDeath",
+            "onRevive",
+            "onEvade",
+            "onBlock",
+            "onShieldGained",
+            "onShieldBroken",
+            "onAllyDeath",
+            "onStatusApplied"
+          ]
+        },
+        {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "enum",
+          "values": [
+            "stop",
+            "detachSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "perTarget",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "stationaryForSec",
+          "type": "number",
           "optional": true
         },
         {
@@ -11780,7 +15372,7 @@
       "surface": "ability hook.on=onUltimateCast",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11800,6 +15392,14 @@
             "R",
             "EX",
             "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "blockSource",
+          "type": "enum",
+          "values": [
+            "thisSource"
           ],
           "optional": true
         },
@@ -11833,6 +15433,11 @@
             "any",
             "thisSource"
           ],
+          "optional": true
+        },
+        {
+          "name": "damageConnected",
+          "type": "literal",
           "optional": true
         },
         {
@@ -11873,6 +15478,32 @@
           "type": "array"
         },
         {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeDuring",
+          "type": "enum",
+          "values": [
+            "dash"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
           "name": "internalCooldown",
           "type": "number",
           "optional": true
@@ -11897,6 +15528,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11905,6 +15547,7 @@
             "onCrowdControlApplied",
             "onCrowdControlReceived",
             "onHeal",
+            "onAllyProtected",
             "onOverheal",
             "onAllyDamaged",
             "onProjectileExpire",
@@ -11917,6 +15560,9 @@
             "onAbilityCast",
             "onAbilityHit",
             "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11929,6 +15575,7 @@
             "onDeath",
             "onRevive",
             "onEvade",
+            "onBlock",
             "onShieldGained",
             "onShieldBroken",
             "onAllyDeath",
@@ -11978,6 +15625,11 @@
           "optional": true
         },
         {
+          "name": "stationaryForSec",
+          "type": "number",
+          "optional": true
+        },
+        {
           "name": "target",
           "type": "enum",
           "values": [
@@ -12009,7 +15661,7 @@
       "surface": "ability hook.on=onUltimateHit",
       "renderable": true,
       "reason": null,
-      "controlCount": 32,
+      "controlCount": 39,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -12230,6 +15882,41 @@
       "renderable": true,
       "reason": null,
       "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "nearbyCombat",
+      "layer": "leaf",
+      "params": [
+        {
+          "name": "radius",
+          "type": "number"
+        },
+        {
+          "name": "subject",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ]
+        },
+        {
+          "name": "withinSec",
+          "type": "number"
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=nearbyCombat",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 5,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13470,7 +17157,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-apply-status",
       "renderable": true,
       "reason": null,
-      "controlCount": 36,
+      "controlCount": 50,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13587,7 +17274,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-area-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 159,
+      "controlCount": 174,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13961,7 +17648,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-buff-self",
       "renderable": true,
       "reason": null,
-      "controlCount": 45,
+      "controlCount": 59,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -14731,6 +18418,12 @@
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
         },
         {
+          "name": "recast",
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        },
+        {
           "name": "side",
           "type": "enum",
           "values": [
@@ -14749,7 +18442,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-effect-sequence",
       "renderable": true,
       "reason": null,
-      "controlCount": 49,
+      "controlCount": 54,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -14787,7 +18480,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-event-passive",
       "renderable": true,
       "reason": null,
-      "controlCount": 75,
+      "controlCount": 82,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15162,7 +18855,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-leap-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 51,
+      "controlCount": 65,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -16696,7 +20389,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-projectile-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 69,
+      "controlCount": 83,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -16853,7 +20546,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-proxy-fanout",
       "renderable": true,
       "reason": null,
-      "controlCount": 43,
+      "controlCount": 57,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -17258,7 +20951,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-single-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 65,
+      "controlCount": 79,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -17596,7 +21289,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-transform",
       "renderable": true,
       "reason": null,
-      "controlCount": 39,
+      "controlCount": 53,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,

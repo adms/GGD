@@ -1,0 +1,192 @@
+{
+  "issue": 1159,
+  "sourceCommit": "97601e43e926d1fcb1f4aa71e98b18db990bc594",
+  "fixedMain": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "observedCI": [
+    {
+      "head": "a520fdafede600faa26d4f20649df813fed0c64a",
+      "run": 34397287693,
+      "unitJob": 102620497117
+    },
+    {
+      "head": "6807d0a95e325ad466becafc809e846ea08d116d",
+      "run": 34397282762,
+      "unitJob": 102620330702
+    }
+  ],
+  "knownFailures": {
+    "tests": 12,
+    "files": 9,
+    "locallyResolved": 11,
+    "stillOpen": [
+      "everyTagAnnounced: v0.42.26, v0.43.4 have no real delivery rows"
+    ]
+  },
+  "validation": [
+    {
+      "name": "budget",
+      "command": "pnpm exec vitest run packages/shared/src/content/modelUpload/budget.test.ts packages/shared/src/content/modelUpload/heroModel.test.ts packages/shared/src/ops/modelBudgetThresholdsOrdered.test.ts tools/model-budget/limits.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "passed": 25,
+      "localLog": "/private/tmp/ggd-mvp-ci-budget.txt",
+      "sha256": "b6b138b10e66f71c3be3760135f611f0c2fa56b2909405fd445a5cb08668a0d9"
+    },
+    {
+      "name": "decoration",
+      "command": "pnpm exec vitest run packages/shared/src/ops/configDecorationCensus.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "passed": 4,
+      "localLog": "/private/tmp/ggd-mvp-ci-decor-test.txt",
+      "sha256": "36080a0d879747a30f166f5252ad8ff65753bbf509683473eb0e5f6b9ebd7b5f"
+    },
+    {
+      "name": "forms",
+      "command": "pnpm exec vitest run packages/shared/src/content/championFormVisibility.test.ts packages/shared/src/content/standinCensus.test.ts apps/client/src/render/views/formAwareModelResolve.test.ts apps/client/src/render/views/standinCensus.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "passed": 45,
+      "localLog": "/private/tmp/ggd-mvp-form-visibility-census.log",
+      "sha256": "e1c8765488469ae4299b36b33822738f70dbfe095c79f1f3a29f68b6cb2d2a5e"
+    },
+    {
+      "name": "announcement-fixtures",
+      "command": "pnpm exec vitest run packages/shared/src/ops/announceLedgerIsWritten.test.ts packages/shared/src/ops/playerNoteNeverEmpty.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "passed": 5,
+      "localLog": "/private/tmp/ggd-mvp-release-note-focused.log",
+      "sha256": "e39ba99fb5000ced79151ba2d9e8c3c8fe00e4ff3b52a8ebe1691c7aad8c397d"
+    },
+    {
+      "name": "legacy",
+      "command": "pnpm exec vitest run packages/shared/src/ops/legacyIndexFresh.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "passed": 2,
+      "localLog": "/private/tmp/ggd-mvp-ci-legacy-test.txt",
+      "sha256": "f5f8d273bc347a81229ff181340a24949870cff392bdc4abf2fb85578ad44ed9"
+    }
+  ],
+  "watchdog": {
+    "initial": "8 of 9 passed; one failed because URL.pathname did not decode this Chinese/space worktree path",
+    "initialLogSha256": "8232a888a6846af335f89e8cbde65708fa54ab28157a7915d97e11aaadaf9ed2",
+    "focusedAfterPathFix": {
+      "passed": 1,
+      "exitCode": 0,
+      "localLog": "/private/tmp/ggd-mvp-watchdog-path-hjicte1m.log",
+      "sha256": "3d0563c4dd1cb8f04710dc38b3e39889e142734f7a1c90a73a262c04ddfede7a"
+    },
+    "floorMs": 900000,
+    "recordedCompletedSuiteMs": 754730,
+    "recordedRun": "2026-09-09/v0.43.2-2-gb75716a1b-dirty",
+    "recordStatus": "completed with failing tests, code 1, not hung; not a green test result"
+  },
+  "validationSummary": "90 relevant tests verified in focused segments, not a single full-suite run. Original failing watchdog case was rerun after path correction; other eight passed and were not repeated. Shared typecheck, changed-file ESLint and Editor build exit 0. Prior remote contract/Go/vuln success is evidence for unchanged parts, not new-head CI success.",
+  "budgetReadTiming": "CLI startup / browser and service build: shared budget imports shipped model-lod.json. Rebuild and deploy Editor and service together after changing channel config. Geometry/texture policies unchanged.",
+  "preservedProjects": {
+    "count": 81,
+    "sha256Compared": true,
+    "baseline": "materials/community-batch2-integration/receipts/mvp-1159-20260910/cross-pr-preserved-projects.json"
+  },
+  "scope": "No hero design, template, model mapping, VFX tuning, recording, real Discord send or production publication. ART_DEBT unchanged. Legacy index rebuilt with original generator; all indexed roots contain tracked files.",
+  "remaining": [
+    "Main review and merge of original PRs",
+    "Real announcement delivery records",
+    "Deploy existing community overlay / Editor",
+    "Authenticated Editor import, submit, Admin approve and minimal game confirmation for 81 heroes"
+  ],
+  "typecheck": {
+    "exitCode": 0,
+    "localLog": "/private/tmp/ggd-mvp-ci-shared-typecheck.txt",
+    "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  },
+  "lint": {
+    "exitCode": 0,
+    "localLog": "/private/tmp/ggd-mvp-ci-lint.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "editorBuild": {
+    "exitCode": 0,
+    "localLog": "/private/tmp/ggd-mvp-ci-editor-build.txt",
+    "sha256": "2f1777ec708fe5f315e8f8343628f05c431841d639b3088fdd74f1605effdf95"
+  },
+  "coordination": {
+    "exitCode": 0,
+    "packets": 31
+  },
+  "generatedChecks": {
+    "decor": 0,
+    "legacyIndex": 0
+  },
+  "followup": {
+    "sourceCommit": "62cad6f5c6d5e69d58b92f2a2349ee589f3d8d3a",
+    "ci": [
+      {
+        "run": 34442186336,
+        "head": "4b2f9f15f4b08c9e47363fb6b276aaf5865d9a20",
+        "unitJob": 102759497896
+      },
+      {
+        "run": 34442191934,
+        "head": "697b27064e4a3e1e3e03b79ef193fe665adcef8d",
+        "unitJob": 102759525188
+      }
+    ],
+    "sameSharedResult": {
+      "passed": 6270,
+      "failed": 5,
+      "skipped": 4,
+      "files": 969
+    },
+    "prior11FixedInCI": true,
+    "localFixes": [
+      "explicit Docker COPY matching the new static config import; broad config COPY already made actual build succeed",
+      "original content:build refreshed only editor-target-profile.json processor/profile digests",
+      "18 expired and still unadopted records reclassified from landing to debt; original dates/groups/reasons preserved; no new exemptions, grace extension or hero edits"
+    ],
+    "debtKeys": [
+      "field:abilities.effects[]#damageArea.maxTargetsCounts",
+      "field:abilities.effects[]#damageArea.runOnEmptyHit",
+      "field:abilities.effects[]#damageLine.victimCondition",
+      "field:abilities.effects[]#damageLine.maxTargetsCounts",
+      "field:abilities.effects[]#damageLine.runOnEmptyHit",
+      "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot",
+      "field:abilities.effects[]#applyBuff.modifiers[].scopeAbilityId",
+      "field:items.modifiers[].scopeSlot",
+      "field:items.modifiers[].scopeAbilityId",
+      "field:abilities.effects[]#applyBuff.hooks[].perTarget",
+      "field:items.passive[].consumeOn",
+      "field:items.passive[].onConsumed",
+      "field:items.passive[].perTarget",
+      "field:items.passive[].critSource",
+      "field:items.passive[].reflectedDamageSource",
+      "field:items.passive[].reflectedDamageType",
+      "field:abilities.effects[]#dash.onEndWhenDead",
+      "field:champions.abilities.*.innateActivePassive"
+    ],
+    "debtSince": "2026-08-10",
+    "debtMeaning": "Still unadopted metadata, not completed hero mechanisms. Static and accepted-community usage both remain zero for these paths.",
+    "focusedTests": {
+      "clientContentImports": 1,
+      "shippedEditorProfileAndTwoProfilesAgree": 7,
+      "fieldAdoption": 10,
+      "exitCode": 0
+    },
+    "processorFingerprint": "7e4ef63cc6d2",
+    "profileDigest": "e4d7eb3ff961",
+    "logSha256": {
+      "ggd-mvp-unit-102759497896.txt": "00a64985c7cd53a394d8e5d472dc0c373b27e6e0c40e1005ead5adf7e31514c9",
+      "ggd-mvp-unit-102759525188.txt": "4e71285a9f29a2239a7fe3c09c14fd1a988154ef97212ae0f1e15d67c1ee6628",
+      "ggd-mvp-client-content-imports-focused.log": "c28fa6e2a57f43921d83384a4a36748e41ce888d0da3b6087ea8103f804d8de7",
+      "ggd-mvp-ci-profile-build.txt": "0a22c210e50dd6990e6d75e3539540613053e4a1d51a77b29b8cc781e00005bf",
+      "ggd-mvp-ci-profile-tests.txt": "7852e5260076acff5a62e786488e167f852b096e5c6f5c01c7af65a84e9816cb",
+      "ggd-mvp-field-adoption-20260910.log": "26001733688c51e1a9883e596ae11d2f077a26c3a93cd2a7ff02cc3ba40ea5d4"
+    },
+    "notRerun": "Actual Docker build already passed on the observed heads; explicit COPY adds an already-copied file. No repeated full hero/editor suite. New remote CI still required.",
+    "openFailure": "everyTagAnnounced: v0.42.26 / v0.43.4 missing real delivery records",
+    "formalObservation": {
+      "publishedHeroWorksEndpoint": "https://ggd.adms.ai/api/v1/hero-works/published",
+      "response": [],
+      "editorEndpoint": "https://ggd.adms.ai/editor/hero-forge",
+      "returnedApplication": "game index, not the Editor entry",
+      "credentialsUsed": false
+    }
+  }
+}

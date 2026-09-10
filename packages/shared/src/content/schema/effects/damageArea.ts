@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SPREAD_MAX_FALLOFF, SPREAD_MAX_RADIUS, SPREAD_MAX_TARGETS, SPREAD_MIN_FALLOFF } from "../../../sim/effects/spreadLimits";
+import { SPREAD_MAX_FALLOFF, SPREAD_MAX_RADIUS, SPREAD_MIN_FALLOFF } from "../../../sim/effects/spreadLimits";
 import { zScaling } from "../common";
 import {
   EFFECT_COMMON_SHAPE,
@@ -17,7 +17,7 @@ export const zDamageArea =
 /**
  * damageArea (#210 近戰擴散) — mirrors the `damageArea` member of `EffectDef`.
  *
- * 三個旋鈕都有**上界**, 不是只有下界: CLAUDE.md 明說「欄位要有上界」, 而這裡
+ * 半徑與衰減有語意上界；人數守正 safe integer，實際政策讀傷害規則。半徑
  * 的失敗形態很具體 —— w3x 的長度單位大約是 GGD 的 54.5 倍, 所以任何一個從
  * 原始資料直接貼過來的 `Area` 欄位 (200/300/450) 都會變成一個蓋滿整個決鬥區
  * 的圓。上界把那種貼上變成「檔案進不來」而不是「上線後某件武器一發清場」。
@@ -38,14 +38,16 @@ z
     /** GGD 單位。不經過 combatEnv.abilityRange — 見 sim/effects/effect.ts。 */
     radius: z.number().positive().max(SPREAD_MAX_RADIUS),
     radiusTier: zAoeTier.optional(),
+    fromCaster: z.boolean().optional().describe("以施法者為範圍中心。"),
+    arcHalfAngleCos: z.number().min(0).max(1).optional().describe("前方弧形：0 為前方半圓，0.5 為120度。省略為整圓。"),
     /** 邊緣倍率: 1 = 不衰減 (預設), 0 = 邊緣歸零 */
     falloff: z
       .number()
       .min(SPREAD_MIN_FALLOFF)
       .max(SPREAD_MAX_FALLOFF)
       .optional(),
-    /** 一次最多濺到幾個人 (不含震央) */
-    maxTargets: z.number().int().min(1).max(SPREAD_MAX_TARGETS).optional(),
+    /** 人數的表示界線；省略與明填值都受 world.damageRules.spreadMaxTargetsCap 限制。 */
+    maxTargets: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER).optional(),
     canCrit: z.boolean().optional(),
     /** 震央本人要不要再吃一次 (預設 false — 他已經吃過觸發這一擊了) */
     includeOrigin: z.boolean().optional(),

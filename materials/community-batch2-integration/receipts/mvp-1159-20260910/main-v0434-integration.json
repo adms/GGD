@@ -1,0 +1,26 @@
+{
+  "issue": 1159,
+  "integratedMain": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "firstBranch": "8dd6e3784ce2b554993b555bfe58893852f4ca0f",
+  "checks": [
+    {
+      "command": "bash scripts/genrun.sh decor:build decor:build:raw",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0
+    }
+  ],
+  "reusedValidation": "apps/, packages/, content/ byte-identical to validated first branch; reuse materials/community-hero-forge/receipts/main-v0434-integration.json. No second full Editor suite.",
+  "preservation": {
+    "projects": 81,
+    "unchangedSha256": true,
+    "reference": "cross-pr-preserved-projects.json"
+  },
+  "publication": "Formal Editor import, submit, Admin approve and minimum game check pending. No claim of 81 published."
+}

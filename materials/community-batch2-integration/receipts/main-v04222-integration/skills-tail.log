@@ -1,0 +1,521 @@
+RUN pnpm atlas:check
+
+> ggd@0.0.0 atlas:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/engine-atlas/atlas.ts --check
+
+✓ engine atlas 是最新的
+EXIT 0 pnpm atlas:check
+RUN pnpm treasure:csv:check
+
+> ggd@0.0.0 treasure:csv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/economy/gen_treasure_csv.py --check
+
+✓ 寶具總表_EX三階.csv 是最新的
+EXIT 0 pnpm treasure:csv:check
+RUN pnpm docs:readme:check
+
+> ggd@0.0.0 docs:readme:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/reference/gen_readme_lists.py --check
+
+stale — run `pnpm docs:readme`: README:roster(replaced),abilities(replaced),items(replaced),grail(replaced),mechanics(replaced),arenas(replaced),combat-env(replaced),stat-bands(replaced),tiers(replaced); docs/reference/roster.md; docs/reference/abilities.md; docs/reference/items.md; docs/reference/grail-wishes.md; docs/reference/mechanics.md
+ ELIFECYCLE  Command failed with exit code 1.
+EXIT 1 pnpm docs:readme:check
+RUN pnpm docs:status:check
+
+> ggd@0.0.0 docs:status:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/status/gen_status.py --check
+
+gen_status --check: OK — 286 tasks (✅218 🔄15 ⬜53) from ~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c
+EXIT 0 pnpm docs:status:check
+RUN pnpm roster:check
+
+> ggd@0.0.0 roster:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/roster-guard/check.ts
+
+EXIT 0 pnpm roster:check
+RUN pnpm pitch:check
+
+> ggd@0.0.0 pitch:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/w3x-import/build_pitch.py --check
+
+合併 34 支 —— 動畫量到 31 支（優先）· w3a 推到 3 支 · 兩邊都沒有 1 支
+✅ content 是最新的
+EXIT 0 pnpm pitch:check
+RUN pnpm newhero:check
+
+> ggd@0.0.0 newhero:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/newhero/gen.ts --check
+
+✅ docs/new-hero-defaults.json 是最新的；30 組預設值全部通過自己的警示（語料 293 支技能）。
+EXIT 0 pnpm newhero:check
+RUN pnpm lowdmg:check
+
+> ggd@0.0.0 lowdmg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/low-damage/gen.ts --check
+
+✅ docs/傷害偏低警告清單.md 是最新的（語料 293 支技能）。
+EXIT 0 pnpm lowdmg:check
+RUN pnpm anchors:check
+
+> ggd@0.0.0 anchors:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/balance-anchors/gen.ts --check
+
+✔ anchors 產物都是最新的（母體 49 張卡 · 純基礎 LV30 中位 2776.2 · 引擎最終 12304.8）
+EXIT 0 pnpm anchors:check
+RUN pnpm statcaps:check
+
+> ggd@0.0.0 statcaps:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/stat-caps/gen_stat_caps.ts --check
+
+✔ statcaps 三份產物都是最新的（母體 49、錨點 LV30）
+EXIT 0 pnpm statcaps:check
+RUN pnpm apconv:plan:check
+
+> ggd@0.0.0 apconv:plan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/ap-conversion/gen.py --check
+
+✅ AP 換算計畫是最新的（56 支 / 73 條）
+EXIT 0 pnpm apconv:plan:check
+RUN pnpm apconv:check
+
+> ggd@0.0.0 apconv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/ap-conversion/apply.py --check
+
+[apconv] 開關 enabled=True mode=replace physical=keepDamageType rounding=halfUp step=10% ap/點=0.25
+[apconv] 語料 56 支（產生器擁有 2，直接編 JSON 54）
+[apconv] check OK
+EXIT 0 pnpm apconv:check
+RUN pnpm apdmg:check
+
+> ggd@0.0.0 apdmg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/ap-damage-scaling/gen.ts --check
+
+[apdmg] ✅ 2 份產物都是最新的；三個住處一致
+EXIT 0 pnpm apdmg:check
+RUN pnpm board:check
+
+> ggd@0.0.0 board:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/board/gen_board.py --check
+
+ggd-board.html is current
+EXIT 0 pnpm board:check
+RUN pnpm msgledger:check
+
+> ggd@0.0.0 msgledger:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/message-ledger.sh --check
+
+✓ 逐則對票 2026-09-08：18 則訊息全部有列、全部對到票
+⏳ 漏了 21:14 · 2026-09-09  補發完成 —— v0.41.0 → v0.42.17 共 24 個版本，每一版都發到 Discord 了。 逐版重讀 commit 挖真內容…
+⏳ 漏了 21:15 · 2026-09-09  補發完成 —— v0.41.0 → v0.42.17 共 24 個版本，每一版都發到 Discord 了。 逐版重讀 commit 挖真內容…
+⏳ 漏了 21:15 · 2026-09-09  請找根因 你是不是被什麼污染或缺少什麼案例引導 請修正…
+⏳ 未對票 docs/_daily/2026-09-09.md:26  03:21  4 ok…
+⏳ 未對票 docs/_daily/2026-09-09.md:27  17:00  你從 v0.41 開始就在打混 請你修正根因 後補每一板的內容出來…
+⏳ 上面 3 則漏列 + 2 列未對票是**今天（2026-09-09）**的 —— 這條 session 還在跑,transcript 還在長 ⇒ ⛔ **不擋**。
+   收工/發版時硬檢查它：`bash scripts/message-ledger.sh --check --date 2026-09-09`（或 GGD_LEDGER_STRICT_TODAY=1）
+EXIT 0 pnpm msgledger:check
+RUN pnpm skillnorm:check
+
+> ggd@0.0.0 skillnorm:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/skill-normalize/gen.ts --check
+
+✓ 技能正規化總閘：四項全過，文件是最新的
+EXIT 0 pnpm skillnorm:check
+RUN pnpm speedtiers:check
+
+> ggd@0.0.0 speedtiers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/speed-growth/gen.ts --check
+
+[speedtiers] 母體 49 位（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"））
+[speedtiers] 梯子 A　總開關 on
+[speedtiers] 移動速度 級別分佈：極小 49
+[speedtiers] 攻擊速度 交給**出身表**（config.stat-normalization@1 的 appliesTo） ⇒ 這一支不敲 asGrowthTier，卡上舊的那一行已刪除
+[speedtiers] check OK
+EXIT 0 pnpm speedtiers:check
+RUN pnpm jasscombo:check
+
+> ggd@0.0.0 jasscombo:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/jass-combo/extract.py --check
+
+OK: 2 份產物與 war3map.j 一致
+EXIT 0 pnpm jasscombo:check
+RUN pnpm vfxbind:check
+
+> ggd@0.0.0 vfxbind:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/vfx-bind/scan.py --check --strict
+
+綁定 58 支技能 / 未綁 132 份 fx.w3x.* emitter 文件
+投射物 1 顆接上原作飛彈 / 20 顆沒接(每一顆都帶理由)
+  MISSING   godie-e002.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e008.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00l.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00w.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00x.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h01n.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h01o.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h020.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hapm.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hapm.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hart.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hjai.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hpb1.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-huth.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hvsh.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hvwd.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-n01c.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-nbbc.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-o00x.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-ogrh.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-osam.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00h.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00j.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00n.q —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00n.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00o.q —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00o.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00v.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u010.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u01u.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u034.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-ucrl.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-udea.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-udre.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-uvng.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  EXTRA     godie-u01u.q —— promoted 有、推導沒有 ⇒ 人工裁決(閘 1/3 沒過但有人看過證據)。⛔ 這不是缺陷,列出來只是為了「沒有一列是無人知曉的」
+  EXTRA     godie-udre.q —— promoted 有、推導沒有 ⇒ 人工裁決(閘 1/3 沒過但有人看過證據)。⛔ 這不是缺陷,列出來只是為了「沒有一列是無人知曉的」
+✅ 綁定表與證據一致
+EXIT 0 pnpm vfxbind:check
+RUN pnpm models:check
+
+> ggd@0.0.0 models:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/model-census/gore_geoset.py --check
+
+check: 147 顆 .glb、20 處已宣告、7 處已宣告的離地分身、0 個問題
+EXIT 0 pnpm models:check
+RUN pnpm lod:check
+
+> ggd@0.0.0 lod:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/lod-gen/gen_lod.py --manifest-only --check
+
+✓ _lod.json 與磁碟上的 83 顆模型一致（逐位元組）
+EXIT 0 pnpm lod:check
+RUN pnpm audit:check
+
+> ggd@0.0.0 audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-audit/audit.py --check
+
+✅ docs/技能模板驗收標準.md 與產生器同步（421 支）
+EXIT 0 pnpm audit:check
+RUN pnpm echoloop:check
+
+> ggd@0.0.0 echoloop:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/balance-alert/echoLoop.ts --check
+
+⚠️  回音迴圈偵測（echo-loop-feedback）—— 「調了等於白調」
+   出貨：一發「極大」＝血條 24.1% · 4.1 發送走 LV30 中位
+
+   旋鈕                       傷害端     生命端     佔血條   判定
+   damageDealt                動       —       動   ⭐ 真的旋鈕
+   abilityPower               動       —       動   ⭐ 真的旋鈕
+   maxHealth                  —       動       動   ⭐ 真的旋鈕
+   strToMaxHealth             動       動       動   ⭐ 真的旋鈕
+   intToAbilityPower          動       —       動   ⭐ 真的旋鈕
+
+✔ 沒有回音迴圈：每一個碰得到傷害或生命的旋鈕，佔血條都跟著動。
+EXIT 0 pnpm echoloop:check
+RUN pnpm templates:check
+
+> ggd@0.0.0 templates:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/ability-templates/gen.py --check
+
+✅ 模板語料與 content/ 一致(ability-templates.csv · ability-templates.md)
+EXIT 0 pnpm templates:check
+RUN pnpm prose:check
+
+> ggd@0.0.0 prose:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/card-prose/apply_placeholders.ts --check
+
+待轉 0 份
+EXIT 0 pnpm prose:check
+RUN pnpm sfxbind:check
+
+> ggd@0.0.0 sfxbind:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/sfx-bind/build_bindings.py --check
+
+ability-sfx-cues.json / UNPORTED_SFX_LEDGER.json / SUGGESTED_SFX_KEYS.json 都是最新的
+  52 cues · 0 bindings · 19 unmatched · 26 unported
+EXIT 0 pnpm sfxbind:check
+RUN pnpm shapes:check
+
+> ggd@0.0.0 shapes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md
+
+✅ 421 支技能、58 份模板，覆蓋與新鮮度都過
+EXIT 0 pnpm shapes:check
+RUN pnpm iconplan:check
+
+> ggd@0.0.0 iconplan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/icon-gen/src/plan.py --check
+
+
+⛔ content/config/icon-plan.json 過期（或被手改）——⭐ 它是 `iconplan:build` 的產物。
+  → 跑 `bash scripts/genrun.sh iconplan:build` 然後 `git add content/config/icon-plan.json`。
+  ⛔ 不要手改：下一次重生成會把它蓋回去,而那個「又不一樣了」看起來像**新的**錯。
+icon-gen plan  (content digest 4dc14d7e8ea57c6c)
+  family         docs   have   drop  blocked  generate
+  champions        71     71      0        0         0
+  abilities       421    421      0        0         0
+  items           142    142      0        0         0
+  TOTAL           634    634      0        0         0
+
+  generate = tier1 0 (live surface today) + tier2 0
+
+  dropped, by rule:
+  blocked, by rule:
+
+  why the art is missing (importer's own resolution):
+
+  ⚠ live-surface files NOT found (veto may be too narrow):
+    data/curation/whitelist.json
+ ELIFECYCLE  Command failed with exit code 1.
+EXIT 1 pnpm iconplan:check
+RUN pnpm formreceipts:check
+
+> ggd@0.0.0 formreceipts:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/skill-forge/build-editor-form-receipts.mjs --check
+
+PASS editor form receipts · 175 total · 170 renderable · 5 missing
+EXIT 0 pnpm formreceipts:check
+RUN pnpm beam:check
+
+> ggd@0.0.0 beam:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/beam-orient/scan.py --check
+
+beam-orient --check: ①7 份宣告 · ②12 份被會動的節點引用（0 份沒有結論）· 共 0 條
+EXIT 0 pnpm beam:check
+RUN pnpm archetypes:check
+
+> ggd@0.0.0 archetypes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/hero-archetypes/build.ts --check
+
+✅ 兩份產物都是最新的（母體 49 位）。
+EXIT 0 pnpm archetypes:check
+RUN pnpm enableaudit:check
+
+> ggd@0.0.0 enableaudit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/review/build-enable-audit.mjs --check
+
+✓ enable-audit 預算是最新的（725 個 id · 2175 列）
+EXIT 0 pnpm enableaudit:check
+RUN pnpm review:check
+
+> ggd@0.0.0 review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/review/check.mjs
+
+[review:check] pending 343 / 資產 1249（Tier0 906 · 已審 0）
+  · [risk 39] model:imported.heromusashimiyamoto —— 25 支上架技能引用（R/EX ×2 加權後 risk 39）；未審
+  · [risk 28] vfx:fx.prim.void.explosion-lg —— 15 支上架技能引用（R/EX ×2 加權後 risk 28）；未審
+  · [risk 21] vfx:fx.prim.void.pulse-lg —— 11 支上架技能引用（R/EX ×2 加權後 risk 21）；未審
+  · [risk 20] vfx:fx.prim.lightning.beam-lg —— 6 支上架技能引用（R/EX ×2 加權後 risk 12）；抱怨族「閃電/雷電」+4；抱怨族「光束砲/蝗蟲群 beam-roll」+4；未審
+  · [risk 18] vfx:fx.prim.fire.explosion-lg —— 11 支上架技能引用（R/EX ×2 加權後 risk 18）；未審
+  審查頁：http://localhost:39527/asset-review.html（pnpm dev 起 client 後）
+[review:check] 🎙 語音 51 位（ladder n=8 · 灰區 0 對進 HITL）
+  ⚠️ 分離度**判不了**：量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／1275 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）
+     ⛔ 「一對都沒選出來」不等於「沒問題」—— 它等於這一族今天沒有量尺。
+[review:check] 功能批 37（待批核 29 · 已確認 0 · 已否決 0 · 未登記 8）—— ⛔ 預設不擋部署
+  · pending beam_visual-proof_20260824-2240 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · unregistered beamshape_visual-proof_20260827-0600 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · pending beamtruth_visual-proof_20260826-1200 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending beamverify_visual-proof_20260826-1200 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending crescent_visual-proof_20260825-2130 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 de5ad2b7 **一個宣稱檔案都沒碰到**（推導出 14 個，含 abilities）—— 這個錨錯了 ⇒ 「證據比修復早」的比對在這一批上不成立
+  · pending dagger_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending dragonslave_visual-proof_20260827 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending dragonslave_visual-proof_20260827-0030 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending dragonslave_visual-proof_20260827-fixed —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending firering_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending goku_visual-proof_20260825-0200 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending kenshiro_visual-proof_20260827 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending penta_visual-proof_20260825-2300 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending quad_visual-proof_20260825-2200 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending stockglow_visual-proof_20260826-1520 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）
+  · pending stuckescape_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending tail_visual-proof_20260826-0000 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · unregistered vfx-forge-eight-skill_visual-proof_20260902-0233 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_asset_backdrop_visual-proof_20260901-0639 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260901-0640 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260902-1015 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260902-1047 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260902-1131 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · unregistered vfx_forge_8_ability_visual-proof_20260903-0511 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · pending weather_rain_visual-proof_20260825 —— ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）；ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  📅 證據時間身分：⚠️ 比修復早 0 批 · ℹ️ 判不了 23 批（報告沒寫拍於哪個 HEAD）
+     ⛔ 判不了的那些**補不回來** —— 捕捉發生在工作樹上，git 只給得出上界。
+     ⭐ 往後的報告會自動蓋 HEAD（`bash scripts/visual-proof.sh --new`）。
+  🎯 修復錨：⚠️ 錨錯 4 批 · ℹ️ 驗不了 15 批
+     判準是 **diff 碰到的檔案**，⛔ 不是 commit 訊息（訊息會說謊 —— tools/review/fix-anchor.mjs 檔頭）。
+     「驗不了」多半是那一批沒登記 --abilities ⇒ 推導不出它的出貨面（渲染端看不到）。
+  功能審查頁：http://localhost:39527/feature-review.html
+[review:check] 🔐 分署 OK：材料 docs/_review/material/ · 結果 docs/_review/verdicts/{local,live}.json
+EXIT 0 pnpm review:check
+RUN pnpm declshape:check
+
+> ggd@0.0.0 declshape:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/declared-shape/gen.ts --check
+
+declshape:check OK（421 支技能）
+EXIT 0 pnpm declshape:check
+RUN pnpm decor:check
+
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+
+⛔ ggd-config-decoration-census.json · ggd-config-decoration-census.md 過期了 —— 跑 `pnpm decor:build` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.
+EXIT 1 pnpm decor:check
+RUN pnpm speedlists:check
+
+> ggd@0.0.0 speedlists:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/skill-lists/gen.mjs --check
+
+speedlists:check OK（3 份產物皆最新）
+EXIT 0 pnpm speedlists:check
+RUN pnpm locust:check
+
+> ggd@0.0.0 locust:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/locust-census/gen.mjs --check
+
+locust:check OK（2 份產物皆最新）
+EXIT 0 pnpm locust:check
+RUN pnpm w3a:check
+
+> ggd@0.0.0 w3a:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/w3a-translate/gen.py --check
+
+w3a:check OK(3 份產物皆最新)
+EXIT 0 pnpm w3a:check
+RUN pnpm board:roll:check
+
+> ggd@0.0.0 board:roll:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/board-roll.sh --check
+
+⛔ 根目錄的 GGD戰情版.md 指向 'docs/_release/戰情版-20260909.md'，應該是 'docs/_release/戰情版-20260908.md'
+   跑：bash scripts/board-roll.sh
+ ELIFECYCLE  Command failed with exit code 1.
+EXIT 1 pnpm board:roll:check
+RUN pnpm ruleslip:check
+
+> ggd@0.0.0 ruleslip:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/rule-slip.sh --check
+
+✓ 守則犯錯帳本：345 筆 · 代號全部合法 · 統計區最新
+EXIT 0 pnpm ruleslip:check
+RUN pnpm receipt:check
+
+> ggd@0.0.0 receipt:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/presentation-receipt/gen.ts --check
+
+receipt:check OK
+EXIT 0 pnpm receipt:check
+RUN pnpm handback:check
+
+> ggd@0.0.0 handback:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/main-handback/gen.ts --check
+
+✓ ggd-main-handback.json 是最新的
+EXIT 0 pnpm handback:check
+RUN pnpm clipdeg:check
+
+> ggd@0.0.0 clipdeg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/clip-degradation/gen.ts --check
+
+✓ ggd-clip-degradation.json 是最新的
+EXIT 0 pnpm clipdeg:check
+RUN pnpm apcoeffdiff:check
+
+> ggd@0.0.0 apcoeffdiff:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/gencheck.sh tsx tools/ap-coeff-apply/gen.ts --check
+
+✓ ggd-ap-coeff-before-after.md 是最新的
+EXIT 0 pnpm apcoeffdiff:check
+RUN pnpm decor:check
+
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+
+⛔ ggd-config-decoration-census.json · ggd-config-decoration-census.md 過期了 —— 跑 `pnpm decor:build` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.
+EXIT 1 pnpm decor:check
+RUN pnpm appearance:check
+
+> ggd@0.0.0 appearance:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> npx tsx tools/resolved-appearance/gen.ts --check
+
+✓ ggd-resolved-appearance.json 是最新的
+EXIT 0 pnpm appearance:check
+RUN pnpm ptokens:check
+
+> ggd@0.0.0 ptokens:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> npx tsx tools/presentation-tokens/gen.ts --check
+
+✓ ggd-presentation-token-manifest.json 是最新的
+EXIT 0 pnpm ptokens:check
+RUN pnpm coord:check
+
+> ggd@0.0.0 coord:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/coord/check.mjs
+
+✅ docs/editor-contract/coordination/brick-request.solid-beam.json
+✅ docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json
+✅ docs/editor-contract/coordination/claim.20260908-codex-blockers-cleared.json
+✅ docs/editor-contract/coordination/claim.20260908-s3-asset-library-split.json
+✅ docs/editor-contract/coordination/claim.20260909-community37-icons.json
+✅ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json
+✅ docs/editor-contract/coordination/claim.community-batch2-integration.json
+✅ docs/editor-contract/coordination/claim.community-hero-forge-integration.json
+✅ docs/editor-contract/coordination/claim.community-hero-forge-plan.json
+✅ docs/editor-contract/coordination/claim.community-teacher-mechanism-corrections.json
+✅ docs/editor-contract/coordination/claim.community37-icons.json
+✅ docs/editor-contract/coordination/claim.editor-form-receipts.json
+✅ docs/editor-contract/coordination/claim.editor-write-gate-zod.json
+✅ docs/editor-contract/coordination/claim.export-champion-package-landed.json
+✅ docs/editor-contract/coordination/claim.export-champion-package.json
+✅ docs/editor-contract/coordination/claim.hero-finetune-research.json
+✅ docs/editor-contract/coordination/claim.hero-forge-plan-main-response.json
+✅ docs/editor-contract/coordination/claim.hero-status-inventory.json
+✅ docs/editor-contract/coordination/claim.main-night-20260905-what-is-already-done.json
+✅ docs/editor-contract/coordination/claim.model-fx-emitter-remaining-four-fields.json
+✅ docs/editor-contract/coordination/claim.vfx-subtype-picker.json
+✅ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json
+✅ docs/editor-contract/coordination/owner-decision.20260908-assets-to-s3-not-git.json
+✅ docs/editor-contract/coordination/owner-decision.20260908-s3-prefix-split-and-legacy-private.json
+✅ docs/editor-contract/coordination/owner-decision.20260908-upload-everything-and-legacy-rename.json
+✅ docs/editor-contract/coordination/question.effect-graph-bridge.json
+✅ docs/editor-contract/coordination/question.ground-barrage-anchor.json
+⚠️  brick-request.solid-beam 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260907-open-tickets-handoff 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260908-codex-blockers-cleared 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260908-s3-asset-library-split 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260909-community37-icons 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.codex-lane-visual-advisory-and-brick-ids 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community-hero-forge-integration 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community-hero-forge-plan 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community-teacher-mechanism-corrections 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community37-icons 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.editor-form-receipts 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.editor-write-gate-zod 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.export-champion-package-landed 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.export-champion-package 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.hero-finetune-research 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.hero-forge-plan-main-response 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.hero-status-inventory 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.main-night-20260905-what-is-already-done 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.model-fx-emitter-remaining-four-fields 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.vfx-subtype-picker 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260906-main-tickets-codex-implements 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-assets-to-s3-not-git 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-s3-prefix-split-and-legacy-private 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-upload-everything-and-legacy-rename 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  question.effect-graph-bridge 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  question.ground-barrage-anchor 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+
+coord:check —— 27 份 packet，0 份有缺
+EXIT 0 pnpm coord:check

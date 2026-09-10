@@ -1,0 +1,50 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ❯ packages/shared/src/ops/everyTagAnnounced.test.ts (1 test | 1 failed) 79ms
+   × 每一個版號都要有 Discord 公告（owner 2026-09-01） > ★ ⭐ `FROM` 之後的每一個 tag 都在公告帳本裡（⛔ 手打繞過 bmpndd.sh 就會紅） 78ms
+     → ⛔⛔ 這幾個版號**沒有玩家公告紀錄**：
+  · v0.42.26
+
+⭐ 修法只有一個：**跑那個唯一入口**
+    bash scripts/bmpndd.sh "<這一版的一句話>"
+⛔ 不是手打 release.sh + gh release create + mini-deploy.sh —— 
+  那正是 2026-09-01 漏掉七版的做法（見本檔檔頭）。
+⚠️ 補發：set -a; . docker/.env; set +a; bash scripts/release-note-players.sh --post: expected [ 'v0.42.26' ] to deeply equal []
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/ops/everyTagAnnounced.test.ts > 每一個版號都要有 Discord 公告（owner 2026-09-01） > ★ ⭐ `FROM` 之後的每一個 tag 都在公告帳本裡（⛔ 手打繞過 bmpndd.sh 就會紅）
+AssertionError: ⛔⛔ 這幾個版號**沒有玩家公告紀錄**：
+  · v0.42.26
+
+⭐ 修法只有一個：**跑那個唯一入口**
+    bash scripts/bmpndd.sh "<這一版的一句話>"
+⛔ 不是手打 release.sh + gh release create + mini-deploy.sh —— 
+  那正是 2026-09-01 漏掉七版的做法（見本檔檔頭）。
+⚠️ 補發：set -a; . docker/.env; set +a; bash scripts/release-note-players.sh --post: expected [ 'v0.42.26' ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "v0.42.26",
++ ]
+
+ ❯ packages/shared/src/ops/everyTagAnnounced.test.ts:75:7
+     73|         "⚠️ 補發：set -a; . docker/.env; set +a; bash scripts/release-…
+     74|       ].join("\n"),
+     75|     ).toEqual([]);
+       |       ^
+     76|   });
+     77| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:42:34
+   Duration  924ms (transform 102ms, setup 0ms, collect 81ms, tests 79ms, environment 0ms, prepare 120ms)
+

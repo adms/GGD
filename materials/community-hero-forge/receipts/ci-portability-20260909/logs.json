@@ -1,0 +1,37 @@
+[
+  {
+    "path": "icon-gen-complete.log",
+    "sha256": "7292f133968c0df6a8b33774c5329d37932546bb37dcdfb6ee0c4dea41bec9cc",
+    "bytes": 609
+  },
+  {
+    "path": "common-fixes-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "editor-release.log",
+    "sha256": "d423aa53b1503f90da1d2123a48915ed4e26cf3716c7487375802b52db56963b",
+    "bytes": 915
+  },
+  {
+    "path": "skills-prefix.log",
+    "sha256": "3dfe68facb22799802908b6f58e1c2f72a1c901e6a268dbfc0a538b3e9260e42",
+    "bytes": 45160
+  },
+  {
+    "path": "skills-tail.log",
+    "sha256": "f405f3526638ec2d11f444a29436a04f5ef4df62fe6d8e9ffefd7295c22e5ef6",
+    "bytes": 9218
+  },
+  {
+    "path": "coord.log",
+    "sha256": "b28f3bb0d83cc04fbc78623e9130a9bfb678add386cf032e2930915001d12177",
+    "bytes": 5957
+  },
+  {
+    "path": "coord-packet.log",
+    "sha256": "6e0b6cfe199f679202eae8831ff5418011581998eb7b5c3c3254d18f8d51e0bf",
+    "bytes": 6032
+  }
+]

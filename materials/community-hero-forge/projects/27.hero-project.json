@@ -1,0 +1,1421 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-27-20260907",
+  "revision": 17,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "庫洛魔法使",
+    "concept": "庫洛魔法使 社群英雄功能驗收稿。作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n視覺方向：粉金牌框、綠風、葉枝束縛、羽翼與細劍；各牌圖示跟真實狀態同步。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔卡牌連結〕",
+      "Q": "風牌",
+      "W": "盾牌",
+      "E": "翔牌",
+      "R": "劍牌",
+      "EX": "〔換牌：風與樹〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 17,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 16,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 16,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 16,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 16,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-27-20260907.plan",
+    "title": "庫洛魔法使",
+    "summary": "庫洛魔法使 社群英雄功能驗收稿。作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n視覺方向：粉金牌框、綠風、葉枝束縛、羽翼與細劍；各牌圖示跟真實狀態同步。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "軟輔",
+    "archetype": "fighter",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "大",
+      "ad": "小",
+      "ap": "中",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "大",
+      "range": "中"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "id": "tpl-mark-stacks",
+        "schema": "template@1",
+        "name": "具名標記-層數與免死",
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "family": "mark-stacks",
+        "status": "enabled",
+        "params": {
+          "markId": {
+            "type": "docRef",
+            "default": "godie-hapm.passive"
+          },
+          "initial": {
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999,
+            "unit": "count"
+          },
+          "max": {
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 600,
+            "unit": "s"
+          },
+          "resetOn": {
+            "type": "enum",
+            "default": "match",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "perStackLost": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.1
+              },
+              {
+                "stat": "maxHealth",
+                "op": "pctAdd",
+                "value": 0.1
+              }
+            ],
+            "optional": true
+          },
+          "lethalMode": {
+            "type": "enum",
+            "default": "save",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "lethalConsume": {
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "surviveHpPct": {
+            "type": "number",
+            "default": 0.01,
+            "min": 0.01,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "lethalDamageTypes": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "default": 1.5,
+            "min": 0.1,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "type": "enum",
+            "default": "damageAndControl",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "restoreHealthPct": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 1,
+            "unit": "ratio",
+            "optional": true
+          },
+          "aoeRadius": {
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          "knockbackDistance": {
+            "type": "number",
+            "default": 4,
+            "min": 0.1,
+            "max": 20,
+            "optional": true
+          },
+          "knockbackSpeed": {
+            "type": "number",
+            "default": 16,
+            "min": 1,
+            "max": 40
+          },
+          "knockbackFrom": {
+            "type": "enum",
+            "default": "caster",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "stunSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0.034,
+            "max": 20,
+            "unit": "s",
+            "optional": true
+          },
+          "stunStatusId": {
+            "type": "docRef",
+            "default": "trial-stun"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+        }
+      },
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔卡牌連結〕",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】風 Q、樹 Q、W、E、R 完成施法後，與上一張卡不同即累積一層連結，上限三層；EX 只換牌不集氣。W 先消耗既有全部連結強化盾，再記入下一段牌序。回合開始重置連結與上一張牌。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-card-links",
+            "template": {
+              "ref": "tpl-mark-stacks",
+              "params": {
+                "markId": "community-review-27-20260907.card-link",
+                "initial": 0,
+                "max": 3,
+                "durationSec": -1,
+                "resetOn": "round",
+                "perStackLost": [],
+                "lethalMode": "none",
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
+              },
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          },
+          {
+            "instanceId": "passive-card-sequence",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAbilityCast",
+                    "abilitySlot": "Q",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-27-20260907.card-link",
+                        "stacks": 1,
+                        "duration": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-27-20260907.card-last.q"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-27-20260907.card-last.q",
+                        "stackKey": "community-review-27-20260907.card-last.q",
+                        "maxStacks": 1,
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "exclusiveGroup": "community-review-27-20260907.last-card",
+                        "exclusiveOnExisting": "replace"
+                      }
+                    ],
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-27-20260907.tree-card"
+                      }
+                    }
+                  },
+                  {
+                    "on": "onAbilityCast",
+                    "abilitySlot": "Q",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-27-20260907.card-link",
+                        "stacks": 1,
+                        "duration": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-27-20260907.card-last.tree"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-27-20260907.card-last.tree",
+                        "stackKey": "community-review-27-20260907.card-last.tree",
+                        "maxStacks": 1,
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "exclusiveGroup": "community-review-27-20260907.last-card",
+                        "exclusiveOnExisting": "replace"
+                      }
+                    ],
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  },
+                  {
+                    "on": "onAbilityCast",
+                    "abilitySlot": "W",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-27-20260907.card-link",
+                        "stacks": 1,
+                        "duration": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-27-20260907.card-last.w"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-27-20260907.card-last.w",
+                        "stackKey": "community-review-27-20260907.card-last.w",
+                        "maxStacks": 1,
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "exclusiveGroup": "community-review-27-20260907.last-card",
+                        "exclusiveOnExisting": "replace"
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onAbilityCast",
+                    "abilitySlot": "E",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-27-20260907.card-link",
+                        "stacks": 1,
+                        "duration": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-27-20260907.card-last.e"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-27-20260907.card-last.e",
+                        "stackKey": "community-review-27-20260907.card-last.e",
+                        "maxStacks": 1,
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "exclusiveGroup": "community-review-27-20260907.last-card",
+                        "exclusiveOnExisting": "replace"
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onAbilityCast",
+                    "abilitySlot": "R",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-27-20260907.card-link",
+                        "stacks": 1,
+                        "duration": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-27-20260907.card-last.r"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-27-20260907.card-last.r",
+                        "stackKey": "community-review-27-20260907.card-last.r",
+                        "maxStacks": 1,
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "exclusiveGroup": "community-review-27-20260907.last-card",
+                        "exclusiveOnExisting": "replace"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "風牌",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】風牌對敵方造成小級魔法傷害並以 GGD 小級擊退推動；換成樹牌後 Q 改為 0.7 秒束縛。兩種模式使用同一個 Q 技能實例、冷卻與魔力。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "q-card-effect",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": []
+                    },
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-27-20260907.tree-card"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 1,
+                    "speed": 10,
+                    "distanceTier": "小",
+                    "from": "caster",
+                    "applyTo": "target",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-27-20260907.tree-card"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.wind.pulse-sm",
+                    "at": "target",
+                    "durationSec": 0.7,
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-27-20260907.tree-card"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-27-20260907.tree-root",
+                    "duration": 0.7,
+                    "root": true,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.nature.pulse-sm",
+                    "at": "target",
+                    "durationSec": 0.7,
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "盾牌",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】為自己或指定友軍提供三秒護盾；結算時消耗既有全部連結（0–3），基礎盾量為 120 + 每層 20，再套用 GGD 等級成長。不同卡牌累積在此次結算後處理，不回頭強化同一片盾。敵方或超距施法不消耗連結。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "w-friendly-protection",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "subject": "self",
+                    "statusId": "community-review-27-20260907.card-link",
+                    "count": 3,
+                    "onConsumed": [
+                      {
+                        "absorbs": "all",
+                        "amount": {
+                          "flat": 180,
+                          "ratios": []
+                        },
+                        "duration": 3,
+                        "kind": "shield",
+                        "onExisting": "keepLarger",
+                        "stackKey": "community-review-27-20260907.w.guard"
+                      }
+                    ],
+                    "onMissing": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-27-20260907.card-link",
+                        "count": 2,
+                        "onConsumed": [
+                          {
+                            "absorbs": "all",
+                            "amount": {
+                              "flat": 160,
+                              "ratios": []
+                            },
+                            "duration": 3,
+                            "kind": "shield",
+                            "onExisting": "keepLarger",
+                            "stackKey": "community-review-27-20260907.w.guard"
+                          }
+                        ],
+                        "onMissing": [
+                          {
+                            "kind": "consumeStatus",
+                            "shape": "single",
+                            "subject": "self",
+                            "statusId": "community-review-27-20260907.card-link",
+                            "count": 1,
+                            "onConsumed": [
+                              {
+                                "absorbs": "all",
+                                "amount": {
+                                  "flat": 140,
+                                  "ratios": []
+                                },
+                                "duration": 3,
+                                "kind": "shield",
+                                "onExisting": "keepLarger",
+                                "stackKey": "community-review-27-20260907.w.guard"
+                              }
+                            ],
+                            "onMissing": [
+                              {
+                                "absorbs": "all",
+                                "amount": {
+                                  "flat": 120,
+                                  "ratios": []
+                                },
+                                "duration": 3,
+                                "kind": "shield",
+                                "onExisting": "keepLarger",
+                                "stackKey": "community-review-27-20260907.w.guard"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "翔牌",
+        "purpose": "【核准惡搞改編】翔牌改成短跳送工具：沿合法落點飛躍0.5秒，沒有傷害或無限飛行；用來追上風牌吹遠的敵人。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "ground",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "leap",
+                    "mode": "toPoint",
+                    "applyTo": "self",
+                    "apexHeight": 0.32,
+                    "durationSec": 0.5,
+                    "landRadius": 1.83,
+                    "onLand": []
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "劍牌",
+        "purpose": "【核准惡搞改編】劍牌其實是短餐刀：四秒AD+15%、攻速+20%，普攻改為近身短距離；用樹牌留人再E接近，風牌可能把晚餐吹走。到期恢復原普攻距離，",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "duration": 4,
+                    "stackKey": "community-review-27-20260907.sword",
+                    "maxStacks": 1,
+                    "modifiers": [
+                      {
+                        "stat": "ad",
+                        "op": "pctAdd",
+                        "value": 0.15
+                      },
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 0.2
+                      },
+                      {
+                        "stat": "range",
+                        "op": "override",
+                        "value": 1.7
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "今天的庫洛牌是餐刀",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔換牌：風與樹〕",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】切換自身 Q 的風／樹模式，不直接攻擊或束縛敵人、不重置 Q 冷卻，也不重複收取 Q 魔力。換牌免費，採 GGD 極小冷卻；原施法未結束時不能插入切換。回合開始回復風牌。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "cooldownTier": "極小",
+          "provenance": "editor-json",
+          "manaCost": [
+            0
+          ],
+          "range": 0
+        },
+        "products": [
+          {
+            "instanceId": "ex-card-effect",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "subject": "self",
+                    "statusId": "community-review-27-20260907.tree-card",
+                    "count": "all",
+                    "onConsumed": [
+                      {
+                        "kind": "spawnVfx",
+                        "vfxId": "fx.prim.wind.pulse-sm",
+                        "at": "self",
+                        "durationSec": 0.7
+                      }
+                    ],
+                    "onMissing": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-27-20260907.tree-card",
+                        "stackKey": "community-review-27-20260907.tree-card",
+                        "maxStacks": 1,
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "modifiers": []
+                      },
+                      {
+                        "kind": "spawnVfx",
+                        "vfxId": "fx.prim.nature.pulse-sm",
+                        "at": "self",
+                        "durationSec": 0.7
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.05d411598b56273f8a35dba93758f663626805c245ed90ed",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "byteSize": 985524,
+      "clipMap": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "sourceAssetId": "mba:ce884f239ba2fa1f0e05bceb",
+      "sourceCharacter": "木之本櫻",
+      "sourceWork": "庫洛魔法使",
+      "relationship": "exact",
+      "notes": "來自魔法少女武鬥祭 Complete Form 1.60；保留原骨架及六種動作。技能機制與特效逐槽另驗收。"
+    },
+    "championIcon": "assets/icons/champions/sela.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-27-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-27-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-27-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-27-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                161,
+                199
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.wind.pulse",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                161,
+                199
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-27-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-27-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                161,
+                199
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-27-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-27-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                161,
+                199
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-27-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-27-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3.glb",
+        "byteSize": 985524,
+        "mediaType": "model/gltf-binary",
+        "sha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b",
+    "name": "庫洛魔法使",
+    "identity": "作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。",
+    "ownerText": "### 27｜庫洛魔法使\n\n作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n- **PASSIVE｜〔卡牌連結〕**：依序使用不同卡牌累積連結，上限三層，強化下一次護盾。\n- **Q｜風牌**：以風束攻擊並推動目標。\n- **W｜盾牌**：為自己或指定友軍提供護盾。\n- **E｜翔牌**：短期飛行位移，具有合法落點與高度限制。\n- **R｜劍牌**：短期將法杖化為劍，替換普攻並強化近戰。\n- **EX｜〔換牌：風與樹〕**：將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。\n\n**審查重點**：牌面、圖示與實際技能同步；驗證切換中的施法、共用冷卻、劍牌結束，以及飛行不穿越對決邊界。\n\n",
+    "reviewText": "牌面、圖示與實際技能同步；驗證切換中的施法、共用冷卻、劍牌結束，以及飛行不穿越對決邊界。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔卡牌連結〕",
+        "ownerDescription": "依序使用不同卡牌累積連結，上限三層，強化下一次護盾。",
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需不同牌序列三層與護盾消耗。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ]
+      },
+      "Q": {
+        "name": "風牌",
+        "ownerDescription": "以風束攻擊並推動目標。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。",
+        "requiredRefinement": "風束推動缺 knockback；目前單體魔法。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ]
+      },
+      "W": {
+        "name": "盾牌",
+        "ownerDescription": "為自己或指定友軍提供護盾。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-27-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "requiredRefinement": "目前自身；需友軍選取。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ]
+      },
+      "E": {
+        "name": "翔牌",
+        "ownerDescription": "短期飛行位移，具有合法落點與高度限制。",
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "requiredRefinement": "有限落點飛躍可預覽；翔牌武器姿態待補。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ]
+      },
+      "R": {
+        "name": "劍牌",
+        "ownerDescription": "短期將法杖化為劍，替換普攻並強化近戰。",
+        "baselineBehavior": "自身取得 4 秒增益：ad +15%、as +20%。",
+        "requiredRefinement": "AD／攻速强化不等於劍牌；需普攻替換、武器及還原。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ]
+      },
+      "EX": {
+        "name": "〔換牌：風與樹〕",
+        "ownerDescription": "將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。",
+        "requiredRefinement": "目前固定樹牌鎖足；需風／樹 Q 版本切換，共享冷卻。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n風牌與樹牌依實際 Q 分支分別識別；EX 切換本身不增加連結。一般攻擊不集氣。牌面／圖示狀態同步仍待畫面實作驗收。",
+    "Q": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n風／樹分支由 EX 狀態決定。風與自然類既有特效僅為分支提示，未宣稱原作風束／葉枝演出或圖示完成。",
+    "W": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n友军／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調；原文及畫面驗收狀態分開記錄。",
+    "E": "庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n翔牌改成短跳送工具：沿合法落點飛躍0.5秒，沒有傷害或無限飛行；用來追上風牌吹遠的敵人。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n劍牌其實是短餐刀：四秒AD+15%、攻速+20%，普攻改為近身短距離；用樹牌留人再E接近，風牌可能把晚餐吹走。到期恢復原普攻距離，\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\nQ 真正改走擊退或束縛分支，EX 本身不集氣。兩者共用同一 Q 實例；牌面／圖示隨模式同步仍待補，不把分支色彩提示當成完整美術。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 17,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 16,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 16,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 16,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 16,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 17,
+      "digest": "4efd57b0df64856ca73fc5023567ec73c4aa99bd19ddd0d24903f13fc76d38f7",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+
+> ggd@0.0.0 content:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh content:build content:build:raw
+
+🔓 隔離區:解鎖 457 份（追蹤 862,缺 0）
+
+> ggd@0.0.0 content:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> pnpm vfxassets:check && pnpm --filter @ggd/shared content:build && pnpm spec:build && pnpm overview:build && pnpm tiers:build
+
+
+> ggd@0.0.0 vfxassets:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/python-pillow.sh tools/vfx-asset-safety/check.py && bash scripts/python-pillow.sh tools/w3x-import/repair_alpha_backdrops.py --check && bash scripts/python-pillow.sh tools/vfx-asset-safety/repair_material_metadata.py --check
+
+vfx-asset-safety: PASS (0 blocker(s))
+checked: 0
+checked: 0
+
+> @ggd/shared@0.0.0 content:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/packages/shared
+> tsx scripts/buildIndexes.ts
+
+⚠️ 讀不到 manifest.json（SyntaxError: Expected property name or '}' in JSON at position 2 (line 2 column 1)）—— 這一趟改以**目錄掃描**為準把每一個集合都納入驗證（這正是 content:build 要重建的那一份產物）。
+（manifest 還沒有這些集合，一併納入驗證：champions、abilities、items、augments、projectiles、status-effects、loot-tables、arenas、maps、config、models、vfx、skins、ability-templates、vfx-scripts、vfx-subtypes —— 它們是這次 build 才第一次進 manifest 與 bundle 的）
+  champions        71 doc(s)  74ea868e6821
+  abilities       421 doc(s)  35a6502b6cc8
+  items           142 doc(s)  1ee281a7f136
+  augments         91 doc(s)  e003b299e8a9
+  projectiles      21 doc(s)  952cffc4b28b
+  status-effects   51 doc(s)  7219076b5f8e
+  loot-tables       3 doc(s)  50b52195cd4a
+  arenas           13 doc(s)  ee5870b2c76d
+  maps              7 doc(s)  51237ab2fd5f
+  config          103 doc(s)  a326bd04a859
+  models          156 doc(s)  a385fd978ca5
+  vfx             702 doc(s)  7df129081586
+  skins             5 doc(s)  3d1095f3da83
+  ability-templates  58 doc(s)  444e6cd5b4aa
+  vfx-scripts      10 doc(s)  3d945d196d0a
+  vfx-subtypes      4 doc(s)  356bb93fc4d8
+contentVersion: cv_4c97c8704c86
+editor-target-profile.json  digest=89ead587cdd3
+bundle.json:    1858 doc(s)  2819208 B raw  599637 B gzip-9  394857 B brotli-11
+
+> ggd@0.0.0 spec:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh spec:build spec:build:raw
+
+
+> ggd@0.0.0 spec:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/skill-spec/gen_spec.ts
+
+[content-cache] Redis 連不上（127.0.0.1:6379）⇒ 退回檔案層
+✅ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/docs/技能標記機制與效果規則.md（4745 行）
+
+> ggd@0.0.0 overview:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh overview:build overview:build:raw
+
+
+> ggd@0.0.0 overview:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/innate-legendary/gen_overview.ts
+
+✅ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/docs/固有能力及寶具總覽.md（3179 行）
+
+> ggd@0.0.0 tiers:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> bash scripts/genrun.sh tiers:build tiers:build:raw
+
+
+> ggd@0.0.0 tiers:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/skill-tiers/gen_tiers.ts
+
+✅ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/docs/editor-contract/ggd-skill-tiers.md（476 行）
+🔒 隔離區:上鎖 457 份（追蹤 862,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: content:build 完成（產物已重新上鎖）

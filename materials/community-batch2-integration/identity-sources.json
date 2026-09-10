@@ -1,0 +1,778 @@
+{
+  "schema": "ggd-batch2-identity-sources@2",
+  "researchDate": "2026-09-09",
+  "method": "逐名核對官方作品／角色頁；公開作者原作作為一級來源。Ned 的官方頁僅證實作品，人物對應明列次級佐證，不提升為官方證明。來源支持身分與辨識元素，不構成六槽原作能力或引擎實作證明。",
+  "userAttachment": "/Users/Takuro/.codex/attachments/0154dc79-f460-44ab-a8db-c1ecac6c2b00/pasted-text.txt",
+  "heroes": [
+    {
+      "number": 1,
+      "id": "b2-popp",
+      "lockedDisplayName": "何布",
+      "canonicalName": "ポップ（Popp）",
+      "canonicalWork": "神龍之謎／DRAGON QUEST 達伊的大冒險",
+      "versionScope": "動畫初期魔法師與亞邦弟子",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://dq-dai.com/character/?char=popp",
+          "title": "東映動畫官方角色頁",
+          "type": "official",
+          "supports": "膽小而會挺身救人的魔法師；Popp 的不同中文譯名不另拆身分。"
+        }
+      ],
+      "originalIdentityFinding": "膽小而會挺身救人的魔法師；Popp 的不同中文譯名不另拆身分。",
+      "ggdAdaptationBoundary": "撤退保險與烤肉笑點、數值門檻均是 GGD 編創。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 2,
+      "id": "b2-rem",
+      "lockedDisplayName": "蕾姆",
+      "canonicalName": "レム",
+      "canonicalWork": "Re:從零開始",
+      "versionScope": "早期羅茲瓦爾宅邸女僕／鬼族",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://re-zero-anime.jp/tv/character/",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "拉姆的雙胞胎妹妹、女僕與鬼族倖存者。"
+        }
+      ],
+      "originalIdentityFinding": "拉姆的雙胞胎妹妹、女僕與鬼族倖存者。",
+      "ggdAdaptationBoundary": "不把後期失憶劇情混入本套；清潔服務與作戰規則是改編。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 3,
+      "id": "b2-zenitsu",
+      "lockedDisplayName": "我妻善逸",
+      "canonicalName": "我妻善逸",
+      "canonicalWork": "鬼滅之刃",
+      "versionScope": "立志篇",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://kimetsu.com/anime/risshihen/character/?chara=zennitsu",
+          "title": "動畫立志篇官方角色頁",
+          "type": "official",
+          "supports": "膽怯、聽覺敏銳，睡著時呈現不同戰鬥表現。"
+        }
+      ],
+      "originalIdentityFinding": "膽怯、聽覺敏銳，睡著時呈現不同戰鬥表現。",
+      "ggdAdaptationBoundary": "睡眠加班笑點與限時準備是改編，不能以原作睡眠代替引擎觸發證明。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 4,
+      "id": "b2-rin",
+      "lockedDisplayName": "遠坂凜",
+      "canonicalName": "遠坂凛",
+      "canonicalWork": "Fate/stay night",
+      "versionScope": "Unlimited Blade Works 的遠坂凜",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.fate-sn.jp/root_rin.html",
+          "title": "動畫官方路線介紹",
+          "type": "official",
+          "supports": "遠坂家魔術師、Archer 的御主。"
+        },
+        {
+          "url": "https://www.lasengle.co.jp/games/dominate-grail-war/pdf/manual.pdf",
+          "title": "Fate/stay night DOMINATE GRAIL WAR 官方遊戲說明書",
+          "type": "official-licensed",
+          "supports": "遠坂凜的寶石魔術辨識；不取用此桌遊規則當 GGD 能力證明。"
+        }
+      ],
+      "originalIdentityFinding": "遠坂家魔術師、Archer 的御主。",
+      "ggdAdaptationBoundary": "不混入 Extra 或伊絲塔；寶石報帳、資源消耗數值是改編。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 5,
+      "id": "b2-uncle",
+      "lockedDisplayName": "異世界舅舅",
+      "canonicalName": "おじさん",
+      "canonicalWork": "異世界舅舅",
+      "versionScope": "從異世界返回現代的舅舅",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.kadokawa.co.jp/product/video1538/",
+          "title": "KADOKAWA 官方作品介紹",
+          "type": "official",
+          "supports": "昏迷十七年後醒來，自稱從異世界返回並展示魔法，喜愛 SEGA。"
+        }
+      ],
+      "originalIdentityFinding": "昏迷十七年後醒來，自稱從異世界返回並展示魔法，喜愛 SEGA。",
+      "ggdAdaptationBoundary": "客服與社交事故為 GGD 喜劇，未將所有原作精靈能力認列為既有引擎能力。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 6,
+      "id": "b2-boxxo",
+      "lockedDisplayName": "阿箱＋拉蜜絲",
+      "canonicalName": "ハッコン＋ラッミス",
+      "canonicalWork": "轉生成自動販賣機的我今天也在迷宮徘徊",
+      "versionScope": "動畫第一季搭檔",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://jihanki-anime.com/1st/",
+          "title": "動畫第一季官方網站",
+          "type": "official",
+          "supports": "阿箱是只能用販賣機既有語音發聲、無法自行行走的販賣機；拉蜜絲以怪力搬運他。"
+        }
+      ],
+      "originalIdentityFinding": "阿箱是只能用販賣機既有語音發聲、無法自行行走的販賣機；拉蜜絲以怪力搬運他。",
+      "ggdAdaptationBoundary": "本驗證是使用者指定的單一搭檔英雄，不宣稱可控制兩個本體或已完成搭載模型。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 7,
+      "id": "b2-shadow",
+      "lockedDisplayName": "闇影",
+      "canonicalName": "シド・カゲノー／シャドウ",
+      "canonicalWork": "我想成為影之強者",
+      "versionScope": "動畫第一季核心身分",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://shadow-garden.jp/1st/story/",
+          "title": "動畫第一季官方故事",
+          "type": "official",
+          "supports": "席德追求暗中強者的中二演出；闇影是同一人的別名。"
+        },
+        {
+          "url": "https://shadow-garden.jp/1st/staffcast/",
+          "title": "動畫第一季官方演員表",
+          "type": "official",
+          "supports": "シド・カゲノー與シャドウ屬同人別名，不得拆開認定。"
+        }
+      ],
+      "originalIdentityFinding": "席德追求暗中強者的中二演出；闇影是同一人的別名。",
+      "ggdAdaptationBoundary": "聚光燈與 ATOMIC 為有界效果；別名不得當不同角色繞過隔離。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 8,
+      "id": "b2-bojji",
+      "lockedDisplayName": "波吉",
+      "canonicalName": "ボッジ",
+      "canonicalWork": "國王排名",
+      "versionScope": "第一季第一王子",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://osama-ranking.com/character/?id=01",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "第一王子，身體弱小、聽不見，仍夢想成為國王。"
+        }
+      ],
+      "originalIdentityFinding": "第一王子，身體弱小、聽不見，仍夢想成為國王。",
+      "ggdAdaptationBoundary": "笑點放在對手落空與勇氣，不取笑身心特徵；弱點打擊的具體效果屬 GGD 改編。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 9,
+      "id": "b2-maomao",
+      "lockedDisplayName": "貓貓",
+      "canonicalName": "猫猫",
+      "canonicalWork": "藥師少女的獨語",
+      "versionScope": "動畫第一季藥師／試毒",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://kusuriyanohitorigoto.jp/season1/",
+          "title": "動畫第一季官方網站",
+          "type": "official",
+          "supports": "藥師出身、喜好研究毒與藥，進入後宮擔任試毒。"
+        }
+      ],
+      "originalIdentityFinding": "藥師出身、喜好研究毒與藥，進入後宮擔任試毒。",
+      "ggdAdaptationBoundary": "試吃會與解毒排隊屬改編；不建立新的毒素資源或製藥系統。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 10,
+      "id": "b2-elma",
+      "lockedDisplayName": "艾爾瑪",
+      "canonicalName": "エルマ・エドヴァン",
+      "canonicalWork": "被逐出家門的重騎士以遊戲知識開無雙",
+      "versionScope": "轉生重騎士／遊戲攻略知識",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://sh-anime.shochiku.co.jp/jukishi-anime/",
+          "title": "松竹動畫官方網站",
+          "type": "official",
+          "supports": "原為遊戲玩家，轉生為艾爾瑪，獲重騎士職業並運用遊戲知識。"
+        }
+      ],
+      "originalIdentityFinding": "原為遊戲玩家，轉生為艾爾瑪，獲重騎士職業並運用遊戲知識。",
+      "ggdAdaptationBoundary": "此來源證實角色與職業，不單憑簡介宣稱每項後期技能；壓血攻略的數值與連招為 GGD 編創。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 11,
+      "id": "b2-albus",
+      "lockedDisplayName": "阿爾巴斯",
+      "canonicalName": "アルバス",
+      "canonicalWork": "廻天のアルバス",
+      "versionScope": "漫畫勇者的重複旅程／效率化",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://websunday.net/work/59488/",
+          "title": "小學館週刊少年 Sunday 官方連載頁",
+          "type": "official",
+          "supports": "牧彰久原作、箭坪幹作畫；勇者以多次冒險經驗追求效率與時間縮短。"
+        }
+      ],
+      "originalIdentityFinding": "牧彰久原作、箭坪幹作畫；勇者以多次冒險經驗追求效率與時間縮短。",
+      "ggdAdaptationBoundary": "勇者再次啟程是使用者指定中文作品標籤；以原作日文標題消歧，不實作存檔回溯。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 12,
+      "id": "b2-goblin",
+      "lockedDisplayName": "哥布林殺手",
+      "canonicalName": "ゴブリンスレイヤー",
+      "canonicalWork": "哥布林殺手",
+      "versionScope": "專注哥布林討伐的銀級冒險者",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://goblinslayer.jp/character/",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "銀級冒險者，專門討伐哥布林。"
+        }
+      ],
+      "originalIdentityFinding": "銀級冒險者，專門討伐哥布林。",
+      "ggdAdaptationBoundary": "施工、評估與廉價裝備笑點是改編，不把其他物種永久改寫成哥布林。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 13,
+      "id": "b2-maple",
+      "lockedDisplayName": "梅普露",
+      "canonicalName": "メイプル／本条楓",
+      "canonicalWork": "怕痛的我把防禦力點滿就對了",
+      "versionScope": "遊戲角色梅普露的防禦大盾特徵",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://bofuri.jp/season1/character/",
+          "title": "動畫第一季官方角色頁",
+          "type": "official",
+          "supports": "本條楓的遊戲角色，將防禦特化並使用大盾。"
+        }
+      ],
+      "originalIdentityFinding": "本條楓的遊戲角色，將防禦特化並使用大盾。",
+      "ggdAdaptationBoundary": "與第 21 名魔法劍士カエデ是不同作品不同人物；吃東西與變形不自動證明引擎支援。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 14,
+      "id": "b2-naofumi",
+      "lockedDisplayName": "岩谷尚文",
+      "canonicalName": "岩谷尚文",
+      "canonicalWork": "盾之勇者成名錄",
+      "versionScope": "盾之勇者核心職責",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://shieldhero-anime.jp/3rd/",
+          "title": "動畫第三季官方網站",
+          "type": "official",
+          "supports": "被召喚到異世界的盾之勇者。"
+        }
+      ],
+      "originalIdentityFinding": "被召喚到異世界的盾之勇者。",
+      "ggdAdaptationBoundary": "僅用盾與保護同伴特徵，不宣稱完整詛咒盾、全部盾型或後期力量。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 15,
+      "id": "b2-makoto",
+      "lockedDisplayName": "深澄真",
+      "canonicalName": "深澄真",
+      "canonicalWork": "月光下的異世界之旅",
+      "versionScope": "第二季商會與巨大魔力特徵",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://tsukimichi.com/news/67/",
+          "title": "動畫官方角色資料公開",
+          "type": "official",
+          "supports": "從原世界來的少年，擁有龐大魔力並經營葛葉商會。"
+        }
+      ],
+      "originalIdentityFinding": "從原世界來的少年，擁有龐大魔力並經營葛葉商會。",
+      "ggdAdaptationBoundary": "商品與批發轟炸是 GGD 喜劇，並非新商業資源系統。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 16,
+      "id": "b2-noor",
+      "lockedDisplayName": "諾爾",
+      "canonicalName": "ノール",
+      "canonicalWork": "我要招架一切",
+      "versionScope": "動畫初期持續練習招架的冒險者",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://parry-anime.com/character/",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "長期磨練招架，仍自認實力不足的冒險者。"
+        }
+      ],
+      "originalIdentityFinding": "長期磨練招架，仍自認實力不足的冒險者。",
+      "ggdAdaptationBoundary": "有限屏障與反制不等於原作敘事中的一切皆能擋；能力邊界由實際引擎驗證。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 17,
+      "id": "b2-touka",
+      "lockedDisplayName": "托卡・史考特",
+      "canonicalName": "トウカ・スコット",
+      "canonicalWork": "勇者死了",
+      "versionScope": "農夫陷阱與勇者身分事故",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.bs11.jp/anime/heroisdead/",
+          "title": "BS11 官方節目介紹",
+          "type": "official",
+          "supports": "农夫設置陷阱導致勇者事故，並捲入身體／勇者身分的變化。"
+        }
+      ],
+      "originalIdentityFinding": "农夫設置陷阱導致勇者事故，並捲入身體／勇者身分的變化。",
+      "ggdAdaptationBoundary": "只用挖坑農夫與工地喜劇；不延伸性化特徵，亦不聲稱真地形挖洞。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 18,
+      "id": "b2-haga",
+      "lockedDisplayName": "羽賀",
+      "canonicalName": "ハガ／羽賀誠",
+      "canonicalWork": "這個世界漏洞百出",
+      "versionScope": "被困遊戲的認真除錯工作者",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://konofuka.com/character",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "真名羽賀誠，受雇於除錯公司，在 VR 遊戲內執行檢查。"
+        }
+      ],
+      "originalIdentityFinding": "真名羽賀誠，受雇於除錯公司，在 VR 遊戲內執行檢查。",
+      "ggdAdaptationBoundary": "除錯技能只由既有戰鬥效果構成，不賦予任意修改程式或管理員權限。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 19,
+      "id": "b2-guts",
+      "lockedDisplayName": "凱茲",
+      "canonicalName": "ガッツ",
+      "canonicalWork": "烙印勇士",
+      "versionScope": "黑色劍士的大劍與義手特徵",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.berserk-anime.com/character/index.html",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "揮舞巨大斬龍劍，裝備義手的黑色劍士。"
+        }
+      ],
+      "originalIdentityFinding": "揮舞巨大斬龍劍，裝備義手的黑色劍士。",
+      "ggdAdaptationBoundary": "使用者名凱茲維持不變；工傷自損是改編，沒有宣稱狂戰士鎧甲換模。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 20,
+      "id": "b2-keyaru",
+      "lockedDisplayName": "凱亞爾",
+      "canonicalName": "ケヤル",
+      "canonicalWork": "回復術士的重來人生",
+      "versionScope": "回復勇者的醫療能力部分",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://kaiyari.com/character.html",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "持有回復能力的勇者；治療承受他人痛楚的設定辨識。"
+        }
+      ],
+      "originalIdentityFinding": "持有回復能力的勇者；治療承受他人痛楚的設定辨識。",
+      "ggdAdaptationBoundary": "僅保留非性化醫療與帳單喜劇，不借用性暴力、記憶操控或復活敘事。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 21,
+      "id": "b2-kaede",
+      "lockedDisplayName": "楓",
+      "canonicalName": "カエデ",
+      "canonicalWork": "異世界転移したのでチートを生かして魔法剣士やることにする",
+      "versionScope": "進行諸島原作中的轉移魔法劍士",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://ncode.syosetu.com/n0447ca/27/",
+          "title": "作者進行諸島公開原作第 26 話",
+          "type": "author-original",
+          "supports": "カエデ使用魔法與劍、護盾等能力；此人不同於梅普露的本條楓。"
+        },
+        {
+          "url": "https://magazine.jp.square-enix.com/top/comics/detail/9784757586499/",
+          "title": "SQUARE ENIX 漫畫第 8 卷官方書籍頁",
+          "type": "official",
+          "supports": "作品名稱與主角カエデ的出版身分補強。"
+        }
+      ],
+      "originalIdentityFinding": "カエデ使用魔法與劍、護盾等能力；此人不同於梅普露的本條楓。",
+      "ggdAdaptationBoundary": "本次選此確定身分；附魔更新視窗、卸載回魔為 GGD 創編，不聲稱原作介面。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 22,
+      "id": "b2-matthias",
+      "lockedDisplayName": "馬提亞斯",
+      "canonicalName": "マティアス＝ヒルデスハイマー",
+      "canonicalWork": "失格紋的最強賢者",
+      "versionScope": "轉生後第四紋戰鬥者",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://shikkakumon.com/chara/index.html",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "賢者轉生為馬提亞斯，以第四紋與過往知識投入戰鬥。"
+        }
+      ],
+      "originalIdentityFinding": "賢者轉生為馬提亞斯，以第四紋與過往知識投入戰鬥。",
+      "ggdAdaptationBoundary": "教師批改、護甲扣分與重修笑點為 GGD 改編。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 23,
+      "id": "b2-sinbad",
+      "lockedDisplayName": "辛巴達",
+      "canonicalName": "シンドバッド",
+      "canonicalWork": "マギ シンドバッドの冒険",
+      "versionScope": "前傳少年辛巴達",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.mbs.jp/sinbad/",
+          "title": "MBS 官方動畫介紹",
+          "type": "official",
+          "supports": "本篇約三十年前的年少辛巴達冒險，後成七海之王。"
+        }
+      ],
+      "originalIdentityFinding": "本篇約三十年前的年少辛巴達冒險，後成七海之王。",
+      "ggdAdaptationBoundary": "明確採前傳少年辨識，不混入本篇成年王全部七種魔裝能力。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 24,
+      "id": "b2-kumoko",
+      "lockedDisplayName": "蜘蛛子",
+      "canonicalName": "私（蜘蛛の魔物）",
+      "canonicalWork": "轉生成蜘蛛又怎樣",
+      "versionScope": "蜘蛛魔物階段",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://kumo-anime.com/character.html",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "轉生為蜘蛛魔物的女主角，運用敏捷、蜘蛛網与毒等求生。"
+        },
+        {
+          "url": "https://kumo-anime.com/special-oth-skill.html",
+          "title": "動畫官方技能介紹",
+          "type": "official",
+          "supports": "蜘蛛絲與毒牙技能辨識。"
+        }
+      ],
+      "originalIdentityFinding": "轉生為蜘蛛魔物的女主角，運用敏捷、蜘蛛網与毒等求生。",
+      "ggdAdaptationBoundary": "不混入後期人形、神化或完整進化；租屋與房東笑點是改編。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 25,
+      "id": "b2-yogiri",
+      "lockedDisplayName": "高遠夜霧",
+      "canonicalName": "高遠夜霧",
+      "canonicalWork": "秒殺外掛太強了，異世界的傢伙們根本就不是對手",
+      "versionScope": "核心身分與即死能力意象",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.earthstar.co.jp/comicalize/comicalize_item/detail/item-10939/",
+          "title": "Earth Star 官方漫畫作品頁",
+          "type": "official",
+          "supports": "擁有即死能力的少年夜霧，原有能力並非同班獲贈技能。"
+        }
+      ],
+      "originalIdentityFinding": "擁有即死能力的少年夜霧，原有能力並非同班獲贈技能。",
+      "ggdAdaptationBoundary": "GGD 明確改成條件式有限傷害與沉默，不宣稱概念抹殺、無條件即死。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 26,
+      "id": "b2-kaiji",
+      "lockedDisplayName": "伊藤開司",
+      "canonicalName": "伊藤開司",
+      "canonicalWork": "賭博默示錄",
+      "versionScope": "漫畫／動畫開司的賭局冒險",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://shop.ntv.co.jp/item/1003aEEZ0300?areaid=sptestishihara2",
+          "title": "日本電視台官方中間管理錄利根川商品／配音資料",
+          "type": "official",
+          "supports": "官方授權作品資料列伊藤開司與動畫聲優；使用者指定的賭博默示錄角色身分保持不變。"
+        }
+      ],
+      "originalIdentityFinding": "官方授權作品資料列伊藤開司與動畫聲優；使用者指定的賭博默示錄角色身分保持不變。",
+      "ggdAdaptationBoundary": "不混用電影專屬劇情；魔力下注是 GGD 有限機制，不是原作真貨幣。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 27,
+      "id": "b2-fushi",
+      "lockedDisplayName": "不死",
+      "canonicalName": "フシ",
+      "canonicalWork": "致不滅的你",
+      "versionScope": "第一季早期刺激、變化與再生意象",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.anime-fumetsunoanatae.com/1st/story/?l=ja",
+          "title": "動畫第一季官方故事",
+          "type": "official",
+          "supports": "最初為球體，受刺激而變化為石頭、狼、少年，擁有再生特徵。"
+        }
+      ],
+      "originalIdentityFinding": "最初為球體，受刺激而變化為石頭、狼、少年，擁有再生特徵。",
+      "ggdAdaptationBoundary": "本次有限治療與適應暫態不等同無限再生、死後復活或死者重建。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 28,
+      "id": "b2-orphen",
+      "lockedDisplayName": "歐菲",
+      "canonicalName": "オーフェン／キリランシェロ",
+      "canonicalWork": "魔術士歐菲",
+      "versionScope": "動畫核心魔術士與地下放貸者",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://ssorphen-anime.com/chara/",
+          "title": "動畫官方角色頁",
+          "type": "official",
+          "supports": "原名奇利藍謝洛，曾在牙之塔學習，黑衣紅頭巾魔術士兼地下放貸者。"
+        }
+      ],
+      "originalIdentityFinding": "原名奇利藍謝洛，曾在牙之塔學習，黑衣紅頭巾魔術士兼地下放貸者。",
+      "ggdAdaptationBoundary": "催收 DOT 與定額自療是改編，不能把借款台詞當持續吸血鏈結。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 29,
+      "id": "b2-klaus",
+      "lockedDisplayName": "克勞斯",
+      "canonicalName": "クラウス",
+      "canonicalWork": "覺醒了自動機能的十五年無成冒險者",
+      "versionScope": "講談社作品的十五年冒險者",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://lanove.kodansha.co.jp/books/2021/9/3.html",
+          "title": "講談社輕小說官方書籍頁",
+          "type": "official",
+          "supports": "冒險十五年的克勞斯獲得自動模式，可自動移動、採集與戰鬥。"
+        }
+      ],
+      "originalIdentityFinding": "冒險十五年的克勞斯獲得自動模式，可自動移動、採集與戰鬥。",
+      "ggdAdaptationBoundary": "改成有期限、可取消的幾次排程攻擊；不冒稱全遊戲 AI 代理或離線收益。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 30,
+      "id": "b2-takopi",
+      "lockedDisplayName": "章魚嗶",
+      "canonicalName": "タコピー",
+      "canonicalWork": "章魚嗶的原罪",
+      "versionScope": "以開心道具幫助朋友的外星訪客",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.tbs.co.jp/anime/takopi_project/character/",
+          "title": "TBS 動畫官方角色頁",
+          "type": "official",
+          "supports": "タコピー是作品主角外星訪客，以讓人開心為動機。"
+        }
+      ],
+      "originalIdentityFinding": "タコピー是作品主角外星訪客，以讓人開心為動機。",
+      "ggdAdaptationBoundary": "僅保留友善道具救援；時間倒流、死亡替代與悲劇事件未實作。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 31,
+      "id": "b2-luckyman",
+      "lockedDisplayName": "幸運超人",
+      "canonicalName": "ラッキーマン／追手内洋一",
+      "canonicalWork": "幸運超人",
+      "versionScope": "追手內洋一變身的幸運英雄",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://pierrot.jp/archive/1990/tv90_09.html",
+          "title": "Studio Pierrot 官方作品資料",
+          "type": "official",
+          "supports": "原本不幸的洋一變身幸運超人，經常靠偶然好運取勝。"
+        }
+      ],
+      "originalIdentityFinding": "原本不幸的洋一變身幸運超人，經常靠偶然好運取勝。",
+      "ggdAdaptationBoundary": "GGD 使用有限種子機率與正式迴避上限，不保證不死或場場必勝。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 32,
+      "id": "b2-misery",
+      "lockedDisplayName": "米瑟利",
+      "canonicalName": "ミザリィ",
+      "canonicalWork": "來自魔界／アウターゾーン",
+      "versionScope": "光原伸原作的神秘異界案內人",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://the0to1.zebrack-comic.shueisha.co.jp/interview/20260312",
+          "title": "集英社 Zebrack 官方作者訪談",
+          "type": "official",
+          "supports": "米瑟利是引導讀者進入異界故事的神秘女子；以單元式故事出現。"
+        }
+      ],
+      "originalIdentityFinding": "米瑟利是引導讀者進入異界故事的神秘女子；以單元式故事出現。",
+      "ggdAdaptationBoundary": "贈品條款商店是 GGD 原創舞台，不能把她說成原作契約惡魔或固定商店店長。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 33,
+      "id": "b2-nube",
+      "lockedDisplayName": "鵺野鳴介",
+      "canonicalName": "鵺野鳴介",
+      "canonicalWork": "靈異教師神眉",
+      "versionScope": "原作教師與鬼手核心特徵",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://books.shueisha.co.jp/info/comics/3306.html",
+          "title": "集英社官方漫畫介紹",
+          "type": "official",
+          "supports": "以鬼手守護學生的教師鵺野鳴介。"
+        }
+      ],
+      "originalIdentityFinding": "以鬼手守護學生的教師鵺野鳴介。",
+      "ggdAdaptationBoundary": "不混入 NEO 專屬後期技能；拉人點名與有限保護是改編。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 34,
+      "id": "b2-shinchan",
+      "lockedDisplayName": "野原新之助",
+      "canonicalName": "野原しんのすけ",
+      "canonicalWork": "蠟筆小新",
+      "versionScope": "五歲幼稚園生的童趣日常",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.tv-asahi.co.jp/shinchan/character/",
+          "title": "朝日電視台官方角色頁",
+          "type": "official",
+          "supports": "五歲、喜歡動感超人，身邊有小白與幼稚園朋友。"
+        }
+      ],
+      "originalIdentityFinding": "五歲、喜歡動感超人，身邊有小白與幼稚園朋友。",
+      "ggdAdaptationBoundary": "只用玩具、散步與運動會，不含性化惡搞；能力仍由有限既有效果構成。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 35,
+      "id": "b2-aladdin",
+      "lockedDisplayName": "阿拉丁",
+      "canonicalName": "アラジン",
+      "canonicalWork": "魔笛 MAGI",
+      "versionScope": "早期吹笛召喚烏戈的阿拉丁",
+      "evidenceLevel": "primary-source",
+      "sources": [
+        {
+          "url": "https://www.aniplex.co.jp/lineup/magi/news/detail/?id=15036",
+          "title": "Aniplex 官方初期角色介紹",
+          "type": "official",
+          "supports": "阿拉丁能從笛中召喚藍色巨人烏戈。"
+        }
+      ],
+      "originalIdentityFinding": "阿拉丁能從笛中召喚藍色巨人烏戈。",
+      "ggdAdaptationBoundary": "選早期召喚朋友辨識，不混入後期宇宙能力；代理召喚不代表烏戈本體素材完成。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 36,
+      "id": "b2-ned",
+      "lockedDisplayName": "青蛙劍士 Ned",
+      "canonicalName": "ネッド／ロイド・コスギ",
+      "canonicalWork": "AVARTH／アヴァルト",
+      "versionScope": "使用者鎖定的青蛙劍士遊戲分身",
+      "evidenceLevel": "primary-work-secondary-character",
+      "sources": [
+        {
+          "url": "https://www.kodansha.co.jp/titles/1000027512",
+          "title": "講談社官方作品頁",
+          "type": "official",
+          "supports": "官方頁證實光永康則《アヴァルト》作品；角色 Ned 與青蛙化身細節由次級漫畫百科補充核對。"
+        },
+        {
+          "url": "https://mangapedia.com/%E3%82%A2%E3%83%B4%E3%82%A1%E3%83%AB%E3%83%88-hb0f755g7",
+          "title": "MangaPedia《アヴァルト》角色介紹",
+          "type": "secondary-character-encyclopedia",
+          "supports": "角色條目將ロイド・コスギ與ネッド對應，描述青蛙樣貌的遊戲角色及劍士特徵。不得稱為出版社官方角色證明。"
+        }
+      ],
+      "originalIdentityFinding": "官方頁證實光永康則《アヴァルト》作品；角色 Ned 與青蛙化身細節由次級漫畫百科補充核對。",
+      "ggdAdaptationBoundary": "名稱不可更換；原作身分以使用者鎖定加次級來源支持，跳躍劍术為 GGD 改編，不冒稱原作招式表。",
+      "originalAbilityCompletenessClaim": false
+    },
+    {
+      "number": 37,
+      "id": "b2-kisaragi",
+      "lockedDisplayName": "如月電車",
+      "canonicalName": "如月電車（GGD 原創）",
+      "canonicalWork": "如月車站題材・GGD 原創",
+      "versionScope": "使用者指定電車本體",
+      "evidenceLevel": "user-authored",
+      "sources": [
+        {
+          "url": "user:pasted-text.txt",
+          "title": "使用者任務附件與本次決策",
+          "type": "user-instruction",
+          "supports": "使用者要求以電車本身作為英雄，不是借用同名原作主角。"
+        }
+      ],
+      "originalIdentityFinding": "使用者要求以電車本身作為英雄，不是借用同名原作主角。",
+      "ggdAdaptationBoundary": "隨機錯站、curse／blind／confusion 全部是 GGD 原創改編；素材、遊戲匯入與能力須各自驗證。",
+      "originalAbilityCompletenessClaim": false
+    }
+  ]
+}
