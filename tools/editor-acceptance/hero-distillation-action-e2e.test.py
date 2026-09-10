@@ -18,7 +18,7 @@ class ActionE2ETest(unittest.TestCase):
                 'kind': 'internal-dev-seen-regression', 'heroes': 1}) + '\n')
             for arm in ['base', 'lora']:
                 (evaluation / arm).mkdir(); (evaluation / arm / 'state.json').write_text(json.dumps({'status': 'completed', 'workerPid': None}) + '\n')
-                (evaluation / arm / 'result.json').write_text(json.dumps({'attemptedHeroes': 1}) + '\n')
+                (evaluation / arm / 'result.json').write_text(json.dumps({'attemptedHeroes': 1, 'completeHeroes': 1}) + '\n')
             (models / 'manifest.json').write_text('{}\n')
             calls = []
             def fake(argv, log, timeout=180):
@@ -35,6 +35,25 @@ class ActionE2ETest(unittest.TestCase):
             report = json.loads((root / 'out' / 'result.json').read_text())
             self.assertEqual(report['arms']['base']['runtimeAudit']['wholeHeroes'], 1)
             self.assertEqual(report['arms']['lora']['compile']['primaryWholeHeroes'], 1)
+
+    def test_writes_negative_receipt_without_running_cpu_stages_when_no_complete_plan_exists(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); evaluation, models, dependencies, assets = [root / name for name in ['evaluation', 'models', 'deps', 'assets']]
+            for folder in [evaluation, models, dependencies, assets]: folder.mkdir()
+            (evaluation / 'manifest.json').write_text(json.dumps({'schema': 'ggd-action-protected-evaluation@1',
+                'kind': 'internal-dev-seen-regression', 'heroes': 1}) + '\n')
+            for arm in ['base', 'lora']:
+                (evaluation / arm).mkdir(); (evaluation / arm / 'state.json').write_text(json.dumps({'status': 'completed', 'workerPid': None}) + '\n')
+                (evaluation / arm / 'result.json').write_text(json.dumps({'attemptedHeroes': 1, 'completeHeroes': 0}) + '\n')
+            (models / 'manifest.json').write_text('{}\n')
+            result = M.run({'evaluation': str(evaluation), 'models': str(models), 'dependencies': str(dependencies),
+                'source_repo': str(ROOT), 'api_dependencies': str(dependencies), 'asset_roots': [str(assets)], 'out': str(root / 'out')},
+                execute=lambda *_: self.fail('CPU E2E must not run without complete plans'))
+            self.assertEqual(result['status'], 'completed')
+            report = json.loads((root / 'out' / 'result.json').read_text())
+            self.assertTrue(report['skipped'])
+            self.assertEqual(report['incompleteArms'], {'base': 0, 'lora': 0})
+            self.assertFalse(report['fullHeroE2EProven'])
 
 
 if __name__ == '__main__':

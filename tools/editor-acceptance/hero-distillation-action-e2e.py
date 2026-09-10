@@ -62,12 +62,15 @@ def action_manifest(evaluation):
     p = read(Path(evaluation) / 'manifest.json')
     assert p['schema'] == 'ggd-action-protected-evaluation@1', 'ACTION_EVALUATION_SCHEMA'
     assert p.get('kind') == 'internal-dev-seen-regression', 'UNLABELLED_EVALUATION_KIND'
+    results = {}
     for arm in ['base', 'lora']:
         state = read(Path(evaluation) / arm / 'state.json')
         result = read(Path(evaluation) / arm / 'result.json')
         assert state['status'] == 'completed' and state['workerPid'] is None, 'ACTION_ARM_NOT_TERMINAL:' + arm
         assert result['attemptedHeroes'] == p['heroes'], 'ACTION_DENOMINATOR_DRIFT:' + arm
-    return p
+        assert isinstance(result.get('completeHeroes'), int) and 0 <= result['completeHeroes'] <= p['heroes'], 'ACTION_COMPLETE_COUNT_INVALID:' + arm
+        results[arm] = result
+    return p, results
 
 
 def run(options, execute=command):
@@ -77,7 +80,7 @@ def run(options, execute=command):
     out = Path(options['out']).resolve(); assert not out.exists(), 'REFUSE_OVERWRITE_OR_RETRY'
     assert source == REPO.resolve(), 'SOURCE_REPO_MUST_BE_CURRENT_RESEARCH_CHECKOUT'
     assert all(path.is_dir() for path in [evaluation, models, dependencies, source, *roots]), 'INPUT_DIRECTORY_MISSING'
-    p = action_manifest(evaluation)
+    p, arm_results = action_manifest(evaluation)
     node = node_binary(options.get('node_binary'))
     out.mkdir(parents=True); (out / 'source').mkdir()
     sources = {name: digest(SCRIPT if name == SCRIPT.name else SCRIPT.with_name(name)) for name in FILES}
@@ -106,6 +109,21 @@ def run(options, execute=command):
     def interrupted(signum, frame): raise InterruptedError('ACTION_E2E_INTERRUPTED')
     signal.signal(signal.SIGTERM, interrupted)
     try:
+        # There is no CPU compilation unit when an arm has no complete HeroPlan.
+        # Preserve the full denominator and a durable negative receipt rather
+        # than turning this expected model result into a controller exception.
+        incomplete = {arm: result['completeHeroes'] for arm, result in arm_results.items()
+                      if result['completeHeroes'] != p['heroes']}
+        if incomplete:
+            write(out / 'result.json', {'schema': 'ggd-action-e2e-result@1', 'arms': {
+                arm: {'completeHeroes': result['completeHeroes'], 'attemptedHeroes': result['attemptedHeroes']}
+                for arm, result in arm_results.items()}, 'evaluationKind': p['kind'],
+                'skipped': True, 'skipReason': 'INCOMPLETE_HERO_PLANS', 'incompleteArms': incomplete,
+                'humanRepairs': 0, 'semanticFidelityMeasured': False, 'gameplayMeasured': False,
+                'fullHeroE2EProven': False, 'modelPromoted': False,
+                'note': 'No compiler/package/import/readback was run because one or more arms lacked a complete no-repair HeroPlan for the fixed denominator.'})
+            state['status'] = 'completed'
+            return state
         summaries = {}
         for arm in ['base', 'lora']:
             compiled, packaged, imported, audit = [out / f'{arm}-{label}' for label in ['compile', 'package', 'import', 'runtime-audit']]
