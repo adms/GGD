@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-haga",
+  "source_name": "youtube: TVアニメ『この世界は不完全すぎる』本PV第1弾",
+  "source_url": "https://www.youtube.com/watch?v=RH5g9eapxsI",
+  "direct_url": "https://www.youtube.com/watch?v=RH5g9eapxsI",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "石川界人",
+  "source_sha256": "703b9ab8c9e9b083bab1c65cfbccbafd316b5a396a85b7e584dc18956f8934c7",
+  "downloaded_at": "2026-09-10T10:54:53.138053Z",
+  "notes": "公式サイト konofuka.com/movie/ が掲載する本PV第1弾。ハガの台詞入り。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 30.0,
+    "window_s": 10.0,
+    "score": 0.627,
+    "metrics": {
+      "multiple_speaker_probability": 0.492,
+      "music_probability": 0.635,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 9.9
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-haga.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

@@ -1,0 +1,472 @@
+{
+ "championId": "community-review-02-20260907",
+ "reference": {
+  "sha256": "f387207578c611cd40bf5b152ad9f9d2ea9494823b23b20da47e4421a264b7a7",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/community-review-02-20260907.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753678,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-02-20260907.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789037111300,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789040376398,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.76,
+     "at": 1789042399473,
+     "error": null
+    }
+   ],
+   "text": "百八式・闇拂！",
+   "lang": "ja",
+   "kana": "ヒャク ハチ シキ ヤミ フツ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-02-20260907.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 29301,
+    "seconds": 1.76,
+    "lufs": null,
+    "hash": "df6f98f6cd6bc989edee31a51869ac89a99be8b9b487dea8a7420842fbd16063",
+    "maxDb": -4.3,
+    "at": 1789042399473
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789037111429,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789040376507,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789042399580,
+     "error": null
+    }
+   ],
+   "text": "百式・鬼燒！",
+   "lang": "ja",
+   "kana": "ヒャク シキ オニ ヤキ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-02-20260907.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "04d5865af55c0d8be6e7e3346c8ee55db06539bc7cd407eedecf43accff76079",
+    "maxDb": -3.9,
+    "at": 1789042399580
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1789037111556,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789040376613,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.92,
+     "at": 1789042399684,
+     "error": null
+    }
+   ],
+   "text": "百二十七式・葵花！",
+   "lang": "ja",
+   "kana": "ヒャク ニジュウ シチ シキ アオイ ハナ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-02-20260907.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 31808,
+    "seconds": 1.92,
+    "lufs": null,
+    "hash": "bb4362bec94aa2165b404d6d214ba93417a82b907a57f10f584154962a31f06c",
+    "maxDb": -5.1,
+    "at": 1789042399684
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.44,
+     "at": 1789037111688,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.92,
+     "at": 1789040376725,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789042399794,
+     "error": null
+    }
+   ],
+   "text": "禁千二百十一式・八稚女！",
+   "lang": "ja",
+   "kana": "キン セン ニヒャク ジュウイチ シキ ハチ チ オンナ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-02-20260907.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 42675,
+    "seconds": 2.6,
+    "lufs": null,
+    "hash": "67b61687a15b1f800b922deff3b2246f533a52e2e89e9ae0c7d9d163c58ee028",
+    "maxDb": -2.9,
+    "at": 1789042399795
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789037111816,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789040376835,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1789042399905,
+     "error": null
+    }
+   ],
+   "text": "裏三百十六式・豺華！",
+   "lang": "ja",
+   "kana": "ウラ サンビャク ジュウロク シキ ヤマイヌ ハナ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-02-20260907.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43511,
+    "seconds": 2.64,
+    "lufs": null,
+    "hash": "0788b3c00b10d6a41619466fa53ae823bd3427d28125c60226ef7d76d16ba1ee",
+    "maxDb": -2.7,
+    "at": 1789042399905
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789043003269,
+     "error": null
+    }
+   ],
+   "text": "月を見るたび思い出せ",
+   "lang": "ja",
+   "kana": "ツキオ ミルタビ オモイダセ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "5e70c4fc16aa5ece9f105a9b4d330ef47f0dc000c87960290001f560d749d1bc",
+    "maxDb": -5.1,
+    "at": 1789043003269
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037111937,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040376947,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "d6751fa53d3fbbcc9448f2f830cd24dcf23ac82b713df5005c96ab68a370a8e0",
+    "maxDb": -2,
+    "at": 1789040376947
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789037112048,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789040377053,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "a4a8bdd128da83e4787c1b2e83a15f9b9a30f2acdd2c522608dd49e5c965718c",
+    "maxDb": -2.3,
+    "at": 1789040377053
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789037112166,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789040377162,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "99e13625100198e61b25a1f357f63c47626523be1ff2a69a26f023ba209ac7ec",
+    "maxDb": -3.4,
+    "at": 1789040377162
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.28,
+     "at": 1789043003385,
+     "error": null
+    }
+   ],
+   "text": "遊びは終わりだ！泣け、叫べ、そして死ね！",
+   "lang": "ja",
+   "kana": "アソビワ オワリダ ナケ サケベ ソシテ シネ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 53542,
+    "seconds": 3.28,
+    "lufs": null,
+    "hash": "8f8ee9d3d1b2cda9f565c04fc9729ea8ecfbad48ce7d0a294b08bb5803f8e1fd",
+    "maxDb": -2,
+    "at": 1789043003386
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037112281,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789040377268,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "e910d6266ea3be873406b1f7ddb27c8e33b9e02ed5c230796538ad02a2978ff2",
+    "maxDb": -2,
+    "at": 1789040377268
+   },
+   "lastError": null
+  }
+ }
+}

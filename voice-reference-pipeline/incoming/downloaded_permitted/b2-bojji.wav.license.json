@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-bojji",
+  "source_name": "youtube: TVアニメ『王様ランキング』WEB予告 第一話「王子とカゲ」",
+  "source_url": "https://www.youtube.com/watch?v=Avo6G-9HjHE",
+  "direct_url": "https://www.youtube.com/watch?v=Avo6G-9HjHE",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "日向未南",
+  "source_sha256": "61d5885904b287967813f7a428aa6f7466e1facaad0ec3770930c078f3f4f045",
+  "downloaded_at": "2026-09-10T10:54:21.458276Z",
+  "notes": "第1話 WEB 予告。短尺で本編音声が使われている。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 14.0,
+    "window_s": 10.0,
+    "score": 0.457,
+    "metrics": {
+      "multiple_speaker_probability": 0.369,
+      "music_probability": 0.587,
+      "speech_or_vocal_ratio": 0.998,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 1e-05,
+      "estimated_snr": 10.2
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-bojji.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

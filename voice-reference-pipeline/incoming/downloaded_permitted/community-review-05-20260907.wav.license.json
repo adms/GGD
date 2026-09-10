@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-05-20260907",
+  "source_name": "youtube: Mega Man 11 – Voice Acting Samples (English vs. Japanese Comparison)",
+  "source_url": "https://www.youtube.com/watch?v=_6s18TixcJ4",
+  "direct_url": "https://www.youtube.com/watch?v=_6s18TixcJ4",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "福原綾香",
+  "source_sha256": "b53ba68729d986cbd02172ce8febb4b207704443a64606b2a30840d6768e15a9",
+  "downloaded_at": "2026-09-10T10:55:48.668532Z",
+  "notes": "Verified via oEmbed (channel ShadowRockZX). Compiles the official-site sample voices; JP Mega Man lines are solo with no BGM in the original samples.",
+  "precut": {
+    "window_start_s": 122.0,
+    "window_s": 10.0,
+    "score": 0.529,
+    "metrics": {
+      "multiple_speaker_probability": 0.127,
+      "music_probability": 0.526,
+      "speech_or_vocal_ratio": 0.621,
+      "silence_ratio": 0.373,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 130.5
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-05-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

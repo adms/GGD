@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-zenitsu",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:332)",
+  "source_url": "voice-index:300heroes:332",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0033-332_voice_joke_1.ogg",
+      "sha256": "ceb988f4420e17732d2e7e0883c207565fd0a965d18dea24966a39cac0863c02",
+      "seconds": 5.41
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0008-332_voice_joke_3.ogg",
+      "sha256": "1452f0d0e958121d6fa09c8148797e5e89cf1e9e3d3e410da4718f3a54a23055",
+      "seconds": 5.97
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/01-0012-332_voice_move_1.ogg",
+      "sha256": "64ae90b2f5e99a8762d1652f9bab1aafb86bf44e5d3b545a83a69bffe0e54622",
+      "seconds": 2.04
+    }
+  ],
+  "source_sha256": "2fd9a03d4bacec37f17d85755bba559563c09cbbf84bc1372cc9929ace54ae15",
+  "downloaded_at": "2026-09-10T11:11:02.723138+00:00"
+}

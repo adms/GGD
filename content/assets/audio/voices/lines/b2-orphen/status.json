@@ -1,0 +1,472 @@
+{
+ "championId": "b2-orphen",
+ "reference": {
+  "sha256": "21510e9d1612d076651f76b9350582359ca8b6f7fe1b260b04809a54e95043a6",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/b2-orphen.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753649,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-orphen.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789037097016,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789040366334,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.68,
+     "at": 1789042394312,
+     "error": null
+    }
+   ],
+   "text": "我放出的光之催繳函！",
+   "lang": "ja",
+   "kana": "ワレ ホウシュツ テキ ミツユキ サイ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-orphen.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28047,
+    "seconds": 1.68,
+    "lufs": null,
+    "hash": "e050b24b7bcd10944bda49dd3aca746f518a7c8730e1af026bd7e735e8068cc6",
+    "maxDb": -2.3,
+    "at": 1789042394312
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1789037097136,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789040366439,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1789042394417,
+     "error": null
+    }
+   ],
+   "text": "利息可以再寄一次！",
+   "lang": "ja",
+   "kana": "リソク カ イ サイ ヨリ イチジ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-orphen.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 46437,
+    "seconds": 2.84,
+    "lufs": null,
+    "hash": "65e5d024154a14da9d6e2f74d592f2132ebb2523ac5aade24936fa1b4a04805d",
+    "maxDb": -2,
+    "at": 1789042394417
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1789037097262,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1789040366548,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1789042394521,
+     "error": null
+    }
+   ],
+   "text": "債務人請勿插話！",
+   "lang": "ja",
+   "kana": "サイム ニン セイ モチロン ソウワ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-orphen.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "590907bccfca3698ce1b795c8753ff7a6330837dc23a2d6851ac704b1ce3f00a",
+    "maxDb": -2.4,
+    "at": 1789042394521
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1789037097383,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.68,
+     "at": 1789040366655,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.2,
+     "at": 1789042394624,
+     "error": null
+    }
+   ],
+   "text": "債主不用敲門！",
+   "lang": "ja",
+   "kana": "サイシュ フヨウ コウ モン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-orphen.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.2,
+    "lufs": null,
+    "hash": "0ccda2732cc285a4bea28bd3975f118b3ab891c9fbd2473bc9e621a2d916f738",
+    "maxDb": -2.7,
+    "at": 1789042394624
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3,
+     "at": 1789037097508,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1789040366762,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1789042394730,
+     "error": null
+    }
+   ],
+   "text": "這筆急救算借你的！",
+   "lang": "ja",
+   "kana": "シャ フデ キュウ キュウ サン シャク",
+   "textSource": "derived",
+   "origin": "ability-name:b2-orphen.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 34316,
+    "seconds": 2.08,
+    "lufs": null,
+    "hash": "dcb1160a127318adb3af8572456ed1c54f621e903d05d16af1ae541dcfea9ce2",
+    "maxDb": -3.2,
+    "at": 1789042394731
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1789042998928,
+     "error": null
+    }
+   ],
+   "text": "我は放つ光の白刃！",
+   "lang": "ja",
+   "kana": "ワレワ ハナツ ヒカリノ ハクジン",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 32644,
+    "seconds": 1.960249,
+    "lufs": null,
+    "hash": "ce1d52ecaac02f4f5a69901a032105c5b3f2fd1f9d56f1ad189f4be479b39ffe",
+    "maxDb": -2,
+    "at": 1789042998928
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.24,
+     "at": 1789037097641,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040366872,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "ba41af948743fb1a9962b29c72ab5b4d5dfc05b678abe592c857d7d7fca0b35c",
+    "maxDb": -2,
+    "at": 1789040366872
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1789037097770,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040366979,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "ff5ec695e75cbde0fcf4b5c4543ab0d2efccb82662cf11d1730caf62681e8add",
+    "maxDb": -2,
+    "at": 1789040366979
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.84,
+     "at": 1789037097892,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1789040367089,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "8b28bf758bc41fdb56d4528cfcd0db826fdbc45ef2c9e5aa495e8057971e3f34",
+    "maxDb": -3.3,
+    "at": 1789040367089
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1789042999044,
+     "error": null
+    }
+   ],
+   "text": "我は放つ光の白刃！",
+   "lang": "ja",
+   "kana": "ワレワ ハナツ ヒカリノ ハクジン",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.04,
+    "lufs": null,
+    "hash": "12a1155c2f206929e0670e52d26debf3e14f33400b90c0efdf3fba34d0586645",
+    "maxDb": -2,
+    "at": 1789042999044
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037098016,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040367204,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "7c5915519aae47ba243228f21d10e455a40996899827c041861359b8451a324d",
+    "maxDb": -2,
+    "at": 1789040367205
+   },
+   "lastError": null
+  }
+ }
+}

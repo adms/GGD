@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-09-20260907",
+  "source_name": "official-sample: 【狼と香辛料】「賢狼ホロのわっちチャンネル」#19 (TOHO animation チャンネル, official)",
+  "source_url": "https://www.youtube.com/watch?v=68Vh_6uhoj4",
+  "direct_url": "https://www.youtube.com/watch?v=68Vh_6uhoj4",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "小清水亜美",
+  "source_sha256": "d610a2ffccd868ec9850563f4bd00cf8f6c511dc36bb2d1e8fc8041de863779f",
+  "downloaded_at": "2026-09-10T10:56:08.489692Z",
+  "notes": "Verified via oEmbed. In-character talk series: Holo (小清水亜美) speaks alone for long stretches — best chance of BGM-light solo speech.",
+  "precut": {
+    "window_start_s": 30.0,
+    "window_s": 10.0,
+    "score": 0.543,
+    "metrics": {
+      "multiple_speaker_probability": 0.357,
+      "music_probability": 0.684,
+      "speech_or_vocal_ratio": 0.995,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 4e-05,
+      "estimated_snr": 13.7
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-09-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-popp",
+  "source_name": "youtube: アニメ『ダイの大冒険』第30話予告「ポップの覚悟」",
+  "source_url": "https://www.youtube.com/watch?v=Up8z3CIny-w",
+  "direct_url": "https://www.youtube.com/watch?v=Up8z3CIny-w",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "豊永利行",
+  "source_sha256": "f43f18fc51c28ebb2fd165371f980b6e35f7cf8e42fef19de471045f4c1dd612",
+  "downloaded_at": "2026-09-10T11:01:53.905935Z",
+  "notes": "タイトルを開いて確認。予告編はナレーション＋BGM入り、区間未検証。",
+  "precut": {
+    "window_start_s": 4.0,
+    "window_s": 10.0,
+    "score": 0.238,
+    "metrics": {
+      "multiple_speaker_probability": 0.106,
+      "music_probability": 0.632,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 7.8
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-popp.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

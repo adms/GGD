@@ -1,0 +1,50 @@
+{
+  "hero_id": "community-review-11-20260907",
+  "source_name": "owner game-voice library (角色語音索引 thunderstore-rimuru-ror2)",
+  "source_url": "voice-index:thunderstore-rimuru-ror2",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/1001475546.wav",
+      "sha256": "c9802a0aea79c2ccbbe04811a6ed3e0a1be5d3bed439055a59b9fe71226525a5",
+      "seconds": 1.1
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/1036054571.wav",
+      "sha256": "d946321560a49b6504317c06ca3cecd40b92a733d9018916924759f72212275c",
+      "seconds": 2.86
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/105924093.wav",
+      "sha256": "222cd7664a4ffb457145e101707fd3da71db74e45938e7b1fe445c2c2e2895a5",
+      "seconds": 1.06
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/203161346.wav",
+      "sha256": "0ec5355296e6afd7451604d61cbffc0d45545f78b3564b1afa68ab294190090c",
+      "seconds": 0.59
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/283133327.wav",
+      "sha256": "baac00c34286649a8e74e1ef42a5a3777610d0ead98f3953672e60549ede9d4f",
+      "seconds": 1.82
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/347941923.wav",
+      "sha256": "2d71ef19a596062b5c85c989927fa4decdffb1057d5aeabf089da8ccfe03db01",
+      "seconds": 1.51
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/505624353.wav",
+      "sha256": "96a3e253b229437621a82ba5345e547fd6c33aab80ac86974b693f7c3ac811fa",
+      "seconds": 3.7
+    }
+  ],
+  "source_sha256": "e150fb85aa6995b7b5426e00440115cd21097b83c0d7f10b95d5c12e4880a177",
+  "downloaded_at": "2026-09-10T11:11:01.141046+00:00"
+}

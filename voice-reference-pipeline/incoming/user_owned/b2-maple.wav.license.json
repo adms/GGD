@@ -1,0 +1,40 @@
+{
+  "hero_id": "b2-maple",
+  "source_name": "owner game-voice library (角色語音索引 300heroes:272)",
+  "source_url": "voice-index:300heroes:272",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0012-272_voice_joke_1.ogg",
+      "sha256": "32a887f066358224cf52df5c290c66938a97321093fbc72d47b1ba6a65b55114",
+      "seconds": 3.82
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0023-272_voice_joke_2.ogg",
+      "sha256": "d6fcaa3e61f8c2c3c2b006f76ae76a38936a56e27de6096c170a2ba7c1c56dd7",
+      "seconds": 2.46
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0009-272_voice_joke_3.ogg",
+      "sha256": "be4a948a05d386d937d3ea45eb547b4f71e3a0e143fd47f2fb2b29110a04ee7f",
+      "seconds": 1.43
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0022-272_voice_joke_4.ogg",
+      "sha256": "d06d2efc7d7decfe9c761bef6e429be6e4f3cbda2594b7b810710799a758e776",
+      "seconds": 2.56
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0017-272_voice_move_1.ogg",
+      "sha256": "2f63f0fa55dd941d5e3d5eaf8f497743d1b953751a9aac9bd6b405c668eaaa77",
+      "seconds": 4.41
+    }
+  ],
+  "source_sha256": "8cbde0dbd88231032369d8a8ee2badc2b70599ae4f2450b9ddc00f406f1e0dea",
+  "downloaded_at": "2026-09-10T11:11:02.516036+00:00"
+}

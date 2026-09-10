@@ -1,0 +1,499 @@
+{
+ "championId": "b2-maple",
+ "reference": {
+  "sha256": "4d884e75e26019b7ace64392cec1bb9c7ae23a570df9b82c11fe89e469197587",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-e00k.wav",
+  "sourceKind": "donor",
+  "donor": "godie-e00k",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=female) — drop b2-maple.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549545,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-e00k.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.04,
+     "at": 1789042996743,
+     "error": null
+    }
+   ],
+   "text": "痛いのは嫌だから攻撃とか受けたくないし…",
+   "lang": "ja",
+   "kana": "イタイノワ イヤダカラ コウゲキトカ ウケタク ナイシ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 49781,
+    "seconds": 3.04,
+    "lufs": null,
+    "hash": "322dac239ea57823538ea4179d29ea687c7cfedd2af2658567246c7bdc967055",
+    "maxDb": -4.5,
+    "at": 1789042996744
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.52,
+     "at": 1789037089515,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice_q2_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0013-272_voice_q2_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.705306,
+    "lufs": null,
+    "hash": "d2ee54c2c91984965db0769a7dd1458051c861e95d015d08b04f157152a6aade",
+    "at": 1789041876461
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.72,
+     "at": 1789037089633,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice_attack_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0025-272_voice_attack_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 34734,
+    "seconds": 2.099955,
+    "lufs": null,
+    "hash": "a78d2ede7d2199e03f874390850904177fbe45b05678eb2da8869f03d7fbd0e2",
+    "at": 1789041876513
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.52,
+     "at": 1789037089753,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice_e_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0001-272_voice_e_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.657415,
+    "lufs": null,
+    "hash": "5ce5af48f8dcfc2db61443e7d4621fc549b12fea5335879993a4ff25ae2887fa",
+    "at": 1789041876565
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.76,
+     "at": 1789037089875,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice_dazhao_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0004-272_voice_dazhao_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 20524,
+    "seconds": 1.214694,
+    "lufs": null,
+    "hash": "7f38f5e892fe4ed9bd81c725a810a75a0e9f44a58e236c98a8e6e18ba7308744",
+    "at": 1789041876618
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789037089997,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice_dazhao_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0004-272_voice_dazhao_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 20524,
+    "seconds": 1.214694,
+    "lufs": null,
+    "hash": "7f38f5e892fe4ed9bd81c725a810a75a0e9f44a58e236c98a8e6e18ba7308744",
+    "at": 1789041876669
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.76,
+     "at": 1789042996857,
+     "error": null
+    }
+   ],
+   "text": "これからも防御特化で頑張る！痛いのは嫌だしね",
+   "lang": "ja",
+   "kana": "コレカラモ ボウギョ トッカデ ガンバル イタイノワ イヤダシネ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 61066,
+    "seconds": 3.76,
+    "lufs": null,
+    "hash": "2d4715c540b49ef9a5ea05de1b642e5ff183d50bb567f492d38f560a7f1775f0",
+    "maxDb": -3.8,
+    "at": 1789042996857
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037090113,
+     "error": null
+    }
+   ],
+   "text": "（原檔）voice_death_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0016-272_voice_death_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 46855,
+    "seconds": 2.863311,
+    "lufs": null,
+    "hash": "44faa9813c4116abc14e198f7d02bff348e138bf4b50cfb295a724701b94782f",
+    "at": 1789041876720
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037090230,
+     "error": null
+    }
+   ],
+   "text": "きゃっ！",
+   "lang": "ja",
+   "kana": "キャッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "fc3f10cea3e0d425578bdad18b368a0b767b6543ea10856b589d9ddc350199d3",
+    "maxDb": -2.1,
+    "at": 1789037090230
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1789037090349,
+     "error": null
+    }
+   ],
+   "text": "ああっ……！",
+   "lang": "ja",
+   "kana": "アアッ",
+   "textSource": "derived",
+   "origin": "grunt:female",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "368c64b1ee90a1de5e0b016f96c1f61feb4af5a4ab25c864e26d241bda884495",
+    "maxDb": -3.9,
+    "at": 1789037090349
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789042996968,
+     "error": null
+    }
+   ],
+   "text": "悪食！",
+   "lang": "ja",
+   "kana": "アクジキ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "3c55d8bfab806000b1e0dec71c039bb6aeb41de92eb38120fdf565e1af10accc",
+    "maxDb": -3.6,
+    "at": 1789042996968
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）voice_attack_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0015-272_voice_attack_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 40586,
+    "seconds": 2.468571,
+    "lufs": null,
+    "hash": "eca72f929bf8136d6c5624216d6f5384eac36d9b09b5b2ff93ca1e9bc58ef9a6",
+    "at": 1789041876825
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）voice_attack_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0008-272_voice_attack_3.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 46437,
+    "seconds": 2.828481,
+    "lufs": null,
+    "hash": "b80e3e1ed543a444829893bbfc4bee46ffb461225037620a708770530ed3cb15",
+    "at": 1789041876880
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "takes": [],
+   "text": "（原檔）voice_move_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0017-272_voice_move_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 71933,
+    "seconds": 4.427755,
+    "lufs": null,
+    "hash": "61659cad78d637069ad831363a304d460429f5c54db5cac136d34750c1de72fb",
+    "at": 1789041876932
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "takes": [],
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0023-272_voice_joke_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 40586,
+    "seconds": 2.477279,
+    "lufs": null,
+    "hash": "5a3daf8f077783920ac8f0af09a112251566fadcbf049a7e28037ee25d71a33a",
+    "at": 1789041876985
+   },
+   "lastError": null
+  },
+  "charge": {
+   "takes": [],
+   "text": "（原檔）voice_move_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0020-272_voice_move_3.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.443991,
+    "lufs": null,
+    "hash": "e33d418727b34e84f4cd1ba59f30f95d4f74c267bad85d2dc762830cae4b846b",
+    "at": 1789041877038
+   },
+   "lastError": null
+  },
+  "free-move": {
+   "takes": [],
+   "text": "（原檔）voice_move_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:272/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0006-272_voice_move_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:272",
+    "stub": false,
+    "bytes": 55214,
+    "seconds": 3.382857,
+    "lufs": null,
+    "hash": "6e12c2075329bddef90458817c6aa96906671c5ad006a77c3ebd84ddec9007d4",
+    "at": 1789041877091
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037090468,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "0386bfdfba1b6f8cbb14c25304eb3528c5372223853004dee38abd1b3c990f2f",
+    "maxDb": -1.9,
+    "at": 1789037090468
+   },
+   "lastError": null
+  }
+ }
+}

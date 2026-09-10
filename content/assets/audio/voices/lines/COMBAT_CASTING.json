@@ -1,0 +1,860 @@
+{
+ "id": "combat-casting",
+ "schema": "voice.combat-casting@1",
+ "note": "⭐ 74 名新英雄（b2-* ＋ community-review-*）的戰鬥語音**暫定卡司**。這 74 名今天一個自己的參考音都沒有（approved/processed/<id>.wav 不存在），所以每一位借一位既有英雄的參考音當 CosyVoice3 的 prompt_wav（`donor`）。⭐ 這是一格開關：① 把 <id>.wav 放進 voice-reference-pipeline/approved/processed/ ⇒ 產生器自動改用本人的（reference 變成 own，⛔ 不必改這裡）；② 改 `donor` 或 `voiceClass` ⇒ 重跑 `pnpm combat:build` 與 run-combat-gen。voiceClass 只用來挑 donor 池與擬聲變體；voiceClassBasis 記錄它從哪裡來（world-knowledge＝角色在原作裡眾所周知的性別／年齡層，⛔ 不是台詞；description-pronoun＝我們自己的 description 寫了「他」；unknown＝不主張，輪流配）。同一池內用 id 排序輪流配，讓 donor 使用次數平均。",
+ "excluded": {
+  "lol-karthus": "owner 2026-09-10：「LOL7個角色應該有自己語音檔 可以排除」——⚠️ 那份檔在哪裡尚未確認（名言 lane 查證 Data Dragon 不出語音行）",
+  "lol-leesin": "同上",
+  "lol-lux": "同上",
+  "lol-missfortune": "同上",
+  "lol-warwick": "同上",
+  "lol-xerath": "同上",
+  "lol-yasuo": "同上"
+ },
+ "donorPools": {
+  "female": [
+   "godie-e001",
+   "godie-e002",
+   "godie-e008",
+   "godie-e00k",
+   "godie-e00w",
+   "godie-etyr",
+   "godie-h020",
+   "godie-hvsh",
+   "godie-hvwd",
+   "godie-n003",
+   "godie-o00k"
+  ],
+  "male": [
+   "godie-e007",
+   "godie-emns",
+   "godie-h01n",
+   "godie-h01u",
+   "godie-hart",
+   "godie-hpal",
+   "godie-hpb1",
+   "godie-nplh",
+   "godie-o00l",
+   "godie-o00x",
+   "godie-ogld",
+   "godie-osam",
+   "godie-u00h",
+   "godie-u00j",
+   "godie-u00k",
+   "godie-u00l",
+   "godie-u00n",
+   "godie-u010",
+   "godie-u01u",
+   "godie-udea",
+   "godie-zombiex"
+  ],
+  "male-low": [
+   "godie-h01u",
+   "godie-hart",
+   "godie-osam",
+   "godie-u00h",
+   "godie-u00j",
+   "godie-u00k",
+   "godie-u00l",
+   "godie-u01u",
+   "godie-ubal"
+  ],
+  "male-youth": [
+   "godie-e007",
+   "godie-edem",
+   "godie-h01n",
+   "godie-hpal",
+   "godie-hpb1",
+   "godie-nplh",
+   "godie-o00x",
+   "godie-u00n"
+  ],
+  "child-boy": [
+   "godie-emfr",
+   "godie-hblm",
+   "godie-n01c"
+  ],
+  "child-girl": [
+   "godie-n003"
+  ],
+  "mechanical": [
+   "godie-e00r"
+  ],
+  "unknown": [
+   "godie-e007",
+   "godie-emns",
+   "godie-h01n",
+   "godie-h01u",
+   "godie-hart",
+   "godie-hpal",
+   "godie-hpb1",
+   "godie-nplh",
+   "godie-o00l",
+   "godie-o00x",
+   "godie-ogld",
+   "godie-osam",
+   "godie-u00h",
+   "godie-u00j",
+   "godie-u00k",
+   "godie-u00l",
+   "godie-u00n",
+   "godie-u010",
+   "godie-u01u",
+   "godie-udea",
+   "godie-zombiex",
+   "godie-e001",
+   "godie-e002",
+   "godie-e008",
+   "godie-e00k",
+   "godie-e00w",
+   "godie-etyr",
+   "godie-h020",
+   "godie-hvsh",
+   "godie-hvwd",
+   "godie-n003",
+   "godie-o00k"
+  ]
+ },
+ "champions": {
+  "b2-aladdin": {
+   "name": "阿拉丁",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-emfr",
+   "donorName": "涅吉",
+   "donorProfile": "child_boy_clear",
+   "lang": "auto"
+  },
+  "b2-albus": {
+   "name": "阿爾巴斯",
+   "voiceClass": "unknown",
+   "voiceClassBasis": "description-pronoun",
+   "reference": "donor",
+   "donor": "godie-e007",
+   "donorName": "天地志狼",
+   "donorProfile": "male_youth_heroic",
+   "lang": "auto"
+  },
+  "b2-bojji": {
+   "name": "波吉",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "description-pronoun",
+   "reference": "donor",
+   "donor": "godie-hblm",
+   "donorName": "慈悲的王者－賈修貝爾",
+   "donorProfile": "child_boy_heroic",
+   "lang": "auto"
+  },
+  "b2-boxxo": {
+   "name": "阿箱＋拉蜜絲",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e001",
+   "donorName": "龍宮禮奈",
+   "donorProfile": "female_dynamic",
+   "lang": "auto"
+  },
+  "b2-elma": {
+   "name": "艾爾瑪",
+   "voiceClass": "male",
+   "voiceClassBasis": "description-pronoun",
+   "reference": "donor",
+   "donor": "godie-e007",
+   "donorName": "天地志狼",
+   "donorProfile": "male_youth_heroic",
+   "lang": "auto"
+  },
+  "b2-fushi": {
+   "name": "不死",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e007",
+   "donorName": "天地志狼",
+   "donorProfile": "male_youth_heroic",
+   "lang": "auto"
+  },
+  "b2-goblin": {
+   "name": "哥布林殺手",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-h01u",
+   "donorName": "呂布奉先",
+   "donorProfile": "male_low_warlord",
+   "lang": "auto"
+  },
+  "b2-guts": {
+   "name": "凱茲",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hart",
+   "donorName": "克勞德",
+   "donorProfile": "male_low_dry",
+   "lang": "auto"
+  },
+  "b2-haga": {
+   "name": "羽賀",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-edem",
+   "donorName": "宇智波佐助",
+   "donorProfile": "male_youth_cold",
+   "lang": "auto"
+  },
+  "b2-kaede": {
+   "name": "楓",
+   "voiceClass": "unknown",
+   "voiceClassBasis": "unknown→round-robin",
+   "reference": "donor",
+   "donor": "godie-emns",
+   "donorName": "夜神月",
+   "donorProfile": "male_intelligent_manic",
+   "lang": "auto"
+  },
+  "b2-kaiji": {
+   "name": "伊藤開司",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-emns",
+   "donorName": "夜神月",
+   "donorProfile": "male_intelligent_manic",
+   "lang": "auto"
+  },
+  "b2-keyaru": {
+   "name": "凱亞爾",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-h01n",
+   "donorName": "黑崎一護",
+   "donorProfile": "male_youth_rough",
+   "lang": "auto"
+  },
+  "b2-kisaragi": {
+   "name": "如月電車",
+   "voiceClass": "mechanical",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e00r",
+   "donorName": "初號機",
+   "donorProfile": "creature_mechanical",
+   "lang": "auto"
+  },
+  "b2-klaus": {
+   "name": "克勞斯",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-h01n",
+   "donorName": "黑崎一護",
+   "donorProfile": "male_youth_rough",
+   "lang": "auto"
+  },
+  "b2-kumoko": {
+   "name": "蜘蛛子",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e002",
+   "donorName": "Saber",
+   "donorProfile": "female_low_regal",
+   "lang": "auto"
+  },
+  "b2-luckyman": {
+   "name": "幸運超人",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge; donor=同一聲優（幸運超人與魯夫皆為田中真弓）—— 2026-09-10 找不到可抓的乾淨片段時的最佳借聲",
+   "reference": "donor",
+   "donor": "godie-u00n",
+   "donorName": "蒙其.D.魯夫",
+   "donorProfile": "male_youth_high_energy",
+   "lang": "auto"
+  },
+  "b2-makoto": {
+   "name": "深澄真",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hpal",
+   "donorName": "藤井八雲",
+   "donorProfile": "male_youth_gentle",
+   "lang": "auto"
+  },
+  "b2-maomao": {
+   "name": "貓貓",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e008",
+   "donorName": "夏娜",
+   "donorProfile": "female_high_tsundere",
+   "lang": "auto"
+  },
+  "b2-maple": {
+   "name": "梅普露",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e00k",
+   "donorName": "安云",
+   "donorProfile": "female_low_assassin",
+   "lang": "auto"
+  },
+  "b2-matthias": {
+   "name": "馬提亞斯",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hpb1",
+   "donorName": "蒼月潮",
+   "donorProfile": "male_youth_wild",
+   "lang": "auto"
+  },
+  "b2-misery": {
+   "name": "米瑟利",
+   "voiceClass": "unknown",
+   "voiceClassBasis": "unknown→round-robin",
+   "reference": "donor",
+   "donor": "godie-h01n",
+   "donorName": "黑崎一護",
+   "donorProfile": "male_youth_rough",
+   "lang": "auto"
+  },
+  "b2-naofumi": {
+   "name": "岩谷尚文",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-nplh",
+   "donorName": "麻倉葉",
+   "donorProfile": "male_youth_relaxed",
+   "lang": "auto"
+  },
+  "b2-ned": {
+   "name": "青蛙劍士 Ned",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hart",
+   "donorName": "克勞德",
+   "donorProfile": "male_low_dry",
+   "lang": "auto"
+  },
+  "b2-noor": {
+   "name": "諾爾",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-o00x",
+   "donorName": "悟空",
+   "donorProfile": "male_high_heroic",
+   "lang": "auto"
+  },
+  "b2-nube": {
+   "name": "鵺野鳴介",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hpal",
+   "donorName": "藤井八雲",
+   "donorProfile": "male_youth_gentle",
+   "lang": "auto"
+  },
+  "b2-orphen": {
+   "name": "歐菲",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hpb1",
+   "donorName": "蒼月潮",
+   "donorProfile": "male_youth_wild",
+   "lang": "auto"
+  },
+  "b2-popp": {
+   "name": "何布",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00n",
+   "donorName": "蒙其.D.魯夫",
+   "donorProfile": "male_youth_high_energy",
+   "lang": "auto"
+  },
+  "b2-rem": {
+   "name": "蕾姆",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e00w",
+   "donorName": "櫻綻剎那",
+   "donorProfile": "female_swordfighter",
+   "lang": "auto"
+  },
+  "b2-rin": {
+   "name": "遠坂凜",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-etyr",
+   "donorName": "木乃香",
+   "donorProfile": "female_soft_healing",
+   "lang": "auto"
+  },
+  "b2-shadow": {
+   "name": "闇影",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-nplh",
+   "donorName": "麻倉葉",
+   "donorProfile": "male_youth_relaxed",
+   "lang": "auto"
+  },
+  "b2-shinchan": {
+   "name": "野原新之助",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-n01c",
+   "donorName": "勇者小呆",
+   "donorProfile": "child_boy_heroic",
+   "lang": "auto"
+  },
+  "b2-sinbad": {
+   "name": "辛巴達",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-o00l",
+   "donorName": "傑洛士",
+   "donorProfile": "male_polite_sinister",
+   "lang": "auto"
+  },
+  "b2-takopi": {
+   "name": "章魚嗶",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-emfr",
+   "donorName": "涅吉",
+   "donorProfile": "child_boy_clear",
+   "lang": "auto"
+  },
+  "b2-touka": {
+   "name": "托卡・史考特",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-o00x",
+   "donorName": "悟空",
+   "donorProfile": "male_high_heroic",
+   "lang": "auto"
+  },
+  "b2-uncle": {
+   "name": "異世界舅舅",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-ogld",
+   "donorName": "黑人牙膏",
+   "donorProfile": "male_professional_villain",
+   "lang": "auto"
+  },
+  "b2-yogiri": {
+   "name": "高遠夜霧",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-h020",
+   "donorName": "莉娜因巴斯",
+   "donorProfile": "female_high_comedic",
+   "lang": "auto"
+  },
+  "b2-zenitsu": {
+   "name": "我妻善逸",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e007",
+   "donorName": "天地志狼",
+   "donorProfile": "male_youth_heroic",
+   "lang": "auto"
+  },
+  "community-review-01-20260907": {
+   "name": "武藤遊戲",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-edem",
+   "donorName": "宇智波佐助",
+   "donorProfile": "male_youth_cold",
+   "lang": "auto"
+  },
+  "community-review-02-20260907": {
+   "name": "八神庵",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-osam",
+   "donorName": "殺生丸",
+   "donorProfile": "male_low_flat",
+   "lang": "auto"
+  },
+  "community-review-03-20260907": {
+   "name": "不知火舞",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hvsh",
+   "donorName": "Rider",
+   "donorProfile": "female_low_breathy",
+   "lang": "auto"
+  },
+  "community-review-04-20260907": {
+   "name": "空條承太郎",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-osam",
+   "donorName": "殺生丸",
+   "donorProfile": "male_low_flat",
+   "lang": "auto"
+  },
+  "community-review-05-20260907": {
+   "name": "洛克人",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-h01n",
+   "donorName": "黑崎一護",
+   "donorProfile": "male_youth_rough",
+   "lang": "auto"
+  },
+  "community-review-06-20260907": {
+   "name": "卡比",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hblm",
+   "donorName": "慈悲的王者－賈修貝爾",
+   "donorProfile": "child_boy_heroic",
+   "lang": "auto"
+  },
+  "community-review-07-20260907": {
+   "name": "西索",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00h",
+   "donorName": "鬼畜狂刀KYO",
+   "donorProfile": "male_low_battle",
+   "lang": "auto"
+  },
+  "community-review-08-20260907": {
+   "name": "米卡莎",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hvwd",
+   "donorName": "桔梗",
+   "donorProfile": "female_cold_clear",
+   "lang": "auto"
+  },
+  "community-review-09-20260907": {
+   "name": "赫蘿",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-n003",
+   "donorName": "依文潔琳",
+   "donorProfile": "female_child_ancient",
+   "lang": "auto"
+  },
+  "community-review-10-20260907": {
+   "name": "魯路修",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hpal",
+   "donorName": "藤井八雲",
+   "donorProfile": "male_youth_gentle",
+   "lang": "auto"
+  },
+  "community-review-11-20260907": {
+   "name": "利姆路",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-o00k",
+   "donorName": "皮卡娘",
+   "donorProfile": "female_high_sadistic",
+   "lang": "auto"
+  },
+  "community-review-12-20260907": {
+   "name": "衛宮士郎",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hpb1",
+   "donorName": "蒼月潮",
+   "donorProfile": "male_youth_wild",
+   "lang": "auto"
+  },
+  "community-review-13-20260907": {
+   "name": "朝田詩乃",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e001",
+   "donorName": "龍宮禮奈",
+   "donorProfile": "female_dynamic",
+   "lang": "auto"
+  },
+  "community-review-14-20260907": {
+   "name": "殺老師",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00j",
+   "donorName": "賽菲洛斯",
+   "donorProfile": "male_low_divine",
+   "lang": "auto"
+  },
+  "community-review-15-20260907": {
+   "name": "比利海靈頓",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00h",
+   "donorName": "鬼畜狂刀KYO",
+   "donorProfile": "male_low_battle",
+   "lang": "auto"
+  },
+  "community-review-16-20260907": {
+   "name": "魔法少女☆伊莉雅",
+   "voiceClass": "child-girl",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-n003",
+   "donorName": "依文潔琳",
+   "donorProfile": "female_child_ancient",
+   "lang": "auto"
+  },
+  "community-review-17-20260907": {
+   "name": "安茲·烏爾·恭",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00j",
+   "donorName": "賽菲洛斯",
+   "donorProfile": "male_low_divine",
+   "lang": "auto"
+  },
+  "community-review-18-20260907": {
+   "name": "吉爾伽美什",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00k",
+   "donorName": "死之王",
+   "donorProfile": "male_ultra_low",
+   "lang": "auto"
+  },
+  "community-review-19-20260907": {
+   "name": "桐谷和人",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-nplh",
+   "donorName": "麻倉葉",
+   "donorProfile": "male_youth_relaxed",
+   "lang": "auto"
+  },
+  "community-review-20-20260907": {
+   "name": "御坂美琴",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e002",
+   "donorName": "Saber",
+   "donorProfile": "female_low_regal",
+   "lang": "auto"
+  },
+  "community-review-21-20260907": {
+   "name": "鹿目圓",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e008",
+   "donorName": "夏娜",
+   "donorProfile": "female_high_tsundere",
+   "lang": "auto"
+  },
+  "community-review-22-20260907": {
+   "name": "菜月昴",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-o00x",
+   "donorName": "悟空",
+   "donorProfile": "male_high_heroic",
+   "lang": "auto"
+  },
+  "community-review-23-20260907": {
+   "name": "坂田銀時",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00k",
+   "donorName": "死之王",
+   "donorProfile": "male_ultra_low",
+   "lang": "auto"
+  },
+  "community-review-24-20260907": {
+   "name": "奇犽",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-n01c",
+   "donorName": "勇者小呆",
+   "donorProfile": "child_boy_heroic",
+   "lang": "auto"
+  },
+  "community-review-25-20260907": {
+   "name": "一拳超人",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00l",
+   "donorName": "拳四郎",
+   "donorProfile": "male_hardboiled",
+   "lang": "auto"
+  },
+  "community-review-26-20260907": {
+   "name": "名偵探柯南",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-emfr",
+   "donorName": "涅吉",
+   "donorProfile": "child_boy_clear",
+   "lang": "auto"
+  },
+  "community-review-27-20260907": {
+   "name": "庫洛魔法使",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e00k",
+   "donorName": "安云",
+   "donorProfile": "female_low_assassin",
+   "lang": "auto"
+  },
+  "community-review-28-20260907": {
+   "name": "艾莉絲·伯雷亞斯·格雷拉特",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e00w",
+   "donorName": "櫻綻剎那",
+   "donorProfile": "female_swordfighter",
+   "lang": "auto"
+  },
+  "community-review-29-20260907": {
+   "name": "芙莉蓮",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-etyr",
+   "donorName": "木乃香",
+   "donorProfile": "female_soft_healing",
+   "lang": "auto"
+  },
+  "community-review-30-20260907": {
+   "name": "尼古貓貓",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-h020",
+   "donorName": "莉娜因巴斯",
+   "donorProfile": "female_high_comedic",
+   "lang": "auto"
+  },
+  "community-review-31-20260907": {
+   "name": "SUN樂",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00n",
+   "donorName": "蒙其.D.魯夫",
+   "donorProfile": "male_youth_high_energy",
+   "lang": "auto"
+  },
+  "community-review-32-20260907": {
+   "name": "阿薩謝爾",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u00n",
+   "donorName": "蒙其.D.魯夫",
+   "donorProfile": "male_youth_high_energy",
+   "lang": "auto"
+  },
+  "community-review-33-20260907": {
+   "name": "近衛刀太",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-e007",
+   "donorName": "天地志狼",
+   "donorProfile": "male_youth_heroic",
+   "lang": "auto"
+  },
+  "community-review-34-20260907": {
+   "name": "高速婆婆",
+   "voiceClass": "female",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hvsh",
+   "donorName": "Rider",
+   "donorProfile": "female_low_breathy",
+   "lang": "auto"
+  },
+  "community-review-35-20260907": {
+   "name": "炭治郎",
+   "voiceClass": "male-youth",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-edem",
+   "donorName": "宇智波佐助",
+   "donorProfile": "male_youth_cold",
+   "lang": "auto"
+  },
+  "community-review-36-20260907": {
+   "name": "鬼畜王蘭斯",
+   "voiceClass": "male",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-u010",
+   "donorName": "飛影",
+   "donorProfile": "male_high_sharp",
+   "lang": "auto"
+  },
+  "community-review-37-20260907": {
+   "name": "吉伊卡哇",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "world-knowledge",
+   "reference": "donor",
+   "donor": "godie-hblm",
+   "donorName": "慈悲的王者－賈修貝爾",
+   "donorProfile": "child_boy_heroic",
+   "lang": "auto"
+  }
+ }
+}

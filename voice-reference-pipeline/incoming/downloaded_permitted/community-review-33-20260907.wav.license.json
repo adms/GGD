@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-33-20260907",
+  "source_name": "youtube: TVアニメ UQ HOLDER! 新PV",
+  "source_url": "https://www.youtube.com/watch?v=XtPWh1KeAmA",
+  "direct_url": "https://www.youtube.com/watch?v=XtPWh1KeAmA",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "高倉有加",
+  "source_sha256": "fc07fc39fcc9c51535f6479245acb593acdf756fee5c3c4cd4a0be84557c5c08",
+  "downloaded_at": "2026-09-10T10:54:02.115729Z",
+  "notes": "公式新PV。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 0.0,
+    "window_s": 10.0,
+    "score": 0.556,
+    "metrics": {
+      "multiple_speaker_probability": 0.457,
+      "music_probability": 0.597,
+      "speech_or_vocal_ratio": 0.998,
+      "silence_ratio": 0.002,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 8.0
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-33-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

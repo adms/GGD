@@ -1,0 +1,21 @@
+{
+ "id": "combat-grunts",
+ "schema": "voice.combat-grunts@1",
+ "note": "B 類（非語意發聲）：hurt／hurt-heavy／kill-1／defeat 用**擬聲**，⛔ 不是台詞 —— 這四格本來就不是句子（吼、悶哼、喘、倒地）。⭐ 這是 81 英雄語音補檔計劃書第 3 節的裁決：不編造任何角色台詞。text 是顯示用、kana 是 CosyVoice3 實唸的片假名（lang=ja 必填，⛔ 不可含漢字）。voiceClass 對到 COMBAT_CASTING.json；沒列的 class 用 default。⭐ owner 若在 OWNER_LINES.csv 對某一位填了 defeat／kill-1 的台詞，那一格就改用台詞（產生器裡台詞 > 擬聲）。",
+ "default": {
+  "hurt":       { "text": "うっ！",        "kana": "ウッ",      "lang": "ja" },
+  "hurt-heavy": { "text": "ぐああっ……！",  "kana": "グアアッ",  "lang": "ja" },
+  "kill-1":     { "text": "はぁっ！",      "kana": "ハァッ",    "lang": "ja" },
+  "defeat":     { "text": "ぐ……っ……",     "kana": "グッ",      "lang": "ja" }
+ },
+ "byVoiceClass": {
+  "female": {
+   "hurt":       { "text": "きゃっ！",      "kana": "キャッ",    "lang": "ja" },
+   "hurt-heavy": { "text": "ああっ……！",    "kana": "アアッ",    "lang": "ja" }
+  },
+  "child-girl": {
+   "hurt":       { "text": "きゃっ！",      "kana": "キャッ",    "lang": "ja" },
+   "hurt-heavy": { "text": "ああっ……！",    "kana": "アアッ",    "lang": "ja" }
+  }
+ }
+}

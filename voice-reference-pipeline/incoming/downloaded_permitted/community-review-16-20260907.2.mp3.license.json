@@ -1,0 +1,15 @@
+{
+  "hero_id": "community-review-16-20260907",
+  "source_name": "game-voice: Fate/Grand Order (JP) — イリヤスフィール〔キャスター〕召喚ボイス「えっと、イリヤって言います。小学五年生です。」 (Atlas Academy mirror)",
+  "source_url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_502800/0_S010.mp3",
+  "direct_url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_502800/0_S010.mp3",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "門脇舞以",
+  "source_sha256": "dfdd4c6e84305b1f329ff03d34d411a3b4654499b29061329f1521064baecc61",
+  "downloaded_at": "2026-09-10T10:52:18.951732Z",
+  "notes": "HEAD-verified: HTTP 200, audio/mpeg, 38 KB. Servant collectionNo 136, svtId 502800; API cv field = 門脇舞以＆高野直子 (Ruby's lines are 高野直子 — pick Illya-only lines). Full list: https://api.atlasacademy.io/nice/JP/servant/136?lore=true (profile.voices[].voiceLines[].audioAssets)."
+}

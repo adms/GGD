@@ -1,0 +1,503 @@
+{
+ "championId": "community-review-14-20260907",
+ "reference": {
+  "sha256": "b14aaf4424bdee6a543020081f3aaa52cf5443b99501388abb8ceac06f4d0926",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/community-review-14-20260907.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789039753707,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-14-20260907.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.88,
+     "at": 1789043006900,
+     "error": null
+    }
+   ],
+   "text": "第二の刃持たざる者に暗殺者の資格なし！",
+   "lang": "ja",
+   "kana": "ダイニノ ヤイバ モタザル モノニ アンサツシャノ シカク ナシ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 63155,
+    "seconds": 3.88,
+    "lufs": null,
+    "hash": "ef8b48d0f9e30a8df80530a728ef66763f78990c07fcfb42bf714da6302e7a74",
+    "maxDb": -1.8,
+    "at": 1789043006901
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789037125224,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1789040383460,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789042403224,
+     "error": null
+    }
+   ],
+   "text": "觸手批改！",
+   "lang": "ja",
+   "kana": "ショクシュ ヒ カイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-14-20260907.q",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.12,
+    "lufs": null,
+    "hash": "56a62fa22345ef3f01d98918cdfd2140e05a20f9ad2821e284bb36ee022608df",
+    "maxDb": -1.9,
+    "at": 1789042403224
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789037125351,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789040383574,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789042403327,
+     "error": null
+    }
+   ],
+   "text": "高速授課！",
+   "lang": "ja",
+   "kana": "コウソク ジュ カ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-14-20260907.w",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "9664b99cedcf8cc1d380e089d987634fe22266ec9e86b5f3049eec22590df2ba",
+    "maxDb": -3.6,
+    "at": 1789042403327
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.2,
+     "at": 1789037125477,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1789040383684,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1789042403431,
+     "error": null
+    }
+   ],
+   "text": "觸手再生！",
+   "lang": "ja",
+   "kana": "ショクシュ サイセイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-14-20260907.e",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "80267d6d3d89861563058d9d18f6827c7645791ac394281d3a4e440619f066e6",
+    "maxDb": -2,
+    "at": 1789042403431
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1789037125602,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789040383797,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.6,
+     "at": 1789042403535,
+     "error": null
+    }
+   ],
+   "text": "完全防禦形態！",
+   "lang": "ja",
+   "kana": "カンゼン ボウギョ ケイタイ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-14-20260907.r",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 26793,
+    "seconds": 1.6,
+    "lufs": null,
+    "hash": "dfc407f08c45767a08e7c0e7fda6c3f5084c391d456364c7f763c03b10fc0396",
+    "maxDb": -2,
+    "at": 1789042403535
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.48,
+     "at": 1789037125734,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1789040383911,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1789042403640,
+     "error": null
+    }
+   ],
+   "text": "分身式教學！",
+   "lang": "ja",
+   "kana": "ブンシン シキ キョウガク",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-14-20260907.ex",
+   "state": "generated",
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.44,
+    "lufs": null,
+    "hash": "0c0c69a93e6acb0532ae89bb3a386bd8fa33bd7102c77e1300035839c2fc986b",
+    "maxDb": -1.9,
+    "at": 1789042403640
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.08,
+     "at": 1789043007014,
+     "error": null
+    }
+   ],
+   "text": "殺せるといいですねぇ。卒業までに",
+   "lang": "ja",
+   "kana": "コロセルト イイデスネエ ソツギョウマデニ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 50199,
+    "seconds": 3.08,
+    "lufs": null,
+    "hash": "9e49d9caaab3c61a1ae3c82c58de65e62db5b30a6bc45c49865f97fac4c57eb1",
+    "maxDb": -1.9,
+    "at": 1789043007015
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789037125865,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040384070,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "ca91d30c005ddec43043f1569422498ef397c332a6eea8736e62e41cd31b1bf2",
+    "maxDb": -2,
+    "at": 1789040384070
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789037126005,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789040384195,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "16726df26221dacf950259ffcc37a4fb110b793e4b1c8833f5d56ba12e01d4cc",
+    "maxDb": -2,
+    "at": 1789040384195
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1789037126153,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789040384311,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "635df223191b1360db8d78220e09332fc2114c0176cfb2468ce2481e3754da91",
+    "maxDb": -5.2,
+    "at": 1789040384311
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1789043007129,
+     "error": null
+    }
+   ],
+   "text": "ヌルフフフフ",
+   "lang": "ja",
+   "kana": "ヌルフフフフ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": 0.48,
+    "lufs": null,
+    "hash": "bbf7df1cd3bbdbc845d94477375f5ea5056763af5737b949c126cf28457ab5c9",
+    "maxDb": -2,
+    "at": 1789043007129
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789037126285,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789040384443,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "351e7d79891aac28748e6c63bebae3fd895b2ddca00fb77690883ef956a6348b",
+    "maxDb": -2,
+    "at": 1789040384443
+   },
+   "lastError": null
+  }
+ }
+}

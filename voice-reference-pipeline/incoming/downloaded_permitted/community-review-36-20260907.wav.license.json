@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-36-20260907",
+  "source_name": "game-voice: ランス03 リーザス陥落 オープニングムービー（アリスソフト公式・シリーズ初フルボイス）",
+  "source_url": "https://www.youtube.com/watch?v=jUCqa4Vh_FU",
+  "direct_url": "https://www.youtube.com/watch?v=jUCqa4Vh_FU",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "由嘉鈍（OVA『ランス01』2014–16・ゲーム『ランス03』2015）／矢尾一樹（OVA『ランス 砂漠のガーディアン』1993）",
+  "source_sha256": "da3a7dff02c102e2fd5e67b05d23dcc7e4e121060a97404dc20f09e4c8b50abb",
+  "downloaded_at": "2026-09-10T10:59:18.137916Z",
+  "notes": "2026-09-10 主 session 補查",
+  "precut": {
+    "window_start_s": 0.0,
+    "window_s": 10.0,
+    "score": 0.938,
+    "metrics": {
+      "multiple_speaker_probability": 0.809,
+      "music_probability": 0.619,
+      "speech_or_vocal_ratio": 0.99,
+      "silence_ratio": 0.01,
+      "clipping_ratio": 1e-05,
+      "estimated_snr": 8.0
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-36-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

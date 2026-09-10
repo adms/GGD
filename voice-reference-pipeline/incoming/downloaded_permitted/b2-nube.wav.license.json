@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-nube",
+  "source_name": "anime-clip: 『地獄先生ぬ～べ～』第2クール 本PV（It's Anime powered by REMOW 公式）",
+  "source_url": "https://www.youtube.com/watch?v=qWHY5_G_BG0",
+  "direct_url": "https://www.youtube.com/watch?v=qWHY5_G_BG0",
+  "license_url": "",
+  "timestamp": "",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "置鮎龍太郎",
+  "source_sha256": "5ece5fb0c5c3b3eb29f2c0f7717bb8fa5133ae0424a5d1d05b1063d440789c04",
+  "downloaded_at": "2026-09-10T11:12:03.923161Z",
+  "notes": "CV 置鮎龍太郎；yt-dlp ytsearch 2026-09-10",
+  "precut": {
+    "window_start_s": 8.0,
+    "window_s": 10.0,
+    "score": 0.662,
+    "metrics": {
+      "multiple_speaker_probability": 0.457,
+      "music_probability": 0.623,
+      "speech_or_vocal_ratio": 0.916,
+      "silence_ratio": 0.079,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 25.6
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-nube.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

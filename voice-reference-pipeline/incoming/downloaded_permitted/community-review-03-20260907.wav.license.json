@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-03-20260907",
+  "source_name": "youtube: KOF XV｜MAI SHIRANUI｜Trailer #13 (SNK OFFICIAL)",
+  "source_url": "https://www.youtube.com/watch?v=WULO-M2wOYs",
+  "direct_url": "https://www.youtube.com/watch?v=WULO-M2wOYs",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "小清水亜美",
+  "source_sha256": "92dd228fa2a3c225057060af1498115471af1429320874b7cb5a760cd4ecf972",
+  "downloaded_at": "2026-09-10T10:55:31.020056Z",
+  "notes": "Verified via oEmbed (SNK OFFICIAL). Opening line 「不知火の炎、たっぷり味わってね！」 per SNK JAPAN's tweet; BGM present.",
+  "precut": {
+    "window_start_s": 44.0,
+    "window_s": 10.0,
+    "score": 0.238,
+    "metrics": {
+      "multiple_speaker_probability": 0.141,
+      "music_probability": 0.597,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 4.9
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-03-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

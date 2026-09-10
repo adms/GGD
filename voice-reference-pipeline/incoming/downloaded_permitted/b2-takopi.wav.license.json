@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-takopi",
+  "source_name": "youtube: アニメ『タコピーの原罪』本PV（TBSアニメ公式）",
+  "source_url": "https://www.youtube.com/watch?v=SUhYB0W7gM0",
+  "direct_url": "https://www.youtube.com/watch?v=SUhYB0W7gM0",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "間宮くるみ",
+  "source_sha256": "6cc8916594b48365021802a810ea3bacba17336af8364917fbd96cf587cf866a",
+  "downloaded_at": "2026-09-10T11:04:29.712585Z",
+  "notes": "oEmbed確認済み。タコピーの台詞あり、BGM混在。",
+  "precut": {
+    "window_start_s": 42.0,
+    "window_s": 10.0,
+    "score": 0.441,
+    "metrics": {
+      "multiple_speaker_probability": 0.327,
+      "music_probability": 0.614,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 8.1
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-takopi.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

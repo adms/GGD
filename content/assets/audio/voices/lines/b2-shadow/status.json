@@ -1,0 +1,542 @@
+{
+ "championId": "b2-shadow",
+ "reference": {
+  "sha256": "c27129d147ca92e778e8e964af9f6c8e86dfac8f322644d872a2cb36bb74026d",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-nplh.wav",
+  "sourceKind": "donor",
+  "donor": "godie-nplh",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=male) — drop b2-shadow.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549577,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-nplh.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.88,
+     "at": 1789037101372,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_use_power1_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power1_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 22613,
+    "seconds": 1.356508,
+    "lufs": null,
+    "hash": "66ddcc9b90dff0f197b324603119848fbec90e745f2e28e7fa98c44728f18a4a",
+    "at": 1789041878443
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789037101492,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_use_power2_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power2_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 38078,
+    "seconds": 2.315805,
+    "lufs": null,
+    "hash": "782922a8304ab4cd5229b98101a3cc4d8645d5ed126c8c2d075519d3372f1a8d",
+    "at": 1789041878495
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.48,
+     "at": 1789037101613,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_use_power3_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power3_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 44765,
+    "seconds": 2.742177,
+    "lufs": null,
+    "hash": "d140bc97b227486099e7ffa8bc22e6e683d692eedc5685daff5bf25ec1304b80",
+    "at": 1789041878553
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.76,
+     "at": 1789037101738,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_use_power4_start_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_use_power4_start_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 51871,
+    "seconds": 3.173878,
+    "lufs": null,
+    "hash": "223c9f1e88e48917003efd43f0991bf64c81e27e42c51a30e448147efc3b738b",
+    "at": 1789041878606
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.68,
+     "at": 1789037101862,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_super_slash_cast",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/abilities/fencer/super_slash/fencer_super_slash_cast.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 71097,
+    "seconds": 4.372744,
+    "lufs": null,
+    "hash": "08dc4f08896232522a8f972db364dc6e2f042be18868eb35ac840526d0d34d2d",
+    "at": 1789041878660
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.6,
+     "at": 1789043000218,
+     "error": null
+    }
+   ],
+   "text": "I AM THE ALL-RANGE ATOMIC",
+   "lang": "ja",
+   "kana": "アイ アム ジ オール レンジ アトミック",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 42675,
+    "seconds": 2.6,
+    "lufs": null,
+    "hash": "ae531228e34f5c215b63c351a0a708dbcd4aba0708283894b65fd339fc73540d",
+    "maxDb": -2.5,
+    "at": 1789043000218
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037101984,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_pain_death_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_pain_death_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 68589,
+    "seconds": 4.224014,
+    "lufs": null,
+    "hash": "c285a4eb121b96ccb44c9ec44a670af989f63cb66106c5044bb0e47fc565bf6c",
+    "at": 1789041878711
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037102102,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_pain_small_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_pain_small_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.532857,
+    "lufs": null,
+    "hash": "c5454de027500a8ae693dab4035d8e5f6beb2621300069d03e8b5b6cc2b0b57a",
+    "at": 1789041878761
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789037102220,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_pain_big_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_pain_big_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 24703,
+    "seconds": 1.481655,
+    "lufs": null,
+    "hash": "35ae9b429211ee357abd6847110eefc5c5be3b5efc0b71e24178f2e6a3a24c57",
+    "at": 1789041878812
+   },
+   "lastError": null
+  },
+  "thanks": {
+   "takes": [],
+   "text": "（原檔）fencer_pick_up_gold_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_pick_up_gold_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 90741,
+    "seconds": 5.604512,
+    "lufs": null,
+    "hash": "d5ecccc6e8905ef2a96864df2ab3e8b8c717e104496465df2c3fc5da845cfb4b",
+    "at": 1789041878862
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789043000333,
+     "error": null
+    }
+   ],
+   "text": "I AM ATOMIC.",
+   "lang": "ja",
+   "kana": "アイ アム アトミック",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.12,
+    "lufs": null,
+    "hash": "419a91057d8e0286554c3a82a0cca5ef53b20d2a0d22db35a32c9e8e92ab9a4c",
+    "maxDb": -3.5,
+    "at": 1789043000333
+   },
+   "lastError": null
+  },
+  "block": {
+   "takes": [],
+   "text": "（原檔）fencer_parry_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_parry_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 42257,
+    "seconds": 2.572857,
+    "lufs": null,
+    "hash": "a32bb06fbc5277cb34c44770e5377c9e187acbf6e4f4745a6145f1f433c41dcf",
+    "at": 1789041878964
+   },
+   "lastError": null
+  },
+  "dodge": {
+   "takes": [],
+   "text": "（原檔）fencer_effort_dash_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_effort_dash_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 31808,
+    "seconds": 1.908481,
+    "lufs": null,
+    "hash": "5d1b190b09b051331132eb4d46ef9e793d2e343748f5deb026b84af941778145",
+    "at": 1789041879015
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "takes": [],
+   "text": "（原檔）fencer_effort_dash_02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/emote/fencer_effort_dash_02.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.511519,
+    "lufs": null,
+    "hash": "38958516c8f750a950956a3f1f96834c50263e57dc1dcdd9a0553f5b645034d9",
+    "at": 1789041879067
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "takes": [],
+   "text": "（原檔）fencer_select_02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_select_02.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 104533,
+    "seconds": 6.464512,
+    "lufs": null,
+    "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89",
+    "at": 1789041879119
+   },
+   "lastError": null
+  },
+  "respond.no": {
+   "takes": [],
+   "text": "（原檔）fencer_unselect_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_unselect_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.026327,
+    "lufs": null,
+    "hash": "b687e5b1942ab3d87ab444d227f280f746a8e6b6461ed74c03d587fdce8ef7be",
+    "at": 1789041879175
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "takes": [],
+   "text": "（原檔）fencer_select_03",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_select_03.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 104533,
+    "seconds": 6.464512,
+    "lufs": null,
+    "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89",
+    "at": 1789041879229
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789037102345,
+     "error": null
+    }
+   ],
+   "text": "（原檔）fencer_kill_anyhero_01",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_kill_anyhero_01.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 90741,
+    "seconds": 5.604512,
+    "lufs": null,
+    "hash": "d5ecccc6e8905ef2a96864df2ab3e8b8c717e104496465df2c3fc5da845cfb4b",
+    "at": 1789041879285
+   },
+   "lastError": null
+  },
+  "kill-2": {
+   "takes": [],
+   "text": "（原檔）fencer_kill_anyhero_02",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_kill_anyhero_02.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 77784,
+    "seconds": 4.803878,
+    "lufs": null,
+    "hash": "54ca412fbb28e4535efae0464d4300edfc82d563fdbdb2a10603ed5b86ca546b",
+    "at": 1789041879341
+   },
+   "lastError": null
+  },
+  "kill-3": {
+   "takes": [],
+   "text": "（原檔）fencer_kill_anyhero_03",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_kill_anyhero_03.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 106623,
+    "seconds": 6.605329,
+    "lufs": null,
+    "hash": "9de82257ee8b1308557ccf8f4da6efafef7a44ed53c06cfe1683d883c792832d",
+    "at": 1789041879395
+   },
+   "lastError": null
+  },
+  "unstoppable": {
+   "takes": [],
+   "text": "（原檔）fencer_revenge_kill",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-shadow/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/vo/fencer/fencer_revenge_kill.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-shadow",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.061043,
+    "lufs": null,
+    "hash": "5547debc2a5b95f622e6b6e40d25294f467df2ee0f6c0d0bf17229f1ed4f91c8",
+    "at": 1789041879448
+   },
+   "lastError": null
+  }
+ }
+}

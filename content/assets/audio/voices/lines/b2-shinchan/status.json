@@ -1,0 +1,431 @@
+{
+ "championId": "b2-shinchan",
+ "reference": {
+  "sha256": "67240cd1ab5f09fdff51c0bb9cd2ef387f81c383e829a266d8c6c9562e2f55a3",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-n01c.wav",
+  "sourceKind": "donor",
+  "donor": "godie-n01c",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=child-boy) — drop b2-shinchan.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789035549580,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-n01c.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1789043000452,
+     "error": null
+    }
+   ],
+   "text": "ねぇねぇお姉さん！",
+   "lang": "ja",
+   "kana": "ネエネエ オネエサン",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "622e38d3f4a165dba53cfb87b177a040e2c489b6bf5143e37f8a8b58a6791796",
+    "maxDb": -2,
+    "at": 1789043000452
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.72,
+     "at": 1789037102475,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1789042395369,
+     "error": null
+    }
+   ],
+   "text": "春日部接力棒快傳！",
+   "lang": "ja",
+   "kana": "カスカベ セツ チカラ ボウ カイ デン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-shinchan.q",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 35152,
+    "seconds": 2.12,
+    "lufs": null,
+    "hash": "89a757468f4602a1529b4db66bb5c9dc24b412762cdaae1118ab9468ef07f48a",
+    "maxDb": -2,
+    "at": 1789042395369
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.68,
+     "at": 1789037102603,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1789042395480,
+     "error": null
+    }
+   ],
+   "text": "玩具散落請勿奔跑！",
+   "lang": "ja",
+   "kana": "ガング サン ラク セイ モチロン ホン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-shinchan.w",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43511,
+    "seconds": 2.64,
+    "lufs": null,
+    "hash": "b320f502f0a57495b2bd605afe5da154e40864a4435635a46c2718dc144174e7",
+    "maxDb": -2,
+    "at": 1789042395480
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1789037102723,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.52,
+     "at": 1789042395587,
+     "error": null
+    }
+   ],
+   "text": "小白帶我換條路！",
+   "lang": "ja",
+   "kana": "ショウハク オビ ワレ カン ジョウ ミチ",
+   "textSource": "derived",
+   "origin": "ability-name:b2-shinchan.e",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.52,
+    "lufs": null,
+    "hash": "b6751e8276290509c7747f6905d7f731ddb97e36f170a89bf266ec95b3626b00",
+    "maxDb": -1.9,
+    "at": 1789042395587
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1789037102846,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789042395691,
+     "error": null
+    }
+   ],
+   "text": "全體一起玩鬼抓人！",
+   "lang": "ja",
+   "kana": "ゼンタイ カズキ ガン オニ ソウ ニン",
+   "textSource": "derived",
+   "origin": "ability-name:b2-shinchan.r",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "13b77dbd897b55bf0febf1427dfbc9859a2a6fff446df98fe19e911257cda18e",
+    "maxDb": -2,
+    "at": 1789042395691
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.04,
+     "at": 1789037102970,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1789042395797,
+     "error": null
+    }
+   ],
+   "text": "玩具箱彈簧送客！",
+   "lang": "ja",
+   "kana": "ガングバコ ダン コウ ソウキャク",
+   "textSource": "derived",
+   "origin": "ability-name:b2-shinchan.ex",
+   "state": "generated",
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.04,
+    "lufs": null,
+    "hash": "65014cf25a2056be335760db99fedadd5e39fef65d15dea859a9ff548719ba23",
+    "maxDb": -1.9,
+    "at": 1789042395798
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.68,
+     "at": 1789043000569,
+     "error": null
+    }
+   ],
+   "text": "オラ、野原しんのすけ、5歳だゾ！",
+   "lang": "ja",
+   "kana": "オラ ノハラ シンノスケ ゴサイダゾ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43929,
+    "seconds": 2.68,
+    "lufs": null,
+    "hash": "4d70b2d8d5e628e7ec9f4eb5a1d17f8a259e8f2f599f96e9baed118b9d6d2283",
+    "maxDb": -2,
+    "at": 1789043000569
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037103096,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "468121bddd3c3ab5b73ed1c185c83023f72a814142449f097969eabd3c2d5587",
+    "maxDb": -1.9,
+    "at": 1789037103096
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.24,
+     "at": 1789037103218,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5059,
+    "seconds": 0.24,
+    "lufs": null,
+    "hash": "f7e6ea2354a60bc53ade309d656aa5e0279b95a9511165d81f84182f6c02e584",
+    "maxDb": -2,
+    "at": 1789037103218
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789037103337,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "b888e2a772c557261c415f1892c0f1c4c855f2d734aa1e29d62e3027c122fd1b",
+    "maxDb": -6,
+    "at": 1789037103337
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789043000688,
+     "error": null
+    }
+   ],
+   "text": "ホホ～イ！",
+   "lang": "ja",
+   "kana": "ホホーイ",
+   "textSource": "authored",
+   "origin": "owner-lines",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "042eff4c080fc8ae792d229611be520f448c7dcad4b9bcc1c4226c996eb4ff77",
+    "maxDb": -2,
+    "at": 1789043000688
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789037103452,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "3d4767960b0d2f1ea084ea8b9a3d74e1c5a065ded7bf870810598cb73f0ca061",
+    "maxDb": -2,
+    "at": 1789037103452
+   },
+   "lastError": null
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-fushi",
+  "source_name": "youtube: アニメ『不滅のあなたへ』番組PV第2弾（Season1・NHK）",
+  "source_url": "https://www.youtube.com/watch?v=0S0ty44JPao",
+  "direct_url": "https://www.youtube.com/watch?v=0S0ty44JPao",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "川島零士",
+  "source_sha256": "235bfe7e24ed483b046bcb417346614c10111d3e1290b59ec953aec1fdd564a6",
+  "downloaded_at": "2026-09-10T10:54:38.222846Z",
+  "notes": "NHK 公式番組PV。宇多田ヒカルの主題歌が乗る区間を避けて切り出す。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 38.0,
+    "window_s": 10.0,
+    "score": 0.576,
+    "metrics": {
+      "multiple_speaker_probability": 0.399,
+      "music_probability": 0.677,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 5.5
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-fushi.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

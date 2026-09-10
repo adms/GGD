@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-01-20260907",
+  "source_name": "youtube: Yu-Gi-Oh! Duel Links (DSOD Yugi Muto, CV 風間俊介)",
+  "source_url": "https://www.youtube.com/watch?v=0-aFpbsNUKE",
+  "direct_url": "https://www.youtube.com/watch?v=0-aFpbsNUKE",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "風間俊介",
+  "source_sha256": "bdf1de8a83654c0b6b5af355efb85751b54dd3476984d89ad6e2c7f5b3b60742",
+  "downloaded_at": "2026-09-10T10:55:23.713229Z",
+  "notes": "Verified via oEmbed: 【遊戯王デュエルリンクス】マジシャン・オブ・カオス 武藤遊戯 DSOD ボイス CV 風間俊介 (channel: Hiria Games). In-game JP voice lines; card-summon SFX likely overlap — pick a summon/quote line.",
+  "precut": {
+    "window_start_s": 58.0,
+    "window_s": 10.0,
+    "score": 0.429,
+    "metrics": {
+      "multiple_speaker_probability": 0.377,
+      "music_probability": 0.552,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 4.7
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/community-review-01-20260907.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

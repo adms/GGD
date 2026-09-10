@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-elma",
+  "source_name": "youtube: 『追放された転生重騎士はゲーム知識で無双する』メインPV（2026-03）",
+  "source_url": "https://www.youtube.com/watch?v=g8rvdawGAfc",
+  "direct_url": "https://www.youtube.com/watch?v=g8rvdawGAfc",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "大塚剛央（幼少期：村上まなつ）",
+  "source_sha256": "b0c631e6f1f13bbf24c8f4ff53a446450686b44794c9ff99b0e8294cbfee76c6",
+  "downloaded_at": "2026-09-10T10:54:34.973229Z",
+  "notes": "松竹公式メインPV第1弾。エルマ（大塚剛央）の台詞入り。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 88.0,
+    "window_s": 10.0,
+    "score": 0.246,
+    "metrics": {
+      "multiple_speaker_probability": 0.223,
+      "music_probability": 0.523,
+      "speech_or_vocal_ratio": 1.0,
+      "silence_ratio": 0.0,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 6.2
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-elma.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}
