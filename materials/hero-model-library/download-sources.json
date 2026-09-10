@@ -41047,7 +41047,7 @@
       "patchVersion": "16.18.8159717+branch.releases-16-18.content.release.cpuarch.any.platform.macos-windows",
       "releaseId": "7CAC3C60C863BF12",
       "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
-      "publicationStatus": "local-verified-s3-pending",
+      "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-audio-review",
@@ -41256,8 +41256,8 @@
         "bytes": 6504344529
       },
       "backupStatus": {
-        "scopedS3ReadbackVerified": false,
-        "state": "local-scoped-archive-verified-s3-pending",
+        "scopedS3ReadbackVerified": true,
+        "state": "exact-seven-full-get-verified",
         "archiveFileCount": 15691,
         "localArchiveReadbackVerified": true,
         "manifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/manifest.json",
@@ -41332,17 +41332,28 @@
           "kind": "original-wad"
         }
       ],
-      "pendingBackup": {
-        "localArchive": "GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/lol-project-seven-scoped-16.18.8159717.tar.gz",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.tar.gz",
-        "bytes": 5895452534,
+      "backup": {
+        "schema": "ggd-scoped-tar-s3-receipt@1",
+        "id": "lol-project-seven-ja-jp-16.18.8159717",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.files.json",
         "sha256": "8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc",
+        "bytes": 5895452534,
         "archiveFormat": "tar-gzip",
         "archiveMemberRoot": "",
-        "readbackVerified": false,
-        "s3ReadbackVerified": false,
-        "localArchiveReadbackVerified": true,
-        "status": "local-archive-readback-verified-s3-pending"
+        "fileCount": 15691,
+        "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
+        "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/lol-project-seven-scoped-16.18.8159717.tar.gz",
+        "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-full-readback.tar.gz",
+        "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/manifest.json",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allArchiveMembersSha256Verified": true,
+        "profile": "vibe-coding",
+        "region": "ap-east-2",
+        "localPreserved": true,
+        "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
+        "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
       }
     },
     {

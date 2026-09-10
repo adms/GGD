@@ -42984,17 +42984,31 @@
     },
     "public:lol-project-seven-ja-jp-16.18.8159717": {
       "type": "tar-gzip",
-      "localArchive": "GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/lol-project-seven-scoped-16.18.8159717.tar.gz",
-      "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.tar.gz",
-      "bytes": 5895452534,
+      "schema": "ggd-scoped-tar-s3-receipt@1",
+      "id": "lol-project-seven-ja-jp-16.18.8159717",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717/8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc.files.json",
       "sha256": "8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc",
-      "readbackVerified": false,
+      "bytes": 5895452534,
       "archiveFormat": "tar-gzip",
       "archiveMemberRoot": "",
+      "fileCount": 15691,
+      "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/lol-project-seven-scoped-16.18.8159717.tar.gz",
+      "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-full-readback.tar.gz",
+      "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/manifest.json",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allArchiveMembersSha256Verified": true,
+      "profile": "vibe-coding",
+      "region": "ap-east-2",
+      "localPreserved": true,
+      "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
+      "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a",
       "localRoot": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
       "localUseAvailable": true,
-      "publicationStatus": "local-verified-s3-pending"
+      "publicationStatus": "s3-readback-verified"
     },
     "public:parallel-ns-alucard-ssbu-audio-decoded-v1": {
       "type": "tar-gzip",
@@ -43015,11 +43029,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "5ef55db49727827c98eff4738ee4340d04d8ffd863ee08de520d87dba30b9155"
+      "sha256": "65fc8f523064fab0165cb61c7f4bbbdd54f4ad01b1238b4fded8c6b3b29ef04e"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "2434560d4a451108b5c9304d07b6d81df33b4dc72c0162101e0041a01dbaa979"
+      "sha256": "8ca9f1400dd08a30fbee87c62a7f0a200eaf520f35f757002e7bd09e5cf57ab0"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
