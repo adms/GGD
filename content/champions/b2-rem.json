@@ -86,7 +86,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -149,7 +150,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -265,7 +267,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -302,10 +305,10 @@
       ],
       "id": "b2-rem.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -362,20 +365,21 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 23,
-    "agiGrowth": 2.17,
+    "agiGrowth": 0,
     "int": 12,
-    "intGrowth": 1.18,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 25,
-    "strGrowth": 2.36
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

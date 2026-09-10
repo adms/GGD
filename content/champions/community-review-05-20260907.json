@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 29,
     "int": 18,
-    "strGrowth": 1.25,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.67,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-05-20260907.w",
@@ -134,10 +140,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -202,7 +208,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.bolt"
+        }
+      ]
     },
     "E": {
       "id": "community-review-05-20260907.e",
@@ -261,7 +273,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-05-20260907.r",
@@ -277,9 +296,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -320,7 +339,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.lightning.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-05-20260907.ex",

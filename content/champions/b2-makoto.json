@@ -90,7 +90,8 @@
           "vfxKey": "fx.prim.arcane.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-makoto.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -155,7 +156,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-makoto.q.webp"
     },
     "R": {
       "castTimeSec": 2.433,
@@ -195,9 +197,9 @@
       ],
       "id": "b2-makoto.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -249,7 +251,8 @@
           "vfxKey": "fx.prim.arcane.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-makoto.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -279,10 +282,10 @@
       ],
       "id": "b2-makoto.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -323,20 +326,21 @@
           "vfxKey": "fx.prim.physical.bolt"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-makoto.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

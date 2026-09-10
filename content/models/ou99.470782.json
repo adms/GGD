@@ -1,19 +1,19 @@
 {
- "id": "ou99.470782",
- "schema": "model@1",
- "glbPath": "assets/models/ou99/ou99_470782.glb",
- "hiddenPrimitives": [
-  2
- ],
- "scale": 1.0,
- "collisionRadius": 0.55,
- "clipMap": {
-  "idle": "Stand - 1",
-  "run": "Walk",
-  "attack": "Attack - 1",
-  "cast": "Spell",
-  "hurt": "Stand - 1",
-  "death": "Death"
- },
- "heroBody": true
+  "id": "ou99.470782",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/ou99_470782.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Spell",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "heroBody": true,
+  "hiddenPrimitives": [
+    2
+  ]
 }

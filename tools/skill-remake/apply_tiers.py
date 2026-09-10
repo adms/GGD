@@ -63,6 +63,19 @@ MIRRORED = (
     "radiusTier",
     "template",
     "effects",
+    # ⭐ GH#1211（2026-09-11）—— `icon` 與 `vfxKey`：**同一個病的第三次**。
+    #
+    # ⚠️ `abilityMirror` 的檔頭逐字記著前兩次：#79 的 `vfxKey`（產生器只寫 standalone），
+    #   以及 `icon` 自己（`tools/icon-gen/.../patch_icon_field` 只寫 standalone，
+    #   416/452 格的內嵌版沒有）。那一次的處置是**把 icon 放進豁免表**，
+    #   ⭐ 而那份檔頭自己判了它：「Sanctioning it here is what let it stay that way」。
+    #   ⇒ 豁免拿掉之後，2026-09-10 上架 81 名新英雄又把它帶回來（實測 476 格）。
+    #
+    # ⭐ 正解是**讓鏡射器認得它**（⛔ 不是第三次豁免）：icon 一律 standalone → embedded。
+    "icon",
+    "vfxKey",
+    # ⭐ 同一族的第四個：特效分層（owner ④ 逐字點名「特效 pitch/scale/color/透明度」要住 JSON）。
+    "vfxLayers",
 )
 
 #: ⭐ 2026-08-27（GH#789）—— **只覆寫、⛔ 不刪除**的鏡射欄位。

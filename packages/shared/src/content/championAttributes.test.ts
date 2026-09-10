@@ -238,8 +238,24 @@ describe("#248 attr-03 — the roster and the coefficient table are complete", (
       expect(["w3x", "authored"]).toContain(a.source);
     }
     // Exactly the three champions with no source map entry are hand-authored.
-    const authored = champs.filter((c) => c.attributes!.source === "authored").map((c) => c.id).sort();
-    expect(authored).toEqual(["godie-zombiex", "sela", "thorne"]);
+    // ⭐ GH#1211 —— `source` 驗的是**關係**，⛔ 不是一張會腐爛的名單。
+    //
+    // ⚠️ 在此之前這裡寫死 `["godie-zombiex","sela","thorne"]`，⭐ 而 2026-09-10 上架的
+    //   81 名新英雄**照定義就是 `authored`**（它們是 GGD 原創，⛔ 不是 w3x 抽取的）
+    //   ⇒ 每多上架一名，這一行就多錯一次（實測 83 vs 3）。
+    //
+    // ⭐ 真正的不變量：**w3x 抽取的（`godie-*`）標 `w3x`，其餘標 `authored`**。
+    //   `godie-zombiex` 是唯一的例外（殭屍王是 GGD 自己寫的數值，掛在 w3x 的 id 上）。
+    //   ⇒ 一位 w3x 英雄的三圍悄悄變成手寫的，這條仍然當場紅。
+    const W3X_BUT_AUTHORED = ["godie-zombiex"];
+    const wrong = champs
+      .filter((c) => {
+        const shouldBeW3x = c.id.startsWith("godie-") && !W3X_BUT_AUTHORED.includes(c.id);
+        return c.attributes!.source !== (shouldBeW3x ? "w3x" : "authored");
+      })
+      .map((c) => `${c.id}:${c.attributes!.source}`)
+      .sort();
+    expect(wrong, "三圍的出身與英雄的出身對不上（w3x 抽取的要標 w3x，原創的要標 authored）").toEqual([]);
   });
 
   it("the nine coefficients live in the combat-env table with their shipped values", () => {
@@ -369,12 +385,11 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
         "（出身五級距 + 屬性層），而 owner 2026-08-21 的裁決是「力敏智成長都歸 0」。\n" +
         "⛔ 不要改這條測試。",
     ).toEqual([]);
-    // ⭐ 反向：缺口必須**還在**。變身態與骨架被一起歸零的那天，這一條會紅，
-    //    而正確的修法是**刪掉這一段**（連同上面那段說明），⛔ 不是放寬它。
-    expect(
-      outside.length,
-      "變身態／骨架佔位的三圍成長已經歸零了 —— 缺口收乾淨了，把這一段反向斷言刪掉。",
-    ).toBeGreaterThan(0);
+    // ⭐ GH#1211（2026-09-11）—— **缺口收乾淨了**，所以這裡原本的「反向斷言」被刪掉。
+    //   它逐字寫著「變身態與骨架被一起歸零的那天，這一條會紅，而正確的修法是**刪掉這一段**」。
+    //   ⇒ 84 位（38 名 b2 · 37 名社群第二批 · 7 名 LoL）照 owner 2026-08-21 的裁決
+    //   「**所有角色**的 力敏智成長都歸 0」一起歸零 ⇒ 全 153 張卡的每級成長現在**只有一個來源**。
+    expect(outside, "⛔ 又有人把三圍成長填回非零了 —— 每級成長不可以有第二個來源").toEqual([]);
 
     // ⭐ 而且要真的走到最終物件：每一條屬性支撐的列，`championStatGrowth`（引擎報給
     //    面板、給小怪曲線、給試算的那一個）必須**逐位元**等於卡上的 `growth`。

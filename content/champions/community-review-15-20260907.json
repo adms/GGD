@@ -40,9 +40,9 @@
     "str": 25,
     "agi": 12,
     "int": 23,
-    "strGrowth": 2.36,
-    "agiGrowth": 1.18,
-    "intGrowth": 2.17,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-15-20260907.w",
@@ -113,10 +119,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -169,7 +175,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.arc"
+        }
+      ]
     },
     "E": {
       "id": "community-review-15-20260907.e",
@@ -228,7 +240,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-15-20260907.r",
@@ -244,9 +263,9 @@
         45.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -299,7 +318,13 @@
           "castTimeSec": 1.633
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.arc"
+        }
+      ]
     }
   },
   "exAbility": "community-review-15-20260907.ex",

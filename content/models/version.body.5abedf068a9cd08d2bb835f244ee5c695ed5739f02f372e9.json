@@ -20,5 +20,8 @@
     "sourceModelKey": "ou99.470782",
     "legacyAppearance": false
   },
-  "yawOffsetDeg": 0
+  "yawOffsetDeg": 0,
+  "hiddenPrimitives": [
+    2
+  ]
 }

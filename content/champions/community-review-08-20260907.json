@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367
+      "castTimeSec": 0.367,
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-08-20260907.w",
@@ -143,10 +149,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -193,7 +199,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "E": {
       "id": "community-review-08-20260907.e",
@@ -240,7 +253,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-08-20260907.r",
@@ -256,9 +276,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -299,7 +319,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.physical.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-08-20260907.ex",

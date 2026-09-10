@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         30.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -117,7 +117,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.q.webp"
     },
     "W": {
       "id": "lol-yasuo.w",
@@ -176,7 +177,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.w.webp"
     },
     "E": {
       "id": "lol-yasuo.e",
@@ -193,10 +195,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -254,7 +256,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.e.webp"
     },
     "R": {
       "id": "lol-yasuo.r",
@@ -270,9 +273,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -340,7 +343,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.9
+      "castTimeSec": 0.9,
+      "icon": "assets/icons/abilities/lol-yasuo.r.webp"
     }
   },
   "exAbility": "lol-yasuo.ex",

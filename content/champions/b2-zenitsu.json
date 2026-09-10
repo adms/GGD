@@ -30,10 +30,10 @@
       ],
       "id": "b2-zenitsu.e",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -65,7 +65,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-zenitsu.e.webp"
     },
     "Q": {
       "castTimeSec": 0.5,
@@ -155,7 +156,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-zenitsu.q.webp"
     },
     "R": {
       "castTimeSec": 1.033,
@@ -200,9 +202,9 @@
       ],
       "id": "b2-zenitsu.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -259,7 +261,8 @@
           "vfxKey": "fx.prim.lightning.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-zenitsu.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -309,10 +312,10 @@
       ],
       "id": "b2-zenitsu.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -373,20 +376,21 @@
           "vfxKey": "fx.prim.lightning.slash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-zenitsu.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 25,
-    "agiGrowth": 2.36,
+    "agiGrowth": 0,
     "int": 23,
-    "intGrowth": 2.17,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored",
     "str": 12,
-    "strGrowth": 1.18
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

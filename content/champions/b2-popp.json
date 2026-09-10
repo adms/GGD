@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-popp.e.webp"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -76,10 +77,10 @@
       ],
       "id": "b2-popp.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -110,7 +111,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-popp.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -139,9 +141,9 @@
       ],
       "id": "b2-popp.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -169,7 +171,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.bolt"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-popp.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -210,10 +213,10 @@
       ],
       "id": "b2-popp.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -265,20 +268,21 @@
           "vfxKey": "fx.prim.ice.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-popp.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

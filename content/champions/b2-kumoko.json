@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-kumoko.e.webp"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -98,7 +99,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-kumoko.q.webp"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -137,9 +139,9 @@
       ],
       "id": "b2-kumoko.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -168,7 +170,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.nova"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-kumoko.r.webp"
     },
     "W": {
       "castTimeSec": 1.7,
@@ -213,10 +216,10 @@
       ],
       "id": "b2-kumoko.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -272,20 +275,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kumoko.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 25,
-    "agiGrowth": 2.36,
+    "agiGrowth": 0,
     "int": 23,
-    "intGrowth": 2.17,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored",
     "str": 12,
-    "strGrowth": 1.18
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

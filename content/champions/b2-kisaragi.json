@@ -44,10 +44,10 @@
       ],
       "id": "b2-kisaragi.e",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -103,7 +103,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kisaragi.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -172,7 +173,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kisaragi.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -308,9 +310,9 @@
       ],
       "id": "b2-kisaragi.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -456,7 +458,8 @@
           "vfxKey": "fx.prim.void.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kisaragi.r.webp"
     },
     "W": {
       "castTimeSec": 0.067,
@@ -550,20 +553,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kisaragi.w.webp"
     }
   },
   "archetype": "tank",
   "attackType": "melee",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 13,
-    "intGrowth": 1.25,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 29,
-    "strGrowth": 2.78
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,

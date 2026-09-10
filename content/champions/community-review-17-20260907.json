@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-17-20260907.w",
@@ -155,7 +161,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.summon",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.summon",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-17-20260907.e",
@@ -172,10 +185,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -220,7 +233,14 @@
           "damageType": "magic"
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.pulse",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-17-20260907.r",
@@ -236,9 +256,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -272,7 +292,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "vfxKey": "fx.prim.void.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-17-20260907.ex",

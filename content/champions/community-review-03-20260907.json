@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -130,7 +130,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.fire.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.fire.bolt"
+        }
+      ]
     },
     "W": {
       "id": "community-review-03-20260907.w",
@@ -147,10 +153,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -202,7 +208,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.fire.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.fire.beam"
+        }
+      ]
     },
     "E": {
       "id": "community-review-03-20260907.e",
@@ -219,10 +231,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -280,7 +292,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.fire.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.fire.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-03-20260907.r",
@@ -296,9 +315,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -359,7 +378,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.733
+      "castTimeSec": 0.733,
+      "vfxKey": "fx.prim.fire.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.fire.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-03-20260907.ex",

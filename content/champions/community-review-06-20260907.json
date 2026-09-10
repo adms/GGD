@@ -40,9 +40,9 @@
     "str": 29,
     "agi": 18,
     "int": 13,
-    "strGrowth": 2.78,
-    "agiGrowth": 1.67,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -118,7 +118,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.arc"
+        }
+      ]
     },
     "W": {
       "id": "community-review-06-20260907.w",
@@ -135,10 +141,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        148.0,
+        148.0,
+        148.0,
+        148.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -190,7 +196,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam"
+        }
+      ]
     },
     "E": {
       "id": "community-review-06-20260907.e",
@@ -249,7 +261,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-06-20260907.r",
@@ -265,9 +284,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        592.0,
+        592.0,
+        592.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -319,7 +338,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-06-20260907.ex",
