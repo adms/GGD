@@ -1,0 +1,51 @@
+{
+  "schema": "ggd-distillation-action-frozen-data@1",
+  "counts": {
+    "train": {
+      "tasks": 2116,
+      "heroes": 59
+    },
+    "dev": {
+      "tasks": 586,
+      "heroes": 15
+    },
+    "all": {
+      "tasks": 2702,
+      "heroes": 74
+    }
+  },
+  "outputs": {
+    "examples.json": "f085569a32ee3cb829b80c24b0560d07bd866f0a5e21fb3df48b367728002c72",
+    "train.jsonl": "06eb117487c7649b108f35ff35361565425e726dba9f27ebfa5caf5e39523166",
+    "dev.jsonl": "581223bc86bd1b67b17ca2f14b4db04ee6000a6641d7e41389907a844ed5dd01",
+    "metrics.json": "96c28f67f7acd763334b5e1f1906108168cebadfab6ae9abfc015f267e53510c",
+    "projection-report.json": "ace643ee592b9fb3e04904d7bd22817338bda2de0f25a6bbc84f3a65db5fd4b6"
+  },
+  "projectionReport": {
+    "schema": "ggd-action-forge-projection@1",
+    "source": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-compact-v8",
+    "sourceManifestSha256": "1d58be824bd5a211aa93c3e02f3eabb0147cbce30811b3cd512077120de6f785",
+    "counts": {
+      "train": {
+        "tasks": 2116,
+        "heroes": 59
+      },
+      "dev": {
+        "tasks": 586,
+        "heroes": 15
+      },
+      "all": {
+        "tasks": 2702,
+        "heroes": 74
+      }
+    },
+    "outputLimitChars": 600,
+    "maxOutputChars": 595,
+    "allTeacherConfigurationsReplayed": true,
+    "sequenceProtocol": "At runtime script exposes the depth-first frontier derived from accepted prior actions; teacher future paths are never an input. Semantic candidates are catalog-bounded; JSON field validity is fail-closed by the authoritative final schema/compiler.",
+    "noNewHeroes": true,
+    "noTeacherRepair": true,
+    "scriptSha256": "ab8fda5012d56190be0186c07ccf43792d933978904b19ba5a8f2b10bcd7fa57"
+  },
+  "releaseQualified": false
+}

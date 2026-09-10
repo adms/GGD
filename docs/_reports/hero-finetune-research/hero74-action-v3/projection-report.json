@@ -1,0 +1,26 @@
+{
+  "schema": "ggd-action-forge-projection@1",
+  "source": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-compact-v8",
+  "sourceManifestSha256": "1d58be824bd5a211aa93c3e02f3eabb0147cbce30811b3cd512077120de6f785",
+  "counts": {
+    "train": {
+      "tasks": 2116,
+      "heroes": 59
+    },
+    "dev": {
+      "tasks": 586,
+      "heroes": 15
+    },
+    "all": {
+      "tasks": 2702,
+      "heroes": 74
+    }
+  },
+  "outputLimitChars": 600,
+  "maxOutputChars": 595,
+  "allTeacherConfigurationsReplayed": true,
+  "sequenceProtocol": "At runtime script exposes the depth-first frontier derived from accepted prior actions; teacher future paths are never an input. Semantic candidates are catalog-bounded; JSON field validity is fail-closed by the authoritative final schema/compiler.",
+  "noNewHeroes": true,
+  "noTeacherRepair": true,
+  "scriptSha256": "ab8fda5012d56190be0186c07ccf43792d933978904b19ba5a8f2b10bcd7fa57"
+}
