@@ -41784,6 +41784,104 @@
       "categoryCounts": {
         "unclassified": 1
       }
+    },
+    {
+      "id": "gamevault-palworld-astralym-audio:astralym-cries",
+      "name": "枯星龍 Astralym 非語言叫聲",
+      "library": "公開來源",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 6,
+      "bytes": 163051,
+      "knownDurationSeconds": 19.966666,
+      "durationMeasuredFiles": 6,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:gamevault-palworld-astralym-audio"
+      ],
+      "sourceUrl": "https://palworld.gamevault.in/paldex/astralym/",
+      "work": "Palworld",
+      "reportedLanguage": "nonverbal",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "sourceIsSynthetic": false,
+      "classificationEvidence": "Six named cry buttons on the Astralym soundboard; no per-clip listening claim.",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 6
+      }
+    },
+    {
+      "id": "palworld-cattiva-gamevault:cattiva-cries",
+      "name": "搗蛋貓 Cattiva 非語言叫聲",
+      "library": "公開來源",
+      "sourceId": "palworld-cattiva-gamevault",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 6,
+      "bytes": 877960,
+      "knownDurationSeconds": 4.973968253968254,
+      "durationMeasuredFiles": 6,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:palworld-cattiva-gamevault"
+      ],
+      "sourceUrl": "https://palworld.gamevault.in/paldex/cattiva/",
+      "work": "Palworld",
+      "reportedLanguage": "nonverbal",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 6
+      }
+    },
+    {
+      "id": "gamevault-palworld-jetragon-cries:jetragon-cries",
+      "name": "空渦龍 Jetragon 非語言叫聲",
+      "library": "公開來源",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 6,
+      "bytes": 69428,
+      "knownDurationSeconds": 8.285034,
+      "durationMeasuredFiles": 6,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:gamevault-palworld-jetragon-cries"
+      ],
+      "sourceUrl": "https://palworld.gamevault.in/paldex/jetragon/",
+      "work": "Palworld",
+      "reportedLanguage": "nonverbal",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 6
+      }
     }
   ],
   "backups": {
@@ -42375,16 +42473,67 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:gamevault-palworld-astralym-audio": {
+      "type": "tar-gzip",
+      "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+      "bytes": 29873643,
+      "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "parallel-palworld-astralym",
+      "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+      "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+      "deletionAllowed": false,
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
+    },
+    "public:palworld-cattiva-gamevault": {
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-gamevault-20260911/7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f.tar.gz",
+      "bytes": 886286,
+      "sha256": "7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f",
+      "readbackVerified": true,
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
+    },
+    "public:gamevault-palworld-jetragon-cries": {
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+      "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+      "bytes": 41944536,
+      "sha256": "42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+      "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/full-get.tar.gz",
+      "receiptPath": "materials/hero-model-library/priority-evidence/palworld-three/jetragon-s3-backup.json",
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "01ad60ef8464cf4c6cefef5c6cdec474d3f6f927ca99d0a18edf2e7d9b4d0d5a"
+      "sha256": "ba82e2f827981368f46ebf07b69e71975958d542a4242ae03d7d3de009d72271"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "964281d7b18d469674dc3bd72007ea57e3b1af09a5602b0f6020bb28ede383d8"
+      "sha256": "d00a5320224b34d90fa6c53d2f573c3a48e64b3d637f84bad8640a256075589a"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -42721,6 +42870,34 @@
     {
       "path": "GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/audioFileIndex.json",
       "sha256": "f3de1a762f1ae136298e15c6e413fb850a55316a195473c7b48ae6338aa34f0a"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/model-audioFileIndex.json",
+      "sha256": "ef909a791640e574c538b2c7de75883cc383b23d98f613668a3eb1da39c5c6f2"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/audioFileIndex.json",
+      "sha256": "a9fca630483f1e828ec4a24d6dd3fff96eace01b4d2713b044fb4a7d6f05c29a"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/audioFileIndex.json",
+      "sha256": "a9fca630483f1e828ec4a24d6dd3fff96eace01b4d2713b044fb4a7d6f05c29a"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/audio-file-index.json",
+      "sha256": "bfe4ce21455fb3ec7e0dd521e2aa15e75d2b55e1dac09b16f2af8461ae48d6d1"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/audio-file-index.json",
+      "sha256": "bfe4ce21455fb3ec7e0dd521e2aa15e75d2b55e1dac09b16f2af8461ae48d6d1"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/audio-index.json",
+      "sha256": "da05773ac9b055ab640aa0587b39b9f859450ed5a4f64e0ee2251115df19b3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/audio-index.json",
+      "sha256": "da05773ac9b055ab640aa0587b39b9f859450ed5a4f64e0ee2251115df19b3ba"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
@@ -93322,15 +93499,15 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 966,
-    "audioFiles": 278976,
-    "bytes": 132953339622,
+    "groups": 969,
+    "audioFiles": 278994,
+    "bytes": 132954450061,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "ccf4e53ba7c2f5cff9b65a261135a779f9921af9dc510c3af040fcc7a17b2c79",
-  "uncompressedFileManifestSha256": "cdb7b9a9d57a7e50f29c4014f77e503785cccc84cd6bc9590c4bb92cd54a6112"
+  "sourceFileManifestSha256": "a14cee2613236d164da513a783d90e630161ae9c200fa070128072563b21f995",
+  "uncompressedFileManifestSha256": "4053c358e4eaec54a591ef3e2a18ce6d5fd617dd96d96913f21dbec78def03fa"
 }

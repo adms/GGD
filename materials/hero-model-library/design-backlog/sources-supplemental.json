@@ -788,6 +788,1477 @@
       ],
       "designStatus": "definitions-incomplete",
       "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**"
+    },
+    {
+      "id": "community:palworld-astralym",
+      "name": "枯星龍",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "opgg-palworld-astralym-2026081102",
+        "gamevault-palworld-astralym-audio"
+      ],
+      "aliases": [
+        "枯星龍",
+        "Astralym",
+        "WorldTreeDragon"
+      ],
+      "modelCandidates": [
+        {
+          "id": "opgg-palworld-astralym-2026081102.body.derived--model-decoded-v2-glb",
+          "sourceCandidateId": "opgg-palworld-astralym-2026081102.body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+          "bytes": 17242184,
+          "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797",
+          "format": "glb",
+          "versionStage": "decoded-quantization-declared",
+          "readiness": "acquired-rigged-animated-source-pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "unknown game build/platform; public web export",
+          "triangles": 23928,
+          "boneCount": 145,
+          "materialCount": 3,
+          "textureCount": 9,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body.webp",
+              "bytes": 156298,
+              "sha256": "39ceb19cbd5a002aaf236a1bf7624448e655af1ecb3e34cbe2e611212da201f5",
+              "name": "MI_WorldTreeDragon_Body.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Emissive.webp",
+              "bytes": 51020,
+              "sha256": "052662d3f172086780a63964b2485e397c929efbc776efa8be6718ce7b971fdc",
+              "name": "MI_WorldTreeDragon_Body_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "bytes": 1116450,
+              "sha256": "e401caa9a66adfaa6bf0f45a41d93b0023870b0b35a575e9bfa42754a1571ef7",
+              "name": "MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Normal.webp",
+              "bytes": 420554,
+              "sha256": "8136a207354ed0d6badfdaa2272874e548cece09cb837190eabb38f10a075491",
+              "name": "MI_WorldTreeDragon_Body_Normal.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Normal.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "name": "MI_WorldTreeDragon_Extra.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "name": "MI_WorldTreeDragon_Extra_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "name": "MI_WorldTreeDragon_Eye.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "name": "MI_WorldTreeDragon_Eye_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/T_WorldTreeDragon_Body_SSS.webp",
+              "bytes": 16898,
+              "sha256": "17a25c314742c4f6f587174246fb864ddb0ae7eda06a937c7576114e4d27bec6",
+              "name": "T_WorldTreeDragon_Body_SSS.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/T_WorldTreeDragon_Body_SSS.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            }
+          ],
+          "relatedMaterialFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials.json",
+              "bytes": 5919,
+              "sha256": "4d6558fa9ff90570dd8e03caaa67bfc99a3e5f24e54ca944d5311c85c3165fe2",
+              "role": "source-material-recipe"
+            }
+          ],
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "staticPoseClipCount": 1,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/analysis/model-analysis.json",
+          "analysisSha256": "82e90d8c94d742ccd780d83371fc7436d0c242f2c7aac0c1d1439bef906d5461",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/model-candidates-v2.json",
+            "bytes": 16803,
+            "sha256": "f4ec966bd8ec0840b8f134e707e491db1b603a8559c537eb2aa4be1449794e97"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+          "limitations": [
+            "Game-derived web export, not original Unreal container; source game platform/build not verified.",
+            "Original GLB requires EXT_meshopt_compression; lossless decoded analytical copy retains identical nodes/skins/animation structure.",
+            "Raw/V1 NORMAL declaration errors corrected in V2 by KHR_mesh_quantization metadata only; V2 zero errors, one nonroot skin warning; runtime/material acceptance still pending.",
+            "External material recipe plus all 9 WebP files retained; standalone GLB has no embedded images. Original shader equivalence/visual validation pending.",
+            "58 clips retained; only 57 show changing values. HaloCutter_Loop_Ring is a static pose.",
+            "Ring-named animations are not proof of separately acquired particle/VFX systems; no standalone VFX package.",
+            "No registered GGD hero ID found by exact Astralym/WorldTreeDragon/枯星龍 search at audit time; heroIds remain empty."
+          ],
+          "validator": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/analysis/khronos-decoded-v2-full.json",
+            "sha256": "15ea61649d510190122068a0a4a25382c9d8ec979d367d60ee9c5ba672bf87e4",
+            "issues": {
+              "numErrors": 0,
+              "numWarnings": 1,
+              "numInfos": 3,
+              "numHints": 0,
+              "truncated": false
+            }
+          }
+        },
+        {
+          "id": "opgg-palworld-astralym-2026081102.body.derived--model-decoded-glb",
+          "sourceCandidateId": "opgg-palworld-astralym-2026081102.body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded.glb",
+          "bytes": 17242092,
+          "sha256": "f213f29cfcd31a808a6a57600c59d8f1bcbaf3dc99e6858ebdadd0c34394b1e6",
+          "format": "glb",
+          "versionStage": "decoded-source-v1",
+          "readiness": "acquired-rigged-animated-source-pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "unknown game build/platform; public web export",
+          "triangles": 23928,
+          "boneCount": 145,
+          "materialCount": 3,
+          "textureCount": 9,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body.webp",
+              "bytes": 156298,
+              "sha256": "39ceb19cbd5a002aaf236a1bf7624448e655af1ecb3e34cbe2e611212da201f5",
+              "name": "MI_WorldTreeDragon_Body.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Emissive.webp",
+              "bytes": 51020,
+              "sha256": "052662d3f172086780a63964b2485e397c929efbc776efa8be6718ce7b971fdc",
+              "name": "MI_WorldTreeDragon_Body_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "bytes": 1116450,
+              "sha256": "e401caa9a66adfaa6bf0f45a41d93b0023870b0b35a575e9bfa42754a1571ef7",
+              "name": "MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Normal.webp",
+              "bytes": 420554,
+              "sha256": "8136a207354ed0d6badfdaa2272874e548cece09cb837190eabb38f10a075491",
+              "name": "MI_WorldTreeDragon_Body_Normal.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Normal.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "name": "MI_WorldTreeDragon_Extra.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "name": "MI_WorldTreeDragon_Extra_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "name": "MI_WorldTreeDragon_Eye.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "name": "MI_WorldTreeDragon_Eye_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/T_WorldTreeDragon_Body_SSS.webp",
+              "bytes": 16898,
+              "sha256": "17a25c314742c4f6f587174246fb864ddb0ae7eda06a937c7576114e4d27bec6",
+              "name": "T_WorldTreeDragon_Body_SSS.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/T_WorldTreeDragon_Body_SSS.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            }
+          ],
+          "relatedMaterialFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials.json",
+              "bytes": 5919,
+              "sha256": "4d6558fa9ff90570dd8e03caaa67bfc99a3e5f24e54ca944d5311c85c3165fe2",
+              "role": "source-material-recipe"
+            }
+          ],
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "staticPoseClipCount": 1,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/analysis/model-analysis.json",
+          "analysisSha256": "82e90d8c94d742ccd780d83371fc7436d0c242f2c7aac0c1d1439bef906d5461",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/model-candidates-v2.json",
+            "bytes": 16803,
+            "sha256": "f4ec966bd8ec0840b8f134e707e491db1b603a8559c537eb2aa4be1449794e97"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+          "limitations": [
+            "Game-derived web export, not original Unreal container; source game platform/build not verified.",
+            "Original GLB requires EXT_meshopt_compression; lossless decoded analytical copy retains identical nodes/skins/animation structure.",
+            "Raw/V1 NORMAL declaration errors corrected in V2 by KHR_mesh_quantization metadata only; V2 zero errors, one nonroot skin warning; runtime/material acceptance still pending.",
+            "External material recipe plus all 9 WebP files retained; standalone GLB has no embedded images. Original shader equivalence/visual validation pending.",
+            "58 clips retained; only 57 show changing values. HaloCutter_Loop_Ring is a static pose.",
+            "Ring-named animations are not proof of separately acquired particle/VFX systems; no standalone VFX package.",
+            "No registered GGD hero ID found by exact Astralym/WorldTreeDragon/枯星龍 search at audit time; heroIds remain empty."
+          ]
+        },
+        {
+          "id": "opgg-palworld-astralym-2026081102.body.original--model-glb",
+          "sourceCandidateId": "opgg-palworld-astralym-2026081102.body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+          "bytes": 12611064,
+          "sha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4",
+          "format": "glb",
+          "versionStage": "original-web-payload",
+          "readiness": "acquired-rigged-animated-source-pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "unknown game build/platform; public web export",
+          "triangles": 23928,
+          "boneCount": 145,
+          "materialCount": 3,
+          "textureCount": 9,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body.webp",
+              "bytes": 156298,
+              "sha256": "39ceb19cbd5a002aaf236a1bf7624448e655af1ecb3e34cbe2e611212da201f5",
+              "name": "MI_WorldTreeDragon_Body.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Emissive.webp",
+              "bytes": 51020,
+              "sha256": "052662d3f172086780a63964b2485e397c929efbc776efa8be6718ce7b971fdc",
+              "name": "MI_WorldTreeDragon_Body_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "bytes": 1116450,
+              "sha256": "e401caa9a66adfaa6bf0f45a41d93b0023870b0b35a575e9bfa42754a1571ef7",
+              "name": "MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Normal.webp",
+              "bytes": 420554,
+              "sha256": "8136a207354ed0d6badfdaa2272874e548cece09cb837190eabb38f10a075491",
+              "name": "MI_WorldTreeDragon_Body_Normal.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Normal.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "name": "MI_WorldTreeDragon_Extra.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "name": "MI_WorldTreeDragon_Extra_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "name": "MI_WorldTreeDragon_Eye.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "name": "MI_WorldTreeDragon_Eye_Emissive.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye_Emissive.webp?v=2026081102",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/T_WorldTreeDragon_Body_SSS.webp",
+              "bytes": 16898,
+              "sha256": "17a25c314742c4f6f587174246fb864ddb0ae7eda06a937c7576114e4d27bec6",
+              "name": "T_WorldTreeDragon_Body_SSS.webp",
+              "format": "webp",
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/T_WorldTreeDragon_Body_SSS.webp?v=2026081102",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            }
+          ],
+          "relatedMaterialFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials.json",
+              "bytes": 5919,
+              "sha256": "4d6558fa9ff90570dd8e03caaa67bfc99a3e5f24e54ca944d5311c85c3165fe2",
+              "role": "source-material-recipe"
+            }
+          ],
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "staticPoseClipCount": 1,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/analysis/model-analysis.json",
+          "analysisSha256": "82e90d8c94d742ccd780d83371fc7436d0c242f2c7aac0c1d1439bef906d5461",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/model-candidates-v2.json",
+            "bytes": 16803,
+            "sha256": "f4ec966bd8ec0840b8f134e707e491db1b603a8559c537eb2aa4be1449794e97"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+          "limitations": [
+            "Game-derived web export, not original Unreal container; source game platform/build not verified.",
+            "Original GLB requires EXT_meshopt_compression; lossless decoded analytical copy retains identical nodes/skins/animation structure.",
+            "Raw/V1 NORMAL declaration errors corrected in V2 by KHR_mesh_quantization metadata only; V2 zero errors, one nonroot skin warning; runtime/material acceptance still pending.",
+            "External material recipe plus all 9 WebP files retained; standalone GLB has no embedded images. Original shader equivalence/visual validation pending.",
+            "58 clips retained; only 57 show changing values. HaloCutter_Loop_Ring is a static pose.",
+            "Ring-named animations are not proof of separately acquired particle/VFX systems; no standalone VFX package.",
+            "No registered GGD hero ID found by exact Astralym/WorldTreeDragon/枯星龍 search at audit time; heroIds remain empty."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No exact Palworld character identity, canonical/internal alias or mapping in all 153 current champion definitions and authoritative model-library inventory/manifest. Acquired identity is confirmed; absence is not an unknown-identity placeholder.",
+      "evidence": {
+        "nameAndWorkCatalogChecked": true,
+        "heroDefinitionCount": 153,
+        "heroMatches": [],
+        "inventoryAliasMatches": [],
+        "modelManifestAliasMatches": [],
+        "runtimeAcceptance": false,
+        "sources": [
+          {
+            "id": "opgg-palworld-astralym-2026081102",
+            "url": "https://op.gg/zh-tw/palworld/pals/astralym",
+            "author": "OP.GG (web exporter); Pocketpair (original game assets)",
+            "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+            "assetKinds": [
+              "model",
+              "skeleton",
+              "animation",
+              "material",
+              "texture"
+            ],
+            "backup": {
+              "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+              "bytes": 29873643,
+              "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "parallel-palworld-astralym",
+              "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+              "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+              "deletionAllowed": false
+            },
+            "backupReceipt": {
+              "path": "/private/tmp/ggd-astralym-s3-backup-receipt.json",
+              "bytes": 3709,
+              "sha256": "60f818dc413923be828ac2c282adcdea461c7655ec1a7b9d96e33fa138fccead"
+            },
+            "license": "Original Palworld assets copyright Pocketpair. No explicit redistribution/reuse license found on the observed source pages; not labelled free licensed.",
+            "fileManifest": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/file-manifest.json",
+              "bytes": 15074,
+              "sha256": "fef30305f922ba9aa498832c832237c43a276f895ba020b820a49a54b527e0fe"
+            },
+            "modelVariantCount": 3,
+            "distinctTextureFiles": 9
+          },
+          {
+            "id": "gamevault-palworld-astralym-audio",
+            "url": "https://palworld.gamevault.in/paldex/astralym/",
+            "author": "Gamevault (audio exporter); Pocketpair (original game assets)",
+            "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+            "assetKinds": [
+              "audio",
+              "sound-effect"
+            ],
+            "backup": {
+              "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+              "bytes": 29873643,
+              "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "parallel-palworld-astralym",
+              "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+              "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+              "deletionAllowed": false
+            },
+            "backupReceipt": {
+              "path": "/private/tmp/ggd-astralym-s3-backup-receipt.json",
+              "bytes": 3709,
+              "sha256": "60f818dc413923be828ac2c282adcdea461c7655ec1a7b9d96e33fa138fccead"
+            },
+            "license": "Original Palworld assets copyright Pocketpair. No explicit redistribution/reuse license found on the observed source pages; not labelled free licensed."
+          }
+        ],
+        "sourceIdentityEvidence": "Public character page labels and native IDs identify 枯星龍 / Astralym / WorldTreeDragon. Model acquisition/analysis receipts pin source bytes; no same-name inference."
+      },
+      "audioSources": [
+        {
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "count": 6,
+          "seconds": 19.966666,
+          "index": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/audioFileIndex.json",
+            "bytes": 5868,
+            "sha256": "a9fca630483f1e828ec4a24d6dd3fff96eace01b4d2713b044fb4a7d6f05c29a"
+          },
+          "modelCandidate": false,
+          "category": "nonverbal-creature-cry",
+          "speechTrainingEligible": false
+        }
+      ],
+      "limitations": [
+        "Multiple model files are retained source/decoded revisions, not distinct characters.",
+        "Sound assets are linked separately and never counted as modelCandidates.",
+        "Model/source readiness does not prove hero skills or backend implementation."
+      ],
+      "supersedesAuditRows": [
+        "opgg-palworld-astralym-2026081102:Astralym"
+      ]
+    },
+    {
+      "id": "community:palworld-cattiva",
+      "name": "搗蛋貓",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "palworld-cattiva-atlasforge",
+        "palworld-cattiva-opgg",
+        "palworld-cattiva-gamevault"
+      ],
+      "aliases": [
+        "搗蛋貓",
+        "Cattiva",
+        "PinkCat",
+        "ツッパニャン"
+      ],
+      "modelCandidates": [
+        {
+          "id": "palworld-cattiva-atlasforge.body.decoded--cattiva-atlasforge-glb",
+          "sourceCandidateId": "palworld-cattiva-atlasforge.body",
+          "sourceId": "palworld-cattiva-atlasforge",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/decoded/cattiva-atlasforge.glb",
+          "bytes": 327652,
+          "sha256": "1afbc1b2122d3e05a49e6fe12775b4d3eb6d2f3e14cfda51388559e52c79707a",
+          "format": "glb",
+          "versionStage": "decoded-source-v1",
+          "readiness": "pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://atlasforge.gg/palworld/pals/cattiva",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "Public web-export; source game build/platform not pinned by source",
+          "triangles": 5798,
+          "boneCount": 43,
+          "materialCount": 3,
+          "textureCount": 3,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-0.webp",
+              "bytes": 16452,
+              "sha256": "7b72978b4bd2fb8b9eb25c6236df1c46efaf1ab5f522a10cf3d4a005ab91c19e",
+              "name": "image-0.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-1.webp",
+              "bytes": 31816,
+              "sha256": "c35ed416e63b8a39d6bcaf9b61433f22eedc2ccd8379c7a7cdbe94abcd0f7e67",
+              "name": "image-1.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-2.webp",
+              "bytes": 177318,
+              "sha256": "b49db76f150069602fafbbc6b818fcdf66933709008e3f9a5aa10fbbd4683da2",
+              "name": "image-2.webp",
+              "format": "webp"
+            }
+          ],
+          "relatedMaterialFiles": [],
+          "nativeAnimationCount": 1,
+          "animationClipCount": 1,
+          "staticPoseClipCount": 0,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/analysis/static-analysis.json",
+          "analysisSha256": "2a03984f7ec78b8240b95e618130c08a51d508d4bb148aff4f32ac2272d5109b",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/model-candidates.json",
+            "bytes": 1880,
+            "sha256": "944029907575c178fa6cb660ad724d1bb35af5f97223d770dc0be0db2ffc6908"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-atlasforge-20260911/ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006.tar.gz",
+          "limitations": [
+            "Source game build/version is unpinned.",
+            "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+            "No GGD backend selection or runtime acceptance performed.",
+            "Source GLB includes only one idle clip; no attack/run/death library in this version.",
+            "Draco decode uses installed Blender library; EXT_texture_webp preserved.",
+            "Standard GLB validator: 0 errors, 1 source hierarchy warning."
+          ]
+        },
+        {
+          "id": "palworld-cattiva-atlasforge.body.original--PinkCat-viewer-model",
+          "sourceCandidateId": "palworld-cattiva-atlasforge.body",
+          "sourceId": "palworld-cattiva-atlasforge",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/original/PinkCat.viewer-model",
+          "bytes": 327652,
+          "sha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4",
+          "format": "viewer-model-glb-wrapper",
+          "versionStage": "original-web-payload",
+          "readiness": "pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://atlasforge.gg/palworld/pals/cattiva",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "Public web-export; source game build/platform not pinned by source",
+          "triangles": 5798,
+          "boneCount": 43,
+          "materialCount": 3,
+          "textureCount": 3,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-0.webp",
+              "bytes": 16452,
+              "sha256": "7b72978b4bd2fb8b9eb25c6236df1c46efaf1ab5f522a10cf3d4a005ab91c19e",
+              "name": "image-0.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-1.webp",
+              "bytes": 31816,
+              "sha256": "c35ed416e63b8a39d6bcaf9b61433f22eedc2ccd8379c7a7cdbe94abcd0f7e67",
+              "name": "image-1.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-2.webp",
+              "bytes": 177318,
+              "sha256": "b49db76f150069602fafbbc6b818fcdf66933709008e3f9a5aa10fbbd4683da2",
+              "name": "image-2.webp",
+              "format": "webp"
+            }
+          ],
+          "relatedMaterialFiles": [],
+          "nativeAnimationCount": 1,
+          "animationClipCount": 1,
+          "staticPoseClipCount": 0,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/analysis/static-analysis.json",
+          "analysisSha256": "2a03984f7ec78b8240b95e618130c08a51d508d4bb148aff4f32ac2272d5109b",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/model-candidates.json",
+            "bytes": 1880,
+            "sha256": "944029907575c178fa6cb660ad724d1bb35af5f97223d770dc0be0db2ffc6908"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-atlasforge-20260911/ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006.tar.gz",
+          "limitations": [
+            "Source game build/version is unpinned.",
+            "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+            "No GGD backend selection or runtime acceptance performed.",
+            "Source GLB includes only one idle clip; no attack/run/death library in this version.",
+            "Draco decode uses installed Blender library; EXT_texture_webp preserved.",
+            "Standard GLB validator: 0 errors, 1 source hierarchy warning."
+          ]
+        },
+        {
+          "id": "palworld-cattiva-atlasforge.body.standardized--cattiva-glb",
+          "sourceCandidateId": "palworld-cattiva-atlasforge.body",
+          "sourceId": "palworld-cattiva-atlasforge",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/standardized/cattiva.glb",
+          "bytes": 502344,
+          "sha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379",
+          "format": "glb",
+          "versionStage": "draco-decoded-standard-source",
+          "readiness": "pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://atlasforge.gg/palworld/pals/cattiva",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "Public web-export; source game build/platform not pinned by source",
+          "triangles": 5798,
+          "boneCount": 43,
+          "materialCount": 3,
+          "textureCount": 3,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-0.webp",
+              "bytes": 16452,
+              "sha256": "7b72978b4bd2fb8b9eb25c6236df1c46efaf1ab5f522a10cf3d4a005ab91c19e",
+              "name": "image-0.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-1.webp",
+              "bytes": 31816,
+              "sha256": "c35ed416e63b8a39d6bcaf9b61433f22eedc2ccd8379c7a7cdbe94abcd0f7e67",
+              "name": "image-1.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-2.webp",
+              "bytes": 177318,
+              "sha256": "b49db76f150069602fafbbc6b818fcdf66933709008e3f9a5aa10fbbd4683da2",
+              "name": "image-2.webp",
+              "format": "webp"
+            }
+          ],
+          "relatedMaterialFiles": [],
+          "nativeAnimationCount": 1,
+          "animationClipCount": 1,
+          "staticPoseClipCount": 0,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/analysis/static-analysis.json",
+          "analysisSha256": "2a03984f7ec78b8240b95e618130c08a51d508d4bb148aff4f32ac2272d5109b",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/model-candidates.json",
+            "bytes": 1880,
+            "sha256": "944029907575c178fa6cb660ad724d1bb35af5f97223d770dc0be0db2ffc6908"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-atlasforge-20260911/ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006.tar.gz",
+          "limitations": [
+            "Source game build/version is unpinned.",
+            "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+            "No GGD backend selection or runtime acceptance performed.",
+            "Source GLB includes only one idle clip; no attack/run/death library in this version.",
+            "Draco decode uses installed Blender library; EXT_texture_webp preserved.",
+            "Standard GLB validator: 0 errors, 1 source hierarchy warning."
+          ]
+        },
+        {
+          "id": "palworld-cattiva-opgg.body.decoded--cattiva-meshopt-decoded-glb",
+          "sourceCandidateId": "palworld-cattiva-opgg.body",
+          "sourceId": "palworld-cattiva-opgg",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-meshopt-decoded.glb",
+          "bytes": 1788384,
+          "sha256": "3fc40875bfa0e8181b1b644fd6d77a6b9fac6283d617d6beab81c9f3cff85287",
+          "format": "glb",
+          "versionStage": "decoded-source-v1",
+          "readiness": "pending-material-binding-and-GGD-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://op.gg/palworld/pals/cattiva",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "Public web-export; source game build/platform not pinned by source",
+          "triangles": 5798,
+          "boneCount": 43,
+          "materialCount": 3,
+          "textureCount": 5,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body.webp",
+              "bytes": 560190,
+              "sha256": "4fcbd5916ca73f1b659dd2eec63b3406a8682a54081cfced74da04a4dbb1e896",
+              "name": "MI_PinkCat_Body.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_MetallicRoughness.webp",
+              "bytes": 731142,
+              "sha256": "72eb6ce098ba36527e89db6a306b08a41f0bf95aa6eaff1c30bc7cc0db3744bb",
+              "name": "MI_PinkCat_Body_MetallicRoughness.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_Normal.webp",
+              "bytes": 1551020,
+              "sha256": "7832eb768a1e0e54439216b90fdd560526e25b191b532dd459862de83c113bb9",
+              "name": "MI_PinkCat_Body_Normal.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Eye.webp",
+              "bytes": 21310,
+              "sha256": "c861e9bf8fd99dfe92b9dfe2adcf32b4f2a73b819de0a383faa067a5b903f4cb",
+              "name": "MI_PinkCat_Eye.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Mouth.webp",
+              "bytes": 12516,
+              "sha256": "c6d8c6eb1dc8eec74734877f891ca691392b9267efd1467a54c2de6bb1c5c364",
+              "name": "MI_PinkCat_Mouth.webp",
+              "format": "webp"
+            }
+          ],
+          "relatedMaterialFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials.json",
+              "bytes": 4430,
+              "sha256": "203f743abbae454cfb3693beacd9e7eb67b221e1d3a393f5164f2ea4d422f1b3",
+              "role": "source-material-recipe"
+            }
+          ],
+          "nativeAnimationCount": 33,
+          "animationClipCount": 33,
+          "staticPoseClipCount": 0,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/analysis/static-analysis.json",
+          "analysisSha256": "33a03524778acb40f37b93bd23554dcacc11e3faad4fad5218e4780fdacd9149",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/model-candidates.json",
+            "bytes": 4844,
+            "sha256": "3f90839ce4109ac0b375ae75aca4983e3bd8ff7f132c2743fbd096987e2d6796"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-opgg-20260911/43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f.tar.gz",
+          "limitations": [
+            "Source game build/version is unpinned.",
+            "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+            "No GGD backend selection or runtime acceptance performed.",
+            "Original model.glb has no images. All five source material images and material parameters preserved separately; no claim this raw body is textured in GGD.",
+            "Source shader subsurface/clearcoat render profile is not fully translated.",
+            "33 stored game-named clips verified with decoded samples; raw Unreal animation files not acquired.",
+            "No new procedural animation. No original Wwise bank or VFX in this model source."
+          ]
+        },
+        {
+          "id": "palworld-cattiva-opgg.body.decoded--cattiva-quantization-declared-glb",
+          "sourceCandidateId": "palworld-cattiva-opgg.body",
+          "sourceId": "palworld-cattiva-opgg",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-quantization-declared.glb",
+          "bytes": 1788472,
+          "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635",
+          "format": "glb",
+          "versionStage": "decoded-quantization-declared",
+          "readiness": "pending-material-binding-and-GGD-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://op.gg/palworld/pals/cattiva",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "Public web-export; source game build/platform not pinned by source",
+          "triangles": 5798,
+          "boneCount": 43,
+          "materialCount": 3,
+          "textureCount": 5,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body.webp",
+              "bytes": 560190,
+              "sha256": "4fcbd5916ca73f1b659dd2eec63b3406a8682a54081cfced74da04a4dbb1e896",
+              "name": "MI_PinkCat_Body.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_MetallicRoughness.webp",
+              "bytes": 731142,
+              "sha256": "72eb6ce098ba36527e89db6a306b08a41f0bf95aa6eaff1c30bc7cc0db3744bb",
+              "name": "MI_PinkCat_Body_MetallicRoughness.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_Normal.webp",
+              "bytes": 1551020,
+              "sha256": "7832eb768a1e0e54439216b90fdd560526e25b191b532dd459862de83c113bb9",
+              "name": "MI_PinkCat_Body_Normal.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Eye.webp",
+              "bytes": 21310,
+              "sha256": "c861e9bf8fd99dfe92b9dfe2adcf32b4f2a73b819de0a383faa067a5b903f4cb",
+              "name": "MI_PinkCat_Eye.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Mouth.webp",
+              "bytes": 12516,
+              "sha256": "c6d8c6eb1dc8eec74734877f891ca691392b9267efd1467a54c2de6bb1c5c364",
+              "name": "MI_PinkCat_Mouth.webp",
+              "format": "webp"
+            }
+          ],
+          "relatedMaterialFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials.json",
+              "bytes": 4430,
+              "sha256": "203f743abbae454cfb3693beacd9e7eb67b221e1d3a393f5164f2ea4d422f1b3",
+              "role": "source-material-recipe"
+            }
+          ],
+          "nativeAnimationCount": 33,
+          "animationClipCount": 33,
+          "staticPoseClipCount": 0,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/analysis/static-analysis.json",
+          "analysisSha256": "33a03524778acb40f37b93bd23554dcacc11e3faad4fad5218e4780fdacd9149",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/model-candidates.json",
+            "bytes": 4844,
+            "sha256": "3f90839ce4109ac0b375ae75aca4983e3bd8ff7f132c2743fbd096987e2d6796"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-opgg-20260911/43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f.tar.gz",
+          "limitations": [
+            "Source game build/version is unpinned.",
+            "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+            "No GGD backend selection or runtime acceptance performed.",
+            "Original model.glb has no images. All five source material images and material parameters preserved separately; no claim this raw body is textured in GGD.",
+            "Source shader subsurface/clearcoat render profile is not fully translated.",
+            "33 stored game-named clips verified with decoded samples; raw Unreal animation files not acquired.",
+            "No new procedural animation. No original Wwise bank or VFX in this model source."
+          ],
+          "validator": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/analysis/gltf-validation-quantization.json",
+            "sha256": "16ddf158a52767e7c4e39a6cf22dd297fc57ac4fb97df8ce231d0eeedbbddb3b",
+            "issues": {
+              "numErrors": 0,
+              "numWarnings": 1,
+              "numInfos": 3,
+              "numHints": 0,
+              "truncated": false
+            }
+          }
+        },
+        {
+          "id": "palworld-cattiva-opgg.body.original--model-glb",
+          "sourceCandidateId": "palworld-cattiva-opgg.body",
+          "sourceId": "palworld-cattiva-opgg",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/model.glb",
+          "bytes": 1461560,
+          "sha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2",
+          "format": "glb",
+          "versionStage": "original-web-payload",
+          "readiness": "pending-material-binding-and-GGD-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "modelSourceUrl": "https://op.gg/palworld/pals/cattiva",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "Public web-export; source game build/platform not pinned by source",
+          "triangles": 5798,
+          "boneCount": 43,
+          "materialCount": 3,
+          "textureCount": 5,
+          "textures": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body.webp",
+              "bytes": 560190,
+              "sha256": "4fcbd5916ca73f1b659dd2eec63b3406a8682a54081cfced74da04a4dbb1e896",
+              "name": "MI_PinkCat_Body.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_MetallicRoughness.webp",
+              "bytes": 731142,
+              "sha256": "72eb6ce098ba36527e89db6a306b08a41f0bf95aa6eaff1c30bc7cc0db3744bb",
+              "name": "MI_PinkCat_Body_MetallicRoughness.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_Normal.webp",
+              "bytes": 1551020,
+              "sha256": "7832eb768a1e0e54439216b90fdd560526e25b191b532dd459862de83c113bb9",
+              "name": "MI_PinkCat_Body_Normal.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Eye.webp",
+              "bytes": 21310,
+              "sha256": "c861e9bf8fd99dfe92b9dfe2adcf32b4f2a73b819de0a383faa067a5b903f4cb",
+              "name": "MI_PinkCat_Eye.webp",
+              "format": "webp"
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Mouth.webp",
+              "bytes": 12516,
+              "sha256": "c6d8c6eb1dc8eec74734877f891ca691392b9267efd1467a54c2de6bb1c5c364",
+              "name": "MI_PinkCat_Mouth.webp",
+              "format": "webp"
+            }
+          ],
+          "relatedMaterialFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials.json",
+              "bytes": 4430,
+              "sha256": "203f743abbae454cfb3693beacd9e7eb67b221e1d3a393f5164f2ea4d422f1b3",
+              "role": "source-material-recipe"
+            }
+          ],
+          "nativeAnimationCount": 33,
+          "animationClipCount": 33,
+          "staticPoseClipCount": 0,
+          "proceduralAnimationCount": 0,
+          "audioCount": 0,
+          "standaloneVfxCount": 0,
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/analysis/static-analysis.json",
+          "analysisSha256": "33a03524778acb40f37b93bd23554dcacc11e3faad4fad5218e4780fdacd9149",
+          "candidateIndex": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/model-candidates.json",
+            "bytes": 4844,
+            "sha256": "3f90839ce4109ac0b375ae75aca4983e3bd8ff7f132c2743fbd096987e2d6796"
+          },
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          },
+          "archiveS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-opgg-20260911/43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f.tar.gz",
+          "limitations": [
+            "Source game build/version is unpinned.",
+            "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+            "No GGD backend selection or runtime acceptance performed.",
+            "Original model.glb has no images. All five source material images and material parameters preserved separately; no claim this raw body is textured in GGD.",
+            "Source shader subsurface/clearcoat render profile is not fully translated.",
+            "33 stored game-named clips verified with decoded samples; raw Unreal animation files not acquired.",
+            "No new procedural animation. No original Wwise bank or VFX in this model source."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No exact Palworld character identity, canonical/internal alias or mapping in all 153 current champion definitions and authoritative model-library inventory/manifest. Acquired identity is confirmed; absence is not an unknown-identity placeholder.",
+      "evidence": {
+        "nameAndWorkCatalogChecked": true,
+        "heroDefinitionCount": 153,
+        "heroMatches": [],
+        "inventoryAliasMatches": [],
+        "modelManifestAliasMatches": [],
+        "runtimeAcceptance": false,
+        "sources": [
+          {
+            "id": "palworld-cattiva-atlasforge",
+            "url": "https://atlasforge.gg/palworld/pals/cattiva",
+            "author": "ATLAS FORGE LLC / upstream model author not named",
+            "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge",
+            "assetKinds": [
+              "model",
+              "skeleton",
+              "texture",
+              "material",
+              "animation"
+            ],
+            "backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-atlasforge-20260911/ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006.tar.gz",
+              "bytes": 2142465,
+              "sha256": "ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006",
+              "readbackVerified": true,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-atlasforge.s3-backup.json"
+            },
+            "backupReceipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-atlasforge.s3-backup.json",
+              "bytes": 7536,
+              "sha256": "dc00e0d7d572eeded7f0b13fac61eb4f0090cf856899f00b67aecf11f6c147ff"
+            },
+            "license": "Game assets belong to Pocketpair; no additional redistribution license verified.",
+            "fileManifest": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/files-sha256.json",
+              "bytes": 4650,
+              "sha256": "dd558a92974a69215c764b591deecb8c54b73630eed519e751cbca7716b7b6d7"
+            },
+            "modelVariantCount": 3,
+            "distinctTextureFiles": 3
+          },
+          {
+            "id": "palworld-cattiva-opgg",
+            "url": "https://op.gg/palworld/pals/cattiva",
+            "author": "OP.GG / upstream exporter not named",
+            "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg",
+            "assetKinds": [
+              "model",
+              "skeleton",
+              "texture",
+              "material",
+              "animation"
+            ],
+            "backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-opgg-20260911/43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f.tar.gz",
+              "bytes": 5316150,
+              "sha256": "43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f",
+              "readbackVerified": true,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-opgg.s3-backup.json"
+            },
+            "backupReceipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-opgg.s3-backup.json",
+              "bytes": 7836,
+              "sha256": "e8c5973d24537ed16548162db9529021c84969ac21bd025dfdf7a556b88f6768"
+            },
+            "license": "Game assets belong to Pocketpair; no additional redistribution license verified.",
+            "fileManifest": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/files-sha256.json",
+              "bytes": 4907,
+              "sha256": "71f0736648d2901444f765463bb8e1222331046003ee4be6555269b0c4e04cba"
+            },
+            "modelVariantCount": 3,
+            "distinctTextureFiles": 5
+          },
+          {
+            "id": "palworld-cattiva-gamevault",
+            "url": "https://palworld.gamevault.in/paldex/cattiva/",
+            "author": "GameVault / original game Pocketpair",
+            "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault",
+            "assetKinds": [
+              "audio",
+              "sfx",
+              "creature-voice"
+            ],
+            "backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-gamevault-20260911/7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f.tar.gz",
+              "bytes": 886286,
+              "sha256": "7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f",
+              "readbackVerified": true,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json"
+            },
+            "backupReceipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json",
+              "bytes": 6802,
+              "sha256": "2da6cc96007ea2e7f0fad831a516d11194834d6ad4ae62b8c4b5c26d2b7b2ac2"
+            },
+            "license": "Game assets belong to Pocketpair; no additional redistribution license verified."
+          }
+        ],
+        "sourceIdentityEvidence": "Public character page labels and native IDs identify 搗蛋貓 / Cattiva / PinkCat. Model acquisition/analysis receipts pin source bytes; no same-name inference."
+      },
+      "audioSources": [
+        {
+          "sourceId": "palworld-cattiva-gamevault",
+          "count": 6,
+          "seconds": 4.973968253968254,
+          "index": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/audio-file-index.json",
+            "bytes": 3736,
+            "sha256": "bfe4ce21455fb3ec7e0dd521e2aa15e75d2b55e1dac09b16f2af8461ae48d6d1"
+          },
+          "modelCandidate": false,
+          "category": "nonverbal-creature-cry",
+          "speechTrainingEligible": false
+        }
+      ],
+      "limitations": [
+        "Multiple model files are retained source/decoded revisions, not distinct characters.",
+        "Sound assets are linked separately and never counted as modelCandidates.",
+        "Model/source readiness does not prove hero skills or backend implementation."
+      ],
+      "supersedesAuditRows": [
+        "palworld-cattiva-atlasforge:Cattiva",
+        "palworld-cattiva-opgg:Cattiva"
+      ]
+    },
+    {
+      "id": "community:palworld-jetragon",
+      "name": "空渦龍 / Jetragon",
+      "work": "Palworld / 幻獸帕魯",
+      "aliases": [
+        "空渦龍",
+        "空涡龙",
+        "Jetragon",
+        "JetDragon",
+        "SK_JetDragon",
+        "ジェッドラン"
+      ],
+      "sourceIds": [
+        "mediafire-shinypenguin-palworld-jetragon",
+        "opgg-palworld-jetragon",
+        "gamevault-palworld-jetragon-cries"
+      ],
+      "modelCandidates": [
+        {
+          "id": "mediafire-shinypenguin-palworld-jetragon.fbx",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
+          "bytes": 8907804,
+          "sha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3",
+          "format": "fbx",
+          "readiness": "acquired-rigged-source-pending-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+          "boneCount": 65,
+          "textureCount": 7,
+          "nativeAnimationCount": 0,
+          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "defaultEligible": false,
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+          "s3ArchiveMember": "original/jetdragon.fbx"
+        },
+        {
+          "id": "mediafire-shinypenguin-palworld-jetragon.assimp-diagnostic-v1",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-assimp-v1/body.glb",
+          "bytes": 8941408,
+          "sha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa",
+          "format": "glb",
+          "readiness": "diagnostic-invalid-preserved",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+          "boneCount": 65,
+          "textureCount": 7,
+          "nativeAnimationCount": 0,
+          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "defaultEligible": false,
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+          "s3ArchiveMember": "converted-assimp-v1/body.glb"
+        },
+        {
+          "id": "mediafire-shinypenguin-palworld-jetragon.reserve-v2",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-reserve-v2/body.glb",
+          "bytes": 8941604,
+          "sha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c",
+          "format": "glb",
+          "readiness": "reserve-pending-ggd-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+          "boneCount": 65,
+          "textureCount": 7,
+          "nativeAnimationCount": 0,
+          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "defaultEligible": false,
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+          "s3ArchiveMember": "converted-reserve-v2/body.glb"
+        },
+        {
+          "id": "opgg-palworld-jetragon.original-glb",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
+          "bytes": 2740172,
+          "sha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f",
+          "format": "glb",
+          "readiness": "acquired-animated-source-pending-material-binding",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "opgg-palworld-jetragon",
+          "boneCount": 75,
+          "textureCount": 8,
+          "nativeAnimationCount": 29,
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+          "defaultEligible": false,
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+          "s3ArchiveMember": "original/opgg/model.glb"
+        },
+        {
+          "id": "opgg-palworld-jetragon.decoded-v1",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
+          "bytes": 3783312,
+          "sha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3",
+          "format": "glb",
+          "readiness": "diagnostic-decoded-pending-extension-declaration",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "opgg-palworld-jetragon",
+          "boneCount": 75,
+          "textureCount": 8,
+          "nativeAnimationCount": 29,
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+          "defaultEligible": false,
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+          "s3ArchiveMember": "decoded/jetragon-meshopt-decoded.glb"
+        },
+        {
+          "id": "opgg-palworld-jetragon.decoded-declared-v2",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+          "bytes": 3783400,
+          "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203",
+          "format": "glb",
+          "readiness": "reserve-pending-material-binding-and-ggd-standardization",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "opgg-palworld-jetragon",
+          "boneCount": 75,
+          "textureCount": 8,
+          "nativeAnimationCount": 29,
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+          "defaultEligible": false,
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+          "s3ArchiveMember": "decoded/jetragon-quantization-declared.glb"
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "Exact confirmed Jetragon/JetDragon/空渦龍 aliases checked against current content/champions; no champion definition found at acquisition time. Re-evaluate on later generated backlog updates.",
+      "evidence": {
+        "identitySourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+        "sourceManifestPalId": "JetDragon",
+        "bodyMeshName": "SK_JetDragon",
+        "actualFilesVerified": true,
+        "animationIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/animation-index.json",
+        "audioIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/audio-index.json",
+        "modelIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/model-candidates.json",
+        "statusIsAcquisitionSnapshot": true
+      },
+      "limitations": [
+        "Pending material/runtime/animation visual acceptance; source files are reserved candidates, not a shipped GGD hero.",
+        "29 source entries contain28 distinct decoded track signatures.",
+        "6 nonverbal MP3 cries, no spoken dialogue or standaloneVFX."
+      ],
+      "backupReceiptPath": "materials/hero-model-library/priority-evidence/palworld-three/jetragon-s3-backup.json",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+        "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+        "bytes": 41944536,
+        "sha256": "42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+        "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/full-get.tar.gz",
+        "receiptPath": "materials/hero-model-library/priority-evidence/palworld-three/jetragon-s3-backup.json"
+      }
     }
   ],
   "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate. ｜ ou99 偶久網付費下載（owner 2026-09-11 授權）：18 顆已轉換入庫並在 GGD 主線 content/models/_index.json 裡，heroBody:true ⇒ 後台與編輯器選單可選。"

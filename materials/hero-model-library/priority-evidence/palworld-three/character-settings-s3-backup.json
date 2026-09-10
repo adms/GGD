@@ -1,0 +1,120 @@
+{
+  "schema": "ggd.source-legacy-backup@1",
+  "sourceId": "palworld-three-character-settings-paldb-v1-0-4",
+  "verifiedAt": "2026-09-10T17:54:20.712447+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "expectedRoleVerified": true,
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-settings/palworld-three-character-settings-paldb-v1-0-4-20260911/7b617d68d24f37e143fae9f4f71360913ba2b33e8168ad01b492b56af3584ac6.tar.gz",
+  "actions": [
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-three-character-settings-20260911/palworld-three-character-settings-paldb-v1-0-4.tar.gz",
+  "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-three-character-settings-20260911/palworld-three-character-settings-paldb-v1-0-4.readback.tar.gz",
+  "archiveSha256": "7b617d68d24f37e143fae9f4f71360913ba2b33e8168ad01b492b56af3584ac6",
+  "archiveBytes": 80132,
+  "memberCount": 14,
+  "fullGetAndMemberShaVerified": true,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 762,
+      "sha256": "ac0579568089bd87500b2354a7b03ec8a98a31f7900a84f6d767924fa5a3661b",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "acquisition.json",
+      "bytes": 2411,
+      "sha256": "ff4e7cf9ff0ca7c9a0870da7d4e95176e74550d982a581ab06dadac382acf411",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "files-sha256.json",
+      "bytes": 2276,
+      "sha256": "e802c44d43d1ec94aa59bb17dac25cac133606029b6866ce83c96f34d1a4ab5c",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "independent-audit.json",
+      "bytes": 50614,
+      "sha256": "531f9a36c966e6e02b50c49ec2bc9ba92e0bc36c9ecc419bca982b773507f8f6",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/Astralym.html",
+      "bytes": 59273,
+      "sha256": "ed841b430604574cf2bcf416c4ca6062d8f8fea799d529c98c300e708f821892",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/Blightstar_Calamity_Zenara_%26_Astralym.html",
+      "bytes": 69276,
+      "sha256": "b5a331b83c3906e787a1065d43d27ac8b39d361187a04622e4185cefea8eb3c4",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/Cattiva.html",
+      "bytes": 141395,
+      "sha256": "494bf7e4cbef8b9b574911ecf974b554a882fd85d14c888079441e84976918f5",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/Jetragon.html",
+      "bytes": 90274,
+      "sha256": "17039f3aee83c6155c37c5705c73da440ce31f7e8ebb40a79a16fac9cc80cfef",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/Nullstar_Calamity_Zenara_%26_Astralym.html",
+      "bytes": 68024,
+      "sha256": "634ad905a0fc7b56e60c0235e6436d0ce1118083e7696c882a8faba6eccb7d42",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "parsed-character-settings.json",
+      "bytes": 26795,
+      "sha256": "c72f2ae21f85f960d49b78689d5744d202f5e918f93eb44522b13e5d2dfc8e17",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "source-entry.json",
+      "bytes": 2126,
+      "sha256": "8a0f29c025d934fa5c8eca25e87415aa7492fe3ca188eb4fb09e32f25ca6e75e",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/backup.py",
+      "bytes": 5549,
+      "sha256": "8f35ee8e71d0a49501e818860c269faed10599697bb2a86304e090aa031a8b76",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/independent_audit.py",
+      "bytes": 7993,
+      "sha256": "e31346030fa32ddd6f6fb2aa3ba74ed56d91ae880369d76ea6494df46dd3aa10",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/parse_character_settings.py",
+      "bytes": 7254,
+      "sha256": "7ed3473d62ab6469ec4d4bc77d0b04a3cc193dc9bcc49cc9c51621eeeaf37025",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    }
+  ],
+  "policy": "legacy source reserve only; no automatic production selection; local all preserved"
+}

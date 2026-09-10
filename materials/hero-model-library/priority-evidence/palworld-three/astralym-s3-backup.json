@@ -1,0 +1,80 @@
+{
+  "schema": "ggd-source-deterministic-backup@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+  "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+  "bytes": 29873643,
+  "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "parallel-palworld-astralym",
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/file-manifest.json",
+    "bytes": 15074,
+    "sha256": "fef30305f922ba9aa498832c832237c43a276f895ba020b820a49a54b527e0fe"
+  },
+  "archiveFiles": 87,
+  "fileContentVerified": true,
+  "frozen": true,
+  "backup": {
+    "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+    "bytes": 29873643,
+    "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+    "archiveFormat": "tar-gzip",
+    "archiveMemberRoot": "parallel-palworld-astralym",
+    "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+    "readbackVerified": true,
+    "fullReadbackVerified": true,
+    "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+    "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+    "deletionAllowed": false
+  },
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "identityVerifiedRole": "assumed-role/vibe-coding-s3-role/",
+  "s3PutCompleted": true,
+  "s3FullGetCompleted": true,
+  "allReadbackMembersVerified": true,
+  "readbackMemberCount": 87,
+  "voiceReaderCompatibility": {
+    "archiveType": "tar-gzip",
+    "audioMembersVerified": [
+      {
+        "path": "original/692273765.mp3",
+        "archiveMember": "parallel-palworld-astralym/original/692273765.mp3",
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0"
+      },
+      {
+        "path": "original/490600725.mp3",
+        "archiveMember": "parallel-palworld-astralym/original/490600725.mp3",
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda"
+      },
+      {
+        "path": "original/334845214.mp3",
+        "archiveMember": "parallel-palworld-astralym/original/334845214.mp3",
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+      },
+      {
+        "path": "original/825892274.mp3",
+        "archiveMember": "parallel-palworld-astralym/original/825892274.mp3",
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a"
+      },
+      {
+        "path": "original/646052.mp3",
+        "archiveMember": "parallel-palworld-astralym/original/646052.mp3",
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa"
+      },
+      {
+        "path": "original/118059401.mp3",
+        "archiveMember": "parallel-palworld-astralym/original/118059401.mp3",
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab"
+      }
+    ],
+    "doublePrefix": false
+  }
+}

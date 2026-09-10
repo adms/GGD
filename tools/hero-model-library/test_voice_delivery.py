@@ -8,11 +8,37 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from voice_index import primary_audio, excluded_from_speech, source_audio_spec
+from voice_index import primary_audio, excluded_from_speech, source_audio_spec, audio_index_files, shared_audio_owner
 from query_voice import read_voice_files
 
 
 class VoiceDelivery(unittest.TestCase):
+    def test_absolute_source_paths_require_matching_safe_relative_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            report = root / 'audio.json'
+            source = dict(localPath=str(root), audioFileIndex=dict(reportPath='audio.json', pathField='relativePath'))
+            def write(rows):
+                report.write_text(json.dumps(dict(files=rows)))
+                source['audioFileIndex']['reportSha256'] = hashlib.sha256(report.read_bytes()).hexdigest()
+            row = dict(path=str(root / 'original/a.mp3'), relativePath='original/a.mp3', label='Joy')
+            write([row])
+            self.assertEqual(audio_index_files(source, root)[0]['path'], 'original/a.mp3')
+            self.assertEqual(audio_index_files(source, root)[0]['label'], 'Joy')
+            for bad in [dict(row, relativePath='../escape.mp3'), dict(row, path=str(root / 'other.mp3'))]:
+                write([bad])
+                with self.assertRaises((ValueError, AssertionError)):
+                    audio_index_files(source, root)
+
+    def test_shared_model_archive_cannot_hide_audio_with_missing_or_wrong_owner(self):
+        model = dict(id='model', localPath='intake/shared', audioCount=0, audioIndexedBySourceId='audio')
+        audio = dict(id='audio', localPath='intake/shared', audioCount=6, audioFileIndex=dict(reportPath='audio.json'))
+        self.assertTrue(shared_audio_owner(model, [model, audio], Path('/workspace')))
+        self.assertFalse(shared_audio_owner(audio, [model, audio], Path('/workspace')))
+        for rows in [[model], [model, dict(audio, localPath='unrelated')], [model, dict(audio, audioIndexedBySourceId='model')]]:
+            with self.assertRaises(AssertionError):
+                shared_audio_owner(model, rows, Path('/workspace'))
+
     def test_null_model_audio_index_does_not_discard_a_real_conversion(self):
         self.assertEqual(source_audio_spec({'audioFileIndex': None}), {})
         conversion = {'reportPath': 'decoded.json', 'reportSha256': 'pinned'}

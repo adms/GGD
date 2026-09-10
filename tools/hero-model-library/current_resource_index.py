@@ -30,6 +30,8 @@ def main():
         voiceIndex='materials/hero-model-library/voice-index.json',
         modelDesignBacklog='materials/hero-model-library/已取得模型待設計英雄.json',
         modelDesignBacklogDocument='materials/hero-model-library/已取得模型待設計英雄.md',
+        palworldResourceIndex='materials/hero-model-library/palworld/帕魯三角色素材索引.json',
+        palworldResourceDocument='materials/hero-model-library/palworld/帕魯三角色素材索引.md',
         projectSevenJapaneseVoiceIndex='materials/hero-model-library/lol-project-seven/seven-voice-index.json',
         note='Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.')
     (ROOT/'materials/asset-library/current-resources.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')

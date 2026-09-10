@@ -1,0 +1,82 @@
+{
+  "schema": "ggd.jetragon.source-delivery@1",
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon",
+  "frozen": true,
+  "files": {
+    "sourceEntries": {
+      "path": "/private/tmp/ggd-jetragon-source-entries.json",
+      "bytes": 64128,
+      "sha256": "150952e22d0caa65d9c543b06b9c6be7d5c599db80a5f2e61d70e8575ed031f5"
+    },
+    "designBacklogEntry": {
+      "path": "/private/tmp/ggd-jetragon-design-backlog-entry.json",
+      "bytes": 8767,
+      "sha256": "78763bb9c58a58c61bc00ea194ab45fb25f6ae9fe2ea2ae9b72d13dc0037fa83"
+    },
+    "s3BackupReceipt": {
+      "path": "/private/tmp/ggd-jetragon-source-s3-backup.json",
+      "bytes": 30026,
+      "sha256": "e5d8811abff5fa2d75759e97a9f503556b052029fd3183b0bd13434a1eecb50b"
+    }
+  },
+  "backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+    "archiveSha256": "42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89",
+    "archiveBytes": 41944536,
+    "memberCount": 65,
+    "fullGetReadback": true,
+    "allMembersVerified": true,
+    "localUnchangedBeforeAfter": true,
+    "verifiedAt": "2026-09-10T17:53:58.890511+00:00"
+  },
+  "counts": {
+    "distinctCharacters": 1,
+    "independentModelSources": 2,
+    "allCandidateAndDiagnosticFiles": 6,
+    "sourceAnimationEntries": 29,
+    "distinctDecodedAnimationTrackSets": 28,
+    "pngTextures": 7,
+    "webpTextures": 8,
+    "nonverbalCryMp3": 6,
+    "spokenDialogue": 0,
+    "standaloneVfx": 0
+  },
+  "validation": {
+    "fbxSourcePublisherSizeAndShaMatch": true,
+    "fbxEmbeddedPngAllStoredChunkCrcPass": true,
+    "opggAll4731AccessorsDecodedFinite": true,
+    "opggMaterialReferences8of8PresentAndDecoded": true,
+    "audio6of6FullDecodePassed": true,
+    "reserveFbxGlb": {
+      "errors": 0,
+      "warnings": 4
+    },
+    "decodedDeclaredOpggGlb": {
+      "errors": 0,
+      "warnings": 1,
+      "infos": 3
+    },
+    "all65ArchivedMembersFullGetShaVerified": true
+  },
+  "pending": [
+    "OP.GG external materials/shader binding into runtime",
+    "Native skeletons65/75 not interchangeable without retarget proof",
+    "GGD standardization/bone and texture limits/state mapping/runtime visual acceptance",
+    "No separate VFX or voiced sentences obtained"
+  ],
+  "centralFilesModified": false,
+  "defaultChanged": false,
+  "gitModified": false,
+  "README": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/README.md",
+  "fullModelIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/model-candidates.json",
+  "animationIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/animation-index.json",
+  "audioIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/audio-index.json",
+  "toolsForRootGitCopy": [
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/build-delivery.py",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/declare_quantization.py",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/inspect_opgg_glb.py",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/prepare_fbx_reserve.py",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/static-analysis.py"
+  ],
+  "backupScriptForRootGitCopy": "/private/tmp/ggd-jetragon-backup.py"
+}

@@ -1,0 +1,505 @@
+{
+  "schema": "ggd.cattiva.delivery@1",
+  "createdAt": "2026-09-10T17:49:00.814664+00:00",
+  "entries": [
+    {
+      "id": "palworld-cattiva-atlasforge",
+      "target": "AtlasForge Cattiva rigged idle model",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://atlasforge.gg/palworld/pals/cattiva",
+      "author": "ATLAS FORGE LLC / upstream model author not named",
+      "sourceGame": "Palworld",
+      "sourceWork": "Palworld / 幻獸帕魯",
+      "platform": "Public web-export; source game build/platform not pinned by source",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "discoveryChannel": "public-community-resource-viewer",
+      "accessStatus": "public-direct-download",
+      "checkedAt": "2026-09-10T17:49:00.814664+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge",
+      "defaultEligible": false,
+      "backendIntegration": {
+        "required": true,
+        "state": "not-registered",
+        "selectionVerified": false
+      },
+      "publicationStatus": "s3-legacy-full-get-verified",
+      "license": "Game assets belong to Pocketpair; no additional redistribution license verified.",
+      "limitations": [
+        "Source game build/version is unpinned.",
+        "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+        "No GGD backend selection or runtime acceptance performed.",
+        "Source GLB includes only one idle clip; no attack/run/death library in this version.",
+        "Draco decode uses installed Blender library; EXT_texture_webp preserved.",
+        "Standard GLB validator: 0 errors, 1 source hierarchy warning."
+      ],
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "texture",
+        "material",
+        "animation"
+      ],
+      "format": "GLB + WebP; original public payload retained",
+      "resourceRole": "character-body",
+      "modelCount": 1,
+      "modelCandidates": [
+        {
+          "id": "palworld-cattiva-atlasforge.body",
+          "candidateId": "palworld-cattiva-atlasforge.body",
+          "character": "Cattiva",
+          "nativeCharacter": "Cattiva",
+          "aliases": [
+            "搗蛋貓",
+            "ツッパニャン",
+            "PinkCat"
+          ],
+          "sourceWork": "Palworld / 幻獸帕魯",
+          "sourceGame": "Palworld",
+          "heroIds": [],
+          "resourceRole": "character-body",
+          "sourceModel": "original/PinkCat.viewer-model",
+          "sourceModelSha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4",
+          "convertedPath": "standardized/cattiva.glb",
+          "sha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379",
+          "bytes": 502344,
+          "identityEvidence": "Public source page labels Cattiva; internal model/animation/material names PinkCat, ZukanIndex 002. Visual runtime acceptance pending.",
+          "readiness": "pending-standardization",
+          "boneCount": 43,
+          "sourceSuppliedAnimationCount": 1,
+          "nativeAnimationCount": 1,
+          "proceduralAnimationCount": 0,
+          "animationOriginEvidence": "Source-supplied original-game names and material paths; raw Unreal animation assets were not acquired.",
+          "animations": [
+            {
+              "name": "AS_PinkCat_Idle",
+              "durationSeconds": 1.6666666269302368
+            }
+          ],
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/analysis/static-analysis.json",
+          "textureCount": 3,
+          "audioCount": 0,
+          "vfxCount": 0,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          }
+        }
+      ],
+      "nativeAnimationCount": 1,
+      "proceduralAnimationCount": 0,
+      "audioCount": 0,
+      "vfxCount": 0,
+      "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/model-candidates.json",
+      "files": [
+        {
+          "path": "original/PinkCat.viewer-model",
+          "bytes": 327652,
+          "sha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4"
+        },
+        {
+          "path": "standardized/cattiva.glb",
+          "bytes": 502344,
+          "sha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379"
+        }
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-atlasforge-20260911/ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006.tar.gz",
+        "bytes": 2142465,
+        "sha256": "ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006",
+        "readbackVerified": true,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-atlasforge.s3-backup.json"
+      },
+      "s3BackupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-atlasforge.s3-backup.json",
+      "filesManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/files-sha256.json",
+      "filesManifestSha256": "dd558a92974a69215c764b591deecb8c54b73630eed519e751cbca7716b7b6d7"
+    },
+    {
+      "id": "palworld-cattiva-opgg",
+      "target": "OP.GG Cattiva model and 33 source animations",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://op.gg/palworld/pals/cattiva",
+      "author": "OP.GG / upstream exporter not named",
+      "sourceGame": "Palworld",
+      "sourceWork": "Palworld / 幻獸帕魯",
+      "platform": "Public web-export; source game build/platform not pinned by source",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "discoveryChannel": "public-community-resource-viewer",
+      "accessStatus": "public-direct-download",
+      "checkedAt": "2026-09-10T17:49:00.814664+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg",
+      "defaultEligible": false,
+      "backendIntegration": {
+        "required": true,
+        "state": "not-registered",
+        "selectionVerified": false
+      },
+      "publicationStatus": "s3-legacy-full-get-verified",
+      "license": "Game assets belong to Pocketpair; no additional redistribution license verified.",
+      "limitations": [
+        "Source game build/version is unpinned.",
+        "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+        "No GGD backend selection or runtime acceptance performed.",
+        "Original model.glb has no images. All five source material images and material parameters preserved separately; no claim this raw body is textured in GGD.",
+        "Source shader subsurface/clearcoat render profile is not fully translated.",
+        "33 stored game-named clips verified with decoded samples; raw Unreal animation files not acquired.",
+        "No new procedural animation. No original Wwise bank or VFX in this model source."
+      ],
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "texture",
+        "material",
+        "animation"
+      ],
+      "format": "GLB + WebP; original public payload retained",
+      "resourceRole": "character-body",
+      "modelCount": 1,
+      "modelCandidates": [
+        {
+          "id": "palworld-cattiva-opgg.body",
+          "candidateId": "palworld-cattiva-opgg.body",
+          "character": "Cattiva",
+          "nativeCharacter": "Cattiva",
+          "aliases": [
+            "搗蛋貓",
+            "ツッパニャン",
+            "PinkCat"
+          ],
+          "sourceWork": "Palworld / 幻獸帕魯",
+          "sourceGame": "Palworld",
+          "heroIds": [],
+          "resourceRole": "character-body",
+          "sourceModel": "original/model.glb",
+          "sourceModelSha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2",
+          "convertedPath": "decoded/cattiva-quantization-declared.glb",
+          "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635",
+          "bytes": 1788472,
+          "identityEvidence": "Public source page labels Cattiva; internal model/animation/material names PinkCat, ZukanIndex 002. Visual runtime acceptance pending.",
+          "readiness": "pending-material-binding-and-GGD-standardization",
+          "boneCount": 43,
+          "sourceSuppliedAnimationCount": 33,
+          "nativeAnimationCount": 33,
+          "proceduralAnimationCount": 0,
+          "animationOriginEvidence": "Source-supplied original-game names and material paths; raw Unreal animation assets were not acquired.",
+          "animations": [
+            {
+              "name": "Architecture",
+              "durationSeconds": 0.5
+            },
+            {
+              "name": "Carrying",
+              "durationSeconds": 1.6666666269302368
+            },
+            {
+              "name": "Carrying_Start",
+              "durationSeconds": 1.6666666269302368
+            },
+            {
+              "name": "CommonWork",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "Damage",
+              "durationSeconds": 1.875
+            },
+            {
+              "name": "Eat",
+              "durationSeconds": 3.3333332538604736
+            },
+            {
+              "name": "Encount",
+              "durationSeconds": 1.875
+            },
+            {
+              "name": "FarSkill_Action",
+              "durationSeconds": 0.4166666567325592
+            },
+            {
+              "name": "FarSkill_ActionLoop",
+              "durationSeconds": 0.8333333134651184
+            },
+            {
+              "name": "FarSkill_End",
+              "durationSeconds": 1.0416666269302368
+            },
+            {
+              "name": "FarSkill_Start",
+              "durationSeconds": 1.0416666269302368
+            },
+            {
+              "name": "FarSkill_StartLoop",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "GetUp_FrontDown",
+              "durationSeconds": 1.875
+            },
+            {
+              "name": "Gunner",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "Idle",
+              "durationSeconds": 1.6666666269302368
+            },
+            {
+              "name": "Idle_Swim",
+              "durationSeconds": 1.0
+            },
+            {
+              "name": "Jail",
+              "durationSeconds": 1.6666666269302368
+            },
+            {
+              "name": "JumpEnd",
+              "durationSeconds": 1.125
+            },
+            {
+              "name": "JumpLoop",
+              "durationSeconds": 0.8333333134651184
+            },
+            {
+              "name": "Mining",
+              "durationSeconds": 1.6666666269302368
+            },
+            {
+              "name": "NekoPunch_End",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "NekoPunch_Loop",
+              "durationSeconds": 0.6666666865348816
+            },
+            {
+              "name": "NekoPunch_Start",
+              "durationSeconds": 0.625
+            },
+            {
+              "name": "Petting",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "Rest01",
+              "durationSeconds": 2.0833332538604736
+            },
+            {
+              "name": "Rest02",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "Rest03",
+              "durationSeconds": 3.3333332538604736
+            },
+            {
+              "name": "Run",
+              "durationSeconds": 0.6666666865348816
+            },
+            {
+              "name": "SleepEnd",
+              "durationSeconds": 3.75
+            },
+            {
+              "name": "SleepLoop",
+              "durationSeconds": 2.5
+            },
+            {
+              "name": "SleepStart",
+              "durationSeconds": 3.75
+            },
+            {
+              "name": "Transport",
+              "durationSeconds": 1.25
+            },
+            {
+              "name": "Walk",
+              "durationSeconds": 1.25
+            }
+          ],
+          "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/analysis/static-analysis.json",
+          "textureCount": 5,
+          "audioCount": 0,
+          "vfxCount": 0,
+          "backendIntegration": {
+            "required": true,
+            "state": "not-registered",
+            "selectionVerified": false
+          }
+        }
+      ],
+      "nativeAnimationCount": 33,
+      "proceduralAnimationCount": 0,
+      "audioCount": 0,
+      "vfxCount": 0,
+      "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/model-candidates.json",
+      "files": [
+        {
+          "path": "original/model.glb",
+          "bytes": 1461560,
+          "sha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2"
+        },
+        {
+          "path": "decoded/cattiva-quantization-declared.glb",
+          "bytes": 1788472,
+          "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635"
+        }
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-opgg-20260911/43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f.tar.gz",
+        "bytes": 5316150,
+        "sha256": "43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f",
+        "readbackVerified": true,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-opgg.s3-backup.json"
+      },
+      "s3BackupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-opgg.s3-backup.json",
+      "filesManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/files-sha256.json",
+      "filesManifestSha256": "71f0736648d2901444f765463bb8e1222331046003ee4be6555269b0c4e04cba"
+    },
+    {
+      "id": "palworld-cattiva-gamevault",
+      "target": "GameVault Cattiva six creature cries",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://palworld.gamevault.in/paldex/cattiva/",
+      "author": "GameVault / original game Pocketpair",
+      "sourceGame": "Palworld",
+      "sourceWork": "Palworld / 幻獸帕魯",
+      "platform": "Public web-export; source game build/platform not pinned by source",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "discoveryChannel": "public-community-soundboard",
+      "accessStatus": "public-direct-download",
+      "checkedAt": "2026-09-10T17:49:00.814664+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault",
+      "defaultEligible": false,
+      "backendIntegration": {
+        "required": true,
+        "state": "not-registered",
+        "selectionVerified": false
+      },
+      "publicationStatus": "s3-legacy-full-get-verified",
+      "license": "Game assets belong to Pocketpair; no additional redistribution license verified.",
+      "limitations": [
+        "Source game build/version is unpinned.",
+        "No paid source, credentials, login bypass, DRM bypass, game or MOD executable used.",
+        "No GGD backend selection or runtime acceptance performed.",
+        "Six source-labelled creature cries, not spoken dialogue or a speech-synthesis dataset.",
+        "Event labels are author/site labels; no individual listening review. No human language asserted.",
+        "Public MP3 are source exports, not original Wwise containers; native Wwise bank not acquired.",
+        "Protected model payload was not accessed or decoded."
+      ],
+      "assetKinds": [
+        "audio",
+        "sfx",
+        "creature-voice"
+      ],
+      "format": "MP3 source / WAV PCM Float32 44100Hz mono",
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioCount": 6,
+      "nativeAnimationCount": 0,
+      "vfxCount": 0,
+      "audioGroups": [
+        {
+          "character": "Cattiva",
+          "nativeId": "PinkCat",
+          "sourceWork": "Palworld / 幻獸帕魯",
+          "reportedLanguage": null,
+          "pathPrefixes": [
+            "decoded/"
+          ],
+          "count": 6,
+          "classification": "creature-cry-source-labelled-unreviewed",
+          "events": [
+            "Normal",
+            "Joy",
+            "Anger",
+            "Sorrow",
+            "Pain",
+            "Death"
+          ]
+        }
+      ],
+      "audioFileIndex": {
+        "reportPath": "audio-file-index.json",
+        "reportSha256": "bfe4ce21455fb3ec7e0dd521e2aa15e75d2b55e1dac09b16f2af8461ae48d6d1"
+      },
+      "files": [
+        {
+          "path": "original/audio/717847191.mp3",
+          "bytes": 5267,
+          "sha256": "6ba47adbb69a06b149e914b68f01a9e4c11fa583425f73ba73d51a32c326c391"
+        },
+        {
+          "path": "original/audio/573810681.mp3",
+          "bytes": 6521,
+          "sha256": "e7f8378b486fdeaa6e954de2b0c1abcc60c8c4119c7ba021204df7ad9df12aaa"
+        },
+        {
+          "path": "original/audio/477932227.mp3",
+          "bytes": 7148,
+          "sha256": "cae96b1a3b1f2c0d91acd089852e23992fa8be33c841636c744f54725130edad"
+        },
+        {
+          "path": "original/audio/942072444.mp3",
+          "bytes": 10700,
+          "sha256": "711aa1b61d4f2bd948dd3ac6775991c8b5cb3f2c4e63165c5806a2d7ba18ec04"
+        },
+        {
+          "path": "original/audio/980873458.mp3",
+          "bytes": 5476,
+          "sha256": "8a05a157dccd5d539ca2ba60489d4e77e5eb8d57f6ec2106d3b46528668c9c21"
+        },
+        {
+          "path": "original/audio/842808624.mp3",
+          "bytes": 7984,
+          "sha256": "80c507895f596ecd4a519cfcc9a6b3ce1f1a22b8de91de5abeced533092794db"
+        }
+      ],
+      "audioSeconds": 4.973968253968254,
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-gamevault-20260911/7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f.tar.gz",
+        "bytes": 886286,
+        "sha256": "7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f",
+        "readbackVerified": true,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json"
+      },
+      "s3BackupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json",
+      "filesManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/files-sha256.json",
+      "filesManifestSha256": "6e327c23958b19ed721d459bf03541388b89acac98ee671274ae50f735262519"
+    }
+  ],
+  "s3BackupReceipts": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-atlasforge.s3-backup.json",
+      "sha256": "dc00e0d7d572eeded7f0b13fac61eb4f0090cf856899f00b67aecf11f6c147ff",
+      "sourceId": "palworld-cattiva-atlasforge"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-opgg.s3-backup.json",
+      "sha256": "e8c5973d24537ed16548162db9529021c84969ac21bd025dfdf7a556b88f6768",
+      "sourceId": "palworld-cattiva-opgg"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json",
+      "sha256": "2da6cc96007ea2e7f0fad831a516d11194834d6ad4ae62b8c4b5c26d2b7b2ac2",
+      "sourceId": "palworld-cattiva-gamevault"
+    }
+  ],
+  "sourceRootsImmutable": true,
+  "centralFilesModified": false,
+  "gitMutation": false
+}

@@ -1,0 +1,204 @@
+{
+  "schema": "ggd.source-legacy-backup@1",
+  "sourceId": "palworld-cattiva-gamevault",
+  "verifiedAt": "2026-09-10T17:50:08.626124+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "expectedRoleVerified": true,
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-gamevault-20260911/7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f.tar.gz",
+  "actions": [
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-20260911/palworld-cattiva-gamevault.tar.gz",
+  "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-20260911/palworld-cattiva-gamevault.readback.tar.gz",
+  "archiveSha256": "7dfe5a5fa6d992641addc4cd75188b2c1d3e56b1118d7c335bc3440108d65b9f",
+  "archiveBytes": 886286,
+  "memberCount": 26,
+  "fullGetAndMemberShaVerified": true,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 821,
+      "sha256": "43a9bf6ace48dd3967106a629aef5a0ee54f3b5e1aee78ada3451dc50c44c5f9",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "acquisition.json",
+      "bytes": 1826,
+      "sha256": "377991753dad11661f2e03b3b75e060dba56281f266aadc3834e8cb409328e41",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/audio-analysis.json",
+      "bytes": 7302,
+      "sha256": "8d9bcf356edf26294c3cc70467d95616f6fe21a0200f644dcce725587bb52c3d",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "audio-file-index.json",
+      "bytes": 3736,
+      "sha256": "bfe4ce21455fb3ec7e0dd521e2aa15e75d2b55e1dac09b16f2af8461ae48d6d1",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "audio-index.json",
+      "bytes": 3736,
+      "sha256": "bfe4ce21455fb3ec7e0dd521e2aa15e75d2b55e1dac09b16f2af8461ae48d6d1",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/477932227.wav",
+      "bytes": 147040,
+      "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/573810681.wav",
+      "bytes": 131896,
+      "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/717847191.wav",
+      "bytes": 103576,
+      "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/842808624.wav",
+      "bytes": 165196,
+      "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/942072444.wav",
+      "bytes": 223052,
+      "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/980873458.wav",
+      "bytes": 107200,
+      "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/cattiva-page.html",
+      "bytes": 53030,
+      "sha256": "982aef3e9a91dd5f97ac4e054356b1797805c350db8de8ebcec2ae53a0ecb990",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/discovery-and-limits.json",
+      "bytes": 806,
+      "sha256": "2464e11d0b477d1fdb5ffd0cdd79f72bf00ce0b273000085092ebf5810b61203",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "files-sha256.json",
+      "bytes": 4103,
+      "sha256": "6e327c23958b19ed721d459bf03541388b89acac98ee671274ae50f735262519",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 117,
+      "sha256": "6811356febadb0563df115880370e472bab7d1011f75b42e2571a39e335ed798",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/audio/477932227.mp3",
+      "bytes": 7148,
+      "sha256": "cae96b1a3b1f2c0d91acd089852e23992fa8be33c841636c744f54725130edad",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/audio/573810681.mp3",
+      "bytes": 6521,
+      "sha256": "e7f8378b486fdeaa6e954de2b0c1abcc60c8c4119c7ba021204df7ad9df12aaa",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/audio/717847191.mp3",
+      "bytes": 5267,
+      "sha256": "6ba47adbb69a06b149e914b68f01a9e4c11fa583425f73ba73d51a32c326c391",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/audio/842808624.mp3",
+      "bytes": 7984,
+      "sha256": "80c507895f596ecd4a519cfcc9a6b3ce1f1a22b8de91de5abeced533092794db",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/audio/942072444.mp3",
+      "bytes": 10700,
+      "sha256": "711aa1b61d4f2bd948dd3ac6775991c8b5cb3f2c4e63165c5806a2d7ba18ec04",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/audio/980873458.mp3",
+      "bytes": 5476,
+      "sha256": "8a05a157dccd5d539ca2ba60489d4e77e5eb8d57f6ec2106d3b46528668c9c21",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "source-entry.json",
+      "bytes": 3545,
+      "sha256": "74d2457259a68219402d19367427d0b2c6ed82751a5f2508a664c32fd8fd09e2",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/acquire.py",
+      "bytes": 1303,
+      "sha256": "d7f5ebbbeee9bf7c8593f20957fd8a6d31665e286d328c9e7cb8cc6034d574e2",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/analyze_audio.py",
+      "bytes": 2416,
+      "sha256": "011a01271379bd5236451fae46fa6c2fa6f5add819b474056983ff871cfdf26a",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    }
+  ],
+  "policy": "legacy source reserve only; no automatic production selection; local all preserved"
+}

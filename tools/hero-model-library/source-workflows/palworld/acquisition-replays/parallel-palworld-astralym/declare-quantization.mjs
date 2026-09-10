@@ -1,0 +1,16 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { resolve, join } from 'node:path';
+import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
+const root=resolve(process.argv[2]),repo=resolve(process.argv[3]);
+const bytes=readFileSync(join(root,'derived/model-decoded.glb')),sha=b=>createHash('sha256').update(b).digest('hex'),length=bytes.readUInt32LE(12),old=JSON.parse(bytes.subarray(20,20+length)),doc=structuredClone(old);
+for(const k of ['extensionsUsed','extensionsRequired'])doc[k]=[...new Set([...(doc[k]??[]),'KHR_mesh_quantization'])];
+let json=Buffer.from(JSON.stringify(doc));json=Buffer.concat([json,Buffer.alloc((4-json.length%4)%4,32)]);
+const bin=bytes.subarray(20+length),header=Buffer.from(bytes.subarray(0,20));header.writeUInt32LE(20+json.length+bin.length,8);header.writeUInt32LE(json.length,12);const out=Buffer.concat([header,json,bin]);
+assert.deepEqual(bin,out.subarray(20+json.length));for(const k of ['nodes','skins','meshes','accessors','animations','bufferViews','buffers','materials'])assert.deepEqual(doc[k],old[k]);
+writeFileSync(join(root,'derived/model-decoded-v2.glb'),out,{flag:'wx'});
+const validator=createRequire(join(repo,'packages/shared/package.json'))('gltf-validator'),report=await validator.validateBytes(new Uint8Array(out),{uri:'model-decoded-v2.glb',maxIssues:0,writeTimestamp:false});
+writeFileSync(join(root,'analysis/khronos-decoded-v2-full.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});
+const receipt={schema:'ggd-gltf-metadata-only-normalization@1',original:{path:'derived/model-decoded.glb',bytes:bytes.length,sha256:sha(bytes)},result:{path:'derived/model-decoded-v2.glb',bytes:out.length,sha256:sha(out)},change:'Declare KHR_mesh_quantization in extensionsUsed/extensionsRequired for the normalized SHORT normals already present in source.',proof:{binChunkByteIdentical:true,geometryAccessorsUnchanged:true,all58AnimationStructuresUnchanged:true,noResampling:true,skinsNodesMaterialsUnchanged:true},validator:{errors:report.issues.numErrors,warnings:report.issues.numWarnings,infos:report.issues.numInfos,truncated:report.issues.truncated},readiness:'standardization-candidate; external material recipe/9 textures and visual/backend acceptance pending'};
+writeFileSync(join(root,'analysis/decoded-v2-receipt.json'),JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(receipt,null,2));

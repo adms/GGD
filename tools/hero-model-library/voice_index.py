@@ -35,6 +35,41 @@ def source_audio_spec(source):
     return source.get('audioFileIndex') or source.get('audioConversion') or {}
 
 
+def audio_index_files(source, workspace, reader=None):
+    """Read a pinned delivery, accepting an explicitly declared relative path field."""
+    spec = source_audio_spec(source)
+    root = (workspace / source['localPath']).resolve()
+    report = (root / spec['reportPath']).resolve()
+    assert report.is_relative_to(root) and sha(report) == spec['reportSha256']
+    rows = (reader(report) if reader else json.loads(report.read_text()))['files']
+    if spec.get('pathField'):
+        assert spec['pathField'] == 'relativePath'
+        normalized = []
+        for row in rows:
+            relative = public_archive_member({}, row['relativePath'])
+            local = (root / relative).resolve()
+            assert local.is_relative_to(root)
+            assert (root / row['path']).resolve() == local
+            normalized.append(dict(row, path=relative))
+        return normalized
+    return rows
+
+
+def shared_audio_owner(source, sources, workspace):
+    """A shared model archive delegates its audio to one explicit audio delivery."""
+    owner_id = source.get('audioIndexedBySourceId')
+    if owner_id is None:
+        return False
+    assert source.get('audioCount') == 0 and owner_id != source['id']
+    owners = [item for item in sources if item['id'] == owner_id]
+    assert len(owners) == 1
+    owner = owners[0]
+    assert not owner.get('audioIndexedBySourceId') and owner.get('audioCount', 0) > 0
+    assert (workspace / owner['localPath']).resolve() == (workspace / source['localPath']).resolve()
+    assert source_audio_spec(owner).get('reportPath')
+    return True
+
+
 def public_archive_type(receipt):
     """Use the declared container format; preserve the historical default."""
     declared = receipt.get('archiveFormat')
@@ -185,7 +220,10 @@ def main():
         role='voice-filename-candidate' if Path(r['path']).name.lower().startswith('vo_') else 'unclassified'
         add(g,rel,r['sha256'],r['bytes'],sid,rel,role=role)
 
-    for source in downloads.get('publicSources',[])+downloads.get('paidSources',[]):
+    all_public_sources = downloads.get('publicSources',[])+downloads.get('paidSources',[])
+    for source in all_public_sources:
+        if shared_audio_owner(source, all_public_sources, ws):
+            continue
         if source.get('supersededPrimaryAudioBy'):
             replacement=next(s for s in downloads.get('publicSources',[])+downloads.get('paidSources',[])
                              if s['id']==source['supersededPrimaryAudioBy'])
@@ -213,7 +251,7 @@ def main():
         if (source.get('audioFileIndex') or {}).get('reportPath'):
             spec=source['audioFileIndex'];path=(ws/source['localPath']/spec['reportPath']).resolve()
             assert path.is_relative_to((ws/source['localPath']).resolve()) and sha(path)==spec['reportSha256']
-            declared=read(path)['files']
+            declared=audio_index_files(source, ws, reader=read)
             # Animation event references can have an explicitly empty audio index.
             # Such a source remains in the model/source catalog; it has no audio
             # payload whose unfinished raw-package backup belongs in this index.
@@ -287,7 +325,7 @@ def main():
             report_path=(ws/source['localPath']/conversion['reportPath']).resolve()
             assert report_path.is_relative_to((ws/source['localPath']).resolve())
             assert sha(report_path)==conversion['reportSha256']
-            decoded_metadata={f['path']:f for f in read(report_path)['files']}
+            decoded_metadata={f['path']:f for f in audio_index_files(source, ws, reader=read)}
         for f in audio:
             member=f['path'];part=None
             if source.get('audioGroups'):
@@ -323,13 +361,13 @@ def main():
                 bank=decoded.get('sourceBank')
                 if bank and bank not in g['originalBanks']:g['originalBanks'].append(bank)
             add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,public_archive_member(receipt,member),
-                seconds=decoded.get('seconds'),original_bank=decoded.get('sourceBank'),
+                seconds=decoded.get('seconds', decoded.get('durationSeconds')),original_bank=decoded.get('sourceBank'),
                 role=(part or {}).get('audioCategory',source.get('audioCategory','unclassified')),
                 source_is_synthetic=decoded.get('sourceIsSynthetic',(part or {}).get('sourceIsSynthetic',source.get('sourceIsSynthetic'))),
                 source_contains_synthetic=(part or {}).get('sourceContainsSynthetic',source.get('sourceContainsSynthetic')))
             for field in ['sampleRate','channels','frames','sampleFormat','bitsPerSample',
                           'peakAbsFloat','samplesAboveUnity','gainDecisionRequired',
-                          'sourcePath','sourceSha256','reportedLocale','sourceManifestLocale']:
+                          'sourcePath','sourceSha256','reportedLocale','sourceManifestLocale','label','event','eventName']:
                 if field in decoded:files[-1][field]=decoded[field]
             for field in ['sourceContainsSynthetic','sourceIsSynthetic','sourceSynthesisProvider','classificationEvidence']:
                 if field in (part or {}):g[field]=part[field]
