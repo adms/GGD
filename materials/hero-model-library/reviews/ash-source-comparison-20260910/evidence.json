@@ -1,0 +1,17 @@
+{
+  "sourceId": "kof-open3dlab-ash-xv",
+  "deliverySha256": "d535ac0750a6951ea87ec5610daa55e3c276fadfa6898c443da98954e75a5f21",
+  "images": [
+    {
+      "path": "previews/left-hair/front.png",
+      "bytes": 332258,
+      "sha256": "820aa69286ece2f33c8a3b43a5a735afad212d71950d2adfee7f2e3ed9583c2f"
+    },
+    {
+      "path": "previews/source-left-hair/front.png",
+      "bytes": 371362,
+      "sha256": "21e128ab0caf40e349ab91fbb3ea422cb272bc9b56a1a1ae28e95b8cd705ce77"
+    }
+  ],
+  "runtimeReady": false
+}

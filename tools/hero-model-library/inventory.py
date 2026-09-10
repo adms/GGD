@@ -114,7 +114,25 @@ input_digest=hashlib.sha256(b''.join(str(p.relative_to(repo)).encode()+b'\0'+p.r
 validation_path=repo/'materials/hero-model-library/inventory-validation.json'
 previous=read(validation_path) if validation_path.exists() else {}
 now=previous.get('time') if previous.get('inputs_sha256')==input_digest else datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
+new_rows=[r for r in rows if r['section'] in ['第一批 37 名','第二批 37 名','LOL 追加 7 名']]
+no_default=[r for r in rows if r['default'] is None]
+placeholders=[r for r in new_rows if (r['default'] or {}).get('kind')=='previous']
+progress=['**尚未全數補齊或上架。** 名單已涵蓋全部 156 個角色／形態 ID（含新增 81 名）；名單完整不代表模型、動作、特效與語音全部完成。','',
+'| 新增 81 名：目前素材庫預設狀態 | 數量 |','|---|---|']
+for kind,label in [('exact','已登記本尊／專用原創模型預設（含如月電車；蜘蛛子僅蜘蛛形態）'),('style-proxy','使用者核准的獨立加工替身'),('alternate','同角色其他形態模型'),('previous','仍使用原有佔位模型'),(None,'尚無合格預設模型')]:
+ progress.append(f"| {label} | {sum((r['default'] or {}).get('kind')==kind for r in new_rows)} |")
+progress+=['','上述數字是分支素材庫狀態，**不是正式站上架數**。新取得來源尚需標準化／後台切換驗收；尚未配對的整庫儲備另外保留，未擅自填入角色。','',
+f'**尚無合格預設的 {len(no_default)} 筆：**','',
+'| 角色／形態 ID | 已登記角色模型來源 | 尚待處理 |','|---|---|---|']
+for r in no_default:
+ sources=[s for s in acquired_sources(download_plan) if r['id'] in s['heroIds'] and is_model_source(s)]
+ source_names='、'.join(f"`{s['id']}`" for s in sources) or '未登記新的完整角色模型來源'
+ state='已取得來源；依下方逐來源證據完成形態確認、轉換與驗收' if sources else '既有候選轉換失敗；見下方失敗原因' if r['pending'] else '只有未核准相似候選；本尊來源仍待補／配對'
+ progress.append(f"| {text(r['name'])} `{r['id']}` | {source_names} | {state} |")
+progress+=['',f"**另有 {len(placeholders)} 名新增角色仍使用原有佔位：** "+'、'.join(text(r['name']) for r in placeholders)+'。其中已取得本尊來源者見下方来源表，不能把取得等同切換完成。','',
+f'「尚未通過轉換」的 {len(pending_rows)} 筆只統計既有轉換失敗，不是全部待補角色。既有 W3X 若只證實檔名，仍須確認本尊／形態；已取得整庫但未配對者不能說成不存在。','']
 lines=['# 全角色模型盤點', '',f'更新時間：{now}（Asia/Taipei）。按角色／形態 ID 計數，不將同名變身態合併成一筆。','',
+*progress,
 *render_sources(download_plan,policy),
 '## 盤點基準','',
 f'- 全表 **{len(rows)} 個角色／形態 ID**：既有目錄 71、第一批 37、第二批 37、LOL 追加 7、歷史對應 4；新增共 **81 名**。',

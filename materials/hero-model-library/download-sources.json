@@ -15157,15 +15157,15 @@
         "state": "pending-standardization",
         "selectionVerified": false
       },
-      "verification": "116個WAD已完成當批處理，共60190個通過驗證的Float32 WAV；另12個媒體未通過解碼／格式驗證，原檔及錯誤保留，不列可播放數。原取樣率／聲道／frame核對，SHA已重新驗證。未逐段聽審；其他原生媒體仍分批轉換，不等待S3。",
+      "verification": "250個WAD已完成當批處理，共126468個通過驗證的Float32 WAV；另36個媒體未通過解碼／格式驗證，原檔及錯誤保留，不列可播放數。原取樣率／聲道／frame核對，SHA已重新驗證。未逐段聽審；其他原生媒體仍分批轉換，不等待S3。 原36個decoder失敗分別有14個原生PCM16另存精確恢復、22個BNK預載片段指向本機已計入的完整WPK音訊；22對逐bytes前綴及完整RIFF長度核對，原錯誤保留，本次無剩餘未對應格式失敗。",
       "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
       "preferredLanguageGaps": [
         "ja-JP",
         "en-US"
       ],
       "audioFileIndex": {
-        "reportPath": "deliveries/decoded-20260910T125206Z.json",
-        "reportSha256": "6d84eb865a9530f00e651cf3eaeba4f87469aac41748f82fead6bb1d040b77ff"
+        "reportPath": "deliveries/decoded-20260910T133206Z.json",
+        "reportSha256": "e0de2ad80aeac17898328be5be9727e8f517e1e791b4be41389eb072db5481a1"
       },
       "audioGroups": [
         {
@@ -16141,6 +16141,107 @@
           "reportedLanguage": "zh-TW"
         },
         {
+          "id": "Jinx",
+          "name": "LOL／Jinx／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Jinx/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Jinx.zh_TW",
+          "name": "LOL／Jinx／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Jinx.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "KSante",
+          "name": "LOL／KSante／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/KSante/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "KSante.zh_TW",
+          "name": "LOL／KSante／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/KSante.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kaisa",
+          "name": "LOL／Kaisa／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kaisa/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kaisa.zh_TW",
+          "name": "LOL／Kaisa／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kaisa.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kalista",
+          "name": "LOL／Kalista／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kalista/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kalista.zh_TW",
+          "name": "LOL／Kalista／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kalista.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Karma",
+          "name": "LOL／Karma／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Karma/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Karma.zh_TW",
+          "name": "LOL／Karma／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Karma.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Karthus",
+          "name": "LOL／卡爾瑟斯／共用音效包",
+          "heroIds": [
+            "example:karthus"
+          ],
+          "pathPrefixes": [
+            "decoded/Karthus/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
           "id": "Karthus.zh_TW",
           "name": "LOL／卡爾瑟斯／繁中命名語系包",
           "heroIds": [
@@ -16152,6 +16253,195 @@
           "reportedLanguage": "zh-TW"
         },
         {
+          "id": "Kassadin",
+          "name": "LOL／Kassadin／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kassadin/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kassadin.zh_TW",
+          "name": "LOL／Kassadin／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kassadin.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Katarina",
+          "name": "LOL／Katarina／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Katarina/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Katarina.zh_TW",
+          "name": "LOL／Katarina／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Katarina.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kayle",
+          "name": "LOL／Kayle／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kayle/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kayle.zh_TW",
+          "name": "LOL／Kayle／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kayle.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kayn",
+          "name": "LOL／Kayn／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kayn/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kayn.zh_TW",
+          "name": "LOL／Kayn／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kayn.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kennen",
+          "name": "LOL／Kennen／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kennen/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kennen.zh_TW",
+          "name": "LOL／Kennen／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kennen.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Khazix",
+          "name": "LOL／Khazix／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Khazix/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Khazix.zh_TW",
+          "name": "LOL／Khazix／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Khazix.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kindred",
+          "name": "LOL／Kindred／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kindred/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kindred.zh_TW",
+          "name": "LOL／Kindred／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kindred.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Kled",
+          "name": "LOL／Kled／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kled/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Kled.zh_TW",
+          "name": "LOL／Kled／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Kled.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "KogMaw",
+          "name": "LOL／KogMaw／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/KogMaw/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "KogMaw.zh_TW",
+          "name": "LOL／KogMaw／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/KogMaw.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Leblanc",
+          "name": "LOL／Leblanc／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Leblanc/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Leblanc.zh_TW",
+          "name": "LOL／Leblanc／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Leblanc.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "LeeSin",
+          "name": "LOL／LeeSin／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/LeeSin/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
           "id": "LeeSin.zh_TW",
           "name": "LOL／LeeSin／繁中命名語系包",
           "heroIds": [],
@@ -16159,6 +16449,107 @@
             "decoded/LeeSin.zh_TW/wav/"
           ],
           "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Leona",
+          "name": "LOL／Leona／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Leona/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Leona.zh_TW",
+          "name": "LOL／Leona／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Leona.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Lillia",
+          "name": "LOL／Lillia／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lillia/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Lillia.zh_TW",
+          "name": "LOL／Lillia／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lillia.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Lissandra",
+          "name": "LOL／Lissandra／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lissandra/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Lissandra.zh_TW",
+          "name": "LOL／Lissandra／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lissandra.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Lucian",
+          "name": "LOL／Lucian／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lucian/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Lucian.zh_TW",
+          "name": "LOL／Lucian／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lucian.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Lulu",
+          "name": "LOL／Lulu／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lulu/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Lulu.zh_TW",
+          "name": "LOL／Lulu／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Lulu.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Lux",
+          "name": "LOL／拉克絲／共用音效包",
+          "heroIds": [
+            "example:lux"
+          ],
+          "pathPrefixes": [
+            "decoded/Lux/wav/"
+          ],
+          "reportedLanguage": null
         },
         {
           "id": "Lux.zh_TW",
@@ -16172,6 +16563,125 @@
           "reportedLanguage": "zh-TW"
         },
         {
+          "id": "Malphite",
+          "name": "LOL／Malphite／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Malphite/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Malphite.zh_TW",
+          "name": "LOL／Malphite／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Malphite.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Malzahar",
+          "name": "LOL／Malzahar／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Malzahar/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Malzahar.zh_TW",
+          "name": "LOL／Malzahar／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Malzahar.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Maokai",
+          "name": "LOL／Maokai／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Maokai/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Maokai.zh_TW",
+          "name": "LOL／Maokai／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Maokai.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "MasterYi",
+          "name": "LOL／MasterYi／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/MasterYi/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "MasterYi.zh_TW",
+          "name": "LOL／MasterYi／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/MasterYi.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Mel",
+          "name": "LOL／Mel／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Mel/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Mel.zh_TW",
+          "name": "LOL／Mel／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Mel.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Milio",
+          "name": "LOL／Milio／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Milio/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Milio.zh_TW",
+          "name": "LOL／Milio／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Milio.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "MissFortune",
+          "name": "LOL／好運姐／共用音效包",
+          "heroIds": [
+            "example:missfortune"
+          ],
+          "pathPrefixes": [
+            "decoded/MissFortune/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
           "id": "MissFortune.zh_TW",
           "name": "LOL／好運姐／繁中命名語系包",
           "heroIds": [
@@ -16179,6 +16689,708 @@
           ],
           "pathPrefixes": [
             "decoded/MissFortune.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "MonkeyKing",
+          "name": "LOL／MonkeyKing／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/MonkeyKing/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "MonkeyKing.zh_TW",
+          "name": "LOL／MonkeyKing／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/MonkeyKing.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Mordekaiser",
+          "name": "LOL／Mordekaiser／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Mordekaiser/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Mordekaiser.zh_TW",
+          "name": "LOL／Mordekaiser／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Mordekaiser.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Morgana",
+          "name": "LOL／Morgana／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Morgana/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Morgana.zh_TW",
+          "name": "LOL／Morgana／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Morgana.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Naafiri",
+          "name": "LOL／Naafiri／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Naafiri/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Naafiri.zh_TW",
+          "name": "LOL／Naafiri／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Naafiri.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nami",
+          "name": "LOL／Nami／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nami/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nami.zh_TW",
+          "name": "LOL／Nami／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nami.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nasus",
+          "name": "LOL／Nasus／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nasus/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nasus.zh_TW",
+          "name": "LOL／Nasus／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nasus.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nautilus",
+          "name": "LOL／Nautilus／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nautilus/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nautilus.zh_TW",
+          "name": "LOL／Nautilus／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nautilus.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Neeko",
+          "name": "LOL／Neeko／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Neeko/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Neeko.zh_TW",
+          "name": "LOL／Neeko／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Neeko.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nidalee",
+          "name": "LOL／Nidalee／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nidalee/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nidalee.zh_TW",
+          "name": "LOL／Nidalee／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nidalee.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nilah",
+          "name": "LOL／Nilah／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nilah/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nilah.zh_TW",
+          "name": "LOL／Nilah／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nilah.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nocturne",
+          "name": "LOL／Nocturne／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nocturne/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nocturne.zh_TW",
+          "name": "LOL／Nocturne／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nocturne.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Nunu",
+          "name": "LOL／Nunu／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nunu/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Nunu.zh_TW",
+          "name": "LOL／Nunu／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Nunu.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Olaf",
+          "name": "LOL／Olaf／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Olaf/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Olaf.zh_TW",
+          "name": "LOL／Olaf／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Olaf.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Orianna",
+          "name": "LOL／Orianna／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Orianna/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Orianna.zh_TW",
+          "name": "LOL／Orianna／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Orianna.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Ornn",
+          "name": "LOL／Ornn／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Ornn/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Ornn.zh_TW",
+          "name": "LOL／Ornn／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Ornn.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Pantheon",
+          "name": "LOL／Pantheon／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Pantheon/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Pantheon.zh_TW",
+          "name": "LOL／Pantheon／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Pantheon.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Poppy",
+          "name": "LOL／Poppy／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Poppy/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Poppy.zh_TW",
+          "name": "LOL／Poppy／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Poppy.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Pyke",
+          "name": "LOL／Pyke／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Pyke/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Pyke.zh_TW",
+          "name": "LOL／Pyke／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Pyke.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Qiyana",
+          "name": "LOL／Qiyana／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Qiyana/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Qiyana.zh_TW",
+          "name": "LOL／Qiyana／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Qiyana.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Quinn",
+          "name": "LOL／Quinn／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Quinn/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Quinn.zh_TW",
+          "name": "LOL／Quinn／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Quinn.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Rakan",
+          "name": "LOL／Rakan／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rakan/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Rakan.zh_TW",
+          "name": "LOL／Rakan／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rakan.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Rammus",
+          "name": "LOL／Rammus／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rammus/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Rammus.zh_TW",
+          "name": "LOL／Rammus／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rammus.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "RekSai",
+          "name": "LOL／RekSai／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/RekSai/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "RekSai.zh_TW",
+          "name": "LOL／RekSai／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/RekSai.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Rell",
+          "name": "LOL／Rell／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rell/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Rell.zh_TW",
+          "name": "LOL／Rell／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rell.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Renata",
+          "name": "LOL／Renata／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Renata/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Renata.zh_TW",
+          "name": "LOL／Renata／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Renata.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Renekton",
+          "name": "LOL／Renekton／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Renekton/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Renekton.zh_TW",
+          "name": "LOL／Renekton／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Renekton.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Rengar",
+          "name": "LOL／Rengar／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rengar/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Rengar.zh_TW",
+          "name": "LOL／Rengar／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rengar.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Riven",
+          "name": "LOL／Riven／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Riven/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Riven.zh_TW",
+          "name": "LOL／Riven／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Riven.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Rumble",
+          "name": "LOL／Rumble／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rumble/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Rumble.zh_TW",
+          "name": "LOL／Rumble／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Rumble.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Ryze",
+          "name": "LOL／Ryze／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Ryze/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Ryze.zh_TW",
+          "name": "LOL／Ryze／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Ryze.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Samira",
+          "name": "LOL／Samira／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Samira/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Samira.zh_TW",
+          "name": "LOL／Samira／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Samira.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Sejuani",
+          "name": "LOL／Sejuani／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Sejuani/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Sejuani.zh_TW",
+          "name": "LOL／Sejuani／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Sejuani.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Senna",
+          "name": "LOL／Senna／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Senna/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Senna.zh_TW",
+          "name": "LOL／Senna／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Senna.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Seraphine",
+          "name": "LOL／Seraphine／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Seraphine/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Seraphine.zh_TW",
+          "name": "LOL／Seraphine／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Seraphine.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Sett",
+          "name": "LOL／Sett／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Sett/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Sett.zh_TW",
+          "name": "LOL／Sett／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Sett.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Shaco",
+          "name": "LOL／Shaco／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Shaco/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Shaco.zh_TW",
+          "name": "LOL／Shaco／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Shaco.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Shen",
+          "name": "LOL／Shen／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Shen/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Shen.zh_TW",
+          "name": "LOL／Shen／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Shen.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Shyvana",
+          "name": "LOL／Shyvana／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Shyvana/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Shyvana.zh_TW",
+          "name": "LOL／Shyvana／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Shyvana.zh_TW/wav/"
+          ],
+          "reportedLanguage": "zh-TW"
+        },
+        {
+          "id": "Singed",
+          "name": "LOL／Singed／共用音效包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Singed/wav/"
+          ],
+          "reportedLanguage": null
+        },
+        {
+          "id": "Singed.zh_TW",
+          "name": "LOL／Singed／繁中命名語系包",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/Singed.zh_TW/wav/"
           ],
           "reportedLanguage": "zh-TW"
         },
@@ -16222,9 +17434,9 @@
         }
       ],
       "audioAcquisition": {
-        "packageCount": 116,
-        "wavFiles": 60190,
-        "failedMedia": 12
+        "packageCount": 250,
+        "wavFiles": 126468,
+        "failedMedia": 36
       },
       "audioFileIndexHistory": [
         {
@@ -16242,8 +17454,27 @@
         {
           "reportPath": "deliveries/decoded-20260910T123657Z.json",
           "reportSha256": "5683d65021a623e2a8d4d06cf694ebc95200d022bea692e20ff6386410143fe0"
+        },
+        {
+          "reportPath": "deliveries/decoded-20260910T125206Z.json",
+          "reportSha256": "6d84eb865a9530f00e651cf3eaeba4f87469aac41748f82fead6bb1d040b77ff"
         }
-      ]
+      ],
+      "audioPrefetchResolution": {
+        "reportPath": "lol-prefetch-resolution.json",
+        "reportSha256": "62fcf75151e8f4111bbc02f391dd2b06da8fa2915d2b372c66e17c2a44fe8daa"
+      },
+      "audioFailureResolution": {
+        "originalFailedMedia": 36,
+        "exactPcm16RecoveredSeparately": 14,
+        "prefetchResolvedToExistingCompleteAudio": 22,
+        "unresolvedMedia": 0,
+        "originalReportsRetained": true,
+        "recoverySourceIds": [
+          "lol-local-native-pcm16-recovery-20260910",
+          "lol-local-native-pcm16-recovery-round18"
+        ]
+      }
     },
     {
       "id": "gamebanana-zero-lancer-493444",
@@ -24138,7 +25369,7 @@
     },
     {
       "id": "lol-riot-ja-jp-16.18.8159717",
-      "target": "LOL 官方日文語音候選／16.18.8159717（已交付18完整WAD）",
+      "target": "LOL 官方日文語音候選／16.18.8159717（82完整WAD）",
       "heroIds": [],
       "ownerEntryIds": [],
       "url": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
@@ -24159,10 +25390,22 @@
         "audio"
       ],
       "audioFileIndex": {
-        "reportPath": "deliveries/local-audio-delivery-20260910T130421918567Z.json",
-        "reportSha256": "4edc534472a9c3ca427a8b7d8e35049bf650a72701eb76c898c11abea252c3d3"
+        "reportPath": "deliveries/local-audio-delivery-20260910T132705556264Z.json",
+        "reportSha256": "e887a420faa93ece80efb379a43878ac934456a9d8b01c87368e8c15ec774481"
       },
       "audioGroups": [
+        {
+          "id": "lol-akshan-ja-jp-16-18-8159717",
+          "name": "League of Legends / Akshan / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Akshan.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
         {
           "id": "lol-alistar-ja-jp-16-18-8159717",
           "name": "League of Legends / Alistar / ja_JP / 16.18.8159717",
@@ -24188,11 +25431,107 @@
           "languageVerified": false
         },
         {
+          "id": "lol-anivia-ja-jp-16-18-8159717",
+          "name": "League of Legends / Anivia / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Anivia.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-annie-ja-jp-16-18-8159717",
           "name": "League of Legends / Annie / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/Annie.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-aurora-ja-jp-16-18-8159717",
+          "name": "League of Legends / Aurora / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Aurora.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-bard-ja-jp-16-18-8159717",
+          "name": "League of Legends / Bard / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Bard.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-blitzcrank-ja-jp-16-18-8159717",
+          "name": "League of Legends / Blitzcrank / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Blitzcrank.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-brand-ja-jp-16-18-8159717",
+          "name": "League of Legends / Brand / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Brand.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-braum-ja-jp-16-18-8159717",
+          "name": "League of Legends / Braum / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Braum.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-cassiopeia-ja-jp-16-18-8159717",
+          "name": "League of Legends / Cassiopeia / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Cassiopeia.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-chogath-ja-jp-16-18-8159717",
+          "name": "League of Legends / Chogath / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Chogath.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24212,11 +25551,59 @@
           "languageVerified": false
         },
         {
+          "id": "lol-drmundo-ja-jp-16-18-8159717",
+          "name": "League of Legends / DrMundo / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/DrMundo.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-elise-ja-jp-16-18-8159717",
+          "name": "League of Legends / Elise / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Elise.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-fiora-ja-jp-16-18-8159717",
           "name": "League of Legends / Fiora / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/Fiora.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-fizz-ja-jp-16-18-8159717",
+          "name": "League of Legends / Fizz / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Fizz.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-gnar-ja-jp-16-18-8159717",
+          "name": "League of Legends / Gnar / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Gnar.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24236,11 +25623,95 @@
           "languageVerified": false
         },
         {
+          "id": "lol-graves-ja-jp-16-18-8159717",
+          "name": "League of Legends / Graves / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Graves.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-gwen-ja-jp-16-18-8159717",
+          "name": "League of Legends / Gwen / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Gwen.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-hecarim-ja-jp-16-18-8159717",
+          "name": "League of Legends / Hecarim / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Hecarim.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-heimerdinger-ja-jp-16-18-8159717",
+          "name": "League of Legends / Heimerdinger / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Heimerdinger.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-hwei-ja-jp-16-18-8159717",
+          "name": "League of Legends / Hwei / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Hwei.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-janna-ja-jp-16-18-8159717",
           "name": "League of Legends / Janna / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/Janna.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-jarvaniv-ja-jp-16-18-8159717",
+          "name": "League of Legends / JarvanIV / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/JarvanIV.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-jayce-ja-jp-16-18-8159717",
+          "name": "League of Legends / Jayce / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Jayce.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24260,6 +25731,18 @@
           "languageVerified": false
         },
         {
+          "id": "lol-katarina-ja-jp-16-18-8159717",
+          "name": "League of Legends / Katarina / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Katarina.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-kennen-ja-jp-16-18-8159717",
           "name": "League of Legends / Kennen / ja_JP / 16.18.8159717",
           "heroIds": [],
@@ -24272,11 +25755,155 @@
           "languageVerified": false
         },
         {
+          "id": "lol-khazix-ja-jp-16-18-8159717",
+          "name": "League of Legends / Khazix / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Khazix.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-kogmaw-ja-jp-16-18-8159717",
           "name": "League of Legends / KogMaw / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/KogMaw.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-lissandra-ja-jp-16-18-8159717",
+          "name": "League of Legends / Lissandra / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Lissandra.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-locke-ja-jp-16-18-8159717",
+          "name": "League of Legends / Locke / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Locke.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-lulu-ja-jp-16-18-8159717",
+          "name": "League of Legends / Lulu / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Lulu.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-malphite-ja-jp-16-18-8159717",
+          "name": "League of Legends / Malphite / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Malphite.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-malzahar-ja-jp-16-18-8159717",
+          "name": "League of Legends / Malzahar / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Malzahar.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-mel-ja-jp-16-18-8159717",
+          "name": "League of Legends / Mel / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Mel.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-milio-ja-jp-16-18-8159717",
+          "name": "League of Legends / Milio / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Milio.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-monkeyking-ja-jp-16-18-8159717",
+          "name": "League of Legends / MonkeyKing / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/MonkeyKing.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-nautilus-ja-jp-16-18-8159717",
+          "name": "League of Legends / Nautilus / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Nautilus.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-neeko-ja-jp-16-18-8159717",
+          "name": "League of Legends / Neeko / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Neeko.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-nocturne-ja-jp-16-18-8159717",
+          "name": "League of Legends / Nocturne / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Nocturne.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24308,11 +25935,179 @@
           "languageVerified": false
         },
         {
+          "id": "lol-poppy-ja-jp-16-18-8159717",
+          "name": "League of Legends / Poppy / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Poppy.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-qiyana-ja-jp-16-18-8159717",
+          "name": "League of Legends / Qiyana / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Qiyana.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-quinn-ja-jp-16-18-8159717",
+          "name": "League of Legends / Quinn / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Quinn.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-rammus-ja-jp-16-18-8159717",
           "name": "League of Legends / Rammus / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/Rammus.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-reksai-ja-jp-16-18-8159717",
+          "name": "League of Legends / RekSai / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/RekSai.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-rell-ja-jp-16-18-8159717",
+          "name": "League of Legends / Rell / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Rell.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-renata-ja-jp-16-18-8159717",
+          "name": "League of Legends / Renata / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Renata.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-renekton-ja-jp-16-18-8159717",
+          "name": "League of Legends / Renekton / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Renekton.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-rengar-ja-jp-16-18-8159717",
+          "name": "League of Legends / Rengar / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Rengar.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-rumble-ja-jp-16-18-8159717",
+          "name": "League of Legends / Rumble / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Rumble.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-ryze-ja-jp-16-18-8159717",
+          "name": "League of Legends / Ryze / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Ryze.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-samira-ja-jp-16-18-8159717",
+          "name": "League of Legends / Samira / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Samira.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-sejuani-ja-jp-16-18-8159717",
+          "name": "League of Legends / Sejuani / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Sejuani.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-shaco-ja-jp-16-18-8159717",
+          "name": "League of Legends / Shaco / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Shaco.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-shen-ja-jp-16-18-8159717",
+          "name": "League of Legends / Shen / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Shen.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24332,11 +26127,47 @@
           "languageVerified": false
         },
         {
+          "id": "lol-sivir-ja-jp-16-18-8159717",
+          "name": "League of Legends / Sivir / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Sivir.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-smolder-ja-jp-16-18-8159717",
+          "name": "League of Legends / Smolder / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Smolder.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-syndra-ja-jp-16-18-8159717",
           "name": "League of Legends / Syndra / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/Syndra.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-tahmkench-ja-jp-16-18-8159717",
+          "name": "League of Legends / TahmKench / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/TahmKench.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24356,11 +26187,179 @@
           "languageVerified": false
         },
         {
+          "id": "lol-taric-ja-jp-16-18-8159717",
+          "name": "League of Legends / Taric / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Taric.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-trundle-ja-jp-16-18-8159717",
+          "name": "League of Legends / Trundle / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Trundle.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-tryndamere-ja-jp-16-18-8159717",
+          "name": "League of Legends / Tryndamere / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Tryndamere.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-twistedfate-ja-jp-16-18-8159717",
+          "name": "League of Legends / TwistedFate / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/TwistedFate.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-vi-ja-jp-16-18-8159717",
+          "name": "League of Legends / Vi / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Vi.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-vladimir-ja-jp-16-18-8159717",
+          "name": "League of Legends / Vladimir / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Vladimir.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-xerath-ja-jp-16-18-8159717",
+          "name": "League of Legends / Xerath / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Xerath.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-yunara-ja-jp-16-18-8159717",
+          "name": "League of Legends / Yunara / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Yunara.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-yuumi-ja-jp-16-18-8159717",
+          "name": "League of Legends / Yuumi / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Yuumi.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-zaahen-ja-jp-16-18-8159717",
+          "name": "League of Legends / Zaahen / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Zaahen.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-zac-ja-jp-16-18-8159717",
+          "name": "League of Legends / Zac / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Zac.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-zeri-ja-jp-16-18-8159717",
+          "name": "League of Legends / Zeri / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Zeri.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-ziggs-ja-jp-16-18-8159717",
+          "name": "League of Legends / Ziggs / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Ziggs.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
           "id": "lol-zilean-ja-jp-16-18-8159717",
           "name": "League of Legends / Zilean / ja_JP / 16.18.8159717",
           "heroIds": [],
           "pathPrefixes": [
             "audio/decoded/Zilean.ja_JP/wav/"
+          ],
+          "reportedLanguage": "ja_JP",
+          "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+          "speakerVerified": false,
+          "languageVerified": false
+        },
+        {
+          "id": "lol-zyra-ja-jp-16-18-8159717",
+          "name": "League of Legends / Zyra / ja_JP / 16.18.8159717",
+          "heroIds": [],
+          "pathPrefixes": [
+            "audio/decoded/Zyra.ja_JP/wav/"
           ],
           "reportedLanguage": "ja_JP",
           "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
@@ -24372,6 +26371,30 @@
         ".wav"
       ],
       "packages": [
+        {
+          "nativeId": "Akshan.ja_JP",
+          "sourceWad": "original-wads/Akshan.ja_JP.wad.client",
+          "bytes": 4312632,
+          "sha256": "1dc7cd2628d17eb5bf63e3df2b773a2caa27eb50a55548fee9a59cdfa9ca9dd3",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Akshan.ja_JP/extraction.json",
+          "extractionReportSha256": "2639b8f2bc66d4a99db4444dc6d65baca0ceb7efb4384a254e02ae7012bc43cb",
+          "decodingReport": "audio/decoded/Akshan.ja_JP/decoding.json",
+          "decodingReportSha256": "a2c44db7d6f020f06d668bbbc292f4fdebe6663b2959909f2e3903344c4a4486",
+          "nativeAudioBanks": 3,
+          "wemFiles": 157,
+          "pcmWavCount": 157,
+          "audioSeconds": 543.7064852607712,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
         {
           "nativeId": "Alistar.ja_JP",
           "sourceWad": "original-wads/Alistar.ja_JP.wad.client",
@@ -24421,6 +26444,30 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Anivia.ja_JP",
+          "sourceWad": "original-wads/Anivia.ja_JP.wad.client",
+          "bytes": 7615812,
+          "sha256": "bd837ae5c97bda97317447e24e9e228d30c880e92ea6b2005395d634b6c21746",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Anivia.ja_JP/extraction.json",
+          "extractionReportSha256": "af3bce9cc0327df57d0552b9b508d21195853def375dd8f3bea1fc7bcdfd180a",
+          "decodingReport": "audio/decoded/Anivia.ja_JP/decoding.json",
+          "decodingReportSha256": "ae9d195db5b61493c21a7f2dbb1a14f18615e0747bba63d727fba7bb16cd1197",
+          "nativeAudioBanks": 12,
+          "wemFiles": 182,
+          "pcmWavCount": 182,
+          "audioSeconds": 577.0678911564626,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Annie.ja_JP",
           "sourceWad": "original-wads/Annie.ja_JP.wad.client",
           "bytes": 835880,
@@ -24438,6 +26485,174 @@
           "wemFiles": 48,
           "pcmWavCount": 48,
           "audioSeconds": 92.0243537414966,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Aurora.ja_JP",
+          "sourceWad": "original-wads/Aurora.ja_JP.wad.client",
+          "bytes": 3962599,
+          "sha256": "a7bcd17d3b1b9134f0320ff489b937b5e47c15081da9e3562865bf06b37ff052",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Aurora.ja_JP/extraction.json",
+          "extractionReportSha256": "a7e04fafcb3d6c3f9bbae06ef2f6f31c50d4275db8b663946b8cc76b69ca2e51",
+          "decodingReport": "audio/decoded/Aurora.ja_JP/decoding.json",
+          "decodingReportSha256": "5a57083dcfcd988258d55a8eb079a92e7be111d213216bef84fec5643e010388",
+          "nativeAudioBanks": 3,
+          "wemFiles": 166,
+          "pcmWavCount": 166,
+          "audioSeconds": 494.35401360544205,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Bard.ja_JP",
+          "sourceWad": "original-wads/Bard.ja_JP.wad.client",
+          "bytes": 2932842,
+          "sha256": "dfd87e80b26113e85bd19dbab174d716073620a1c05f18255369b13281804694",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Bard.ja_JP/extraction.json",
+          "extractionReportSha256": "4a40593854f98937321a008cdfacac594d1100bbcfc733c0219fb966edacf0f9",
+          "decodingReport": "audio/decoded/Bard.ja_JP/decoding.json",
+          "decodingReportSha256": "a9e003bf6c246b8003879abccb6d009d90f2d76f0ce3eef8631934f1e01ef594",
+          "nativeAudioBanks": 3,
+          "wemFiles": 52,
+          "pcmWavCount": 52,
+          "audioSeconds": 279.0729931972789,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Blitzcrank.ja_JP",
+          "sourceWad": "original-wads/Blitzcrank.ja_JP.wad.client",
+          "bytes": 9558452,
+          "sha256": "204e7618e4887308c1f4d9ed641d6ffe7e2c143994799c240422bce5f0dc6163",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Blitzcrank.ja_JP/extraction.json",
+          "extractionReportSha256": "b3322f62089c73f7832700312a1326b968a367b60622c1dd5c8aab6e39ecf505",
+          "decodingReport": "audio/decoded/Blitzcrank.ja_JP/decoding.json",
+          "decodingReportSha256": "93e1cde4b03f4d738dd110e4bcb1ccce0d81f7345331810507667c0edec0924d",
+          "nativeAudioBanks": 15,
+          "wemFiles": 263,
+          "pcmWavCount": 263,
+          "audioSeconds": 660.8395464852607,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Brand.ja_JP",
+          "sourceWad": "original-wads/Brand.ja_JP.wad.client",
+          "bytes": 7825523,
+          "sha256": "d0b181018198d14b8d8289a723bba5e886011eb59b55f4586caab27aa64c684a",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Brand.ja_JP/extraction.json",
+          "extractionReportSha256": "7d98b92c69ae2a9b7e1c9cdf9ae7c9bfe64ee28ab52df45b3b3a7403ae518db7",
+          "decodingReport": "audio/decoded/Brand.ja_JP/decoding.json",
+          "decodingReportSha256": "006ad594c378ce156c77bd620e54e74edc75e5fe9c79a826b515a925fc993f96",
+          "nativeAudioBanks": 15,
+          "wemFiles": 243,
+          "pcmWavCount": 243,
+          "audioSeconds": 765.2321995464849,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Braum.ja_JP",
+          "sourceWad": "original-wads/Braum.ja_JP.wad.client",
+          "bytes": 5658838,
+          "sha256": "f3a55e92df20041cf3b15a59b1efa3b09e8f48a45a43160a98aabfabb08e0110",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Braum.ja_JP/extraction.json",
+          "extractionReportSha256": "620e7f320eb7ede7942d087abb8563771a370e080e8a48c8648d8bff29581a1c",
+          "decodingReport": "audio/decoded/Braum.ja_JP/decoding.json",
+          "decodingReportSha256": "3a9fb7149cb108587a81220a43872fd8cc6c03b0665a88aee70d322e920ce419",
+          "nativeAudioBanks": 9,
+          "wemFiles": 231,
+          "pcmWavCount": 231,
+          "audioSeconds": 630.2019727891158,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Cassiopeia.ja_JP",
+          "sourceWad": "original-wads/Cassiopeia.ja_JP.wad.client",
+          "bytes": 10465401,
+          "sha256": "5981170468773751e28d7e2545e535dd24140ae3e69a5363030f47e049b688e2",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Cassiopeia.ja_JP/extraction.json",
+          "extractionReportSha256": "12d1c446b0ec77bd166fc00917f1f8868258e34a3edb226fbc8cea0c7bc173d8",
+          "decodingReport": "audio/decoded/Cassiopeia.ja_JP/decoding.json",
+          "decodingReportSha256": "f7b2920799bee6742d9316d3868503bc1f8e7697c26bb8234f5f06ca8894e570",
+          "nativeAudioBanks": 9,
+          "wemFiles": 268,
+          "pcmWavCount": 268,
+          "audioSeconds": 882.0991383219957,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Chogath.ja_JP",
+          "sourceWad": "original-wads/Chogath.ja_JP.wad.client",
+          "bytes": 7024937,
+          "sha256": "0cee8a4a96e3ae83e6821c6a3822dab02837b134846aca5c0addfac4ff9ddbc8",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Chogath.ja_JP/extraction.json",
+          "extractionReportSha256": "ca36d9e06e55d4953401ea81d06a83e9a580946ea88b22ff957d08ba867185fa",
+          "decodingReport": "audio/decoded/Chogath.ja_JP/decoding.json",
+          "decodingReportSha256": "3acc97edb069cbdda6fdb592ef5e6120895a4614def0aec599319ab974bcef59",
+          "nativeAudioBanks": 15,
+          "wemFiles": 191,
+          "pcmWavCount": 191,
+          "audioSeconds": 601.7904308390025,
           "errors": [],
           "rawDecoderFailedCount": 0,
           "exactPcm16RecoveryCount": 0,
@@ -24469,6 +26684,54 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "DrMundo.ja_JP",
+          "sourceWad": "original-wads/DrMundo.ja_JP.wad.client",
+          "bytes": 10596756,
+          "sha256": "d551ec72d465a636cb46b395b014e64818fca1fa2883410d1147b85a673e607b",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/DrMundo.ja_JP/extraction.json",
+          "extractionReportSha256": "8ff61ffcc0f91d25bb23e98f3a2777d1580783197ae1bd76ab616ba210b34004",
+          "decodingReport": "audio/decoded/DrMundo.ja_JP/decoding.json",
+          "decodingReportSha256": "5cd66dff40dd101d625c7ee7281482ce3a642dcda5b2a2966409b8186842e68d",
+          "nativeAudioBanks": 9,
+          "wemFiles": 336,
+          "pcmWavCount": 336,
+          "audioSeconds": 1066.0613832199551,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Elise.ja_JP",
+          "sourceWad": "original-wads/Elise.ja_JP.wad.client",
+          "bytes": 2219337,
+          "sha256": "dce5d3fee7cb54bb4893406db8fde16c37e4cee3b66ca8779fb70be6c113b0bd",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Elise.ja_JP/extraction.json",
+          "extractionReportSha256": "8501bece198db9a96ddd7ee85bf8ab942e010a9848aac275acf6b794c7d23ed9",
+          "decodingReport": "audio/decoded/Elise.ja_JP/decoding.json",
+          "decodingReportSha256": "c5d1bf9f217c296cfa9e7bf37e0ad32a875dffe3e7c588f51232adec6739c432",
+          "nativeAudioBanks": 3,
+          "wemFiles": 72,
+          "pcmWavCount": 72,
+          "audioSeconds": 203.11834467120187,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Fiora.ja_JP",
           "sourceWad": "original-wads/Fiora.ja_JP.wad.client",
           "bytes": 2102559,
@@ -24486,6 +26749,54 @@
           "wemFiles": 103,
           "pcmWavCount": 103,
           "audioSeconds": 195.7510884353741,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Fizz.ja_JP",
+          "sourceWad": "original-wads/Fizz.ja_JP.wad.client",
+          "bytes": 3804508,
+          "sha256": "e946e62298add3a8e219942b1e56befe8e86c9bcd01b20eb36a813a5327707c9",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Fizz.ja_JP/extraction.json",
+          "extractionReportSha256": "df60c851b93733ed3de45c073e757fb00bd87d82bd8cf3756dc56437fe9a10f7",
+          "decodingReport": "audio/decoded/Fizz.ja_JP/decoding.json",
+          "decodingReportSha256": "4a03a4fa40d6099b98b10a90f3a727d8e4678513f4d0d928a270e546b43324eb",
+          "nativeAudioBanks": 12,
+          "wemFiles": 200,
+          "pcmWavCount": 200,
+          "audioSeconds": 397.3523129251701,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Gnar.ja_JP",
+          "sourceWad": "original-wads/Gnar.ja_JP.wad.client",
+          "bytes": 3955156,
+          "sha256": "241ffe8c9ddd2bc5d4b26e98d1aa72b31a2315c5f768394f4efb5adbc112dc6f",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Gnar.ja_JP/extraction.json",
+          "extractionReportSha256": "ce5eee538d64ac88656e6653dc0eb49b0eb27b02baa84598c76cbe417eead306",
+          "decodingReport": "audio/decoded/Gnar.ja_JP/decoding.json",
+          "decodingReportSha256": "b76cf77ee795d07aa8fc3a5da3af773776d6b5040dca7e4dae5db204c6969d14",
+          "nativeAudioBanks": 12,
+          "wemFiles": 186,
+          "pcmWavCount": 186,
+          "audioSeconds": 460.2654648526078,
           "errors": [],
           "rawDecoderFailedCount": 0,
           "exactPcm16RecoveryCount": 0,
@@ -24517,6 +26828,126 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Graves.ja_JP",
+          "sourceWad": "original-wads/Graves.ja_JP.wad.client",
+          "bytes": 8495287,
+          "sha256": "6228afa148fd1e47d8c1b91a950e220124f1853c352be51bc898a8aca102d031",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Graves.ja_JP/extraction.json",
+          "extractionReportSha256": "099fb67f86de60171f343263b52049a111357a223ce4093263ee9622c5a4579a",
+          "decodingReport": "audio/decoded/Graves.ja_JP/decoding.json",
+          "decodingReportSha256": "363cc2a26f0cfa2f82599dc252c11cb9ebe4afe8faccf462053b0d6796dd4fd6",
+          "nativeAudioBanks": 12,
+          "wemFiles": 246,
+          "pcmWavCount": 246,
+          "audioSeconds": 942.7666213151922,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Gwen.ja_JP",
+          "sourceWad": "original-wads/Gwen.ja_JP.wad.client",
+          "bytes": 6000271,
+          "sha256": "c5efdef84c4cc745ac4d1bf01d1b03b6234d1d3d7248b6fddfc4d0bd2816ddb6",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Gwen.ja_JP/extraction.json",
+          "extractionReportSha256": "e63e2de0a9c7feb1a0831823fdd9c9c6686a592d56ac406553d92c59bd53ae4c",
+          "decodingReport": "audio/decoded/Gwen.ja_JP/decoding.json",
+          "decodingReportSha256": "e32486d1bd2fd8ffc8b1091e60d3074d89efaf7e48359b016cc40ac6c4e52635",
+          "nativeAudioBanks": 3,
+          "wemFiles": 144,
+          "pcmWavCount": 144,
+          "audioSeconds": 618.6343990929707,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Hecarim.ja_JP",
+          "sourceWad": "original-wads/Hecarim.ja_JP.wad.client",
+          "bytes": 5098719,
+          "sha256": "c24527406e776e7e9aad40655f52c67a80f48674c99282e22fed9cac76e0aa93",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Hecarim.ja_JP/extraction.json",
+          "extractionReportSha256": "2ccb88ed6552757b686dfc1d604752c4109939064ca420bd9d5dcecbe8302dc5",
+          "decodingReport": "audio/decoded/Hecarim.ja_JP/decoding.json",
+          "decodingReportSha256": "01d1f915c889e1d007f6f6fdf09c301d656c1c1913071ba193533b6a11eac84a",
+          "nativeAudioBanks": 12,
+          "wemFiles": 189,
+          "pcmWavCount": 189,
+          "audioSeconds": 544.779387755102,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Heimerdinger.ja_JP",
+          "sourceWad": "original-wads/Heimerdinger.ja_JP.wad.client",
+          "bytes": 9562229,
+          "sha256": "ee50665970200031f46bf6783c5d9d1ca699969ed1217e64159c2061234b4f24",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Heimerdinger.ja_JP/extraction.json",
+          "extractionReportSha256": "ef926659a397aa9783538bc88694c3785676df0b6aecb44be5f13fc694558e62",
+          "decodingReport": "audio/decoded/Heimerdinger.ja_JP/decoding.json",
+          "decodingReportSha256": "1bcccbc0b8dd9b632e49d97f320f46b916b83007de2dda002f7c1721356c7f3f",
+          "nativeAudioBanks": 9,
+          "wemFiles": 290,
+          "pcmWavCount": 290,
+          "audioSeconds": 873.3187301587308,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Hwei.ja_JP",
+          "sourceWad": "original-wads/Hwei.ja_JP.wad.client",
+          "bytes": 4629823,
+          "sha256": "c7f4925238c846f124ed7c4f060dbe12a8176294241b0ff5f75e608308ccb264",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Hwei.ja_JP/extraction.json",
+          "extractionReportSha256": "6b1b474809275e342579c51adc38b12c6678314a792d0eea665c6e9fbc53833a",
+          "decodingReport": "audio/decoded/Hwei.ja_JP/decoding.json",
+          "decodingReportSha256": "1741fd8835e021bf357669dd75f5739991317ba9925cf0968dc9cc8a8c09bea2",
+          "nativeAudioBanks": 3,
+          "wemFiles": 161,
+          "pcmWavCount": 161,
+          "audioSeconds": 608.6684353741498,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Janna.ja_JP",
           "sourceWad": "original-wads/Janna.ja_JP.wad.client",
           "bytes": 2095101,
@@ -24534,6 +26965,54 @@
           "wemFiles": 90,
           "pcmWavCount": 90,
           "audioSeconds": 236.49968253968254,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "JarvanIV.ja_JP",
+          "sourceWad": "original-wads/JarvanIV.ja_JP.wad.client",
+          "bytes": 6267005,
+          "sha256": "98328e343fba77fbe051e21b9fc92c5afab35b2d8e350bc827d64ac868b9578b",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/JarvanIV.ja_JP/extraction.json",
+          "extractionReportSha256": "fddc1a7d9a8301af125b2ce4b354b4f419d38f10120524bfcccbf3d1acf0d8c0",
+          "decodingReport": "audio/decoded/JarvanIV.ja_JP/decoding.json",
+          "decodingReportSha256": "11c9d3353f9fe23333780ac18b6183dc581fbf1bcd5e0cdf79bcb8ef5fae5af2",
+          "nativeAudioBanks": 15,
+          "wemFiles": 216,
+          "pcmWavCount": 216,
+          "audioSeconds": 676.9236734693876,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Jayce.ja_JP",
+          "sourceWad": "original-wads/Jayce.ja_JP.wad.client",
+          "bytes": 8885846,
+          "sha256": "22d6fbfac67459adeb485d2fe3c350fbfeb10d772f17abc8c02dae31b780732f",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Jayce.ja_JP/extraction.json",
+          "extractionReportSha256": "a249c694becfc3a1af195595e279155a806ea4c899f26b12e11f1c6a20118476",
+          "decodingReport": "audio/decoded/Jayce.ja_JP/decoding.json",
+          "decodingReportSha256": "ea458e3ce0241506bec718f6a0421a5256d1939b42009bd713e991d02d9c8a47",
+          "nativeAudioBanks": 15,
+          "wemFiles": 321,
+          "pcmWavCount": 321,
+          "audioSeconds": 972.3326757369612,
           "errors": [],
           "rawDecoderFailedCount": 0,
           "exactPcm16RecoveryCount": 0,
@@ -24565,6 +27044,30 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Katarina.ja_JP",
+          "sourceWad": "original-wads/Katarina.ja_JP.wad.client",
+          "bytes": 7502854,
+          "sha256": "5fc47b1ada203b9080c28f8776e065a13ab75c1c5a1207e28fc67b154b1a6a49",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Katarina.ja_JP/extraction.json",
+          "extractionReportSha256": "4667e8aa9d032e6e7a6401f40b554c07bef0b839eed0f13c62cbee484261df13",
+          "decodingReport": "audio/decoded/Katarina.ja_JP/decoding.json",
+          "decodingReportSha256": "2664e7aacfbc8db424a7ab5a418c753594214f034f580fc3f306ff6d9e603448",
+          "nativeAudioBanks": 15,
+          "wemFiles": 277,
+          "pcmWavCount": 277,
+          "audioSeconds": 848.5479138321995,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Kennen.ja_JP",
           "sourceWad": "original-wads/Kennen.ja_JP.wad.client",
           "bytes": 1238364,
@@ -24589,6 +27092,30 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Khazix.ja_JP",
+          "sourceWad": "original-wads/Khazix.ja_JP.wad.client",
+          "bytes": 8943630,
+          "sha256": "3711539aff47b98de615c6f3da9002f7031b2e2201aefb8de3fcd5122ea13eed",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Khazix.ja_JP/extraction.json",
+          "extractionReportSha256": "bc40de96119653ac3f2acc178e52e8217b702c9995375afcab0e4358eb896087",
+          "decodingReport": "audio/decoded/Khazix.ja_JP/decoding.json",
+          "decodingReportSha256": "99e26aca19ffb32824e2028c19d26bf6b3ef4bbf6a5e14846da8786479255b14",
+          "nativeAudioBanks": 11,
+          "wemFiles": 270,
+          "pcmWavCount": 270,
+          "audioSeconds": 837.0540136054424,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "KogMaw.ja_JP",
           "sourceWad": "original-wads/KogMaw.ja_JP.wad.client",
           "bytes": 1961770,
@@ -24606,6 +27133,270 @@
           "wemFiles": 120,
           "pcmWavCount": 120,
           "audioSeconds": 215.68643990929706,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Lissandra.ja_JP",
+          "sourceWad": "original-wads/Lissandra.ja_JP.wad.client",
+          "bytes": 10947631,
+          "sha256": "9eb2c536526ec5a2ae3f127c4bc1b423b47f225142b0241378c8db3b512bc487",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Lissandra.ja_JP/extraction.json",
+          "extractionReportSha256": "58a97d738eb5af007c8425d53c92fa4ae20f99050b7be2c489961474ef5508cc",
+          "decodingReport": "audio/decoded/Lissandra.ja_JP/decoding.json",
+          "decodingReportSha256": "d0ae9ba9c660a06cc97cfe9d0368d7bdb65ff27b10ac0feac3c947441aaf93b6",
+          "nativeAudioBanks": 15,
+          "wemFiles": 331,
+          "pcmWavCount": 331,
+          "audioSeconds": 1085.754988662132,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Locke.ja_JP",
+          "sourceWad": "original-wads/Locke.ja_JP.wad.client",
+          "bytes": 3407044,
+          "sha256": "a7d87ade65a13af29d2a1afee502c41da3f0e5e2747744f8c0db5db6ad8fa290",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Locke.ja_JP/extraction.json",
+          "extractionReportSha256": "71feaf69b22c71235d5a1ba70d1087d275671a628fc2b9fa684cb780d72c797b",
+          "decodingReport": "audio/decoded/Locke.ja_JP/decoding.json",
+          "decodingReportSha256": "86ac86c91faa4853739899bc9761ec470602bcd45897094319329cdaa11a23ba",
+          "nativeAudioBanks": 3,
+          "wemFiles": 175,
+          "pcmWavCount": 175,
+          "audioSeconds": 343.6991156462585,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Lulu.ja_JP",
+          "sourceWad": "original-wads/Lulu.ja_JP.wad.client",
+          "bytes": 2794877,
+          "sha256": "03d3ecf5c704ba4729cc774f2c14e9862e56db594bd2980016b2a33945368166",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Lulu.ja_JP/extraction.json",
+          "extractionReportSha256": "5bf5e8471c30b7356b6df8d504bb80354216108ffc3d50b8a17666ba0f75bb90",
+          "decodingReport": "audio/decoded/Lulu.ja_JP/decoding.json",
+          "decodingReportSha256": "af38b5fbb9f0a853a6ab22438b8124e5cce3a2ed528dfca438bdc8a08a5c1e39",
+          "nativeAudioBanks": 9,
+          "wemFiles": 111,
+          "pcmWavCount": 111,
+          "audioSeconds": 308.4377777777778,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Malphite.ja_JP",
+          "sourceWad": "original-wads/Malphite.ja_JP.wad.client",
+          "bytes": 3717123,
+          "sha256": "0b201429f049759178ae56a027283fa277520b558e5d76e6480cd70359fcf945",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Malphite.ja_JP/extraction.json",
+          "extractionReportSha256": "34958e9adf536a09f70f05406b4f0b91f62b8f302eb26cf5509232209bb8667e",
+          "decodingReport": "audio/decoded/Malphite.ja_JP/decoding.json",
+          "decodingReportSha256": "a93c084563d3e8531cad574f533654f128296c60bf0d1423cafab7ccd75615b3",
+          "nativeAudioBanks": 15,
+          "wemFiles": 151,
+          "pcmWavCount": 151,
+          "audioSeconds": 325.7777777777777,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Malzahar.ja_JP",
+          "sourceWad": "original-wads/Malzahar.ja_JP.wad.client",
+          "bytes": 4125033,
+          "sha256": "0ae1e48ca41745ee101458506b6b45bb7c582c6ec92452d10020c9df11e0e250",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Malzahar.ja_JP/extraction.json",
+          "extractionReportSha256": "7012cd139b7b3d1f6b17ab53e57fa81ce43fe1681c5b2f9ab5909da8cce8c6cb",
+          "decodingReport": "audio/decoded/Malzahar.ja_JP/decoding.json",
+          "decodingReportSha256": "8172f965905c8cb7ae2b71dbe5f32fb961f9a7fed8b3d8cafda0356a3c9b0001",
+          "nativeAudioBanks": 9,
+          "wemFiles": 114,
+          "pcmWavCount": 114,
+          "audioSeconds": 407.29124716553287,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Mel.ja_JP",
+          "sourceWad": "original-wads/Mel.ja_JP.wad.client",
+          "bytes": 5336607,
+          "sha256": "5fc1d0623d4a99742fb4c213ac70bcd85fc364f058912b2b2b5ebd46c019cf68",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Mel.ja_JP/extraction.json",
+          "extractionReportSha256": "e5319fbc3d2be6e012771679d00f2a6810fb5591fbc08caa790538890a9c57a3",
+          "decodingReport": "audio/decoded/Mel.ja_JP/decoding.json",
+          "decodingReportSha256": "17277348fc8eabddd38adfea8db19dcc13d54abea92d0c1b6c29df86b5d69999",
+          "nativeAudioBanks": 3,
+          "wemFiles": 167,
+          "pcmWavCount": 167,
+          "audioSeconds": 606.5052154195012,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Milio.ja_JP",
+          "sourceWad": "original-wads/Milio.ja_JP.wad.client",
+          "bytes": 4431081,
+          "sha256": "ef0c360ee9d5e6c897fcffff51bf21a50063ef86942355528a11a275d780d5ab",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Milio.ja_JP/extraction.json",
+          "extractionReportSha256": "e63667340c8ea589beba981505c5002ab64d3fc118160a99e52a0f23c51eb496",
+          "decodingReport": "audio/decoded/Milio.ja_JP/decoding.json",
+          "decodingReportSha256": "f82bcc1bc5394f9f891f9c17c1dd514062212e106accb8bc8a90774b4d786a1a",
+          "nativeAudioBanks": 3,
+          "wemFiles": 159,
+          "pcmWavCount": 159,
+          "audioSeconds": 532.5631519274378,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "MonkeyKing.ja_JP",
+          "sourceWad": "original-wads/MonkeyKing.ja_JP.wad.client",
+          "bytes": 6849088,
+          "sha256": "607e0e226351b48ded6ed0c76a4071520c9179c8c1f7459630b14f3f29da1bd4",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/MonkeyKing.ja_JP/extraction.json",
+          "extractionReportSha256": "bf0b00ad8c2c2b92102685b553b1786a465f10829e25db630617d12b312e2276",
+          "decodingReport": "audio/decoded/MonkeyKing.ja_JP/decoding.json",
+          "decodingReportSha256": "f31d005a6d7fb7d55fc0812f093eeaa7f3a80121acfb5a2c95e1e08312b8da2c",
+          "nativeAudioBanks": 15,
+          "wemFiles": 232,
+          "pcmWavCount": 232,
+          "audioSeconds": 771.4649206349206,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Nautilus.ja_JP",
+          "sourceWad": "original-wads/Nautilus.ja_JP.wad.client",
+          "bytes": 7864627,
+          "sha256": "cdfc9897d5dadf949428c4ccc777a1561d35e4fe534244ea3c2452c9d52eb409",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Nautilus.ja_JP/extraction.json",
+          "extractionReportSha256": "daa664c6d6333b70e457b9569a9c9f650aa820cc8beee96d229723c57f8b94b5",
+          "decodingReport": "audio/decoded/Nautilus.ja_JP/decoding.json",
+          "decodingReportSha256": "2776ca24aa88ffbbacc451bee6678976035589c9bcb99536b887c2e5f82dece6",
+          "nativeAudioBanks": 9,
+          "wemFiles": 114,
+          "pcmWavCount": 114,
+          "audioSeconds": 572.8299319727892,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Neeko.ja_JP",
+          "sourceWad": "original-wads/Neeko.ja_JP.wad.client",
+          "bytes": 6359246,
+          "sha256": "c0692d3983700b5166907e2ad4a5d9c8b85b51a13266adc4133d34ec4472af24",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Neeko.ja_JP/extraction.json",
+          "extractionReportSha256": "22d514e265e0f0ddf2170b496887d50edc362d0792136b33c924767f869c4d56",
+          "decodingReport": "audio/decoded/Neeko.ja_JP/decoding.json",
+          "decodingReportSha256": "b7d00502f7b8efc5dfae839ef7c5bb0b5e98abc8c1ae0506982b9c56ff819288",
+          "nativeAudioBanks": 3,
+          "wemFiles": 154,
+          "pcmWavCount": 154,
+          "audioSeconds": 664.7921873582762,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Nocturne.ja_JP",
+          "sourceWad": "original-wads/Nocturne.ja_JP.wad.client",
+          "bytes": 6410438,
+          "sha256": "5c424cff16b449c8660f1074a3eb8224a9cd2eaf672bb36126a2b8346a5d4114",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Nocturne.ja_JP/extraction.json",
+          "extractionReportSha256": "f857d949f0620a7d1e714e4d1d26b7fc6f9cb6dab427ab5cd08b94b1c6266b06",
+          "decodingReport": "audio/decoded/Nocturne.ja_JP/decoding.json",
+          "decodingReportSha256": "60ba45b930e4e907f420c1de388b53a07061a0b526a3f5ef253a3c4417a1509f",
+          "nativeAudioBanks": 9,
+          "wemFiles": 151,
+          "pcmWavCount": 151,
+          "audioSeconds": 631.1687074829931,
           "errors": [],
           "rawDecoderFailedCount": 0,
           "exactPcm16RecoveryCount": 0,
@@ -24661,6 +27452,78 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Poppy.ja_JP",
+          "sourceWad": "original-wads/Poppy.ja_JP.wad.client",
+          "bytes": 8480500,
+          "sha256": "33bebc667229f7b3f6684cf68b261629027e5eadc2a466720c2964f1f71190bc",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Poppy.ja_JP/extraction.json",
+          "extractionReportSha256": "f4d00f5b07d4e58662e260ce824e8d2ea9e7ad1340a8c0313b570e53514505d4",
+          "decodingReport": "audio/decoded/Poppy.ja_JP/decoding.json",
+          "decodingReportSha256": "d3b9ac00bc0822f4510b8f23bd1b203d80e974354fa6537f851566d9e2b188fb",
+          "nativeAudioBanks": 9,
+          "wemFiles": 425,
+          "pcmWavCount": 425,
+          "audioSeconds": 904.5482766439918,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Qiyana.ja_JP",
+          "sourceWad": "original-wads/Qiyana.ja_JP.wad.client",
+          "bytes": 11224499,
+          "sha256": "87ed82fa79dab3c2c0fa7fc4d9dda6c0ef3f9f053b5dc304aa6ac0f7020a08d7",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Qiyana.ja_JP/extraction.json",
+          "extractionReportSha256": "62199ac3b7166976866c2e120bca7d2102180941f490b214f0f355d3041d14a4",
+          "decodingReport": "audio/decoded/Qiyana.ja_JP/decoding.json",
+          "decodingReportSha256": "ec60e732d5a1f166466bd5e0252d7f00c6b5a88bd73967d51214b3bf11b3273b",
+          "nativeAudioBanks": 6,
+          "wemFiles": 332,
+          "pcmWavCount": 332,
+          "audioSeconds": 1538.234172335601,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Quinn.ja_JP",
+          "sourceWad": "original-wads/Quinn.ja_JP.wad.client",
+          "bytes": 3365909,
+          "sha256": "4b8fc2ffda27c1064bae7302fdc8dd0e0ed06119e79856edaedc87c533fe21fc",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Quinn.ja_JP/extraction.json",
+          "extractionReportSha256": "f39b741e26e02ead8d0236d14be62a0e09c4178ae71b58c6e74c6d4c298dfc28",
+          "decodingReport": "audio/decoded/Quinn.ja_JP/decoding.json",
+          "decodingReportSha256": "71d46f874daef14f6d03d6781a5fc12876049987c893921293979329c8079152",
+          "nativeAudioBanks": 9,
+          "wemFiles": 147,
+          "pcmWavCount": 147,
+          "audioSeconds": 380.66469387755114,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Rammus.ja_JP",
           "sourceWad": "original-wads/Rammus.ja_JP.wad.client",
           "bytes": 773958,
@@ -24678,6 +27541,270 @@
           "wemFiles": 77,
           "pcmWavCount": 77,
           "audioSeconds": 67.4033106575964,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "RekSai.ja_JP",
+          "sourceWad": "original-wads/RekSai.ja_JP.wad.client",
+          "bytes": 9351884,
+          "sha256": "125fbb60e2dcae77101088690647eb85e9ee039096afade1c59bead6fdf3afe6",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/RekSai.ja_JP/extraction.json",
+          "extractionReportSha256": "0a89041c9ec4582e8359a8f6ef7bcdd9b6ef2809ce3e6056d505f6a93efa4a4f",
+          "decodingReport": "audio/decoded/RekSai.ja_JP/decoding.json",
+          "decodingReportSha256": "74cfdc27c0085497f249e921b9f1997a9937fd1aa33af92ed0d9bbdb57230fe2",
+          "nativeAudioBanks": 9,
+          "wemFiles": 210,
+          "pcmWavCount": 210,
+          "audioSeconds": 785.1685487528347,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Rell.ja_JP",
+          "sourceWad": "original-wads/Rell.ja_JP.wad.client",
+          "bytes": 3108467,
+          "sha256": "006d12b8db7585015bcc39df3e97f7382450981ff804d1b13912d316212c9d8f",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Rell.ja_JP/extraction.json",
+          "extractionReportSha256": "3f5e7b23a7795f7d635120da35598b8ed615a75865a8eaf18b2fa93c0c3168cf",
+          "decodingReport": "audio/decoded/Rell.ja_JP/decoding.json",
+          "decodingReportSha256": "2ff67a7b8c0d42814d2e03c7b2288c9e0390f2cae9fac9bc3edd646df647e55f",
+          "nativeAudioBanks": 3,
+          "wemFiles": 147,
+          "pcmWavCount": 147,
+          "audioSeconds": 418.65312925170065,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Renata.ja_JP",
+          "sourceWad": "original-wads/Renata.ja_JP.wad.client",
+          "bytes": 11671176,
+          "sha256": "7b39f97b3b065c355fc1b3bd6f37a44e7b8d63ca5a0e29194ac7f82a5d660ced",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Renata.ja_JP/extraction.json",
+          "extractionReportSha256": "d0bbf5ae30515cfe5e140a1e0202c69355fb1d8222ff97a5485512bc7e8fd7cc",
+          "decodingReport": "audio/decoded/Renata.ja_JP/decoding.json",
+          "decodingReportSha256": "2ca493f6a19e6bd6506d3480c5d808519fdb1c39cd06f2e1515aa1e710bacad2",
+          "nativeAudioBanks": 6,
+          "wemFiles": 321,
+          "pcmWavCount": 321,
+          "audioSeconds": 1217.998448696145,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Renekton.ja_JP",
+          "sourceWad": "original-wads/Renekton.ja_JP.wad.client",
+          "bytes": 9241899,
+          "sha256": "0e213ae14bc6d0dc1656479838fb61564c1dacfe85176f2f740ebf39948e86b4",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Renekton.ja_JP/extraction.json",
+          "extractionReportSha256": "0da5f3e4a9aee4f9987551b74e4197adb9311cdd5f477ac4749d617c41f93389",
+          "decodingReport": "audio/decoded/Renekton.ja_JP/decoding.json",
+          "decodingReportSha256": "e6a6d825dcfc52d5f5e80a05c0b4fdbf10120de32ecbc268123a93c053284c1e",
+          "nativeAudioBanks": 12,
+          "wemFiles": 290,
+          "pcmWavCount": 290,
+          "audioSeconds": 894.8808163265302,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Rengar.ja_JP",
+          "sourceWad": "original-wads/Rengar.ja_JP.wad.client",
+          "bytes": 3828976,
+          "sha256": "14af16f3215805b53c034f196f227a5385726f0f1bc502ed1771c246292716d2",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Rengar.ja_JP/extraction.json",
+          "extractionReportSha256": "55963d4706bfe85403d5fb612a522f7043b0a3f06242ddd968c0030f683ab575",
+          "decodingReport": "audio/decoded/Rengar.ja_JP/decoding.json",
+          "decodingReportSha256": "acc41c9b10b57cf6adbf239c437a470dccbcf2fc7399bee24d8fda9ed8f7dfde",
+          "nativeAudioBanks": 6,
+          "wemFiles": 126,
+          "pcmWavCount": 126,
+          "audioSeconds": 409.6989569160998,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Rumble.ja_JP",
+          "sourceWad": "original-wads/Rumble.ja_JP.wad.client",
+          "bytes": 5538775,
+          "sha256": "9f99d4afcfbf58e0661c03448a5ba90d9ef5fd920070d6f98cc714167b995789",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Rumble.ja_JP/extraction.json",
+          "extractionReportSha256": "9693a03c6fd36bec7638a3d12e04c1de98367e36cb312f6de867c7333270933a",
+          "decodingReport": "audio/decoded/Rumble.ja_JP/decoding.json",
+          "decodingReportSha256": "5ecf2511b55eb9e652dde523676ded6a763cb09ec7f4ea518c468714e66cb7ba",
+          "nativeAudioBanks": 9,
+          "wemFiles": 171,
+          "pcmWavCount": 171,
+          "audioSeconds": 609.9356462585035,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Ryze.ja_JP",
+          "sourceWad": "original-wads/Ryze.ja_JP.wad.client",
+          "bytes": 6483142,
+          "sha256": "7578ef327cd2cf87ef0c5016d23880a48d5d8fd44516d1b14d516756f5404b01",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Ryze.ja_JP/extraction.json",
+          "extractionReportSha256": "54187bba8ed73c875351e4b60c34e8aef7f1c9a2dae1576f30d8839186a2daee",
+          "decodingReport": "audio/decoded/Ryze.ja_JP/decoding.json",
+          "decodingReportSha256": "61ede5ba2c138001d818253010830aa39f194b8d68996cafe6dd66a3d74cf58e",
+          "nativeAudioBanks": 6,
+          "wemFiles": 265,
+          "pcmWavCount": 265,
+          "audioSeconds": 643.2198639455783,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Samira.ja_JP",
+          "sourceWad": "original-wads/Samira.ja_JP.wad.client",
+          "bytes": 11203833,
+          "sha256": "ae9aaff99ca4a99405348119c10b5669ef1bdb2ebc2c2d4946e136c15fe49b67",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Samira.ja_JP/extraction.json",
+          "extractionReportSha256": "4651965db47f2ea6fd4f8ea16d18afc70e40acb178a07155dd0d3ea79ca126bd",
+          "decodingReport": "audio/decoded/Samira.ja_JP/decoding.json",
+          "decodingReportSha256": "de7ef018d56b86df5b137afb6e3dbd6cf0e321dd9f131b3a334a20639ff1336a",
+          "nativeAudioBanks": 12,
+          "wemFiles": 329,
+          "pcmWavCount": 329,
+          "audioSeconds": 1195.2333922902496,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Sejuani.ja_JP",
+          "sourceWad": "original-wads/Sejuani.ja_JP.wad.client",
+          "bytes": 6533627,
+          "sha256": "e2ed98e5a1bd4055a97dcbfe7c618c5ed87c86349b629cf2cdbc5c5eb389e228",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Sejuani.ja_JP/extraction.json",
+          "extractionReportSha256": "64ddbb709b6271b24ee02dae05923f6d60781736fb280d0782d110024c535d84",
+          "decodingReport": "audio/decoded/Sejuani.ja_JP/decoding.json",
+          "decodingReportSha256": "cfd35fb562243ba52fe48fd76b2976ba9d511f0190376ae393c13b9de46f140f",
+          "nativeAudioBanks": 12,
+          "wemFiles": 226,
+          "pcmWavCount": 226,
+          "audioSeconds": 618.1580045351478,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Shaco.ja_JP",
+          "sourceWad": "original-wads/Shaco.ja_JP.wad.client",
+          "bytes": 4840115,
+          "sha256": "49058b0d4f53be32f9a9e3553140ab94d64850466807493c83a769af5417316d",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Shaco.ja_JP/extraction.json",
+          "extractionReportSha256": "b06fb4a4882eb77146a0c58ff5d902c60e2603c81ec50bc53be4cb0e9cccd37b",
+          "decodingReport": "audio/decoded/Shaco.ja_JP/decoding.json",
+          "decodingReportSha256": "5f87b503a822ef8fc40bef29b168078a9273e4e0ccc8dd8b202806ec9201fc16",
+          "nativeAudioBanks": 12,
+          "wemFiles": 150,
+          "pcmWavCount": 150,
+          "audioSeconds": 456.23816326530624,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Shen.ja_JP",
+          "sourceWad": "original-wads/Shen.ja_JP.wad.client",
+          "bytes": 2435255,
+          "sha256": "315c38c2c909368850c9785e919d4e507c49025a9c01c7a8812014c5efee2bd5",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Shen.ja_JP/extraction.json",
+          "extractionReportSha256": "b02c1901da9699b00cb5b6d56d81d878bda3c179e745b68543976b0fea0232c6",
+          "decodingReport": "audio/decoded/Shen.ja_JP/decoding.json",
+          "decodingReportSha256": "513c8018adba9db77c905c2991a88f30c049ddb7ed8bd288e8225f9cbbab05f3",
+          "nativeAudioBanks": 12,
+          "wemFiles": 119,
+          "pcmWavCount": 119,
+          "audioSeconds": 271.0746258503403,
           "errors": [],
           "rawDecoderFailedCount": 0,
           "exactPcm16RecoveryCount": 0,
@@ -24709,6 +27836,54 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Sivir.ja_JP",
+          "sourceWad": "original-wads/Sivir.ja_JP.wad.client",
+          "bytes": 11442687,
+          "sha256": "5472d182d4cc4e46f04f9d6722252aeb86d73d1da19ce9e1e7fa2f48f7d55d99",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Sivir.ja_JP/extraction.json",
+          "extractionReportSha256": "46d4278cad4bb0e6a5c1589e3ec4a47e7938c22f462491c5db76d1ed130a21ee",
+          "decodingReport": "audio/decoded/Sivir.ja_JP/decoding.json",
+          "decodingReportSha256": "a32391285a39fe483b28a9003f16c86a4e69bee7130d931d611199f2cabb249c",
+          "nativeAudioBanks": 9,
+          "wemFiles": 310,
+          "pcmWavCount": 310,
+          "audioSeconds": 1052.4956009070288,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Smolder.ja_JP",
+          "sourceWad": "original-wads/Smolder.ja_JP.wad.client",
+          "bytes": 5767595,
+          "sha256": "e75cbe75695b6e35844b8fd4e616200e29773aa9c8ff4d7bc2d3b78fe0372d58",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Smolder.ja_JP/extraction.json",
+          "extractionReportSha256": "b80ad91942c05dc41ad1435c2a5faf3938ca2730c1d4f3d98e85b915ef7e8dc8",
+          "decodingReport": "audio/decoded/Smolder.ja_JP/decoding.json",
+          "decodingReportSha256": "30b5ccff12b3ca544f4fe1647bb36df45955fba3819ad0eb411ee6cfb1a22c6a",
+          "nativeAudioBanks": 3,
+          "wemFiles": 194,
+          "pcmWavCount": 194,
+          "audioSeconds": 691.7034920634918,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Syndra.ja_JP",
           "sourceWad": "original-wads/Syndra.ja_JP.wad.client",
           "bytes": 1922326,
@@ -24726,6 +27901,30 @@
           "wemFiles": 44,
           "pcmWavCount": 44,
           "audioSeconds": 200.93290249433105,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "TahmKench.ja_JP",
+          "sourceWad": "original-wads/TahmKench.ja_JP.wad.client",
+          "bytes": 8585100,
+          "sha256": "22b83af059af9082ebb2fc32763046f39fb8f28ca90711cdf1a8bb9b8ca64c03",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/TahmKench.ja_JP/extraction.json",
+          "extractionReportSha256": "c44c05d3e8352c4649fe9182d6936793ac64671a36622e8c2a413d5eae303cb5",
+          "decodingReport": "audio/decoded/TahmKench.ja_JP/decoding.json",
+          "decodingReportSha256": "e564144af664178ede8f812f338cd07c6dbde39e887e26eb28710450f655e99f",
+          "nativeAudioBanks": 3,
+          "wemFiles": 238,
+          "pcmWavCount": 238,
+          "audioSeconds": 995.6450793650799,
           "errors": [],
           "rawDecoderFailedCount": 0,
           "exactPcm16RecoveryCount": 0,
@@ -24757,6 +27956,318 @@
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         },
         {
+          "nativeId": "Taric.ja_JP",
+          "sourceWad": "original-wads/Taric.ja_JP.wad.client",
+          "bytes": 6605320,
+          "sha256": "3570912916539bd775b54a7df0369b3c8caa7139da857c8da16ca6a545ec2ffa",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Taric.ja_JP/extraction.json",
+          "extractionReportSha256": "670c914e1237b870cad953e364c0ad48a4e1708ffdb6cb9c3921f3f7939c8124",
+          "decodingReport": "audio/decoded/Taric.ja_JP/decoding.json",
+          "decodingReportSha256": "a08bb2edda7bf215f80755a312c30f02fc45b1900e0a8387f965440126edf790",
+          "nativeAudioBanks": 9,
+          "wemFiles": 244,
+          "pcmWavCount": 244,
+          "audioSeconds": 702.0761451247166,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Trundle.ja_JP",
+          "sourceWad": "original-wads/Trundle.ja_JP.wad.client",
+          "bytes": 2425448,
+          "sha256": "6852e80a1987290428a766d98cfa5f943b42b8f214189426118757cecbcc1610",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Trundle.ja_JP/extraction.json",
+          "extractionReportSha256": "188665098c32d7f0fc2641bd722384c1596b8b8c6342551c6fd264e76605701d",
+          "decodingReport": "audio/decoded/Trundle.ja_JP/decoding.json",
+          "decodingReportSha256": "588601d114982676f493818bfef59328fb12ff710d1db6508b0efda2a95a8a26",
+          "nativeAudioBanks": 6,
+          "wemFiles": 107,
+          "pcmWavCount": 107,
+          "audioSeconds": 274.23750566893426,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Tryndamere.ja_JP",
+          "sourceWad": "original-wads/Tryndamere.ja_JP.wad.client",
+          "bytes": 3071300,
+          "sha256": "e99119177908a9fc6b5e02e1eea75208932bf5d21c4fe7547ff38596463d26a6",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Tryndamere.ja_JP/extraction.json",
+          "extractionReportSha256": "6b943358a5b4d7566b68b0b6471ddc525cb90b6ca19cc60372037599c47e850e",
+          "decodingReport": "audio/decoded/Tryndamere.ja_JP/decoding.json",
+          "decodingReportSha256": "821a4ccdcacbae466a8fdc2b9391546580f93f73f482203df962bc4a65c19fa1",
+          "nativeAudioBanks": 15,
+          "wemFiles": 107,
+          "pcmWavCount": 107,
+          "audioSeconds": 328.46655328798175,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "TwistedFate.ja_JP",
+          "sourceWad": "original-wads/TwistedFate.ja_JP.wad.client",
+          "bytes": 3740429,
+          "sha256": "2d4c266e29828e7af2499aa7a10072d719afb54f11ca6fc12b701689ade501d3",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/TwistedFate.ja_JP/extraction.json",
+          "extractionReportSha256": "ed24576e01de977ac69196d8d16902aac1a29adf619cfae9bb2c39a6aab8eb02",
+          "decodingReport": "audio/decoded/TwistedFate.ja_JP/decoding.json",
+          "decodingReportSha256": "59741382684b5002f2d4b5836af0f387d04a3c5405030685d1befeac05362d6b",
+          "nativeAudioBanks": 9,
+          "wemFiles": 138,
+          "pcmWavCount": 138,
+          "audioSeconds": 349.9588662131521,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Vi.ja_JP",
+          "sourceWad": "original-wads/Vi.ja_JP.wad.client",
+          "bytes": 12517831,
+          "sha256": "180b26c92ace110037e88b3aa2c1acea5389f5d751cbf6b63f3d4edea03de857",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Vi.ja_JP/extraction.json",
+          "extractionReportSha256": "e25719dde1ebcc21788960e954f13019d74bd6b661eb2778e9624ab6bbdb8595",
+          "decodingReport": "audio/decoded/Vi.ja_JP/decoding.json",
+          "decodingReportSha256": "be5020e7f1abb17db1d44538fe323a496964642d0d628af232d0b4c9a8359e15",
+          "nativeAudioBanks": 12,
+          "wemFiles": 355,
+          "pcmWavCount": 355,
+          "audioSeconds": 1211.967074829932,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Vladimir.ja_JP",
+          "sourceWad": "original-wads/Vladimir.ja_JP.wad.client",
+          "bytes": 9732953,
+          "sha256": "b806adb1553f4c5d021efc268e8a3ee38ec011ef51c837432117b56b285b58b2",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Vladimir.ja_JP/extraction.json",
+          "extractionReportSha256": "3b87dff2a4920955f2bbbfe0bd8070ac7c0e6e99229204e640b6a41bb7900914",
+          "decodingReport": "audio/decoded/Vladimir.ja_JP/decoding.json",
+          "decodingReportSha256": "1e290e1feb893258a88bcdd1fb0522d007cf74db95c394f37d8f4b6ca04b8d89",
+          "nativeAudioBanks": 15,
+          "wemFiles": 242,
+          "pcmWavCount": 242,
+          "audioSeconds": 778.27097505669,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Xerath.ja_JP",
+          "sourceWad": "original-wads/Xerath.ja_JP.wad.client",
+          "bytes": 12506045,
+          "sha256": "bde0ced1ff6858fd410767ad792a2bb532e49bff04c880936aed4c8fff483efb",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Xerath.ja_JP/extraction.json",
+          "extractionReportSha256": "b3d547b68126932f44abbb09e25c88e16997e412387771378987c50c67b8b4db",
+          "decodingReport": "audio/decoded/Xerath.ja_JP/decoding.json",
+          "decodingReportSha256": "a81f3148862f31f51ef167e9f1261f7a1636635bbc1c92e66649c1bd3df31ab3",
+          "nativeAudioBanks": 8,
+          "wemFiles": 223,
+          "pcmWavCount": 223,
+          "audioSeconds": 1060.2127210884355,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Yunara.ja_JP",
+          "sourceWad": "original-wads/Yunara.ja_JP.wad.client",
+          "bytes": 4656372,
+          "sha256": "7f981422f6b62d7447f195212a66127981dd77de239a3daf53abe9cc2eddef9f",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Yunara.ja_JP/extraction.json",
+          "extractionReportSha256": "39bcf9698d6ec8557c59f96a05f746de2a6237e6c525cdef13b51955be7c5b61",
+          "decodingReport": "audio/decoded/Yunara.ja_JP/decoding.json",
+          "decodingReportSha256": "f5df5ce3c36edbfd10fae6c774bdf186f81c0bfbb40c9265a440ea1a7d2995ee",
+          "nativeAudioBanks": 3,
+          "wemFiles": 170,
+          "pcmWavCount": 170,
+          "audioSeconds": 532.7131065759638,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Yuumi.ja_JP",
+          "sourceWad": "original-wads/Yuumi.ja_JP.wad.client",
+          "bytes": 5465676,
+          "sha256": "8348583294979322f1a56498920f11c7422227c3315a797e71ca979dadd42c50",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Yuumi.ja_JP/extraction.json",
+          "extractionReportSha256": "41a88585f62ddcead65741d63afe8cea657afa03430816645c8e3b22e88bc0e4",
+          "decodingReport": "audio/decoded/Yuumi.ja_JP/decoding.json",
+          "decodingReportSha256": "3ed8b00095cf84e48a23b02c797dc0029df1097ac76d373017b2397732746bd1",
+          "nativeAudioBanks": 3,
+          "wemFiles": 173,
+          "pcmWavCount": 173,
+          "audioSeconds": 630.0425170068025,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Zaahen.ja_JP",
+          "sourceWad": "original-wads/Zaahen.ja_JP.wad.client",
+          "bytes": 8775067,
+          "sha256": "b5db5873e86a96acd9812f273ebfc1d9e6e537f783217315b42f7aa9693c2a52",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Zaahen.ja_JP/extraction.json",
+          "extractionReportSha256": "5602410e34a3714f6117707013554720a80c21e5633066d08f9bc216c77399ab",
+          "decodingReport": "audio/decoded/Zaahen.ja_JP/decoding.json",
+          "decodingReportSha256": "d0f92a0414d147b0ce92730843456fe140bc3a18687bd8731e5a0fbfc1076c8e",
+          "nativeAudioBanks": 3,
+          "wemFiles": 168,
+          "pcmWavCount": 168,
+          "audioSeconds": 777.0368707482991,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Zac.ja_JP",
+          "sourceWad": "original-wads/Zac.ja_JP.wad.client",
+          "bytes": 7134194,
+          "sha256": "0ef60393854f2f7bd6498d6f97935cd5f460782a3cea27bd7b12fabeeb2ba9e0",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Zac.ja_JP/extraction.json",
+          "extractionReportSha256": "68d517b0cb9bde35eff2c2d384e337201b19e145b9282b907519e12de678f33f",
+          "decodingReport": "audio/decoded/Zac.ja_JP/decoding.json",
+          "decodingReportSha256": "0104beb416a9c11b12ebc97c6d6cb899f8e11ed99560d417715bf32940b226b3",
+          "nativeAudioBanks": 12,
+          "wemFiles": 272,
+          "pcmWavCount": 272,
+          "audioSeconds": 691.4252834467118,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Zeri.ja_JP",
+          "sourceWad": "original-wads/Zeri.ja_JP.wad.client",
+          "bytes": 7358656,
+          "sha256": "e62ba83b64ae6d19793d40667ac88a8c724d6dce6cbe9b51aaf0c55f0751e48f",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Zeri.ja_JP/extraction.json",
+          "extractionReportSha256": "63596fcd6a9849f1bd5c2f9361443243ad19c3dd3a6b2fb4cfb2d59266245b4c",
+          "decodingReport": "audio/decoded/Zeri.ja_JP/decoding.json",
+          "decodingReportSha256": "2c5ba8095244938edeca7091a06f4203a883c2e57f7095bc4fda4723c3148289",
+          "nativeAudioBanks": 6,
+          "wemFiles": 332,
+          "pcmWavCount": 332,
+          "audioSeconds": 818.9168253968257,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Ziggs.ja_JP",
+          "sourceWad": "original-wads/Ziggs.ja_JP.wad.client",
+          "bytes": 2787757,
+          "sha256": "4788cfe7adb0bf53fb134d2b9ce81bc573b2c8c164c8a4122e716d9fe04b63f8",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Ziggs.ja_JP/extraction.json",
+          "extractionReportSha256": "5921c8d2ffb740b335ca9acc4b7276f19bd4ff31826d821d276d8659efc8e374",
+          "decodingReport": "audio/decoded/Ziggs.ja_JP/decoding.json",
+          "decodingReportSha256": "2438445391c58091ffbbc528da79927100270b12ac0535339a653d5248c56e6d",
+          "nativeAudioBanks": 6,
+          "wemFiles": 124,
+          "pcmWavCount": 124,
+          "audioSeconds": 327.8901814058959,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
           "nativeId": "Zilean.ja_JP",
           "sourceWad": "original-wads/Zilean.ja_JP.wad.client",
           "bytes": 379058,
@@ -24779,18 +28290,42 @@
           "exactPcm16RecoveryCount": 0,
           "effectiveFailedCount": 0,
           "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
+        },
+        {
+          "nativeId": "Zyra.ja_JP",
+          "sourceWad": "original-wads/Zyra.ja_JP.wad.client",
+          "bytes": 4236625,
+          "sha256": "b461ac0f2a96a9a6db9dfd0380a49a65ddb90d6e959c472236d5dd60082b1954",
+          "officialManifestFlags": [
+            "ja_JP"
+          ],
+          "manifestFileSizeVerified": true,
+          "manifestChunkOrderAndTargetSizesVerified": true,
+          "extractionReport": "audio/packages/Zyra.ja_JP/extraction.json",
+          "extractionReportSha256": "6428ea1ee45a6757c1e87c272fc00d1a9e5bb88d5fa0c042d98eab8445e41772",
+          "decodingReport": "audio/decoded/Zyra.ja_JP/decoding.json",
+          "decodingReportSha256": "ee1d8cc08e233bbc309d3278786dc687dc60950e41cf1f51b3360075f33241cb",
+          "nativeAudioBanks": 9,
+          "wemFiles": 165,
+          "pcmWavCount": 165,
+          "audioSeconds": 457.56133786848073,
+          "errors": [],
+          "rawDecoderFailedCount": 0,
+          "exactPcm16RecoveryCount": 0,
+          "effectiveFailedCount": 0,
+          "validation": "WAD/WPK/RIFF bounds plus vgmstream source and output frame/rate/channel agreement"
         }
       ],
       "audioAcquisition": {
-        "completeWads": 18,
-        "completeAudioWads": 17,
+        "completeWads": 82,
+        "completeAudioWads": 81,
         "nonAudioWads": 1,
-        "pcmWavCount": 1120,
-        "audioSeconds": 2378.068548752836,
-        "audioBytes": 574008136,
-        "nativeWemFiles": 1120,
-        "nativeBanks": 102,
-        "filesWithSamplesAboveUnity": 333,
+        "pcmWavCount": 14460,
+        "audioSeconds": 45136.868472789254,
+        "audioBytes": 11347829544,
+        "nativeWemFiles": 14460,
+        "nativeBanks": 664,
+        "filesWithSamplesAboveUnity": 4102,
         "confirmedVoiceCount": null,
         "synthesisReadyGroups": 0,
         "exactPcm16Recoveries": 0,
@@ -24807,7 +28342,7 @@
         "state": "pending-audio-review",
         "selectionVerified": false
       },
-      "verification": "官方16.18.8159717日文18完整WAD（17音訊包＋1 TFT空佔位），1120 Float32 WAV全部SHA/frames驗證、0 unresolved；官方ja_JP語系證據及原WAD/chunks/WEM保留。未裁切浮點峰值；全174WAD目錄的其餘批次仍處理中，不列已取得。",
+      "verification": "固定82完整WAD（81音訊＋1空佔位）交付14,460 Float32 WAV，0 unresolved。保留官方ja_JP來源證據、原WAD/WEM、所有歷史交付；4,102個浮點峰值超過1的檔案原樣保存。尚未逐段聽審；全174包其餘未列已取得。",
       "audioFileIndexHistory": [
         {
           "reportPath": "deliveries/local-audio-delivery-20260910T125015909272Z.json",
@@ -24816,6 +28351,10 @@
         {
           "reportPath": "deliveries/local-audio-delivery-20260910T125511149916Z.json",
           "reportSha256": "3f1a1a67c641765a3f8163455be35130d56d741d620135a141fe194137f3b5eb"
+        },
+        {
+          "reportPath": "deliveries/local-audio-delivery-20260910T130421918567Z.json",
+          "reportSha256": "4edc534472a9c3ca427a8b7d8e35049bf650a72701eb76c898c11abea252c3d3"
         }
       ]
     },
@@ -27557,7 +31096,7 @@
           "downloadUrl": "https://codeload.github.com/neztypezero/PSP-GMO-Loader/zip/f346daeca824aff9740cd8e41719d88a06133dda"
         }
       ],
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-standardization",
@@ -28121,17 +31660,16 @@
         "bytes": 53591,
         "sha256": "ac850f39ed332393a96860f8c957b5ebd305f810ea1173dcec01901296b5856c"
       },
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/github-neztypezero-psp-gmo-loader-f346daec/5f93b4e23a85caac1adb937a1b612b3b2a8b024c7ab1b50e435a455af96676cf.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-neztypezero-psp-gmo-loader-f346daec/5f93b4e23a85caac1adb937a1b612b3b2a8b024c7ab1b50e435a455af96676cf.zip",
-        "bytes": 45718668,
-        "sha256": "5f93b4e23a85caac1adb937a1b612b3b2a8b024c7ab1b50e435a455af96676cf",
-        "readbackVerified": false,
-        "status": "not-uploaded"
-      },
       "derivedSourceIds": [
         "psp-cloud-native-motion-batch4"
-      ]
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-neztypezero-psp-gmo-loader-f346daec/5f93b4e23a85caac1adb937a1b612b3b2a8b024c7ab1b50e435a455af96676cf.zip",
+        "bytes": 45718668,
+        "sha256": "5f93b4e23a85caac1adb937a1b612b3b2a8b024c7ab1b50e435a455af96676cf",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
     },
     {
       "id": "github-pionome-piosgmolibrary-ff019de8",
@@ -28170,7 +31708,7 @@
           "downloadUrl": "https://codeload.github.com/pionome/PiosGmoLibrary/zip/ff019de81a424155561b16919a6fbaefe7f0c269"
         }
       ],
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "tooling-only-not-runtime-asset",
@@ -28179,13 +31717,12 @@
       "fucNativeGapClosed": false,
       "licenseStatus": "public-source-preserved-no-redistribution-permission-inferred",
       "verification": "完整作者倉庫原包、15 Git blobs與SHA已核對；保留格式解析程式作工具儲備，不是模型、動作或聲音成品。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/github-pionome-piosgmolibrary-ff019de8/984f890104a6dc222943727f5cddb07307a1b8762aaa818c97634e6f3b922731.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-pionome-piosgmolibrary-ff019de8/984f890104a6dc222943727f5cddb07307a1b8762aaa818c97634e6f3b922731.zip",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-pionome-piosgmolibrary-ff019de8/984f890104a6dc222943727f5cddb07307a1b8762aaa818c97634e6f3b922731.zip",
         "bytes": 112705,
         "sha256": "984f890104a6dc222943727f5cddb07307a1b8762aaa818c97634e6f3b922731",
-        "readbackVerified": false,
-        "status": "not-uploaded"
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
       }
     },
     {
@@ -28270,20 +31807,19 @@
         "unrecoveredCount": 0,
         "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/recovery-lol-local-pcm16-20260910"
       },
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-audio-review",
         "selectionVerified": false
       },
       "verification": "Fiora 7／Gnar 4／Janna 1，共12個原生PCM16已另存Float32；native WEM data與舊PCM16相等，每個Float32樣本乘回32768後逐byte相同，frames/rate/channels全核對。原始WEM、舊WAV、失败報告及舊語系誤標索引保留；正確來源為無語系尾碼的共用WAD，語言待核。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-20260910/8e8495b0000c181800a5eb5c7a949dfaa325ec14c643b3d2468058bb2dc62644.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-20260910/8e8495b0000c181800a5eb5c7a949dfaa325ec14c643b3d2468058bb2dc62644.zip",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-20260910/8e8495b0000c181800a5eb5c7a949dfaa325ec14c643b3d2468058bb2dc62644.zip",
         "bytes": 4977708,
         "sha256": "8e8495b0000c181800a5eb5c7a949dfaa325ec14c643b3d2468058bb2dc62644",
-        "readbackVerified": false,
-        "status": "not-uploaded"
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
       }
     },
     {
@@ -29471,20 +33007,19 @@
         "format": "jsonl"
       },
       "files": [],
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-runtime-motion-and-scale-validation",
         "selectionVerified": false
       },
       "verification": "兩服裝×四手型共8GLB，逐個只留一左一右手；原GLB保留，accessor／skin／綁定矩陣相同；Khronos完整0錯誤0警告。60張有效實際Babylon圖，27張目視＋根工作流核對3張；未見明顯贴圖／肢體錯位，肘部診斷手掌跟隨。0動作／音訊，仍需GGD尺度落地、idle/run重綁及切換驗收，不能當作已上架。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/parallel-community-slayers-lina-hand-review/01343f214bf2d2f57ffe66a988f5ac329264405a0e5db44c92b46739c97e9ebf.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-lina-hand-review/01343f214bf2d2f57ffe66a988f5ac329264405a0e5db44c92b46739c97e9ebf.zip",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-slayers-lina-hand-review/01343f214bf2d2f57ffe66a988f5ac329264405a0e5db44c92b46739c97e9ebf.zip",
         "bytes": 37495760,
         "sha256": "01343f214bf2d2f57ffe66a988f5ac329264405a0e5db44c92b46739c97e9ebf",
-        "readbackVerified": false,
-        "status": "not-uploaded"
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
       }
     },
     {
@@ -29548,21 +33083,13 @@
       "audioFormatRevisionOf": "kof-xv-ash-audio",
       "countAsNewPerformance": false,
       "preferredOverPcm16": true,
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-audio-review",
         "selectionVerified": false
       },
       "verification": "同一批原始OGG另存86個Float32，完整檔SHA／frames核對；6檔有超過1的原始峰值，完整保留並標gainDecisionRequired。優先取用此格式；原始OGG與舊PCM16保留為可查替代格式，不加算新台詞／新音源。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/kof-xv-ash-audio-float32-v1/026209f922f3a5b4fd602bd36b2705b7bd496a5361c462bcc243f4adc744a123.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-ash-audio-float32-v1/026209f922f3a5b4fd602bd36b2705b7bd496a5361c462bcc243f4adc744a123.zip",
-        "bytes": 21454874,
-        "sha256": "026209f922f3a5b4fd602bd36b2705b7bd496a5361c462bcc243f4adc744a123",
-        "readbackVerified": false,
-        "status": "not-uploaded"
-      },
       "audioGroups": [
         {
           "id": "XV_Ash-unclassified-audio",
@@ -29575,7 +33102,14 @@
           "reportedLanguage": "Not explicitly stated in source post; per-clip language unreviewed",
           "speakerVerified": false
         }
-      ]
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-ash-audio-float32-v1/026209f922f3a5b4fd602bd36b2705b7bd496a5361c462bcc243f4adc744a123.zip",
+        "bytes": 21454874,
+        "sha256": "026209f922f3a5b4fd602bd36b2705b7bd496a5361c462bcc243f4adc744a123",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
     },
     {
       "heroIds": [
@@ -29635,21 +33169,13 @@
       "audioFormatRevisionOf": "kof-xv-mai-audio",
       "countAsNewPerformance": false,
       "preferredOverPcm16": true,
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-audio-review",
         "selectionVerified": false
       },
       "verification": "同一批原始OGG另存82個Float32，完整檔SHA／frames核對；8檔有超過1的原始峰值，完整保留並標gainDecisionRequired。優先取用此格式；原始OGG與舊PCM16保留為可查替代格式，不加算新台詞／新音源。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/kof-xv-mai-audio-float32-v1/6975e73c384282959e87984c364248321fe9ec1fafdabca760832ecf92e6e4bb.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-audio-float32-v1/6975e73c384282959e87984c364248321fe9ec1fafdabca760832ecf92e6e4bb.zip",
-        "bytes": 21126863,
-        "sha256": "6975e73c384282959e87984c364248321fe9ec1fafdabca760832ecf92e6e4bb",
-        "readbackVerified": false,
-        "status": "not-uploaded"
-      },
       "audioGroups": [
         {
           "id": "XV_Mai-unclassified-audio",
@@ -29664,7 +33190,14 @@
           "reportedLanguage": "Not explicitly stated in source post; per-clip language unreviewed",
           "speakerVerified": false
         }
-      ]
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-audio-float32-v1/6975e73c384282959e87984c364248321fe9ec1fafdabca760832ecf92e6e4bb.zip",
+        "bytes": 21126863,
+        "sha256": "6975e73c384282959e87984c364248321fe9ec1fafdabca760832ecf92e6e4bb",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
     },
     {
       "id": "psp-cloud-native-motion-batch4",
@@ -29769,7 +33302,7 @@
         "sha256": "cfa1ca39374274d44f96459343c2aebc17f17fa721432f294adfc62d99a61e50"
       },
       "derivedFromSourceId": "github-neztypezero-psp-gmo-loader-f346daec",
-      "publicationStatus": "local-only-awaiting-s3-upload",
+      "publicationStatus": "s3-legacy-readback-verified",
       "backendIntegration": {
         "required": true,
         "state": "pending-runtime-animation-review",
@@ -29816,11 +33349,606 @@
         }
       ],
       "verification": "沿用已凍結本機GMO，60骨節配對；13段原生Motion共1850通道轉1846，另4條保留原始資料並明列。全量Khronos0錯誤0警告；65個CPU蒙皮播放frame、原始keys及區間中點核對。新版本修正Cloud UV，5643三角頂點與SMD核對、PNG原樣保留。原作版本、實際公尺尺度、GGD後台播放未驗收；非Fate，不填Fate PSP缺口。",
-      "pendingBackup": {
-        "localArchive": "outputs/model-source-backups/psp-cloud-native-motion-batch4/cb214d461510f5a65a42d8a59030a408bad74657e4f730f651cc147375c50b84.zip",
-        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/psp-cloud-native-motion-batch4/cb214d461510f5a65a42d8a59030a408bad74657e4f730f651cc147375c50b84.zip",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/psp-cloud-native-motion-batch4/cb214d461510f5a65a42d8a59030a408bad74657e4f730f651cc147375c50b84.zip",
         "bytes": 2519021,
         "sha256": "cb214d461510f5a65a42d8a59030a408bad74657e4f730f651cc147375c50b84",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      }
+    },
+    {
+      "id": "kof-open3dlab-ash-xv",
+      "target": "KOF XV／Ash Crimson／左右瀏海模型候選",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+      "uploader": "Anthony; original XPS model credited to MichiFreddy35",
+      "format": "Blender / 2 GLB / 15 original packed textures",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "needs-material-and-rest-pose-review",
+      "purchaseDecision": "supplement-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "character-model-collection",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv",
+      "sourceGame": "The King of Fighters XV",
+      "platform": "unknown-original-platform",
+      "selectionClass": "community-mod",
+      "discoveryChannel": "model-sharing-community-public-free-mirror",
+      "assetKinds": [
+        "model",
+        "texture",
+        "skeleton"
+      ],
+      "modelCandidates": [
+        {
+          "candidateId": "kof-xv-ash-crimson-open3dlab-left-hair",
+          "sourceId": "kof-open3dlab-ash-xv",
+          "character": "Ash Crimson",
+          "heroIds": [],
+          "sourceGame": "The King of Fighters XV",
+          "sourcePlatform": "unknown-original-platform",
+          "platformEvidence": "Author identifies KOF XV; original game installation platform is not specified.",
+          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+          "author": "Anthony; original XPS model credited to MichiFreddy35",
+          "sourceClass": "mod-community-port",
+          "variant": "left-hair",
+          "model": "converted/left-hair/body.glb",
+          "bytes": 41217652,
+          "sha256": "f71a26ff138b9adef7257c06c842211ce871adafa1c7ec0985fed2aebead1ec4",
+          "readyStage": "standard-glb-candidate-needs-appearance-review",
+          "meshCount": 2,
+          "skinCount": 1,
+          "jointCounts": [
+            258
+          ],
+          "animationCount": 0,
+          "sourceStaticPoseActions": 3,
+          "textureCount": 9,
+          "sourceSkeleton": "community-Rigify: 972 source bones, GLB deform hierarchy 258 joints",
+          "maxVertexInfluences": 5,
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "needs-material-and-rest-pose-review",
+          "visualReviewPath": "visual-review.json",
+          "defaultChanged": false,
+          "candidateMustBeRetained": true,
+          "originalBytesPreserved": true,
+          "limitations": [
+            "Static single-frame source actions are retained in original blend, not presented as gameplay animations.",
+            "Full rig, helper widgets and source drivers remain in original blend; GLB exports deform bones only.",
+            "Source vertex influences are preserved; runtime retargeting/deformation and maximum influence compatibility require acceptance.",
+            "The native Blender front preview shows more visible face and finer hair strands; the GLB fringe appears more opaque and covers more face.",
+            "GLB boots show bright reflective patches not apparent in the source preview.",
+            "Exact source-to-GLB appearance parity is not accepted; material translation and current-versus-rest pose need further review."
+          ]
+        },
+        {
+          "candidateId": "kof-xv-ash-crimson-open3dlab-right-hair",
+          "sourceId": "kof-open3dlab-ash-xv",
+          "character": "Ash Crimson",
+          "heroIds": [],
+          "sourceGame": "The King of Fighters XV",
+          "sourcePlatform": "unknown-original-platform",
+          "platformEvidence": "Author identifies KOF XV; original game installation platform is not specified.",
+          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+          "author": "Anthony; original XPS model credited to MichiFreddy35",
+          "sourceClass": "mod-community-port",
+          "variant": "right-hair",
+          "model": "converted/right-hair/body.glb",
+          "bytes": 41217580,
+          "sha256": "fd4880ca4e1a5eb1752e6db1dc56ef0a34c1302862d9aee14c405e5bb78bd553",
+          "readyStage": "standard-glb-candidate-needs-appearance-review",
+          "meshCount": 2,
+          "skinCount": 1,
+          "jointCounts": [
+            258
+          ],
+          "animationCount": 0,
+          "sourceStaticPoseActions": 3,
+          "textureCount": 9,
+          "sourceSkeleton": "community-Rigify: 972 source bones, GLB deform hierarchy 258 joints",
+          "maxVertexInfluences": 5,
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "manualVisualReview": "needs-material-and-rest-pose-review",
+          "visualReviewPath": "visual-review.json",
+          "defaultChanged": false,
+          "candidateMustBeRetained": true,
+          "originalBytesPreserved": true,
+          "limitations": [
+            "Static single-frame source actions are retained in original blend, not presented as gameplay animations.",
+            "Full rig, helper widgets and source drivers remain in original blend; GLB exports deform bones only.",
+            "Source vertex influences are preserved; runtime retargeting/deformation and maximum influence compatibility require acceptance.",
+            "The native Blender front preview shows more visible face and finer hair strands; the GLB fringe appears more opaque and covers more face.",
+            "GLB boots show bright reflective patches not apparent in the source preview.",
+            "Exact source-to-GLB appearance parity is not accepted; material translation and current-versus-rest pose need further review."
+          ]
+        }
+      ],
+      "candidateManifest": {
+        "path": "candidate-manifest.json",
+        "sha256": "70400ae1b5c4eda8e9fd3b605abdbc7dc9cc1fd411a6d92a9a6f83d1a1e46735"
+      },
+      "filesManifest": {
+        "path": "deliveries/local-model-delivery-20260910T132732566397Z.json",
+        "sha256": "d535ac0750a6951ea87ec5610daa55e3c276fadfa6898c443da98954e75a5f21"
+      },
+      "files": [
+        {
+          "path": "original/Ash.blend",
+          "bytes": 57581887,
+          "sha256": "30e11c524fb8223fd421ecf3c2d832fff7a3671f6a38444f7ebed5adeb2cc746"
+        }
+      ],
+      "sourceLicense": "Uploader-declared CC BY-NC-ND 4.0; license metadata unverified",
+      "publicationStatus": "local-only-awaiting-s3-upload",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-material-and-rest-pose-review",
+        "selectionVerified": false
+      },
+      "verification": "完整57,581,887-byte原始Blend與作者SHA相同；15原始packed textures逐檔保留，2個左右瀏海GLB各94,274三角形、258 joints、18材質、最多5權重。原972骨節Rigify與3個單幀pose保留在原檔；0 gameplay動畫/音訊。GLB結構可讀，但瀏海alpha/材質及靴面反光與原檔不同，外觀尚未驗收，不自動使用。",
+      "pendingBackup": {
+        "localArchive": "outputs/model-source-backups/kof-open3dlab-ash-xv/fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce.zip",
+        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-open3dlab-ash-xv/fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce.zip",
+        "bytes": 215081296,
+        "sha256": "fa8ad8375859040b5a965164f07465626597adff87c3325a1731532953ec47ce",
+        "readbackVerified": false,
+        "status": "not-uploaded"
+      }
+    },
+    {
+      "id": "parallel-community-lina-rays-300-retarget",
+      "target": "莉娜 Rays模型／300英雄 idle-run 動作重綁樣本",
+      "heroIds": [
+        "godie-h020",
+        "godie-hjai"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+      "uploader": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+      "format": "1 retarget GLB / 3 audit GLB / 2 derived motions",
+      "accessStatus": "local-derived-source",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "review-sample-needs-foot-contact-loop-repair",
+      "purchaseDecision": "supplement-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "character-model-collection",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget",
+      "sourceGame": "Tales of the Rays",
+      "platform": "Mobile (Android/iOS)",
+      "selectionClass": "community-mod",
+      "selectionClassNote": "Rays本體搭配300英雄跨遊戲重綁動作；處理版本另存，不標為Rays原生動畫。",
+      "discoveryChannel": "local-cross-game-motion-retarget",
+      "assetKinds": [
+        "model",
+        "texture",
+        "skeleton",
+        "animation"
+      ],
+      "modelCandidates": [
+        {
+          "candidateId": "community.slayers-tales-of-rays.lina00-hands-a.300heroes-retarget-review",
+          "sourceCandidateId": "community.slayers-tales-of-rays.lina00-hands-a",
+          "sourceId": "parallel-community-lina-rays-300-retarget",
+          "upstreamSourceId": "parallel-community-slayers-lina-hand-review",
+          "label": "莉娜 lina00 放鬆手型 — 300英雄 idle/run 動作重綁試作（待腳步與接縫修復）",
+          "nativeCharacter": "Lina Inverse",
+          "heroIds": [
+            "godie-h020",
+            "godie-hjai"
+          ],
+          "resourceRole": "character-body-retarget-review-sample",
+          "sourceClass": "original-game-body-with-cross-game-retargeted-animation",
+          "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
+          "author": "Ceruleancast / Meowth for Smash; original model ripping credited to Kittyinhiding and ArkDelgato; local GGD retarget study",
+          "sourceGame": "Tales of the Rays",
+          "sourcePlatform": "Mobile (Android/iOS)",
+          "sourceWork": "Slayers",
+          "animationSourceGame": "300英雄",
+          "animationSourceId": "300heroes:46",
+          "animationProvenanceLabel": "300英雄動作重綁到Rays模型",
+          "nativeAnimationFps": "unknown",
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget/candidates/lina00-hands-a-300-idle-run-resampled-120hz.glb",
+          "file": {
+            "path": "candidates/lina00-hands-a-300-idle-run-resampled-120hz.glb",
+            "bytes": 2166420,
+            "sha256": "9daaf6ed16444d87f949043dd45d88150f74648dca2cb4c4ca9e53cbebaec662"
+          },
+          "format": "glb",
+          "bodyModelCount": 1,
+          "meshNodes": 3,
+          "meshPrimitives": 5,
+          "triangles": 9072,
+          "joints": 69,
+          "retargetedMajorJoints": 19,
+          "embeddedTextures": 3,
+          "distinctEmbeddedTexturePayloads": 2,
+          "nativeRaysAnimationClips": 0,
+          "derivedAnimationClips": 2,
+          "sourceWalkAvailable": false,
+          "audioFiles": 0,
+          "sceneScale": 0.01,
+          "nominalRestHeightMeters": 1.55758,
+          "canonicalCharacterHeightClaim": false,
+          "selection": {
+            "handVariant": "a",
+            "left": "HandLa.013",
+            "right": "HandRa.013",
+            "visibleLeftHandMeshes": 1,
+            "visibleRightHandMeshes": 1
+          },
+          "animations": [
+            {
+              "name": "300heroes_bat_idle_retargeted_to_Rays_Lina",
+              "sourceClip": "bat_idle",
+              "durationSeconds": 1.21875,
+              "sourceKeyCount": 40,
+              "derivedKeyCount": 184,
+              "nativeRaysAnimation": false,
+              "groundCorrectionMeters": -0.009947277883668348
+            },
+            {
+              "name": "300heroes_single_run_retargeted_to_Rays_Lina",
+              "sourceClip": "single_run",
+              "durationSeconds": 0.40625,
+              "sourceKeyCount": 14,
+              "derivedKeyCount": 62,
+              "nativeRaysAnimation": false,
+              "groundCorrectionMeters": 0.06588524031124654
+            }
+          ],
+          "rootMotion": {
+            "horizontal": "in-place; source root XZ trajectory discarded",
+            "vertical": "source root Y delta relative to source rest, multiplied by leg-length ratio 1.8731744117095663",
+            "grounding": "constant per-clip vertical translation, derived processing; 120 Hz minima plus 2 mm margin; no IK",
+            "sourceDurationPreserved": true,
+            "originalRunRelabeledWalk": false
+          },
+          "validation": {
+            "khronosErrors": 0,
+            "khronosWarnings": 0,
+            "khronosInfos": 1,
+            "khronosInfo": "FB_ngon_encoding unsupported by validator",
+            "khronosTruncated": false,
+            "assimpReadback": true,
+            "geometryWeightsTexturesAndInverseBindMatricesUnchanged": true,
+            "actualBabylonPlayback": true,
+            "visualReview": "bounded phase snapshots and dense foot audit",
+            "runtimeReady": false,
+            "footPlantPass": false,
+            "loopContinuityPass": false
+          },
+          "existsLocal": true,
+          "readiness": "review-sample-needs-foot-contact-loop-repair",
+          "backendSelectableVerified": false,
+          "eligibleForAutomaticDefault": false,
+          "runtimeReady": false,
+          "manualDefaultsChanged": false,
+          "limitations": [
+            "No native Rays animation; all two clips are 300英雄動作重綁到Rays模型. No walk clip is available in existing GLB or native metadata.",
+            "Native JUMPX FPS is unknown. Existing GGD GLB durations are preserved; 120 Hz is derived processing and Babylon 60 fps is an importer convention, not verified native timing.",
+            "240 Hz boot-vertex audit still finds run right boot -1.18 mm below ground; idle left boot stays roughly 1.4 cm above ground.",
+            "Run loop foot-position gaps remain 10.1 cm left / 6.3 cm right; endpoint repair not performed.",
+            "Run is in-place with no gameplay velocity; planted-foot locking and sliding are not solved. Near-contact samples can move horizontally up to roughly 20 m/s under the existing very fast clip tempo.",
+            "Only short near-ground contacts and visually elevated run phases remain after constant grounding. This is a review sample, not production locomotion.",
+            "No transfer of limb axial twist or separate finger animation; selected relaxed hand meshes are rigid wrist children. No target toe joint; source toe orientation drives target boot.",
+            "Unmapped hair/cape/accessory joints preserve local rest. Large static cape silhouette during running is visible and lacks source secondary motion.",
+            "Sparse visual inspection covers 22 images across baseline/source and final snapshots, not every frame. Dense geometry audit checks feet, not whole-body self collision.",
+            "Assimp readback confirms parsing/counts only; renderer/CPU skin calculations are used for skin-space grounding, not Assimp static bounds.",
+            "No game runtime, backend selection, production default, or gameplay locomotion acceptance."
+          ]
+        }
+      ],
+      "auditIntermediates": [
+        {
+          "file": {
+            "path": "candidates/lina00-hands-a-300-idle-run-prototype.glb",
+            "bytes": 2104944,
+            "sha256": "8108e1687d5ae48799d9b06afa22411a87a880048844a25abec253b97caa4781"
+          },
+          "resourceRole": "audit-baseline-not-distinct-character",
+          "automaticallySelectable": false,
+          "notes": "earlier prototype; retained for comparison and reproducibility"
+        },
+        {
+          "file": {
+            "path": "candidates/lina00-hands-a-300-idle-run-resampled-ungrounded-control.glb",
+            "bytes": 2166432,
+            "sha256": "c4a932d1970183a3114d7511436267c44df5aa9d41f503f10e5736b82e9f3010"
+          },
+          "resourceRole": "audit-baseline-not-distinct-character",
+          "automaticallySelectable": false,
+          "notes": "same dense retarget rotations, source-scaled root bob, zero grounding offset"
+        },
+        {
+          "file": {
+            "path": "candidates/lina00-hands-a-300-idle-run-stable-torso.glb",
+            "bytes": 2104944,
+            "sha256": "441f9c99029e6e1c3828c489ca75f1b37f7ee97ac4cb226152e51aa387521983"
+          },
+          "resourceRole": "audit-baseline-not-distinct-character",
+          "automaticallySelectable": false,
+          "notes": "earlier prototype; retained for comparison and reproducibility"
+        }
+      ],
+      "filesManifest": {
+        "path": "all-files.sha256.jsonl",
+        "sha256": "b207ff9bd31dea295ce6f2715f8147eed9e6aed74d34d1bbc9030b36383957be"
+      },
+      "candidateManifest": {
+        "path": "model-candidates.json",
+        "sha256": "3c95096ad87a3a8fd4fd5d734e4c3b9ef0c2b982c972bb2904d50101af9676e3"
+      },
+      "derivedFromSourceId": "parallel-community-slayers-lina-hand-review",
+      "animationSourceId": "300heroes:46",
+      "publicationStatus": "local-only-awaiting-s3-upload",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-foot-contact-and-loop-review",
+        "selectionVerified": false
+      },
+      "verification": "保留原8手型、原300GLB/JUMPX。1個主候選＋3個加工對照，19主要關節重綁、69 joints、0.01尺度；實際Babylon播放及Khronos0錯誤0警告。idle/run為300動作重綁到Rays，0原生Rays/0 walk，原生FPS未知。原片長不改，另有120Hz重取樣與每段地面偏移；跑步仍1.18mm穿地、6.3–10.1cm足部循環差與腳滑/披風僵硬，idle左腳約1.4cm離地，待修復。",
+      "pendingBackup": {
+        "localArchive": "outputs/model-source-backups/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
+        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-lina-rays-300-retarget/30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d.zip",
+        "bytes": 33386225,
+        "sha256": "30826c46b524665df11477845fc6a88435d2c46a9f60cbf3b6eec16a9f0b767d",
+        "readbackVerified": false,
+        "status": "not-uploaded"
+      }
+    },
+    {
+      "id": "lol-local-native-pcm16-recovery-round18",
+      "target": "LOL Malzahar／共用WAD 2個原生PCM16精確恢復",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://www.leagueoflegends.com/",
+      "uploader": "Local Riot game extraction; exact numeric conversion",
+      "format": "Native PCM16 / Float32 WAV",
+      "accessStatus": "local-installed-game",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "purchaseDecision": "supplement-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round18",
+      "sourceGame": "League of Legends",
+      "platform": "Local installed game",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "local-recovery",
+      "assetKinds": [
+        "audio"
+      ],
+      "audioFileIndex": {
+        "reportPath": "delivery.json",
+        "reportSha256": "cac6e01e47bbfe4326ebd6c98019fe92111325e6ad1e422681ff1ce2402bd623"
+      },
+      "audioGroups": [
+        {
+          "id": "Malzahar",
+          "name": "LOL／Malzahar／共用WAD PCM16精確恢復",
+          "heroIds": [],
+          "pathPrefixes": [
+            "Malzahar/"
+          ],
+          "reportedLanguage": null
+        }
+      ],
+      "audioAcquisition": {
+        "pcmWavCount": 2
+      },
+      "primaryAudioFormats": [
+        ".wav"
+      ],
+      "recoveryOfSourceId": "local-lol-decoded-audio",
+      "publicationStatus": "local-only-awaiting-s3-upload",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-audio-review",
+        "selectionVerified": false
+      },
+      "verification": "Malzahar共用WAD的2個原生PCM16另轉Float32，原WEM data與舊PCM16相同，逐樣本還原一致，frame/rate/channels皆核對。原WEM/舊PCM16另複製歸檔；非新台詞、語言未核，既有12個恢復檔來源不變。",
+      "pendingBackup": {
+        "localArchive": "outputs/model-source-backups/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
+        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-local-native-pcm16-recovery-round18/6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8.zip",
+        "bytes": 2463798,
+        "sha256": "6f5f7fd2d96b13c51484bf0472ee346789d954f8b9fc0805ede5607092a2e6f8",
+        "readbackVerified": false,
+        "status": "not-uploaded"
+      }
+    },
+    {
+      "id": "github-udienzebeer-fate-uc-hd-c8c2d52b",
+      "target": "Fate/unlimited codes PSP／103張社群替換貼圖儲備",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://github.com/UdienZebeer/Fate-UC-HD",
+      "uploader": "UdienZebeer",
+      "sourceCommit": "c8c2d52b60856913d6d81ee0cba5533cc1a098a6",
+      "format": "103 PNG / 1 INI / complete original ZIP",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "texture-reserve-with-one-missing-config-target",
+      "purchaseDecision": "supplement-only-continue-model-search",
+      "defaultEligible": false,
+      "resourceRole": "component-supplement",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-texture-recovery-batch6",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "PSP",
+      "selectionClass": "community-mod",
+      "discoveryChannel": "author-public-repository",
+      "assetKinds": [
+        "texture",
+        "portrait",
+        "ui"
+      ],
+      "resourceOptions": [
+        {
+          "resourceId": "fuc-psp-community-textures-c8c2d52b",
+          "kind": "texture-supplement",
+          "index": "texture-index.json",
+          "modelOption": false,
+          "runtimeVfxOption": false,
+          "defaultChanged": false,
+          "fileVerified": true,
+          "integrationStatus": "ready-for-index-integration; hero/UI mapping remains reviewable",
+          "runtimeReady": false,
+          "sourceConfigurationComplete": false,
+          "missingTargets": [
+            "main/inputtext.png"
+          ],
+          "usage": "Texture reserve; use original mapping and review image regions before importing."
+        }
+      ],
+      "textureIndex": {
+        "path": "texture-index.json",
+        "sha256": "39c9c15617637b1892007b5f73577f0920a4a945fe4bb4b1b14c650c70ce0691"
+      },
+      "sourceCharacterImageGroups": {
+        "archer": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/archer_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/archer_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/archer_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/archer_4.png"
+        ],
+        "assassin": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/assassin_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/assassin_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/assassin_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/assassin_4.png"
+        ],
+        "bazett": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/bazett_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/bazett_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/bazett_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/bazett_4.png"
+        ],
+        "berserker": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/berserker_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/berserker_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/berserker_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/berserker_4.png"
+        ],
+        "caster": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/caster_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/caster_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/caster_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/caster_4.png"
+        ],
+        "gilgamesh": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/gilgamesh_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/gilgamesh_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/gilgamesh_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/gilgamesh_4.png"
+        ],
+        "kirei": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/kirei_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/kirei_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/kirei_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/kirei_4.png"
+        ],
+        "lancer": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancer_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancer_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancer_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancer_4.png"
+        ],
+        "lancerzero": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancerzero_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancerzero_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancerzero_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/lancerzero_4.png"
+        ],
+        "leysritt": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/leysritt_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/leysritt_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/leysritt_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/leysritt_4.png"
+        ],
+        "luvia": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/luvia_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/luvia_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/luvia_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/luvia_4.png"
+        ],
+        "rider": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rider_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rider_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rider_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rider_4.png"
+        ],
+        "rin": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rin_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rin_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rin_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/rin_4.png"
+        ],
+        "saber": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saber_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saber_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saber_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saber_4.png"
+        ],
+        "saberalter": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberalter_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberalter_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberalter_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberalter_4.png"
+        ],
+        "saberlily": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberlily_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberlily_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/saberlily_3.png"
+        ],
+        "sakura": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/sakura_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/sakura_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/sakura_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/sakura_4.png"
+        ],
+        "shiro": [
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/shiro_1.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/shiro_2.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/shiro_3.png",
+          "extracted/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6/chara/shiro_4.png"
+        ]
+      },
+      "sourceFileManifest": {
+        "path": "source-file-manifest.json",
+        "sha256": "b071d50b21850af7d18d6398a07177b9f43fb4d5409c1ae9822d1ae53aea3c2a"
+      },
+      "filesManifest": {
+        "path": "files.sha256.json",
+        "bytes": 29919,
+        "sha256": "b73c771127661342b0b86132d870a3dbbbb05007609728938ceecd2bb6249062"
+      },
+      "files": [
+        {
+          "path": "original/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6.zip",
+          "bytes": 30560970,
+          "sha256": "57ba4a76de840b8c68a592218591dbe0962107f1fe02e05cd390a4d4b9c09450"
+        }
+      ],
+      "sourceConfigurationComplete": false,
+      "missingSourceConfigTargets": [
+        "main/inputtext.png"
+      ],
+      "fucNativeGapClosed": false,
+      "publicationStatus": "local-only-awaiting-s3-upload",
+      "backendIntegration": {
+        "required": true,
+        "state": "texture-supplement-pending-mapping-not-model",
+        "selectionVerified": false
+      },
+      "verification": "完整30,560,970-byte ZIP CRC通過，104/104來源檔Git blob/大小吻合，103 PNG全部解碼：71角色肖像/片段、18任務肖像、7商標、4介面、3靜態魔法陣。INI共88映射，原包缺main/inputtext.png；不是可直接套用的完整設定。模型/骨架/動作/原生VFX/音訊皆0，不能填Fate PSP原生素材缺口。原27.4MB partial留作診斷，未計入可用檔案。",
+      "pendingBackup": {
+        "localArchive": "outputs/model-source-backups/github-udienzebeer-fate-uc-hd-c8c2d52b/005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001.zip",
+        "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-udienzebeer-fate-uc-hd-c8c2d52b/005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001.zip",
+        "bytes": 89129051,
+        "sha256": "005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001",
         "readbackVerified": false,
         "status": "not-uploaded"
       }
@@ -30149,6 +34277,33 @@
         "heroIds": [],
         "selectionVerified": false
       }
+    },
+    {
+      "id": "fuc-psp-native-assets",
+      "target": "Fate/unlimited codes PSP／完整原生模型、動作、VFX、音訊",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://github.com/shadow-nero/FPKCodes",
+      "resourceRole": "native-game-acquisition-lead",
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "animation",
+        "vfx",
+        "audio"
+      ],
+      "accessStatus": "tool-source-only-no-game-assets",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "purchaseDecision": "continue-native-source-search",
+      "verification": "已保存11條作者/官方/社群路線、3個完整程式倉庫tree與本機掃描；皆未提供實際Fate PSP FPK/GMO。網址是格式工具，不是遊戲素材下載。另取得的103PNG替換包只有肖像/介面，原生本體、動作、VFX及音訊缺口仍開放；正常公開模型分享持續搜尋。",
+      "researchEvidence": {
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-source-audit-batch5/control/handoff.json",
+        "sha256": "63900c2dd3aea17286b025970cbc7de9dc021f231f4007653eefc6454064fd9b"
+      },
+      "supplementSourceIds": [
+        "github-udienzebeer-fate-uc-hd-c8c2d52b"
+      ]
     }
   ],
   "ingestionPolicy": {

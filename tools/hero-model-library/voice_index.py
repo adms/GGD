@@ -289,6 +289,20 @@ def main():
             for field in ['sourceContainsSynthetic','sourceIsSynthetic','sourceSynthesisProvider','classificationEvidence']:
                 if field in (part or {}):g[field]=part[field]
 
+    prefetch_aliases=[]
+    primary_by_path={f['path']:f for f in files}
+    for source in downloads.get('publicSources',[])+downloads.get('paidSources',[]):
+        spec=source.get('audioPrefetchResolution')
+        if not spec:continue
+        path=(OUT/spec['reportPath']).resolve()
+        assert path.is_relative_to(OUT.resolve()) and sha(path)==spec['reportSha256']
+        resolution=read(path);assert resolution['sourceId']==source['id'] and resolution['newAudioFiles']==0
+        for row in resolution['records']:
+            target=primary_by_path[row['path']]
+            assert (target['sha256'],target['bytes'],target['groupId'])==(row['sha256'],row['bytes'],row['groupId'])
+            assert row['byteExactPrefixVerified'] and row['completeRiffLengthVerified'] and row['alreadyCountedPrimaryAudio']
+            prefetch_aliases.append(row)
+
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
     for g in groups.values():
@@ -304,7 +318,7 @@ def main():
         languagePreference=['ja','en','other-or-unreviewed'],
         scope='All indexed 300/MBA audio and verified local public/paid source audio; S3 backup readiness is tracked separately. Not all files are character voices.',
         groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
-        alternateAudioSources=alternate_audio,
+        alternateAudioSources=alternate_audio,prefetchAliases=prefetch_aliases,
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
@@ -312,7 +326,7 @@ def main():
         summary=dict(groups=len(groups),audioFiles=len(files),bytes=sum(f['bytes'] for f in files),
             missingOrSizeChanged=sum(not f['localSizeVerified'] for f in files),
             confirmedVoiceCount=None,synthesisReadyGroups=0,
-            alternateFormatFiles=sum(len(s['files']) for s in alternate_audio)))
+            alternateFormatFiles=sum(len(s['files']) for s in alternate_audio),prefetchAliases=len(prefetch_aliases)))
     manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
     (OUT/'voice-files.jsonl').write_text(manifest)
     compressed=gzip.compress(manifest.encode(),mtime=0)
@@ -326,6 +340,7 @@ def main():
         '**語音查找與選用優先順序：日文 → 英文 → 其他語言／待核。** 所有語言、版本仍完整保留。查詢按來源明列語言排序；作者或安裝包語系只算線索，不等於逐段聽審已確認。LOL 等已存在本機的素材先擷取建檔，不重複下載；缺少的日／英語版本另列補件。', '',
         '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
         'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
+        f'LoL 已核對 {len(prefetch_aliases)} 個 BNK 預載片段，逐位元組前綴與 RIFF 完整長度均對應同角色 WPK 的完整音訊。`prefetchAliases` 指向已計入的主要 WAV、完整 WEM 及原片段；查詢回傳三者本機路徑。原片段與失敗報告保留，不補零、不改 RIFF 標頭，也不另算新音訊。', '',
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{len(files):,} 個可播放格式檔案**。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；數字是音訊檔數，**不是已確認角色語音數**。同一音訊的舊備份及診斷 PCM16 不重複計入主要輸入；原始容器與歷史版本仍保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',
         '先按 groupId 選來源，再讀逐檔清單；逐段確認說話者、語言及台詞，排除技能音效、系統提示、音樂、多人混音與低品質片段。另存切句／轉錄／清理結果及來源 SHA-256，不覆寫原檔。悟空與利姆路優先用 `decoded-audio-float`，保留超過 1.0 的原始浮點峰值，聽審後另作增益處理。生成的語音需標記為合成內容，並記錄所用素材組與處理版本。', '',

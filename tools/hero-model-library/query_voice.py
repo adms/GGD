@@ -40,6 +40,10 @@ def main():
     workspace=Path(data.get('localWorkspace',ROOT.parents[2]))
     result=dict(groups=groups,sourceLeads=leads,nativeAudioSources=native,backups={k:v for k,v in data['backups'].items() if k in backup_ids},
                 localWorkspace=str(workspace),localUseRequiresS3=False,languagePreference=data.get('languagePreference',[]),synthesisContract=data['synthesisContract'])
+    result['prefetchAliases']=[dict(a,absolutePath=str(workspace/a['path']),
+        fragmentAbsolutePath=str(workspace/a['fragmentPath']),
+        completeSourceAbsolutePath=str(workspace/a['completeSourcePath']))
+        for a in data.get('prefetchAliases',[]) if a['groupId'] in ids]
     if args.files:
         result['files']=[r for r in read_voice_files(data) if r['groupId'] in ids]
         order={g['id']:i for i,g in enumerate(groups)}

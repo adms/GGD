@@ -60,6 +60,9 @@ class VoiceDelivery(unittest.TestCase):
                               aliasGroupIds=['kof-old','kof-float'],fileCount=1)],
                   alternateAudioSources=[dict(id='kof-old',preferredGroupId='kof-old:voice',
                                               preferredSourceId='kof-float',files=[alternate])],
+                  prefetchAliases=[dict(groupId='kof-old:voice',path='new/float.wav',
+                                        fragmentPath='raw/prefix.wem',completeSourcePath='raw/full.wem',
+                                        alreadyCountedPrimaryAudio=True)],
                   localWorkspace='/local/assets',backups={},synthesisContract={},
                   sourceFileManifest='voice-files.jsonl.gz',sourceFileEncoding='gzip',
                   sourceFileManifestSha256=hashlib.sha256(blob).hexdigest(),
@@ -80,6 +83,9 @@ class VoiceDelivery(unittest.TestCase):
                     self.assertEqual(result['files'][0]['absolutePath'],'/local/assets/new/float.wav')
                     self.assertEqual(result['alternateFiles'],
                                      [dict(alternate,absolutePath='/local/assets/old/pcm.wav')])
+                    self.assertEqual(len(result['prefetchAliases']),1)
+                    self.assertEqual(result['prefetchAliases'][0]['completeSourceAbsolutePath'],
+                                     '/local/assets/raw/full.wem')
 
 
 if __name__=='__main__':unittest.main()
