@@ -120,6 +120,19 @@
       ]
     },
     {
+      "kind": "confirmed",
+      "text": "GitHub Linux CI 曾因沒有 macOS say 聲音，把兩份已提交名言索引誤判為 stale；名言 freshness check 現在沿用已提交產物記錄且仍在允許清單內的聲音版本，正式重建仍會依 macOS 實機聲音解析。沒有 say 的 PATH 回歸與一般 freshness check 均通過，因此來源內容漂移仍會紅，主機聲音庫差異不再製造假失敗。",
+      "commit": "188a88a9c62813cad68fef9c6395152948272b06",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/ops/champQuotesGeneratorRuns.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "tools/tts-gen/src/build-champ-quotes.mjs",
+        "packages/shared/src/ops/champQuotesGeneratorRuns.test.ts"
+      ]
+    },
+    {
       "kind": "inferred",
       "text": "全部 126 名要在同一正式服務完成，仍依賴本 PR、LoL 第二批 Draft PR #1193 及 Main 當下 target 合併。集中閘目前只剩 #1170 尚未合併的核准語音 donor WAV；本分支不以假檔或跳過檢查偽造通過。P3-05 若要從可選且關閉提升為可發布推論，還需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。",
       "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
