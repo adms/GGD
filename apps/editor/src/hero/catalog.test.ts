@@ -37,4 +37,10 @@ it("bundles every pickable document template plus the offline preview inputs", (
   );
   expect(bundledHeroCatalog.modelIds.every((id) => bodies.has(id) || declared.has(id))).toBe(true);
   expect(bundledHeroCatalog.modelIds.filter((id) => !bodies.has(id)).length).toBeGreaterThan(0);
+  // ⛔ 凍結版本（`version.body.*`）是「某支英雄某個時間點的身體」這個歷史事實的快照，
+  //    ⛔ 不是可挑的身體 —— 而它們**每一顆都在 `bodies` 裡**（英雄卡的 modelKey 指的就是它）
+  //    ⇒ 少了這條，`bound.has(id)` 會把它們全部放行。2026-09-11 量到 261 筆裡有 45 筆是它們。
+  //    ⭐ 後台下拉早就濾掉了（`contentApi.ts` 的 `!entry.id.startsWith("version.body.")`）
+  //    ⇒ 這一條讓**兩個面對同一個問題給同一個答案**。
+  expect(bundledHeroCatalog.modelIds.filter((id) => id.startsWith("version.body."))).toEqual([]);
 });
