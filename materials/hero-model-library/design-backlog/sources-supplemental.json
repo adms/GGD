@@ -161,7 +161,634 @@
       "supersedesAuditRows": [
         "mediafire-shinypenguin-palworld-daedream:Daedream"
       ]
+    },
+    {
+      "id": "ou99:異形",
+      "name": "異形",
+      "work": "異形 Alien",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:312479",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_312479.glb",
+          "bytes": 494380,
+          "sha256": "6489ec93268ada2aec4b3e679e2a21235f2607782cdb3837a2b33f6cfd2de43b",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-312479-1-1.html",
+          "sourceTitle": null,
+          "tris": 1552,
+          "drawCalls": 1,
+          "animations": 6,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.312479",
+          "ggdModelDoc": "content/models/ou99.312479.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-usyl"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "Usyl",
+      "originalHeroName": "殺戮之牙",
+      "shelfNote": "⭐ **原作已設計**：`Usyl`／「殺戮之牙」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:犬夜叉",
+      "name": "犬夜叉",
+      "work": "犬夜叉",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:452782",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_452782.glb",
+          "bytes": 1191816,
+          "sha256": "7cf93c7fc14b517326a509edcf5ef38c0ebe40ce3512b7f945cb2648c3faf3a6",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-452782-1-1.html",
+          "sourceTitle": "二狗子天刀铁碎牙犬夜叉特效角色",
+          "tris": 3174,
+          "drawCalls": 9,
+          "animations": 22,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.452782",
+          "ggdModelDoc": "content/models/ou99.452782.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "designStatus": "not-defined",
+      "shelfNote": "⛔ **未設計**：原作 127 名英雄與 GGD 153 張卡逐字比對（含綽號別名）皆無此角色"
+    },
+    {
+      "id": "ou99:瘋狂假面",
+      "name": "瘋狂假面",
+      "work": "變態假面",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:455144",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_455144.glb",
+          "bytes": 555332,
+          "sha256": "57a9acc49317d22d079e0f7b3532f48bbb520b1eb1918579a25ce9099f9dbe68",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-455144-1-1.html",
+          "sourceTitle": null,
+          "tris": 6080,
+          "drawCalls": 1,
+          "animations": 9,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.455144",
+          "ggdModelDoc": "content/models/ou99.455144.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-nbst"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "Nbst",
+      "originalHeroName": "變態正義",
+      "shelfNote": "⭐ **原作已設計**：`Nbst`／「變態正義」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:黑化Saber",
+      "name": "黑化Saber",
+      "work": "Fate/stay night",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:466278",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_466278.glb",
+          "bytes": 1363744,
+          "sha256": "a66a572b1099262940fa82cb16e8b6ef0a0362837115b9762ae1dcdef164031b",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-466278-1-1.html",
+          "sourceTitle": "亚瑟王saber黑剑版魔兽模型下载+动作",
+          "tris": 11309,
+          "drawCalls": 2,
+          "animations": 17,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.466278",
+          "ggdModelDoc": "content/models/ou99.466278.json"
+        },
+        {
+          "id": "ou99:495309",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_495309.glb",
+          "bytes": 3552996,
+          "sha256": "2dd7fd9e8b8df143757c4949d4582db0efb999fe61847c88b79ed7b5f2de9a8e",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-495309-1-1.html",
+          "sourceTitle": "泳装版黑Saber 魔兽模型下载+动作",
+          "tris": 13036,
+          "drawCalls": 7,
+          "animations": 16,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.495309",
+          "ggdModelDoc": "content/models/ou99.495309.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-e00q"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "E00Q",
+      "originalHeroName": "英靈-亞瑟王",
+      "shelfNote": "⭐ **原作已設計**：`E00Q`／「英靈-亞瑟王」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:劍心",
+      "name": "劍心",
+      "work": "神劍闖江湖",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:470351",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_470351.glb",
+          "bytes": 1011568,
+          "sha256": "ea79fe64a767d221dacd6d46f074dfd427fd44f79abceb3c95fcc9ee351affa0",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-470351-1-1.html",
+          "sourceTitle": "心魔阿修罗浪客剑心魔兽模型下载+动作",
+          "tris": 12077,
+          "drawCalls": 3,
+          "animations": 7,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.470351",
+          "ggdModelDoc": "content/models/ou99.470351.json"
+        },
+        {
+          "id": "ou99:487482",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_487482.glb",
+          "bytes": 2086760,
+          "sha256": "18fbfc550f63702acda8b894da67108eea4318a6fd90dc0b7b20a986860c02e4",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-487482-1-1.html",
+          "sourceTitle": "浪子剑豪绯村剑心 魔兽模型下载+动作",
+          "tris": 8134,
+          "drawCalls": 2,
+          "animations": 11,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.487482",
+          "ggdModelDoc": "content/models/ou99.487482.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-eevi"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "Eevi",
+      "originalHeroName": "拔刀齋",
+      "shelfNote": "⭐ **原作已設計**：`Eevi`／「拔刀齋」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:阿絲娜",
+      "name": "阿絲娜",
+      "work": "刀劍神域",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:470467",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_470467.glb",
+          "bytes": 1904992,
+          "sha256": "85d241a04faa3a45c834f3b280d9acd12151eeb1e7e584ac1f661fbf448a7a14",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-470467-1-1.html",
+          "sourceTitle": "经典亚丝娜魔兽模型下载+动作",
+          "tris": 12182,
+          "drawCalls": 4,
+          "animations": 14,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.470467",
+          "ggdModelDoc": "content/models/ou99.470467.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "designStatus": "not-defined",
+      "shelfNote": "⛔ **未設計**：原作 127 名英雄與 GGD 153 張卡逐字比對（含綽號別名）皆無此角色"
+    },
+    {
+      "id": "ou99:鋼彈",
+      "name": "鋼彈",
+      "work": "機動戰士鋼彈",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:472273",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_472273.glb",
+          "bytes": 1953984,
+          "sha256": "eacda1cb2a5e1479bd7b4b28faf6510eff9ee353c0544a69c42fd004b5b5f435",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-472273-1-1.html",
+          "sourceTitle": "机甲灭却者魔兽模型下载+动作",
+          "tris": 4785,
+          "drawCalls": 4,
+          "animations": 10,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.472273",
+          "ggdModelDoc": "content/models/ou99.472273.json"
+        },
+        {
+          "id": "ou99:493659",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_493659.glb",
+          "bytes": 3138300,
+          "sha256": "00448facbf9911fd4b4fea88e4b87215d199a8ec600b6f7156c73f33ea66edc3",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-493659-1-1.html",
+          "sourceTitle": null,
+          "tris": 14620,
+          "drawCalls": 2,
+          "animations": 8,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.493659",
+          "ggdModelDoc": "content/models/ou99.493659.json"
+        },
+        {
+          "id": "ou99:494307",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_494307.glb",
+          "bytes": 1116020,
+          "sha256": "7a75d42e00900d5744be6b50fc0940e651c57ff7dfda04a3861ddc7c90c2ecc2",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-494307-1-1.html",
+          "sourceTitle": "太空机器人",
+          "tris": 3431,
+          "drawCalls": 4,
+          "animations": 12,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.494307",
+          "ggdModelDoc": "content/models/ou99.494307.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-hlgr"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "Hlgr",
+      "originalHeroName": "鋼彈",
+      "shelfNote": "⭐ **原作已設計**：`Hlgr`／「鋼彈」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:貞子",
+      "name": "貞子",
+      "work": "七夜怪談",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:480489",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_480489.glb",
+          "bytes": 445832,
+          "sha256": "7887e42d27116eabda9a919b100c63df88715b4b32d761b2b182f98c450a01cf",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-480489-1-1.html",
+          "sourceTitle": "伽椰子蜘蛛人 魔兽模型下载+动作",
+          "tris": 4156,
+          "drawCalls": 2,
+          "animations": 5,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.480489",
+          "ggdModelDoc": "content/models/ou99.480489.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-e00t"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "E00T",
+      "originalHeroName": "七夜怪談",
+      "shelfNote": "⭐ **原作已設計**：`E00T`／「七夜怪談」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:阿強一號",
+      "name": "阿強一號",
+      "work": "機器人動畫",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:485012",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_485012.glb",
+          "bytes": 1043944,
+          "sha256": "5ee356f14d2b804a257b86b503124f0c2fe2d5b701723f7e01207e2bdc95e417",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-485012-1-1.html",
+          "sourceTitle": "维罗妮卡机器人 魔兽模型下载+动作",
+          "tris": 14512,
+          "drawCalls": 1,
+          "animations": 12,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.485012",
+          "ggdModelDoc": "content/models/ou99.485012.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-h021"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "H021",
+      "originalHeroName": "破銅爛鐵",
+      "shelfNote": "⭐ **原作已設計**：`H021`／「破銅爛鐵」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:胖虎",
+      "name": "胖虎",
+      "work": "哆啦A夢",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:496746",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_496746.glb",
+          "bytes": 785220,
+          "sha256": "910774b747c47dcb0092556957f022a7d5acb404147f4f4fe0f046da4ddbb573",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-496746-1-1.html",
+          "sourceTitle": "哆啦A梦-胖虎",
+          "tris": 4978,
+          "drawCalls": 2,
+          "animations": 16,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.496746",
+          "ggdModelDoc": "content/models/ou99.496746.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-nman"
+      ],
+      "designStatus": "definitions-incomplete",
+      "originalHeroRawcode": "Nman",
+      "originalHeroName": "地獄歌神",
+      "shelfNote": "⭐ **原作已設計**：`Nman`／「地獄歌神」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:小當家",
+      "name": "小當家",
+      "work": "中華一番",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:498407",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_498407.glb",
+          "bytes": 561132,
+          "sha256": "fa2d87e97b0c01a79dfe9f714d956fed0a5ddac2589e4fcaf2a11e20130c0bdb",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-498407-1-1.html",
+          "sourceTitle": "空手道旗袍男子 魔兽模型下载+动作",
+          "tris": 4238,
+          "drawCalls": 2,
+          "animations": 16,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.498407",
+          "ggdModelDoc": "content/models/ou99.498407.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "designStatus": "not-defined",
+      "shelfNote": "⛔ **未設計**：原作 127 名英雄與 GGD 153 張卡逐字比對（含綽號別名）皆無此角色"
+    },
+    {
+      "id": "ou99:死之王",
+      "name": "死之王",
+      "work": "GGD 原創",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:459087",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_459087.glb",
+          "bytes": 5512212,
+          "sha256": "e8b57b8054ce2589fe74e90273dbd39b4ae42d5490e119ee83015eff192ed4c7",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-459087-1-1.html",
+          "sourceTitle": "冬装二次元女",
+          "tris": 21591,
+          "drawCalls": 3,
+          "animations": 26,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.459087",
+          "ggdModelDoc": "content/models/ou99.459087.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-u00k"
+      ],
+      "designStatus": "definitions-incomplete",
+      "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:飛鼠先生",
+      "name": "飛鼠先生",
+      "work": "GGD 原創",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:469191",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_469191.glb",
+          "bytes": 7799644,
+          "sha256": "3719a18cd861533c7acc56d1b1a7ff30ba7ee13cd90ec9caef28f4cec15e8879",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-469191-1-1.html",
+          "sourceTitle": "复仇七夜志贵",
+          "tris": 8175,
+          "drawCalls": 2,
+          "animations": 53,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.469191",
+          "ggdModelDoc": "content/models/ou99.469191.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-udea"
+      ],
+      "designStatus": "definitions-incomplete",
+      "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**"
+    },
+    {
+      "id": "ou99:黑人牙膏",
+      "name": "黑人牙膏",
+      "work": "GGD 原創",
+      "sourceIds": [
+        "ou99-forum-20260910"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ou99:495978",
+          "library": "ou99",
+          "path": "/Users/Takuro/GGD/content/assets/models/ou99/ou99_495978.glb",
+          "bytes": 1306916,
+          "sha256": "9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727",
+          "format": "glb",
+          "existsLocal": true,
+          "readiness": "backend-standardized-option",
+          "converted": true,
+          "resourceRole": "character-body",
+          "sourceClass": "paid-forum-download-warcraft3-mdx",
+          "identityReviewRequired": false,
+          "sourceUrl": "https://www.ou99.com/thread-495978-1-1.html",
+          "sourceTitle": "骷髅头男孩",
+          "tris": 12953,
+          "drawCalls": 1,
+          "animations": 9,
+          "textureMaxEdge": 256,
+          "ggdModelKey": "ou99.495978",
+          "ggdModelDoc": "content/models/ou99.495978.json"
+        }
+      ],
+      "acquisitionNote": "owner 授權付費購買並下載；已轉換入庫、後台與編輯器選單可選（heroBody:true）",
+      "identityHeroIds": [
+        "godie-ogld"
+      ],
+      "designStatus": "definitions-incomplete",
+      "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**"
     }
   ],
-  "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate."
+  "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate. ｜ ou99 偶久網付費下載（owner 2026-09-11 授權）：18 顆已轉換入庫並在 GGD 主線 content/models/_index.json 裡，heroBody:true ⇒ 後台與編輯器選單可選。"
 }
