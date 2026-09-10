@@ -30,6 +30,14 @@ version a controlled experiment, not a claimed quality improvement: final
 full-hero success still requires zero invalid decisions, assembly, compiler,
 import, and gameplay evidence.
 
+## Runtime guard cadence
+
+The training supervisor keeps process liveness and per-step deadline checks
+short, but reads battery/RAM/swap sensors only once every 180 seconds.  This
+three-minute resource cadence is frozen into a newly prepared run manifest;
+an already-running older supervisor retains its recorded cadence and is not
+silently rewritten in memory.
+
 ## Frozen local projection receipt
 
 The run admitted on 2026-09-10 uses this deterministic source manifest:
