@@ -33,3 +33,5 @@
 來源工作流繼續 KOF／Fate／Infinity Strash 等擷取。本工作流接收後分批轉換、驗收、追加選項及推送；不以整個遊戲尚未抓完阻擋這批交付。原始／半成品全部保留，S3 狀態另記，不能把 Git 推送當成原始備份已完成。
 
 KOF 新交付：不知火舞 XV 原作 FBX＋12 TGA、八神庵 XV 原作 FBX＋12 TGA，以及舞的 SFM 部件包，均已歸檔待材質重綁／標準化；未取得原生動作。Infinity Strash 何布 MOD 取得 1 sequence＋5 montage，缺骨架／本體，不算完整角色。
+
+定點 WebGL 與原 MDX 查核已確認：凱亞爾為手持螺旋燈器、楓為紅黑長刃，兩者應保留；羽賀則是原始 Decay 血肉顯隱遺失，仍由本轉換工作流補獨立修正版。原模型／不可變版本均未改動，完整 models:check 仍未通過。詳見 [`部件審查`](priority-evidence/residual-geometry/review.json)。

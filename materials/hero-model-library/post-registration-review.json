@@ -13,7 +13,8 @@
       ],
       "primitive": 0,
       "signal": "suspect second-skeleton",
-      "state": "pending-component-identification"
+      "state": "reviewed-held-accessory-false-positive-preserve",
+      "component": "handheld spiral lantern/tool; native prop bones, no GEOA visibility removal"
     },
     {
       "heroId": "b2-kaede",
@@ -23,7 +24,8 @@
       ],
       "primitive": 3,
       "signal": "suspect second-skeleton",
-      "state": "pending-component-identification"
+      "state": "reviewed-held-weapon-false-positive-preserve",
+      "component": "red-black long blade; native prop chain, no GEOA visibility removal"
     },
     {
       "heroId": "b2-haga",
@@ -33,7 +35,9 @@
       ],
       "primitive": 2,
       "signal": "gore-joint and floor-slab",
-      "state": "pending-visibility-treatment-with-original-preservation"
+      "state": "confirmed-decay-gore-visibility-loss-pending-new-version",
+      "component": "49 vertices, 22 triangles, gutz00, Textures/gutz.blp; native alpha 0 for six GGD states, 1 only in Decay Flesh/Bone",
+      "nextOwner": "conversion-integration-workflow"
     },
     {
       "heroId": "godie-n00b",
@@ -57,5 +61,6 @@
     "Keep originals and acquired source variants; any accepted visibility correction becomes a separately registered version.",
     "These findings do not invalidate checksums or backend registration, but do block a claim that every retained model passed full visual acceptance."
   ],
-  "evidence": "priority-evidence/release-gates/models-check.log"
+  "evidence": "priority-evidence/release-gates/models-check.log",
+  "componentReview": "priority-evidence/residual-geometry/review.json"
 }

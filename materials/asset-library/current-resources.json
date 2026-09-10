@@ -3640,7 +3640,8 @@
         ],
         "primitive": 0,
         "signal": "suspect second-skeleton",
-        "state": "pending-component-identification"
+        "state": "reviewed-held-accessory-false-positive-preserve",
+        "component": "handheld spiral lantern/tool; native prop bones, no GEOA visibility removal"
       },
       "modelDocumentGitPath": "content/models/ou99.458777-standard-v3.json"
     },
@@ -4118,7 +4119,8 @@
         ],
         "primitive": 3,
         "signal": "suspect second-skeleton",
-        "state": "pending-component-identification"
+        "state": "reviewed-held-weapon-false-positive-preserve",
+        "component": "red-black long blade; native prop chain, no GEOA visibility removal"
       },
       "modelDocumentGitPath": "content/models/ou99.474258-standard.json"
     },
@@ -4561,7 +4563,9 @@
         ],
         "primitive": 2,
         "signal": "gore-joint and floor-slab",
-        "state": "pending-visibility-treatment-with-original-preservation"
+        "state": "confirmed-decay-gore-visibility-loss-pending-new-version",
+        "component": "49 vertices, 22 triangles, gutz00, Textures/gutz.blp; native alpha 0 for six GGD states, 1 only in Decay Flesh/Bone",
+        "nextOwner": "conversion-integration-workflow"
       },
       "modelDocumentGitPath": "content/models/ou99.495015-standard.json"
     },
