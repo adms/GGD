@@ -56,6 +56,16 @@
       "vfxCount": 0,
       "audioCount": 0,
       "readyStage": "pending-standardization",
+      "conversionPreflight": {
+        "status": "rejected-not-a-converted-model",
+        "analysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-mai-preflight-20260911-v1/analysis.json",
+        "analysisSha256": "e78c0c1e7ff2636541172e5cff06a634bd188b7b7b69011560cd1e7ac6a10166",
+        "s3Archive": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-mai-preflight-20260911-v1/ac829ec415d742b5a1359a77bb68a7a739462735598df2e3b97096d49e8d28a2.tar.gz",
+        "s3ArchiveSha256": "ac829ec415d742b5a1359a77bb68a7a739462735598df2e3b97096d49e8d28a2",
+        "s3FullReadbackVerified": true,
+        "reason": "Assimp GLB retained source-package-external texture URIs; geometry-only analysis preserved 229 GLB joints but not proven equivalent to the 319-bone FBX. Skin-aware decimation remained 87083 triangles at a 26000 target, so model-budget/optimize@2 rejected writing a candidate.",
+        "runtimeSelectable": false
+      },
       "runtimeReady": false,
       "backendSelectionVerified": false,
       "defaultChanged": false,
@@ -65,7 +75,7 @@
         "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
         "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
         "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
-        "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+        "No texture-complete GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed. A 2026-09-11 preflight was explicitly rejected; retained stage evidence is not a candidate.",
         "Existing manually approved Mai proxy default is preserved; this is an additional candidate only.",
         "Blender import reported Materials mapping type NoMappingInformation; per-material assignments require inspection during conversion."
       ]
@@ -93,7 +103,7 @@
     "state": "pending-standardization",
     "selectionVerified": false
   },
-  "verification": "原包79735587 bytes，SHA與完整解包逐檔紀錄可查；21 mesh／116939 triangles／319骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁，未GLB/後台驗收，無預設變更。",
+  "verification": "原包79735587 bytes，SHA與完整解包逐檔紀錄可查；21 mesh／116939 triangles／319骨、全部頂點權重、最多4；12 TGA皆完整解碼。0原作動作/音訊/獨立VFX；FBX圖片引用待重綁。2026-09-11 Assimp／meshoptimizer 前檢查因外部貼圖 URI、GLB 229 joints 對 FBX 319 bones 尚未等價驗證、且最低 87083 triangles 仍高於 26000 目標而拒絕；未產生 GLB／後台驗收，無預設變更。",
   "backup": {
     "status": "not-uploaded",
     "readbackVerified": false

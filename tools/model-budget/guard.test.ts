@@ -63,7 +63,7 @@ describe("the import guard scores against the role gate", () => {
     expect(status).toBe(1);
     const out = JSON.parse(stdout);
     const axis = (k: string) => out.results[0].axes.find((a: any) => a.key === k);
-    expect(axis("maxTextureEdge").verdict).toBe("warn");
+    expect(axis("maxTextureEdge").verdict).toBe("over");
     expect(axis("drawCalls").verdict).toBe("over");
     // ⭐ GH#1164 —— 這一行原本斷言 `warn`（那時警戒線是 120，而這顆是 123 通道）。
     // ⛔ owner 2026-09-10 把警戒線移到 300 ⇒ 123 通道現在是 `ok`，而那是**對的**。
@@ -92,7 +92,9 @@ describe("the import guard scores against the role gate", () => {
     const axisOf = (out: string) =>
       JSON.parse(out).results[0].axes.find((a: any) => a.key === "animChannels");
     expect(axisOf(now.stdout).verdict).toBe("warn");
-    expect(now.status).toBe(0);
+    // The 412-channel result remains only a warning, while the same fixture's
+    // 1024px texture independently exceeds the current 256px hero ceiling.
+    expect(now.status).toBe(1);
     // ② ⭐ 把上限壓到那顆之下 ⇒ 「擋」那條路必須真的擋
     const tight = run([dragon, "--role", "champion", "--json", "--channel-limit", "400"]);
     expect(axisOf(tight.stdout).verdict, "⛔ 上限壓到 400 而 412 通道沒被判 over ⇒ 擋的那條路是死的").toBe("over");

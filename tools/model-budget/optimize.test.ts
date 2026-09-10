@@ -59,6 +59,12 @@ describe("checkRig is the rig-survival gate", () => {
     expect(r.reasons.join(" ")).toMatch(/did not decrease/);
   });
 
+  it("also records a requested triangle target that the candidate exceeds", () => {
+    const r = checkRig(KNIGHT, KNIGHT, 1);
+    expect(r.ok).toBe(false);
+    expect(r.reasons.join(" ")).toMatch(/triangle target not met/);
+  });
+
   it("rejects a candidate that lost an animation clip", () => {
     // craft a broken candidate: same geometry bytes, one animation dropped
     const glb = readGlb(RIGGED);
@@ -73,14 +79,14 @@ describe("checkRig is the rig-survival gate", () => {
 });
 
 describe.skipIf(!hasFfmpeg)("the optimiser texture stage", () => {
-  it("dry run plans a 1024→512 resize and writes nothing", () => {
+  it("dry run plans a 1024→256 resize and writes nothing", () => {
     const { status, stdout } = run([KNIGHT, "--role", "champion", "--json", "--out", path.join(tmp, "never")]);
     expect(status).toBe(0);
     expect(fs.existsSync(path.join(tmp, "never"))).toBe(false); // dry run touches nothing
     const out = JSON.parse(stdout.slice(stdout.indexOf("{")));
     const tex = out.plans[0].textures[0];
     expect(Math.max(tex.from.w, tex.from.h)).toBe(1024);
-    expect(Math.max(tex.to.w, tex.to.h)).toBe(512);
+    expect(Math.max(tex.to.w, tex.to.h)).toBe(256);
     expect(out.plans[0].vramAfter).toBeLessThan(out.plans[0].vramBefore);
   });
 

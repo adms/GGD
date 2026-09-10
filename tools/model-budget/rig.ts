@@ -61,7 +61,7 @@ export function summariseRig(file: string): RigSummary {
  * carry weights on every skinned primitive, and actually have FEWER triangles
  * (a decimation that did nothing is not worth adopting).
  */
-export function checkRig(srcFile: string, candidateFile: string): RigCheck {
+export function checkRig(srcFile: string, candidateFile: string, targetTris?: number): RigCheck {
   const before = summariseRig(srcFile);
   const after = summariseRig(candidateFile);
   const reasons: string[] = [];
@@ -72,5 +72,7 @@ export function checkRig(srcFile: string, candidateFile: string): RigCheck {
   if (before.skinnedPrims > 0 && after.withWeights < after.skinnedPrims)
     reasons.push(`${after.skinnedPrims - after.withWeights} skinned primitive(s) lost WEIGHTS_0`);
   if (after.tris >= before.tris) reasons.push(`triangles did not decrease (${before.tris}→${after.tris})`);
+  if (targetTris !== undefined && after.tris > targetTris)
+    reasons.push(`triangle target not met (${after.tris} > ${targetTris})`);
   return { ok: reasons.length === 0, reasons, before, after };
 }
