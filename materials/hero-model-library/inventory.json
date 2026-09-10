@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:59:22+08:00",
-  "inputsSha256": "b4960b2c39ad1547228f81a12d53ac8306f837cd3bdc6fa894de093465f7d1d3",
+  "generatedAt": "2026-09-11T07:15:54+08:00",
+  "inputsSha256": "8977e3ba0ec9a45ee7d1b4b8d1eb785af6aa05f8ae87f1cbcfb2211c734a2915",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -93912,7 +93912,7 @@
         "resourceRole": "character-model-collection",
         "localPath": "GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2",
         "selectionClass": "community-mod",
-        "publicationStatus": "local-only-awaiting-s3-upload",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-runtime-and-visual-validation",
@@ -94033,14 +94033,15 @@
           "sha256": "64e0af66d0bdeefefa6847bacb1632d258c8454bc7d041a357be63a8d760801b"
         },
         "newlyAcquiredSourcePackages": 0,
-        "verification": "原來源與舊2GLB完整保留，另存左右瀏海2材質修訂版。修正roughness、lightmap、IOR與白色emission錯譯；24張同相機比較圖及2總圖，根工作流已檢視兩總圖。幾何/骨架不改，258 joints、0 gameplay動畫。仍缺view-dependent environment項的等價呈現，最大5權重與GGD效能/變形/切換待驗收；新版本不移除舊選項。",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/kof-open3dlab-ash-xv-material-repair-v2/029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-open3dlab-ash-xv-material-repair-v2/029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7.zip",
+        "verification": "原來源與舊2GLB完整保留，另存左右瀏海2材質修訂版。修正roughness、lightmap、IOR與白色emission錯譯；24張同相機比較圖及2總圖，根工作流已檢視兩總圖。幾何/骨架不改，258 joints、0 gameplay動畫。仍缺view-dependent environment項的等價呈現，最大5權重與GGD效能/變形/切換待驗收；新版本不移除舊選項。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-open3dlab-ash-xv-material-repair-v2/029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7.zip",
           "bytes": 343150268,
           "sha256": "029c775cb00525d7f05bc5bac3fcb26e8a5fd7635a2402d703d4d5dc61aa24a7",
-          "readbackVerified": false,
-          "status": "not-uploaded"
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
