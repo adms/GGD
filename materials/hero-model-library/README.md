@@ -6,7 +6,8 @@
 |---|---|
 | [全角色模型盤點.md](全角色模型盤點.md) | 人閱讀：81 名新角色與既有角色、預設、候選及下載安排 |
 | [inventory.json](inventory.json) | 程序讀取：同份盤點的角色 ID、modelKey、S3 路徑與取得狀態 |
-| [download-sources.json](download-sources.json) | 可共編：使用者指定的下載網址與改造備註 |
+| [download-sources.json](download-sources.json) | 可共編：下載網址、改造備註、免費／論壇付費交付及每筆必要的後台整合追蹤 |
+| [public-source-files.json](public-source-files.json) | 免費／付費來源完整備份的逐檔 SHA-256、S3 位置與尚未上傳紀錄；沿用檔名，不是成品清單 |
 | [pairing-inputs.json](pairing-inputs.json) | 可共編：第二批與舊英雄配對來源 |
 | [default-policy.json](default-policy.json) | 預設核准範圍：僅 11 組加工替身，其他相似模型留候選 |
 | [derivatives.json](derivatives.json) | 可共編：獨立模型副本的製作要求 |
@@ -19,4 +20,4 @@
 
 本版包含 97 筆來源選項、90 個不同模型，以及成品庫中既有的 60 個 GGD 作者化 VFX 元件。模型／動作元件與完整英雄包分開計算；不得宣稱 156 筆盤點 ID 已全部上架。
 
-已有可用 300 模型就預設用 300，付費來源暫緩；缺可用 300 時才優先處理使用者來源。銀時、蜘蛛子、海克力斯與五個待轉換項目的細節統一放在盤點，不再在多個 README 重複維護。
+已有可用 300 模型就預設用 300；既有版本先核對，避免重買。其他工作流經使用者授權付費取得的素材，一律與免費來源保留整合，預設順位不得刪減候選；尚未取得或轉換的來源不冒充已上架。銀時、蜘蛛子、海克力斯及各來源未完成步驟的細節統一放在盤點。

@@ -1,6 +1,6 @@
 import argparse,json,re,hashlib,datetime
 from pathlib import Path
-from source_links import render_sources, plan_sources
+from source_links import render_sources, plan_sources, acquired_sources
 from default_policy import eligible
 repo=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser(description='Rebuild the hero inventory using Git files only.')
@@ -137,8 +137,9 @@ for section in ['既有角色／形態','第一批 37 名','第二批 37 名','L
   d=r['default']
   requests=[e for e in download_plan['entries'] if r['id'] in e['heroIds']]
   download='已有 300，暫緩付費下載' if requests and all(e['downloadPriority']=='defer-existing-300' for e in requests) else '使用者來源優先下載' if requests else '未列新增下載來源'
-  acquired=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds']]
+  acquired=[s for s in acquired_sources(download_plan) if r['id'] in s['heroIds']]
   if any(r['id'] in e.get('purchaseHoldFor',[]) for e in requests):download='**免費來源已取得，暫緩購買**；先完成轉換／動作驗收'
+  if any(e.get('acquiredPaidSources') for e in requests):download='**來源已取得（含論壇付費），全部保留整合**；先完成轉換／後台切換驗收'
   leads=[s for s in download_plan.get('publicSourceLeads',[]) if r['id'] in s['heroIds']]
   if leads:download+='；其他來源線索（未取得模型）：'+'、'.join(f'[{s["id"]}]({s["url"]})' for s in leads)
   options='<br>'.join(f"{i+1}. {text(o['name'])}／{source_label(o)}（{kinds.get(o['kind'],'待轉換')}{'；未核准預設' if not o.get('defaultEligible',False) and o['kind']=='style-proxy' else ''}）" for i,o in enumerate(r['options']+r['pending'])) or '尚無可用候選'
@@ -177,6 +178,7 @@ for r in rows:
  r['checkoutSelection']={'modelKey':chosen.get('modelKey'),'mode':chosen.get('modelSelectionMode','auto')} if chosen else None
  r['downloadSources']=[e['id'] for e in download_plan['entries'] if r['id'] in e['heroIds']]
  r['publicCandidates']=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds']]
+ r['paidCandidates']=[s for s in download_plan.get('paidSources',[]) if r['id'] in s['heroIds']]
  for option in r['options']:
   m=by_key.get(option['key'])
   if m:

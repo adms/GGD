@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T13:35:58+08:00",
-  "inputsSha256": "c6262008749a3c6ca4019f34c5a5a6a99f18700022f65a7df4181607b27a33b7",
+  "generatedAt": "2026-09-10T14:11:24+08:00",
+  "inputsSha256": "83e295e5cbc37b6f638e452e9ee9a14b26ef6fa35cc2adb38ede9a95bd6b1a8e",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -64,7 +64,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e002",
@@ -148,7 +149,8 @@
       "downloadSources": [
         "owner-model-084"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e007",
@@ -206,7 +208,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e008",
@@ -290,7 +293,8 @@
       "downloadSources": [
         "owner-model-077"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00l",
@@ -374,7 +378,8 @@
       "downloadSources": [
         "owner-model-084"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00n",
@@ -432,7 +437,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00r",
@@ -527,9 +533,20 @@
             "sha256": "49999053a5ec9b83a9a02a04922f694c9ea20603c3bbf36c3b94aa015fa27408",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-e00r"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00s",
@@ -589,7 +606,8 @@
       "downloadSources": [
         "owner-model-034"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00w",
@@ -647,7 +665,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00x",
@@ -705,7 +724,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-e010",
@@ -765,7 +785,8 @@
       "downloadSources": [
         "owner-model-034"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-edem",
@@ -849,7 +870,8 @@
       "downloadSources": [
         "owner-model-089"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-efur",
@@ -907,7 +929,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-emfr",
@@ -965,7 +988,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-emns",
@@ -1054,18 +1078,27 @@
           "verification": "已取得 LIGHT DN KW.dff／txd，解析 33 Frame、32 骨、36,957 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收。",
           "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
           "usage": "intake-only; no automatic runtime selection",
-          "pendingBackup": {
-            "status": "not-uploaded",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
-            "localArchive": "outputs/public-model-sources-20260910/gtainside-light-yagami-kw-round5-final.zip",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
             "bytes": 8285227,
             "sha256": "3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2",
-            "contentKind": "model-intake",
-            "readbackVerified": false
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload"
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-emns"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-etyr",
@@ -1123,7 +1156,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-ewar",
@@ -1181,7 +1215,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h00l",
@@ -1239,7 +1274,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h01n",
@@ -1323,7 +1359,8 @@
       "downloadSources": [
         "owner-model-083"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h01o",
@@ -1407,7 +1444,8 @@
       "downloadSources": [
         "owner-model-083"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h01u",
@@ -1467,7 +1505,56 @@
       "downloadSources": [
         "owner-model-079"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "gtainside-lubu",
+          "target": "呂布（Warriors Orochi 3）",
+          "heroIds": [
+            "godie-h01u"
+          ],
+          "url": "https://www.gtainside.com/sanandreas/skins/110660-warriors-orochi-3-lu-bu/",
+          "downloadUrl": "https://files.gtainside.com/201709/1506627573_Warriors%20Orochi%203%20Lu%20bu.rar",
+          "uploader": "diegoforfun",
+          "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-lubu",
+          "files": [
+            {
+              "path": "raw/Warriors-Orochi-3-Lu-bu.rar",
+              "bytes": 1372912,
+              "sha256": "9264030fdbd0dd73d24527e1d16c212be3e9fa66ca2a7c1e50a4bed7b511d476",
+              "archiveMember": "raw/Warriors-Orochi-3-Lu-bu.rar"
+            }
+          ],
+          "verification": "已取得 bmost.dff／txd；解析 33 Frame、32 骨、10,053 頂點蒙皮與綁定矩陣，3 張 PNG。包內無 IFP，武器需另配；待 GLB、動作綁定與後台驗收。",
+          "reuseTerms": "作者署名與遊戲來源保留；跨遊戲再散布權利未核實。",
+          "usage": "intake-only; backend integration required after standardization",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-h01u"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-lubu/822167f0bf7f385e904949ddcd4e1cf9c4f6bbaae5c70f0dee95410db326cf89.zip",
+            "bytes": 8574786,
+            "sha256": "822167f0bf7f385e904949ddcd4e1cf9c4f6bbaae5c70f0dee95410db326cf89",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        }
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-h020",
@@ -1567,7 +1654,8 @@
         "mode": "manual"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h02k",
@@ -1627,7 +1715,8 @@
       "downloadSources": [
         "owner-model-017"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h02r",
@@ -1685,7 +1774,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h02u",
@@ -1743,7 +1833,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-h02v",
@@ -1801,7 +1892,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hapm",
@@ -1885,7 +1977,8 @@
       "downloadSources": [
         "owner-model-066"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hart",
@@ -1943,7 +2036,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hgam",
@@ -2001,7 +2095,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hjai",
@@ -2101,7 +2196,8 @@
         "mode": "manual"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hpb1",
@@ -2161,7 +2257,8 @@
       "downloadSources": [
         "owner-model-088"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-huth",
@@ -2219,7 +2316,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hvsh",
@@ -2301,7 +2399,8 @@
         "mode": "manual"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-hvwd",
@@ -2420,18 +2519,27 @@
               }
             }
           ],
-          "pendingBackup": {
-            "status": "not-uploaded",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
-            "localArchive": "outputs/public-model-sources-20260910/gtainside-anime-pack-round5-final.zip",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
             "bytes": 21768074,
             "sha256": "3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b",
-            "contentKind": "model-intake",
-            "readbackVerified": false
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload"
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-hvwd"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-n003",
@@ -2491,7 +2599,8 @@
       "downloadSources": [
         "owner-model-086"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-n00b",
@@ -2585,9 +2694,20 @@
             "sha256": "4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-n00b"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-n00p",
@@ -2645,7 +2765,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-n01c",
@@ -2703,7 +2824,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-n01g",
@@ -2763,7 +2885,8 @@
       "downloadSources": [
         "owner-model-086"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-nbbc",
@@ -2821,7 +2944,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-nsjs",
@@ -2879,7 +3003,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o00k",
@@ -2937,7 +3062,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o00l",
@@ -2995,7 +3121,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o00x",
@@ -3055,7 +3182,8 @@
       "downloadSources": [
         "owner-model-082"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o02l",
@@ -3115,7 +3243,8 @@
       "downloadSources": [
         "owner-model-081"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o02p",
@@ -3277,9 +3406,24 @@
               "readbackVerified": true,
               "usage": "legacy; human permission required; not runtime-ready"
             }
-          ]
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-o02p",
+              "community-review-09-20260907"
+            ],
+            "ownerEntryIds": [
+              "owner-model-022",
+              "owner-model-030"
+            ],
+            "release": null,
+            "selectionVerified": false
+          }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-o030",
@@ -3339,7 +3483,8 @@
       "downloadSources": [
         "owner-model-042"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-ofar",
@@ -3428,16 +3573,24 @@
           "verification": "已靜態擷取 1 Mesh、1 SkinnedMeshRenderer、37 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。只認列一般形態 godie-ofar；瘋狂皮卡丘 godie-o02l 尚未取得。待骨架 GLB 與動作綁定。",
           "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
           "usage": "intake-only; no automatic runtime selection",
-          "pendingBackup": {
-            "status": "not-uploaded",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
-            "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-tiny-round5-final.zip",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
             "bytes": 1608020,
             "sha256": "12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9",
-            "contentKind": "model-intake",
-            "readbackVerified": false
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload"
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-ofar"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          }
         },
         {
           "id": "thunderstore-pikachu-frankzin",
@@ -3467,18 +3620,27 @@
           "verification": "已靜態擷取 7 Mesh、7 SkinnedMeshRenderer、90 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。模型含 pm0025 身體／尾巴與 Pikachu Avatar；封面非模型預覽，外觀待驗收。只認列一般形態 godie-ofar，不涵蓋瘋狂皮卡丘。",
           "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
           "usage": "intake-only; no automatic runtime selection",
-          "pendingBackup": {
-            "status": "not-uploaded",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
-            "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-frankzin-round5-final.zip",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
             "bytes": 8075339,
             "sha256": "7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f",
-            "contentKind": "model-intake",
-            "readbackVerified": false
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload"
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-ofar"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-ogld",
@@ -3538,7 +3700,8 @@
       "downloadSources": [
         "owner-model-041"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-ogrh",
@@ -3598,7 +3761,8 @@
       "downloadSources": [
         "owner-model-082"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-orkn",
@@ -3658,7 +3822,8 @@
       "downloadSources": [
         "owner-model-042"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-osam",
@@ -3742,7 +3907,8 @@
       "downloadSources": [
         "owner-model-071"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00h",
@@ -3800,7 +3966,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00j",
@@ -3904,9 +4071,20 @@
             "sha256": "b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-u00j"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00k",
@@ -3966,7 +4144,8 @@
       "downloadSources": [
         "owner-model-012"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00l",
@@ -4024,7 +4203,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00n",
@@ -4108,7 +4288,8 @@
       "downloadSources": [
         "owner-model-075"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00o",
@@ -4192,7 +4373,8 @@
       "downloadSources": [
         "owner-model-075"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u00v",
@@ -4250,7 +4432,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u010",
@@ -4308,7 +4491,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u01u",
@@ -4392,7 +4576,8 @@
       "downloadSources": [
         "owner-model-072"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-u034",
@@ -4452,7 +4637,8 @@
       "downloadSources": [
         "owner-model-023"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-ubal",
@@ -4513,7 +4699,8 @@
         "owner-model-025",
         "owner-model-026"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-ucrl",
@@ -4608,9 +4795,20 @@
             "sha256": "73d98838696ad5fd53523f67fe1024a474529c47deaa8cabc9dbb4ad4f862378",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-ucrl"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-udea",
@@ -4670,7 +4868,8 @@
       "downloadSources": [
         "owner-model-049"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-udre",
@@ -4754,7 +4953,8 @@
       "downloadSources": [
         "owner-model-072"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-umal",
@@ -4849,6 +5049,16 @@
             "sha256": "933d753ac2bf8647d81d35d64ef827e3c2ab3425e811837f14adcbcce23d93d7",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-umal"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         },
         {
@@ -4885,9 +5095,20 @@
             "sha256": "8b9c1ea9bb7a5fdc422c221c787cb6ed312598478317eaeda93d746f0e87d8ad",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-umal"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-uvng",
@@ -4945,7 +5166,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-zombiex",
@@ -5003,7 +5225,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "sela",
@@ -5061,7 +5284,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "thorne",
@@ -5119,7 +5343,8 @@
         "mode": "auto"
       },
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-01-20260907",
@@ -5189,7 +5414,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-02-20260907",
@@ -5292,9 +5518,20 @@
             "sha256": "ce83cafc0a4e8b481c7bfc1300d2dbf14f9e054ad7b3e1b67aa1601f91b0282c",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-02-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-03-20260907",
@@ -5386,7 +5623,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-04-20260907",
@@ -5458,7 +5696,8 @@
       "downloadSources": [
         "owner-model-032"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-05-20260907",
@@ -5560,9 +5799,20 @@
             "sha256": "6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-05-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-06-20260907",
@@ -5650,7 +5900,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-07-20260907",
@@ -5752,9 +6003,20 @@
             "sha256": "b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-07-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-08-20260907",
@@ -5824,7 +6086,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-09-20260907",
@@ -5926,6 +6189,16 @@
             "sha256": "43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-09-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         },
         {
@@ -6029,9 +6302,24 @@
               "readbackVerified": true,
               "usage": "legacy; human permission required; not runtime-ready"
             }
-          ]
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "godie-o02p",
+              "community-review-09-20260907"
+            ],
+            "ownerEntryIds": [
+              "owner-model-022",
+              "owner-model-030"
+            ],
+            "release": null,
+            "selectionVerified": false
+          }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-10-20260907",
@@ -6103,7 +6391,8 @@
       "downloadSources": [
         "owner-model-067"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-11-20260907",
@@ -6206,9 +6495,20 @@
             "sha256": "eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-11-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-12-20260907",
@@ -6278,7 +6578,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-13-20260907",
@@ -6348,7 +6649,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-14-20260907",
@@ -6449,9 +6751,20 @@
             "sha256": "db49dfe987e5f1a704a210a67ff6a7f73d55bb5e5ef6882629b91e70c1ec550a",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-14-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-15-20260907",
@@ -6554,9 +6867,20 @@
             "sha256": "d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-15-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-16-20260907",
@@ -6626,7 +6950,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-17-20260907",
@@ -6696,7 +7021,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-18-20260907",
@@ -6768,7 +7094,8 @@
       "downloadSources": [
         "owner-model-070"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-19-20260907",
@@ -6838,7 +7165,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-20-20260907",
@@ -6910,7 +7238,8 @@
       "downloadSources": [
         "owner-model-063"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-21-20260907",
@@ -6980,7 +7309,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-22-20260907",
@@ -7083,9 +7413,20 @@
             "sha256": "ec763b598598a0f3cc3cde1f3d21231b0071aab635fefdbf772af0d5a34f229c",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-22-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-23-20260907",
@@ -7175,7 +7516,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-24-20260907",
@@ -7247,7 +7589,8 @@
       "downloadSources": [
         "owner-model-069"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-25-20260907",
@@ -7317,7 +7660,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-26-20260907",
@@ -7387,7 +7731,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-27-20260907",
@@ -7453,7 +7798,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-28-20260907",
@@ -7523,7 +7869,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-29-20260907",
@@ -7595,7 +7942,8 @@
       "downloadSources": [
         "owner-model-031"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-30-20260907",
@@ -7663,7 +8011,8 @@
       "downloadSources": [
         "owner-model-047"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-31-20260907",
@@ -7755,7 +8104,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-32-20260907",
@@ -7847,7 +8197,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-33-20260907",
@@ -7915,7 +8266,8 @@
       "downloadSources": [
         "owner-model-051"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-34-20260907",
@@ -7983,7 +8335,64 @@
       "downloadSources": [
         "owner-model-052"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "thunderstore-turbo-granny",
+          "target": "高速婆婆（招財貓形態，使用者確認）",
+          "heroIds": [
+            "community-review-34-20260907"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+          "downloadUrl": "https://thunderstore.io/package/download/inkiidonut/Granny_Suit/0.1.0/",
+          "uploader": "inkiidonut",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-turbo-granny",
+          "files": [
+            {
+              "path": "raw/Granny_Suit-0.1.0.zip",
+              "bytes": 507560,
+              "sha256": "8de3239cbb57ea36a77235eb69da3c1364fb43d5dacb4463f4f61a629252fedb",
+              "archiveMember": "raw/Granny_Suit-0.1.0.zip"
+            }
+          ],
+          "verification": "使用者 2026-09-10 明確確認採招財貓形態。已靜態擷取 20 Mesh、20 SkinnedMeshRenderer、63 Transform、20 貼圖、1 Avatar；包內 0 AnimationClip。取代舊稿排除招財貓的外觀限制，待骨架 GLB、動作與後台切換驗收。",
+          "reuseTerms": "作者署名與原始包保留；跨遊戲再散布權利未核實。",
+          "usage": "intake-only; backend integration required after standardization",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-34-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "ownerModelDecision": {
+            "date": "2026-09-10",
+            "quote": "高速婆婆模型是招財貓形態 這是對的 他的最新形態",
+            "acceptedForm": "招財貓",
+            "sourceId": "thunderstore-turbo-granny",
+            "scope": "visual model selection; overrides older no-maneki-neko presentation note",
+            "supersedes": "materials/community-hero-forge/recipes/34.upload-recipe.json → presentation.visualDirection"
+          },
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2.zip",
+            "bytes": 2227840,
+            "sha256": "16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        }
+      ],
+      "paidCandidates": []
     },
     {
       "id": "community-review-35-20260907",
@@ -8055,7 +8464,8 @@
       "downloadSources": [
         "owner-model-016"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-36-20260907",
@@ -8123,7 +8533,8 @@
       "downloadSources": [
         "owner-model-053"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "community-review-37-20260907",
@@ -8191,7 +8602,131 @@
       "downloadSources": [
         "owner-model-020"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "github-chiikawa",
+          "target": "吉伊卡哇（Minecraft 模型／動作／音效）",
+          "heroIds": [
+            "community-review-37-20260907"
+          ],
+          "url": "https://github.com/Dwinovo/minecraft-chiikawa",
+          "downloadUrl": "https://codeload.github.com/Dwinovo/minecraft-chiikawa/zip/b9ef93b9fd653e10714d1ed844f50a59f51b4057",
+          "uploader": "Dwinovo；美術支援 zoe_1000",
+          "format": "Bedrock geometry + animation JSON／PNG／OGG",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa",
+          "files": [
+            {
+              "path": "raw/chiikawa-b9ef93b9.zip",
+              "bytes": 1628532,
+              "sha256": "c1d9c551c17693c1ca5fe35bbb572db18a888252e2e95483651481ae2de9fe5f",
+              "archiveMember": "raw/chiikawa-b9ef93b9.zip"
+            }
+          ],
+          "verification": "已取得固定 Git 版本的 7 角色原生模型、141 段動畫記錄、25 PNG 與 21 OGG（ffprobe 通過）。吉伊卡哇本體 24 骨節、26 方塊、19 段動畫及 3 個音訊檔；部分動畫通道引用不存在的骨名，已保留缺口。其餘 6 角色完整歸檔但未對應 GGD ID。待 GLB、綁定與後台驗收。",
+          "reuseTerms": "CC-BY-NC-SA-4.0；保留作者與 LICENSE，成品用途／再散布條件需遵循來源。",
+          "usage": "intake-only; backend integration required after standardization",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "community-review-37-20260907"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "sourceCommit": "b9ef93b9fd653e10714d1ed844f50a59f51b4057",
+          "characters": [
+            {
+              "name": "chiikawa",
+              "heroIds": [
+                "community-review-37-20260907"
+              ],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/chiikawa.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/chiikawa.json",
+              "boneCount": 24,
+              "animationCount": 19,
+              "backendIntegrationRequired": true,
+              "mappingState": "mapped"
+            },
+            {
+              "name": "hachiware",
+              "heroIds": [],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/hachiware.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/hachiware.json",
+              "boneCount": 36,
+              "animationCount": 19,
+              "backendIntegrationRequired": true,
+              "mappingState": "pending-character-mapping"
+            },
+            {
+              "name": "kurimanju",
+              "heroIds": [],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/kurimanju.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/kurimanju.json",
+              "boneCount": 24,
+              "animationCount": 19,
+              "backendIntegrationRequired": true,
+              "mappingState": "pending-character-mapping"
+            },
+            {
+              "name": "momonga",
+              "heroIds": [],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/momonga.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/momonga.json",
+              "boneCount": 24,
+              "animationCount": 21,
+              "backendIntegrationRequired": true,
+              "mappingState": "pending-character-mapping"
+            },
+            {
+              "name": "rakko",
+              "heroIds": [],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/rakko.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/rakko.json",
+              "boneCount": 34,
+              "animationCount": 20,
+              "backendIntegrationRequired": true,
+              "mappingState": "pending-character-mapping"
+            },
+            {
+              "name": "shisa",
+              "heroIds": [],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/shisa.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/shisa.json",
+              "boneCount": 32,
+              "animationCount": 24,
+              "backendIntegrationRequired": true,
+              "mappingState": "pending-character-mapping"
+            },
+            {
+              "name": "usagi",
+              "heroIds": [],
+              "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/usagi.json",
+              "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/usagi.json",
+              "boneCount": 33,
+              "animationCount": 19,
+              "backendIntegrationRequired": true,
+              "mappingState": "pending-character-mapping"
+            }
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-chiikawa/6d3881abab64d6d910adb43254825d097c385ecee631cccdd0b41dfc1b116ef6.zip",
+            "bytes": 3207188,
+            "sha256": "6d3881abab64d6d910adb43254825d097c385ecee631cccdd0b41dfc1b116ef6",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        }
+      ],
+      "paidCandidates": []
     },
     {
       "id": "godie-e00u",
@@ -8245,7 +8780,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o01z",
@@ -8335,7 +8871,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-o02v",
@@ -8425,7 +8962,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "godie-ntin",
@@ -8551,7 +9089,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-popp",
@@ -8627,7 +9166,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-rem",
@@ -8681,7 +9221,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-zenitsu",
@@ -8737,7 +9278,8 @@
       "downloadSources": [
         "owner-model-015"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-rin",
@@ -8793,7 +9335,8 @@
       "downloadSources": [
         "owner-model-065"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-uncle",
@@ -8830,7 +9373,8 @@
       "downloadSources": [
         "owner-model-043"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-boxxo",
@@ -8879,7 +9423,8 @@
       "downloadSources": [
         "owner-model-036"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-shadow",
@@ -8916,7 +9461,56 @@
       "downloadSources": [
         "owner-model-046"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "gamebanana-shadow",
+          "target": "闇影／席德・卡蓋諾（Shadow）",
+          "heroIds": [
+            "b2-shadow"
+          ],
+          "url": "https://gamebanana.com/mods/662449",
+          "downloadUrl": "https://gamebanana.com/dl/1656965",
+          "uploader": "MoltiOG／Molti；模型權重與物理 struggling",
+          "format": "Source 2 VPK → skinned GLB／PNG／MP3／VPCF",
+          "accessStatus": "public-manual-download",
+          "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow",
+          "files": [
+            {
+              "path": "raw/shadow_x_apollo_deadlock_a5ff4.zip",
+              "bytes": 32677176,
+              "sha256": "9f382e299798a492a7a5bbed1aa7113a38df51399ba3b297ded4ec3008d4d566",
+              "archiveMember": "raw/shadow_x_apollo_deadlock_a5ff4.zip"
+            }
+          ],
+          "verification": "VPK 全部 484 成員 CRC32 通過並完整解包。角色 GLB 含 3 蒙皮網格、842 骨節與 6 段動畫；另有碰撞體／特效模型。295 原生 VPCF、146 MP3（ffprobe 全通過）與 74 PNG 已保存。缺少共用 shader、預設 mask、動畫圖及特效材質，待 GGD 正規化、動作綁定、特效轉換及後台驗收。",
+          "reuseTerms": "作者列非商用與署名要求；發布修改／再散布需先取得作者同意。保留完整條款，備份不等於共享成品已可發布。",
+          "usage": "intake-only; backend integration required after standardization",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "b2-shadow"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-shadow/4748ef6d094d47b6933ac08c953fa80d45e408a9c2f0c589bffc982f9a69a785.zip",
+            "bytes": 154480597,
+            "sha256": "4748ef6d094d47b6933ac08c953fa80d45e408a9c2f0c589bffc982f9a69a785",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        }
+      ],
+      "paidCandidates": []
     },
     {
       "id": "b2-bojji",
@@ -8998,7 +9592,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-maomao",
@@ -9069,9 +9664,20 @@
             "sha256": "52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "b2-maomao"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "b2-elma",
@@ -9108,7 +9714,8 @@
       "downloadSources": [
         "owner-model-048"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-albus",
@@ -9184,7 +9791,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-goblin",
@@ -9260,7 +9868,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-maple",
@@ -9314,7 +9923,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-naofumi",
@@ -9400,18 +10010,27 @@
           "verification": "已取得 Naofumi.dff／txd，解析 33 Frame、32 骨、57,628 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收，保留使用者移除刀劍要求。",
           "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
           "usage": "intake-only; no automatic runtime selection",
-          "pendingBackup": {
-            "status": "not-uploaded",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
-            "localArchive": "outputs/public-model-sources-20260910/gtainside-naofumi-round5-final.zip",
+          "publicationStatus": "s3-legacy-readback-verified",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
             "bytes": 9501904,
             "sha256": "8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7",
-            "contentKind": "model-intake",
-            "readbackVerified": false
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
           },
-          "publicationStatus": "local-only-awaiting-s3-upload"
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "b2-naofumi"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "b2-makoto",
@@ -9448,7 +10067,8 @@
       "downloadSources": [
         "owner-model-019"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-noor",
@@ -9506,7 +10126,8 @@
       "downloadSources": [
         "owner-model-027"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-touka",
@@ -9543,7 +10164,8 @@
       "downloadSources": [
         "owner-model-028"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-haga",
@@ -9580,7 +10202,8 @@
       "downloadSources": [
         "owner-model-054"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-guts",
@@ -9672,9 +10295,20 @@
             "sha256": "f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80",
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "heroIds": [
+              "b2-guts"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
           }
         }
-      ]
+      ],
+      "paidCandidates": []
     },
     {
       "id": "b2-keyaru",
@@ -9711,7 +10345,8 @@
       "downloadSources": [
         "owner-model-055"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-kaede",
@@ -9748,7 +10383,8 @@
       "downloadSources": [
         "owner-model-056"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-matthias",
@@ -9785,7 +10421,8 @@
       "downloadSources": [
         "owner-model-057"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-sinbad",
@@ -9822,7 +10459,8 @@
       "downloadSources": [
         "owner-model-037"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-kumoko",
@@ -9882,7 +10520,8 @@
       "downloadSources": [
         "owner-model-014"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-yogiri",
@@ -9958,7 +10597,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-kaiji",
@@ -10015,7 +10655,8 @@
       "downloadSources": [
         "owner-model-058"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-fushi",
@@ -10052,7 +10693,8 @@
       "downloadSources": [
         "owner-model-059"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-orphen",
@@ -10089,7 +10731,8 @@
       "downloadSources": [
         "owner-model-038"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-klaus",
@@ -10126,7 +10769,8 @@
       "downloadSources": [
         "owner-model-039"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-takopi",
@@ -10184,7 +10828,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-luckyman",
@@ -10221,7 +10866,8 @@
       "downloadSources": [
         "owner-model-062"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-misery",
@@ -10297,7 +10943,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-nube",
@@ -10334,7 +10981,8 @@
       "downloadSources": [
         "owner-model-040"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-shinchan",
@@ -10373,7 +11021,8 @@
       "downloadSources": [
         "owner-model-060"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-aladdin",
@@ -10410,7 +11059,8 @@
       "downloadSources": [
         "owner-model-033"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-ned",
@@ -10448,7 +11098,8 @@
       "downloadSources": [
         "owner-model-061"
       ],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "b2-kisaragi",
@@ -10502,7 +11153,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:karthus",
@@ -10558,7 +11210,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:leesin",
@@ -10582,7 +11235,8 @@
       ],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:lux",
@@ -10638,7 +11292,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:missfortune",
@@ -10694,7 +11349,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:warwick",
@@ -10718,7 +11374,8 @@
       ],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:xerath",
@@ -10774,7 +11431,8 @@
       "pending": [],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     },
     {
       "id": "example:yasuo",
@@ -10798,7 +11456,8 @@
       ],
       "checkoutSelection": null,
       "downloadSources": [],
-      "publicCandidates": []
+      "publicCandidates": [],
+      "paidCandidates": []
     }
   ],
   "downloadPlan": {
@@ -10827,6 +11486,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "thunderstore-eva01"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "thunderstore-eva01"
         ],
         "purchaseHoldFor": [
@@ -10862,6 +11525,10 @@
         "acquiredPublicSources": [
           "itch-kmiliz-doraemon"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "itch-kmiliz-doraemon"
+        ],
         "purchaseHoldFor": [
           "godie-n00b"
         ],
@@ -10890,15 +11557,21 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
+        "acquiredPublicSources": [
+          "thunderstore-sadako"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-sadako"
+        ],
         "purchaseHoldFor": [],
-        "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHoldWithoutHeroId": true,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
-        "downloadPriority": "needs-roster-mapping"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-004",
@@ -10916,6 +11589,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -10952,6 +11627,11 @@
           "thunderstore-kenshiro",
           "thunderstore-hokuto-lr"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-kenshiro",
+          "thunderstore-hokuto-lr"
+        ],
         "purchaseHoldFor": [
           "godie-umal"
         ],
@@ -10983,6 +11663,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "thunderstore-hisoka"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "thunderstore-hisoka"
         ],
         "purchaseHoldFor": [
@@ -11019,6 +11703,11 @@
           "thunderstore-holo",
           "hive-anime-team-survival"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-holo",
+          "hive-anime-team-survival"
+        ],
         "purchaseHoldFor": [
           "community-review-09-20260907"
         ],
@@ -11050,6 +11739,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "thunderstore-rimuru-ror2"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "thunderstore-rimuru-ror2"
         ],
         "purchaseHoldFor": [
@@ -11085,6 +11778,10 @@
         "acquiredPublicSources": [
           "steam-korosensei"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "steam-korosensei"
+        ],
         "purchaseHoldFor": [
           "community-review-14-20260907"
         ],
@@ -11116,6 +11813,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "steam-billy-herrington"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "steam-billy-herrington"
         ],
         "purchaseHoldFor": [
@@ -11151,6 +11852,10 @@
         "acquiredPublicSources": [
           "thunderstore-maomao"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-maomao"
+        ],
         "purchaseHoldFor": [
           "b2-maomao"
         ],
@@ -11182,6 +11887,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11209,6 +11916,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11236,6 +11945,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11270,6 +11981,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11304,6 +12017,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11338,6 +12053,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11365,6 +12082,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11392,6 +12111,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11420,17 +12141,25 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "github-chiikawa"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "github-chiikawa"
+        ],
+        "purchaseHoldFor": [
+          "community-review-37-20260907"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "community-review-37-20260907"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-021",
@@ -11450,6 +12179,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "thunderstore-guts"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "thunderstore-guts"
         ],
         "purchaseHoldFor": [
@@ -11481,6 +12214,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "hive-anime-team-survival"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "hive-anime-team-survival"
         ],
         "purchaseHoldFor": [],
@@ -11515,6 +12252,10 @@
         "acquiredPublicSources": [
           "thunderstore-gon"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-gon"
+        ],
         "purchaseHoldFor": [
           "godie-ucrl"
         ],
@@ -11546,6 +12287,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11576,6 +12319,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11608,6 +12353,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11637,6 +12384,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11666,6 +12415,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11693,6 +12444,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11718,6 +12471,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "hive-anime-team-survival"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "hive-anime-team-survival"
         ],
         "purchaseHoldFor": [],
@@ -11747,6 +12504,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11781,6 +12540,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11815,6 +12576,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11845,6 +12608,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11881,6 +12646,10 @@
         "acquiredPublicSources": [
           "gtainside-naofumi"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "gtainside-naofumi"
+        ],
         "purchaseHoldFor": [
           "b2-naofumi"
         ],
@@ -11914,6 +12683,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11943,6 +12714,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -11972,6 +12745,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12001,6 +12776,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12030,6 +12807,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12059,6 +12838,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12089,6 +12870,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12119,6 +12902,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12148,6 +12933,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "hive-megaman-x"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "hive-megaman-x"
         ],
         "purchaseHoldFor": [
@@ -12183,6 +12972,10 @@
         "acquiredPublicSources": [
           "thunderstore-iori"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-iori"
+        ],
         "purchaseHoldFor": [
           "community-review-02-20260907"
         ],
@@ -12213,17 +13006,25 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "gamebanana-shadow"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "gamebanana-shadow"
+        ],
+        "purchaseHoldFor": [
+          "b2-shadow"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "b2-shadow"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-047",
@@ -12243,6 +13044,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12272,6 +13075,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12301,6 +13106,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12330,6 +13137,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "thunderstore-rezero"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "thunderstore-rezero"
         ],
         "purchaseHoldFor": [
@@ -12363,6 +13174,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12381,7 +13194,9 @@
           "community-review-34-20260907"
         ],
         "category": "primary",
-        "ownerNotes": [],
+        "ownerNotes": [
+          "高速婆婆模型採招財貓形態（使用者 2026-09-10 最新確認）；取代舊稿「不用招財貓」的外觀限制，技能機制不因此改寫。"
+        ],
         "mappingStatus": "mapped",
         "sources": [
           {
@@ -12389,19 +13204,35 @@
             "submittedUrl": "https://www.ou99.com/thread-458013-1-1.html"
           }
         ],
+        "ownerModelDecision": {
+          "date": "2026-09-10",
+          "quote": "高速婆婆模型是招財貓形態 這是對的 他的最新形態",
+          "acceptedForm": "招財貓",
+          "sourceId": "thunderstore-turbo-granny",
+          "scope": "visual model selection; overrides older no-maneki-neko presentation note",
+          "supersedes": "materials/community-hero-forge/recipes/34.upload-recipe.json → presentation.visualDirection"
+        },
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "thunderstore-turbo-granny"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-turbo-granny"
+        ],
+        "purchaseHoldFor": [
+          "community-review-34-20260907"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "community-review-34-20260907"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-053",
@@ -12421,6 +13252,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12450,6 +13283,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12481,6 +13316,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12510,6 +13347,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12539,6 +13378,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12570,6 +13411,8 @@
           "steam-kaiji"
         ],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12599,6 +13442,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12630,6 +13475,8 @@
           "gtainside-shinchan-locator"
         ],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12659,6 +13506,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12690,6 +13539,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12719,6 +13570,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12751,6 +13604,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12778,6 +13633,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12812,6 +13669,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12846,6 +13705,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12878,6 +13739,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12905,6 +13768,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12939,6 +13804,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -12981,6 +13848,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13020,6 +13889,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13068,6 +13939,10 @@
         "acquiredPublicSources": [
           "gtainside-light-yagami-kw"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "gtainside-light-yagami-kw"
+        ],
         "purchaseHoldFor": [
           "godie-emns"
         ],
@@ -13105,6 +13980,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13137,6 +14014,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13183,6 +14062,10 @@
         "acquiredPublicSources": [
           "hive-sephiroth"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "hive-sephiroth"
+        ],
         "purchaseHoldFor": [
           "godie-u00j"
         ],
@@ -13214,6 +14097,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13252,6 +14137,10 @@
         "acquiredPublicSources": [
           "gtainside-kenshin"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "gtainside-kenshin"
+        ],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": true,
         "purchaseHold": true,
@@ -13286,17 +14175,25 @@
         ],
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "acquiredPublicSources": [
+          "gtainside-lubu"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "gtainside-lubu"
+        ],
+        "purchaseHoldFor": [
+          "godie-h01u"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-h01u"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-080",
@@ -13316,6 +14213,10 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [
+          "gtainside-anime-pack"
+        ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
           "gtainside-anime-pack"
         ],
         "purchaseHoldFor": [
@@ -13357,6 +14258,11 @@
           "thunderstore-pikachu-tiny",
           "thunderstore-pikachu-frankzin"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "thunderstore-pikachu-tiny",
+          "thunderstore-pikachu-frankzin"
+        ],
         "purchaseHoldFor": [
           "godie-ofar"
         ],
@@ -13394,6 +14300,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13425,6 +14333,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13534,6 +14444,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13583,6 +14495,8 @@
           "steam-saber-alter"
         ],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13623,6 +14537,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13667,6 +14583,10 @@
         "acquiredPublicSources": [
           "hive-anime-team-survival"
         ],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [
+          "hive-anime-team-survival"
+        ],
         "purchaseHoldFor": [
           "godie-o02p"
         ],
@@ -13708,6 +14628,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -13745,6 +14667,8 @@
         "paidPurchaseAllowed": false,
         "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
+        "acquiredPaidSources": [],
+        "acquiredSourceIds": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
         "purchaseHold": false,
@@ -15252,6 +16176,16 @@
           "sha256": "4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-n00b"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15287,6 +16221,16 @@
           "sha256": "6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-05-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15322,6 +16266,16 @@
           "sha256": "b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-u00j"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15357,6 +16311,16 @@
           "sha256": "b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-07-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15392,6 +16356,16 @@
           "sha256": "52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "b2-maomao"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15427,6 +16401,16 @@
           "sha256": "43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-09-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15462,6 +16446,16 @@
           "sha256": "f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "b2-guts"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15565,7 +16559,21 @@
             "readbackVerified": true,
             "usage": "legacy; human permission required; not runtime-ready"
           }
-        ]
+        ],
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-o02p",
+            "community-review-09-20260907"
+          ],
+          "ownerEntryIds": [
+            "owner-model-022",
+            "owner-model-030"
+          ],
+          "release": null,
+          "selectionVerified": false
+        }
       },
       {
         "id": "thunderstore-rezero",
@@ -15601,6 +16609,16 @@
           "sha256": "ec763b598598a0f3cc3cde1f3d21231b0071aab635fefdbf772af0d5a34f229c",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-22-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15637,6 +16655,16 @@
           "sha256": "73d98838696ad5fd53523f67fe1024a474529c47deaa8cabc9dbb4ad4f862378",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-ucrl"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15673,6 +16701,16 @@
           "sha256": "eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-11-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15709,6 +16747,16 @@
           "sha256": "ce83cafc0a4e8b481c7bfc1300d2dbf14f9e054ad7b3e1b67aa1601f91b0282c",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-02-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15745,6 +16793,16 @@
           "sha256": "49999053a5ec9b83a9a02a04922f694c9ea20603c3bbf36c3b94aa015fa27408",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-e00r"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15781,6 +16839,16 @@
           "sha256": "933d753ac2bf8647d81d35d64ef827e3c2ab3425e811837f14adcbcce23d93d7",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-umal"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15817,6 +16885,16 @@
           "sha256": "8b9c1ea9bb7a5fdc422c221c787cb6ed312598478317eaeda93d746f0e87d8ad",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-umal"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15853,6 +16931,16 @@
           "sha256": "db49dfe987e5f1a704a210a67ff6a7f73d55bb5e5ef6882629b91e70c1ec550a",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-14-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15889,6 +16977,16 @@
           "sha256": "d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f",
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-15-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
         }
       },
       {
@@ -15919,16 +17017,24 @@
         "verification": "已靜態擷取 1 Mesh、1 SkinnedMeshRenderer、37 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。只認列一般形態 godie-ofar；瘋狂皮卡丘 godie-o02l 尚未取得。待骨架 GLB 與動作綁定。",
         "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
         "usage": "intake-only; no automatic runtime selection",
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
-          "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-tiny-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-tiny/12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9.zip",
           "bytes": 1608020,
           "sha256": "12a0ad4d8c252a5b90ea10991322b59d5e94330c4831d797b65cc23b82bb03e9",
-          "contentKind": "model-intake",
-          "readbackVerified": false
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-ofar"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        }
       },
       {
         "id": "thunderstore-pikachu-frankzin",
@@ -15958,16 +17064,24 @@
         "verification": "已靜態擷取 7 Mesh、7 SkinnedMeshRenderer、90 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。模型含 pm0025 身體／尾巴與 Pikachu Avatar；封面非模型預覽，外觀待驗收。只認列一般形態 godie-ofar，不涵蓋瘋狂皮卡丘。",
         "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
         "usage": "intake-only; no automatic runtime selection",
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
-          "localArchive": "outputs/public-model-sources-20260910/thunderstore-pikachu-frankzin-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-pikachu-frankzin/7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f.zip",
           "bytes": 8075339,
           "sha256": "7aa540438c51a754d72dac33026bf03593824b40913cb6f333e234affe1a724f",
-          "contentKind": "model-intake",
-          "readbackVerified": false
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-ofar"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        }
       },
       {
         "id": "gtainside-naofumi",
@@ -15997,16 +17111,24 @@
         "verification": "已取得 Naofumi.dff／txd，解析 33 Frame、32 骨、57,628 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收，保留使用者移除刀劍要求。",
         "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
         "usage": "intake-only; no automatic runtime selection",
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
-          "localArchive": "outputs/public-model-sources-20260910/gtainside-naofumi-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-naofumi/8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7.zip",
           "bytes": 9501904,
           "sha256": "8a1155c0879ed20dd34d398de954ca561ec9c15108299c7c492db47f5d51c8e7",
-          "contentKind": "model-intake",
-          "readbackVerified": false
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "b2-naofumi"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        }
       },
       {
         "id": "gtainside-light-yagami-kw",
@@ -16036,16 +17158,24 @@
         "verification": "已取得 LIGHT DN KW.dff／txd，解析 33 Frame、32 骨、36,957 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收。",
         "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
         "usage": "intake-only; no automatic runtime selection",
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
-          "localArchive": "outputs/public-model-sources-20260910/gtainside-light-yagami-kw-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-light-yagami-kw/3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2.zip",
           "bytes": 8285227,
           "sha256": "3f5ee74eae82c933575a2f3d1a4afe1318b8177c070e4953a97869708a24efc2",
-          "contentKind": "model-intake",
-          "readbackVerified": false
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-emns"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        }
       },
       {
         "id": "gtainside-kenshin",
@@ -16076,16 +17206,24 @@
         "ownerEntryIds": [
           "owner-model-078"
         ],
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-kenshin/9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576.zip",
-          "localArchive": "outputs/public-model-sources-20260910/gtainside-kenshin-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-kenshin/9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576.zip",
           "bytes": 15983696,
           "sha256": "9dba46e09e2627413aa1b2b3177061ab26dd7bd0e2033620cd6b5a0315abc576",
-          "contentKind": "model-intake",
-          "readbackVerified": false
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-character-mapping",
+          "heroIds": [],
+          "ownerEntryIds": [
+            "owner-model-078"
+          ],
+          "release": null,
+          "selectionVerified": false
+        }
       },
       {
         "id": "gtainside-anime-pack",
@@ -16145,25 +17283,353 @@
             }
           }
         ],
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
-          "localArchive": "outputs/public-model-sources-20260910/gtainside-anime-pack-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-anime-pack/3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b.zip",
           "bytes": 21768074,
           "sha256": "3f60ca705e5109f82bbd6749c1dfa593f28aa5fd189fb49243a031118530bb3b",
-          "contentKind": "model-intake",
-          "readbackVerified": false
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
         },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-hvwd"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        }
+      },
+      {
+        "id": "github-chiikawa",
+        "target": "吉伊卡哇（Minecraft 模型／動作／音效）",
+        "heroIds": [
+          "community-review-37-20260907"
+        ],
+        "url": "https://github.com/Dwinovo/minecraft-chiikawa",
+        "downloadUrl": "https://codeload.github.com/Dwinovo/minecraft-chiikawa/zip/b9ef93b9fd653e10714d1ed844f50a59f51b4057",
+        "uploader": "Dwinovo；美術支援 zoe_1000",
+        "format": "Bedrock geometry + animation JSON／PNG／OGG",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/github-chiikawa",
+        "files": [
+          {
+            "path": "raw/chiikawa-b9ef93b9.zip",
+            "bytes": 1628532,
+            "sha256": "c1d9c551c17693c1ca5fe35bbb572db18a888252e2e95483651481ae2de9fe5f",
+            "archiveMember": "raw/chiikawa-b9ef93b9.zip"
+          }
+        ],
+        "verification": "已取得固定 Git 版本的 7 角色原生模型、141 段動畫記錄、25 PNG 與 21 OGG（ffprobe 通過）。吉伊卡哇本體 24 骨節、26 方塊、19 段動畫及 3 個音訊檔；部分動畫通道引用不存在的骨名，已保留缺口。其餘 6 角色完整歸檔但未對應 GGD ID。待 GLB、綁定與後台驗收。",
+        "reuseTerms": "CC-BY-NC-SA-4.0；保留作者與 LICENSE，成品用途／再散布條件需遵循來源。",
+        "usage": "intake-only; backend integration required after standardization",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-37-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        },
+        "sourceCommit": "b9ef93b9fd653e10714d1ed844f50a59f51b4057",
+        "characters": [
+          {
+            "name": "chiikawa",
+            "heroIds": [
+              "community-review-37-20260907"
+            ],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/chiikawa.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/chiikawa.json",
+            "boneCount": 24,
+            "animationCount": 19,
+            "backendIntegrationRequired": true,
+            "mappingState": "mapped"
+          },
+          {
+            "name": "hachiware",
+            "heroIds": [],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/hachiware.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/hachiware.json",
+            "boneCount": 36,
+            "animationCount": 19,
+            "backendIntegrationRequired": true,
+            "mappingState": "pending-character-mapping"
+          },
+          {
+            "name": "kurimanju",
+            "heroIds": [],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/kurimanju.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/kurimanju.json",
+            "boneCount": 24,
+            "animationCount": 19,
+            "backendIntegrationRequired": true,
+            "mappingState": "pending-character-mapping"
+          },
+          {
+            "name": "momonga",
+            "heroIds": [],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/momonga.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/momonga.json",
+            "boneCount": 24,
+            "animationCount": 21,
+            "backendIntegrationRequired": true,
+            "mappingState": "pending-character-mapping"
+          },
+          {
+            "name": "rakko",
+            "heroIds": [],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/rakko.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/rakko.json",
+            "boneCount": 34,
+            "animationCount": 20,
+            "backendIntegrationRequired": true,
+            "mappingState": "pending-character-mapping"
+          },
+          {
+            "name": "shisa",
+            "heroIds": [],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/shisa.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/shisa.json",
+            "boneCount": 32,
+            "animationCount": 24,
+            "backendIntegrationRequired": true,
+            "mappingState": "pending-character-mapping"
+          },
+          {
+            "name": "usagi",
+            "heroIds": [],
+            "modelPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/models/entity/usagi.json",
+            "animationPath": "extracted/minecraft-chiikawa-b9ef93b9fd653e10714d1ed844f50a59f51b4057/common/src/main/resources/assets/chiikawa/animations/usagi.json",
+            "boneCount": 33,
+            "animationCount": 19,
+            "backendIntegrationRequired": true,
+            "mappingState": "pending-character-mapping"
+          }
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-chiikawa/6d3881abab64d6d910adb43254825d097c385ecee631cccdd0b41dfc1b116ef6.zip",
+          "bytes": 3207188,
+          "sha256": "6d3881abab64d6d910adb43254825d097c385ecee631cccdd0b41dfc1b116ef6",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
+      },
+      {
+        "id": "gamebanana-shadow",
+        "target": "闇影／席德・卡蓋諾（Shadow）",
+        "heroIds": [
+          "b2-shadow"
+        ],
+        "url": "https://gamebanana.com/mods/662449",
+        "downloadUrl": "https://gamebanana.com/dl/1656965",
+        "uploader": "MoltiOG／Molti；模型權重與物理 struggling",
+        "format": "Source 2 VPK → skinned GLB／PNG／MP3／VPCF",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow",
+        "files": [
+          {
+            "path": "raw/shadow_x_apollo_deadlock_a5ff4.zip",
+            "bytes": 32677176,
+            "sha256": "9f382e299798a492a7a5bbed1aa7113a38df51399ba3b297ded4ec3008d4d566",
+            "archiveMember": "raw/shadow_x_apollo_deadlock_a5ff4.zip"
+          }
+        ],
+        "verification": "VPK 全部 484 成員 CRC32 通過並完整解包。角色 GLB 含 3 蒙皮網格、842 骨節與 6 段動畫；另有碰撞體／特效模型。295 原生 VPCF、146 MP3（ffprobe 全通過）與 74 PNG 已保存。缺少共用 shader、預設 mask、動畫圖及特效材質，待 GGD 正規化、動作綁定、特效轉換及後台驗收。",
+        "reuseTerms": "作者列非商用與署名要求；發布修改／再散布需先取得作者同意。保留完整條款，備份不等於共享成品已可發布。",
+        "usage": "intake-only; backend integration required after standardization",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "b2-shadow"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        },
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-shadow/4748ef6d094d47b6933ac08c953fa80d45e408a9c2f0c589bffc982f9a69a785.zip",
+          "bytes": 154480597,
+          "sha256": "4748ef6d094d47b6933ac08c953fa80d45e408a9c2f0c589bffc982f9a69a785",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
+      },
+      {
+        "id": "thunderstore-sadako",
+        "target": "貞子（Dead by Daylight Onryo）",
+        "heroIds": [],
+        "url": "https://thunderstore.io/c/lethal-company/p/Irados69/Onryo3DModel/",
+        "downloadUrl": "https://thunderstore.io/package/download/Irados69/Onryo3DModel/0.1.0/",
+        "uploader": "Irados69",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-sadako",
+        "files": [
+          {
+            "path": "raw/Onryo3DModel-0.1.0.zip",
+            "bytes": 5319280,
+            "sha256": "85e7b05eda40b0ffdcbb9ce53ebfe653ff23e129126b75a012a50a45cedafaf7",
+            "archiveMember": "raw/Onryo3DModel-0.1.0.zip"
+          }
+        ],
+        "verification": "已靜態擷取 BetterSadako：10 Mesh、10 SkinnedMeshRenderer、147 Transform、6 貼圖、1 Avatar；包內 0 AnimationClip。完整原包、骨架及材質解析已保留，待 GGD ID 對應、GLB 與動作綁定。",
+        "reuseTerms": "作者與遊戲來源保留；跨遊戲再散布權利未核實。",
+        "usage": "intake-only; backend integration required after standardization",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-character-mapping",
+          "heroIds": [],
+          "ownerEntryIds": [
+            "owner-model-003"
+          ],
+          "release": null,
+          "selectionVerified": false
+        },
+        "ownerEntryIds": [
+          "owner-model-003"
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-sadako/f9825c55aaaba8dc051e16aa56cfa7b058bbdbd2f889d213db677350a4c2f6e5.zip",
+          "bytes": 29565891,
+          "sha256": "f9825c55aaaba8dc051e16aa56cfa7b058bbdbd2f889d213db677350a4c2f6e5",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
+      },
+      {
+        "id": "thunderstore-turbo-granny",
+        "target": "高速婆婆（招財貓形態，使用者確認）",
+        "heroIds": [
+          "community-review-34-20260907"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+        "downloadUrl": "https://thunderstore.io/package/download/inkiidonut/Granny_Suit/0.1.0/",
+        "uploader": "inkiidonut",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-turbo-granny",
+        "files": [
+          {
+            "path": "raw/Granny_Suit-0.1.0.zip",
+            "bytes": 507560,
+            "sha256": "8de3239cbb57ea36a77235eb69da3c1364fb43d5dacb4463f4f61a629252fedb",
+            "archiveMember": "raw/Granny_Suit-0.1.0.zip"
+          }
+        ],
+        "verification": "使用者 2026-09-10 明確確認採招財貓形態。已靜態擷取 20 Mesh、20 SkinnedMeshRenderer、63 Transform、20 貼圖、1 Avatar；包內 0 AnimationClip。取代舊稿排除招財貓的外觀限制，待骨架 GLB、動作與後台切換驗收。",
+        "reuseTerms": "作者署名與原始包保留；跨遊戲再散布權利未核實。",
+        "usage": "intake-only; backend integration required after standardization",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "community-review-34-20260907"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        },
+        "ownerModelDecision": {
+          "date": "2026-09-10",
+          "quote": "高速婆婆模型是招財貓形態 這是對的 他的最新形態",
+          "acceptedForm": "招財貓",
+          "sourceId": "thunderstore-turbo-granny",
+          "scope": "visual model selection; overrides older no-maneki-neko presentation note",
+          "supersedes": "materials/community-hero-forge/recipes/34.upload-recipe.json → presentation.visualDirection"
+        },
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-turbo-granny/16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2.zip",
+          "bytes": 2227840,
+          "sha256": "16b5e28412d43a451a98bd49fcb4aa73d1a33f54e815e128af960ba9fa3137d2",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
+      },
+      {
+        "id": "gtainside-lubu",
+        "target": "呂布（Warriors Orochi 3）",
+        "heroIds": [
+          "godie-h01u"
+        ],
+        "url": "https://www.gtainside.com/sanandreas/skins/110660-warriors-orochi-3-lu-bu/",
+        "downloadUrl": "https://files.gtainside.com/201709/1506627573_Warriors%20Orochi%203%20Lu%20bu.rar",
+        "uploader": "diegoforfun",
+        "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+        "accessStatus": "public-manual-download",
+        "checkedAt": "2026-09-10T05:48:49.506201+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/gtainside-lubu",
+        "files": [
+          {
+            "path": "raw/Warriors-Orochi-3-Lu-bu.rar",
+            "bytes": 1372912,
+            "sha256": "9264030fdbd0dd73d24527e1d16c212be3e9fa66ca2a7c1e50a4bed7b511d476",
+            "archiveMember": "raw/Warriors-Orochi-3-Lu-bu.rar"
+          }
+        ],
+        "verification": "已取得 bmost.dff／txd；解析 33 Frame、32 骨、10,053 頂點蒙皮與綁定矩陣，3 張 PNG。包內無 IFP，武器需另配；待 GLB、動作綁定與後台驗收。",
+        "reuseTerms": "作者署名與遊戲來源保留；跨遊戲再散布權利未核實。",
+        "usage": "intake-only; backend integration required after standardization",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization",
+          "heroIds": [
+            "godie-h01u"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        },
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-lubu/822167f0bf7f385e904949ddcd4e1cf9c4f6bbaae5c70f0dee95410db326cf89.zip",
+          "bytes": 8574786,
+          "sha256": "822167f0bf7f385e904949ddcd4e1cf9c4f6bbaae5c70f0dee95410db326cf89",
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
       }
     ],
     "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。",
     "purchasePolicy": {
       "paidPurchaseAllowed": false,
-      "scope": "all owner download-list entries",
-      "status": "paused-pending-public-source-review",
-      "reason": "使用者要求先登記公開來源，避免其他工作流花錢購買模型。",
-      "resumeCondition": "使用者另行明確同意購買；來源順位不等於付款授權。"
+      "scope": "this workflow only; does not revoke separately owner-authorized paid acquisition workflows",
+      "status": "no-paid-purchases-in-this-workflow",
+      "reason": "本工作流查找免費來源；使用者已說明另有工作流負責論壇付費下載，其交付必須完整整合。",
+      "resumeCondition": "本工作流付款仍需另行授權；其他工作流照既有使用者授權執行。",
+      "doNotBlockOwnerAuthorizedPaidWorkflows": true
     },
     "publicSourceLeads": [
       {
@@ -16307,17 +17773,39 @@
           "url": "https://youtu.be/VOguSQomlD4",
           "modelFiles": 0
         },
-        "pendingBackup": {
-          "status": "not-uploaded",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-shinchan-locator/dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d.zip",
-          "localArchive": "outputs/public-model-sources-20260910/gtainside-shinchan-locator-round5-final.zip",
+        "publicationStatus": "s3-legacy-readback-verified",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gtainside-shinchan-locator/dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d.zip",
           "bytes": 1277,
           "sha256": "dc3c80fbc9f2efae7ed05137ddd0425f93a64117e3d35eb7cead909327ab602d",
-          "contentKind": "locator-only-no-model",
-          "readbackVerified": false
-        },
-        "publicationStatus": "local-only-awaiting-s3-upload"
+          "readbackVerified": true,
+          "usage": "manual-only legacy backup; not runtime-ready"
+        }
       }
-    ]
+    ],
+    "ingestionPolicy": {
+      "archiveEveryAcquiredResource": true,
+      "preserveAllSourcesAndVersions": true,
+      "requireIndependentBackendOptions": true,
+      "scope": "all workflows and acquired models, textures, skeletons, animations, VFX and audio",
+      "defaultPriorityDoesNotFilterOptions": true,
+      "completionRequires": [
+        "full-archive-with-sha256",
+        "exact-character-and-form-mapping",
+        "standardized-assets-and-dependency-gaps-recorded",
+        "published-release",
+        "backend-dropdown-registration",
+        "backend-selection-verified",
+        "inventory-git-s3-indexes-synchronized"
+      ],
+      "rawStorage": "S3 legacy; local copy retained",
+      "controlStorage": "Git",
+      "candidateRegistrationIsCompletion": false,
+      "includePaidForumSources": true,
+      "includeOtherWorkflowDeliveries": true,
+      "paidAcquisitionCollection": "paidSources",
+      "publicAcquisitionCollection": "publicSources"
+    },
+    "paidSources": []
   }
 }

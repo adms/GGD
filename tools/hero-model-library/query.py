@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from source_links import acquired_sources
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -31,37 +32,46 @@ def main():
     query = args.query.casefold()
     if args.downloads:
         direct = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]
-        hero_ids, entry_ids = public_match_scope(data['downloadPlan'].get('publicSources',[]) + data['downloadPlan'].get('publicSourceLeads',[]),query)
+        hero_ids, entry_ids = public_match_scope(acquired_sources(data['downloadPlan']) + data['downloadPlan'].get('publicSourceLeads',[]),query)
         records = direct or [e for e in data['downloadPlan']['entries'] if e['id'] in entry_ids or hero_ids.intersection(e['heroIds'])]
+        # Keep deliveries outside the owner's original download list visible too.
+        source_ids={sid for e in records for sid in e.get('acquiredSourceIds',[])}
+        deliveries=[s for s in acquired_sources(data['downloadPlan'])
+            if s['id'] in source_ids or not query or query in json.dumps(s,ensure_ascii=False).casefold()]
+        delivery_ids={s['id'] for s in deliveries}
         if args.json:
-            source_ids={sid for e in records for sid in e.get('acquiredPublicSources',[])}
             lead_ids={sid for e in records for sid in e.get('publicSourceLeadIds',[])}
-            print(json.dumps({'release':data['release'], 'purchasePolicy':data['downloadPlan'].get('purchasePolicy',{}), 'entries':records,
+            print(json.dumps({'release':data['release'], 'purchasePolicy':data['downloadPlan'].get('purchasePolicy',{}), 'ingestionPolicy':data['downloadPlan'].get('ingestionPolicy',{}), 'entries':records,
                 'publicSourceLeads':[s for s in data['downloadPlan'].get('publicSourceLeads',[]) if s['id'] in lead_ids],
-                'publicSources':[s for s in data['downloadPlan'].get('publicSources',[]) if s['id'] in source_ids]}, ensure_ascii=False, indent=2))
+                'paidSources':[s for s in data['downloadPlan'].get('paidSources',[]) if s['id'] in delivery_ids],
+                'publicSources':[s for s in data['downloadPlan'].get('publicSources',[]) if s['id'] in delivery_ids]}, ensure_ascii=False, indent=2))
         else:
             if data['downloadPlan'].get('purchasePolicy',{}).get('paidPurchaseAllowed') is False:
-                print('付費模型購買暫緩；優先下載不是付款授權。')
-            labels = {'defer-acquired-public':'免費來源已取得，暫緩購買','defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
+                print('本工作流不執行付費購買；不取消使用者另行授權的論壇下載工作流。')
+            labels = {'defer-acquired-public':'來源已取得，先核對避免重買','defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
             for e in records:
                 print(f"{e['target']} | {labels[e['downloadPriority']]} | {', '.join(e['heroIds']) or '未對應'}")
                 if e.get('purchaseHoldWithoutHeroId'):
-                    print('  免費來源已取得，暫緩購買：清單組 '+e['id']+'；尚待 GGD 角色 ID 對應')
+                    print('  來源已取得，先核對避免重買：清單組 '+e['id']+'；尚待 GGD 角色 ID 對應')
                 if e.get('purchaseHoldFor'):
-                    print('  免費來源已取得，暫緩購買：'+', '.join(e['purchaseHoldFor'])+'；先完成轉換／動作驗收')
+                    print('  來源已取得，先核對避免重買：'+', '.join(e['purchaseHoldFor'])+'；先完成轉換／動作驗收')
                     if e.get('partialPurchaseHold'):
                         print('  其他形態尚未取得，保留原下載安排：'+', '.join(i for i in e['heroIds'] if i not in e['purchaseHoldFor']))
                 if e.get('purchaseHold') or e.get('partialPurchaseHold'):
-                    for s in data['downloadPlan'].get('publicSources',[]):
-                        if s['id'] in e['acquiredPublicSources']: print('    '+s['url']+' | '+s['verification'])
+                    for s in acquired_sources(data['downloadPlan']):
+                        if s['id'] in e['acquiredSourceIds']: print('    '+s['url']+' | '+s['verification'])
                 for s in e['sources']: print('  '+s['submittedUrl'])
                 for s in data['downloadPlan'].get('publicSourceLeads',[]):
                     if s['id'] in e.get('publicSourceLeadIds',[]):print('  來源線索（未取得）：'+s['url']+' | '+s['verification'])
                 for note in e['ownerNotes']: print('  指定處理：'+note)
-        return 0 if records else 1
+            for source in deliveries:
+                if source['id'] not in source_ids:
+                    print(source['id']+' | '+source['target']+' | 已取得來源，保留整合')
+                    print('  '+source['url']+' | '+source['verification'])
+        return 0 if records or deliveries else 1
     exact = [h for h in data['heroes'] if h['id'].casefold() == query]
     direct = [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options']],ensure_ascii=False).casefold()]
-    hero_ids, _ = public_match_scope(data['downloadPlan'].get('publicSources',[]),query)
+    hero_ids, _ = public_match_scope(acquired_sources(data['downloadPlan']),query)
     records = exact or direct or [h for h in data['heroes'] if h['id'] in hero_ids]
     if args.json:
         print(json.dumps({'release':data['release'],'productionSnapshot':data['productionSnapshot'],'heroes':records},ensure_ascii=False,indent=2))
@@ -83,9 +93,11 @@ def main():
                 print('    S3: '+asset['s3Uri']);print('    SHA-256: '+asset['sha256'])
             else:print('    位置：專案既有模型，未列入此 S3 成品版本')
         for p in h['pending']: print('  待轉換：'+p['name'])
-        for s in h.get('publicCandidates',[]):
-            print('  已取得免費來源（暫緩購買）：'+s['target']+' | '+s['url'])
+        for s in h.get('publicCandidates',[]) + h.get('paidCandidates',[]):
+            print('  已取得來源（全部保留整合）：'+s['target']+' | '+s['url'])
             print('    '+s['verification'])
+            if s.get('backendIntegration',{}).get('required'):
+                print('    必須納入後台獨立選項；目前狀態：'+s['backendIntegration']['state'])
         if h['downloadSources']: print('  指定下載來源：'+', '.join(h['downloadSources'])+'；用 --downloads '+h['id']+' 查詢')
     return 0 if records else 1
 

@@ -2,21 +2,35 @@
 from copy import deepcopy
 from default_policy import eligible
 
+def acquired_sources(data):
+    """Keep paid and public acquisitions in one integration path without renaming sources."""
+    return data.get('publicSources', []) + data.get('paidSources', [])
+
 
 def plan_sources(data, manifest, policy):
     """Derive download priority from the current approved manifest, not old intake flags."""
     data = deepcopy(data)
     heroes = {h['id']: h for h in manifest['heroes']}
+    if data.get('ingestionPolicy', {}).get('requireIndependentBackendOptions'):
+        for source in acquired_sources(data):
+            integration = source.get('backendIntegration', {})
+            assert integration.get('required') is True, source['id'] + ': missing required backend integration tracking'
+            assert integration.get('state') and 'selectionVerified' in integration, source['id'] + ': missing backend integration state'
+    ids = [s['id'] for s in acquired_sources(data)]
+    assert len(ids) == len(set(ids)), 'Acquired source IDs must be unique across public and paid collections'
     for entry in data['entries']:
         entry['paidPurchaseAllowed'] = data.get('purchasePolicy', {}).get('paidPurchaseAllowed', False)
         entry['publicSourceLeadIds'] = [s['id'] for s in data.get('publicSourceLeads', [])
             if set(s['heroIds']) & set(entry['heroIds']) or entry['id'] in s.get('ownerEntryIds', [])]
-        acquired = [s for s in data.get('publicSources', [])
+        acquired = [s for s in acquired_sources(data)
             if (set(s['heroIds']) & set(entry['heroIds']) or entry['id'] in s.get('ownerEntryIds',[])) and s['acquisitionStatus'] == 'downloaded-verified']
-        entry['acquiredPublicSources'] = [s['id'] for s in acquired]
-        held_ids = {i for s in acquired if s.get('purchaseDecision') == 'hold-purchase-review-free-source' for i in s['heroIds']}
+        entry['acquiredPublicSources'] = [s['id'] for s in acquired if s in data.get('publicSources', [])]
+        entry['acquiredPaidSources'] = [s['id'] for s in acquired if s in data.get('paidSources', [])]
+        entry['acquiredSourceIds'] = [s['id'] for s in acquired]
+        held_sources = [s for s in acquired if s.get('purchaseDecision') in {'hold-purchase-review-free-source', 'hold-purchase-review-acquired-source'} or s in data.get('paidSources', [])]
+        held_ids = {i for s in held_sources for i in s['heroIds']}
         entry['purchaseHoldFor'] = [i for i in entry['heroIds'] if i in held_ids]
-        entry['purchaseHoldWithoutHeroId'] = not entry['heroIds'] and any(entry['id'] in s.get('ownerEntryIds',[]) and s.get('purchaseDecision') == 'hold-purchase-review-free-source' for s in acquired)
+        entry['purchaseHoldWithoutHeroId'] = not entry['heroIds'] and any(entry['id'] in s.get('ownerEntryIds',[]) for s in held_sources)
         entry['purchaseHold'] = entry['purchaseHoldWithoutHeroId'] or bool(entry['heroIds']) and all(i in held_ids for i in entry['heroIds'])
         entry['partialPurchaseHold'] = bool(entry['purchaseHoldFor']) and not entry['purchaseHold']
         available = []
@@ -36,26 +50,34 @@ def render_sources(data):
     sources = {s['id']: s for s in data['sources']}
     entries = data['entries']
     count = sum(len(e['sources']) for e in entries)
-    public = data.get('publicSources', [])
-    lines = []
+    public = acquired_sources(data)
+    lines = ['## 第一守則：所有取得資源完整歸檔，全部納入後台可選選項', '',
+        '**所有工作流取得的模型、貼圖、骨架、動作、特效與音效，包含免費來源與另一工作流從論壇付費取得的資源，都必須完整保存、登記角色與來源，完成標準化後成為對應角色後台下拉選單的獨立選項。不同來源與版本全部保留，不因已有本尊、已有較高順位模型、未選為預設、付費或免費、或不是本工作流找到，就省略、覆蓋或丟棄。**', '',
+        '每筆依序完成：取得實檔 → 原始包與完整解包檔歸檔 → 角色／形態及來源 ID 對應 → 模型、貼圖、動作綁定與特效／音效轉換 → 成品入庫 → 後台選項註冊與實際切換驗證 → 同批更新本盤點及 Git／S3 索引。尚未完成的步驟必須列為待辦；只有網址、只有備份、只有候選登記，都不能算完成上架。', '',
+        '原始與半成品存 S3 `legacy/`、本機留副本；標準化成品進固定成品庫。程式、角色設定、版本清單、SHA-256 與文件進 Git。來源包內缺少的動作、特效或音效要明列缺口並持續補齊，不能據此遺漏已取得的其他素材。', '',
+        '預設仍依 300 > MBA > 原版 > 借用 W3X，並限核准本尊與指定 11 組加工副本；**預設順位只決定預選哪個，不能拿來刪減可選來源。** 平行工作流使用相同角色 ID、獨立來源 ID 與逐檔 SHA-256 共編，合併來源後重建盤點，保留其他工作流登記。', '',
+        '機器規則：`download-sources.json → ingestionPolicy`。免費來源放 `publicSources`，論壇付費交付放 `paidSources`，兩者走同一角色候選與整合流程；逐筆 `backendIntegration.required=true`，待完成轉換與後台切換驗證才可改為完成。目前實際上架狀態必須另有成品版本與驗證收據。', '']
     if data.get('purchasePolicy', {}).get('paidPurchaseAllowed') is False:
         lines += ['## 購買暫緩：其他工作流先讀', '',
-            '**本輪清單的付費模型購買全部暫緩，先查找並處理免費公開來源。**「優先下載」是來源查找順位，不是付款授權；需要購買時，另由使用者明確同意。', '',
-            '程序先讀 `download-sources.json → purchasePolicy.paidPurchaseAllowed=false`；逐角色下載查詢也回傳 `paidPurchaseAllowed=false`。`purchaseHoldFor` 只記已取得免費檔的角色／形態，不能把尚未取得的線索當成模型已到手。', '']
+            '**本工作流不執行付費購買；使用者另行授權的論壇付費工作流照其授權進行，交付素材必須整合並保留。**「優先下載」是來源查找順位，不是新的付款授權；已取得版本先核對以避免重買，不影響另行授權取得不同版本。', '',
+            '程序同時讀 `purchasePolicy.scope` 與 `paidPurchaseAllowed=false`：限制範圍是本工作流，不是取消其他工作流的使用者授權。`purchaseHoldFor` 只記已有實檔的角色／形態，不能把尚未取得的線索當成模型已到手。', '']
     if public:
-        lines += ['## 已取得免費來源：先暫緩購買', '',
-            '**以下角色已取得免費來源的實際檔案，其他工作流先不要重複付費購買。** 這是購買暫緩記錄，並非全部已完成標準化或可直接作預設。沿用 300 優先與 11 組核准加工副本規則。', '',
-            '免費檔取得範圍只涵蓋表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組查找。整批付費暫緩另由上方 `purchasePolicy` 決定。', '',
-            '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 檔案保存狀態 | 購買安排 |', '|---|---|---|---|---|']
+        lines += ['## 已取得來源：免費與付費全部保留', '',
+            '**以下角色已取得實際檔案，購買前先核對已有版本。** 不同免費／付費來源全部保留整合；這不代表全部已完成標準化或可直接作預設。沿用 300 優先與 11 組核准加工副本規則。', '',
+            '取得範圍只涵蓋表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組查找。付費權限依各工作流的使用者授權判斷。', '',
+            '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 檔案保存狀態 | 後台整合 | 購買安排 |', '|---|---|---|---|---|---|']
         for s in public:
-            decision = '**暫緩購買，先處理已取得免費檔**' if s['heroIds'] or s.get('ownerEntryIds') else '地圖素材池；尚未認列角色'
+            decision = '**已有實檔；保留來源，避免重買**' if s['heroIds'] or s.get('ownerEntryIds') else '素材池；待角色對應，仍須保留整合'
             ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
             if s.get('ownerEntryIds'): ids += '<br>未對應角色 ID 的清單組：' + '、'.join(f'`{i}`' for i in s['ownerEntryIds'])
             storage = ('本機已保存；S3 legacy 備份已讀回驗證' if s.get('backup', {}).get('readbackVerified') is True else
                        '**僅本機已保存，S3 尚未上傳**' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' else
                        '本機已保存；S3 備份狀態未確認')
-            lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {storage} | {decision} |')
-        lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources`。`pendingBackup.plannedS3Uri` 只是預定上傳位置，不能當成已存在的 S3 檔案；已上傳以 `backup.readbackVerified=true` 為準。`readiness` 尚未通過的來源只供人工處理，不進入成品自動取用；來源使用條件另行保留，不把免費下載當成已確認可再散布。', '']
+            state = s.get('backendIntegration', {}).get('state')
+            integration = {'pending-character-mapping': '必須整合；待角色 ID 對應', 'pending-standardization': '必須整合；待標準化／切換驗收'}.get(state, state or '尚未登記')
+            method = '論壇付費' if s in data.get('paidSources', []) else '免費公開'
+            lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{method}；{s["uploader"]}；{s["format"]} | {s["verification"]} | {storage} | {integration} | {decision} |')
+        lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources／paidSources`；完整備份的逐檔清單統一在 `public-source-files.json`（沿用檔名，包含付費交付）。`pendingBackup.plannedS3Uri` 只是預定上傳位置，不能當成已存在的 S3 檔案；已上傳以 `backup.readbackVerified=true` 為準。`readiness` 尚未通過的來源只供人工處理，不進入成品自動取用；來源使用條件另行保留，不把下載或付款當成已確認可再散布。', '']
     if data.get('publicSourceLeads'):
         lines += ['## 已找到來源頁，尚未取得檔案', '',
             '以下來源尚未取得模型檔，不計入已下載數量，也不加入可用候選；同一角色可能已從上方其他來源取得模型。', '',
@@ -68,8 +90,8 @@ def render_sources(data):
         '## 指定下載來源與購買順位', '',
         '**已有可用 300英雄模型 → 預設使用 300英雄，付費來源暫緩；指定的 11 個核准加工副本也可預設。缺可用 300英雄模型 → 下列使用者來源為最高優先下載。**', '',
         f'清單共有 {len(entries)} 組角色／形態、{count} 個原始網址；去除同帖不同頁後為 {len(sources)} 個資源帖。', '',
-        f'這 {len(entries)} 組來源中：**{sum(e["downloadPriority"] == "defer-existing-300" for e in entries)} 組已有 300、暫緩付費下載；{sum(e["downloadPriority"] == "defer-acquired-public" for e in entries)} 組免費來源已取得、暫緩購買；{sum(e["downloadPriority"] == "owner-highest" for e in entries)} 組優先下載；{sum(e["downloadPriority"] == "needs-roster-mapping" for e in entries)} 組待對應角色 ID。** 數量按來源組計算，巴恩兩種形態各佔一組。', '',
-        f'其中 **{sum(e["partialPurchaseHold"] for e in entries)} 組只有部分形態取得免費來源**：`purchaseHoldFor` 所列 ID 已取得，其他形態仍待查找；不能因整批付費暫緩就省略未取得形態。', '',
+        f'這 {len(entries)} 組來源中：**{sum(e["downloadPriority"] == "defer-existing-300" for e in entries)} 組已有 300、暫緩付費下載；{sum(e["downloadPriority"] == "defer-acquired-public" for e in entries)} 組來源已取得（含免費／付費）、避免重買；{sum(e["downloadPriority"] == "owner-highest" for e in entries)} 組優先下載；{sum(e["downloadPriority"] == "needs-roster-mapping" for e in entries)} 組待對應角色 ID。** 數量按來源組計算，巴恩兩種形態各佔一組。', '',
+        f'其中 **{sum(e["partialPurchaseHold"] for e in entries)} 組只有部分形態取得來源**：`purchaseHoldFor` 所列 ID 已取得，其他形態仍待查找；不能因已有同名模型就省略未取得形態。', '',
         f'「待整合」{sum(e["category"] == "primary" for e in entries)} 組與「加購替換」{sum(e["category"] == "optional" for e in entries)} 組保留原分類；實際下載順位依上面的 300 優先規則。未取得並驗證的模型不會直接取代遊戲預設。', '',
         '來源狀態與後續共編欄位：[download-sources.json](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/download-sources.json)。網站登入、回覆或付費要求須逐帖核對；上方免費來源與原清單資源帖分開記錄，取得替代來源不代表已下載原帖附件。', '',
     ]
@@ -84,12 +106,12 @@ def render_sources(data):
             if any(sources[s['sourceId']]['accessStatus'] == 'reply-required' for s in entry['sources']):
                 state += '；頁面要求回覆解鎖，模型身分待核'
             if entry.get('purchaseHold'):
-                state = '**免費來源已取得，暫緩購買**；' + '、'.join(entry['acquiredPublicSources']) + '；待完成標準化'
+                state = ('**來源已取得（含論壇付費），保留全部選項**；' if entry['acquiredPaidSources'] else '**免費來源已取得，暫緩購買**；') + '、'.join(entry['acquiredSourceIds']) + '；待完成標準化'
                 if entry['purchaseHoldWithoutHeroId']:state += '；尚待 GGD 角色 ID 對應，保留購買暫緩'
             elif entry.get('partialPurchaseHold'):
                 held = '、'.join(f'`{i}`' for i in entry['purchaseHoldFor'])
                 remaining = '、'.join(f'`{i}`' for i in entry['heroIds'] if i not in entry['purchaseHoldFor'])
-                state = f'**部分形態免費來源已取得**；{held} 暫緩購買；{remaining} 未取得、保留原下載安排；' + '、'.join(entry['acquiredPublicSources'])
+                state = f'**部分形態來源已取得**；{held} 先核對避免重買；{remaining} 未取得、保留原下載安排；' + '、'.join(entry['acquiredSourceIds'])
             if entry.get('mappingNote'): notes += '；' + entry['mappingNote']
             if entry.get('publicSourceLeadIds'):
                 state += '；**其他來源線索，尚未取得模型**：' + '、'.join(entry['publicSourceLeadIds'])
