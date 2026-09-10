@@ -2237,6 +2237,10 @@ export class VfxForgeStage {
       const texture = GetEnvironmentBRDFTexture(this.scene);
       const deadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
       while (!texture.isReady() && !this.disposed && Date.now() < deadline) {
+        // Hero Forge is normally paused on frame zero. Babylon finishes this
+        // GPU-backed lookup during rendering, so waiting for animation frames
+        // alone can never make the texture ready on a cold scene.
+        this.renderScene();
         await this.waitForBrowserFrame();
       }
       if (this.disposed) return;

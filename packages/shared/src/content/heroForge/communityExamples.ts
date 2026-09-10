@@ -1,20 +1,23 @@
 import { defaultAbilityMaxRank } from "../schema/ability";
 import type { TemplateDoc } from "../schema/template";
+import type { VfxScriptAuthoredDoc } from "../schema/vfxScript";
 import { archetypeForOrigin, ORIGIN_ATTACK_TYPE } from "../heroForge";
 import { HERO_PROJECT_SCHEMA, HERO_PLAN_SCHEMA, HERO_SECTION_IDS, HERO_SLOTS, type HeroSlot } from "./constants";
 import { zHeroSlotPlans, type Origin } from "./plan";
 import { defaultHeroPresentation } from "./presentation";
 import { zHeroProject, type HeroProject } from "./schema";
 import { pinHeroPlanTemplates } from "./templateVersions";
+import { contentSha256 } from "../import/jcs";
 
 type Band = "極小" | "小" | "中" | "大" | "極大";
 type Params = Record<string, unknown>;
-interface Move {
+export interface Move {
   name: string;
   purpose: string;
   ref: string;
   params: Params;
   effects?: Params[];
+  abilityOverrides?: Record<string, unknown>;
   range?: Band;
   cooldown?: Band;
   mana?: Band;
@@ -26,10 +29,14 @@ export interface CommunityHeroExample {
   name: string;
   origin: Origin;
   attackType?: "melee" | "ranged";
+  modelKey?: string;
   summary: string;
   adaptations: readonly string[];
   sourceUrl: string;
+  sourceWork?: string;
   moves: Readonly<Record<HeroSlot, Move>>;
+  /** Optional authored cues; omitted recipes retain their original presentation bytes. */
+  authoredPresentation?: Partial<Record<HeroSlot, Pick<VfxScriptAuthoredDoc, "segments" | "notes" | "yields">>>;
 }
 
 // These are ordinary authoring recipes. No champion-specific runtime branch,
@@ -154,18 +161,34 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
 export function createCommunityHeroExample(exampleId: string, projectId: string, templates: readonly TemplateDoc[], generatorVersion?: string): HeroProject {
   const recipe = COMMUNITY_HERO_EXAMPLES.find((entry) => entry.id === exampleId);
   if (!recipe) throw new Error(`找不到社群驗收範例：${exampleId}`);
+  return createCommunityHeroRecipe(recipe, projectId, templates, generatorVersion);
+}
+
+/** Compile an authoring recipe with its own identity and pinned template sources. */
+export function createCommunityHeroRecipe(recipe: CommunityHeroExample, projectId: string, templates: readonly TemplateDoc[], generatorVersion?: string): HeroProject {
   const catalog = new Map(templates.map((template) => [template.id, template]));
+  const withHeroId = <T,>(value: T): T => JSON.parse(JSON.stringify(value).replaceAll("$hero", projectId), (key, entry: unknown) => {
+    // Editor UUIDs can overflow shield's 48-character stackKey limit. Apply
+    // the same mapping to definitions and extendBuff.stackKey references;
+    // statusId and ability identity use their own full, unshortened IDs.
+    return key === "stackKey" && typeof entry === "string" && entry.length > 48
+      ? `stack-${contentSha256([projectId, entry]).slice(-42)}` : entry;
+  });
   const sourceLock = { canonicalId: null, versionId: null };
-  const concept = `${recipe.summary}\n\n概念來源：LoL ${recipe.inspiration}\n${recipe.sourceUrl}\n\n本遊戲改編：\n${recipe.adaptations.map((text) => `• ${text}`).join("\n")}\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。`;
+  const concept = `${recipe.summary}\n\n概念來源：${recipe.sourceWork ?? "LoL"} ${recipe.inspiration}\n${recipe.sourceUrl}\n\n本遊戲改編：\n${recipe.adaptations.map((text) => `• ${text}`).join("\n")}\n\n${recipe.modelKey ? "採用所選 GGD 模型與特效。" : "採用既有 GGD 模型與特效，外觀為驗收用替身。"}`;
   const presentation = defaultHeroPresentation();
-  presentation.modelKey = recipe.origin === "法師" || recipe.origin === "軟輔" ? "champ.sela" : "champ.thorne";
+  presentation.modelKey = recipe.modelKey ?? (recipe.origin === "法師" || recipe.origin === "軟輔" ? "champ.sela" : "champ.thorne");
   const slots = zHeroSlotPlans.parse(Object.fromEntries(HERO_SLOTS.map((slot) => {
     const definition = recipe.moves[slot];
     const template = catalog.get(definition.ref);
     if (!template || template.status !== "enabled") throw new Error(`${recipe.inspiration} ${slot} 的模板尚不可用：${definition.ref}`);
     const passive = slot === "PASSIVE";
     const abilityId = `${projectId}.${slot.toLowerCase()}`;
-    if (!passive) presentation.slots[slot].script = {
+    const authored = recipe.authoredPresentation?.[slot];
+    if (authored) presentation.slots[slot].script = {
+      schema: "vfx-script@1", id: abilityId, abilityId, ...withHeroId(authored),
+    };
+    else if (!passive) presentation.slots[slot].script = {
       schema: "vfx-script@1", id: abilityId, abilityId,
       segments: [{ kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
         { kind: "floatingText", on: "castEffect", text: definition.name, colorRgb: [210, 230, 255], durationSec: 0.7 },
@@ -174,10 +197,10 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
     return [slot, {
       slot, name: definition.name, purpose: definition.purpose, maxRank: defaultAbilityMaxRank(slot),
       products: [{ instanceId: `${recipe.id}-${slot.toLowerCase()}-1`, template: { ref: definition.ref, inheritDefaults: true,
-        params: JSON.parse(JSON.stringify(definition.params).replaceAll("$hero", projectId)) } }],
+        params: withHeroId(definition.params) } }],
       templateConflictPolicy: "reject",
       tuning: { cooldownSec: passive ? 0 : 10, manaCost: passive ? 0 : 40, range: passive ? 0 : 6 },
-      abilityOverrides: { provenance: "editor-json", ...(passive ? {} : { rangeTier: definition.range ?? "中", cooldownTier: definition.cooldown ?? (slot === "EX" ? "大" : "小"), manaCostTier: definition.mana ?? "小", castTimeTier: definition.cast ?? "小" }), ...(definition.effects ? { effects: structuredClone(definition.effects) } : {}) },
+      abilityOverrides: withHeroId({ provenance: "editor-json", ...(passive ? {} : { rangeTier: definition.range ?? "中", cooldownTier: definition.cooldown ?? (slot === "EX" ? "大" : "小"), manaCostTier: definition.mana ?? "小", castTimeTier: definition.cast ?? "小" }), ...(definition.effects ? { effects: definition.effects } : {}), ...definition.abilityOverrides }),
       capabilityIds: [...template.requires], directionOptionIds: [], fallbackOptionIds: [],
     }];
   })));

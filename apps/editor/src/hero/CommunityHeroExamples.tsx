@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AcquiredHeroExamples } from "./AcquiredHeroExamples";
 import { COMMUNITY_HERO_EXAMPLES, createCommunityHeroExample } from "@ggd/shared/content/heroForge/communityExamples";
 import type { LocalDraft } from "../drafts/repository";
 import { autosave } from "../drafts/session";
@@ -19,7 +20,7 @@ export function CommunityHeroExamples({ onOpen }: { onOpen(draft: LocalDraft): v
     } catch (cause) { setError(String(cause)); }
     finally { setPending(null); }
   };
-  return <section className="community-hero-examples" aria-label="社群角色驗收範例">
+  return <><section className="community-hero-examples" aria-label="社群角色驗收範例">
     <h2>LoL 概念改編・社群角色驗收</h2>
     <p>建立自己的六槽英雄副本，直接試玩、調整及送審。範例使用本遊戲的積木與級距，AI 關閉也能完成。</p>
     {error ? <p role="alert">{error}</p> : null}
@@ -30,5 +31,5 @@ export function CommunityHeroExamples({ onOpen }: { onOpen(draft: LocalDraft): v
       </details>
       <button type="button" disabled={pending !== null} onClick={() => void create(example.id)}>{pending === example.id ? "正在保存…" : `建立${example.inspiration}改編作品`}</button>
     </li>)}</ul>
-  </section>;
+  </section><AcquiredHeroExamples onOpen={onOpen} /></>;
 }
