@@ -137,6 +137,8 @@ export const zAbilityRecast = z
     cooldownAt: z.enum(["first", "end"]).optional(),
     /** 每一次後段的耗魔（預設 0 —— 首放已經付過）。 */
     costPerRecast: z.number().min(0).optional(),
+    /** GH#1197 威寇茲 W：`firstCast` = 後段沿用**首段**的落點與方向（裂痕固定在原處，⛔ 不讀後段這一按的目標）。缺 = press */
+    anchor: z.enum(["press", "firstCast"]).optional().describe("firstCast = 後段釘在首段的落點／方向（威寇茲 W）"),
   })
   .strict();
 

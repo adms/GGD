@@ -178,6 +178,11 @@ export interface ProjectileComp {
   /** ids already hit (pierce support); single-hit projectiles despawn on first */
   pierce: boolean;
   hitSet: Set<EntityId>;
+  /** GH#1197 回程彈：`"return"` = 正在飛回施法者（`ProjectileSystem` 每 tick 重算方向）。缺 = 去程。 */
+  phase?: "out" | "return";
+  returns?: boolean;
+  /** GH#1197 分裂彈設定（從 `ProjectileDef.split` 複製）。 */
+  split?: { projectileId: ProjectileId; on: readonly ("hit" | "recast")[] };
   /** effects executed on each unit hit (caster = owner) */
   onHit: import("./effects/effect").EffectDef[];
   /** rank of the spawning ability (for scaling in onHit) */
@@ -479,6 +484,8 @@ export interface StatusEffect {
    * 具有[恐懼]狀態」)。兩邊讀同一個旗標,所以文案說的恐懼與判斷的恐懼是同一件事。
    */
   feared?: boolean;
+  /** GH#1197 魅惑（阿璃 E）：被迫朝 `applierId` 走、不接指令。與 `feared` 同一列（`sim/charm.ts`）。 */
+  charmed?: boolean;
   /**
    * 這個標記**帶的一個數字** —— 目前唯一的作者是 `spendMana.bankAs`,唯一的
    * 讀者是 `damage.bankedBonus`(effectCommon.ts::bankedAddend)。
@@ -756,4 +763,29 @@ export interface ReviveCircleComp {
   channellerId: EntityId | null;
   /** an enemy stood inside this tick (progress held, not reset) */
   contested: boolean;
+}
+
+/** 【邊界陣】的一段：兩端點；`alive:false` = 已被穿越（消失）。 */
+export interface ThresholdSegment {
+  a: Vec2;
+  b: Vec2;
+  alive: boolean;
+}
+/**
+ * 【邊界陣】（GH#1197 瑟雷西 R）—— ⛔ 沒有 transform／health：它不是單位。
+ * 穿越判定：每個候選敵人記上一 tick 位置（`lastPos`），本 tick 的位移線段與哪一段相交就是穿越。
+ */
+export interface ThresholdComp {
+  castInstance?: import("./content/castInstance").CastInstance;
+  ownerId: EntityId;
+  zone: number;
+  center: Vec2;
+  radius: number;
+  segments: ThresholdSegment[];
+  onCross: import("./effects/effect").EffectDef[];
+  expiresAtTick: number;
+  rank: number;
+  origin: string;
+  abilitySlot?: CastableSlot;
+  lastPos: Map<EntityId, Vec2>;
 }

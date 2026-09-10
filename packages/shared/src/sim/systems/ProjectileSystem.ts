@@ -24,7 +24,8 @@ export interface ProjectileHitEvent {
   /** 普攻路徑才有。 */
   crit?: boolean;
 }
-import { scale, addScaled, dist } from "../math/vec2";
+import { scale, addScaled, dist, sub } from "../math/vec2";
+import { flipToReturn, splitProjectile } from "../projectileSplit";
 import { sweptCircleVsCircle } from "../collision/intersect";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
@@ -50,6 +51,21 @@ export function projectileSystem(world: SimWorld): void {
     if (world.settledZones.has(t.zone)) {
       toDestroy.push(id);
       continue;
+    }
+    // ⭐ GH#1197 阿璃 Q 回程：每 tick 朝施法者**當下**位置轉向；到人身上（或施法者沒了）就收。
+    if (proj.phase === "return") {
+      const ot = world.transform.get(proj.ownerId);
+      const oh = world.health.get(proj.ownerId);
+      const back = ot ? sub(ot.pos, t.pos) : { x: 0, z: 0 };
+      const backLen = Math.sqrt(back.x * back.x + back.z * back.z);
+      if (!ot || oh?.alive !== true || ot.zone !== t.zone || backLen <= Math.max(0.5, proj.hitRadius)) {
+        toDestroy.push(id);
+        continue;
+      }
+      proj.dir = scale(back, 1 / backLen);
+      t.vel = scale(proj.dir, proj.speed);
+      t.facing = proj.dir;
+      proj.remainingRange = backLen;
     }
     const stepLen = Math.min(proj.speed * world.dt, proj.remainingRange);
     const delta = scale(proj.dir, stepLen);
@@ -162,8 +178,14 @@ export function projectileSystem(world: SimWorld): void {
           fireHooks(world, owner, "onAbilityHit", bestId, proj.abilitySlot);
         }
       }
-      if (!proj.pierce) {
+      if (proj.split !== undefined && proj.split.on.includes("hit")) {
+        splitProjectile(world, id, proj); // GH#1197 威寇茲 Q：命中 ⇒ 左右分裂，主彈退場
         toDestroy.push(id);
+        continue;
+      }
+      if (!proj.pierce) {
+        if (proj.returns === true && proj.phase !== "return") flipToReturn(proj);
+        else toDestroy.push(id);
         continue;
       }
     } else {
@@ -175,7 +197,8 @@ export function projectileSystem(world: SimWorld): void {
     // terminate on zone boundary or range end
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
     if (proj.remainingRange <= 1e-6 || dist(t.pos, zone.center) > zone.boundaryRadius) {
-      toDestroy.push(id);
+      if (proj.returns === true && proj.phase !== "return") flipToReturn(proj); // 阿璃 Q：射程盡頭 ⇒ 掉頭
+      else toDestroy.push(id);
     }
   }
 

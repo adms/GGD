@@ -35,7 +35,7 @@
       "tickOnApply": true
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 1,
   "castTimeTier": "大",
   "template": {
     "ref": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
@@ -50,7 +50,7 @@
       "impactRadius": 150,
       "scatterRadius": 150,
       "payout": "perImpact",
-      "castTimeSec": 0.5
+      "castTimeSec": 1
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"

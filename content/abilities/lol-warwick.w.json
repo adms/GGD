@@ -38,7 +38,7 @@
       "duration": 3
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.267,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
@@ -56,7 +56,7 @@
           "value": 0.2
         }
       ],
-      "castTimeSec": 0.1
+      "castTimeSec": 0.267
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"

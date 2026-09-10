@@ -81,6 +81,12 @@ z
     count: z.number().int().positive().max(60).optional(),
     /** 拔不完時先拔哪一邊。省略 = 後台的 `defaultOrder`。 */
     order: z.enum(["newest", "oldest"]).optional(),
+    /**
+     * ⭐ GH#1197 蓋倫 Q：只清**這幾類**狀態（`["slow"]` = 只清減速，暈眩／禁足留著）。
+     * 判準是「那一筆狀態**全部**機制都在名單內」—— 一筆同時帶減速＋暈眩的狀態，`["slow"]` ⛔ 不會碰它
+     * （⛔ 不然「減速淨化」會順手把暈眩拔掉）。省略 = 舊行為（pools／polarity 決定）。
+     */
+    statusKinds: z.array(z.enum(["slow", "root", "stun", "silence", "fear", "charm", "disarm"])).min(1).optional(),
   })
   .strict();
 

@@ -2352,7 +2352,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 >
 > ⚠️ 一個 token 出現在這裡＝**引擎認得它**；「內容」欄是 0 ＝ 機制在但還沒有人用，⛔ 不是壞掉。
 
-### 效果（effect kind）—— 49 種
+### 效果（effect kind）—— 50 種
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
@@ -2370,9 +2370,9 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `randomArea` | 7 | `restore` | 53 | `revive` | 1 |
 | `screenFlash` | 6 | `screenShake` | 17 | `shield` | 85 |
 | `shieldBreak` | 2 | `spawnModelFx` | 55 | `spawnProjectile` | 4 |
-| `spawnVfx` | 56 | `spendHealth` | 4 | `spendMana` | 6 |
-| `summon` | 8 | `swapResource` | 1 | `taunt` | 2 |
-| `weightedBranch` | 13 |  |  |  |  |
+| `spawnThresholds` | 0 | `spawnVfx` | 56 | `spendHealth` | 4 |
+| `spendMana` | 6 | `summon` | 8 | `swapResource` | 1 |
+| `taunt` | 2 | `weightedBranch` | 13 |  |  |
 
 ### 觸發事件（hook event）—— 33 種
 

@@ -67,6 +67,19 @@ export const zProjectileDef = z
     maxRange: z.number().positive(),
     hitRadius: z.number().positive(),
     pierce: z.boolean().optional(),
+    /**
+     * GH#1197 阿璃 Q：射程走完（或非穿透彈命中）之後**飛回施法者當下位置**，到人身上才消失。
+     * 回程的命中**分開記錄**（hitSet 重置 ⇒ 去程打過的人回程可以再打）。缺 = 舊行為（射程盡頭消失）。
+     */
+    returns: z.boolean().optional(),
+    /**
+     * GH#1197 威寇茲 Q：主彈在「命中」／「再次施放」時從**當下位置**左右各分裂一發 `projectileId`（垂直 ±90°），
+     * 子彈繼承主彈的 onHit／施放序號；主彈當場消失。`on` 決定哪些時機分裂（再次施放要配 `ability.recast`）。
+     */
+    split: z
+      .object({ projectileId: zRef<ProjectileId>("projectiles"), on: z.array(z.enum(["hit", "recast"])).min(1) })
+      .strict()
+      .optional(),
     vfxKey: zRef("vfx", { soft: true }).optional(),
     /**
      * RENDER-ONLY (never read by the sim): the 3D body the client builds for

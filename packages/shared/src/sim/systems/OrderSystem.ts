@@ -18,6 +18,7 @@ import { bodyHeldByRules } from "../movementHold";
 import { stuckEscapeRules, stuckEscapeTick } from "../stuckEscape";
 import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
 import { fearDropsOrders, fearPass } from "../fear";
+import { charmDropsOrders, charmPass } from "../charm";
 import { chaosDropsOrders, chaosPass } from "../chaos";
 import { reachTo } from "./BasicAttackSystem";
 import { cancelRecoveryByOrder } from "../abilities/abilityRecovery";
@@ -244,6 +245,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       if (
         berserkDropsOrders(world, id) ||
         fearDropsOrders(world, id) ||
+        charmDropsOrders(world, id) ||
         chaosDropsOrders(world, id)
       )
         break; // one entity per seat
@@ -531,6 +533,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
   // 掃 `world.nav` 而不是 `world.champion`:#215 的殭屍也有 nav,而 52-002 /
   // 52-02 的範圍恐懼打到的多半正是它們。
   fearPass(world);
+  charmPass(world); // 魅惑：走向施加者（sim/charm.ts）
   // ---- 混亂:亂走 (sim/chaos.ts) ----
   // ⚠️ 和恐懼**同一個位置、同一個理由**:上面每一段都會寫 `nav.moveTarget`,
   // 跑在中間的話這一 tick 剛抽好的亂走點會被追擊蓋回去 —— 而「被蓋回去」在

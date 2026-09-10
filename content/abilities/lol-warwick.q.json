@@ -67,7 +67,7 @@
       "stacking": "refresh"
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
@@ -78,7 +78,7 @@
       "intervalSec": 1,
       "durationSec": 3,
       "stacking": "refresh",
-      "castTimeSec": 0.1
+      "castTimeSec": 0.567
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"

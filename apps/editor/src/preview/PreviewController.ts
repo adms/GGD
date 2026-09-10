@@ -643,6 +643,15 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
         effectLines(e.onHit, finalStats, attrs, maxRank, depth + 1, out);
         break;
+      // GH#1197 瑟雷西 R【邊界陣】—— 正多邊形的**邊**，穿過那一段才對穿越者跑 onCross，那一段即消失。
+      case "spawnThresholds":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `邊界陣 ${e.sides} 段（半徑 ${e.radius}，${e.durationSec}s）—— 穿過某一段時對穿越者：`,
+        });
+        effectLines(e.onCross, finalStats, attrs, maxRank, depth + 1, out);
+        break;
       // ⭐ GH#541 連段 —— 節奏可能住在**共用表**（`family` → `config.combo-strikes@1`），
       // 所以預覽要說得出「幾段從哪裡來」，⛔ 不可以印一個編輯器自己算的假數字。
       case "comboStrikes": {

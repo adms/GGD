@@ -13,6 +13,7 @@ import type {
   TeamComp,
   Navigation,
   ProjectileComp,
+  ThresholdComp,
   ChampionComp,
   StatusComp,
   FlowerComp,
@@ -111,6 +112,7 @@ import { recoveryDecaySystem } from "./systems/RecoverySystem";
 import { basicAttackSystem } from "./systems/BasicAttackSystem";
 import { toggleUpkeepSystem } from "./abilities/toggle";
 import { projectileSystem } from "./systems/ProjectileSystem";
+import { thresholdSystem } from "./systems/ThresholdSystem";
 import { combatResolveSystem } from "./combat/damage";
 import { flightSystem } from "./flight";
 import { attrGrantExpirySystem } from "./effects/grantAttribute";
@@ -166,6 +168,8 @@ export class SimWorld {
   readonly team = new Map<EntityId, TeamComp>();
   readonly nav = new Map<EntityId, Navigation>();
   readonly projectile = new Map<EntityId, ProjectileComp>();
+  /** 【邊界陣】（GH#1197）—— 見 `systems/ThresholdSystem.ts`。 */
+  readonly threshold = new Map<EntityId, ThresholdComp>();
   readonly champion = new Map<EntityId, ChampionComp>();
   readonly status = new Map<EntityId, StatusComp>();
   readonly stats = new Map<EntityId, StatsComp>();
@@ -1510,6 +1514,7 @@ export class SimWorld {
     this.team.delete(id);
     this.nav.delete(id);
     this.projectile.delete(id);
+    this.threshold.delete(id);
     this.champion.delete(id);
     this.status.delete(id);
     this.stats.delete(id);
@@ -1813,6 +1818,7 @@ export class SimWorld {
     //                             `AbilitiesComp.toggles` 空的時候是嚴格 no-op，
     //                             所以每一份既有錄影逐位元不變。
     projectileSystem(this); // 7. advance projectiles, swept hits
+    thresholdSystem(this); //  7a. 【邊界陣】穿越判定 —— 讀 movementSystem(5) 之後的位置
     hitstopDecaySystem(this); //  7b. age hitstop/knockdown AFTER their gates ran
     //                             (movement/attack), BEFORE this tick's hits set
     //                             fresh values -> a hit on tick T freezes exactly

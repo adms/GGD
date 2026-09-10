@@ -32,6 +32,7 @@ export interface CheatStatusFlags {
   stun?: boolean;
   root?: boolean;
   feared?: boolean;
+  charmed?: boolean;
   silenced?: boolean;
   disarmed?: boolean;
   /** 移動速度倍率（0.8 = 減速 20%）。`undefined` = 不動。 */
@@ -59,6 +60,7 @@ export function cheatStatusFlags(id: string, tags: readonly string[] | undefined
   if (t.has("root") || t.has("immobilize")) out.root = true;
   // 恐懼 —— `flee` 是它與其他 `ai-override` 家族成員的分野（暴走/混亂/魅惑沒有）。
   if (t.has("fear") || t.has("flee")) out.feared = true;
+  if (t.has("charm")) out.charmed = true;
   // 沉默 / 繳械 —— 它們是「這半個操作被拿走」的類別 tag。暈眩身上兩個都有，
   // 而那是對的：一個被暈的人本來就既放不出技能也打不出普攻。
   if (t.has("cast-denied")) out.silenced = true;
@@ -79,6 +81,7 @@ export function cheatStatusHasMechanics(flags: CheatStatusFlags): boolean {
     flags.stun === true ||
     flags.root === true ||
     flags.feared === true ||
+    flags.charmed === true ||
     flags.silenced === true ||
     flags.disarmed === true ||
     flags.moveSpeedMult !== undefined
@@ -90,6 +93,7 @@ export const CHEAT_STATUS_FLAG_LABEL: Readonly<Record<keyof CheatStatusFlags, st
   stun: "暈眩",
   root: "禁足",
   feared: "恐懼",
+  charmed: "魅惑",
   silenced: "沉默",
   disarmed: "繳械",
   moveSpeedMult: "減速",
@@ -101,6 +105,7 @@ export function describeCheatStatusFlags(flags: CheatStatusFlags): string {
   if (flags.stun) parts.push(CHEAT_STATUS_FLAG_LABEL.stun);
   if (flags.root) parts.push(CHEAT_STATUS_FLAG_LABEL.root);
   if (flags.feared) parts.push(CHEAT_STATUS_FLAG_LABEL.feared);
+  if (flags.charmed) parts.push(CHEAT_STATUS_FLAG_LABEL.charmed);
   if (flags.silenced) parts.push(CHEAT_STATUS_FLAG_LABEL.silenced);
   if (flags.disarmed) parts.push(CHEAT_STATUS_FLAG_LABEL.disarmed);
   if (flags.moveSpeedMult !== undefined) {

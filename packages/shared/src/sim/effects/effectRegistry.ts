@@ -109,6 +109,7 @@ import { grantXpEffect } from "./grantXp"; // ⭐ GH#890 —— 每秒額外獲�
 // function the 復活圈 (#84/#206) completes through — so this is a new way to
 // TRIGGER a revive, never a second definition of what a revived champion is.
 import { dispelEffect } from "./dispel";
+import { spawnThresholdsEffect } from "./spawnThresholds";
 import { shieldBreakEffect } from "./shieldBreak";
 import { devourEffect } from "./devour";
 import { reviveEffect } from "./revive";
@@ -204,6 +205,8 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   // ── 【淨化】/【驅散】(A4b) — 清 status / dot / shields / buffs 的選定子集。
   //    行為 ./dispel.ts，池子語意 ../clearPools.ts，旋鈕 ../dispelRules.ts。
   dispel: dispelEffect,
+  // ── 【邊界陣】(GH#1197 瑟雷西 R) — 可穿越的段，穿越才觸發、各段獨立消失。行為 ../systems/ThresholdSystem.ts。
+  spawnThresholds: spawnThresholdsEffect,
   shieldBreak: shieldBreakEffect,
   devour: devourEffect,
 

@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "dbeac382",
+    "fingerprint": "5c58cd69",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -141,6 +141,7 @@
       "shieldBreak",
       "spawnModelFx",
       "spawnProjectile",
+      "spawnThresholds",
       "spawnVfx",
       "spendHealth",
       "spendMana",
@@ -285,6 +286,7 @@
       "centre",
       "championId",
       "chance",
+      "charmed",
       "clampMin",
       "clip",
       "clipTimeScale",
@@ -402,6 +404,7 @@
       "onCarrierDeath",
       "onCasterDeath",
       "onConsumed",
+      "onCross",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -462,6 +465,7 @@
       "scripted",
       "shape",
       "side",
+      "sides",
       "silenced",
       "sizeScale",
       "slot",
@@ -479,6 +483,7 @@
       "stacks",
       "statusId",
       "statusImmunity",
+      "statusKinds",
       "steps",
       "stopDistance",
       "stopOnCasterDeath",
@@ -624,6 +629,7 @@
       "centre",
       "championId",
       "chance",
+      "charmed",
       "clampMin",
       "clip",
       "clipTimeScale",
@@ -801,6 +807,7 @@
       "onCarrierDeath",
       "onCasterDeath",
       "onConsumed",
+      "onCross",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -888,6 +895,7 @@
       "scripted",
       "shape",
       "side",
+      "sides",
       "silenced",
       "sizeScale",
       "slot",
@@ -907,6 +915,7 @@
       "statusImmunity",
       "statusImmunity.charges",
       "statusImmunity.tags",
+      "statusKinds",
       "steps",
       "steps.duration",
       "steps.modifiers",
@@ -1222,8 +1231,10 @@
         "maxRange",
         "meshShape",
         "pierce",
+        "returns",
         "schema",
         "speed",
+        "split",
         "vfxKey"
       ],
       "status-effect@1": [
@@ -7529,12 +7540,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "dbeac382",
+    "engineFingerprint": "5c58cd69",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 dbeac382 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 5c58cd69 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -8402,15 +8413,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "d73db2d4efee",
+    "fingerprint": "7fa275f09510",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "4f797fffd292"
+        "digest": "ab550ad831c2"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "58fb2d5798f7"
+        "digest": "639da5369f6d"
       },
       {
         "surface": "exact-ref-collector",
@@ -8458,7 +8469,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "53b4c04717ec",
+  "migrationFingerprint": "adb0cce4c6f9",
   "supportedModes": [
     "bootstrap"
   ],
@@ -8472,5 +8483,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "3f67f5f2d755"
+  "profileDigest": "a8feaa679b46"
 }

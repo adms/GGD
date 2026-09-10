@@ -79,6 +79,8 @@ export interface ApplyStatusVariant {
    * ⚠️ 它**是** CC（免控擋得掉），也只管腳 —— 要連技能一起封請配 `silenced`。
    */
   feared?: boolean;
+  /** GH#1197 魅惑（鏡射 feared，方向相反：走向施加者）。 */
+  charmed?: boolean;
   /**
    * C4 睡眠（#278）—— **受傷即提早解除這一筆**。
    * ⛔ 只拔標了它的那幾筆；身上的其他 status 一格不動（`sim/statusBreak.ts`）。

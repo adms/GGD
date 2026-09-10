@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
@@ -113,7 +113,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
@@ -165,14 +165,14 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.1
+          "castTimeSec": 0.067
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
@@ -232,7 +232,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.033,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
@@ -250,7 +250,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 0.1
+          "castTimeSec": 1.033
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
@@ -340,7 +340,7 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.5
+      "castTimeSec": 0.9
     }
   },
   "exAbility": "lol-yasuo.ex",

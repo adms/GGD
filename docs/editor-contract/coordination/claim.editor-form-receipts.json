@@ -6,11 +6,11 @@
   "to": "main",
   "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
   "contractFingerprint": "34e36ee3486cf36a",
-  "title": "Editor 178 顆積木的 React 操作與回讀：173 通過、5 不可用",
+  "title": "Editor 179 顆積木的 React 操作與回讀：174 通過、5 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，178 顆積木中 173 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，179 顆積木中 174 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,20 +26,20 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "3f2c27c99debcc5a1de9658c9f5673f378ec6a64ca6cc70039976ca1bd1c073e",
-    "capabilityFingerprint": "dbeac382",
+    "brickInputSha256": "6afb8e3be9e2e708f66dc6a8add15cd3db38cb81e1dda91e33b463a13c5f4837",
+    "capabilityFingerprint": "5c58cd69",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
     "typeCatalogSha256": "34e36ee3486cf36a362be073f44c4c9d98ef7acd2ba4a31d91efe0409a4099ff"
   },
   "summary": {
-    "total": 178,
-    "renderable": 173,
+    "total": 179,
+    "renderable": 174,
     "missing": 5,
-    "parameterEdited": 106,
+    "parameterEdited": 107,
     "byLayer": {
       "effect": {
-        "total": 49,
-        "renderable": 49,
+        "total": 50,
+        "renderable": 50,
         "missing": 0
       },
       "hook": {
@@ -311,6 +311,11 @@
           "optional": true
         },
         {
+          "name": "charmed",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "clipTimeScale",
           "type": "number",
           "optional": true
@@ -424,7 +429,7 @@
       "surface": "ability.effects[].kind=applyStatus",
       "renderable": true,
       "reason": null,
-      "controlCount": 33,
+      "controlCount": 34,
       "editedPath": "value.clipTimeScale",
       "parameterEdited": true,
       "roundTrip": true,
@@ -1823,6 +1828,11 @@
             "allies",
             "enemies"
           ],
+          "optional": true
+        },
+        {
+          "name": "statusKinds",
+          "type": "array",
           "optional": true
         }
       ],
@@ -3913,6 +3923,46 @@
       "reason": null,
       "controlCount": 2,
       "editedPath": "value.projectileId",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "spawnThresholds",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "durationSec",
+          "type": "number"
+        },
+        {
+          "name": "onCross",
+          "type": "array"
+        },
+        {
+          "name": "radius",
+          "type": "number"
+        },
+        {
+          "name": "sides",
+          "type": "union"
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnThresholds",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 5,
+      "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
       "browserVerified": false
@@ -13564,7 +13614,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-apply-status",
       "renderable": true,
       "reason": null,
-      "controlCount": 36,
+      "controlCount": 37,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -14055,7 +14105,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-buff-self",
       "renderable": true,
       "reason": null,
-      "controlCount": 45,
+      "controlCount": 46,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15256,7 +15306,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-leap-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 51,
+      "controlCount": 52,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -16790,7 +16840,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-projectile-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 69,
+      "controlCount": 70,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -16947,7 +16997,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-proxy-fanout",
       "renderable": true,
       "reason": null,
-      "controlCount": 43,
+      "controlCount": 44,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -17352,7 +17402,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-single-strike",
       "renderable": true,
       "reason": null,
-      "controlCount": 65,
+      "controlCount": 66,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -17690,7 +17740,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-transform",
       "renderable": true,
       "reason": null,
-      "controlCount": 39,
+      "controlCount": 40,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,

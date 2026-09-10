@@ -4,14 +4,14 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`dbeac382`
+capability 指紋：`5c58cd69`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 178 |
-| effect | 49 |
+| total | 179 |
+| effect | 50 |
 | hook | 33 |
 | leaf | 10 |
 | template | 47 |
@@ -19,24 +19,24 @@ capability 指紋：`dbeac382`
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 18 |
-| gated | 137 |
+| gated | 138 |
 | gaps | 55 |
 | missingAdminForm | 55 |
 | missingEditorForm | 4 |
-| zeroAdoption | 44 |
+| zeroAdoption | 45 |
 
 ## 兩個編輯器的表單怎麼量的
 
 - **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1184 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
-- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 178 顆有收據；收據裡沒有的才退回代理值。
+- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 179 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
-## `effect`（49）
+## `effect`（50）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 134 |
-| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 134 |
+| `applyStatus` | 25 | 0 | 0 | ✅ | ✅ | 134 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 33 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 4 |
@@ -51,7 +51,7 @@ capability 指紋：`dbeac382`
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 72 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
-| `dispel` | 10 | 1 | 0 | ✅ | ✅ | 17 |
+| `dispel` | 11 | 1 | 0 | ✅ | ✅ | 17 |
 | `dot` | 13 | 0 | 0 | ✅ | ✅ | 42 |
 | `evasion` | 6 | 0 | 0 | ✅ | ✅ | 3 |
 | `eventValueConversion` | 12 | 1 | 0 | ✅ | ✅ | 1 |
@@ -77,6 +77,7 @@ capability 指紋：`dbeac382`
 | `shieldBreak` | 8 | 1 | 0 | ✅ | ✅ | 0 |
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
 | `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
+| `spawnThresholds` | 5 | 0 | 0 | ✅ | ✅ | 0 |
 | `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 56 |
 | `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 4 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 6 |

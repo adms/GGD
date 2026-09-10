@@ -30,6 +30,7 @@ import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
 import { armRecast, bindRecastSerial, consumeRecastCharge, recastPressGate, sweepRecast } from "./recast";
+import { splitLiveProjectiles } from "../projectileSplit";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
 import { spellWardRefusesCast } from "../spellWardCast";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
@@ -581,6 +582,13 @@ export function castAbility(
   const recastPress = recastPressGate(inst, def.recast, world.tick);
   if (recastPress === "gate") return "recast-gate";
   const isRecast = recastPress === "recast";
+  // ⭐ GH#1197 威寇茲 W：後段釘在首段的落點／方向 —— 在目標解析**之前**把這一按的 target 換掉
+  //   （⛔ 放在解析之後不行：ground 對著空地會先回 bad-target）。
+  if (isRecast && def.recast?.anchor === "firstCast" && inst.recast?.point) {
+    const rp = inst.recast.point;
+    const rd = inst.recast.direction;
+    target = def.castType === "ground" ? { type: "point", point: { x: rp.x, z: rp.z } } : rd ? { type: "dir", dir: { x: rd.x, z: rd.z } } : target;
+  }
   if (!isRecast && inst.cooldownRemainingTicks > 0) return "cooldown";
 
   // The SIXTH slot is castable only for `innateKind: "active"` — the ~60 real
@@ -624,7 +632,7 @@ export function castAbility(
   // for the same dead button. The case recovery exists to govern is a COMBO —
   // a DIFFERENT ability, off cooldown, mana in hand, right after the first one
   // — and that case reaches exactly this line.
-  if ((ab.recovery?.ticksLeft ?? 0) > 0) return "recovery";
+  if (!isRecast && (ab.recovery?.ticksLeft ?? 0) > 0) return "recovery"; // 後段是同一次施放的延續，⛔ 不吃打空後搖
 
   // ---- resolve targeting ----
   let targets: EntityId[] = [];
@@ -755,9 +763,14 @@ export function castAbility(
   );
   const cdTicks = Math.round(cdSecs / world.dt);
   if (isRecast) {
+    splitLiveProjectiles(world, caster, slot, inst.recast?.serial ?? -1); // GH#1197 威寇茲 Q：再按 ⇒ 主彈當場分裂
     consumeRecastCharge(inst); // 用完 ⇒ finishRecast 會把 `cooldownAt:"end"` 暫存的冷卻寫進去
   } else if (def.recast) {
     inst.cooldownRemainingTicks = armRecast(inst, def.recast, world.tick, world.dt, cdTicks);
+    if (inst.recast) {
+      inst.recast.point = point;
+      inst.recast.direction = direction;
+    }
   } else {
     inst.cooldownRemainingTicks = cdTicks;
   }

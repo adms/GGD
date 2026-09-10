@@ -46,4 +46,6 @@ export interface DispelVariant {
   count?: number;
   /** 拔不完時先拔哪一邊。省略 = `defaultOrder`。 */
   order?: "newest" | "oldest";
+  /** GH#1197 只清這幾類（每一筆狀態的**全部**機制都要在名單內才拔 —— 帶暈眩的減速不會被「只清減速」拔掉）。 */
+  statusKinds?: readonly ("slow" | "root" | "stun" | "silence" | "fear" | "charm" | "disarm")[];
 }

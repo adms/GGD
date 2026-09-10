@@ -314,6 +314,8 @@ export interface AbilityRecast {
   /** `end`：冷卻等最後一段放完（或窗口到期）才開始跑。缺 = first */
   cooldownAt?: "first" | "end";
   costPerRecast?: number;
+  /** firstCast：後段釘在首段的落點／方向（威寇茲 W）。缺 = press */
+  anchor?: "press" | "firstCast";
 }
 
 export interface AbilityToggle {
@@ -783,6 +785,10 @@ export interface ProjectileDef {
   maxRange: number;
   hitRadius: number;
   pierce?: boolean;
+  /** GH#1197 阿璃 Q：射程走完飛回施法者；回程命中分開記錄。 */
+  returns?: boolean;
+  /** GH#1197 威寇茲 Q：命中／再次施放時從當下位置左右分裂（`sim/projectileSplit.ts`）。 */
+  split?: { projectileId: ProjectileId; on: readonly ("hit" | "recast")[] };
   vfxKey?: string;
   /** RENDER-ONLY 3D body shape for the flying missile (see projectile@1). */
   meshShape?: "bolt" | "orb" | "shard";

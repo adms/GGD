@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "d307e6fc4e79",
-  "capabilityFingerprint": "dbeac382",
+  "fingerprint": "533009533ebd",
+  "capabilityFingerprint": "5c58cd69",
   "required": [
     {
       "group": "abilityField",
@@ -20918,6 +20918,10 @@
     },
     {
       "group": "effectField",
+      "name": "charmed"
+    },
+    {
+      "group": "effectField",
       "name": "clampMin"
     },
     {
@@ -21387,6 +21391,10 @@
     {
       "group": "effectField",
       "name": "onConsumed"
+    },
+    {
+      "group": "effectField",
+      "name": "onCross"
     },
     {
       "group": "effectField",
@@ -21875,6 +21883,10 @@
     {
       "group": "effectFieldPath",
       "name": "chance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "charmed"
     },
     {
       "group": "effectFieldPath",
@@ -22590,6 +22602,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "onCross"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "onDevour"
     },
     {
@@ -22934,6 +22950,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "sides"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "silenced"
     },
     {
@@ -23007,6 +23027,10 @@
     {
       "group": "effectFieldPath",
       "name": "statusImmunity.tags"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "statusKinds"
     },
     {
       "group": "effectFieldPath",
@@ -23426,6 +23450,10 @@
     },
     {
       "group": "effectField",
+      "name": "sides"
+    },
+    {
+      "group": "effectField",
       "name": "silenced"
     },
     {
@@ -23491,6 +23519,10 @@
     {
       "group": "effectField",
       "name": "statusImmunity"
+    },
+    {
+      "group": "effectField",
+      "name": "statusKinds"
     },
     {
       "group": "effectField",
@@ -23807,6 +23839,10 @@
     {
       "group": "effectKind",
       "name": "spawnProjectile"
+    },
+    {
+      "group": "effectKind",
+      "name": "spawnThresholds"
     },
     {
       "group": "effectKind",
@@ -24353,12 +24389,42 @@
     },
     {
       "group": "projectileField",
+      "name": "returns",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
       "name": "schema",
       "owner": "projectile@1"
     },
     {
       "group": "projectileField",
       "name": "speed",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "split",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "split.on",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "split.on[]=hit",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "split.on[]=recast",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "split.projectileId",
       "owner": "projectile@1"
     },
     {
@@ -25158,8 +25224,8 @@
     }
   ],
   "counts": {
-    "effectKind": 49,
-    "effectField": 274,
+    "effectKind": 50,
+    "effectField": 278,
     "hookEvent": 33,
     "hookField": 22,
     "abilityField": 41,
@@ -25167,15 +25233,15 @@
     "templateFamily": 47,
     "conditionLeaf": 10,
     "conditionLeafField": 19,
-    "effectFieldPath": 450,
+    "effectFieldPath": 454,
     "vfxField": 91,
     "modelField": 47,
-    "projectileField": 15,
+    "projectileField": 21,
     "skinField": 9,
     "vfxScriptField": 8,
     "configField": 4046,
     "_notRequired": 15,
-    "_total": 5169,
+    "_total": 5184,
     "_ownerOnly": 39
   }
 }

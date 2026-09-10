@@ -81,6 +81,10 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // a missile that expired without hitting anything → client fizzle, so a ranged
   // auto that whiffs still resolves visually
   "projectileEnd",
+  // GH#1197 【邊界陣】：生成（畫五段）／某段被穿越（消失＋打擊）／整組到期
+  "thresholdSpawn",
+  "thresholdBreak",
+  "thresholdEnd",
   "levelUp",
   "castBegin",
   "castEnd",
