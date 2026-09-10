@@ -643,6 +643,14 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
         effectLines(e.onHit, finalStats, attrs, maxRank, depth + 1, out);
         break;
+      // GH#1190 鄂爾 Q【暫時障礙】—— 真碰撞圓柱，到期／被 dash.shatter 撞碎消失。
+      case "spawnObstacle":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `暫時障礙 半徑 ${e.radius}，${e.durationSec}s（${e.at === "self" ? "施法者腳下" : "落點"}${e.shatterable === false ? "，不可撞碎" : "，可被衝刺撞碎"}）`,
+        });
+        break;
       // GH#1197 瑟雷西 R【邊界陣】—— 正多邊形的**邊**，穿過那一段才對穿越者跑 onCross，那一段即消失。
       case "spawnThresholds":
         out.push({

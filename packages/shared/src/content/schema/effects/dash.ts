@@ -73,8 +73,9 @@ z
      * 結束條件。預設選 always，因為卡面說「衝刺後揮出」，而一刀被場景取消是玩家
      * 看不見的失敗。
      */
+    /** GH#1190：`blocked` = 衝刺被牆／柱**擋停**才跑 onEnd（鄂爾 E 撞柱震波；沒撞到就不震） */
     onEndOn: z
-      .enum(["always", "completed"])
+      .enum(["always", "completed", "blocked"])
       .optional()
       .describe(
         "被地形擋下來的衝刺算不算衝完：always（預設，照樣揮出）或 completed（只有跑完距離才揮）。",
@@ -83,6 +84,9 @@ z
     onEndWhenDead: z
       .boolean()
       .optional()
+      ,
+    /** GH#1190：撞停時把身體碰到的**可碎**暫時障礙（spawnObstacle）撞碎。缺 = false */
+    shatter: z.boolean().optional()
       .describe("衝刺途中陣亡還要不要跑結束效果。留空＝不跑。"),
   })
   .strict();

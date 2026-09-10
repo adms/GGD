@@ -257,7 +257,7 @@ describe("champion docs carry the form link (transform-forms-docs)", () => {
     const nonW3x = [...DOCS.values()].filter((d) => d.transform !== undefined && !d.id.startsWith("godie-"));
     const broken = nonW3x
       .filter((d) => {
-        const cp = DOCS.get(d.transform!.counterpartId);
+        const cp = DOCS.get(String(d.transform!.counterpartId));
         return cp?.transform?.counterpartId !== d.id;
       })
       .map((d) => `${d.id} → ${d.transform!.counterpartId}`);

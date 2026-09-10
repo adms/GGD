@@ -152,6 +152,8 @@ export interface Navigation {
    * and "dash OR leap, never both" becomes true by construction).
    */
   override: DashOverride | LeapOverride | null;
+  /** GH#1190：上一次衝刺被牆／柱擋停的 tick（`dash.onEndOn:"blocked"` 讀它；`startDash` 時清掉）。 */
+  dashBlockedTick?: number;
   /** basic-attack target acquired by attack-move / attackTarget orders */
   attackTarget: EntityId | null;
   /**
@@ -788,4 +790,19 @@ export interface ThresholdComp {
   origin: string;
   abilitySlot?: CastableSlot;
   lastPos: Map<EntityId, Vec2>;
+}
+
+/**
+ * 【暫時障礙】（GH#1190 鄂爾 Q）—— 技能生的碰撞圓柱。
+ * ⛔ 沒有 transform／health：它不是單位、索敵看不到它；碰撞由 `sim/obstacles.ts` 併進該區的障礙物清單。
+ */
+export interface ObstacleComp {
+  castInstance?: import("./content/castInstance").CastInstance;
+  ownerId: EntityId;
+  zone: number;
+  center: Vec2;
+  radius: number;
+  expiresAtTick: number;
+  shatterable: boolean;
+  origin: string;
 }

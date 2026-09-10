@@ -85,6 +85,10 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "thresholdSpawn",
   "thresholdBreak",
   "thresholdEnd",
+  // GH#1190 【暫時障礙】：生成／被衝刺撞碎／到期
+  "obstacleSpawn",
+  "obstacleShatter",
+  "obstacleEnd",
   "levelUp",
   "castBegin",
   "castEnd",

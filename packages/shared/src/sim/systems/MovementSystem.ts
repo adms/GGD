@@ -29,6 +29,7 @@ import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } fro
 import { steerAroundObstacles } from "../collision/avoid";
 import { walkWaypoint, navRules } from "../navRoute";
 import { activeObstacles, heldGates } from "../map/gates";
+import { obstaclesFor } from "../obstacles";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import {
@@ -183,12 +184,17 @@ export function movementSystem(world: SimWorld): void {
       const delta = scale(ov.dir, stepLen);
       const before = { x: t.pos.x, z: t.pos.z };
       const body = { pos: t.pos, radius: t.radius };
-      moveWithCollision(body, delta, zone);
+      moveWithCollision(body, delta, zone, obstaclesFor(world, t.zone, zone.obstacles)); // GH#1190 暫時障礙也擋衝刺
       t.pos = body.pos;
       ov.remaining -= stepLen;
       const moved = len(sub(t.pos, before));
       // Dash stopped early by a wall → end the dash.
-      if (moved + 1e-6 < stepLen || ov.remaining <= 1e-6) nav.override = null;
+      if (moved + 1e-6 < stepLen || ov.remaining <= 1e-6) {
+        // ⭐ GH#1190：走不到這一步該有的長度 = 被牆／柱**擋停**（⛔ 不是走完）——
+        //   `dash.onEndOn:"blocked"` 讀這一格。⚠️ 只記 `dash`，⛔ 不記 `knockback`（那不是玩家按的）。
+        if (ov.kind === "dash" && moved + 1e-6 < stepLen) nav.dashBlockedTick = world.tick;
+        nav.override = null;
+      }
       // Velocity is what the body ACTUALLY did (see the note in step 2).
       t.vel = scale(sub(t.pos, before), 1 / dt);
       continue;
@@ -221,7 +227,7 @@ export function movementSystem(world: SimWorld): void {
         zoneForNav === undefined
           ? []
           : activeObstacles(
-              zoneForNav.obstacles,
+              obstaclesFor(world, t.zone, zoneForNav.obstacles), // GH#1190 暫時障礙
               world.gateSchedule,
               world.tick,
               // ⭐ 玩家站著撐開／壓住的門。⚠️ 位置**按 entity id 排序**取出來 ——
@@ -483,7 +489,7 @@ export function movementSystem(world: SimWorld): void {
     // unless a grant explicitly opts out, which is the answer to 「會不會飛出
     // 場外」. Leaving the arena breaks every zone-scoped mechanic there is.
     if (!flightIgnoresObstacles(world, id)) {
-      for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);
+      for (const ob of obstaclesFor(world, t.zone, zone.obstacles)) pushOutOfObstacle(body, ob); // GH#1190
     }
     if (flightStaysInBoundary(world, id)) clampToBoundary(body, zone);
     t.pos = body.pos;
@@ -532,6 +538,7 @@ export function startDash(
   if (!nav) return;
   const d = normalize(dir);
   if (d.x === 0 && d.z === 0) return;
+  delete nav.dashBlockedTick; // ⭐ 新的一次衝刺：上一次的撞停不算（GH#1190）
   nav.override = { kind: "dash", dir: d, speed, remaining: distance, authored: true };
 }
 

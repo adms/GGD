@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "5c58cd69",
+  "fingerprint": "e9023124",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -43,6 +43,7 @@
     "shield",
     "shieldBreak",
     "spawnModelFx",
+    "spawnObstacle",
     "spawnProjectile",
     "spawnThresholds",
     "spawnVfx",
@@ -367,6 +368,8 @@
     "scatterRadius",
     "scripted",
     "shape",
+    "shatter",
+    "shatterable",
     "side",
     "sides",
     "silenced",
@@ -797,6 +800,8 @@
     "scatterRadius",
     "scripted",
     "shape",
+    "shatter",
+    "shatterable",
     "side",
     "sides",
     "silenced",

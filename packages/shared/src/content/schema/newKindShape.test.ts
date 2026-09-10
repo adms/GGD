@@ -78,6 +78,9 @@ const OWN_GEOMETRY_KINDS: ReadonlyMap<string, string> = new Map([
   //   handler（sim/effects/spawnThresholds.ts）只讀 radius／sides 算頂點，⛔ 從頭到尾讀不到 shape；
   //   目標不是「圈內的人」而是「穿過某一段的人」，所以 shape:"circle" 會是一個沒有人讀的欄位。
   ["spawnThresholds", "radius"],
+  // GH#1190 鄂爾 Q【暫時障礙】：作用範圍是「以落點為中心、半徑 radius 的碰撞圓柱」——
+  //   它不打任何人，handler 只讀 radius／at；shape 對一根柱子沒有意義（沒有人讀）。
+  ["spawnObstacle", "radius"],
 ]);
 
 /**
