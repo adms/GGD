@@ -73,11 +73,12 @@ def source_weapon_components(downloads, repo):
         for candidate in source.get('componentCandidates', []):
             if not candidate.get('componentReady'):
                 continue
+            if candidate.get('resourceRole') != 'weapon-prop':
+                continue
             require(candidate['id'] not in seen, 'Duplicate component ID: ' + candidate['id'])
             seen.add(candidate['id'])
             require(candidate.get('sourceId') == source['id'], 'Component source mismatch')
             require(candidate.get('sourceClass') == source.get('sourceClass'), 'Component source classification mismatch')
-            require(candidate.get('resourceRole') == 'weapon-prop', 'Unsupported independent component role')
             for field in ['runtimeSelectable', 'defaultEligible', 'automaticEligible', 'runtimeDropdownRegistered', 'fullHeroModel']:
                 require(candidate.get(field) is False, 'Independent component cannot enable ' + field)
             require(candidate.get('heroIds') == [], 'Independent component cannot bind heroIds')

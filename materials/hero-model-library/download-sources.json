@@ -18386,7 +18386,216 @@
         "sha256": "b6f62cd511049ca4175d31b35cbb1320931dae763e46605e13830c40d9275835",
         "readbackVerified": true,
         "usage": "manual-only legacy backup; not runtime-ready"
-      }
+      },
+      "sourceClass": "community-mod",
+      "componentCandidates": [
+        {
+          "id": "zero-lancer-p1-static-skinned-v1",
+          "sourceId": "gamebanana-zero-lancer-493444",
+          "sourceClass": "community-mod",
+          "nameZh": "Zero Lancer／迪爾姆德 P1",
+          "originalName": "Diarmuid Ua Duibhne / Zero Lancer P1",
+          "workZh": "Fate/unlimited codes（作者標示；原平台待核）",
+          "sourceGame": "Fate/unlimited codes",
+          "platform": "unknown",
+          "variant": "P1",
+          "resourceRole": "independent-static-skinned-model-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+          "bytes": 336732,
+          "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+          "gitPath": "content/assets/models/community/01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "triangles": 4984,
+          "drawPrimitives": 1,
+          "skinCount": 1,
+          "jointCount": 59,
+          "textureCount": 1,
+          "readiness": "accepted-static-skinned-component-pending-character-mapping-and-animation",
+          "limitations": [
+            "No native animation, morph or particle resources.",
+            "No source PSP/PS2 platform proof or original-game skeleton provenance.",
+            "Exact Unity toon outline/shader parity unverified.",
+            "Native 10-face vertex-normal versus geometric-normal diagnostic retained.",
+            "No action animation playback, GGD hero binding, runtime switching, default selection or deployment."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/delivery.json",
+            "bytes": 13879,
+            "sha256": "4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/acceptance.json",
+            "bytes": 1175,
+            "sha256": "ef2f05776faf6d207cd8fc2d080ef6c1e748f2e2fa6bfcf31d639ef3feadab51"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-validation.json",
+            "bytes": 4087,
+            "sha256": "d23cda69feed8ad78523fabb6095ea040ab08ae198056ba5fc0f2a9eb79249d6"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-webgl-proof.json",
+            "bytes": 2367,
+            "sha256": "5dd5ba8ad2db48bfa5269e99ce99d61f552e8a4af1b894e645cc5a502732352d"
+          },
+          "sourceFidelityEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/source-fidelity.json",
+            "bytes": 48009,
+            "sha256": "a0a76d4337fcf0fdf28f0ba7d467fcfa6dc08dfe552d2cd5bf53fc7009376f5a"
+          },
+          "sourceRebuildEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/source-rebuild.json",
+            "bytes": 2724,
+            "sha256": "054db586af3d3cda012a470f92f3f2f13aa5f9c9d42657de3ec48a5175100ca6"
+          },
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+              "s3ArchiveMember": "outputs/p1/component.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/latest-receipt.json",
+              "backupReceiptSha256": "1f9f02c958b19f4c5050a970a2c25a1a3da9c0709d4a7c11b9dd2ead80145ef9"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+          "s3ArchiveMember": "outputs/p1/component.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/latest-receipt.json",
+          "backupReceiptSha256": "1f9f02c958b19f4c5050a970a2c25a1a3da9c0709d4a7c11b9dd2ead80145ef9"
+        },
+        {
+          "id": "zero-lancer-p2-static-skinned-v1",
+          "sourceId": "gamebanana-zero-lancer-493444",
+          "sourceClass": "community-mod",
+          "nameZh": "Zero Lancer／迪爾姆德 P2",
+          "originalName": "Diarmuid Ua Duibhne / Zero Lancer P2",
+          "workZh": "Fate/unlimited codes（作者標示；原平台待核）",
+          "sourceGame": "Fate/unlimited codes",
+          "platform": "unknown",
+          "variant": "P2",
+          "resourceRole": "independent-static-skinned-model-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+          "bytes": 337856,
+          "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+          "gitPath": "content/assets/models/community/112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "triangles": 4984,
+          "drawPrimitives": 1,
+          "skinCount": 1,
+          "jointCount": 59,
+          "textureCount": 1,
+          "readiness": "accepted-static-skinned-component-pending-character-mapping-and-animation",
+          "limitations": [
+            "No native animation, morph or particle resources.",
+            "No source PSP/PS2 platform proof or original-game skeleton provenance.",
+            "Exact Unity toon outline/shader parity unverified.",
+            "Native 10-face vertex-normal versus geometric-normal diagnostic retained.",
+            "No action animation playback, GGD hero binding, runtime switching, default selection or deployment."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/delivery.json",
+            "bytes": 13879,
+            "sha256": "4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/acceptance.json",
+            "bytes": 1175,
+            "sha256": "ef2f05776faf6d207cd8fc2d080ef6c1e748f2e2fa6bfcf31d639ef3feadab51"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-validation.json",
+            "bytes": 4087,
+            "sha256": "8053c708514237dd4b8ef3ae80497d5b91fa35405d99dbf0cf19bfb69eea4907"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-webgl-proof.json",
+            "bytes": 2367,
+            "sha256": "71a2982a7479fa45e1af06e31b87fc61d179447e866ce0c6bdcc9b0ff310fa22"
+          },
+          "sourceFidelityEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/source-fidelity.json",
+            "bytes": 48009,
+            "sha256": "a0a76d4337fcf0fdf28f0ba7d467fcfa6dc08dfe552d2cd5bf53fc7009376f5a"
+          },
+          "sourceRebuildEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/source-rebuild.json",
+            "bytes": 2724,
+            "sha256": "054db586af3d3cda012a470f92f3f2f13aa5f9c9d42657de3ec48a5175100ca6"
+          },
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+              "s3ArchiveMember": "outputs/p2/component.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/latest-receipt.json",
+              "backupReceiptSha256": "1f9f02c958b19f4c5050a970a2c25a1a3da9c0709d4a7c11b9dd2ead80145ef9"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+          "s3ArchiveMember": "outputs/p2/component.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/latest-receipt.json",
+          "backupReceiptSha256": "1f9f02c958b19f4c5050a970a2c25a1a3da9c0709d4a7c11b9dd2ead80145ef9"
+        }
+      ],
+      "supplementalDeliveries": [
+        {
+          "id": "zero-lancer-validation-20260911-v1",
+          "sourceId": "gamebanana-zero-lancer-493444",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/98282b507c6e003977bb054015f2978449d9d7f136f3335cea307bc307e54ead/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/98282b507c6e003977bb054015f2978449d9d7f136f3335cea307bc307e54ead/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.files.json",
+          "bytes": 52286149,
+          "sha256": "f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1",
+          "fileCount": 771,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zero-lancer-validation-20260911-v1/latest-receipt.json",
+          "receiptSha256": "1f9f02c958b19f4c5050a970a2c25a1a3da9c0709d4a7c11b9dd2ead80145ef9",
+          "manifestSha256": "d8276bf10d7eb130bea5408d86773835cd29adcab4c50c57daf67c304f01b16e",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
+      ]
     },
     {
       "id": "spritedatabase-fate-ps2-archer",

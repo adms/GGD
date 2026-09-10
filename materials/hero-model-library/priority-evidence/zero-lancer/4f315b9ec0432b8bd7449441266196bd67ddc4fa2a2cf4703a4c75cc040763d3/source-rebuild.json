@@ -1,0 +1,53 @@
+{
+  "schema": "ggd.zero-lancer-source-rebuild@1",
+  "tools": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "109bab326cbc62a3daf8a10ff40695e8a983cb351a4cbd2fdc2e4a8ce71674f1"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-zero-lancer-process.py",
+      "sha256": "34a156dbdc534acb9b84cdf840a8ecdf0bfd2f4885783de45b23add85f7828d0"
+    }
+  ],
+  "versionOutput": "3.12.13 (main, Jul 18 2026, 16:55:23) [Clang 22.1.3 ]\n1.25.3\n2.5.3\n",
+  "commands": [
+    [
+      "/private/tmp/ggd-public-model-venv/bin/python",
+      "-P",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild/tools/convert_unity_prefab.py",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild/extracted/Zero Lancer/zero lancer.cbb",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild/converted/diarmuid-p1",
+      "--root-name",
+      "Diarmuid BRC_character",
+      "--height",
+      "1.8"
+    ],
+    [
+      "/private/tmp/ggd-public-model-venv/bin/python",
+      "-P",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild/tools/process-with-explicit-root.py",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild"
+    ]
+  ],
+  "sourceRootParameterizationOnly": true,
+  "variants": [
+    {
+      "variant": "P1",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild/converted/diarmuid-p1-textured/body.glb",
+      "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+      "expectedSourceSha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+      "byteIdentical": true,
+      "bytes": 336732
+    },
+    {
+      "variant": "P2",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/rebuild/converted/diarmuid-p2-textured/body.glb",
+      "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+      "expectedSourceSha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+      "byteIdentical": true,
+      "bytes": 337856
+    }
+  ],
+  "allModelBytesIdentical": true
+}
