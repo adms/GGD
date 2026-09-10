@@ -90,55 +90,43 @@ const PENDING = (JSON.parse(readFileSync(join(REPO, PENDING_JSON), "utf8")) as {
  * 首輪 44 筆**全部是註解**（讀取來源說明／行為出處引用），零筆是 print/throw 訊息，
  * 所以沒有「訊息當場改」的那一類；⛔ 但「只是註解」不等於無害 ——
  * resolve_unit_tints.py 那句最貴的謊（檔頭宣稱產物是手編的）也「只是」一句 docstring。
+ *
+ * ⛔⛔ **2026-09-10：43 列刪到 16 列 —— ⚠️ ⭐ 而那 27 列⛔不是被修好的。**
+ * ⭐ 那 27 句 prose **一個字都沒動**。真正發生的是 `productOwners()` **瞎了**：
+ * 判準③是「glob 涵蓋的檔**只要有一個不是產物 ⇒ 整條 glob 回 null**」（刻意偏漏報那一邊），
+ * 而社群英雄（`b2-*`）落地之後 —— `content/champions/` **154 份裡 82 份不是產物**、
+ * `content/abilities/` **908 份裡 486 份不是產物** ⇒ `content/champions/*.json`、
+ * `content/abilities/<id>.json` 這一族**寬 glob 一律回 null** ⇒ 不再被算成違規。
+ *
+ * ⭐ **留下來的 16 列正好是反證**：它們寫的是**具名**產物
+ * （`godie-udea.r.json` · `content/config/vfx-families.json` · `content/champions/_index.json` …）
+ * —— 只吃得到真的是產物的那幾份 ⇒ 仍然解析得出擁有者 ⇒ 仍然紅。
+ *
+ * ⇒ ⚠️ **這條閘今天對「寬 glob 的產物路徑」結構上失明** —— ⭐ 而那正是它最該說話的那一種
+ * （`content/champions/*.json` 是誤導源第一名）。⛔ 本輪柵欄內不動判準③（改它是設計決定：
+ * 會把偏漏報翻成偏誤報，而擁有者可能標錯）—— ⭐ 記在這裡，是為了讓下一輪
+ * ⛔ 不要把這 27 列讀成「修好了」（第一·五守則：知識不可以無聲消失）。
  */
 const GRANDFATHERED: Record<string, string> = {
   "apps/admin/src/assets/useVoxelSkinSheet.ts": "註解提到 content/champions/_index.json（行 4）",
-  "apps/admin/src/assets/voxelSkinSheet.ts": "註解提到 content/champions/*.json（行 5）",
-  "apps/admin/src/championLabels.ts": "註解提到 content/champions/<id>.json（行 23）",
-  "apps/admin/src/curationReset.ts": "註解提到 content/champions/<id>.json（行 113）",
-  "apps/admin/src/curationTransform.ts": "註解提到 content/champions/<id>.json（行 19）",
-  "apps/admin/src/quickApproval.ts": "註解提到 content/champions/<id>.json（行 17）",
-  "apps/client/scripts/probeCastPillar.ts": "註解提到 content/champions/<id>.json（行 185）",
-  "apps/client/scripts/probeModelSizing.ts": "註解提到 content/champions/*.json（行 29）",
-  "apps/client/src/audio/abilitySfxCues.ts": "註解提到 content/abilities/*.json（行 39）",
   "apps/client/src/audio/sfxLayerCap.ts": "註解提到 content/config/vfx-families.json（行 13）",
-  "apps/client/src/render/intermission/idlePerform.ts": "註解提到 content/champions/*.json（行 17）",
   "apps/client/src/render/vfx/familyCastHeight.ts": "註解提到 content/config/vfx-families.json（行 8）",
-  "apps/client/src/render/views/championBody.ts": "註解提到 content/champions/*.json（行 65/225）",
-  "apps/client/src/render/views/standinCensus.ts": "註解提到 content/champions/*.json（行 7）",
-  "apps/client/src/ui/codex/codexEditModel.ts": "註解提到 content/abilities/<id>.json（行 12）",
   "apps/client/src/vfx/beamAudition.ts": "註解提到 content/abilities/godie-ogrh.r.json（行 13）",
-  "apps/client/src/vfx/castBeam.ts": "註解提到 content/abilities/*.json（行 29）",
   "apps/client/src/vfx/chainLightningAudition.ts": "註解提到 content/abilities/godie-udea.r.json（行 13）",
   "apps/client/src/vfx/chainLightningAuditionWorld.ts": "註解提到 content/abilities/godie-udea.r.json（行 5）",
   "apps/client/src/vfx/vfxHardCap.ts": "註解提到 content/config/ability-vfx-bindings.json（行 13）",
-  "apps/editor/src/preview/PreviewController.ts": "註解提到 content/abilities/<id>.json（行 179）",
-  "packages/shared/src/content/abilityCodeParity.ts": "註解提到 content/abilities/*.json（行 118）",
-  "packages/shared/src/content/abilityCodeParityForms.ts": "註解提到 content/abilities/<id>.*.json（行 98）",
-  "packages/shared/src/content/delistedChampions.ts":
-    "註解提到 content/champions/<id>.json · content/abilities/*.passive.json（行 49/68）",
   "packages/shared/src/content/editModel.ts":
     "註解提到 content/abilities/<id>.json · content/champions/godie-hart.json（行 14/551）",
-  "packages/shared/src/content/modelFxPreset.ts": "註解提到 content/champions/*.json（行 124）",
-  "packages/shared/src/content/schema/abilityVfx.ts": "註解提到 content/abilities/<id>.json（行 18）",
   "packages/shared/src/content/schema/abilityVfxBindings.ts":
     "註解提到 content/abilities/*.json · content/config/ability-vfx-bindings.json（行 12/113）",
   "packages/shared/src/content/schema/config/arenaRules.mobWaves.ts":
     "註解提到 content/abilities/godie-zombieking.passive.json（行 609）",
-  "packages/shared/src/content/templates/failures.ts": "註解提到 content/abilities/<id>.json（行 27）",
-  "packages/shared/src/protocol/schema.ts": "註解提到 content/champions/*.json（行 1101）",
   "packages/shared/src/sim/aura/aura.ts":
     "註解提到 content/abilities/godie-h01n.passive.json · content/abilities/godie-e010.passive.json（行 15/173）",
   "packages/shared/src/sim/berserk.ts": "註解提到 content/abilities/godie-e00r.passive.json（行 12）",
-  "packages/shared/src/sim/combat/damage.ts": "註解提到 content/abilities/*.ex.json（行 310）",
-  "packages/shared/src/sim/combatFeel.ts": "註解提到 content/abilities/*.json（行 325/580）",
   "packages/shared/src/sim/content/defs.ts": "註解提到 content/abilities/godie-h01n.r.json（行 125）",
-  "packages/shared/src/sim/content/registry.ts": "註解提到 content/abilities/<id>.json（行 120）",
-  "packages/shared/src/sim/content/requirement.ts": "註解提到 content/champions/*.json（行 26）",
   "packages/shared/src/sim/content/skeleton.ts":
     "註解提到 content/champions/sela.json · content/abilities/thorne.q.json（行 219/284）",
-  "packages/shared/src/sim/economy/augmentEligibility.ts": "註解提到 content/abilities/*.json（行 29）",
-  "packages/shared/src/sim/effects/knockbackLimits.ts": "註解提到 content/abilities/*.json（行 19）",
   "packages/shared/src/sim/stats/modifiers.ts": "註解提到 content/config/stat-caps.json（行 82）",
   "packages/shared/src/sim/systems/MobSystem.ts": "註解提到 content/abilities/godie-zombieking.passive.json（行 669）",
 };

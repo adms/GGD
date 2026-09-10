@@ -185,9 +185,9 @@ print(len(star), len(white), len(star - white))
 PY
   )"
   if [ "${n_short:-1}" = "0" ]; then
-    ok "白名單涵蓋映像宣告的全部 $n_star 名官方英雄（這台啟用 $n_white）"
+    ok "白名單涵蓋映像宣告的全部 ${n_star} 名官方英雄（這台啟用 ${n_white}）"
   else
-    warn "⛔ **這台機器少啟用 $n_short 名官方英雄**（映像 $n_star / 啟用 $n_white）"
+    warn "⛔ **這台機器少啟用 ${n_short} 名官方英雄**（映像 ${n_star} / 啟用 ${n_white}）"
     info "⇒ 玩家的症狀是**選人畫面少人**，⛔ 而每一個既有檢查都會是綠的。"
     info "⇒ 補它（union-only，⛔ 一個都不會被移除，有稽核）："
     info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union"
@@ -195,7 +195,16 @@ PY
     #   必須贏過「部署腳本覺得應該啟用」。⇒ 這裡的責任是**讓它不可能被忽略**。
     [ "${GGD_DEPLOY_APPLY_STARTER:-0}" = "1" ] && {
       info "GGD_DEPLOY_APPLY_STARTER=1 ⇒ 現在就補"
-      r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union" 2>&1 | tail -3 | sed 's/^/    /'
+      # ⛔⛔ **在此之前這一行是 `r "…" 2>&1 | tail -3 | sed …`**（GH#968 的形狀，第二個實例）：
+      #   ⭐ 離開碼**沒有任何人讀** ⇒ seed 失敗只是印一行紅字,然後第 5/6 段照跑。
+      #   ⚠️ 而它們量的是**白名單端點還活著**（一個名詞）⇒ 全部綠
+      #   ⇒ ⭐ **一次失敗的補啟用,與一次成功的補啟用,輸出一模一樣** ——
+      #     而玩家那邊「選人畫面少人」原封不動。
+      # ⇒ 走 `run_step`：它 `die`,⛔ 不往下走。⭐ 這是刻意的 ——
+      #   ⚠️ 這一段是**操作者明確開旗標要求的修復**（⛔ 不是順帶的讀取），
+      #   失敗還往下印綠勾就是替一個沒發生的修復背書。
+      run_step "補啟用官方英雄（starter-union）" \
+        "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union" 3
     }
   fi
 fi

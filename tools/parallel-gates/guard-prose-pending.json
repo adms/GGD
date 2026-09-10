@@ -8,36 +8,29 @@
     "product/owner 是量出來的（tools/parallel-gates/sync-io.json 的 steps[].writes），⛔ 不是手寫的。",
     "",
     "2026-08-25 首輪：高風險的 5 支（兩句 print 指錯指令、三份 docstring 宣稱產物是手編的）當場修掉，",
-    "其餘進表 —— 多半是 w3x-import 一次性 importer 的歷史 docstring 與 reference 註解。"
+    "其餘進表 —— 多半是 w3x-import 一次性 importer 的歷史 docstring 與 reference 註解。",
+    "",
+    "⛔⛔ 2026-09-10：刪掉 5 列（features.ts · build_vfx_bindings.py · extract_jass_spells.py ·",
+    "model_audit_61.mjs · strip_teamglow.py）—— ⚠️ ⭐ **⛔ 不是因為有人修好了它們。**",
+    "⭐ 那 5 句 prose **一個字都沒動**（例：strip_teamglow.py:26 仍逐字寫著 content/champions/*.json，",
+    "而整檔仍然沒有任何擁有者線索）。⭐ 真正發生的是**分類器瞎了**：",
+    "productOwners() 判準③是「glob 涵蓋的檔**只要有一個不是產物 ⇒ 整條 glob 不算**」（刻意偏漏報），",
+    "而社群英雄（b2-*）落地之後 content/champions/ 154 份裡有 **82 份不是產物**、",
+    "content/abilities/ 908 份裡有 **486 份不是產物** ⇒ `content/champions/*.json` 這種**寬 glob 一律回 null**",
+    "⇒ 那幾句 prose 不再被算成違規 ⇒ 棘輪判它們「已經修好」。",
+    "⭐ 而 extract_ex.py／gen_ex_content.py 兩列活下來，正好是反證：",
+    "它們寫的是 `content/champions/godie-<rawcode>.json` —— 只吃得到 godie-* 那批（全部是產物）⇒ 仍然解析得出擁有者。",
+    "⇒ ⚠️ **這條閘今天對「寬 glob 產物路徑」結構上失明**（也就是它最該說話的那一種）。",
+    "   ⛔ 這一格記在這裡，是為了讓下一輪不要把這 5 列讀成「修好了」（知識不可以無聲消失）。"
   ],
   "pending": {
-    "tools/role-classify/src/features.ts": {
-      "product": "content/champions/<id>.json · content/abilities/<id>.ex.json",
-      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
-    },
-    "tools/w3x-import/build_vfx_bindings.py": {
-      "product": "content/abilities/*.json",
-      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
-    },
     "tools/w3x-import/extract_ex.py": {
       "product": "content/champions/godie-<rawcode>.json",
       "owner": "castderive:build:raw · skillremake:json · tiers:apply"
     },
-    "tools/w3x-import/extract_jass_spells.py": {
-      "product": "content/champions/**",
-      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
-    },
     "tools/w3x-import/gen_ex_content.py": {
       "product": "content/abilities/godie-<rawcode>.ex.json · content/champions/godie-<rawcode>.json",
       "owner": "castderive:build:raw · skillremake:json · tiers:apply"
-    },
-    "tools/w3x-import/model_audit_61.mjs": {
-      "product": "content/champions/*.json",
-      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
-    },
-    "tools/w3x-import/strip_teamglow.py": {
-      "product": "content/champions/*.json",
-      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
     }
   }
 }
