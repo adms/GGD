@@ -1,0 +1,76 @@
+{
+  "schema": "ggd.frozen-file-manifest@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1200,
+      "sha256": "7e012407d4cf0652c52c939a2db8401d1083e54e4764fde170bb39c7129c71f0"
+    },
+    {
+      "path": "checked-routes.json",
+      "bytes": 1332,
+      "sha256": "397b7c3fd1f90279f68aef28c8c587ed4b33d327862552f87ccc3cc49d952ac0"
+    },
+    {
+      "path": "download-receipts.json",
+      "bytes": 1247,
+      "sha256": "851a3687f37bc4c25770abf5d1904e106c7209141541eadb497264758e4e3268"
+    },
+    {
+      "path": "freeze.py",
+      "bytes": 7077,
+      "sha256": "8367e1f022fb03e5a7c032f4ad0bb74a225f8d56300500e3826d1f400286e66a"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 5507,
+      "sha256": "ae96457dbbca1f38fd7ecfc05ac4cbecc1128ba3828eeda79a1ce4ac109ecd69"
+    },
+    {
+      "path": "originals/JR_Melody.mp3",
+      "bytes": 253180,
+      "sha256": "e437c81e1d18fa3e7216901c52894e354566d5de7f948e58aec96e217749f0cd"
+    },
+    {
+      "path": "originals/doaShimarimasuFemale.mp3",
+      "bytes": 170880,
+      "sha256": "ede6e2a4fff56342f55fb3bdb48172792fd761291b5181fbcaf5915ae67d4ee1"
+    },
+    {
+      "path": "sources/JR_Melody.decode.log",
+      "bytes": 1808,
+      "sha256": "cf99ceb505ae550c2b03463064ba7f2d8c73302d5dcc0ba14093f8be471ab860"
+    },
+    {
+      "path": "sources/JR_Melody.ffprobe.json",
+      "bytes": 2351,
+      "sha256": "26e80820a46ffea1e20010f946e0544e6b37d5a8227350e818f91262ad62fe2e"
+    },
+    {
+      "path": "sources/doaShimarimasuFemale.decode.log",
+      "bytes": 1578,
+      "sha256": "e4f64f275c64adfe7e680e8420d9ba78c6891d47c6bb8be288c9aaecfeae8876"
+    },
+    {
+      "path": "sources/doaShimarimasuFemale.ffprobe.json",
+      "bytes": 2162,
+      "sha256": "6339e5b4e3634c7cf1b208ad1d14edb962eb0b110f39f976b4519f441f1d9638"
+    },
+    {
+      "path": "sources/yamanote-app.html",
+      "bytes": 127566,
+      "sha256": "f32d8bf22e5ca3f6284bad3a6ee36e116c1a8b1b7ac7b4b7b29ce467a2849a70"
+    },
+    {
+      "path": "sources/yamanote-help.js",
+      "bytes": 5157,
+      "sha256": "fb53605536d9b15f7b3338fcae5792ff3dcfe57351616c1bf9ac401620f00066"
+    },
+    {
+      "path": "sources/yamanote-main.js",
+      "bytes": 150391,
+      "sha256": "f6e13c1e3f6692380c12a210ff0ba2517bd83defa7b5075262ee026e01b4d144"
+    }
+  ]
+}

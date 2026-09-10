@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=mechanical) — drop b2-kisaragi.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549528,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-e00r.wav"
+  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/voice-reference-pipeline/approved/processed/godie-e00r.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -210,6 +210,26 @@
    },
    "lastError": null
   },
+  "victory": {
+   "takes": [],
+   "text": "（原檔）JR_Melody",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:public-railway:yamanote-app/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "public-railway:yamanote-app",
+    "stub": false,
+    "bytes": 161376,
+    "seconds": 10.03102,
+    "lufs": null,
+    "hash": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
+    "at": 1789058049147
+   },
+   "lastError": null
+  },
   "defeat": {
    "takes": [
     {
@@ -300,6 +320,26 @@
     "hash": "9cecd0bd8c9f381aa1767ed3e13855fdce2193daa8af4a48ba67d8210563f51b",
     "maxDb": -3.7,
     "at": 1789037083889
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [],
+   "text": "（原檔）doaShimarimasuFemale",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:public-railway:yamanote-app/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/doaShimarimasuFemale.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "public-railway:yamanote-app",
+    "stub": false,
+    "bytes": 116654,
+    "seconds": 7.218821,
+    "lufs": null,
+    "hash": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45",
+    "at": 1789058049358
    },
    "lastError": null
   },

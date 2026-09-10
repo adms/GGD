@@ -511,7 +511,13 @@
     "sourceReusedCombatClips": 308,
     "syntheticCombatClips": 708,
     "projectSevenRuntimeCombatBinding": "pending",
-    "priorityAudit": "priority-evidence/main-81-handoff/audio/per-hero.json"
+    "priorityAudit": "priority-evidence/main-81-handoff/audio/per-hero.json",
+    "currentBranchCombatClips": 1018,
+    "currentBranchSourceReusedCombatClips": 310,
+    "trainSupplementClips": 2,
+    "extendedElevenCategoriesCompleteHeroes": 74,
+    "trainSupplement": "priority-evidence/kisaragi-train-audio/conversion.json",
+    "currentBranchAudit": "priority-evidence/main-81-handoff/current-branch-audio/current-per-hero.json"
   },
   "limitations": [
     "Seven runtime derivatives use six GGD procedural animation states, not acquired native actions. Original source meshes, rigs and textures remain preserved.",
@@ -558,7 +564,8 @@
     "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
     "productionDeployed": false
   },
-  "contentBuildVersion": "cv_8fd827bdb947",
-  "latestValidation": "priority-evidence/main-81-handoff/validation.json",
-  "priority81Handoff": "priority-81-handoff.json"
+  "contentBuildVersion": "cv_469994722c04",
+  "latestValidation": "priority-evidence/kisaragi-train-audio/validation.json",
+  "priority81Handoff": "priority-81-handoff.json",
+  "previousValidation": "priority-evidence/main-81-handoff/validation.json"
 }

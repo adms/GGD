@@ -1,0 +1,30 @@
+{
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi",
+  "archivePath": "/private/tmp/ggd-yamanote-s3-backup/a5c68d28b3a70f7a752bf601ef3c4d6ccaff98103497078441f65ed21f90adbc.tar.gz",
+  "archiveBytes": 487908,
+  "archiveSha256": "a5c68d28b3a70f7a752bf601ef3c4d6ccaff98103497078441f65ed21f90adbc",
+  "frozenInventoryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/files.sha256.json",
+  "frozenInventorySha256": "db1f403e90a2e07a889e1c746b8122e5ae3d8254750b32e6992cd35e4740b160",
+  "inventoryFileCount": 15,
+  "verifiedOriginalFiles": 14,
+  "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-audio/yamanote-kisaragi-20260911/a5c68d28b3a70f7a752bf601ef3c4d6ccaff98103497078441f65ed21f90adbc.tar.gz",
+  "verified": true,
+  "schema": "ggd.s3-legacy-backup-receipt@1",
+  "verifiedAt": "2026-09-10T16:34:08.004283+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "identityArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789056687",
+  "identityMatchesExpectedRole": true,
+  "uploadExitCode": 0,
+  "readbackExitCode": 0,
+  "readbackPath": "/private/tmp/ggd-yamanote-s3-backup/readback.tar.gz",
+  "readbackSha256": "a5c68d28b3a70f7a752bf601ef3c4d6ccaff98103497078441f65ed21f90adbc",
+  "readbackArchiveMembersVerified": 15,
+  "actions": [
+    "sts:GetCallerIdentity",
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "centralWrites": false,
+  "localOriginalsPreserved": true
+}

@@ -8,7 +8,10 @@ def insert_priority_voice(text):
     path=ROOT/'materials/hero-model-library/lol-project-seven/seven-voice-index.json'
     if not path.exists():return text
     data=json.loads(path.read_text())
-    rows=['## 本次優先：七名 LOL 日文音訊','',
+    rows=['## 優先合併的 81 名英雄音訊','',
+        '[81 英雄成品與缺口](81英雄優先合併清單.md) · [逐檔機器索引](priority-81-handoff.json)。讀取各角色 `audio.currentBranchFiles`；未有分支補件者使用 `audio.mainCommittedFiles`。每檔有 Git 路徑與 SHA-256，可直接從本機讀取。',
+        '', '如月列車另補「嘲諷」關門廣播與「勝利」JR 發車旋律：[轉換與來源收據](priority-evidence/kisaragi-train-audio/conversion.json)。這兩段是指定鐵路音源；旋律不作語音合成輸入，原有九類音訊保留。',
+        '', '## 七名 LOL 日文音訊','',
         '後續 LOL 擷取僅限這七名。已取得 **4,927 個 WAV**，可直接讀本機；此子集與下方整庫索引有重疊，不能相加計總數。原有其他角色檔案保留，不再擴抓全人物。',
         '', '[七名專用機器索引](lol-project-seven/seven-voice-index.json) · [擷取範圍設定](lol-project-seven/project-seven-config.json)', '',
         '逐檔路徑與 SHA-256 讀上述索引的 `audioFileIndex.reportPath`，依 `reportSha256` 驗證後篩選 `files`。`example:*` 是規格 ID，出貨 ID 為 `lol-*`；兩者是同一角色。', '',

@@ -1,0 +1,293 @@
+{
+  "schema": "ggd.kisaragi-train-audio-review@1",
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "head": "00d7d66fbc0f4013f319f70466c8f5ff8395531a",
+  "comparedSnapshotFileCount": 3487,
+  "snapshotChangedPaths": [
+    "content/assets/audio/voices/lines/b2-kisaragi/status.json"
+  ],
+  "snapshotMissingPaths": [],
+  "snapshotNewPaths": [
+    "content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+    "content/assets/audio/voices/lines/b2-kisaragi/victory.mp3"
+  ],
+  "oldNineRecords": [
+    {
+      "category": "skill-name.q",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "f07a52592ea878d75efe6d9690edef989b0735f435773e6e9abf421625cec1a2",
+      "headFileSha256": "f07a52592ea878d75efe6d9690edef989b0735f435773e6e9abf421625cec1a2"
+    },
+    {
+      "category": "skill-name.w",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "26fcac74f920cbcee250f2f7d09ee3dd013978be4818d774035e1a3934ddc6b6",
+      "headFileSha256": "26fcac74f920cbcee250f2f7d09ee3dd013978be4818d774035e1a3934ddc6b6"
+    },
+    {
+      "category": "skill-name.e",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "277a636f8c19944ec8b4898b1de532c5905d4e9f2ef47a60e3665b44d9e27b33",
+      "headFileSha256": "277a636f8c19944ec8b4898b1de532c5905d4e9f2ef47a60e3665b44d9e27b33"
+    },
+    {
+      "category": "skill-name.r",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "18cefb1e8575838f0e9a55b9bbfa71cfef327616b7a6a72999a1d6b3bee34eb8",
+      "headFileSha256": "18cefb1e8575838f0e9a55b9bbfa71cfef327616b7a6a72999a1d6b3bee34eb8"
+    },
+    {
+      "category": "skill-name.ex",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "f8067181fdbedabae471f35e3d857ec3685e87f1633bcdf50b83d33f2d22dabb",
+      "headFileSha256": "f8067181fdbedabae471f35e3d857ec3685e87f1633bcdf50b83d33f2d22dabb"
+    },
+    {
+      "category": "defeat",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "155f52c78b50e94a4ecac5a0be0b453d2d03992cb0893c9ea1ae3a1a88b650c0",
+      "headFileSha256": "155f52c78b50e94a4ecac5a0be0b453d2d03992cb0893c9ea1ae3a1a88b650c0"
+    },
+    {
+      "category": "hurt",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "ff104a6545d3121d69a439b5f5838b6ff77cf1774911c8794412f09d8da71010",
+      "headFileSha256": "ff104a6545d3121d69a439b5f5838b6ff77cf1774911c8794412f09d8da71010"
+    },
+    {
+      "category": "hurt-heavy",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "9cecd0bd8c9f381aa1767ed3e13855fdce2193daa8af4a48ba67d8210563f51b",
+      "headFileSha256": "9cecd0bd8c9f381aa1767ed3e13855fdce2193daa8af4a48ba67d8210563f51b"
+    },
+    {
+      "category": "kill-1",
+      "snapshotEqual": true,
+      "headEqual": true,
+      "fileSha256": "8040e35717d47b9a443b7030d1eb1334e1f5b81e8884d87d182e710bec2a0c8b",
+      "headFileSha256": "8040e35717d47b9a443b7030d1eb1334e1f5b81e8884d87d182e710bec2a0c8b"
+    }
+  ],
+  "audio": [
+    {
+      "category": "taunt",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/doaShimarimasuFemale.mp3",
+        "sha256": "ede6e2a4fff56342f55fb3bdb48172792fd761291b5181fbcaf5915ae67d4ee1",
+        "bytes": 170880,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 2,
+        "bitRate": 188213,
+        "seconds": 7.218821,
+        "decodeExitCode": 0,
+        "decodeStderr": ""
+      },
+      "converted": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+        "sha256": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45",
+        "bytes": 116654,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 1,
+        "bitRate": 128000,
+        "seconds": 7.218821,
+        "decodeExitCode": 0,
+        "decodeStderr": ""
+      },
+      "sourceHashMatches": true,
+      "convertedHashMatches": true,
+      "durationUnchanged": true
+    },
+    {
+      "category": "victory",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+        "sha256": "e437c81e1d18fa3e7216901c52894e354566d5de7f948e58aec96e217749f0cd",
+        "bytes": 253180,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 2,
+        "bitRate": 200093,
+        "seconds": 10.03102,
+        "decodeExitCode": 0,
+        "decodeStderr": ""
+      },
+      "converted": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+        "sha256": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
+        "bytes": 161376,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 1,
+        "bitRate": 128000,
+        "seconds": 10.03102,
+        "decodeExitCode": 0,
+        "decodeStderr": ""
+      },
+      "sourceHashMatches": true,
+      "convertedHashMatches": true,
+      "durationUnchanged": true
+    }
+  ],
+  "sourceManifestHashMatches": true,
+  "reviewedAt": "2026-09-10T16:38:09.314930+00:00",
+  "cliChecks": [
+    {
+      "args": [
+        "--hero"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "--hero requires a roster champion ID\n",
+      "changedStatusOrIndexes": []
+    },
+    {
+      "args": [
+        "--hero",
+        "--check"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "--hero requires a roster champion ID\n",
+      "changedStatusOrIndexes": []
+    },
+    {
+      "args": [
+        "--hero",
+        "ggd-review-no-such-hero"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "--hero is not a combat-cast roster champion: ggd-review-no-such-hero\n",
+      "changedStatusOrIndexes": []
+    },
+    {
+      "args": [
+        "--check",
+        "--hero",
+        "b2-kisaragi"
+      ],
+      "exitCode": 0,
+      "stdout": "[combat:check] 1 heroes · 11 lines scripted · 0 still to render (run-combat-gen.mjs)\n[combat:check] ⚠️ 2 句中文台詞跳過（合成只講日文）:\n  OWNER_LINES.csv b2-kisaragi.victory 是中文台詞「地獄就是不斷重複又重複。」—— 合成只講日文，跳過；請給日文或指定原檔\n  OWNER_LINES.csv b2-kisaragi.taunt 是中文台詞「永無休止。」—— 合成只講日文，跳過；請給日文或指定原檔\n",
+      "stderr": "",
+      "changedStatusOrIndexes": []
+    },
+    {
+      "args": [
+        "--hero=b2-kisaragi"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "Use --hero <roster champion ID> exactly once\n",
+      "changedStatusOrIndexes": []
+    },
+    {
+      "args": [
+        "--hero",
+        "b2-kisaragi",
+        "--hero",
+        "b2-kisaragi"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "Use --hero <roster champion ID> exactly once\n",
+      "changedStatusOrIndexes": []
+    }
+  ],
+  "scopedBuilderEvidence": {
+    "staticWriteSites": [
+      "tools/voice-gen/src/build-combat-lines.mjs:183 filters heroes by ONLY_HERO",
+      "tools/voice-gen/src/build-combat-lines.mjs:283 writes only statusPath(id) inside filtered loop"
+    ],
+    "actualScopedCheck": {
+      "heroCount": 1,
+      "lineCount": 11,
+      "toRender": 0,
+      "exitCode": 0
+    },
+    "noValidWriteRunByReviewer": true
+  },
+  "indexDiffChecks": [
+    {
+      "path": "content/assets/audio/voices/lines/COMBAT_ORIGINALS.json",
+      "changedChampionIds": [
+        "b2-kisaragi"
+      ],
+      "otherTopLevelFieldsUnchanged": true
+    },
+    {
+      "path": "content/assets/audio/voices/champions/MANIFEST.json",
+      "changedChampionIds": [
+        "b2-kisaragi"
+      ],
+      "otherTopLevelFieldsUnchanged": true
+    }
+  ],
+  "runtimeParserCheck": {
+    "method": "actual voicePackFromDoc + packClips imported from apps/client/src/audio/selectVoiceLadder.ts via node --import tsx",
+    "heroId": "b2-kisaragi",
+    "taunt": {
+      "clip": "assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+      "lang": "ja",
+      "seconds": 7.218821
+    },
+    "victory": {
+      "clip": "assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+      "lang": "und",
+      "seconds": 10.03102
+    },
+    "select": {
+      "clip": "assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+      "automaticFromTaunt": true
+    },
+    "result": "all three resolve successfully"
+  },
+  "readSources": [
+    {
+      "path": "tools/voice-gen/src/build-combat-lines.mjs",
+      "sha256": "07ab6e11b35f42ebb0fbb307c374c450ce47b908d2870451294d9d9849d4f4cb"
+    },
+    {
+      "path": "tools/hero-model-library/import_kisaragi_train_audio.py",
+      "sha256": "bc3b5b7a7606dbba58874b98acb697657b304458b39ab25222f0a60e6c9a85e1"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
+      "sha256": "9cc46f1458764742d95c68101f3aea96d611ae7925cee9aa6e3a0ff4900416d0"
+    }
+  ],
+  "nonBlockingNotes": [
+    "Exactly nine old line objects and MP3 bytes are unchanged from HEAD and the parent snapshots. Only reference.path changed to this worktree path.",
+    "Taunt is 7.218821 seconds and is also added to the existing select pool; source was deliberately not trimmed.",
+    "Originals explicitly retain originalCharacterVoice=false, station-announcement/departure-melody classification, excludedFromSpeechInput=true, and unverified audio-reuse license.",
+    "--check emits the two preexisting Chinese OWNER_LINES skips, then uses the requested original files; no synthetic Chinese lines were generated."
+  ],
+  "limitations": [
+    "No listening, transcription, real-speaker identity, browser playback, deployment or rights clearance verification.",
+    "No source files or central indexes were modified by this review.",
+    "No global builder/check or publisher was run."
+  ],
+  "result": "PASS for requested two-file binding, formats, hashes and isolation; CLI equals-syntax finding fixed and verified",
+  "resolvedFindings": [
+    {
+      "severity": "P2",
+      "path": "tools/voice-gen/src/build-combat-lines.mjs",
+      "line": 43,
+      "title": "Unrecognized --hero=<id> silently removes write scope",
+      "evidence": "indexOf(\"--hero\") returns -1 for [\"--hero=no-such-hero\"], so ONLY_HERO=null and the existing per-hero filter accepts all heroes. Invalid separated forms were dynamically rejected; equals form was assessed from exact parser expression without running the prohibited global builder.",
+      "impact": "A caller using conventional equals syntax can regenerate every combat hero instead of failing before writes.",
+      "recommendation": "Support --hero=<id> or reject any --hero= prefix before reads/writes; preserve missing/unknown-ID rejection.",
+      "resolution": "Parent added early rejection of --hero= and duplicate --hero; both dynamically tested exit 2 with no status/index writes."
+    }
+  ],
+  "findings": []
+}

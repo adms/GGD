@@ -291,6 +291,33 @@ class Builder:
         audio_main_by_id = {}
         for audio_file in main_files:
             audio_main_by_id.setdefault(audio_file["heroId"], []).append(audio_file)
+        # A branch supplement is independent of the immutable Main audit. Never
+        # rewrite mainCommittedVoice/Files to make unmerged additions look merged.
+        overlay_path = self.audio_report.parent.parent / "current-branch-audio/overlay.json"
+        overlay_evidence = self.evidence(overlay_path)
+        overlay, overlay_by_id, overlay_files_by_id = {}, {}, {}
+        if overlay_evidence["existsLocal"]:
+            overlay = self.read(overlay_path)
+            if overlay.get("schema") != "ggd.priority81.audio-branch-overlay@1" or overlay.get("baselineUnmodified") is not True:
+                raise ValueError("Unsupported current-branch audio overlay")
+            for pin in overlay["inputs"]:
+                path = self.repo / pin["gitPath"] if pin.get("gitPath") else Path(pin["localPath"])
+                actual = self.evidence(path)
+                if actual["sha256"] != pin["sha256"] or actual["bytes"] != pin["bytes"]:
+                    raise ValueError(f"Current-branch audio overlay is stale: {path}; rerun build_priority81_audio_overlay.py")
+            pinned_baseline = next((p for p in overlay["inputs"] if p.get("gitPath") == audio_evidence["gitPath"]), None)
+            if not pinned_baseline or pinned_baseline["sha256"] != audio_evidence["sha256"]:
+                raise ValueError("Audio overlay references a different frozen Main baseline")
+            for name in ("overlay.json", "current-per-hero.json", "receipt.json"):
+                audio_artifacts.append(self.evidence(overlay_path.parent / name))
+            overlay_by_id = {h["heroId"]: h for h in overlay["heroes"]}
+            for row in overlay["files"]:
+                if row.get("mainMerged") is not False:
+                    raise ValueError("Branch audio additions must not claim Main merged")
+                overlay_files_by_id.setdefault(row["heroId"], []).append(row)
+        current_audio_paths = {f["clip"] for f in main_files} | {f["clip"] for f in overlay.get("files", [])}
+        if overlay and overlay["summary"]["currentUniqueClipPaths"] != len(current_audio_paths):
+            raise ValueError("Audio overlay count does not match distinct current paths")
         derivatives = policy.get("approvedDerivatives", [])
         derivative_by_id = {d["heroId"]: d for d in derivatives}
         if len(derivative_by_id) != 11:
@@ -328,10 +355,12 @@ class Builder:
             if active:
                 gaps.extend(active["gaps"])
             a = audio_by_id.get(hero_id) or audio_by_id.get(runtime_id)
+            branch = overlay_by_id.get(hero_id) or overlay_by_id.get(runtime_id)
+            branch_voice = branch["currentBranchVoice"] if branch else None
             if a is None:
                 gaps.append("per-hero audio audit not available")
             else:
-                pack = a.get("mainCommittedVoice") or {}
+                pack = branch_voice or a.get("mainCommittedVoice") or {}
                 jp = a.get("projectSevenJapaneseSupplement") or {}
                 if jp.get("localShaVerifiedFiles", 0) and not pack.get("uniqueClipCount", 0):
                     gaps.append("戰鬥語音待綁定")
@@ -346,6 +375,18 @@ class Builder:
                                        "currentMatchesAudit": match, "speakerVerified": False})
                 if not match:
                     gaps.append("committed audio no longer matches audit: " + f["clip"])
+            branch_additions = []
+            for f in overlay_files_by_id.get(hero_id, overlay_files_by_id.get(runtime_id, [])):
+                ev = self.evidence(self.repo / "content" / f["clip"])
+                if ev["sha256"] != f["sha256"]:
+                    raise ValueError("Current-branch audio differs from overlay: " + f["clip"])
+                branch_additions.append({**ev, "classification": f["classification"],
+                                         "categories": f["categories"], "contentKind": f["contentKind"],
+                                         "auditSha256": f["sha256"], "currentMatchesAudit": True,
+                                         "publicationState": f["publicationState"], "mainMerged": False,
+                                         "speakerVerified": False, "originalCharacterPerformance": False,
+                                         "excludedFromSpeechInput": f.get("excludedFromSpeechInput", False),
+                                         "originalFile": f["originalFile"], "sourceMetadata": f["sourceMetadata"]})
             runtime_audio = []
             for p in sorted(audio_paths({"voice": (a or {}).get("runtimeVoice"),
                                          "sfx": (a or {}).get("runtimeSfx")})):
@@ -375,7 +416,9 @@ class Builder:
                 "approvedDerivative": approved,
                 "audio": {"auditReport": audio_evidence, "auditHeroId": a.get("heroId") if a else None,
                           "status": "per-hero-audited" if a else "pending-audit", "data": a,
-                          "mainCommittedFiles": finished_audio, "runtimeAudioFiles": runtime_audio},
+                          "mainCommittedFiles": finished_audio, "runtimeAudioFiles": runtime_audio,
+                          "currentBranchVoice": branch_voice, "currentBranchAdditions": branch_additions,
+                          "currentBranchFiles": finished_audio + branch_additions},
                 "gaps": gaps,
             })
         supplements = self.raw_supplements()
@@ -407,9 +450,14 @@ class Builder:
                         "registeredCandidateCount": sum(len(h["candidateModels"]) for h in heroes),
                         "perHeroAudioAudits": sum(h["audio"]["status"] == "per-hero-audited" for h in heroes),
                         "heroesWithReportedGaps": sum(bool(h["gaps"]) for h in heroes),
+                        "mainBaselineAudioFiles": len({f["clip"] for f in main_files}),
+                        "currentBranchAudioAdditions": len(overlay.get("files", [])),
+                        "currentBranchAudioFiles": len(current_audio_paths),
+                        "mainMergedAudioAdditions": False,
                         "productionDeploymentVerified": False,
                         "all81NativeAudioOrMotionComplete": False},
             "audioAudit": audio_evidence, "audioEvidenceFiles": audio_artifacts,
+            "currentBranchAudioOverlay": {"report": overlay_evidence, "summary": overlay.get("summary")},
             "audioSummary": audio_summary, "heroes": heroes, "rawSupplements": supplements,
         }
 
@@ -441,12 +489,16 @@ def render(data):
              f"交 Main 審查合併：**81 位英雄、{summary['registeredCandidateCount']} 個已登記候選**。"
              f"{summary['activeModelFilesAndMappingsPass']}/81 個作用中模型通過本機檔案與映射檢查；"
              f"{summary['activePlaceholderCount']} 個仍為佔位。剩餘轉換由 Root 負責。", "",
-             f"音訊：{committed.get('heroesWithCommittedCharacterPack', 0)} 位有 "
+             f"Main 已合併音訊基準：{committed.get('heroesWithCommittedCharacterPack', 0)} 位有 "
              f"{committed.get('uniqueClipPaths', 0)} 個成品檔（來源沿用 "
              f"{classes.get('source-file-reused-not-speaker-verified', 0)}、自身參考合成 "
              f"{classes.get('synthetic-own-reference-labelled', 0)}、借用參考合成 "
              f"{classes.get('synthetic-donor-reference', 0)}）；另 LoL 7 位有 "
              f"{audio_summary.get('sevenJapaneseFileRows', 0)} 個日文 WAV 儲備待綁定。", "",
+             (f"本分支目前共 **{summary.get('currentBranchAudioFiles', 0)} 個成品音訊檔**："
+              f"新增 {summary.get('currentBranchAudioAdditions', 0)} 檔鐵路廣播／發車音樂，補上如月列車 taunt、victory；"
+              "**新增項仍待 Main 合併**。表格採本分支現況，凍結 Main 基準保留於 JSON。"
+              if summary.get("currentBranchAudioAdditions") else ""), "",
              "保留 **15 筆手動指定與 11 支認可加工副本**，全部候選供後台選用。預設順位："
              + " ＞ ".join(rules["priorityLabels"][k] for k in rules["priority"]) + "。", "",
              "表中 GLB 段數為實際剪輯數，六個狀態映射可共用剪輯，不能當作六段原生動作。"
@@ -462,12 +514,15 @@ def render(data):
         path = (model.get("document") or {}).get("gitPath")
         link = f"[{label}](../../{quote(path, safe='/.-_')})" if path else cell(label)
         audio = hero["audio"].get("data") or {}
-        pack = audio.get("mainCommittedVoice") or {}
+        branch_voice = hero["audio"].get("currentBranchVoice")
+        pack = branch_voice or audio.get("mainCommittedVoice") or {}
         jp = audio.get("projectSevenJapaneseSupplement") or {}
         total, original, synthetic = (pack.get(k, 0) for k in
                                       ("uniqueClipCount", "originalSourceLabelledCount", "syntheticCount"))
         jp_count = jp.get("localShaVerifiedFiles", 0)
         audio_label = f"{total}（原{original}／合{synthetic}）"
+        if branch_voice:
+            audio_label += f"；新增{len(hero['audio']['currentBranchAdditions'])}待合併"
         if jp_count:
             audio_label += f"；JP {jp_count} 未綁"
         gaps = ["佔位；新來源待轉換" if g == "engine placeholder remains in model provenance" else g

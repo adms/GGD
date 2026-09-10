@@ -1,0 +1,124 @@
+{
+  "schema": "ggd.source-audio-delivery@1",
+  "frozen": true,
+  "checkedAt": "2026-09-10T16:25:51.950694+00:00",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi",
+  "scope": "b2-kisaragi taunt/victory two short audio candidates only",
+  "newAudioFiles": 2,
+  "newAudioBytes": 424060,
+  "sources": [
+    {
+      "sourceId": "yamanote-app-doaShimarimasuFemale",
+      "heroIds": [
+        "b2-kisaragi"
+      ],
+      "proposedCategory": "taunt",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/doaShimarimasuFemale.mp3",
+      "relativePath": "originals/doaShimarimasuFemale.mp3",
+      "downloadUrl": "https://yamanote.app/assets/sounds/doaShimarimasuFemale.mp3",
+      "sourcePage": "https://yamanote.app/",
+      "sourceHelp": "https://yamanote.app/help",
+      "bytes": 170880,
+      "sha256": "ede6e2a4fff56342f55fb3bdb48172792fd761291b5181fbcaf5915ae67d4ee1",
+      "acquisitionStatus": "downloaded-http-200",
+      "format": "mp3",
+      "seconds": 7.218821,
+      "sampleRate": 44100,
+      "channels": 2,
+      "fullDecodePassed": true,
+      "peakDb": -3.1,
+      "sourceTags": {
+        "title": "山手線"
+      },
+      "proposedSegment": {
+        "startSeconds": 0,
+        "endSeconds": 7.218821,
+        "basis": "whole published short source file; no trimming or normalization performed"
+      },
+      "sourceClassification": "site-labelled-yamanote-door-announcement-female",
+      "siteAuthor": "not identified in retrieved site/help",
+      "recordingAuthor": "unknown",
+      "license": "no audio reuse license found",
+      "rightsStatus": "audio-reuse-license-unverified",
+      "copyrightEvidence": "Help CC BY-SA 4.0 attribution applies only to Brancacube map. MP3 ID3 for JR Melody identifies JR East original departure-melody album.",
+      "actualRecordingVerified": false,
+      "listeningReviewComplete": false,
+      "transcriptVerified": false,
+      "syntheticGeneratedByThisWorkflow": false,
+      "commercialRedistributionCleared": false,
+      "runtimeBindingReady": false,
+      "runtimeBindingBlockers": [
+        "audio reuse license unverified",
+        "content has source metadata/provenance and full decode evidence, but no listening verification"
+      ],
+      "sourceContextEvidence": [
+        "Main JavaScript sound enum and station assignments retained",
+        "Help describes station melodies and door-closing announcements",
+        "MP3 metadata retained"
+      ]
+    },
+    {
+      "sourceId": "yamanote-app-JR_Melody",
+      "heroIds": [
+        "b2-kisaragi"
+      ],
+      "proposedCategory": "victory",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+      "relativePath": "originals/JR_Melody.mp3",
+      "downloadUrl": "https://yamanote.app/assets/sounds/melodies/JR_Melody.mp3",
+      "sourcePage": "https://yamanote.app/",
+      "sourceHelp": "https://yamanote.app/help",
+      "bytes": 253180,
+      "sha256": "e437c81e1d18fa3e7216901c52894e354566d5de7f948e58aec96e217749f0cd",
+      "acquisitionStatus": "downloaded-http-200",
+      "format": "mp3",
+      "seconds": 10.03102,
+      "sampleRate": 44100,
+      "channels": 2,
+      "fullDecodePassed": true,
+      "peakDb": -5.2,
+      "sourceTags": {
+        "album": "JR East Train Melodies",
+        "artist": "JR東日本",
+        "comment": "JR東日本 駅発車メロディー オリジナル音源集",
+        "title": "JR Melody",
+        "TOTALTRACKS": "74"
+      },
+      "proposedSegment": {
+        "startSeconds": 0,
+        "endSeconds": 10.03102,
+        "basis": "whole published short source file; no trimming or normalization performed"
+      },
+      "sourceClassification": "site-labelled-jr-station-departure-melody",
+      "siteAuthor": "not identified in retrieved site/help",
+      "recordingAuthor": "JR東日本 (ID3 artist tag; recorder not established)",
+      "license": "no audio reuse license found",
+      "rightsStatus": "audio-reuse-license-unverified",
+      "copyrightEvidence": "Help CC BY-SA 4.0 attribution applies only to Brancacube map. MP3 ID3 for JR Melody identifies JR East original departure-melody album.",
+      "actualRecordingVerified": false,
+      "listeningReviewComplete": false,
+      "transcriptVerified": false,
+      "syntheticGeneratedByThisWorkflow": false,
+      "commercialRedistributionCleared": false,
+      "runtimeBindingReady": false,
+      "runtimeBindingBlockers": [
+        "audio reuse license unverified",
+        "content has source metadata/provenance and full decode evidence, but no listening verification"
+      ],
+      "sourceContextEvidence": [
+        "Main JavaScript sound enum and station assignments retained",
+        "Help describes station melodies and door-closing announcements",
+        "MP3 metadata retained"
+      ]
+    }
+  ],
+  "normalDownloadOnly": true,
+  "centralWrites": false,
+  "synthesis": false,
+  "runtimeBinding": false,
+  "limits": [
+    "Acquired files are not a claim of audio reuse clearance.",
+    "Site expressly describes its experience as not 100 percent accurate; current real-world melody prevalence is not verified.",
+    "No listening/transcription verification. Full decoder pass and non-silence prove audio data only."
+  ]
+}

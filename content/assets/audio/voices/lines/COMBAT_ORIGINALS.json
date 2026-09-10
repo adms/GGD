@@ -2934,6 +2934,44 @@
     "seconds": 3.02,
     "importedAt": "2026-09-10T12:25:18.542392+00:00"
    }
+  },
+  "b2-kisaragi": {
+   "taunt": {
+    "src": "GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/doaShimarimasuFemale.mp3",
+    "name": "doaShimarimasuFemale",
+    "group": "public-railway:yamanote-app",
+    "sourceId": "yamanote-app-doaShimarimasuFemale",
+    "sha256": "ede6e2a4fff56342f55fb3bdb48172792fd761291b5181fbcaf5915ae67d4ee1",
+    "seconds": 7.218821,
+    "importedAt": "2026-09-10T16:25:51.950694+00:00",
+    "url": "https://yamanote.app/assets/sounds/doaShimarimasuFemale.mp3",
+    "sourcePage": "https://yamanote.app/",
+    "lang": "ja",
+    "assetKind": "station-announcement",
+    "selection": "owner-requested-train-audio",
+    "originalCharacterVoice": false,
+    "rightsStatus": "audio-reuse-license-unverified",
+    "listeningReviewComplete": false,
+    "excludedFromSpeechInput": true
+   },
+   "victory": {
+    "src": "GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+    "name": "JR_Melody",
+    "group": "public-railway:yamanote-app",
+    "sourceId": "yamanote-app-JR_Melody",
+    "sha256": "e437c81e1d18fa3e7216901c52894e354566d5de7f948e58aec96e217749f0cd",
+    "seconds": 10.03102,
+    "importedAt": "2026-09-10T16:25:51.950694+00:00",
+    "url": "https://yamanote.app/assets/sounds/melodies/JR_Melody.mp3",
+    "sourcePage": "https://yamanote.app/",
+    "lang": "und",
+    "assetKind": "departure-melody",
+    "selection": "owner-requested-train-audio",
+    "originalCharacterVoice": false,
+    "rightsStatus": "audio-reuse-license-unverified",
+    "listeningReviewComplete": false,
+    "excludedFromSpeechInput": true
+   }
   }
  }
 }

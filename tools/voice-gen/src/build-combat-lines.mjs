@@ -41,6 +41,15 @@ import {
 } from "./combatLinesLib.mjs";
 
 const CHECK = process.argv.includes("--check");
+// A source delivery can update one hero without regenerating another workflow's lines.
+if (process.argv.some((arg) => arg.startsWith("--hero=")) || process.argv.filter((arg) => arg === "--hero").length > 1) {
+  console.error("Use --hero <roster champion ID> exactly once"); process.exit(2);
+}
+const heroArg = process.argv.indexOf("--hero");
+const ONLY_HERO = heroArg >= 0 ? process.argv[heroArg + 1] : null;
+if (heroArg >= 0 && (!ONLY_HERO || ONLY_HERO.startsWith("--"))) {
+  console.error("--hero requires a roster champion ID"); process.exit(2);
+}
 const SLOTS = ["q", "w", "e", "r", "ex"];
 /** Real kana letters (ぁ-ゖ, ァ-ヺ, ー). ⛔ NOT the block range: ・(U+30FB) is a
  *  separator that Chinese skill names use constantly (百八式・闇拂). */
@@ -136,7 +145,7 @@ function originalLine(id, cat) {
   if (!o) return null;
   const mp3 = clipPath(id, cat);
   if (!existsSync(mp3)) return { error: `COMBAT_ORIGINALS.json 說 ${id}/${cat} 用原檔，但 ${relative(ROOT, mp3)} 不存在（跑 import_originals）` };
-  return { lang: "ja", text: `（原檔）${o.name ?? o.src}`, origin: `original:${o.group ?? "?"}/${o.src}`, original: o, mp3 };
+  return { lang: o.lang ?? "ja", text: `（原檔）${o.name ?? o.src}`, origin: `original:${o.group ?? "?"}/${o.src}`, original: o, mp3 };
 }
 
 /** Merge a derived line onto the previous record, keeping render state iff the text is unchanged. */
@@ -169,7 +178,10 @@ for (const id of Object.keys(casting.champions)) {
 }
 
 const summary = { heroes: 0, lines: 0, toRender: 0, ownerPending: [], stale: [], skippedZh: [] };
-for (const id of heroes.sort()) {
+if (ONLY_HERO && !heroes.includes(ONLY_HERO)) {
+  console.error(`--hero is not a combat-cast roster champion: ${ONLY_HERO}`); process.exit(2);
+}
+for (const id of heroes.filter((id) => !ONLY_HERO || id === ONLY_HERO).sort()) {
   const name = championName(id);
   const cast = casting.champions[id];
   const ref = referenceFor(id, casting);

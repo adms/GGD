@@ -2187,7 +2187,6 @@
       "tier": "combat-core",
       "missingCategories": [
         "quote",
-        "victory",
         "stun",
         "poison",
         "slow",
@@ -2198,7 +2197,6 @@
         "confused",
         "paralyzed",
         "thanks",
-        "taunt",
         "curse",
         "hum",
         "attack-light",
@@ -2225,6 +2223,16 @@
         "unstoppable"
       ],
       "lines": {
+        "select": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+            "text": "（原檔）doaShimarimasuFemale",
+            "lang": "ja",
+            "durationSec": 7.218821,
+            "speakerSim": null,
+            "hash": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45"
+          }
+        ],
         "defeat": [
           {
             "clip": "assets/audio/voices/lines/b2-kisaragi/defeat.mp3",
@@ -2313,6 +2321,26 @@
             "durationSec": 2,
             "speakerSim": null,
             "hash": "26fcac74f920cbcee250f2f7d09ee3dd013978be4818d774035e1a3934ddc6b6"
+          }
+        ],
+        "taunt": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+            "text": "（原檔）doaShimarimasuFemale",
+            "lang": "ja",
+            "durationSec": 7.218821,
+            "speakerSim": null,
+            "hash": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+            "text": "（原檔）JR_Melody",
+            "lang": "und",
+            "durationSec": 10.03102,
+            "speakerSim": null,
+            "hash": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc"
           }
         ]
       }
