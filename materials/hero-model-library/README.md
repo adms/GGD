@@ -18,12 +18,17 @@
 | [spider-identity.json](spider-identity.json) | 蜘蛛子原生表格與模型身分對應證據 |
 | [s3-publication-receipt.json](s3-publication-receipt.json) | S3 上傳後讀回驗證；不是網站部署收據 |
 | [turbo-granny-compaction-validation.json](turbo-granny-compaction-validation.json) | 招財貓合併版的 GGD 格式與網格／貼圖預算檢查；尚缺動作與後台切換驗收 |
+| [goku-audio-validation.json](goku-audio-validation.json) | 悟空 69 個浮點 WAV 母檔的解碼、取樣數、峰值與獨立 FFmpeg 驗證；尚缺事件／技能對應與聽審 |
 
 本版包含 97 筆來源選項、90 個不同模型，以及成品庫中既有的 60 個 GGD 作者化 VFX 元件。模型／動作元件與完整英雄包分開計算；不得宣稱 156 筆盤點 ID 已全部上架。
 
 已有可用 300 模型就預設用 300；既有版本先核對，避免重買。其他工作流經使用者授權付費取得的素材，一律與免費來源保留整合，預設順位不得刪減候選；尚未取得或轉換的來源不冒充已上架。銀時、蜘蛛子、海克力斯及各來源未完成步驟的細節統一放在盤點。
 
-靜態解析使用 `tools/hero-model-library/public-source-requirements.txt` 的固定版本。`extract_public_sources.py` 會保存 DLL 中的原生資源，並以 `embedded_resources.py` 拆出 Wwise BNK 的 DIDX／DATA 媒體；保留原 bank 和事件資料，WEM 尚未解碼、可能是串流預取片段，不計為完整可播放音效。
+靜態解析使用 `tools/hero-model-library/public-source-requirements.txt` 的固定版本。`extract_public_sources.py` 會保存 DLL 中的原生資源，並以 `embedded_resources.py` 拆出 Wwise BNK 的 DIDX／DATA 媒體；保留原 bank 和事件資料，擷取出的 WEM 可能是串流預取片段，必須另行解碼及驗證。
+
+`decode_wwise_intake.py <WEM目錄> <新輸出目錄> --decoder <vgmstream-cli>` 使用官方 [vgmstream r2117](https://github.com/vgmstream/vgmstream/tree/r2117)（`71e2361042531fe767fb98300cf8c1ee95e539a0`）解碼，工具依官方建置說明準備，不執行 MOD。預設 Float32 WAV 保留原取樣率、聲道與超過 1 的峰值；不加循環、淡出、正規化或重取樣。逐檔檢查 RIFF 長度、來源 SHA、解碼器中繼資料與實際取樣數，結果寫入 `audio-index.json`，失敗檔也列入；`--sample-format pcm16` 僅供診斷，可能截波。原 bank、WEM 與歷次解碼產物全部保留。
+
+悟空已解碼 69 份浮點 WAV（178.307 秒），另以 FFmpeg 全檔解碼驗證。25 檔浮點峰值超過 1，播放增益與整數格式匯出仍待確認；先前 69 份 PCM16 診斷版不作母檔。逐檔索引在 intake 的 `decoded-audio-float/audio-index.json`，與整個素材包一併存 S3 legacy。尚缺逐檔聽審、bank 事件／技能對應、模型動作整合及後台切換，這批音訊不會自動進入正式成品庫。
 
 `convert_unity_prefab.py <bundle> <intake輸出目錄> --root-name <精確 prefab 名稱>` 僅將已檢查的 Unity 蒙皮模型轉為自包含 GLB，保留骨節順序與綁定矩陣，驗證座標轉換前後頂點位置。遇到未支援的 morph、透明材質或 UV 變換會停止；動作尚未轉換，輸出屬於 intake 半成品。`compact_unity_skin.py <GLB> <新輸出目錄>` 進一步合併共骨節蒙皮與單色材質，在多組骨節姿勢下比對頂點位置，保留有圖案貼圖的原尺寸。高速婆婆已由 32 降至 5 繪製批次，全部 9,432 面及 29 骨節保留；`converted-prefab/`、`compacted-prefab/` 各自保存 GLB、格式驗證、三面截圖及瀏覽器收據。仍缺動作與後台切換驗收，不能據 GLB 可開啟就登記成品。
 

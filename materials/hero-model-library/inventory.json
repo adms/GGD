@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T17:27:07+08:00",
-  "inputsSha256": "627dd42ca638816268d287654e86c4c1b01fbdcf22fa2fa5e98ef43e4f6a62ce",
+  "generatedAt": "2026-09-10T17:53:23+08:00",
+  "inputsSha256": "02f77ca9502f0abf1168b64c5fc67e0f5b928e8c7dd37a8ab6139ea9fb760a90",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -3772,8 +3772,8 @@
           "downloadUrl": "https://thunderstore.io/package/download/kinggrinyov/Goku/2.12.3/",
           "uploader": "kinggrinyov",
           "version": "2.12.3",
-          "format": "Unity AssetBundle／原生骨架、動畫、粒子；Wwise BNK／WEM",
-          "verification": "ZIP CRC 與 SHA-256 通過；靜態解析 65 Mesh、96 SkinnedMeshRenderer、556 Transform、93 Texture2D、48 AnimationClip、60 ParticleSystem。完整保留內嵌 Wwise bank，拆出 69 個 WEM 媒體片段；WEM 尚未解碼與核對事件，不能當作可播放音效完成。僅對應一般悟空 godie-ogrh；超三 godie-o00x 尚未驗證，不因同名或其他形態而勾銷缺口。",
+          "format": "Unity AssetBundle／原生骨架、動畫、粒子；Wwise BNK／WEM／Float32 WAV",
+          "verification": "ZIP CRC 與 SHA-256 通過；靜態解析 65 Mesh、96 SkinnedMeshRenderer、556 Transform、93 Texture2D、48 AnimationClip、60 ParticleSystem。69 個 WEM 已解碼為 69 份浮點 WAV 母檔（共 178.307 秒），原取樣率／聲道與取樣數一致，另以 FFmpeg 全檔驗證；25 檔峰值超過 1，浮點母檔保留峰值，先前 PCM16 診斷版仍保留但可能截波。尚未逐檔聽審、對應 bank 事件／技能或整合模型動作，不列成品。僅對應一般悟空 godie-ogrh；超三 godie-o00x 尚未驗證。",
           "reuseTerms": "來源 README、作者署名與全部原檔保留；跨遊戲轉換與再散布使用條件尚待核對。",
           "accessStatus": "public-manual-download",
           "checkedAt": "2026-09-10T06:32:34.475939+00:00",
@@ -3803,12 +3803,35 @@
             "selectionVerified": false
           },
           "backup": {
-            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e.zip",
-            "bytes": 131846504,
-            "sha256": "d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/22dd0a688ef8533c3825a368dd11f2d88a73300100d41777641008652de10c4f.zip",
+            "bytes": 181136410,
+            "sha256": "22dd0a688ef8533c3825a368dd11f2d88a73300100d41777641008652de10c4f",
             "readbackVerified": true,
             "usage": "manual-only legacy backup; not runtime-ready"
-          }
+          },
+          "audioConversion": {
+            "validationPath": "materials/hero-model-library/goku-audio-validation.json",
+            "indexPath": "decoded-audio-float/audio-index.json",
+            "indexSha256": "9d936b1f7a688647c5a02fee0c3bbea07f281478b291db85aed0b9626c3254a7",
+            "decodedFloatWavCount": 69,
+            "retainedDiagnosticPcm16Count": 69,
+            "totalSeconds": 178.3068557256236,
+            "floatWavBytes": 36767604,
+            "sourceWemRetained": true,
+            "sourceBankRetained": true,
+            "eventBindingsVerified": false,
+            "listeningReviewComplete": false,
+            "runtimeReady": false
+          },
+          "backupHistory": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e.zip",
+              "bytes": 131846504,
+              "sha256": "d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e",
+              "readbackVerified": true,
+              "usage": "manual-only legacy backup; not runtime-ready"
+            }
+          ]
         }
       ],
       "paidCandidates": []
@@ -17999,8 +18022,8 @@
         "downloadUrl": "https://thunderstore.io/package/download/kinggrinyov/Goku/2.12.3/",
         "uploader": "kinggrinyov",
         "version": "2.12.3",
-        "format": "Unity AssetBundle／原生骨架、動畫、粒子；Wwise BNK／WEM",
-        "verification": "ZIP CRC 與 SHA-256 通過；靜態解析 65 Mesh、96 SkinnedMeshRenderer、556 Transform、93 Texture2D、48 AnimationClip、60 ParticleSystem。完整保留內嵌 Wwise bank，拆出 69 個 WEM 媒體片段；WEM 尚未解碼與核對事件，不能當作可播放音效完成。僅對應一般悟空 godie-ogrh；超三 godie-o00x 尚未驗證，不因同名或其他形態而勾銷缺口。",
+        "format": "Unity AssetBundle／原生骨架、動畫、粒子；Wwise BNK／WEM／Float32 WAV",
+        "verification": "ZIP CRC 與 SHA-256 通過；靜態解析 65 Mesh、96 SkinnedMeshRenderer、556 Transform、93 Texture2D、48 AnimationClip、60 ParticleSystem。69 個 WEM 已解碼為 69 份浮點 WAV 母檔（共 178.307 秒），原取樣率／聲道與取樣數一致，另以 FFmpeg 全檔驗證；25 檔峰值超過 1，浮點母檔保留峰值，先前 PCM16 診斷版仍保留但可能截波。尚未逐檔聽審、對應 bank 事件／技能或整合模型動作，不列成品。僅對應一般悟空 godie-ogrh；超三 godie-o00x 尚未驗證。",
         "reuseTerms": "來源 README、作者署名與全部原檔保留；跨遊戲轉換與再散布使用條件尚待核對。",
         "accessStatus": "public-manual-download",
         "checkedAt": "2026-09-10T06:32:34.475939+00:00",
@@ -18030,12 +18053,35 @@
           "selectionVerified": false
         },
         "backup": {
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e.zip",
-          "bytes": 131846504,
-          "sha256": "d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/22dd0a688ef8533c3825a368dd11f2d88a73300100d41777641008652de10c4f.zip",
+          "bytes": 181136410,
+          "sha256": "22dd0a688ef8533c3825a368dd11f2d88a73300100d41777641008652de10c4f",
           "readbackVerified": true,
           "usage": "manual-only legacy backup; not runtime-ready"
-        }
+        },
+        "audioConversion": {
+          "validationPath": "materials/hero-model-library/goku-audio-validation.json",
+          "indexPath": "decoded-audio-float/audio-index.json",
+          "indexSha256": "9d936b1f7a688647c5a02fee0c3bbea07f281478b291db85aed0b9626c3254a7",
+          "decodedFloatWavCount": 69,
+          "retainedDiagnosticPcm16Count": 69,
+          "totalSeconds": 178.3068557256236,
+          "floatWavBytes": 36767604,
+          "sourceWemRetained": true,
+          "sourceBankRetained": true,
+          "eventBindingsVerified": false,
+          "listeningReviewComplete": false,
+          "runtimeReady": false
+        },
+        "backupHistory": [
+          {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-goku/d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e.zip",
+            "bytes": 131846504,
+            "sha256": "d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e",
+            "readbackVerified": true,
+            "usage": "manual-only legacy backup; not runtime-ready"
+          }
+        ]
       },
       {
         "id": "gta5mod-shinchan-sd2",
@@ -18396,13 +18442,22 @@
         "ownerEntryIds": [],
         "url": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309923/",
         "pageTitle": "Sinbad - Magi: Aratanaru Sekai (JPN)",
-        "checkedAt": "2026-09-10T09:26:21.591140+00:00",
-        "accessStatus": "public-page-download-not-observed",
+        "checkedAt": "2026-09-10T09:45:17.651880+00:00",
+        "accessStatus": "public-page-download-blocked",
         "acquisitionStatus": "not-downloaded",
         "defaultEligible": false,
         "purchaseDecision": "hold-purchase-investigate-public-source",
-        "verification": "瀏覽器已正常開啟頁面並確認 Ozci 上傳的 DAE／PNG ZIP（453.80 KB）。下載動作後未在本機觀測到檔案，不能列為已取得。巴力魔裝是另一獨立來源，不能代替此一般形態。",
-        "downloadUrl": "https://models.spriters-resource.com/media/assets/307/309923.zip?updated=1755502676"
+        "verification": "公開頁面可正常開啟並確認 Ozci 上傳的 DAE／PNG ZIP（453.80 KB）；正常下載按鈕未產生本機檔案，直接 HTTP 下載回傳 403，瀏覽器開啟 ZIP 回報 ERR_BLOCKED_BY_CLIENT。未取得實檔，保留一般形態缺口；已取得的巴力魔裝是獨立來源，不能代替。",
+        "downloadUrl": "https://models.spriters-resource.com/media/assets/307/309923.zip?updated=1755502676",
+        "acquisitionAttempts": [
+          {
+            "checkedAt": "2026-09-10T09:45:17.651880+00:00",
+            "normalDownloadClick": "no-local-file-observed",
+            "directHttpStatus": 403,
+            "browserNavigation": "ERR_BLOCKED_BY_CLIENT",
+            "acquired": false
+          }
+        ]
       }
     ],
     "ingestionPolicy": {
