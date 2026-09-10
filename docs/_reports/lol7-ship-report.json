@@ -1,0 +1,392 @@
+{
+  "schema": "ggd-lol7-report@1",
+  "heroes": 7,
+  "withRealModel": 7,
+  "inventoryStale": [
+    "李星",
+    "沃維克",
+    "犽宿"
+  ],
+  "staleBlockers": [
+    {
+      "row": "阿箱＋拉蜜絲 `b2-boxxo`",
+      "value": 237,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 237 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "李星 `example:leesin`",
+      "value": 196,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 196 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "沃維克 `example:warwick`",
+      "value": 188,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 188 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "犽宿 `example:yasuo`",
+      "value": 170,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 170 **今天過得了** —— 這一列該重新評估"
+    }
+  ],
+  "withChampionIcon": 7,
+  "abilityIcons": 42,
+  "abilitySlots": 42,
+  "withPlaceholders": 0,
+  "rows": [
+    {
+      "id": "lol-karthus",
+      "exampleId": "karthus",
+      "name": "卡爾瑟斯",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/lol-karthus.webp",
+      "abilities": [
+        "lol-karthus.passive",
+        "lol-karthus.q",
+        "lol-karthus.w",
+        "lol-karthus.e",
+        "lol-karthus.r",
+        "lol-karthus.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-karthus.q",
+        "lol-karthus.w",
+        "lol-karthus.e",
+        "lol-karthus.r",
+        "lol-karthus.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8"
+      ],
+      "model": {
+        "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+        "assetId": "ggd.model.d76a057d4869e4913d9a7327",
+        "glbPath": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+        "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+        "state": "real",
+        "why": "盤點表指定「卡爾瑟斯」，素材庫對得到"
+      },
+      "source": {
+        "inspiration": "卡爾瑟斯",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/karthus/",
+        "adaptations": [
+          "死亡後施法改為每場一次的免死續命，仍須存活才能施法。",
+          "安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-leesin",
+      "exampleId": "leesin",
+      "name": "李星",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-leesin.webp",
+      "abilities": [
+        "lol-leesin.passive",
+        "lol-leesin.q",
+        "lol-leesin.w",
+        "lol-leesin.e",
+        "lol-leesin.r",
+        "lol-leesin.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-leesin.q",
+        "lol-leesin.w",
+        "lol-leesin.e",
+        "lol-leesin.r",
+        "lol-leesin.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368"
+      ],
+      "model": {
+        "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+        "assetId": "ggd.model.f9e0593bc69748052ff9f72d",
+        "glbPath": "assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
+        "sha256": "17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e",
+        "state": "real-late",
+        "why": "⚠️ 盤點表寫「待取得核准模型」，⭐ 而素材庫已經有「李星」了 ⇒ 表對這一名過期"
+      },
+      "source": {
+        "inspiration": "李星",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/leesin/",
+        "adaptations": [
+          "能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。",
+          "聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-lux",
+      "exampleId": "lux",
+      "name": "拉克絲",
+      "origin": "軟輔",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-lux.webp",
+      "abilities": [
+        "lol-lux.passive",
+        "lol-lux.q",
+        "lol-lux.w",
+        "lol-lux.e",
+        "lol-lux.r",
+        "lol-lux.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-lux.q",
+        "lol-lux.w",
+        "lol-lux.e",
+        "lol-lux.r",
+        "lol-lux.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+      ],
+      "model": {
+        "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+        "assetId": "ggd.model.5ad7e0cc65e3eca8ead74227",
+        "glbPath": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+        "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+        "state": "real",
+        "why": "盤點表指定「拉克絲」，素材庫對得到"
+      },
+      "source": {
+        "inspiration": "拉克絲",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/lux/",
+        "adaptations": [
+          "照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。",
+          "護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-missfortune",
+      "exampleId": "missfortune",
+      "name": "好運姐",
+      "origin": "射手",
+      "role": "marksman",
+      "icon": "assets/icons/champions/lol-missfortune.webp",
+      "abilities": [
+        "lol-missfortune.passive",
+        "lol-missfortune.q",
+        "lol-missfortune.w",
+        "lol-missfortune.e",
+        "lol-missfortune.r",
+        "lol-missfortune.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-missfortune.q",
+        "lol-missfortune.w",
+        "lol-missfortune.e",
+        "lol-missfortune.r",
+        "lol-missfortune.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+      ],
+      "model": {
+        "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+        "assetId": "ggd.model.589d121ff37d383fbfaa85f6",
+        "glbPath": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+        "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+        "state": "real",
+        "why": "盤點表指定「好運姐」，素材庫對得到"
+      },
+      "source": {
+        "inspiration": "好運姐",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/missfortune/",
+        "adaptations": [
+          "換目標額外傷害改為固定內置冷卻，不因切換目標重置。",
+          "彈射使用最多兩人的連鎖判定；大招改為有界落點彈幕，非自由轉向的錐形掃射。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-warwick",
+      "exampleId": "warwick",
+      "name": "沃維克",
+      "origin": "狂戰",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-warwick.webp",
+      "abilities": [
+        "lol-warwick.passive",
+        "lol-warwick.q",
+        "lol-warwick.w",
+        "lol-warwick.e",
+        "lol-warwick.r",
+        "lol-warwick.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-warwick.q",
+        "lol-warwick.w",
+        "lol-warwick.e",
+        "lol-warwick.r",
+        "lol-warwick.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+        "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990"
+      ],
+      "model": {
+        "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+        "assetId": "ggd.model.b021c68877664a89b7ec8d46",
+        "glbPath": "assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+        "sha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
+        "state": "real-late",
+        "why": "⚠️ 盤點表寫「待取得核准模型」，⭐ 而素材庫已經有「沃維克」了 ⇒ 表對這一名過期"
+      },
+      "source": {
+        "inspiration": "沃維克",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/warwick/",
+        "adaptations": [
+          "低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。",
+          "減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-xerath",
+      "exampleId": "xerath",
+      "name": "齊勒斯",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/lol-xerath.webp",
+      "abilities": [
+        "lol-xerath.passive",
+        "lol-xerath.q",
+        "lol-xerath.w",
+        "lol-xerath.e",
+        "lol-xerath.r",
+        "lol-xerath.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-xerath.q",
+        "lol-xerath.w",
+        "lol-xerath.e",
+        "lol-xerath.r",
+        "lol-xerath.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+        "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+        "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+      ],
+      "model": {
+        "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+        "assetId": "ggd.model.0817d46424cf8193b7b3229a",
+        "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+        "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+        "state": "real",
+        "why": "盤點表指定「齊勒斯」，素材庫對得到"
+      },
+      "source": {
+        "inspiration": "齊勒斯",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/xerath/",
+        "adaptations": [
+          "普攻回魔改為 EX 主動回復固定比例魔力，受冷卻限制。",
+          "蓄力及大招重瞄準改為一次施放的固定時序；最遠射程使用極大級距。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-yasuo",
+      "exampleId": "yasuo",
+      "name": "犽宿",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-yasuo.webp",
+      "abilities": [
+        "lol-yasuo.passive",
+        "lol-yasuo.q",
+        "lol-yasuo.w",
+        "lol-yasuo.e",
+        "lol-yasuo.r",
+        "lol-yasuo.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-yasuo.q",
+        "lol-yasuo.w",
+        "lol-yasuo.e",
+        "lol-yasuo.r",
+        "lol-yasuo.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+        "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368"
+      ],
+      "model": {
+        "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+        "assetId": "ggd.model.1b523670f582b44d8f9595b9",
+        "glbPath": "assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+        "sha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
+        "state": "real-late",
+        "why": "⚠️ 盤點表寫「待取得核准模型」，⭐ 而素材庫已經有「犽宿」了 ⇒ 表對這一名過期"
+      },
+      "source": {
+        "inspiration": "犽宿",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/yasuo/",
+        "adaptations": [
+          "第三次斬擊旋風改為獨立 EX；大招不要求擊飛，但有固定鎖足與冷卻。",
+          "風牆改為限時物理護盾，不摧毀投射物；不提供雙倍暴擊或無限突進。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityExamples.ts"
+      },
+      "placeholders": []
+    }
+  ]
+}

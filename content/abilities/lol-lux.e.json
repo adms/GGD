@@ -1,0 +1,70 @@
+{
+  "id": "lol-lux.e",
+  "name": "流光之域",
+  "provenance": "editor-json",
+  "description": "在落點留下 3 秒光域，每秒造成極小級魔法傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 4.5,
+      "radiusTier": "小",
+      "side": "enemies",
+      "delaySec": 1,
+      "count": 3,
+      "intervalSec": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "mult": 0.3333333333333333
+          }
+        }
+      ],
+      "targetMode": "reresolve"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+    "params": {
+      "intervalSec": 1,
+      "durationSec": 3,
+      "radiusTier": "小",
+      "anchor": "point",
+      "applyTo": "enemies",
+      "damageTier": "極小",
+      "damageType": "magic",
+      "castTimeSec": 0.3,
+      "radius": 4.5
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-lux.e.webp"
+}

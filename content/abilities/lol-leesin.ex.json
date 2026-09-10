@@ -1,0 +1,63 @@
+{
+  "id": "lol-leesin.ex",
+  "name": "逐響躍步",
+  "provenance": "editor-json",
+  "description": "朝落點跳躍並在著地時打擊附近敵人，作為獨立追擊技能。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    90
+  ],
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 2.75,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 1.2,
+      "durationSec": 0.5,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 300,
+      "durationSec": 0.5,
+      "landRadius": 150,
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-leesin.ex.webp"
+}

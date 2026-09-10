@@ -432,6 +432,16 @@ var (
 		"b2-uncle",
 		"b2-yogiri",
 		"b2-zenitsu",
+		// ⭐ GH#1158 / GH#1165 —— owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」。
+		//    招式來源是出貨的 `communityExamples.ts`（⛔ 不是我編的），模型是 owner
+		//    `全角色模型盤點.md` 的「LOL 追加 7 名」那一節，七名都對得到素材庫的入庫模型。
+		"lol-karthus",
+		"lol-leesin",
+		"lol-lux",
+		"lol-missfortune",
+		"lol-warwick",
+		"lol-xerath",
+		"lol-yasuo",
 	}
 
 	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,

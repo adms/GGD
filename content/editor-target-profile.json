@@ -3,15 +3,15 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_17e40e6582a7",
+    "contentVersion": "cv_1d7b5c80bfcd",
     "collections": {
       "champions": {
-        "hash": "7878b6e8823e",
-        "count": 146
+        "hash": "657d1d84cb64",
+        "count": 153
       },
       "abilities": {
-        "hash": "7cef4c063c51",
-        "count": 865
+        "hash": "e4ebfb62ea67",
+        "count": 907
       },
       "items": {
         "hash": "1ee281a7f136",
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "fca07e10b638",
+        "hash": "2f1ba7c75a52",
         "count": 103
       },
       "models": {
-        "hash": "c72dc3b0bbd4",
-        "count": 234
+        "hash": "0315d65c2719",
+        "count": 201
       },
       "vfx": {
         "hash": "7df129081586",
@@ -58,12 +58,12 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "1549a016b360",
-        "count": 77
+        "hash": "48fcf2ce8923",
+        "count": 82
       },
       "vfx-scripts": {
-        "hash": "3d945d196d0a",
-        "count": 10
+        "hash": "f0d32f6453bb",
+        "count": 45
       },
       "vfx-subtypes": {
         "hash": "356bb93fc4d8",
@@ -1918,8 +1918,8 @@
   "contentVocabulary": {
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
-      "count": 865,
-      "fromTemplate": 584,
+      "count": 907,
+      "fromTemplate": 626,
       "templates": [
         {
           "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -2132,6 +2132,94 @@
           }
         },
         {
+          "id": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+          "family": "on-attack",
+          "status": "enabled",
+          "params": {
+            "bonusDamage": {
+              "default": {
+                "perRank": [
+                  100
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "chance": {
+              "max": 1,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "ratio"
+            },
+            "condition": {
+              "default": {
+                "any": [
+                  {
+                    "all": [
+                      {
+                        "not": {
+                          "is": "champion",
+                          "kind": "kind",
+                          "subject": "target"
+                        }
+                      },
+                      {
+                        "kind": "stat",
+                        "mode": "percent",
+                        "op": "<",
+                        "stat": "hp",
+                        "subject": "target",
+                        "value": 0.35
+                      }
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      },
+                      {
+                        "kind": "chance",
+                        "p": 0.01
+                      }
+                    ]
+                  }
+                ]
+              },
+              "optional": true,
+              "type": "condition"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "event": {
+              "default": "onBasicAttack",
+              "type": "enum",
+              "values": [
+                "onBasicAttack",
+                "onDamageDealt"
+              ]
+            },
+            "internalCooldown": {
+              "default": 0,
+              "max": 60,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            }
+          }
+        },
+        {
           "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
           "family": "pull-throw",
           "status": "enabled",
@@ -2243,6 +2331,136 @@
                 "distance",
                 "point"
               ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+          "family": "random-barrage",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "count": {
+              "default": 9,
+              "max": 100,
+              "min": 2,
+              "type": "number",
+              "unit": "count"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "impactDamage": {
+              "default": {
+                "perRank": [
+                  150
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "impactRadius": {
+              "default": 320,
+              "max": 900,
+              "min": 50,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "intervalSec": {
+              "default": 0.1,
+              "max": 0.6,
+              "min": 0.04,
+              "type": "number",
+              "unit": "s"
+            },
+            "openingDamage": {
+              "optional": true,
+              "type": "scaling"
+            },
+            "payout": {
+              "default": "perImpact",
+              "type": "enum",
+              "values": [
+                "perImpact",
+                "onceAtCast"
+              ]
+            },
+            "scatterRadius": {
+              "default": 225,
+              "max": 1500,
+              "min": 0,
+              "type": "number",
+              "unit": "wc3u"
+            }
+          }
+        },
+        {
+          "id": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+          "family": "line-sweep",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "perRank": [
+                  150
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "segmentAoe": {
+              "default": 400,
+              "max": 900,
+              "min": 100,
+              "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**",
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "segmentCount": {
+              "default": 6,
+              "max": 20,
+              "min": 3,
+              "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）",
+              "type": "number",
+              "unit": "count"
+            },
+            "stepSize": {
+              "default": 200,
+              "max": 300,
+              "min": 100,
+              "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**",
+              "type": "number",
+              "unit": "wc3u"
             }
           }
         },
@@ -2563,6 +2781,46 @@
           }
         },
         {
+          "id": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+          "family": "ground-nova",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "perRank": [
+                  150
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "radius": {
+              "default": 530,
+              "max": 900,
+              "min": 200,
+              "type": "number",
+              "unit": "wc3u"
+            }
+          }
+        },
+        {
           "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
           "family": "apply-status",
           "status": "enabled",
@@ -2711,6 +2969,166 @@
               ],
               "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
               "type": "hooks"
+            }
+          }
+        },
+        {
+          "id": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+          "family": "mark-stacks",
+          "status": "enabled",
+          "params": {
+            "aoeRadius": {
+              "default": 6,
+              "max": 12,
+              "min": 0,
+              "type": "number"
+            },
+            "durationSec": {
+              "default": -1,
+              "max": 600,
+              "min": -1,
+              "type": "number",
+              "unit": "s"
+            },
+            "initial": {
+              "default": 12,
+              "max": 999,
+              "min": 0,
+              "type": "number",
+              "unit": "count"
+            },
+            "internalCooldown": {
+              "default": 0.5,
+              "max": 30,
+              "min": 0,
+              "type": "number",
+              "unit": "s"
+            },
+            "invulnerableScope": {
+              "default": "damageAndControl",
+              "type": "enum",
+              "values": [
+                "damageAndControl",
+                "damageOnly"
+              ]
+            },
+            "invulnerableSec": {
+              "default": 1.5,
+              "max": 30,
+              "min": 0.1,
+              "type": "number",
+              "unit": "s"
+            },
+            "knockbackDistance": {
+              "default": 4,
+              "max": 20,
+              "min": 0.1,
+              "optional": true,
+              "type": "number"
+            },
+            "knockbackFrom": {
+              "default": "caster",
+              "type": "enum",
+              "values": [
+                "caster",
+                "facing",
+                "pull"
+              ]
+            },
+            "knockbackSpeed": {
+              "default": 16,
+              "max": 40,
+              "min": 1,
+              "type": "number"
+            },
+            "lethalConsume": {
+              "default": 1,
+              "max": 999,
+              "min": 1,
+              "type": "number",
+              "unit": "count"
+            },
+            "lethalDamageTypes": {
+              "default": "all",
+              "type": "enum",
+              "values": [
+                "all",
+                "physicalMagic",
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            "lethalMode": {
+              "default": "save",
+              "type": "enum",
+              "values": [
+                "save",
+                "none"
+              ]
+            },
+            "markId": {
+              "default": "godie-hapm.passive",
+              "type": "docRef"
+            },
+            "max": {
+              "default": 12,
+              "max": 999,
+              "min": 1,
+              "type": "number",
+              "unit": "count"
+            },
+            "perStackLost": {
+              "default": [
+                {
+                  "op": "pctAdd",
+                  "stat": "ad",
+                  "value": 0.1
+                },
+                {
+                  "op": "pctAdd",
+                  "stat": "maxHealth",
+                  "value": 0.1
+                }
+              ],
+              "optional": true,
+              "type": "statModifiers"
+            },
+            "resetOn": {
+              "default": "match",
+              "type": "enum",
+              "values": [
+                "match",
+                "round",
+                "never"
+              ]
+            },
+            "restoreHealthPct": {
+              "default": 0.5,
+              "max": 1,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "ratio"
+            },
+            "stunSec": {
+              "default": 0.5,
+              "max": 20,
+              "min": 0.034,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "stunStatusId": {
+              "default": "trial-stun",
+              "type": "docRef"
+            },
+            "surviveHpPct": {
+              "default": 0.01,
+              "max": 1,
+              "min": 0.01,
+              "type": "number",
+              "unit": "ratio"
             }
           }
         },
@@ -6757,7 +7175,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 66,
+        "enabled": 71,
         "draft": 11
       },
       "innateKinds": [
@@ -7643,8 +8061,8 @@
             "unlocked": 581152
           },
           "maxMana": {
-            "base": 351387,
-            "unlocked": 351387
+            "base": 352091,
+            "unlocked": 352091
           },
           "healthRegen": {
             "base": 1235,
@@ -7980,11 +8398,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "12fac38bbc77",
+    "fingerprint": "3748f628f0cd",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "cd19dc60ae8b"
+        "digest": "3b1967e16e14"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8050,5 +8468,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "7e3d017b60b0"
+  "profileDigest": "69bfc04a5614"
 }

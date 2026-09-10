@@ -1,0 +1,24 @@
+{
+  "id": "lol-warwick.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-warwick.ex",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "血性護甲",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

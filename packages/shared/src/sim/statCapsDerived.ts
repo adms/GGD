@@ -32,10 +32,10 @@ export interface DerivedCapProvenance {
 export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
   anchorLevel: 30,
   multiple: 200,
-  population: 123,
+  population: 130,
   medians: Object.freeze({
   "maxHealth": 2905.7622,
-  "maxMana": 1756.9332,
+  "maxMana": 1760.4542,
   "healthRegen": 6.1761,
   "manaRegen": 11.7525,
   "ad": 115.2799,
@@ -46,7 +46,7 @@ export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
 
 export const DERIVED_STAT_CAPS: Readonly<Partial<Record<Stat, DerivedStatCap>>> = Object.freeze({
   "maxHealth": Object.freeze({ base: 581152, unlocked: 581152 }),
-  "maxMana": Object.freeze({ base: 351387, unlocked: 351387 }),
+  "maxMana": Object.freeze({ base: 352091, unlocked: 352091 }),
   "healthRegen": Object.freeze({ base: 1235, unlocked: 1235 }),
   "manaRegen": Object.freeze({ base: 2351, unlocked: 2351 }),
   "ad": Object.freeze({ base: 23056, unlocked: 23056 }),

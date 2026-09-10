@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "fca07e10b638",
+  "hash": "2f1ba7c75a52",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -47,8 +47,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "9406a30a5679",
-      "size": 10011
+      "hash": "e6ff764ee534",
+      "size": 9931
     },
     {
       "id": "asset-cdn",
@@ -221,7 +221,7 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "bb79da2d2f98",
+      "hash": "1caf3d4af2fd",
       "size": 3352
     },
     {
@@ -461,7 +461,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "6a13a8e3541a",
+      "hash": "7341ce37a7df",
       "size": 920
     },
     {

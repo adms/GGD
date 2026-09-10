@@ -1,0 +1,42 @@
+{
+  "id": "lol-leesin.r",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-leesin.r",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "斷陣踢",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    },
+    {
+      "modelKey": "w3x.stock.nedeathsmall",
+      "path": "static",
+      "anchor": "target",
+      "lifeSec": 1,
+      "kind": "modelFx",
+      "on": "castEffect",
+      "offsetForwardU": 0
+    },
+    {
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static",
+      "anchor": "target",
+      "lifeSec": 0.8,
+      "kind": "modelFx",
+      "on": "castEffect",
+      "offsetForwardU": 0
+    }
+  ]
+}

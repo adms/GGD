@@ -1,0 +1,24 @@
+{
+  "id": "lol-xerath.q",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-xerath.q",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "星牢光路",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

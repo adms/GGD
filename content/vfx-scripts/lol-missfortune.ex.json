@@ -1,0 +1,24 @@
+{
+  "id": "lol-missfortune.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-missfortune.ex",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "藏帆備彈",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "lol-yasuo.r",
+  "name": "天際斷章",
+  "provenance": "editor-json",
+  "description": "鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "radius": 7.33,
+  "rangeTier": "極小",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "lock-combo",
+      "duration": 0.8999999999999999,
+      "applyTo": "target",
+      "root": true
+    },
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.3,
+      "durationSec": 0.8999999999999999
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 0.8999999999999999,
+      "landRadius": 7.33,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeTier": "大",
+  "template": {
+    "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+    "params": {
+      "hitCount": 3,
+      "hitIntervalSec": 0.3,
+      "perHitDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "finisherDamage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "finisherRadius": 400,
+      "damageType": "physical",
+      "lockTarget": "root",
+      "casterGuard": "none",
+      "trigger": "onCast"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
+  },
+  "schema": "ability@1",
+  "castTimeSec": 0.5,
+  "icon": "assets/icons/abilities/lol-yasuo.r.webp"
+}

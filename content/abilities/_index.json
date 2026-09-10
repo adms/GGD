@@ -1,6 +1,6 @@
 {
   "collection": "abilities",
-  "hash": "7cef4c063c51",
+  "hash": "e4ebfb62ea67",
   "entries": [
     {
       "id": "b2-aladdin.e",
@@ -5143,6 +5143,258 @@
       "path": "abilities/godie-zombiex.w.json",
       "hash": "4fe4c13e0a89",
       "size": 1178
+    },
+    {
+      "id": "lol-karthus.e",
+      "path": "abilities/lol-karthus.e.json",
+      "hash": "ae1942fa63bf",
+      "size": 1545
+    },
+    {
+      "id": "lol-karthus.ex",
+      "path": "abilities/lol-karthus.ex.json",
+      "hash": "5129e451564c",
+      "size": 1155
+    },
+    {
+      "id": "lol-karthus.passive",
+      "path": "abilities/lol-karthus.passive.json",
+      "hash": "a56ad3aeff51",
+      "size": 1832
+    },
+    {
+      "id": "lol-karthus.q",
+      "path": "abilities/lol-karthus.q.json",
+      "hash": "d0828db0bc71",
+      "size": 1140
+    },
+    {
+      "id": "lol-karthus.r",
+      "path": "abilities/lol-karthus.r.json",
+      "hash": "5f3154f6c80c",
+      "size": 1167
+    },
+    {
+      "id": "lol-karthus.w",
+      "path": "abilities/lol-karthus.w.json",
+      "hash": "36ef55980f8a",
+      "size": 1266
+    },
+    {
+      "id": "lol-leesin.e",
+      "path": "abilities/lol-leesin.e.json",
+      "hash": "37d22d5face4",
+      "size": 1158
+    },
+    {
+      "id": "lol-leesin.ex",
+      "path": "abilities/lol-leesin.ex.json",
+      "hash": "04e671c92efd",
+      "size": 1442
+    },
+    {
+      "id": "lol-leesin.passive",
+      "path": "abilities/lol-leesin.passive.json",
+      "hash": "1232a403455a",
+      "size": 1455
+    },
+    {
+      "id": "lol-leesin.q",
+      "path": "abilities/lol-leesin.q.json",
+      "hash": "d8a7da81c3d0",
+      "size": 1126
+    },
+    {
+      "id": "lol-leesin.r",
+      "path": "abilities/lol-leesin.r.json",
+      "hash": "dba3aa4a72f2",
+      "size": 1748
+    },
+    {
+      "id": "lol-leesin.w",
+      "path": "abilities/lol-leesin.w.json",
+      "hash": "7ad07831a8f6",
+      "size": 1449
+    },
+    {
+      "id": "lol-lux.e",
+      "path": "abilities/lol-lux.e.json",
+      "hash": "7d94d22fccf8",
+      "size": 1529
+    },
+    {
+      "id": "lol-lux.ex",
+      "path": "abilities/lol-lux.ex.json",
+      "hash": "c3d729ac476e",
+      "size": 1255
+    },
+    {
+      "id": "lol-lux.passive",
+      "path": "abilities/lol-lux.passive.json",
+      "hash": "8773749ad545",
+      "size": 1440
+    },
+    {
+      "id": "lol-lux.q",
+      "path": "abilities/lol-lux.q.json",
+      "hash": "6649ebce3f54",
+      "size": 1250
+    },
+    {
+      "id": "lol-lux.r",
+      "path": "abilities/lol-lux.r.json",
+      "hash": "cc90e55dd3a1",
+      "size": 1560
+    },
+    {
+      "id": "lol-lux.w",
+      "path": "abilities/lol-lux.w.json",
+      "hash": "156527aba61c",
+      "size": 1268
+    },
+    {
+      "id": "lol-missfortune.e",
+      "path": "abilities/lol-missfortune.e.json",
+      "hash": "6a6b4305da17",
+      "size": 1551
+    },
+    {
+      "id": "lol-missfortune.ex",
+      "path": "abilities/lol-missfortune.ex.json",
+      "hash": "a55bae109839",
+      "size": 1363
+    },
+    {
+      "id": "lol-missfortune.passive",
+      "path": "abilities/lol-missfortune.passive.json",
+      "hash": "64771cc843aa",
+      "size": 1468
+    },
+    {
+      "id": "lol-missfortune.q",
+      "path": "abilities/lol-missfortune.q.json",
+      "hash": "9b5ce253216f",
+      "size": 1475
+    },
+    {
+      "id": "lol-missfortune.r",
+      "path": "abilities/lol-missfortune.r.json",
+      "hash": "76393f6d520a",
+      "size": 1361
+    },
+    {
+      "id": "lol-missfortune.w",
+      "path": "abilities/lol-missfortune.w.json",
+      "hash": "4db766abfe7a",
+      "size": 1370
+    },
+    {
+      "id": "lol-warwick.e",
+      "path": "abilities/lol-warwick.e.json",
+      "hash": "680673428058",
+      "size": 1248
+    },
+    {
+      "id": "lol-warwick.ex",
+      "path": "abilities/lol-warwick.ex.json",
+      "hash": "072797392d8e",
+      "size": 1144
+    },
+    {
+      "id": "lol-warwick.passive",
+      "path": "abilities/lol-warwick.passive.json",
+      "hash": "e686de76d7d0",
+      "size": 1705
+    },
+    {
+      "id": "lol-warwick.q",
+      "path": "abilities/lol-warwick.q.json",
+      "hash": "d330e2bb9b0f",
+      "size": 1792
+    },
+    {
+      "id": "lol-warwick.r",
+      "path": "abilities/lol-warwick.r.json",
+      "hash": "10690826cc58",
+      "size": 1962
+    },
+    {
+      "id": "lol-warwick.w",
+      "path": "abilities/lol-warwick.w.json",
+      "hash": "a1cf466ffb2a",
+      "size": 1368
+    },
+    {
+      "id": "lol-xerath.e",
+      "path": "abilities/lol-xerath.e.json",
+      "hash": "2a119acb410c",
+      "size": 1256
+    },
+    {
+      "id": "lol-xerath.ex",
+      "path": "abilities/lol-xerath.ex.json",
+      "hash": "87d890534b81",
+      "size": 1246
+    },
+    {
+      "id": "lol-xerath.passive",
+      "path": "abilities/lol-xerath.passive.json",
+      "hash": "17bee3f0f90b",
+      "size": 1452
+    },
+    {
+      "id": "lol-xerath.q",
+      "path": "abilities/lol-xerath.q.json",
+      "hash": "04251f27bcaa",
+      "size": 1577
+    },
+    {
+      "id": "lol-xerath.r",
+      "path": "abilities/lol-xerath.r.json",
+      "hash": "dfd2517d13d8",
+      "size": 1360
+    },
+    {
+      "id": "lol-xerath.w",
+      "path": "abilities/lol-xerath.w.json",
+      "hash": "40988e653cc4",
+      "size": 1123
+    },
+    {
+      "id": "lol-yasuo.e",
+      "path": "abilities/lol-yasuo.e.json",
+      "hash": "a54c3715e80c",
+      "size": 1783
+    },
+    {
+      "id": "lol-yasuo.ex",
+      "path": "abilities/lol-yasuo.ex.json",
+      "hash": "2f32b091137a",
+      "size": 1221
+    },
+    {
+      "id": "lol-yasuo.passive",
+      "path": "abilities/lol-yasuo.passive.json",
+      "hash": "fb25093f4853",
+      "size": 1453
+    },
+    {
+      "id": "lol-yasuo.q",
+      "path": "abilities/lol-yasuo.q.json",
+      "hash": "8f4f4a9c150d",
+      "size": 1574
+    },
+    {
+      "id": "lol-yasuo.r",
+      "path": "abilities/lol-yasuo.r.json",
+      "hash": "9580fb5e2b8f",
+      "size": 1968
+    },
+    {
+      "id": "lol-yasuo.w",
+      "path": "abilities/lol-yasuo.w.json",
+      "hash": "c13b00a11eb7",
+      "size": 1288
     },
     {
       "id": "sela.e",

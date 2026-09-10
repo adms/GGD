@@ -1,0 +1,56 @@
+{
+  "id": "lol-xerath.ex",
+  "name": "回收奧能",
+  "provenance": "editor-json",
+  "description": "獲得短效魔法護盾並回復自身 15% 最大魔力；受到 EX 冷卻限制。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60
+  ],
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "極大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "magic",
+      "stackKey": "concept-xerath-guard",
+      "onExisting": "keepLarger"
+    },
+    {
+      "kind": "restore",
+      "manaPct": 0.15,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-xerath.ex.webp"
+}

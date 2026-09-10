@@ -23,8 +23,10 @@
 ⇒ ⭐ 所以 ③④ 會**再查一次 catalog 的角色名** —— 對得到就升級成 ①，
 ⛔ 而**在報告裡指名**「表已經對這一名過期了」。
 """
+import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 GGD_NATIVE = re.compile(r"GGD\s*原版")
@@ -149,3 +151,50 @@ def stale_blockers(path: Path, shipped_limit: int) -> list[dict]:
                    f"⇒ 通道 {value} **今天過得了** —— 這一列該重新評估",
         })
     return out
+
+
+def entry_for_model_key(titles: dict[str, dict], key: str) -> dict | None:
+    """⭐ 反查素材庫的入庫條目（asset id · sha256 · glbPath）—— ⛔ 不改 `resolve()` 的回傳。"""
+    for entry in titles.values():
+        try:
+            if _model_key(entry) == key:
+                return entry
+        except ValueError:
+            continue
+    return None
+
+
+def main() -> None:
+    """
+    ⭐ 一支**唯讀**的 CLI：把盤點表的一節解析＋解析成 `{heroId → modelKey…}` 印成 JSON。
+
+    ⛔ 它存在的唯一理由是**不要有第二份解析規則**（第〇·四守則）——
+    `lol7.py` 要同一組答案，⭐ 而它走這裡，⛔ 不自己再 parse 一次那張表。
+    """
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--inventory", type=Path, required=True, help="全角色模型盤點.md")
+    ap.add_argument("--catalog", type=Path, required=True, help="素材庫 catalog.json")
+    ap.add_argument("--section", help="只印這一節（前綴比對，例：LOL 追加 7 名）")
+    ap.add_argument("--role", default="fighter", help="解析骨架時用的 role")
+    args = ap.parse_args()
+    titles = catalog_titles(args.catalog)
+    rows = []
+    for row in parse_inventory(args.inventory):
+        if args.section and not row["section"].startswith(args.section):
+            continue
+        resolved = resolve(row, titles, args.role)
+        entry = entry_for_model_key(titles, resolved["modelKey"])
+        src = ((entry or {}).get("provenance") or {}).get("sources") or [{}]
+        rows.append({**row, **resolved,
+                     "assetId": (entry or {}).get("id"),
+                     "assetTitle": (entry or {}).get("title"),
+                     "glbPath": src[0].get("glbPath"),
+                     "glbSha256": src[0].get("sha256")})
+    if not rows:
+        print(f"⛔ 盤點表這一節一列都沒解析到：{args.section} —— 表的結構變了", file=sys.stderr)
+        raise SystemExit(2)
+    print(json.dumps(rows, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

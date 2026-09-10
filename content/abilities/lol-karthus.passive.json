@@ -1,0 +1,76 @@
+{
+  "id": "lol-karthus.passive",
+  "name": "未竟尾聲",
+  "provenance": "editor-json",
+  "description": "每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施法。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "effects": [],
+  "marks": [
+    {
+      "markId": "lol-karthus.last-song",
+      "initial": 1,
+      "max": 1,
+      "durationSec": -1,
+      "resetOn": "match",
+      "perStackLost": [],
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.01,
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 1,
+        "selfEffects": [
+          {
+            "kind": "invulnerable",
+            "durationSec": 0.5,
+            "applyTo": "self",
+            "blocksControl": true
+          },
+          {
+            "kind": "restore",
+            "healthPct": 0.15
+          }
+        ],
+        "aoeEffects": [],
+        "aoeRadius": 0
+      }
+    }
+  ],
+  "template": {
+    "ref": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+    "params": {
+      "markId": "lol-karthus.last-song",
+      "initial": 1,
+      "max": 1,
+      "durationSec": -1,
+      "resetOn": "match",
+      "perStackLost": [],
+      "lethalMode": "save",
+      "lethalConsume": 1,
+      "surviveHpPct": 0.01,
+      "internalCooldown": 1,
+      "invulnerableSec": 0.5,
+      "restoreHealthPct": 0.15,
+      "aoeRadius": 0,
+      "knockbackDistance": 0,
+      "stunSec": 0
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:96c2b1dc9c2f30e2ce468873ef2dc08edee6ff6ec678862db64e565a31a00dbc"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-karthus.passive.webp"
+}

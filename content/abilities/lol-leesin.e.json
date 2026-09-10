@@ -1,0 +1,55 @@
+{
+  "id": "lol-leesin.e",
+  "name": "震地迴響",
+  "provenance": "editor-json",
+  "description": "在指定近處引爆小級物理傷害，保留可瞄準的落點。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "radius": 5.5,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.3
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-leesin.e.webp"
+}

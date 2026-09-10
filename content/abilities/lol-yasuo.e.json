@@ -1,0 +1,80 @@
+{
+  "id": "lol-yasuo.e",
+  "name": "踏風進擊",
+  "provenance": "editor-json",
+  "description": "朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "radius": 2.75,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.25,
+      "throwDistance": 5.5,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "knockback",
+          "distance": 5.5,
+          "speed": 15.99,
+          "from": "facing",
+          "launchHeight": 0
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+    "params": {
+      "dashDistance": 300,
+      "dashDurationSec": 0.25,
+      "apexHeight": 0,
+      "radius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "pushDistance": 300,
+      "pushSpeed": 872,
+      "pushFrom": "facing",
+      "pushLaunchHeight": 0,
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-yasuo.e.webp"
+}

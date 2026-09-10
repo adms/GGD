@@ -1,0 +1,72 @@
+{
+  "id": "lol-warwick.passive",
+  "name": "嗅血",
+  "provenance": "editor-json",
+  "description": "普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 2,
+            "condition": {
+              "kind": "stat",
+              "subject": "target",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<",
+              "value": 0.35
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "template": {
+    "ref": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+    "params": {
+      "event": "onBasicAttack",
+      "condition": {
+        "kind": "stat",
+        "subject": "target",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.35
+      },
+      "bonusDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic",
+      "internalCooldown": 2
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-warwick.passive.webp"
+}

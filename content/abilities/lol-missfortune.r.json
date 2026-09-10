@@ -1,0 +1,60 @@
+{
+  "id": "lol-missfortune.r",
+  "name": "扇港齊射",
+  "provenance": "editor-json",
+  "description": "向指定區域連續投下六發物理彈幕，散布及命中區域均有界。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "radius": 5.5,
+  "rangeTier": "大",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.2,
+      "durationSec": 1,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "template": {
+    "ref": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+    "params": {
+      "count": 6,
+      "intervalSec": 0.2,
+      "impactDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "impactRadius": 150,
+      "scatterRadius": 150,
+      "payout": "perImpact",
+      "castTimeSec": 0.5
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-missfortune.r.webp"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "lol-warwick.ex",
+  "name": "血性護甲",
+  "provenance": "editor-json",
+  "description": "獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "concept-warwick-guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-warwick.ex.webp"
+}

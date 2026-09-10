@@ -1,0 +1,302 @@
+{
+  "id": "lol-xerath",
+  "name": "齊勒斯",
+  "description": "以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。\n\n概念來源：LoL 齊勒斯\nhttps://www.leagueoflegends.com/zh-tw/champions/xerath/\n\n本遊戲改編：\n• 普攻回魔改為 EX 主動回復固定比例魔力，受冷卻限制。\n• 蓄力及大招重瞄準改為一次施放的固定時序；最遠射程使用極大級距。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 1.25,
+    "agiGrowth": 1.67,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-xerath.q",
+      "name": "星牢光路",
+      "provenance": "editor-json",
+      "description": "吟唱後向前產生四段奧術打擊，使用大級距施放距離。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.75,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "template": {
+        "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
+      }
+    },
+    "W": {
+      "id": "lol-xerath.w",
+      "name": "星核墜落",
+      "provenance": "editor-json",
+      "description": "在指定區域引爆小級魔法傷害。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 5.5,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "params": {
+          "radius": 300,
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+      }
+    },
+    "E": {
+      "id": "lol-xerath.e",
+      "name": "奧能拘束",
+      "provenance": "editor-json",
+      "description": "對指定敵人造成傷害並暈眩 0.8 秒，不按飛行距離延長。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "stun",
+          "duration": 0.8,
+          "applyTo": "target",
+          "stun": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.1
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      }
+    },
+    "R": {
+      "id": "lol-xerath.r",
+      "name": "星牢轟擊",
+      "provenance": "editor-json",
+      "description": "在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        120,
+        120,
+        120
+      ],
+      "manaCost": [
+        576,
+        576,
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 12,
+      "radius": 5.5,
+      "rangeTier": "極大",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "intervalSec": 0.5,
+          "durationSec": 1,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 1,
+      "castTimeTier": "極大",
+      "template": {
+        "ref": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+        "params": {
+          "count": 3,
+          "intervalSec": 0.5,
+          "impactDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "magic",
+          "impactRadius": 200,
+          "scatterRadius": 100,
+          "payout": "perImpact",
+          "castTimeSec": 1
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"
+      }
+    }
+  },
+  "exAbility": "lol-xerath.ex",
+  "passiveAbility": "lol-xerath.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-xerath.webp"
+}

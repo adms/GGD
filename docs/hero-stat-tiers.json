@@ -1,12 +1,12 @@
 {
   "schema": "hero-stat-tiers@1",
   "generatedFrom": {
-    "contentVersion": "cv_35acc7631749",
-    "championDocsInBundle": 146,
+    "contentVersion": "cv_71de986df6dd",
+    "championDocsInBundle": 153,
     "configFingerprints": {
       "combat-env": "cc72865ad07b",
       "base-bonus": "0a1907f2f3ec",
-      "stat-caps": "7bd6e8f67230",
+      "stat-caps": "b5f1a5b1f663",
       "body-scale": "91e4313b130c",
       "roster": "e8b6e97e6c8e"
     },
@@ -28,14 +28,14 @@
     "兩軸各自跑自己的 Jenks，⛔ 不共用界線（量綱差 30 倍，共用會讓其中一軸塌成一格）。"
   ],
   "population": {
-    "total": 137,
+    "total": 144,
     "counts": {
-      "base": 122,
+      "base": 129,
       "transform": 14,
       "mob": 1
     },
-    "boundaryDerivationTotal": 137,
-    "pickableTotal": 123,
+    "boundaryDerivationTotal": 144,
+    "pickableTotal": 130,
     "rows": [
       {
         "id": "b2-aladdin",
@@ -1543,6 +1543,83 @@
         "bodyScale": 1,
         "attrSource": "authored",
         "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-karthus",
+        "name": "卡爾瑟斯",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "ranged",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-leesin",
+        "name": "李星",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "melee",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-lux",
+        "name": "拉克絲",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "ranged",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-missfortune",
+        "name": "好運姐",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "ranged",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-warwick",
+        "name": "沃維克",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "melee",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-xerath",
+        "name": "齊勒斯",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "ranged",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
+      },
+      {
+        "id": "lol-yasuo",
+        "name": "犽宿",
+        "group": "base",
+        "counterpartId": null,
+        "inBoundaryDerivation": true,
+        "attackType": "melee",
+        "bodyScale": 1,
+        "attrSource": "authored",
+        "reachability": "本體·可選"
       }
     ],
     "caveats": [
@@ -1550,7 +1627,7 @@
       "ApplyStarterSet 是 union-only（永不移除），而後台的 PUT /curation/whitelist 與 bulk 可以任意增減任何 id → 線上與種子的差距**上下都未知**，不要只往「線上更少」寫。",
       "要關掉這一格只有一條路：請 owner 從後台匯出 whitelist（或 #179 的遷移包）貼進來。⛔ 不可以從「線上顯示 63 隻」這個數字反推內容。",
       "伺服器側 randomChampionPool() 不呼叫 isTransformedBody，所以 bot／殭屍王抽到的身體可能超出這份母體 —— 那是另一個缺口（已記在 docs/hero-tiers-proposal.md），不影響玩家自己選得到誰。",
-      "母體 137 = 可選本體 123（含 godie-zombiex）+ 可達變身 14。owner 2026-08-11 二次拍板：**53+21 全部進統計**。",
+      "母體 144 = 可選本體 130（含 godie-zombiex）+ 可達變身 14。owner 2026-08-11 二次拍板：**53+21 全部進統計**。",
       "⚠️ 計畫書第一版的「75」是重複計數 —— godie-zombiex 本來就在白名單種子裡（starter.go:346），是那 53 位可選本體之一，不是第 54 位。",
       "⚠️ 第一版把 zombiex 擋在界線推導外（inBoundaryDerivation=false），這一版取消了：玩家選得到的英雄就該參與定義「什麼算正常」，否則會出現「照界線它是極小、但界線根本沒看過它」這種自打嘴巴的表。",
       "預設模式從 reachable-dedup 改回 **reachable**。dedup 的唯一理由是「17 位變身態與本體逐位元相同」，而那句話實測是假的（26 個非退化軸格全同的只有 1 位，中位數 23/26）。三種模式仍全部算出來供對照。"
@@ -1650,8 +1727,8 @@
         "unlocked": 581152
       },
       "maxMana": {
-        "base": 351387,
-        "unlocked": 351387
+        "base": 352091,
+        "unlocked": 352091
       },
       "healthRegen": {
         "base": 1235,
@@ -1775,7 +1852,7 @@
   "stats": {
     "maxHealth": {
       "label": "生命上限",
-      "couplingNote": "力量（加法，係數 23）—— lv10 有 41% 來自三圍（可選本體的中位數）",
+      "couplingNote": "力量（加法，係數 23）—— lv10 有 42% 來自三圍（可選本體的中位數）",
       "finalClamp": null,
       "axes": {
         "initial": {
@@ -1916,7 +1993,14 @@
             "godie-udre": 656,
             "godie-umal": 610,
             "godie-uvng": 495,
-            "godie-zombiex": 380
+            "godie-zombiex": 380,
+            "lol-karthus": 840,
+            "lol-leesin": 955,
+            "lol-lux": 1024,
+            "lol-missfortune": 840,
+            "lol-warwick": 1116,
+            "lol-xerath": 840,
+            "lol-yasuo": 955
           },
           "ingameValues": {
             "b2-aladdin": 4560,
@@ -2055,7 +2139,14 @@
             "godie-udre": 3824,
             "godie-umal": 3640,
             "godie-uvng": 3180,
-            "godie-zombiex": 2720
+            "godie-zombiex": 2720,
+            "lol-karthus": 4560,
+            "lol-leesin": 5020,
+            "lol-lux": 5296,
+            "lol-missfortune": 4560,
+            "lol-warwick": 5664,
+            "lol-xerath": 4560,
+            "lol-yasuo": 5020
           },
           "breaksJenks": [
             564,
@@ -2066,18 +2157,18 @@
           "bandCounts": [
             40,
             21,
-            25,
-            31,
-            20
+            28,
+            34,
+            21
           ],
           "degenerate": false,
           "distinct": 20,
           "min": 380,
           "max": 1208,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 20,
               "breaks": [
                 564,
@@ -2088,13 +2179,13 @@
               "bandCounts": [
                 40,
                 21,
-                25,
-                31,
-                20
+                28,
+                34,
+                21
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 20,
               "breaks": [
                 564,
@@ -2105,13 +2196,13 @@
               "bandCounts": [
                 32,
                 15,
-                25,
-                31,
-                20
+                28,
+                34,
+                21
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 20,
               "breaks": [
                 564,
@@ -2122,9 +2213,9 @@
               "bandCounts": [
                 32,
                 15,
-                25,
-                31,
-                20
+                28,
+                34,
+                21
               ]
             }
           }
@@ -2267,7 +2358,14 @@
             "godie-udre": 76.4612,
             "godie-umal": 76.9306,
             "godie-uvng": 36.5265,
-            "godie-zombiex": 100.0663
+            "godie-zombiex": 100.0663,
+            "lol-karthus": 74.5837,
+            "lol-leesin": 73.4102,
+            "lol-lux": 56.0751,
+            "lol-missfortune": 57.9527,
+            "lol-warwick": 55.1363,
+            "lol-xerath": 74.5837,
+            "lol-yasuo": 73.4102
           },
           "ingameValues": {
             "b2-aladdin": 298.3347,
@@ -2406,7 +2504,14 @@
             "godie-udre": 305.8448,
             "godie-umal": 307.7224,
             "godie-uvng": 146.106,
-            "godie-zombiex": 400.2652
+            "godie-zombiex": 400.2652,
+            "lol-karthus": 298.3347,
+            "lol-leesin": 293.6408,
+            "lol-lux": 224.3004,
+            "lol-missfortune": 231.8106,
+            "lol-warwick": 220.5453,
+            "lol-xerath": 298.3347,
+            "lol-yasuo": 293.6408
           },
           "breaksJenks": [
             39,
@@ -2416,8 +2521,8 @@
           ],
           "bandCounts": [
             16,
-            36,
-            34,
+            39,
+            38,
             28,
             23
           ],
@@ -2425,10 +2530,10 @@
           "distinct": 51,
           "min": 28,
           "max": 100.0663,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 51,
               "breaks": [
                 39,
@@ -2438,14 +2543,14 @@
               ],
               "bandCounts": [
                 16,
-                36,
-                34,
+                39,
+                38,
                 28,
                 23
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 51,
               "breaks": [
                 39,
@@ -2455,14 +2560,14 @@
               ],
               "bandCounts": [
                 16,
-                36,
-                34,
+                39,
+                38,
                 28,
                 23
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 38,
               "breaks": [
                 36.5673,
@@ -2472,8 +2577,8 @@
               ],
               "bandCounts": [
                 8,
-                30,
-                34,
+                33,
+                38,
                 28,
                 23
               ]
@@ -2625,7 +2730,14 @@
             "godie-udre": 470,
             "godie-umal": 325,
             "godie-uvng": 310,
-            "godie-zombiex": 300
+            "godie-zombiex": 300,
+            "lol-karthus": 805,
+            "lol-leesin": 565,
+            "lol-lux": 655,
+            "lol-missfortune": 640,
+            "lol-warwick": 550,
+            "lol-xerath": 805,
+            "lol-yasuo": 565
           },
           "ingameValues": {
             "b2-aladdin": 1405,
@@ -2764,7 +2876,14 @@
             "godie-udre": 1070,
             "godie-umal": 925,
             "godie-uvng": 910,
-            "godie-zombiex": 900
+            "godie-zombiex": 900,
+            "lol-karthus": 1405,
+            "lol-leesin": 1165,
+            "lol-lux": 1255,
+            "lol-missfortune": 1240,
+            "lol-warwick": 1150,
+            "lol-xerath": 1405,
+            "lol-yasuo": 1165
           },
           "breaksJenks": [
             355,
@@ -2775,18 +2894,18 @@
           "bandCounts": [
             24,
             33,
-            33,
-            27,
-            20
+            36,
+            29,
+            22
           ],
           "degenerate": false,
           "distinct": 29,
           "min": 130,
           "max": 805,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 29,
               "breaks": [
                 355,
@@ -2797,13 +2916,13 @@
               "bandCounts": [
                 24,
                 33,
-                33,
-                27,
-                20
+                36,
+                29,
+                22
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 29,
               "breaks": [
                 355,
@@ -2814,13 +2933,13 @@
               "bandCounts": [
                 21,
                 23,
-                32,
-                27,
-                20
+                35,
+                29,
+                22
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 29,
               "breaks": [
                 355,
@@ -2831,9 +2950,9 @@
               "bandCounts": [
                 21,
                 23,
-                32,
-                27,
-                20
+                35,
+                29,
+                22
               ]
             }
           }
@@ -2976,7 +3095,14 @@
             "godie-udre": 46.0765,
             "godie-umal": 47.5561,
             "godie-uvng": 37.5347,
-            "godie-zombiex": 37.6367
+            "godie-zombiex": 37.6367,
+            "lol-karthus": 42.6582,
+            "lol-leesin": 45.1071,
+            "lol-lux": 34.0143,
+            "lol-missfortune": 44.3418,
+            "lol-warwick": 19.824,
+            "lol-xerath": 42.6582,
+            "lol-yasuo": 45.1071
           },
           "ingameValues": {
             "b2-aladdin": 42.6582,
@@ -3115,7 +3241,14 @@
             "godie-udre": 46.0765,
             "godie-umal": 47.5561,
             "godie-uvng": 37.5347,
-            "godie-zombiex": 37.6367
+            "godie-zombiex": 37.6367,
+            "lol-karthus": 42.6582,
+            "lol-leesin": 45.1071,
+            "lol-lux": 34.0143,
+            "lol-missfortune": 44.3418,
+            "lol-warwick": 19.824,
+            "lol-xerath": 42.6582,
+            "lol-yasuo": 45.1071
           },
           "breaksJenks": [
             24.1097,
@@ -3124,9 +3257,9 @@
             47.9643
           ],
           "bandCounts": [
-            26,
-            30,
-            40,
+            27,
+            31,
+            45,
             30,
             11
           ],
@@ -3134,10 +3267,10 @@
           "distinct": 53,
           "min": 17,
           "max": 57.06,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 53,
               "breaks": [
                 24.1097,
@@ -3146,15 +3279,15 @@
                 47.9643
               ],
               "bandCounts": [
-                26,
-                30,
-                40,
+                27,
+                31,
+                45,
                 30,
                 11
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 53,
               "breaks": [
                 24.1097,
@@ -3163,15 +3296,15 @@
                 47.9643
               ],
               "bandCounts": [
-                26,
-                30,
-                40,
+                27,
+                31,
+                45,
                 30,
                 11
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 44,
               "breaks": [
                 24.1097,
@@ -3180,9 +3313,9 @@
                 47.9643
               ],
               "bandCounts": [
-                15,
-                27,
-                40,
+                16,
+                28,
+                45,
                 30,
                 11
               ]
@@ -3334,7 +3467,14 @@
             "godie-udre": 1.13,
             "godie-umal": 1.05,
             "godie-uvng": 0.85,
-            "godie-zombiex": 0.88
+            "godie-zombiex": 0.88,
+            "lol-karthus": 1.49,
+            "lol-leesin": 1.69,
+            "lol-lux": 1.81,
+            "lol-missfortune": 1.49,
+            "lol-warwick": 1.97,
+            "lol-xerath": 1.49,
+            "lol-yasuo": 1.69
           },
           "ingameValues": {
             "b2-aladdin": 1.49,
@@ -3473,7 +3613,14 @@
             "godie-udre": 1.13,
             "godie-umal": 1.05,
             "godie-uvng": 0.85,
-            "godie-zombiex": 0.88
+            "godie-zombiex": 0.88,
+            "lol-karthus": 1.49,
+            "lol-leesin": 1.69,
+            "lol-lux": 1.81,
+            "lol-missfortune": 1.49,
+            "lol-warwick": 1.97,
+            "lol-xerath": 1.49,
+            "lol-yasuo": 1.69
           },
           "breaksJenks": [
             1.29,
@@ -3483,7 +3630,7 @@
           ],
           "bandCounts": [
             56,
-            77,
+            84,
             2,
             1,
             1
@@ -3492,10 +3639,10 @@
           "distinct": 26,
           "min": 0.69,
           "max": 12.88,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 26,
               "breaks": [
                 1.29,
@@ -3505,42 +3652,42 @@
               ],
               "bandCounts": [
                 56,
-                77,
+                84,
                 2,
                 1,
                 1
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 26,
               "breaks": [
-                1.29,
-                1.81,
+                1.25,
+                1.69,
                 3.3,
                 8.64
               ],
               "bandCounts": [
-                43,
-                56,
-                22,
+                41,
+                54,
+                33,
                 1,
                 1
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 26,
               "breaks": [
-                1.29,
-                1.81,
+                1.25,
+                1.69,
                 3.3,
                 8.64
               ],
               "bandCounts": [
-                43,
-                56,
-                22,
+                41,
+                54,
+                33,
                 1,
                 1
               ]
@@ -3685,7 +3832,14 @@
             "godie-udre": 0.2034,
             "godie-umal": 0.2042,
             "godie-uvng": 0.1289,
-            "godie-zombiex": 0.1286
+            "godie-zombiex": 0.1286,
+            "lol-karthus": 0.1567,
+            "lol-leesin": 0.1977,
+            "lol-lux": 0.1964,
+            "lol-missfortune": 0.1223,
+            "lol-warwick": 0.3238,
+            "lol-xerath": 0.1567,
+            "lol-yasuo": 0.1977
           },
           "ingameValues": {
             "b2-aladdin": 0.1567,
@@ -3824,7 +3978,14 @@
             "godie-udre": 0.2034,
             "godie-umal": 0.2042,
             "godie-uvng": 0.1289,
-            "godie-zombiex": 0.1286
+            "godie-zombiex": 0.1286,
+            "lol-karthus": 0.1567,
+            "lol-leesin": 0.1977,
+            "lol-lux": 0.1964,
+            "lol-missfortune": 0.1223,
+            "lol-warwick": 0.3238,
+            "lol-xerath": 0.1567,
+            "lol-yasuo": 0.1977
           },
           "breaksJenks": [
             0.1,
@@ -3834,19 +3995,19 @@
           ],
           "bandCounts": [
             10,
-            36,
+            37,
+            46,
             44,
-            41,
-            6
+            7
           ],
           "degenerate": false,
           "distinct": 53,
           "min": 0.07,
           "max": 0.3344,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 53,
               "breaks": [
                 0.1,
@@ -3856,14 +4017,14 @@
               ],
               "bandCounts": [
                 10,
-                36,
+                37,
+                46,
                 44,
-                41,
-                6
+                7
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 53,
               "breaks": [
                 0.1,
@@ -3873,14 +4034,14 @@
               ],
               "bandCounts": [
                 10,
-                36,
+                37,
+                46,
                 44,
-                41,
-                6
+                7
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 45,
               "breaks": [
                 0.0838,
@@ -3890,10 +4051,10 @@
               ],
               "bandCounts": [
                 2,
-                31,
-                43,
-                41,
-                6
+                32,
+                45,
+                44,
+                7
               ]
             }
           }
@@ -4043,7 +4204,14 @@
             "godie-udre": 5.88,
             "godie-umal": 3.25,
             "godie-uvng": 3.04,
-            "godie-zombiex": 6.96
+            "godie-zombiex": 6.96,
+            "lol-karthus": 7.5,
+            "lol-leesin": 4.14,
+            "lol-lux": 5.4,
+            "lol-missfortune": 5.19,
+            "lol-warwick": 3.93,
+            "lol-xerath": 7.5,
+            "lol-yasuo": 4.14
           },
           "ingameValues": {
             "b2-aladdin": 70,
@@ -4182,7 +4350,14 @@
             "godie-udre": 57.04,
             "godie-umal": 36,
             "godie-uvng": 34.32,
-            "godie-zombiex": 65.68
+            "godie-zombiex": 65.68,
+            "lol-karthus": 70,
+            "lol-leesin": 43.12,
+            "lol-lux": 53.2,
+            "lol-missfortune": 51.52,
+            "lol-warwick": 41.44,
+            "lol-xerath": 70,
+            "lol-yasuo": 43.12
           },
           "breaksJenks": [
             3.46,
@@ -4192,19 +4367,19 @@
           ],
           "bandCounts": [
             20,
-            51,
-            26,
+            54,
+            28,
             18,
-            22
+            24
           ],
           "degenerate": false,
           "distinct": 30,
           "min": 0.52,
           "max": 8.04,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 30,
               "breaks": [
                 3.46,
@@ -4214,14 +4389,14 @@
               ],
               "bandCounts": [
                 20,
-                51,
-                26,
+                54,
+                28,
                 18,
-                22
+                24
               ]
             },
             "reachable-dedup": {
-              "n": 124,
+              "n": 131,
               "distinct": 30,
               "breaks": [
                 3.25,
@@ -4231,14 +4406,14 @@
               ],
               "bandCounts": [
                 14,
-                48,
-                23,
+                51,
+                25,
                 17,
-                22
+                24
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 30,
               "breaks": [
                 3.25,
@@ -4248,10 +4423,10 @@
               ],
               "bandCounts": [
                 14,
-                47,
-                23,
+                50,
+                25,
                 17,
-                22
+                24
               ]
             }
           }
@@ -4394,7 +4569,14 @@
             "godie-udre": 0.1463,
             "godie-umal": 0.1732,
             "godie-uvng": 0.1341,
-            "godie-zombiex": 0.0941
+            "godie-zombiex": 0.0941,
+            "lol-karthus": 0.5838,
+            "lol-leesin": 0.2625,
+            "lol-lux": 0.3843,
+            "lol-missfortune": 0.3507,
+            "lol-warwick": 0.2478,
+            "lol-xerath": 0.5838,
+            "lol-yasuo": 0.2625
           },
           "ingameValues": {
             "b2-aladdin": 4.6704,
@@ -4533,7 +4715,14 @@
             "godie-udre": 1.1704,
             "godie-umal": 1.3856,
             "godie-uvng": 1.0728,
-            "godie-zombiex": 0.7528
+            "godie-zombiex": 0.7528,
+            "lol-karthus": 4.6704,
+            "lol-leesin": 2.1,
+            "lol-lux": 3.0744,
+            "lol-missfortune": 2.8056,
+            "lol-warwick": 1.9824,
+            "lol-xerath": 4.6704,
+            "lol-yasuo": 2.1
           },
           "breaksJenks": [
             0.1127,
@@ -4544,18 +4733,18 @@
           "bandCounts": [
             26,
             36,
-            28,
-            27,
-            20
+            31,
+            29,
+            22
           ],
           "degenerate": false,
           "distinct": 45,
           "min": 0.0571,
           "max": 0.5838,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 45,
               "breaks": [
                 0.1127,
@@ -4566,13 +4755,13 @@
               "bandCounts": [
                 26,
                 36,
-                28,
-                27,
-                20
+                31,
+                29,
+                22
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 45,
               "breaks": [
                 0.1127,
@@ -4583,13 +4772,13 @@
               "bandCounts": [
                 26,
                 36,
-                28,
-                27,
-                20
+                31,
+                29,
+                22
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 41,
               "breaks": [
                 0.1243,
@@ -4600,9 +4789,9 @@
               "bandCounts": [
                 14,
                 34,
-                28,
-                27,
-                20
+                31,
+                29,
+                22
               ]
             }
           }
@@ -4752,7 +4941,14 @@
             "godie-udre": 11.28,
             "godie-umal": 13.2,
             "godie-uvng": 9.6,
-            "godie-zombiex": 17.28
+            "godie-zombiex": 17.28,
+            "lol-karthus": 35.12,
+            "lol-leesin": 36.32,
+            "lol-lux": 37.04,
+            "lol-missfortune": 35.12,
+            "lol-warwick": 38,
+            "lol-xerath": 35.12,
+            "lol-yasuo": 36.32
           },
           "ingameValues": {
             "b2-aladdin": 67.12,
@@ -4891,7 +5087,14 @@
             "godie-udre": 43.28,
             "godie-umal": 45.2,
             "godie-uvng": 41.6,
-            "godie-zombiex": 49.28
+            "godie-zombiex": 49.28,
+            "lol-karthus": 67.12,
+            "lol-leesin": 68.32,
+            "lol-lux": 69.04,
+            "lol-missfortune": 67.12,
+            "lol-warwick": 70,
+            "lol-xerath": 67.12,
+            "lol-yasuo": 68.32
           },
           "breaksJenks": [
             13.32,
@@ -4902,18 +5105,18 @@
           "bandCounts": [
             45,
             12,
-            47,
-            30,
+            52,
+            32,
             3
           ],
           "degenerate": false,
           "distinct": 39,
           "min": 8.52,
           "max": 48.24,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 39,
               "breaks": [
                 13.32,
@@ -4924,13 +5127,13 @@
               "bandCounts": [
                 45,
                 12,
-                47,
-                30,
+                52,
+                32,
                 3
               ]
             },
             "reachable-dedup": {
-              "n": 126,
+              "n": 133,
               "distinct": 39,
               "breaks": [
                 13.32,
@@ -4941,13 +5144,13 @@
               "bandCounts": [
                 36,
                 10,
-                47,
-                30,
+                52,
+                32,
                 3
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 36,
               "breaks": [
                 12,
@@ -4959,8 +5162,8 @@
                 29,
                 11,
                 6,
-                47,
-                30
+                52,
+                32
               ]
             }
           }
@@ -5103,7 +5306,14 @@
             "godie-udre": 3.0992,
             "godie-umal": 3.0796,
             "godie-uvng": 1.1878,
-            "godie-zombiex": 1.8808
+            "godie-zombiex": 1.8808,
+            "lol-karthus": 2.849,
+            "lol-leesin": 4.6899,
+            "lol-lux": 2.6979,
+            "lol-missfortune": 7.9918,
+            "lol-warwick": 4.551,
+            "lol-xerath": 2.849,
+            "lol-yasuo": 4.6899
           },
           "ingameValues": {
             "b2-aladdin": 2.849,
@@ -5242,7 +5452,14 @@
             "godie-udre": 3.0992,
             "godie-umal": 3.0796,
             "godie-uvng": 1.1878,
-            "godie-zombiex": 1.8808
+            "godie-zombiex": 1.8808,
+            "lol-karthus": 2.849,
+            "lol-leesin": 4.6899,
+            "lol-lux": 2.6979,
+            "lol-missfortune": 7.9918,
+            "lol-warwick": 4.551,
+            "lol-xerath": 2.849,
+            "lol-yasuo": 4.6899
           },
           "breaksJenks": [
             1.1878,
@@ -5253,18 +5470,18 @@
           "bandCounts": [
             15,
             22,
-            67,
-            32,
-            1
+            70,
+            35,
+            2
           ],
           "degenerate": false,
           "distinct": 56,
           "min": 0.66,
           "max": 7.9918,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 56,
               "breaks": [
                 1.1878,
@@ -5275,13 +5492,13 @@
               "bandCounts": [
                 15,
                 22,
-                67,
-                32,
-                1
+                70,
+                35,
+                2
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 56,
               "breaks": [
                 1.1878,
@@ -5292,13 +5509,13 @@
               "bandCounts": [
                 15,
                 22,
-                67,
-                32,
-                1
+                70,
+                35,
+                2
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 49,
               "breaks": [
                 1.9592,
@@ -5308,10 +5525,10 @@
               ],
               "bandCounts": [
                 23,
-                57,
+                60,
                 10,
-                32,
-                1
+                35,
+                2
               ]
             }
           }
@@ -5461,7 +5678,14 @@
             "godie-udre": 72,
             "godie-umal": 60,
             "godie-uvng": 56,
-            "godie-zombiex": 24
+            "godie-zombiex": 24,
+            "lol-karthus": 134,
+            "lol-leesin": 70,
+            "lol-lux": 94,
+            "lol-missfortune": 90,
+            "lol-warwick": 66,
+            "lol-xerath": 134,
+            "lol-yasuo": 70
           },
           "ingameValues": {
             "b2-aladdin": 134,
@@ -5600,7 +5824,14 @@
             "godie-udre": 72,
             "godie-umal": 60,
             "godie-uvng": 56,
-            "godie-zombiex": 24
+            "godie-zombiex": 24,
+            "lol-karthus": 134,
+            "lol-leesin": 70,
+            "lol-lux": 94,
+            "lol-missfortune": 90,
+            "lol-warwick": 66,
+            "lol-xerath": 134,
+            "lol-yasuo": 70
           },
           "breaksJenks": [
             24,
@@ -5611,18 +5842,18 @@
           "bandCounts": [
             2,
             17,
-            56,
-            41,
-            21
+            59,
+            43,
+            23
           ],
           "degenerate": false,
           "distinct": 24,
           "min": 8,
           "max": 134,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 24,
               "breaks": [
                 24,
@@ -5633,13 +5864,13 @@
               "bandCounts": [
                 2,
                 17,
-                56,
-                41,
-                21
+                59,
+                43,
+                23
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 24,
               "breaks": [
                 24,
@@ -5650,13 +5881,13 @@
               "bandCounts": [
                 2,
                 14,
-                48,
-                38,
-                21
+                51,
+                40,
+                23
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 24,
               "breaks": [
                 24,
@@ -5667,9 +5898,9 @@
               "bandCounts": [
                 2,
                 14,
-                48,
-                38,
-                21
+                51,
+                40,
+                23
               ]
             }
           }
@@ -5812,7 +6043,14 @@
             "godie-udre": 0.3449,
             "godie-umal": 0.5439,
             "godie-uvng": 2.9184,
-            "godie-zombiex": 2.0064
+            "godie-zombiex": 2.0064,
+            "lol-karthus": 11.12,
+            "lol-leesin": 5,
+            "lol-lux": 7.32,
+            "lol-missfortune": 6.68,
+            "lol-warwick": 4.72,
+            "lol-xerath": 11.12,
+            "lol-yasuo": 5
           },
           "ingameValues": {
             "b2-aladdin": 11.12,
@@ -5951,7 +6189,14 @@
             "godie-udre": 0.3449,
             "godie-umal": 0.5439,
             "godie-uvng": 2.9184,
-            "godie-zombiex": 2.0064
+            "godie-zombiex": 2.0064,
+            "lol-karthus": 11.12,
+            "lol-leesin": 5,
+            "lol-lux": 7.32,
+            "lol-missfortune": 6.68,
+            "lol-warwick": 4.72,
+            "lol-xerath": 11.12,
+            "lol-yasuo": 5
           },
           "breaksJenks": [
             0.9452,
@@ -5962,18 +6207,18 @@
           "bandCounts": [
             47,
             16,
-            27,
-            27,
-            20
+            30,
+            29,
+            22
           ],
           "degenerate": false,
           "distinct": 32,
           "min": 0,
           "max": 11.12,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 32,
               "breaks": [
                 0.9452,
@@ -5984,30 +6229,30 @@
               "bandCounts": [
                 47,
                 16,
-                27,
-                27,
-                20
+                30,
+                29,
+                22
               ]
             },
             "reachable-dedup": {
-              "n": 136,
+              "n": 143,
               "distinct": 32,
               "breaks": [
-                0.9452,
-                2.9184,
+                2.5867,
                 5,
+                7.32,
                 8.68
               ],
               "bandCounts": [
-                46,
+                60,
+                32,
                 16,
-                27,
-                27,
-                20
+                13,
+                22
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 32,
               "breaks": [
                 2.5867,
@@ -6017,10 +6262,10 @@
               ],
               "bandCounts": [
                 47,
-                29,
-                14,
+                32,
+                16,
                 13,
-                20
+                22
               ]
             }
           }
@@ -6170,7 +6415,14 @@
             "godie-udre": 4.2,
             "godie-umal": 6,
             "godie-uvng": 7.8,
-            "godie-zombiex": 2.4
+            "godie-zombiex": 2.4,
+            "lol-karthus": 5.4,
+            "lol-leesin": 8.7,
+            "lol-lux": 6,
+            "lol-missfortune": 8.7,
+            "lol-warwick": 6.9,
+            "lol-xerath": 5.4,
+            "lol-yasuo": 8.7
           },
           "ingameValues": {
             "b2-aladdin": 5.4,
@@ -6309,7 +6561,14 @@
             "godie-udre": 4.2,
             "godie-umal": 6,
             "godie-uvng": 7.8,
-            "godie-zombiex": 2.4
+            "godie-zombiex": 2.4,
+            "lol-karthus": 5.4,
+            "lol-leesin": 8.7,
+            "lol-lux": 6,
+            "lol-missfortune": 8.7,
+            "lol-warwick": 6.9,
+            "lol-xerath": 5.4,
+            "lol-yasuo": 8.7
           },
           "breaksJenks": [
             4.6,
@@ -6319,19 +6578,19 @@
           ],
           "bandCounts": [
             27,
-            50,
-            35,
-            22,
+            53,
+            36,
+            25,
             3
           ],
           "degenerate": false,
           "distinct": 34,
           "min": 2.4,
           "max": 19.2,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 34,
               "breaks": [
                 4.6,
@@ -6341,14 +6600,14 @@
               ],
               "bandCounts": [
                 27,
-                50,
-                35,
-                22,
+                53,
+                36,
+                25,
                 3
               ]
             },
             "reachable-dedup": {
-              "n": 126,
+              "n": 133,
               "distinct": 34,
               "breaks": [
                 4.6,
@@ -6358,14 +6617,14 @@
               ],
               "bandCounts": [
                 26,
-                43,
-                32,
-                22,
+                46,
+                33,
+                25,
                 3
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 31,
               "breaks": [
                 4.6,
@@ -6375,9 +6634,9 @@
               ],
               "bandCounts": [
                 26,
-                43,
-                32,
-                21,
+                46,
+                33,
+                24,
                 1
               ]
             }
@@ -6521,7 +6780,14 @@
             "godie-udre": 0.8764,
             "godie-umal": 0.8581,
             "godie-uvng": 0.3801,
-            "godie-zombiex": 1.1246
+            "godie-zombiex": 1.1246,
+            "lol-karthus": 0.9584,
+            "lol-leesin": 1.2919,
+            "lol-lux": 0.9883,
+            "lol-missfortune": 0.834,
+            "lol-warwick": 1.0257,
+            "lol-xerath": 0.9584,
+            "lol-yasuo": 1.2919
           },
           "ingameValues": {
             "b2-aladdin": 0.9584,
@@ -6660,7 +6926,14 @@
             "godie-udre": 0.8764,
             "godie-umal": 0.8581,
             "godie-uvng": 0.3801,
-            "godie-zombiex": 1.1246
+            "godie-zombiex": 1.1246,
+            "lol-karthus": 0.9584,
+            "lol-leesin": 1.2919,
+            "lol-lux": 0.9883,
+            "lol-missfortune": 0.834,
+            "lol-warwick": 1.0257,
+            "lol-xerath": 0.9584,
+            "lol-yasuo": 1.2919
           },
           "breaksJenks": [
             0.5,
@@ -6671,18 +6944,18 @@
           "bandCounts": [
             15,
             31,
-            47,
-            35,
+            52,
+            37,
             9
           ],
           "degenerate": false,
           "distinct": 61,
           "min": 0.3,
           "max": 2.0615,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 61,
               "breaks": [
                 0.5,
@@ -6693,13 +6966,13 @@
               "bandCounts": [
                 15,
                 31,
-                47,
-                35,
+                52,
+                37,
                 9
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 61,
               "breaks": [
                 0.5,
@@ -6710,13 +6983,13 @@
               "bandCounts": [
                 15,
                 31,
-                47,
-                35,
+                52,
+                37,
                 9
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 54,
               "breaks": [
                 0.4138,
@@ -6727,8 +7000,8 @@
               "bandCounts": [
                 7,
                 26,
-                46,
-                35,
+                51,
+                37,
                 9
               ]
             }
@@ -6879,7 +7152,14 @@
             "godie-udre": 28,
             "godie-umal": 28,
             "godie-uvng": 28,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "ingameValues": {
             "b2-aladdin": 25,
@@ -7018,7 +7298,14 @@
             "godie-udre": 30.6,
             "godie-umal": 30.6,
             "godie-uvng": 30.6,
-            "godie-zombiex": 25
+            "godie-zombiex": 25,
+            "lol-karthus": 25,
+            "lol-leesin": 25,
+            "lol-lux": 25,
+            "lol-missfortune": 25,
+            "lol-warwick": 25,
+            "lol-xerath": 25,
+            "lol-yasuo": 25
           },
           "breaksJenks": [
             0,
@@ -7027,7 +7314,7 @@
             28
           ],
           "bandCounts": [
-            75,
+            82,
             0,
             0,
             61,
@@ -7037,10 +7324,10 @@
           "distinct": 3,
           "min": 0,
           "max": 50,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 3,
               "breaks": [
                 0,
@@ -7049,7 +7336,7 @@
                 28
               ],
               "bandCounts": [
-                75,
+                82,
                 0,
                 0,
                 61,
@@ -7057,7 +7344,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 124,
+              "n": 131,
               "distinct": 3,
               "breaks": [
                 0,
@@ -7066,7 +7353,7 @@
                 28
               ],
               "bandCounts": [
-                75,
+                82,
                 0,
                 0,
                 48,
@@ -7074,7 +7361,7 @@
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 2,
               "breaks": [
                 0,
@@ -7083,7 +7370,7 @@
                 0
               ],
               "bandCounts": [
-                75,
+                82,
                 0,
                 0,
                 0,
@@ -7230,7 +7517,14 @@
             "godie-udre": 2.3541,
             "godie-umal": 2.3541,
             "godie-uvng": 1.0342,
-            "godie-zombiex": 3.2998
+            "godie-zombiex": 3.2998,
+            "lol-karthus": 2.1118,
+            "lol-leesin": 2.6398,
+            "lol-lux": 2.1118,
+            "lol-missfortune": 1.3199,
+            "lol-warwick": 2.1118,
+            "lol-xerath": 2.1118,
+            "lol-yasuo": 2.6398
           },
           "ingameValues": {
             "b2-aladdin": 0.4224,
@@ -7369,7 +7663,14 @@
             "godie-udre": 0.4708,
             "godie-umal": 0.4708,
             "godie-uvng": 0.2068,
-            "godie-zombiex": 0.66
+            "godie-zombiex": 0.66,
+            "lol-karthus": 0.4224,
+            "lol-leesin": 0.528,
+            "lol-lux": 0.4224,
+            "lol-missfortune": 0.264,
+            "lol-warwick": 0.4224,
+            "lol-xerath": 0.4224,
+            "lol-yasuo": 0.528
           },
           "breaksJenks": [
             1.3199,
@@ -7378,9 +7679,9 @@
             3.2998
           ],
           "bandCounts": [
-            25,
-            52,
-            44,
+            26,
+            56,
+            46,
             7,
             9
           ],
@@ -7388,10 +7689,10 @@
           "distinct": 11,
           "min": 1.0342,
           "max": 5.2796,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 11,
               "breaks": [
                 1.3199,
@@ -7400,15 +7701,15 @@
                 3.2998
               ],
               "bandCounts": [
-                25,
-                52,
-                44,
+                26,
+                56,
+                46,
                 7,
                 9
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 11,
               "breaks": [
                 1.3199,
@@ -7417,15 +7718,15 @@
                 3.2998
               ],
               "bandCounts": [
-                25,
-                52,
-                44,
+                26,
+                56,
+                46,
                 7,
                 9
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 10,
               "breaks": [
                 1.3199,
@@ -7434,9 +7735,9 @@
                 3.2998
               ],
               "bandCounts": [
-                11,
-                52,
-                44,
+                12,
+                56,
+                46,
                 7,
                 9
               ]
@@ -7447,7 +7748,7 @@
     },
     "as": {
       "label": "攻擊速度",
-      "couplingNote": "敏捷（乘法（base × (1 + 係數·屬性)），係數 0.01）—— lv10 有 21% 來自三圍（可選本體的中位數）",
+      "couplingNote": "敏捷（乘法（base × (1 + 係數·屬性)），係數 0.01）—— lv10 有 25% 來自三圍（可選本體的中位數）",
       "finalClamp": [
         0.2,
         4
@@ -7591,7 +7892,14 @@
             "godie-udre": 0.6,
             "godie-umal": 0.6,
             "godie-uvng": 0.63,
-            "godie-zombiex": 0.6517
+            "godie-zombiex": 0.6517,
+            "lol-karthus": 0.826,
+            "lol-leesin": 0.903,
+            "lol-lux": 0.84,
+            "lol-missfortune": 0.903,
+            "lol-warwick": 0.861,
+            "lol-xerath": 0.826,
+            "lol-yasuo": 0.903
           },
           "ingameValues": {
             "b2-aladdin": 0.826,
@@ -7730,7 +8038,14 @@
             "godie-udre": 0.6,
             "godie-umal": 0.6,
             "godie-uvng": 0.63,
-            "godie-zombiex": 0.6517
+            "godie-zombiex": 0.6517,
+            "lol-karthus": 0.826,
+            "lol-leesin": 0.903,
+            "lol-lux": 0.84,
+            "lol-missfortune": 0.903,
+            "lol-warwick": 0.861,
+            "lol-xerath": 0.826,
+            "lol-yasuo": 0.903
           },
           "breaksJenks": [
             0.452,
@@ -7742,17 +8057,17 @@
             1,
             54,
             19,
-            35,
-            28
+            39,
+            31
           ],
           "degenerate": false,
           "distinct": 40,
           "min": 0.452,
           "max": 1,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 40,
               "breaks": [
                 0.452,
@@ -7764,12 +8079,12 @@
                 1,
                 54,
                 19,
-                35,
-                28
+                39,
+                31
               ]
             },
             "reachable-dedup": {
-              "n": 131,
+              "n": 138,
               "distinct": 40,
               "breaks": [
                 0.452,
@@ -7781,12 +8096,12 @@
                 1,
                 48,
                 19,
-                35,
-                28
+                39,
+                31
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 32,
               "breaks": [
                 0.452,
@@ -7798,8 +8113,8 @@
                 1,
                 48,
                 15,
-                34,
-                25
+                38,
+                28
               ]
             }
           }
@@ -7942,7 +8257,14 @@
             "godie-udre": 0.0142,
             "godie-umal": 0.0143,
             "godie-uvng": 0.0038,
-            "godie-zombiex": 0.0097
+            "godie-zombiex": 0.0097,
+            "lol-karthus": 0.0117,
+            "lol-leesin": 0.0195,
+            "lol-lux": 0.0132,
+            "lol-missfortune": 0.0195,
+            "lol-warwick": 0.0215,
+            "lol-xerath": 0.0117,
+            "lol-yasuo": 0.0195
           },
           "ingameValues": {
             "b2-aladdin": 0.0117,
@@ -8081,7 +8403,14 @@
             "godie-udre": 0.0142,
             "godie-umal": 0.0143,
             "godie-uvng": 0.0038,
-            "godie-zombiex": 0.0097
+            "godie-zombiex": 0.0097,
+            "lol-karthus": 0.0117,
+            "lol-leesin": 0.0195,
+            "lol-lux": 0.0132,
+            "lol-missfortune": 0.0195,
+            "lol-warwick": 0.0215,
+            "lol-xerath": 0.0117,
+            "lol-yasuo": 0.0195
           },
           "breaksJenks": [
             0.0044,
@@ -8091,19 +8420,19 @@
           ],
           "bandCounts": [
             4,
-            60,
-            32,
-            37,
+            62,
+            33,
+            41,
             4
           ],
           "degenerate": false,
           "distinct": 38,
           "min": 0.0038,
           "max": 0.0348,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 38,
               "breaks": [
                 0.0044,
@@ -8113,14 +8442,14 @@
               ],
               "bandCounts": [
                 4,
-                60,
-                32,
-                37,
+                62,
+                33,
+                41,
                 4
               ]
             },
             "reachable-dedup": {
-              "n": 137,
+              "n": 144,
               "distinct": 38,
               "breaks": [
                 0.0044,
@@ -8130,14 +8459,14 @@
               ],
               "bandCounts": [
                 4,
-                60,
-                32,
-                37,
+                62,
+                33,
+                41,
                 4
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 30,
               "breaks": [
                 0.0044,
@@ -8147,9 +8476,9 @@
               ],
               "bandCounts": [
                 4,
-                60,
-                32,
-                23,
+                62,
+                33,
+                27,
                 4
               ]
             }
@@ -8303,7 +8632,14 @@
             "godie-udre": 6.1,
             "godie-umal": 5.9,
             "godie-uvng": 6,
-            "godie-zombiex": 2.6
+            "godie-zombiex": 2.6,
+            "lol-karthus": 8,
+            "lol-leesin": 8,
+            "lol-lux": 6,
+            "lol-missfortune": 8,
+            "lol-warwick": 10,
+            "lol-xerath": 8,
+            "lol-yasuo": 8
           },
           "ingameValues": {
             "b2-aladdin": 4.8,
@@ -8442,7 +8778,14 @@
             "godie-udre": 4.88,
             "godie-umal": 4.72,
             "godie-uvng": 4.8,
-            "godie-zombiex": 2.08
+            "godie-zombiex": 2.08,
+            "lol-karthus": 4.8,
+            "lol-leesin": 6.4,
+            "lol-lux": 3.6,
+            "lol-missfortune": 4.8,
+            "lol-warwick": 8,
+            "lol-xerath": 4.8,
+            "lol-yasuo": 6.4
           },
           "breaksJenks": [
             2.6,
@@ -8453,18 +8796,18 @@
           "bandCounts": [
             1,
             3,
-            74,
-            48,
-            11
+            75,
+            53,
+            12
           ],
           "degenerate": false,
           "distinct": 17,
           "min": 2.6,
           "max": 10,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 17,
               "breaks": [
                 2.6,
@@ -8475,13 +8818,13 @@
               "bandCounts": [
                 1,
                 3,
-                74,
-                48,
-                11
+                75,
+                53,
+                12
               ]
             },
             "reachable-dedup": {
-              "n": 131,
+              "n": 138,
               "distinct": 17,
               "breaks": [
                 2.6,
@@ -8492,13 +8835,13 @@
               "bandCounts": [
                 1,
                 3,
-                68,
-                48,
-                11
+                69,
+                53,
+                12
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 12,
               "breaks": [
                 2.6,
@@ -8509,9 +8852,9 @@
               "bandCounts": [
                 1,
                 26,
-                42,
                 43,
-                11
+                48,
+                12
               ]
             }
           }
@@ -8654,7 +8997,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "ingameValues": {
             "b2-aladdin": 0,
@@ -8793,7 +9143,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "breaksJenks": [
             0,
@@ -8802,7 +9159,7 @@
             0
           ],
           "bandCounts": [
-            137,
+            144,
             0,
             0,
             0,
@@ -8812,10 +9169,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 1,
               "breaks": [
                 0,
@@ -8824,7 +9181,7 @@
                 0
               ],
               "bandCounts": [
-                137,
+                144,
                 0,
                 0,
                 0,
@@ -8832,7 +9189,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 0,
@@ -8841,7 +9198,7 @@
                 0
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -8849,7 +9206,7 @@
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 0,
@@ -8858,7 +9215,7 @@
                 0
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -9012,7 +9369,14 @@
             "godie-udre": 1.6,
             "godie-umal": 1.6,
             "godie-uvng": 1.4,
-            "godie-zombiex": 1.6
+            "godie-zombiex": 1.6,
+            "lol-karthus": 8.2,
+            "lol-leesin": 1.6,
+            "lol-lux": 8.2,
+            "lol-missfortune": 8.2,
+            "lol-warwick": 1.4,
+            "lol-xerath": 8.2,
+            "lol-yasuo": 1.6
           },
           "ingameValues": {
             "b2-aladdin": 4.92,
@@ -9151,7 +9515,14 @@
             "godie-udre": 0.96,
             "godie-umal": 1.0848,
             "godie-uvng": 0.84,
-            "godie-zombiex": 0.96
+            "godie-zombiex": 0.96,
+            "lol-karthus": 4.92,
+            "lol-leesin": 0.96,
+            "lol-lux": 4.92,
+            "lol-missfortune": 4.92,
+            "lol-warwick": 0.84,
+            "lol-xerath": 4.92,
+            "lol-yasuo": 0.96
           },
           "breaksJenks": [
             1.6,
@@ -9160,9 +9531,9 @@
             10
           ],
           "bandCounts": [
-            93,
+            96,
             1,
-            30,
+            34,
             10,
             3
           ],
@@ -9170,9 +9541,26 @@
           "distinct": 7,
           "min": 1.4,
           "max": 12,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
+              "n": 144,
+              "distinct": 7,
+              "breaks": [
+                1.6,
+                6,
+                8.2,
+                10
+              ],
+              "bandCounts": [
+                96,
+                1,
+                34,
+                10,
+                3
+              ]
+            },
+            "reachable-dedup": {
               "n": 137,
               "distinct": 7,
               "breaks": [
@@ -9182,32 +9570,15 @@
                 10
               ],
               "bandCounts": [
-                93,
+                89,
                 1,
-                30,
-                10,
-                3
-              ]
-            },
-            "reachable-dedup": {
-              "n": 130,
-              "distinct": 7,
-              "breaks": [
-                1.6,
-                6,
-                8.2,
-                10
-              ],
-              "bandCounts": [
-                86,
-                1,
-                30,
+                34,
                 10,
                 3
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 5,
               "breaks": [
                 1.4,
@@ -9216,9 +9587,9 @@
                 10
               ],
               "bandCounts": [
-                45,
-                38,
-                29,
+                46,
+                40,
+                33,
                 10,
                 1
               ]
@@ -9363,7 +9734,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "ingameValues": {
             "b2-aladdin": 0,
@@ -9502,7 +9880,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "breaksJenks": [
             0,
@@ -9511,7 +9896,7 @@
             0
           ],
           "bandCounts": [
-            137,
+            144,
             0,
             0,
             0,
@@ -9521,10 +9906,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 1,
               "breaks": [
                 0,
@@ -9533,7 +9918,7 @@
                 0
               ],
               "bandCounts": [
-                137,
+                144,
                 0,
                 0,
                 0,
@@ -9541,7 +9926,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 0,
@@ -9550,7 +9935,7 @@
                 0
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -9558,7 +9943,7 @@
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 0,
@@ -9567,7 +9952,7 @@
                 0
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -9724,7 +10109,14 @@
             "godie-udre": 0.055,
             "godie-umal": 0.05,
             "godie-uvng": 0.0375,
-            "godie-zombiex": 0.08
+            "godie-zombiex": 0.08,
+            "lol-karthus": 0.0325,
+            "lol-leesin": 0.045,
+            "lol-lux": 0.0525,
+            "lol-missfortune": 0.0325,
+            "lol-warwick": 0.0625,
+            "lol-xerath": 0.0325,
+            "lol-yasuo": 0.045
           },
           "ingameValues": {
             "b2-aladdin": 0.0325,
@@ -9863,7 +10255,14 @@
             "godie-udre": 0.055,
             "godie-umal": 0.05,
             "godie-uvng": 0.0375,
-            "godie-zombiex": 0.08
+            "godie-zombiex": 0.08,
+            "lol-karthus": 0.0325,
+            "lol-leesin": 0.045,
+            "lol-lux": 0.0525,
+            "lol-missfortune": 0.0325,
+            "lol-warwick": 0.0625,
+            "lol-xerath": 0.0325,
+            "lol-yasuo": 0.045
           },
           "breaksJenks": [
             0.0375,
@@ -9872,20 +10271,20 @@
             0.065
           ],
           "bandCounts": [
-            33,
-            51,
-            19,
-            24,
+            36,
+            53,
+            20,
+            25,
             10
           ],
           "degenerate": false,
           "distinct": 16,
           "min": 0.03,
           "max": 0.08,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 16,
               "breaks": [
                 0.0375,
@@ -9894,15 +10293,15 @@
                 0.065
               ],
               "bandCounts": [
-                33,
-                51,
-                19,
-                24,
+                36,
+                53,
+                20,
+                25,
                 10
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 16,
               "breaks": [
                 0.0375,
@@ -9911,15 +10310,15 @@
                 0.065
               ],
               "bandCounts": [
-                32,
-                44,
-                17,
-                20,
+                35,
+                46,
+                18,
+                21,
                 10
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 16,
               "breaks": [
                 0.0375,
@@ -9928,10 +10327,10 @@
                 0.065
               ],
               "bandCounts": [
-                32,
-                44,
-                17,
-                20,
+                35,
+                46,
+                18,
+                21,
                 10
               ]
             }
@@ -10075,7 +10474,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0.0031,
+            "lol-leesin": 0.0042,
+            "lol-lux": 0.005,
+            "lol-missfortune": 0.0031,
+            "lol-warwick": 0.0059,
+            "lol-xerath": 0.0031,
+            "lol-yasuo": 0.0042
           },
           "ingameValues": {
             "b2-aladdin": 0.0031,
@@ -10214,7 +10620,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0.0031,
+            "lol-leesin": 0.0042,
+            "lol-lux": 0.005,
+            "lol-missfortune": 0.0031,
+            "lol-warwick": 0.0059,
+            "lol-xerath": 0.0031,
+            "lol-yasuo": 0.0042
           },
           "breaksJenks": [
             0,
@@ -10224,19 +10637,19 @@
           ],
           "bandCounts": [
             63,
-            23,
-            31,
-            13,
+            26,
+            34,
+            14,
             7
           ],
           "degenerate": false,
           "distinct": 7,
           "min": 0,
           "max": 0.007,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 7,
               "breaks": [
                 0,
@@ -10246,14 +10659,14 @@
               ],
               "bandCounts": [
                 63,
-                23,
-                31,
-                13,
+                26,
+                34,
+                14,
                 7
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 7,
               "breaks": [
                 0,
@@ -10263,14 +10676,14 @@
               ],
               "bandCounts": [
                 49,
-                23,
-                31,
-                13,
+                26,
+                34,
+                14,
                 7
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 7,
               "breaks": [
                 0,
@@ -10280,9 +10693,9 @@
               ],
               "bandCounts": [
                 49,
-                23,
-                31,
-                13,
+                26,
+                34,
+                14,
                 7
               ]
             }
@@ -10433,7 +10846,14 @@
             "godie-udre": 1.75,
             "godie-umal": 1.75,
             "godie-uvng": 1.75,
-            "godie-zombiex": 1.75
+            "godie-zombiex": 1.75,
+            "lol-karthus": 1.75,
+            "lol-leesin": 1.75,
+            "lol-lux": 1.75,
+            "lol-missfortune": 1.75,
+            "lol-warwick": 1.75,
+            "lol-xerath": 1.75,
+            "lol-yasuo": 1.75
           },
           "ingameValues": {
             "b2-aladdin": 1.75,
@@ -10572,7 +10992,14 @@
             "godie-udre": 1.75,
             "godie-umal": 1.75,
             "godie-uvng": 1.75,
-            "godie-zombiex": 1.75
+            "godie-zombiex": 1.75,
+            "lol-karthus": 1.75,
+            "lol-leesin": 1.75,
+            "lol-lux": 1.75,
+            "lol-missfortune": 1.75,
+            "lol-warwick": 1.75,
+            "lol-xerath": 1.75,
+            "lol-yasuo": 1.75
           },
           "breaksJenks": [
             1.75,
@@ -10581,7 +11008,7 @@
             1.75
           ],
           "bandCounts": [
-            137,
+            144,
             0,
             0,
             0,
@@ -10591,10 +11018,10 @@
           "distinct": 1,
           "min": 1.75,
           "max": 1.75,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 1,
               "breaks": [
                 1.75,
@@ -10603,7 +11030,7 @@
                 1.75
               ],
               "bandCounts": [
-                137,
+                144,
                 0,
                 0,
                 0,
@@ -10611,7 +11038,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 1.75,
@@ -10620,7 +11047,7 @@
                 1.75
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -10628,7 +11055,7 @@
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 1.75,
@@ -10637,7 +11064,7 @@
                 1.75
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -10784,7 +11211,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "ingameValues": {
             "b2-aladdin": 0,
@@ -10923,7 +11357,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 0,
+            "lol-leesin": 0,
+            "lol-lux": 0,
+            "lol-missfortune": 0,
+            "lol-warwick": 0,
+            "lol-xerath": 0,
+            "lol-yasuo": 0
           },
           "breaksJenks": [
             0,
@@ -10932,7 +11373,7 @@
             0
           ],
           "bandCounts": [
-            137,
+            144,
             0,
             0,
             0,
@@ -10942,10 +11383,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 1,
               "breaks": [
                 0,
@@ -10954,7 +11395,7 @@
                 0
               ],
               "bandCounts": [
-                137,
+                144,
                 0,
                 0,
                 0,
@@ -10962,7 +11403,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 0,
@@ -10971,7 +11412,7 @@
                 0
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -10979,7 +11420,7 @@
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 1,
               "breaks": [
                 0,
@@ -10988,7 +11429,7 @@
                 0
               ],
               "bandCounts": [
-                123,
+                130,
                 0,
                 0,
                 0,
@@ -11142,7 +11583,14 @@
             "godie-udre": 22,
             "godie-umal": 20,
             "godie-uvng": 15,
-            "godie-zombiex": 12
+            "godie-zombiex": 12,
+            "lol-karthus": 13,
+            "lol-leesin": 18,
+            "lol-lux": 21,
+            "lol-missfortune": 13,
+            "lol-warwick": 25,
+            "lol-xerath": 13,
+            "lol-yasuo": 18
           },
           "ingameValues": {
             "b2-aladdin": 13,
@@ -11281,7 +11729,14 @@
             "godie-udre": 22,
             "godie-umal": 20,
             "godie-uvng": 15,
-            "godie-zombiex": 12
+            "godie-zombiex": 12,
+            "lol-karthus": 13,
+            "lol-leesin": 18,
+            "lol-lux": 21,
+            "lol-missfortune": 13,
+            "lol-warwick": 25,
+            "lol-xerath": 13,
+            "lol-yasuo": 18
           },
           "breaksJenks": [
             15,
@@ -11290,20 +11745,20 @@
             26
           ],
           "bandCounts": [
-            34,
-            51,
-            19,
-            24,
+            37,
+            53,
+            20,
+            25,
             9
           ],
           "degenerate": false,
           "distinct": 15,
           "min": 12,
           "max": 30,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 15,
               "breaks": [
                 15,
@@ -11312,15 +11767,15 @@
                 26
               ],
               "bandCounts": [
-                34,
-                51,
-                19,
-                24,
+                37,
+                53,
+                20,
+                25,
                 9
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 15,
               "breaks": [
                 15,
@@ -11329,15 +11784,15 @@
                 26
               ],
               "bandCounts": [
-                33,
-                44,
-                17,
-                20,
+                36,
+                46,
+                18,
+                21,
                 9
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 15,
               "breaks": [
                 15,
@@ -11346,10 +11801,10 @@
                 26
               ],
               "bandCounts": [
-                33,
-                44,
-                17,
-                20,
+                36,
+                46,
+                18,
+                21,
                 9
               ]
             }
@@ -11493,7 +11948,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 1.25,
+            "lol-leesin": 1.67,
+            "lol-lux": 1.99,
+            "lol-missfortune": 1.25,
+            "lol-warwick": 2.36,
+            "lol-xerath": 1.25,
+            "lol-yasuo": 1.67
           },
           "ingameValues": {
             "b2-aladdin": 1.25,
@@ -11632,7 +12094,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 1.25,
+            "lol-leesin": 1.67,
+            "lol-lux": 1.99,
+            "lol-missfortune": 1.25,
+            "lol-warwick": 2.36,
+            "lol-xerath": 1.25,
+            "lol-yasuo": 1.67
           },
           "breaksJenks": [
             0,
@@ -11642,19 +12111,19 @@
           ],
           "bandCounts": [
             63,
-            23,
-            31,
-            13,
+            26,
+            34,
+            14,
             7
           ],
           "degenerate": false,
           "distinct": 7,
           "min": 0,
           "max": 2.78,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 7,
               "breaks": [
                 0,
@@ -11664,14 +12133,14 @@
               ],
               "bandCounts": [
                 63,
-                23,
-                31,
-                13,
+                26,
+                34,
+                14,
                 7
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 7,
               "breaks": [
                 0,
@@ -11681,14 +12150,14 @@
               ],
               "bandCounts": [
                 49,
-                23,
-                31,
-                13,
+                26,
+                34,
+                14,
                 7
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 7,
               "breaks": [
                 0,
@@ -11698,9 +12167,9 @@
               ],
               "bandCounts": [
                 49,
-                23,
-                31,
-                13,
+                26,
+                34,
+                14,
                 7
               ]
             }
@@ -11851,7 +12320,14 @@
             "godie-udre": 14,
             "godie-umal": 20,
             "godie-uvng": 26,
-            "godie-zombiex": 8
+            "godie-zombiex": 8,
+            "lol-karthus": 18,
+            "lol-leesin": 29,
+            "lol-lux": 20,
+            "lol-missfortune": 29,
+            "lol-warwick": 23,
+            "lol-xerath": 18,
+            "lol-yasuo": 29
           },
           "ingameValues": {
             "b2-aladdin": 18,
@@ -11990,7 +12466,14 @@
             "godie-udre": 14,
             "godie-umal": 20,
             "godie-uvng": 26,
-            "godie-zombiex": 8
+            "godie-zombiex": 8,
+            "lol-karthus": 18,
+            "lol-leesin": 29,
+            "lol-lux": 20,
+            "lol-missfortune": 29,
+            "lol-warwick": 23,
+            "lol-xerath": 18,
+            "lol-yasuo": 29
           },
           "breaksJenks": [
             15,
@@ -12000,19 +12483,19 @@
           ],
           "bandCounts": [
             39,
-            35,
-            20,
-            23,
-            20
+            37,
+            21,
+            24,
+            23
           ],
           "degenerate": false,
           "distinct": 19,
           "min": 8,
           "max": 29,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 19,
               "breaks": [
                 15,
@@ -12022,14 +12505,14 @@
               ],
               "bandCounts": [
                 39,
-                35,
-                20,
-                23,
-                20
+                37,
+                21,
+                24,
+                23
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 19,
               "breaks": [
                 15,
@@ -12039,14 +12522,14 @@
               ],
               "bandCounts": [
                 34,
-                31,
-                16,
-                22,
-                20
+                33,
+                17,
+                23,
+                23
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 19,
               "breaks": [
                 15,
@@ -12056,10 +12539,10 @@
               ],
               "bandCounts": [
                 34,
-                31,
-                16,
-                22,
-                20
+                33,
+                17,
+                23,
+                23
               ]
             }
           }
@@ -12202,7 +12685,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 1.67,
+            "lol-leesin": 2.78,
+            "lol-lux": 1.89,
+            "lol-missfortune": 2.78,
+            "lol-warwick": 2.17,
+            "lol-xerath": 1.67,
+            "lol-yasuo": 2.78
           },
           "ingameValues": {
             "b2-aladdin": 1.67,
@@ -12341,7 +12831,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 1.67,
+            "lol-leesin": 2.78,
+            "lol-lux": 1.89,
+            "lol-missfortune": 2.78,
+            "lol-warwick": 2.17,
+            "lol-xerath": 1.67,
+            "lol-yasuo": 2.78
           },
           "breaksJenks": [
             0,
@@ -12352,18 +12849,18 @@
           "bandCounts": [
             63,
             15,
-            28,
-            12,
-            19
+            31,
+            13,
+            22
           ],
           "degenerate": false,
           "distinct": 8,
           "min": 0,
           "max": 2.78,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 8,
               "breaks": [
                 0,
@@ -12374,13 +12871,13 @@
               "bandCounts": [
                 63,
                 15,
-                28,
-                12,
-                19
+                31,
+                13,
+                22
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 8,
               "breaks": [
                 0,
@@ -12391,13 +12888,13 @@
               "bandCounts": [
                 49,
                 15,
-                28,
-                12,
-                19
+                31,
+                13,
+                22
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 8,
               "breaks": [
                 0,
@@ -12408,9 +12905,9 @@
               "bandCounts": [
                 49,
                 15,
-                28,
-                12,
-                19
+                31,
+                13,
+                22
               ]
             }
           }
@@ -12560,7 +13057,14 @@
             "godie-udre": 18,
             "godie-umal": 15,
             "godie-uvng": 14,
-            "godie-zombiex": 6
+            "godie-zombiex": 6,
+            "lol-karthus": 29,
+            "lol-leesin": 13,
+            "lol-lux": 19,
+            "lol-missfortune": 18,
+            "lol-warwick": 12,
+            "lol-xerath": 29,
+            "lol-yasuo": 13
           },
           "ingameValues": {
             "b2-aladdin": 29,
@@ -12699,7 +13203,14 @@
             "godie-udre": 18,
             "godie-umal": 15,
             "godie-uvng": 14,
-            "godie-zombiex": 6
+            "godie-zombiex": 6,
+            "lol-karthus": 29,
+            "lol-leesin": 13,
+            "lol-lux": 19,
+            "lol-missfortune": 18,
+            "lol-warwick": 12,
+            "lol-xerath": 29,
+            "lol-yasuo": 13
           },
           "breaksJenks": [
             6,
@@ -12709,19 +13220,36 @@
           ],
           "bandCounts": [
             2,
+            47,
             44,
-            42,
             27,
-            22
+            24
           ],
           "degenerate": false,
           "distinct": 20,
           "min": 2,
           "max": 30,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
+              "distinct": 20,
+              "breaks": [
+                6,
+                15,
+                20,
+                26
+              ],
+              "bandCounts": [
+                2,
+                47,
+                44,
+                27,
+                24
+              ]
+            },
+            "reachable-dedup": {
+              "n": 130,
               "distinct": 20,
               "breaks": [
                 6,
@@ -12732,30 +13260,13 @@
               "bandCounts": [
                 2,
                 44,
-                42,
-                27,
-                22
-              ]
-            },
-            "reachable-dedup": {
-              "n": 123,
-              "distinct": 20,
-              "breaks": [
-                6,
-                15,
-                20,
-                26
-              ],
-              "bandCounts": [
-                2,
-                41,
-                34,
+                36,
                 24,
-                22
+                24
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 20,
               "breaks": [
                 6,
@@ -12765,10 +13276,10 @@
               ],
               "bandCounts": [
                 2,
-                41,
-                34,
+                44,
+                36,
                 24,
-                22
+                24
               ]
             }
           }
@@ -12911,7 +13422,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 2.78,
+            "lol-leesin": 1.25,
+            "lol-lux": 1.83,
+            "lol-missfortune": 1.67,
+            "lol-warwick": 1.18,
+            "lol-xerath": 2.78,
+            "lol-yasuo": 1.25
           },
           "ingameValues": {
             "b2-aladdin": 2.78,
@@ -13050,7 +13568,14 @@
             "godie-udre": 0,
             "godie-umal": 0,
             "godie-uvng": 0,
-            "godie-zombiex": 0
+            "godie-zombiex": 0,
+            "lol-karthus": 2.78,
+            "lol-leesin": 1.25,
+            "lol-lux": 1.83,
+            "lol-missfortune": 1.67,
+            "lol-warwick": 1.18,
+            "lol-xerath": 2.78,
+            "lol-yasuo": 1.25
           },
           "breaksJenks": [
             0,
@@ -13060,19 +13585,19 @@
           ],
           "bandCounts": [
             63,
-            27,
-            14,
+            30,
+            16,
             13,
-            20
+            22
           ],
           "degenerate": false,
           "distinct": 7,
           "min": 0,
           "max": 2.78,
-          "derivationN": 137,
+          "derivationN": 144,
           "modes": {
             "reachable": {
-              "n": 137,
+              "n": 144,
               "distinct": 7,
               "breaks": [
                 0,
@@ -13082,14 +13607,14 @@
               ],
               "bandCounts": [
                 63,
-                27,
-                14,
+                30,
+                16,
                 13,
-                20
+                22
               ]
             },
             "reachable-dedup": {
-              "n": 123,
+              "n": 130,
               "distinct": 7,
               "breaks": [
                 0,
@@ -13099,14 +13624,14 @@
               ],
               "bandCounts": [
                 49,
-                27,
-                14,
+                30,
+                16,
                 13,
-                20
+                22
               ]
             },
             "pickable": {
-              "n": 123,
+              "n": 130,
               "distinct": 7,
               "breaks": [
                 0,
@@ -13116,10 +13641,10 @@
               ],
               "bandCounts": [
                 49,
-                27,
-                14,
+                30,
+                16,
                 13,
-                20
+                22
               ]
             }
           }
@@ -22169,6 +22694,468 @@
         "initial": "極小",
         "growth": "極小"
       }
+    },
+    "lol-karthus": {
+      "maxHealth": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "maxMana": {
+        "initial": "極大",
+        "growth": "中"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "manaRegen": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "ad": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "ap": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "armor": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "小"
+      },
+      "as": {
+        "initial": "大",
+        "growth": "小"
+      },
+      "ms": {
+        "initial": "大",
+        "growth": null
+      },
+      "range": {
+        "initial": "中",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "極小",
+        "growth": "小"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "極小",
+        "growth": "小"
+      },
+      "agi": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "int": {
+        "initial": "極大",
+        "growth": "極大"
+      }
+    },
+    "lol-leesin": {
+      "maxHealth": {
+        "initial": "大",
+        "growth": "中"
+      },
+      "maxMana": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "大"
+      },
+      "manaRegen": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "ad": {
+        "initial": "中",
+        "growth": "大"
+      },
+      "ap": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "armor": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "中"
+      },
+      "as": {
+        "initial": "極大",
+        "growth": "大"
+      },
+      "ms": {
+        "initial": "大",
+        "growth": null
+      },
+      "range": {
+        "initial": "極小",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "agi": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "int": {
+        "initial": "小",
+        "growth": "小"
+      }
+    },
+    "lol-lux": {
+      "maxHealth": {
+        "initial": "大",
+        "growth": "小"
+      },
+      "maxMana": {
+        "initial": "大",
+        "growth": "小"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "大"
+      },
+      "manaRegen": {
+        "initial": "中",
+        "growth": "大"
+      },
+      "ad": {
+        "initial": "大",
+        "growth": "中"
+      },
+      "ap": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "armor": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "小"
+      },
+      "as": {
+        "initial": "大",
+        "growth": "中"
+      },
+      "ms": {
+        "initial": "中",
+        "growth": null
+      },
+      "range": {
+        "initial": "中",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "agi": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "int": {
+        "initial": "中",
+        "growth": "中"
+      }
+    },
+    "lol-missfortune": {
+      "maxHealth": {
+        "initial": "中",
+        "growth": "小"
+      },
+      "maxMana": {
+        "initial": "大",
+        "growth": "中"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "小"
+      },
+      "manaRegen": {
+        "initial": "中",
+        "growth": "大"
+      },
+      "ad": {
+        "initial": "中",
+        "growth": "極大"
+      },
+      "ap": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "armor": {
+        "initial": "大",
+        "growth": "中"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "極小"
+      },
+      "as": {
+        "initial": "極大",
+        "growth": "大"
+      },
+      "ms": {
+        "initial": "大",
+        "growth": null
+      },
+      "range": {
+        "initial": "中",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "極小",
+        "growth": "小"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "極小",
+        "growth": "小"
+      },
+      "agi": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "int": {
+        "initial": "中",
+        "growth": "中"
+      }
+    },
+    "lol-warwick": {
+      "maxHealth": {
+        "initial": "極大",
+        "growth": "小"
+      },
+      "maxMana": {
+        "initial": "中",
+        "growth": "極小"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "極大"
+      },
+      "manaRegen": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "ad": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "ap": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "armor": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "小"
+      },
+      "as": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "ms": {
+        "initial": "極大",
+        "growth": null
+      },
+      "range": {
+        "initial": "極小",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "agi": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "int": {
+        "initial": "小",
+        "growth": "小"
+      }
+    },
+    "lol-xerath": {
+      "maxHealth": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "maxMana": {
+        "initial": "極大",
+        "growth": "中"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "manaRegen": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "ad": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "ap": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "armor": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "小"
+      },
+      "as": {
+        "initial": "大",
+        "growth": "小"
+      },
+      "ms": {
+        "initial": "大",
+        "growth": null
+      },
+      "range": {
+        "initial": "中",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "極小",
+        "growth": "小"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "極小",
+        "growth": "小"
+      },
+      "agi": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "int": {
+        "initial": "極大",
+        "growth": "極大"
+      }
+    },
+    "lol-yasuo": {
+      "maxHealth": {
+        "initial": "大",
+        "growth": "中"
+      },
+      "maxMana": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "healthRegen": {
+        "initial": "小",
+        "growth": "大"
+      },
+      "manaRegen": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "ad": {
+        "initial": "中",
+        "growth": "大"
+      },
+      "ap": {
+        "initial": "中",
+        "growth": "中"
+      },
+      "armor": {
+        "initial": "大",
+        "growth": "大"
+      },
+      "mr": {
+        "initial": null,
+        "growth": "中"
+      },
+      "as": {
+        "initial": "極大",
+        "growth": "大"
+      },
+      "ms": {
+        "initial": "大",
+        "growth": null
+      },
+      "range": {
+        "initial": "極小",
+        "growth": null
+      },
+      "critChance": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "critDamage": {
+        "initial": null,
+        "growth": null
+      },
+      "str": {
+        "initial": "小",
+        "growth": "中"
+      },
+      "agi": {
+        "initial": "極大",
+        "growth": "極大"
+      },
+      "int": {
+        "initial": "小",
+        "growth": "小"
+      }
     }
   },
   "outliers": {
@@ -22980,6 +23967,64 @@
           "armor@initial",
           "range@initial",
           "agi@initial"
+        ]
+      },
+      {
+        "id": "lol-karthus",
+        "name": "卡爾瑟斯",
+        "group": "base",
+        "axis": "growth",
+        "extremeStats": [
+          "manaRegen",
+          "ap",
+          "int"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-leesin",
+        "name": "李星",
+        "group": "base",
+        "axis": "growth",
+        "extremeStats": [
+          "agi"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "range@initial"
+        ]
+      },
+      {
+        "id": "lol-xerath",
+        "name": "齊勒斯",
+        "group": "base",
+        "axis": "growth",
+        "extremeStats": [
+          "manaRegen",
+          "ap",
+          "int"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-yasuo",
+        "name": "犽宿",
+        "group": "base",
+        "axis": "growth",
+        "extremeStats": [
+          "agi"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "range@initial"
         ]
       },
       {
@@ -23821,6 +24866,68 @@
           "armor@initial",
           "range@initial",
           "agi@initial"
+        ]
+      },
+      {
+        "id": "lol-karthus",
+        "name": "卡爾瑟斯",
+        "group": "base",
+        "axis": "cross",
+        "extremeStats": [
+          "maxMana",
+          "manaRegen",
+          "ap",
+          "int"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-leesin",
+        "name": "李星",
+        "group": "base",
+        "axis": "cross",
+        "extremeStats": [
+          "as",
+          "agi"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "range@initial"
+        ]
+      },
+      {
+        "id": "lol-xerath",
+        "name": "齊勒斯",
+        "group": "base",
+        "axis": "cross",
+        "extremeStats": [
+          "maxMana",
+          "manaRegen",
+          "ap",
+          "int"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-yasuo",
+        "name": "犽宿",
+        "group": "base",
+        "axis": "cross",
+        "extremeStats": [
+          "as",
+          "agi"
+        ],
+        "compensationStats": [],
+        "anyMinimalStats": [
+          "range@initial"
         ]
       }
     ],
@@ -25579,6 +26686,114 @@
         ]
       },
       {
+        "id": "lol-karthus",
+        "name": "卡爾瑟斯",
+        "group": "base",
+        "axis": "initial",
+        "extremeStats": [
+          "maxMana",
+          "manaRegen",
+          "ap",
+          "int"
+        ],
+        "compensationStats": [
+          "critChance",
+          "str"
+        ],
+        "anyMinimalStats": [
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-leesin",
+        "name": "李星",
+        "group": "base",
+        "axis": "initial",
+        "extremeStats": [
+          "as",
+          "agi"
+        ],
+        "compensationStats": [
+          "range"
+        ],
+        "anyMinimalStats": [
+          "range@initial"
+        ]
+      },
+      {
+        "id": "lol-missfortune",
+        "name": "好運姐",
+        "group": "base",
+        "axis": "initial",
+        "extremeStats": [
+          "as",
+          "agi"
+        ],
+        "compensationStats": [
+          "critChance",
+          "str"
+        ],
+        "anyMinimalStats": [
+          "mr@growth",
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-warwick",
+        "name": "沃維克",
+        "group": "base",
+        "axis": "initial",
+        "extremeStats": [
+          "maxHealth",
+          "ms"
+        ],
+        "compensationStats": [
+          "range"
+        ],
+        "anyMinimalStats": [
+          "maxMana@growth",
+          "range@initial"
+        ]
+      },
+      {
+        "id": "lol-xerath",
+        "name": "齊勒斯",
+        "group": "base",
+        "axis": "initial",
+        "extremeStats": [
+          "maxMana",
+          "manaRegen",
+          "ap",
+          "int"
+        ],
+        "compensationStats": [
+          "critChance",
+          "str"
+        ],
+        "anyMinimalStats": [
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-yasuo",
+        "name": "犽宿",
+        "group": "base",
+        "axis": "initial",
+        "extremeStats": [
+          "as",
+          "agi"
+        ],
+        "compensationStats": [
+          "range"
+        ],
+        "anyMinimalStats": [
+          "range@initial"
+        ]
+      },
+      {
         "id": "b2-elma",
         "name": "艾爾瑪",
         "group": "base",
@@ -26053,6 +27268,40 @@
           "agi@growth",
           "int@initial",
           "int@growth"
+        ]
+      },
+      {
+        "id": "lol-missfortune",
+        "name": "好運姐",
+        "group": "base",
+        "axis": "growth",
+        "extremeStats": [
+          "ad",
+          "agi"
+        ],
+        "compensationStats": [
+          "mr"
+        ],
+        "anyMinimalStats": [
+          "mr@growth",
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-warwick",
+        "name": "沃維克",
+        "group": "base",
+        "axis": "growth",
+        "extremeStats": [
+          "healthRegen"
+        ],
+        "compensationStats": [
+          "maxMana"
+        ],
+        "anyMinimalStats": [
+          "maxMana@growth",
+          "range@initial"
         ]
       },
       {
@@ -26861,6 +28110,41 @@
           "int@initial",
           "int@growth"
         ]
+      },
+      {
+        "id": "lol-missfortune",
+        "name": "好運姐",
+        "group": "base",
+        "axis": "cross",
+        "extremeStats": [
+          "as",
+          "agi"
+        ],
+        "compensationStats": [
+          "mr"
+        ],
+        "anyMinimalStats": [
+          "mr@growth",
+          "critChance@initial",
+          "str@initial"
+        ]
+      },
+      {
+        "id": "lol-warwick",
+        "name": "沃維克",
+        "group": "base",
+        "axis": "cross",
+        "extremeStats": [
+          "maxHealth",
+          "ms"
+        ],
+        "compensationStats": [
+          "maxMana"
+        ],
+        "anyMinimalStats": [
+          "maxMana@growth",
+          "range@initial"
+        ]
       }
     ]
   },
@@ -26895,7 +28179,7 @@
         "stat": "ad",
         "axis": "growth",
         "tier": "極大",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "ap",

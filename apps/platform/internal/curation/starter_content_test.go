@@ -214,7 +214,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	set := curation.StarterSet()
-	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 123 champions")
+	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 130 champions")
 	require.GreaterOrEqual(t, len(set.Items), 24, "starter set must enable at least 24 items")
 	require.GreaterOrEqual(t, len(set.Abilities), len(set.Champions)*5,
 		"every starter champion contributes its full Q/W/E/R/EX kit")
@@ -604,7 +604,8 @@ func TestStarterShopIsFinalWeapons(t *testing.T) {
 // whitelist in BOTH directions — a stricter bar than the D-gates were.
 
 // firstOpenRoster is the official roster: 49 hand-picked champions plus the
-// 37 community heroes owner ruled official on 2026-09-10 — the FIRST OPEN
+// 74 community heroes owner ruled official on 2026-09-10 and the 7 LOL heroes
+// owner asked for the same day (「其實還有**七個LOL英雄**也要跟著上架喔」) — the FIRST OPEN
 // ROSTER (對戰可選名單), one canonical id per requested name after dropping the
 // test/placeholder and duplicate-reskin candidates (see starter.go and 附錄A of
 // docs/hero-popularity-ranking.md). Pinned here id-for-id so a re-import or a
@@ -721,19 +722,23 @@ var firstOpenRoster = []string{
 	"b2-uncle",
 	"b2-yogiri",
 	"b2-zenitsu",
+	// ⭐ GH#1158 / GH#1165 —— 七名 LOL 英雄（owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」）。
+	"lol-karthus", "lol-leesin", "lol-lux", "lol-missfortune",
+	"lol-warwick", "lol-xerath", "lol-yasuo",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
-// seeds is EXACTLY the 123 canonical first-open-roster ids — no more, no fewer,
+// seeds is EXACTLY the 130 canonical first-open-roster ids — no more, no fewer,
 // none swapped. This is the guard the task asks for; it needs no content tree,
 // so it runs in any environment.
 func TestFirstOpenRoster(t *testing.T) {
 	testkit.Cover(t, "whitelist-first-open-roster")
 
-	// ⭐ 86 = 49 原本手挑的 ＋ 37 名 2026-09-10 owner 裁定為官方的社群英雄。
+	// ⭐ 130 = 49 原本手挑的 ＋ 74 名 2026-09-10 owner 裁定為官方的社群英雄（37＋37）
+	//    ＋ 7 名 LOL 英雄（owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」）。
 	// ⚠️ 這個字面值是**刻意**的:它擋的是「有人不小心動了名單」——
 	//   ⇒ 真的要改名單就把它一起改,⛔ 而不是讓它自己跟著 len() 走(那等於沒有閘)。
-	require.Len(t, firstOpenRoster, 123, "the first open roster is 123 champions")
+	require.Len(t, firstOpenRoster, 130, "the first open roster is 130 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -744,7 +749,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 123 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 130 canonical first-open-roster ids")
 }
 
 // storeDoc is the FLAT-PRICE half of content/config/store.json — the same two
@@ -771,7 +776,9 @@ const (
 	starterFreeChampions = 12
 	// ⭐ GH#1165：+37（第一批社群英雄）—— ⚠️ **免費那 12 位一位都沒動**，
 	//   那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
-	starterPricedChampions = 111 // ⭐ 2026-09-10 GH#1165：第二批 37 名（免費那 12 位一位都沒動）
+	// ⭐ 2026-09-10 GH#1165：第二批 37 名；GH#1158 再 +7（LOL 七名）
+	//   —— ⭐ **免費那 12 位一位都沒動**，那才是這條斷言真正在守的東西。
+	starterPricedChampions = 118
 )
 
 // clientWalletMetaPath is the champ-select module that carries the client's

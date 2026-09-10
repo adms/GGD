@@ -1,0 +1,54 @@
+{
+  "id": "lol-yasuo.ex",
+  "name": "旋風縛步",
+  "provenance": "editor-json",
+  "description": "將蓄風招式獨立為 EX，對指定敵人造成物理傷害並鎖足 0.8 秒。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.8,
+      "applyTo": "target",
+      "root": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-yasuo.ex.webp"
+}

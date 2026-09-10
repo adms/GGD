@@ -1,0 +1,24 @@
+{
+  "id": "lol-missfortune.q",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-missfortune.q",
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "text": "回聲雙響",
+      "colorRgb": [
+        210,
+        230,
+        255
+      ],
+      "durationSec": 0.7,
+      "kind": "floatingText",
+      "on": "castEffect"
+    }
+  ]
+}
