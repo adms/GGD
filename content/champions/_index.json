@@ -1,12 +1,12 @@
 {
   "collection": "champions",
-  "hash": "6e435995086a",
+  "hash": "1fc6f02701c9",
   "entries": [
     {
       "id": "b2-aladdin",
       "path": "champions/b2-aladdin.json",
-      "hash": "903f767d4cd1",
-      "size": 10905
+      "hash": "37c5e1e6ec14",
+      "size": 9303
     },
     {
       "id": "b2-albus",
@@ -47,8 +47,8 @@
     {
       "id": "b2-guts",
       "path": "champions/b2-guts.json",
-      "hash": "b78ab31cb075",
-      "size": 10051
+      "hash": "0d46c2e73590",
+      "size": 9730
     },
     {
       "id": "b2-haga",
@@ -65,14 +65,14 @@
     {
       "id": "b2-kaiji",
       "path": "champions/b2-kaiji.json",
-      "hash": "71690e25daaa",
-      "size": 11815
+      "hash": "b195437d0b7f",
+      "size": 10970
     },
     {
       "id": "b2-keyaru",
       "path": "champions/b2-keyaru.json",
-      "hash": "1e08294176c5",
-      "size": 10411
+      "hash": "3dc845660094",
+      "size": 8740
     },
     {
       "id": "b2-kisaragi",
@@ -107,8 +107,8 @@
     {
       "id": "b2-maomao",
       "path": "champions/b2-maomao.json",
-      "hash": "1ca83e7ad6f7",
-      "size": 12631
+      "hash": "cdaab478f6bd",
+      "size": 11663
     },
     {
       "id": "b2-maple",
@@ -137,8 +137,8 @@
     {
       "id": "b2-naofumi",
       "path": "champions/b2-naofumi.json",
-      "hash": "ec6e7fce073a",
-      "size": 12356
+      "hash": "2c36e0939ef8",
+      "size": 11438
     },
     {
       "id": "b2-ned",
@@ -191,8 +191,8 @@
     {
       "id": "b2-shinchan",
       "path": "champions/b2-shinchan.json",
-      "hash": "b0421b1e2ef5",
-      "size": 8787
+      "hash": "10a16212f31e",
+      "size": 8881
     },
     {
       "id": "b2-sinbad",
@@ -497,8 +497,8 @@
     {
       "id": "godie-e00s",
       "path": "champions/godie-e00s.json",
-      "hash": "0b82f736e617",
-      "size": 12067
+      "hash": "7be7d1b8be73",
+      "size": 10939
     },
     {
       "id": "godie-e00w",
@@ -515,8 +515,8 @@
     {
       "id": "godie-e010",
       "path": "champions/godie-e010.json",
-      "hash": "3f6822e8d2db",
-      "size": 11828
+      "hash": "421718bdc3b2",
+      "size": 10791
     },
     {
       "id": "godie-edem",
@@ -527,8 +527,8 @@
     {
       "id": "godie-efur",
       "path": "champions/godie-efur.json",
-      "hash": "47fe354ca3f8",
-      "size": 10157
+      "hash": "a25e330c8ed8",
+      "size": 9815
     },
     {
       "id": "godie-emfr",
@@ -611,8 +611,8 @@
     {
       "id": "godie-hapm",
       "path": "champions/godie-hapm.json",
-      "hash": "bea5d9b48a6e",
-      "size": 14759
+      "hash": "40c438f3408d",
+      "size": 12803
     },
     {
       "id": "godie-hart",
@@ -743,8 +743,8 @@
     {
       "id": "godie-ogld",
       "path": "champions/godie-ogld.json",
-      "hash": "1556a2d04d05",
-      "size": 6786
+      "hash": "1db213ce1372",
+      "size": 7145
     },
     {
       "id": "godie-ogrh",
@@ -779,8 +779,8 @@
     {
       "id": "godie-u00k",
       "path": "champions/godie-u00k.json",
-      "hash": "1847b973081a",
-      "size": 6592
+      "hash": "ada8bcabc8d8",
+      "size": 6936
     },
     {
       "id": "godie-u00l",
@@ -839,8 +839,8 @@
     {
       "id": "godie-udea",
       "path": "champions/godie-udea.json",
-      "hash": "c9c1ab678af1",
-      "size": 7608
+      "hash": "551abffcea14",
+      "size": 7793
     },
     {
       "id": "godie-udre",
@@ -869,44 +869,44 @@
     {
       "id": "lol-karthus",
       "path": "champions/lol-karthus.json",
-      "hash": "bdb55a696938",
-      "size": 7598
+      "hash": "b1756dfbe303",
+      "size": 7584
     },
     {
       "id": "lol-leesin",
       "path": "champions/lol-leesin.json",
-      "hash": "b313b3cfbe83",
-      "size": 7975
+      "hash": "3bdb489aa5d1",
+      "size": 7959
     },
     {
       "id": "lol-lux",
       "path": "champions/lol-lux.json",
-      "hash": "2b8c71877946",
-      "size": 8172
+      "hash": "3c999d3d3287",
+      "size": 8156
     },
     {
       "id": "lol-missfortune",
       "path": "champions/lol-missfortune.json",
-      "hash": "843074687d2c",
-      "size": 8273
+      "hash": "650f01af8d03",
+      "size": 8265
     },
     {
       "id": "lol-warwick",
       "path": "champions/lol-warwick.json",
-      "hash": "6f4ba1681c0e",
-      "size": 9035
+      "hash": "cf91e9ae7657",
+      "size": 9023
     },
     {
       "id": "lol-xerath",
       "path": "champions/lol-xerath.json",
-      "hash": "071ad03049bf",
-      "size": 7876
+      "hash": "5493743f0370",
+      "size": 7864
     },
     {
       "id": "lol-yasuo",
       "path": "champions/lol-yasuo.json",
-      "hash": "d4a44956810c",
-      "size": 9279
+      "hash": "c588f04db11c",
+      "size": 9267
     },
     {
       "id": "sela",
