@@ -34,6 +34,11 @@ import {
   type Round11DenyReason,
   type Round11Seat,
 } from "@ggd/shared/sim/round11Possession";
+import {
+  round11FrozenSurvivalFrac,
+  round11Score,
+} from "@ggd/shared/sim/round11Scoring";
+import { COMBAT_SCORE_SCALE } from "@ggd/shared/sim/stats/rating";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
@@ -999,6 +1004,12 @@ export class MatchController {
    * ⛔⛔ 它**刻意不進生存分數** —— 進了就是票點名的「回刷人類分數」。
    */
   private readonly round11BossKillTally = new Map<number, number>();
+  /**
+   * ⭐ 第十一回合**進場那一刻**每個座位的累計傷害（GH#1151 G 的分母基準）。
+   * ⛔ 沒有它,「本回合貢獻」就會變成「整場貢獻」——⭐ 而獎勵局會直接把
+   * 前十回合的戰果再乘一次倍率（票逐字警告的「**重複乘算**」的另一個入口）。
+   */
+  private readonly round11DamageBase = new Map<SeatId, number>();
 
   /** ⭐ **只給測試**：換邊狀態（⛔ 出貨路徑仍是唯一的寫入端）。 */
   get round11PossessionsForTest(): ReadonlyMap<
@@ -2439,6 +2450,14 @@ export class MatchController {
       this.round11Possessions.clear();
       this.round11FrozenStats.clear();
       this.round11BossKillTally.clear();
+      // ⭐ GH#1151 G —— **本回合**的戰鬥貢獻要有分母:`matchStats` 是整場累計,
+      //   ⛔ 直接拿它當「這一回合打了多少」會把前十回合的戰果算進獎勵局。
+      //   ⇒ ⭐ 在進場那一刻抄一份基準,貢獻 ＝ 現在 − 基準。
+      this.round11DamageBase.clear();
+      for (const [seatId, seat] of this.seats) {
+        if (seat.entityId === null) continue;
+        this.round11DamageBase.set(seatId, this.world.matchStats.get(seat.entityId)?.damageDealt ?? 0);
+      }
     }
   }
 
@@ -3961,7 +3980,10 @@ export class MatchController {
       return {
         seatId,
         // ⭐ 逐字同一支：結算頁的 `SettlementPlayer.score` 也是這一行。
-        score: rankScore(entry, lobby),
+        //   ⭐ GH#1151 G —— 第十一回合走**它自己那支公式**（獎勵局）。
+        score: this.round11Round === this.phase.round
+          ? this.round11ScoreFor(seatId, entry)
+          : rankScore(entry, lobby),
         survivalBonus: survivalBonus(entry),
         rank: ranks[i]!,
         // 第一回合沒有上一次 ⇒ 留 undefined（⛔ 不是 0：0 會被畫成「從第 0 名掉下來」）。
@@ -3972,6 +3994,62 @@ export class MatchController {
       for (const p of players) this.lastRoundRank.set(asSeatId(p.seatId), p.rank);
     }
     return { round: this.phase.round, final, players };
+  }
+
+  /**
+   * ⭐⭐ 第十一回合那一名玩家的**本回合分數**（GH#1151 G）。
+   *
+   * > owner 2026-09-02（逐字）：「我說過了是**總分加倍的獎勵局**，所以影響最終計分的獎勵局」
+   *
+   * ⚠️⚠️ ⭐ 票逐字警告的坑是「⛔ 不能把**總分**與**本回合分數**混用而**重複乘算**」——
+   * ⭐ 而 `round11Score()` **不吃總分**（它只有兩個參數），
+   * ⇒ 這裡能做的事只有「算出本回合那一格」，⛔ 而那正是重點。
+   *
+   * ⭐ 兩個分數（都正規化到 [0,1]，由這裡算）：
+   *   · `survivalFrac`     —— 撐到第幾秒 ÷ 這一回合多長（換邊那一刻＝死亡那一刻）
+   *   · `contributionFrac` —— **本回合**傷害 ÷ 全場本回合最高
+   *
+   * ⚠️ ⭐ 分子刻意是「現在 − 進場基準」：`matchStats.damageDealt` 是**整場累計**，
+   * ⛔ 直接拿它當本回合貢獻 ＝ 把前十回合的戰果也乘上獎勵倍率
+   *   （⭐ 那是「重複乘算」的**第二個**入口，而它不在票文的字面上）。
+   *
+   * ⭐ 乘 `COMBAT_SCORE_SCALE` 是為了跟其他回合**同一個單位** ——
+   * ⛔ 一個 0..1 的分數混進 0..1000 的排行榜，玩家會以為獎勵局倒扣。
+   */
+  private round11ScoreFor(seatId: SeatId, entry: RankEntry): number {
+    const cfg = this.rules.round11.scoring;
+    const durationSec = this.rules.round11.durationSec;
+    const nowSec = this.world.tick / TICK_HZ;
+    // ⭐ 本回合貢獻的分母 ＝ 全場**本回合**最高（⛔ 不是整場最高）。
+    let best = 0;
+    const roundDamageOf = (sid: SeatId): number => {
+      const seat = this.seats.get(sid);
+      if (!seat || seat.entityId === null) return 0;
+      // ⛔⛔ 換邊之後讀的是**凍結的那一份**（GH#922 驗收④）——
+      //   ⚠️ ⭐ 這一行是被守衛抓出來的:第一版讀 `world.matchStats`(活的)
+      //   ⇒ ⭐ 開王期間的戰果會從**獎勵局的貢獻**這條路回刷進分數,
+      //   ⛔ 而 E 的凍結守在另一條路上(`rankEntriesBySeat`)——**兩條路,只堵了一條**。
+      const now =
+        (this.round11FrozenStats.get(sid) ?? this.world.matchStats.get(seat.entityId))
+          ?.damageDealt ?? 0;
+      return Math.max(0, now - (this.round11DamageBase.get(sid) ?? 0));
+    };
+    for (const sid of this.seats.keys()) best = Math.max(best, roundDamageOf(sid));
+    const mine = roundDamageOf(seatId);
+    // ⭐ 換邊那一刻就是英雄死亡那一刻;沒換邊 ⇒ 還活著 ⇒ 撐到現在。
+    const p = this.round11Possessions.get(seatId);
+    const enteredAtSec = nowSec - Math.min(nowSec, durationSec);
+    const survivalFrac = round11FrozenSurvivalFrac(
+      p === undefined ? null : Math.max(0, p.convertedAtSec - enteredAtSec),
+      Math.min(nowSec - enteredAtSec, durationSec),
+      durationSec,
+    );
+    const score = round11Score(
+      { survivalFrac, contributionFrac: best > 0 ? mine / best : 0 },
+      cfg,
+    );
+    // ⭐ 存活加成那一半仍然照舊(它是**回合數**的獎勵,⛔ 與這一回合的公式無關)。
+    return Math.round(score * COMBAT_SCORE_SCALE) + survivalBonus(entry);
   }
 
   /**
