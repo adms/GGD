@@ -7,7 +7,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "軟輔",
-  "modelKey": "imported.doraemon-cat",
+  "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -245,5 +245,37 @@
     "救援",
     "控場"
   ],
-  "pitch": "不靠自己殺人，而是利用各種功能手段解決問題，適合喜歡臨場應變的玩家。"
+  "pitch": "不靠自己殺人，而是利用各種功能手段解決問題，適合喜歡臨場應變的玩家。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.832aa0b71d8f1dbd04503a7a036353f5621608ab300e8131",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.doraemon-cat",
+      "modelSha256": "f4e46b43320b3ce72437c545ef22ce33f97fb5e6ec205156acdf687cb6706e8b",
+      "binarySha256": "5ca1a1e022461eb2dd5e241082223c76683ff4d9a44d24f6fb6f192c73dad29e",
+      "registeredAt": "2026-09-10T13:45:21.300Z",
+      "source": {
+        "kind": "previous",
+        "character": "小叮噹 - 哆拉A夢",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.doraemon-cat.json"
+      }
+    },
+    {
+      "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
+      "label": "ou99「搞怪哆啦A梦猫」（本尊·合併版）",
+      "sourceModelKey": "ou99.496905",
+      "modelSha256": "f40f51ec96937eebeeebb4950ce845ae993f8b62ac7fec518d50b7718fec58f8",
+      "binarySha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
+      "registeredAt": "2026-09-10T13:45:21.326Z",
+      "source": {
+        "kind": "exact",
+        "character": "哆啦A夢",
+        "work": "哆啦A夢",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-496905-1-2.html"
+      }
+    }
+  ]
 }
