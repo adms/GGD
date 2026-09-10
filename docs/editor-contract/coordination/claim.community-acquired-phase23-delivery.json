@@ -134,8 +134,8 @@
     },
     {
       "kind": "confirmed",
-      "text": "目前 target 的真實 loopback 發布批次已完成：34 名全部經 Editor 草稿、完整 ZIP 與服務 inspection，27 名成功投稿並由管理員發布；另以 DIO 發布暫時 v2 後恢復 v1，沙耶的發布指標與 revision 均未變。其餘 7 名只有一個共同失敗條件：完整 ZIP 為 4,201,105–6,865,787 bytes，超過 config.ugc@1 的一般 4 MiB 上界；heroArchiveLimit() 只在 HeroProject 宣告 uploadedModel 時採模型 ZIP 上限，使用已核准 catalog modelKey 的完整包不會採用。第一批另抽驗兩個已存在 catalog 的 canonical ID，均被 compileHeroPackageProject() 以官方身分防撞規則拒絕，因此目前無法將既有正式英雄接入同 ID 的版本發布鏈。",
-      "commit": "880382da016a0040aa8098a81b445d519ff4c977",
+      "text": "目前 target 的真實 loopback 發布批次已完成：34 名全部經 Editor 草稿、完整 ZIP 與服務 inspection，27 名成功投稿並由管理員發布；另以 DIO 發布暫時 v2 後恢復 v1，沙耶的發布指標與 revision 均未變。其餘 7 名只有一個共同失敗條件：完整 ZIP 為 4,201,105–6,865,787 bytes，超過 config.ugc@1 的一般 4 MiB 上界；heroArchiveLimit() 只在 HeroProject 宣告 uploadedModel 時採模型 ZIP 上限，使用已核准 catalog modelKey 的完整包不會採用。集合檢查證明第一批 37、第二批 37 與 LoL 第一批 7 名共 81／81 canonical ID 已存在 content/champions，而 compileHeroPackageProject() 對此條件會確定套用官方身分防撞規則；第一批兩名服務抽驗亦收到同一拒絕，因此目前無法將這 81 名既有正式英雄接入同 ID 的版本發布鏈。",
+      "commit": "ee39dd00694bcc8721ebcf79339afddc128c45e0",
       "repro": {
         "command": "node tools/editor-acceptance/check-community-release-receipts.mjs",
         "expectedExit": 0
