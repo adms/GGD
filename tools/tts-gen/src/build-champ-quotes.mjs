@@ -11,6 +11,17 @@
 // research (QUOTES, keyed by the champion's display NAME) to the open roster's
 // name→candidate-id map (ROSTER) and writes, keyed by CHAMPION ID:
 //
+// ⛔⛔ 2026-09-10 量到 —— 在這之前這一支**從來沒有 join 過出貨 roster**。
+//    它把自己那三張手寫的表寫出去,然後在註解與 `generatedBy` 裡自稱
+//    「**full 113 coverage**」—— ⭐ 而 113 是**手打的常數**,⛔ 不是算出來的。
+//    實測(分母＝`content/champions/*.json` 的 `doc.id`,排除 `_index.json`):
+//      · 出貨 roster **153** 位
+//      · 這支產出 **113** 個 id,其中 **45** 個的英雄文件已經搬進 `content/_legacy/`
+//      ⇒ ⭐ 真的拿得到名言的只有 **68** 位,**85 位一句都沒有** —— ⛔ 而它 exit 0。
+//    ⚠️ 姊妹支 `build-champ-names.mjs` 有**一模一樣**的病(GH#811),差別只在
+//    ⭐ **它 join 了 roster**,所以它會紅;這一支不 join,所以它不會紅。
+//    ⇒ 現在它也 join 了:出貨英雄缺一句名言 ⇒ **exit 1 並指名他**(見 ROSTER JOIN 段)。
+//
 //   content/assets/audio/voices/quotes/quotes.json      (client manifest + display)
 //   content/assets/audio/voices/quotes/_tts-quotes.json (tts-gen input)
 //
@@ -190,15 +201,17 @@ const ROSTER = {
   "死之王": ["godie-u00k"],
 };
 
-// ── full-roster coverage: the remaining champions, keyed EXPLICITLY by id ─────
-// The QUOTES/ROSTER pair above covers the open-roster wave (48 names → 67 ids).
-// EVERY champion in docs/champions.csv also has an authored 名言, so this table
-// carries the rest — one entry PER champion id (no name→id fan-out; these ids do
-// not have the roster's duplicate-candidate ambiguity). Fields mirror a QUOTES
-// row (name/character/gender/jpQuote/romaji/zhGloss/source) but each pins its own
-// `id`. jpQuote/zhGloss are the docs/champions.csv 名言 text (verified to split
-// exactly on the trailing Chinese-gloss parens); gender/romaji/source are the VO
-// research. Together with the 67 above this brings coverage to all 113 ids.
+// ── the remaining champions, keyed EXPLICITLY by id ──────────────────────────
+// The QUOTES/ROSTER pair above covers the open-roster wave. This table carries
+// the rest — one entry PER champion id (no name→id fan-out; these ids do not have
+// the roster's duplicate-candidate ambiguity). Fields mirror a QUOTES row
+// (name/character/gender/jpQuote/romaji/zhGloss/source) but each pins its own
+// `id`; `name` may be OMITTED, in which case it is read from the champion's own
+// shipping doc (⭐ 一個住處,⛔ 不要在這裡再抄一份顯示名).
+//
+// ⛔ 這裡**沒有**「總共幾個 id」的數字。⭐ 涵蓋率是 ROSTER JOIN 段從出貨的
+//    `content/champions/*.json` **算出來的** —— 一個手打的總數就是下一個
+//    「full 113 coverage」(它活過了 roster 的兩次擴充,而沒有任何東西變紅)。
 const EXTRA = [
   { id: "godie-e00j", name: "騜", character: "騜 / GGD原創/惡搞", gender: "male", jpQuote: "ひざまずけ、皇者（おうじゃ）の御成りだ！", romaji: "Hizamazuke, ōja no onari da!", zhGloss: "跪下吧，皇者駕到！", source: "original：GGD原創「皇者・騜」惡搞台詞（無正典名言）" },
   { id: "godie-e00q", name: "黑化Saber", character: "黑化Saber / Fate", gender: "female", jpQuote: "約束された勝利の剣（エクスカリバー・モルガン）！", romaji: "Yakusoku sareta shōri no ken — Ekusukaribā Morugan!", zhGloss: "誓約勝利之劍・魔劍摩根！（黑化聖劍的招牌寶具呼喊）", source: "Fate/stay night [HF]／FGO セイバーオルタ 宝具「エクスカリバー・モルガン」" },
@@ -246,6 +259,52 @@ const EXTRA = [
   { id: "godie-uwar", name: "撒尿牛丸", character: "撒尿牛丸 / 映画『食神』", gender: "male", jpQuote: "心さえあれば、誰だって食神になれるんだ！", romaji: "Kokoro sae areba, dare datte shokushin ni nareru nda!", zhGloss: "只要有心，人人都可以是食神！", source: "映画『食神』（周星馳）— 撒尿牛丸／食神の名台詞" },
   { id: "sela", name: "Sela, the Ember Sage", character: "Sela, the Ember Sage / GGD原創/惡搞", gender: "female", jpQuote: "灰は終わりじゃない…そこから、わたしは燃え上がる。", romaji: "Hai wa owari ja nai… soko kara, watashi wa moeagaru.", zhGloss: "灰燼並非終點…我將自此熊熊燃起。", source: "original：GGD seed（Sela, the Ember Sage・餘燼賢者）" },
   { id: "thorne", name: "Thorne, the Bramble Knight", character: "Thorne, the Bramble Knight / GGD原創/惡搞", gender: "male", jpQuote: "我が茨よ、絡みつけ。お前に逃げ場などない。", romaji: "Waga ibara yo, karamitsuke. Omae ni nigeba nado nai.", zhGloss: "我的荊棘啊，纏上去吧。你已無處可逃。", source: "original：GGD seed（Thorne, the Bramble Knight・荊棘騎士）" },
+
+  // ══ 2026-09 社群審查 37 —— ⭐ 出處是**本機的一個檔的一個欄位**,⛔ 不是回想 ══
+  //
+  // ⭐ 規則(⛔ 不是 37 次個別判斷):`materials/asset-library/source/
+  //    GGD社群英雄上傳內容_37名/projects/NN.hero-project.json` 的 `brief.moveNames`
+  //    ⭐ **用〔〕把「GGD 自己接的佔位機制」與「原作的招式名」分開了** ——
+  //    〔全武裝齊射〕是 GGD 接的,「火之神神樂・圓舞」是原作的。
+  //    ⇒ 判準:**未加〔〕且是原作專有名詞**的那一格(R 優先,R 是〔〕就看 Q)
+  //      ⇒ 還原它的**日文原名**當名言(⭐ 這是「還原原文」,⛔ 不是我翻一句台詞)。
+  //      每一列的 `source` 指得到那個檔的那一格。
+  //    ⇒ 未加〔〕但**是描述性的**、或 Q/R **兩格都在〔〕裡** ⇒ ⛔ **留空**,
+  //      進 UNSOURCED 讓閘指名它。⭐ 「查不到就留給閘叫」比編一句好:
+  //      一句編的台詞會被下一輪當成原作,⛔ 而沒有任何測試分得出來。
+  //
+  // ⚠️ ⛔ 這裡一列都**不要**寫「角色的名台詞」——那要靠回想,而回想沒有出處。
+  //    招式名有:它逐字寫在上面那個檔裡,任何人都可以打開來反駁我。
+  { id: "community-review-01-20260907", character: "武藤遊戲 / 遊☆戯☆王", gender: "male", jpQuote: "オシリスの天空竜！", romaji: "Oshirisu no Tenkūryū!", zhGloss: "歐西里斯的天空龍！（決鬥者的王牌神卡）", source: "遊☆戯☆王（武藤遊戯）— hero-project 01 `brief.moveNames.R`「歐西里斯的天空龍」還原原作卡名" },
+  { id: "community-review-02-20260907", character: "八神庵 / THE KING OF FIGHTERS", gender: "male", jpQuote: "禁千弐百十一式・八稚女！", romaji: "Kin Sen Nihyaku Jūichi Shiki — Yaotome!", zhGloss: "禁千二百十一式・八稚女！（八神庵的招牌超必殺）", source: "THE KING OF FIGHTERS（八神庵）— hero-project 02 `brief.moveNames.R`「禁千二百十一式・八稚女」還原原作技名" },
+  { id: "community-review-03-20260907", character: "不知火舞 / THE KING OF FIGHTERS", gender: "female", jpQuote: "超必殺忍蜂！", romaji: "Chō Hissatsu Ninbachi!", zhGloss: "超必殺忍蜂！（不知火舞的招牌超必殺）", source: "THE KING OF FIGHTERS（不知火舞）— hero-project 03 `brief.moveNames.R`「超必殺忍蜂」還原原作技名" },
+  { id: "community-review-04-20260907", character: "空條承太郎 / ジョジョの奇妙な冒険", gender: "male", jpQuote: "スタープラチナ・ザ・ワールド！", romaji: "Sutā Purachina Za Wārudo!", zhGloss: "白金之星・世界！（承太郎的替身時停）", source: "ジョジョの奇妙な冒険（空条承太郎）— hero-project 04 `brief.moveNames.R`「白金之星・世界」還原原作替身名" },
+  { id: "community-review-05-20260907", character: "洛克人 / ロックマン (Mega Man)", gender: "male", jpQuote: "ロックバスター！", romaji: "Rokku Basutā!", zhGloss: "洛克砲！（洛克人的招牌手砲）", source: "ロックマン（Mega Man）— hero-project 05 `brief.moveNames.Q`「洛克砲」還原原作武裝名（R 是〔全武裝齊射〕＝GGD 佔位）" },
+  { id: "community-review-06-20260907", character: "卡比 / 星のカービィ", gender: "neutral", jpQuote: "ウルトラソード！", romaji: "Urutora Sōdo!", zhGloss: "超級巨劍！（卡比的招牌大絕）", source: "星のカービィ（カービィ）— hero-project 06 `brief.moveNames.R`「超級巨劍」還原原作技名" },
+  { id: "community-review-08-20260907", character: "米卡莎 / 進撃の巨人", gender: "female", jpQuote: "雷槍！", romaji: "Raisō!", zhGloss: "雷槍！（調查兵團的對巨人兵裝）", source: "進撃の巨人（ミカサ・アッカーマン）— hero-project 08 `brief.moveNames.R`「雷槍」還原原作兵裝名" },
+  { id: "community-review-10-20260907", character: "魯路修 / コードギアス 反逆のルルーシュ", gender: "male", jpQuote: "絶対遵守のギアス！", romaji: "Zettai Junshu no Giasu!", zhGloss: "絕對遵守的 Geass！（魯路修的王之力）", source: "コードギアス（ルルーシュ）— hero-project 10 `brief.moveNames.R`「絕對遵守的 Geass」還原原作能力名" },
+  { id: "community-review-12-20260907", character: "衛宮士郎 / Fate/stay night", gender: "male", jpQuote: "無限の剣製（アンリミテッドブレイドワークス）！", romaji: "Anrimiteddo Bureido Wākusu!", zhGloss: "無限劍製！（士郎的固有結界）", source: "Fate/stay night（衛宮士郎）— hero-project 12 `brief.moveNames.R`「無限劍製」還原原作固有結界名" },
+  { id: "community-review-17-20260907", character: "安茲·烏爾·恭 / OVERLORD", gender: "male", jpQuote: "落ちよ、天（フォールン・ダウン）！", romaji: "Ochiyo, ten — Fōrun Daun!", zhGloss: "墜落天空！（安茲的第十位階魔法）", source: "OVERLORD（アインズ・ウール・ゴウン）— hero-project 17 `brief.moveNames.R`「墜落天空」還原原作魔法名" },
+  { id: "community-review-18-20260907", character: "吉爾伽美什 / Fate", gender: "male", jpQuote: "天地乖離す開闢の星（エヌマ・エリシュ）！", romaji: "Enuma Erishu!", zhGloss: "天地乖離開闢之星！（英雄王的最強寶具）", source: "Fate（ギルガメッシュ）— hero-project 18 `brief.moveNames.R`「天地乖離開闢之星」還原原作寶具名" },
+  { id: "community-review-19-20260907", character: "桐谷和人 / ソードアート・オンライン", gender: "male", jpQuote: "スターバースト・ストリーム！", romaji: "Sutābāsuto Sutorīmu!", zhGloss: "星爆氣流斬！（桐人的二刀流劍技）", source: "ソードアート・オンライン（キリト）— hero-project 19 `brief.moveNames.R`「Starburst Stream」逐字即原作技名" },
+  { id: "community-review-20-20260907", character: "御坂美琴 / とある科学の超電磁砲", gender: "female", jpQuote: "超電磁砲（レールガン）！", romaji: "Rērugan!", zhGloss: "超電磁砲！（常盤台的 Level 5 招牌）", source: "とある科学の超電磁砲（御坂美琴）— hero-project 20 `brief.moveNames.R`「超電磁砲」還原原作能力名" },
+  { id: "community-review-22-20260907", character: "菜月昴 / Re:ゼロから始める異世界生活", gender: "male", jpQuote: "死に戻り。", romaji: "Shini-modori.", zhGloss: "死亡回歸。（昴唯一的權能）", source: "Re:ゼロ（ナツキ・スバル）— hero-project 22 `brief.moveNames.R`「死亡回歸」還原原作權能名" },
+  { id: "community-review-25-20260907", character: "一拳超人 / ワンパンマン", gender: "male", jpQuote: "マジシリーズ・マジ殴り！", romaji: "Maji Shirīzu — Maji Naguri!", zhGloss: "認真系列・認真一拳！（埼玉的唯一大絕）", source: "ワンパンマン（サイタマ）— hero-project 25 `brief.moveNames.R`「認真系列・認真一拳」還原原作技名" },
+  // ⭐ 唯一一列刻意收下**加了〔〕的那一格**:〔真相只有一個〕的文字本身就是本作
+  //    **逐字的招牌台詞**(〔〕在這份來源裡標的是「GGD 還沒把它做成機制」,
+  //    ⛔ 不是「這句話是 GGD 編的」)。⇒ 出處仍然是那個檔的那一格。
+  { id: "community-review-26-20260907", character: "名偵探柯南 / 名探偵コナン", gender: "male", jpQuote: "真実はいつも一つ！", romaji: "Shinjitsu wa itsumo hitotsu!", zhGloss: "真相只有一個！（柯南的招牌決め台詞）", source: "名探偵コナン（江戸川コナン）— hero-project 26 `brief.moveNames.R`「〔真相只有一個〕」逐字即原作決め台詞" },
+  { id: "community-review-28-20260907", character: "艾莉絲·伯雷亞斯·格雷拉特 / 無職転生", gender: "female", jpQuote: "光の太刀！", romaji: "Hikari no Tachi!", zhGloss: "光之太刀！（劍神流的奧義）", source: "無職転生（エリス・ボレアス・グレイラット）— hero-project 28 `brief.moveNames.R`「光之太刀」還原原作劍技名" },
+  { id: "community-review-29-20260907", character: "芙莉蓮 / 葬送のフリーレン", gender: "female", jpQuote: "ゾルトラーク！", romaji: "Zorutorāku!", zhGloss: "佐爾特拉克！（一般攻擊魔法）", source: "葬送のフリーレン（フリーレン）— hero-project 29 `brief.moveNames.Q`「一般攻擊魔法・Zoltraak」還原原作魔法名（R 是〔葬送連射〕＝GGD 佔位）" },
+  { id: "community-review-32-20260907", character: "阿薩謝爾 / よんでますよ、アザゼルさん。", gender: "male", jpQuote: "ジ・エンド・オブ・ソン！", romaji: "Ji Endo Obu Son!", zhGloss: "THE END OF SON！（阿薩謝爾的招牌）", source: "よんでますよ、アザゼルさん。（アザゼル）— hero-project 32 `brief.moveNames.R`「THE END OF SON」逐字即來源技名" },
+  { id: "community-review-35-20260907", character: "炭治郎 / 鬼滅の刃", gender: "male", jpQuote: "ヒノカミ神楽・円舞！", romaji: "Hinokami Kagura — Enbu!", zhGloss: "火之神神樂・圓舞！（竈門家的呼吸）", source: "鬼滅の刃（竈門炭治郎）— hero-project 35 `brief.moveNames.R`「火之神神樂・圓舞」還原原作技名" },
+  { id: "community-review-36-20260907", character: "鬼畜王蘭斯 / 鬼畜王ランス", gender: "male", jpQuote: "ランスアタック！", romaji: "Ransu Atakku!", zhGloss: "蘭斯攻擊！（蘭斯的招牌）", source: "鬼畜王ランス（ランス）— hero-project 36 `brief.moveNames.R`「Rance Attack／蘭斯攻擊」逐字即原作技名" },
+
+  // ══ GGD 原創角色 —— `original:` ＝ real:false,與既有 31 列同一個標準 ═══════
+  // ⭐ 原創角色**沒有原作可以引用**,所以惡搞一句是誠實的(而且標成 real:false);
+  // ⛔ 對**真實作品的角色**這樣做就是編造 —— 那些一律留空,見 UNSOURCED。
+  { id: "b2-kisaragi", character: "如月電車 / GGD原創（如月車站都市傳說題材）", gender: "neutral", jpQuote: "次は…どこにも、着きません。", romaji: "Tsugi wa… doko ni mo, tsukimasen.", zhGloss: "下一站…哪裡也到不了。（如月車站）", source: "original：GGD 原創 —— batch2-37 intake `characters/b2-kisaragi.json` 的 `work` 逐字寫著「如月車站題材・GGD 原創」,⛔ 沒有原作角色可以引用" },
+  { id: "godie-zombiex", character: "喪標麥可 / GGD原創(去死團)", gender: "male", jpQuote: "カレーも、お前も、全部飲み込んでやる。", romaji: "Karē mo, omae mo, zenbu nomikonde yaru.", zhGloss: "咖哩也好，你也好，全部給我吞下去。（黑泥吞噬）", source: "original：GGD 去死團原創角色 —— 依 `content/champions/godie-zombiex.json` 的 description（「黑泥吞噬」「咖哩」「去死團原創角色」）惡搞" },
 ];
 
 // ── clean male-voice resolver (see header) ──────────────────────────────────
@@ -330,8 +389,128 @@ function isReal(source) {
   return !/^\s*original\s*[:：]/i.test(String(source ?? ""));
 }
 
+// ── ROSTER JOIN — ⭐ 分母是**出貨的英雄文件**,⛔ 不是這幾張表的長度 ──────────
+
+/** 出貨 roster：`content/champions/*.json` 的 `doc.id` → `doc.name`。 */
+function championNames() {
+  const dir = path.join(CONTENT, "champions");
+  const out = new Map();
+  for (const f of fs.readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const doc = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+    out.set(doc.id, doc.name);
+  }
+  return out;
+}
+
+/**
+ * 已下架的英雄（文件搬進 `content/_legacy/champions/`）。
+ *
+ * ⭐ 與姊妹支同一個判準：一列名言之所以「多餘」,唯一可以被反駁的證據是
+ * **那位英雄的文件搬走了** —— ⛔ 不是一張手寫的 RETIRED 名單(那種表會過期,
+ * 而且過期時不會有東西紅)。⚠️ 目錄不存在時回**空集合** ⇒ 每一列漂移都退回
+ * fatal（fail-loud）,⛔ 不可以「讀不到就全部放行」。
+ */
+function retiredChampionIds() {
+  const dir = path.join(CONTENT, "_legacy", "champions");
+  const out = new Set();
+  if (!fs.existsSync(dir)) return out;
+  for (const f of fs.readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    out.add(f.slice(0, -".json".length));
+  }
+  return out;
+}
+
+/**
+ * 變身態 → 本體。名言**推導**自本體那一列,⛔ 不是複製一份
+ * （第〇·四守則：同一句話不可以有第二個住處 —— 本體改了,變身態要跟著改）。
+ * 出處：`build-champ-names.mjs` 的 CASTING 對同一批 id 做了同樣的事並註記了配對。
+ * ⚠️ 本體自己**沒有**名言時,變身態也一起留空（⛔ 不會憑空生出一句）。
+ */
+const FORM_OF = {
+  "godie-e010": "godie-e00s", // 70 紮根 = e00s 變身
+  "godie-o030": "godie-orkn", // 30 變態紳士 = orkn 變身
+  "b2-maple-alt-9769eb88b85b": "b2-maple", // 梅普露（變身）
+};
+
+/**
+ * ⛔⛔ **宣告過的缺口** —— 這些出貨英雄**沒有名言,而那是刻意的**。
+ *
+ * ⭐ 判準（owner 的規則,逐字）：「名言要嘛引用得到出處,要嘛**留空並讓閘指名它**」。
+ * ⭐ 「查不到就留給閘叫」**比編一句好**：一句編的台詞會被下一輪當成原作,
+ * ⛔ 而**沒有任何測試分得出來**（第一·五守則：卡片上不可以有說了但不會發生的字）。
+ *
+ * ⚠️ ⛔ 這**不是**一個讓閘閉嘴的逃生口：
+ *   · 這裡的 id 若**其實有**名言 ⇒ fatal（過期的宣告）
+ *   · 這裡的 id 若**不是**出貨英雄 ⇒ fatal（漂移）
+ *   · 出貨英雄**兩張表都沒有** ⇒ fatal（⭐ 這是承重的那個方向）
+ *   ⇒ 兩頭都走過（第二守則⑫：只從一頭走的掃描,結構上對另一頭失明）。
+ *
+ * 值是 NO_SOURCE_REASON 的鍵 —— ⭐ K 個模板 + 一張表,⛔ 不是 60 句手打的理由。
+ */
+const NO_SOURCE_REASON = {
+  b2Identity:
+    "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+  ggdPlaceholderMoves:
+    "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+  descriptiveMoveName:
+    "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+  lolNoVoiceLines:
+    "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+  formOfUnsourced:
+    "變身態 —— 本體自己也還沒有可引用的名言,⇒ 一起留空（FORM_OF 推導的結果,⛔ 不是各自的判斷）。",
+};
+
+const UNSOURCED = {
+  // ── batch2-37（36）—— 有身分,⛔ 沒有台詞也沒有原作招式名 ──────────────────
+  "b2-aladdin": "b2Identity", "b2-albus": "b2Identity", "b2-bojji": "b2Identity",
+  "b2-boxxo": "b2Identity", "b2-elma": "b2Identity", "b2-fushi": "b2Identity",
+  "b2-goblin": "b2Identity", "b2-guts": "b2Identity", "b2-haga": "b2Identity",
+  "b2-kaede": "b2Identity", "b2-kaiji": "b2Identity", "b2-keyaru": "b2Identity",
+  "b2-klaus": "b2Identity", "b2-kumoko": "b2Identity", "b2-luckyman": "b2Identity",
+  "b2-makoto": "b2Identity", "b2-maomao": "b2Identity", "b2-maple": "b2Identity",
+  "b2-matthias": "b2Identity", "b2-misery": "b2Identity", "b2-naofumi": "b2Identity",
+  "b2-ned": "b2Identity", "b2-noor": "b2Identity", "b2-nube": "b2Identity",
+  "b2-orphen": "b2Identity", "b2-popp": "b2Identity", "b2-rem": "b2Identity",
+  "b2-rin": "b2Identity", "b2-shadow": "b2Identity", "b2-shinchan": "b2Identity",
+  "b2-sinbad": "b2Identity", "b2-takopi": "b2Identity", "b2-touka": "b2Identity",
+  "b2-uncle": "b2Identity", "b2-yogiri": "b2Identity", "b2-zenitsu": "b2Identity",
+
+  // ── 社群審查 37 裡的 16 位 ────────────────────────────────────────────────
+  // Q/R 兩格都在〔〕裡（9）
+  "community-review-07-20260907": "ggdPlaceholderMoves", // 西索
+  "community-review-13-20260907": "ggdPlaceholderMoves", // 朝田詩乃
+  "community-review-15-20260907": "ggdPlaceholderMoves", // 比利海靈頓
+  "community-review-21-20260907": "ggdPlaceholderMoves", // 鹿目圓
+  "community-review-23-20260907": "ggdPlaceholderMoves", // 坂田銀時
+  "community-review-30-20260907": "ggdPlaceholderMoves", // 尼古貓貓
+  "community-review-33-20260907": "ggdPlaceholderMoves", // 近衛刀太
+  "community-review-34-20260907": "ggdPlaceholderMoves", // 高速婆婆
+  "community-review-37-20260907": "ggdPlaceholderMoves", // 吉伊卡哇
+  // 未加〔〕但是描述性的（7）
+  "community-review-09-20260907": "descriptiveMoveName", // 赫蘿「賢狼真身」—— 賢狼是原作稱號,真身是 GGD 的詞
+  "community-review-11-20260907": "descriptiveMoveName", // 利姆路「黑炎」「水刃」—— 通用詞
+  "community-review-14-20260907": "descriptiveMoveName", // 殺老師「完全防禦形態」
+  "community-review-16-20260907": "descriptiveMoveName", // 伊莉雅「夢幻召喚・Saber」
+  "community-review-24-20260907": "descriptiveMoveName", // 奇犽「神速・疾風迅雷」—— 兩個原作詞被接成一個 GGD 名
+  "community-review-27-20260907": "descriptiveMoveName", // 庫洛魔法使「劍牌」「風牌」
+  "community-review-31-20260907": "descriptiveMoveName", // SUN樂「Accel」「Spiral Edge」
+
+  // ── 英雄聯盟 7 —— 官方來源結構上就沒有台詞 ────────────────────────────────
+  "lol-karthus": "lolNoVoiceLines", "lol-leesin": "lolNoVoiceLines",
+  "lol-lux": "lolNoVoiceLines", "lol-missfortune": "lolNoVoiceLines",
+  "lol-warwick": "lolNoVoiceLines", "lol-xerath": "lolNoVoiceLines",
+  "lol-yasuo": "lolNoVoiceLines",
+
+  // ── 變身態,本體也留空 ─────────────────────────────────────────────────────
+  "b2-maple-alt-9769eb88b85b": "formOfUnsourced",
+};
+
 // ── build ────────────────────────────────────────────────────────────────
 const { voice: maleVoice, installed: maleVoiceInstalled } = resolveMaleVoice();
+const ship = championNames();
+const retired = retiredChampionIds();
 const problems = [];
 const seenNames = new Set();
 
@@ -347,7 +526,9 @@ function addEntry(id, q) {
   const gender = q.gender === "female" || q.gender === "male" || q.gender === "neutral" ? q.gender : "neutral";
   const voice = voiceFor(gender, maleVoice);
   quotes[id] = {
-    name: q.name,
+    // ⭐ 顯示名優先讀**英雄自己的出貨文件**（一個住處）；表裡的 `name` 只是
+    //    舊的 open-roster 研究拼寫的後備 —— ⛔ 新的一列不要再抄一次顯示名。
+    name: q.name ?? ship.get(id) ?? id,
     character: q.character,
     gender,
     voice,
@@ -387,15 +568,90 @@ for (const name of Object.keys(ROSTER)) {
   if (!seenNames.has(name)) problems.push(`ROSTER name ${name} has no quote row`);
 }
 
-// (2) the remaining champions, one explicit-id entry each (full 113 coverage).
+// (2) the remaining champions, one explicit-id entry each.
 for (const e of EXTRA) {
-  seenNames.add(e.name);
+  seenNames.add(e.name ?? ship.get(e.id) ?? e.id);
   addEntry(e.id, e);
+}
+
+// (3) 變身態：名言**推導**自本體那一列（⛔ 不複製；本體改了它自動跟著改）。
+const derivedForms = [];
+for (const [formId, baseId] of Object.entries(FORM_OF)) {
+  const base = quotes[baseId];
+  if (!base) continue; // 本體自己沒有名言 ⇒ 變身態也留空（UNSOURCED 宣告過）
+  addEntry(formId, {
+    ...base,
+    name: ship.get(formId) ?? base.name,
+    source: `${base.source}（變身態：名言推導自本體 ${baseId}，⛔ 不是第二份文案）`,
+  });
+  derivedForms.push({ id: formId, base: baseId });
+}
+
+// ── ROSTER JOIN：四個方向，⭐ 兩頭都走過 ─────────────────────────────────────
+//
+// | 方向 | 級別 | 為什麼 |
+// |---|---|---|
+// | 出貨英雄**缺**名言、也**沒有**宣告缺口 | ⛔ **fatal** | ⭐ 承重的那一個 —— 漏掉＝那位英雄選起來**一句話都沒有**，⛔ 而在此之前它 exit 0 |
+// | 名言列指向 `_legacy/` 的英雄 | ⚠️ 警示 | 他被下架了，⛔ 不是打錯字；文案留著（`retiredQuotes`） |
+// | 名言列**兩邊都查不到** | ⛔ fatal | 真的漂移／打錯字 |
+// | 宣告的缺口**其實有名言**、或**不是出貨英雄** | ⛔ fatal | ⭐ 一個過期的宣告會讓閘對那一格永遠閉嘴 |
+const unsourced = [];
+for (const [id, name] of ship) {
+  if (quotes[id]) continue;
+  const reasonKey = UNSOURCED[id];
+  if (reasonKey) {
+    unsourced.push({ id, name, reasonKey, why: NO_SOURCE_REASON[reasonKey] });
+    continue;
+  }
+  problems.push(
+    `出貨英雄 ${id}（${name}）沒有名言 —— 補一列 EXTRA（source 欄要指得到一個檔的一個欄位），` +
+      `或在 UNSOURCED 裡宣告它並寫下**為什麼查不到**。⛔ 不要編一句台詞：` +
+      `編的那一句會被下一輪當成原作，而沒有任何測試分得出來。`,
+  );
+}
+
+const retiredQuotes = [];
+for (const id of Object.keys(quotes)) {
+  if (ship.has(id)) continue;
+  if (retired.has(id)) {
+    retiredQuotes.push({ id, name: quotes[id].name });
+    continue;
+  }
+  problems.push(
+    `名言列 ${id} 在 content/champions/${id}.json 與 content/_legacy/champions/${id}.json **都**查不到 —— 真的漂移，⛔ 不是下架`,
+  );
+}
+retiredQuotes.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+
+for (const [id, reasonKey] of Object.entries(UNSOURCED)) {
+  if (!NO_SOURCE_REASON[reasonKey]) {
+    problems.push(`UNSOURCED ${id} 的理由代號 "${reasonKey}" 不在 NO_SOURCE_REASON 裡`);
+    continue;
+  }
+  if (quotes[id]) {
+    problems.push(`UNSOURCED ${id} 宣告「查不到出處」，⛔ 而它其實有名言了 —— 把這一列刪掉`);
+    continue;
+  }
+  if (!ship.has(id)) {
+    problems.push(`UNSOURCED ${id} 不是出貨英雄（content/champions/${id}.json 不存在）—— 過期的宣告`);
+  }
 }
 
 if (problems.length) {
   for (const p of problems) console.error(`build-champ-quotes: ${p}`);
   process.exit(1);
+}
+if (unsourced.length) {
+  console.warn(
+    `build-champ-quotes: ⚠️ ${unsourced.length}/${ship.size} 位出貨英雄**刻意留空** —— 本機查不到可引用的出處（⛔ 不編造）。` +
+      `逐名與理由寫在 quotes.json 的 \`unsourced\`；查到出處就補一列 EXTRA 並刪掉 UNSOURCED 那一列。`,
+  );
+}
+if (retiredQuotes.length) {
+  console.warn(
+    `build-champ-quotes: ⚠️ ${retiredQuotes.length} 列名言的英雄已下架（content/_legacy/champions/）——` +
+      ` 文案留在 MANIFEST.retiredQuotes，⛔ 不算進出貨涵蓋率`,
+  );
 }
 
 // ── write ────────────────────────────────────────────────────────────────
@@ -412,7 +668,7 @@ const manifest = {
   note:
     "Per-champion famous-quote (名言) pack (task #139). Keyed by CHAMPION ID; the client (apps/client/src/audio/nameVoice.ts) fetches this verbatim and, on champ-select CONFIRM, plays clip as a THIRD segment after the 稱號→全名 call-out (task #120). Also shown as a quote in the champ-select profile (ProfileBlock.tsx). Lives under content/assets/ (NOT content/config/) for the same reason as the names pack — see docs/todo/name-voice.md — so it is NOT part of content:validate; the client's tolerant parser + nameVoice.test.ts validate it.",
   generatedBy:
-    "node tools/tts-gen/src/build-champ-quotes.mjs — DO NOT HAND-EDIT. The QUOTES + ROSTER (open-roster wave) and EXTRA (explicit-id, full 113 coverage) tables in that script are the source of truth; this file and the tts-gen input are both written from it.",
+    "node tools/tts-gen/src/build-champ-quotes.mjs — DO NOT HAND-EDIT. The QUOTES + ROSTER (open-roster wave), EXTRA (explicit-id) and FORM_OF (變身態，推導) tables in that script are the source of truth; this file and the tts-gen input are both written from it. ⭐ Coverage below is JOINED against the shipping roster (content/champions/*.json) at build time — a shipping champion with neither a quote nor a declared UNSOURCED gap makes this generator exit non-zero and NAME him. ⛔ 這裡刻意沒有任何手打的總數：在此之前它自稱一句「full ⟨手打的數字⟩ coverage」，而 roster 擴充之後那句話變成謊話，⛔ 沒有任何東西變紅（2026-09-10 量到）。",
   generator: `node tools/tts-gen/src/generate.mjs content/${QUOTES_DIR}/${TTS_MANIFEST}`,
   voice: {
     engine: "macOS say (Apple TTS)",
@@ -428,7 +684,28 @@ const manifest = {
         : `No clean Japanese male voice (${MALE_VOICE_PREFS.join(", ")}) is LISTED by \`say -v '?'\` on this build machine, so male clips are left UNRENDERED — their manifest entries still point at their intended ${maleVoice} clip path. Male does NOT fall back to ${FEMALE_VOICE} (a female voice must not stand in for a male line) nor to the novelty formant-synth voices (they cannot articulate a quote intelligibly). Install ${maleVoice} (System Settings → Accessibility → Spoken Content → Voices), then run: node tools/tts-gen/src/generate.mjs content/${QUOTES_DIR}/${TTS_MANIFEST}`),
   },
   loudness: { metric: "EBU R128 gated integrated", targetLufs: TARGET_LUFS, truePeakDb: TRUE_PEAK_DB },
-  coverage: { names: seenNames.size, ids: Object.keys(quotes).length, real: realCount, original: originalCount, byGender },
+  /**
+   * ⭐ 每一格都是**算出來的**（分母＝出貨的 champion 文件），⛔ 沒有一個手打的數字。
+   * `shippingWithQuote + unsourced === rosterShipping` 是這一段的自洽條件。
+   */
+  coverage: {
+    rosterShipping: ship.size,
+    shippingWithQuote: Object.keys(quotes).filter((id) => ship.has(id)).length,
+    unsourced: unsourced.length,
+    retiredRows: retiredQuotes.length,
+    derivedForms: derivedForms.length,
+    names: seenNames.size,
+    ids: Object.keys(quotes).length,
+    real: realCount,
+    original: originalCount,
+    byGender,
+  },
+  /** 出貨英雄裡**刻意沒有名言**的那些 —— 逐名 ＋ 為什麼查不到（⛔ 不是「還沒做」）。 */
+  unsourced,
+  /** 名言列的英雄已下架（`content/_legacy/champions/`）—— 文案留著，⛔ 不算涵蓋率。 */
+  retiredQuotes,
+  /** 變身態 ← 本體（名言是推導的，⛔ 不是第二份文案）。 */
+  derivedForms,
   fields: {
     name: "the champion's display name this quote was authored for",
     character: "source character / franchise (review aid)",
@@ -448,6 +725,10 @@ fs.mkdirSync(path.join(CONTENT, QUOTES_DIR), { recursive: true });
 fs.writeFileSync(path.join(CONTENT, QUOTES_DIR, "quotes.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 fs.writeFileSync(path.join(CONTENT, QUOTES_DIR, TTS_MANIFEST), `${JSON.stringify(ttsLines, null, 2)}\n`);
 
+console.log(
+  `build-champ-quotes: 出貨 roster ${ship.size} 位 → ${manifest.coverage.shippingWithQuote} 位有名言、` +
+    `${unsourced.length} 位刻意留空（＋${retiredQuotes.length} 列已下架、${derivedForms.length} 列變身推導）`,
+);
 console.log(
   `build-champ-quotes: ${seenNames.size} names → ${Object.keys(quotes).length} champion ids ` +
     `(${realCount} real, ${originalCount} original; male ${byGender.male}, female ${byGender.female}, ` +
