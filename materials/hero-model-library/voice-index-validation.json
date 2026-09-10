@@ -1,12 +1,9 @@
 {
   "schema": "ggd-local-audio-index-validation@1",
-  "audioFiles": 278874,
-  "groups": 962,
+  "audioFiles": 278971,
+  "groups": 963,
   "alternateFormatFiles": 168,
   "prefetchAliases": 47,
-  "originalDecoderFailedMedia": 68,
-  "exactPcm16RecoveredSeparately": 20,
-  "unresolvedFrozenDecoderMedia": 1,
   "localMissing": 0,
   "duplicatePaths": 0,
   "languagePriority": [
@@ -14,32 +11,24 @@
     "en",
     "other-or-unreviewed"
   ],
-  "priorPublishedAudioPreserved": 233417,
+  "priorPublishedAudioPreserved": 278874,
   "priorAlternateFilesPreserved": 168,
-  "priorVerifiedBackupRecordsUnchanged": 67,
-  "currentVerifiedBackupRecords": 70,
   "queriedDeliveryCounts": {
     "local-lol-decoded-audio": 165761,
     "lol-riot-ja-jp-16.18.8159717": 20603,
     "lol-local-native-pcm16-recovery-round18": 2,
     "kof-xv-ash-audio": 86,
-    "kof-xv-mai-audio": 82
+    "kof-xv-mai-audio": 82,
+    "kof-xv-iori-audio-float32-v1": 97
   },
-  "cleanCheckoutGzipQueryVerified": true,
-  "compressedManifestSha256": "f95439d0df0c0219354a998b42ba60c0bc62d9fd53bd81b4d6fa1176bc2a4829",
-  "compressedManifestBytes": 26519560,
+  "compressedManifestSha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+  "compressedManifestBytes": 26531986,
   "localUncompressedRetained": true,
-  "lolDecodedSuccess": 165761,
-  "lolCompletedPackages": 334,
-  "japaneseOfficialWads": 98,
-  "japaneseOfficialFloatWavs": 20603,
-  "independentlyRehashedNewPrimaryFiles": 20605,
+  "independentlyRehashedNewPrimaryFiles": 97,
   "documentMirrorsMatch": true,
   "synthesisReadyGroups": 0,
-  "newModelCandidates": 6,
-  "fateTextureSourceFiles": 104,
-  "fatePngs": 103,
-  "fateNativeAssetGapOpen": true,
-  "defaultModelFilesUnchanged": true,
-  "scope": "Full primary/alternate preservation and immutable delivered native failure coverage; actual clean-checkout CLI with prefetch pointers; generator local SHA plus independent Japanese/recovered hashes; not listening or GGD runtime acceptance."
+  "latestIncrementalValidation": "parallel-deliveries-20260910/audio-index-validation.json",
+  "previousBatchValidation": "parallel-deliveries-20260910/prior-voice-index-validation.json",
+  "scope": "Current audio index; all historical primary path/group/SHA/size entries, alternate encodings and prefetch aliases preserved. New Iori delivery independently rehashed; no language or speaker acceptance.",
+  "modelChanges": "priority-evidence/haga-native-visibility/final-integrity.json"
 }

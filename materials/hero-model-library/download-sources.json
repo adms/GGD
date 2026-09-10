@@ -36471,6 +36471,98 @@
         "readbackVerified": false
       },
       "audioFileIndex": null
+    },
+    {
+      "id": "kof-xv-iori-audio-float32-v1",
+      "target": "KOF XV／八神庵原包音訊／Float32",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "uploader": "miner600",
+      "format": "Original 7z / OGG Vorbis / Float32 WAV",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "purchaseDecision": "free-source-acquired-do-not-buy-duplicate",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
+      "sourceGame": "The King of Fighters XV",
+      "platform": "Unknown; source post does not identify platform or patch",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "community-forum-public-soundrip",
+      "assetKinds": [
+        "audio"
+      ],
+      "publicationStatus": "local-only-not-uploaded",
+      "files": [],
+      "packages": [
+        {
+          "filename": "XV_Iori.7z",
+          "sourceArchive": "original/XV_Iori.7z",
+          "bytes": 2259630,
+          "sha256": "3e4ef12dc8d150acb2e9759fdd46b46b1231f72ca462b5eda6180195daa60149",
+          "publisherSha256Verified": true,
+          "validationReport": "audio-validation.json",
+          "validationReportSha256": "794ad29752cdccbfdc2bef733c4376e88c4d78bf87c61956170b5118677a8787",
+          "allFilesVerified": true
+        }
+      ],
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-audio-review",
+        "selectionVerified": false
+      },
+      "audioFileIndex": {
+        "reportPath": "deliveries/local-audio-delivery-20260910T152930028503Z.json",
+        "reportSha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+      },
+      "audioGroups": [
+        {
+          "id": "XV_Iori-voice-label-unreviewed",
+          "name": "The King of Fighters XV / Iori Yagami / source-labelled voice",
+          "heroIds": [
+            "community-review-02-20260907"
+          ],
+          "pathPrefixes": [
+            "decoded-audio/XV_Iori/"
+          ],
+          "reportedLanguage": null,
+          "languageEvidence": "The source post does not explicitly label KOF XV language. Individual clip language unreviewed.",
+          "speakerVerified": false,
+          "audioCategory": "voice-label-unreviewed"
+        }
+      ],
+      "audioAcquisition": {
+        "sourceAudioCount": 97,
+        "pcmWavCount": 97,
+        "audioSeconds": 133.35066666666665,
+        "audioBytes": 26045356,
+        "nativeFormats": {
+          "vorbis": 97
+        },
+        "filesWithSamplesAboveUnity": 28,
+        "maxPeakAbsFloat": 1.0243676900863647,
+        "confirmedVoiceCount": null,
+        "synthesisReadyGroups": 0,
+        "nativeAnimationCount": 0,
+        "uniqueCharacterSfxCount": 0
+      },
+      "primaryAudioFormats": [
+        ".wav"
+      ],
+      "reportedLanguage": null,
+      "languageEvidence": "The source post does not explicitly label KOF XV language. Individual clip language unreviewed.",
+      "verification": "Complete source archive, all extracted OGG and all Float32 WAV SHA checked. Every WAV payload, frame count, sample rate and channel count checked; per-clip language and speaker pending review.",
+      "mappingEvidence": "Author archive XV_Iori mapped to Iori Yagami; not per-clip speaker confirmation.",
+      "originalDownload": {
+        "page": "https://www.mediafire.com/file/e14t1r4hvycl6g8/XV_Iori.7z/file",
+        "url": "https://download1478.mediafire.com/h1qc4urdle5gb5HxI_DcHxABpodvsBLJaBf2Zl-81zYherkF76Bx-DyrnnVu5JDA8f029Da2VOqGeKq7rMrIMLhS7sgfbGXdBid6y8GPVYaCj1jg5N1HECJCbkqA2x749VudGchyfa-6QSNH_vg3PSlr3Zmf7BTirfH8xa9pTupr1w/e14t1r4hvycl6g8/XV_Iori.7z",
+        "bytes": 2259630,
+        "sha256": "3e4ef12dc8d150acb2e9759fdd46b46b1231f72ca462b5eda6180195daa60149"
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -36873,6 +36965,514 @@
         "en"
       ],
       "defaultPolicy": "Keep all independent versions; current approved Popp derivative remains manual priority until an explicit selection change."
+    },
+    {
+      "id": "lead-vearn-mmd-sketchfab-a264ddd",
+      "target": "巴恩／大魔王バーン／Vearn：MMD 社群模型，形態未驗",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://sketchfab.com/3d-models/dragon-quest-mmd-a264ddd01e1a416abd6ec2fd17ab7bf2",
+      "uploader": "tellgamestory (@apisitzero)",
+      "originalAuthor": "鯖缶",
+      "additionalCredits": [
+        "ガンプラP：美希2_ミストバーン顔出衣装"
+      ],
+      "sourceGame": null,
+      "sourceKind": "community-authored-MMD",
+      "platform": "MMD",
+      "accessStatus": "public-metadata-no-public-archive-url-obtained",
+      "format": "MMD model advertised; actual archive format unverified",
+      "advertised": {
+        "trianglesApprox": 48200,
+        "verticesApprox": 24900,
+        "publishedAt": "2022-06-04",
+        "versionReferenced": "0.87",
+        "licenseLabel": "CC Attribution"
+      },
+      "evidence": [
+        {
+          "url": "https://sketchfab.com/3d-models/dragon-quest-mmd-a264ddd01e1a416abd6ec2fd17ab7bf2",
+          "status": "public-page-read",
+          "observation": "Download 3D Model button appears, but web extraction provides no normal archive URL. Original creator and borrowed costume are explicitly credited."
+        },
+        {
+          "url": "https://bowlroll.net/up/dl37061",
+          "status": "tool-safety-non-retryable-stopped",
+          "observation": "Original distribution URL returned URL not safe (non-retryable). No alternate endpoint or shell workaround attempted."
+        },
+        {
+          "url": "https://sketchfab.com/developers/download-api/downloading-models",
+          "status": "search-result-read-direct-open-403-stopped",
+          "observation": "Official indexed developer documentation requires an end-user OAuth access token for the download API. No API call, login, token request or viewer-geometry extraction was attempted."
+        }
+      ],
+      "reuseTerms": "Sketchfab uploader labels CC Attribution, but upstream model and borrowed costume have separate attribution. Upstream terms not retrieved; uploader label alone does not establish redistribution rights for all components.",
+      "gaps": [
+        "No actual archive, mesh, textures, skeleton, motions, voices or VFX acquired.",
+        "Old/young/transformed Vearn identity not visually or file-verified.",
+        "No native Infinity Strash provenance."
+      ],
+      "nextAction": "Normal authorized Sketchfab download or an independent creator-provided public distribution and complete upstream terms are needed; do not retry the denied Bowlroll route.",
+      "checkedAt": "2026-09-10T15:32:00.790812+00:00",
+      "ownerEntryIds": [],
+      "downloadUrl": null,
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "assetKinds": [],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase",
+      "discoveryChannel": "public-mod-workshop-community-search",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+      "files": [],
+      "upstreamArchiveSha256": null,
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "selectionVerified": false,
+        "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+      },
+      "publicationStatus": "local-research-index-only",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "assetPayloadExists": false,
+        "readbackVerified": false
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+        "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+      },
+      "verification": "本輪未取得素材。No actual archive, mesh, textures, skeleton, motions, voices or VFX acquired. Old/young/transformed Vearn identity not visually or file-verified. No native Infinity Strash provenance."
+    },
+    {
+      "id": "lead-dai-popp-shindai-mmd",
+      "target": "小呆 Dai／何布 Popp：寝台 MMD 模型",
+      "heroIds": [
+        "godie-nbbc",
+        "b2-popp"
+      ],
+      "url": "https://privatter.net/p/9295526",
+      "uploader": "寝台 (@expressssn)",
+      "originalAuthor": "寝台",
+      "sourceGame": null,
+      "sourceKind": "community-authored-MMD",
+      "platform": "MMD",
+      "accessStatus": "public-author-terms-inspected-sharing-use-not-permitted",
+      "format": "MMD model advertised; actual package unverified",
+      "advertised": {
+        "characters": [
+          "Dai",
+          "Popp",
+          "Hyunckel"
+        ],
+        "distributionVideoId": "sm41123801"
+      },
+      "evidence": [
+        {
+          "url": "https://privatter.net/p/9295526",
+          "status": "public-author-terms-read",
+          "observation": "Author permits personal edits and image/video production, including Blender or Unreal for that production purpose. Terms prohibit redistribution, commercial/paid uses, use with ripped models, and unlisted purposes."
+        },
+        {
+          "url": "https://www.nicozon.net/tag/wave%EF%BC%88niki%EF%BC%89/r/a/4",
+          "status": "public-credit-page-read",
+          "observation": "WAVE video sm41332759 credits Dai/Popp/Hyunckel to 寝台 and model distribution sm41123801. Dance motion and music are separately credited, not native game actions."
+        },
+        {
+          "url": "https://www.nicovideo.jp/watch/sm41123801",
+          "status": "tool-non-retryable-stopped",
+          "observation": "Video URL cannot be opened (non-retryable). No alternate endpoint used."
+        }
+      ],
+      "reuseTerms": "Author terms do not authorize the GGD shared model library/game use; source is retained as a rejected-for-this-use research lead only.",
+      "gaps": [
+        "No package acquired.",
+        "Not Infinity Strash, and no source-native game actions/voice/VFX established.",
+        "Existing terms exclude intended shared redistribution and do not list game use."
+      ],
+      "nextAction": "Only reconsider if the author separately grants the required use; no contact message sent.",
+      "checkedAt": "2026-09-10T15:32:00.790812+00:00",
+      "ownerEntryIds": [],
+      "downloadUrl": null,
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "assetKinds": [],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase",
+      "discoveryChannel": "public-mod-workshop-community-search",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+      "files": [],
+      "upstreamArchiveSha256": null,
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "heroIds": [
+          "godie-nbbc",
+          "b2-popp"
+        ],
+        "selectionVerified": false,
+        "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+      },
+      "publicationStatus": "local-research-index-only",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "assetPayloadExists": false,
+        "readbackVerified": false
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+        "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+      },
+      "verification": "本輪未取得素材。No package acquired. Not Infinity Strash, and no source-native game actions/voice/VFX established. Existing terms exclude intended shared redistribution and do not list game use."
+    },
+    {
+      "id": "lead-dai-jumpforce-l4d2-2298782931",
+      "target": "小呆 Dai：JUMP FORCE 移植 L4D2 Coach",
+      "heroIds": [
+        "godie-nbbc"
+      ],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+      "uploader": "Steam creator display names observed: ĐȺɨsᵾꝁɇ¹⁷³ึ / ฿ØⱠ₮Ø₭¹⁷³ึ",
+      "sourceGame": "JUMP FORCE",
+      "targetGame": "Left 4 Dead 2",
+      "sourceKind": "community-game-port",
+      "platform": "PC / Steam Workshop",
+      "accessStatus": "workshop-item-removed-stopped",
+      "format": "L4D2 mod package advertised; actual archive unverified",
+      "advertised": {
+        "title": "[DMG] DAI Jump Force Replace Coach",
+        "displaySizeMB": 197.885,
+        "postedAt": "2020-11-26",
+        "updatedAt": "2022-06-27",
+        "features": [
+          "FPS arms",
+          "facial animations",
+          "in-game icons",
+          "damage effects",
+          "hair jiggle"
+        ],
+        "dependency": "[CORE MOD] Realistic Damage"
+      },
+      "evidence": [
+        {
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+          "status": "public-page-read-item-removed",
+          "observation": "Page says item removed for Steam Community & Content Guidelines and shows incompatibility warning. No download API or alternate package retrieval attempted."
+        }
+      ],
+      "reuseTerms": "Author explicitly prohibits reupload without permission.",
+      "gaps": [
+        "No actual body archive or animation/skeleton/texture files acquired.",
+        "Low-health hair glow/rise is described as a community gameplay effect; not proof of the canonical Dragon Demon form.",
+        "Not Infinity Strash."
+      ],
+      "nextAction": "Only use a normal reinstated or independently author-published distribution with the necessary reuse grant.",
+      "checkedAt": "2026-09-10T15:32:00.790812+00:00",
+      "ownerEntryIds": [],
+      "downloadUrl": null,
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "assetKinds": [],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase",
+      "discoveryChannel": "public-mod-workshop-community-search",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+      "files": [],
+      "upstreamArchiveSha256": null,
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "heroIds": [
+          "godie-nbbc"
+        ],
+        "selectionVerified": false,
+        "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+      },
+      "publicationStatus": "local-research-index-only",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "assetPayloadExists": false,
+        "readbackVerified": false
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+        "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+      },
+      "verification": "本輪未取得素材。No actual body archive or animation/skeleton/texture files acquired. Low-health hair glow/rise is described as a community gameplay effect; not proof of the canonical Dragon Demon form. Not Infinity Strash."
+    },
+    {
+      "id": "lead-dai-jumpforce-sword-l4d2-2318399292",
+      "target": "小呆 Dai 武器：JUMP FORCE 劍移植 L4D2",
+      "heroIds": [
+        "godie-nbbc"
+      ],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+      "uploader": "Steam creator display names observed: ĐȺɨsᵾꝁɇ¹⁷³ึ / ฿ØⱠ₮Ø₭¹⁷³ึ",
+      "sourceGame": "JUMP FORCE",
+      "targetGame": "Left 4 Dead 2",
+      "sourceKind": "community-game-port",
+      "platform": "PC / Steam Workshop",
+      "accessStatus": "workshop-item-removed-stopped",
+      "format": "L4D2 weapon mod advertised; actual archive unverified",
+      "advertised": {
+        "title": "Jump Force DAI Sword Replace Cricket Bat",
+        "displaySizeMB": 15.85,
+        "postedAt": "2020-12-12",
+        "updatedAt": "2021-08-05"
+      },
+      "evidence": [
+        {
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+          "status": "public-page-read-item-removed",
+          "observation": "Page says item removed. No alternate download attempted. Weapon-only lead, never counted as a body."
+        }
+      ],
+      "reuseTerms": "No verified reusable package or author grant acquired.",
+      "gaps": [
+        "No weapon file acquired.",
+        "No native character voice or sound file verified.",
+        "Not Infinity Strash."
+      ],
+      "nextAction": "Normal author distribution needed; do not substitute removed-item retrieval.",
+      "checkedAt": "2026-09-10T15:32:00.790812+00:00",
+      "ownerEntryIds": [],
+      "downloadUrl": null,
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "assetKinds": [],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase",
+      "discoveryChannel": "public-mod-workshop-community-search",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+      "files": [],
+      "upstreamArchiveSha256": null,
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "heroIds": [
+          "godie-nbbc"
+        ],
+        "selectionVerified": false,
+        "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+      },
+      "publicationStatus": "local-research-index-only",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "assetPayloadExists": false,
+        "readbackVerified": false
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+        "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+      },
+      "verification": "本輪未取得素材。No weapon file acquired. No native character voice or sound file verified. Not Infinity Strash."
+    },
+    {
+      "id": "lead-popp-dragonquest-tact-modelsresource",
+      "target": "何布 Popp：Dragon Quest Tact 本尊線索",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "url": "https://models.spriters-resource.com/mobile/dragonquesttact/",
+      "uploader": "Unknown; character detail page not retrieved",
+      "sourceGame": "Dragon Quest Tact",
+      "sourceKind": "community-original-game-extraction-listing",
+      "platform": "Mobile",
+      "accessStatus": "http-403-stopped",
+      "format": "Unknown; package not retrieved",
+      "advertised": {
+        "listedCharacter": "Popp"
+      },
+      "evidence": [
+        {
+          "url": "https://models.spriters-resource.com/mobile/dragonquesttact/",
+          "status": "search-result-listed-direct-open-403",
+          "observation": "Search index lists Popp among game models. Direct page request returned (403) Forbidden; stopped without alternate host or ZIP access."
+        }
+      ],
+      "reuseTerms": "Unknown; source listing only.",
+      "gaps": [
+        "No individual Popp source/archive URL, skeleton, animation, texture or audio verified.",
+        "A different original game, not Infinity Strash."
+      ],
+      "nextAction": "Track until normally accessible, or locate a separate author-published package; do not retry/bypass the 403.",
+      "checkedAt": "2026-09-10T15:32:00.790812+00:00",
+      "ownerEntryIds": [],
+      "downloadUrl": null,
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "assetKinds": [],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase",
+      "discoveryChannel": "public-mod-workshop-community-search",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+      "files": [],
+      "upstreamArchiveSha256": null,
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "heroIds": [
+          "b2-popp"
+        ],
+        "selectionVerified": false,
+        "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+      },
+      "publicationStatus": "local-research-index-only",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "assetPayloadExists": false,
+        "readbackVerified": false
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+        "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+      },
+      "verification": "本輪未取得素材。No individual Popp source/archive URL, skeleton, animation, texture or audio verified. A different original game, not Infinity Strash."
+    },
+    {
+      "id": "lead-popp-summerforce-cgtrader-3827837",
+      "target": "何布 Popp：summerforce 社群綁骨模型（付費，未購）",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "url": "https://www.cgtrader.com/3d-models/character/fantasy-character/popp-dragon-quest-the-adventure-of-dai-3d-model",
+      "uploader": "summerforce",
+      "originalAuthor": "summerforce (seller attribution)",
+      "sourceGame": null,
+      "sourceKind": "community-authored-model",
+      "platform": "Blender / FBX",
+      "accessStatus": "paid-source-not-purchased",
+      "format": "Advertised Blend / FBX / OBJ / STL; not inspected",
+      "advertised": {
+        "modelId": 3827837,
+        "rigged": true,
+        "textures": true,
+        "materials": true,
+        "uvMapped": true,
+        "displaySizeMB": 75.6,
+        "publishedAt": "2022-06-21"
+      },
+      "evidence": [
+        {
+          "url": "https://www.cgtrader.com/3d-models/character/fantasy-character/popp-dragon-quest-the-adventure-of-dai-3d-model",
+          "status": "public-product-page-read",
+          "observation": "Paid product advertises complete poseable rig, textures and multiple formats. No purchase or download attempted."
+        }
+      ],
+      "reuseTerms": "Product labels Royalty Free License (no AI); no transaction or entitlement obtained.",
+      "gaps": [
+        "Not acquired; advertised rig and package quality unverified.",
+        "No native game animation, sound or VFX established.",
+        "Not Infinity Strash."
+      ],
+      "nextAction": "Do not auto-purchase; remain a paid research lead while searching normal free sources.",
+      "checkedAt": "2026-09-10T15:32:00.790812+00:00",
+      "ownerEntryIds": [],
+      "downloadUrl": null,
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "model-source-lead",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "assetKinds": [],
+      "defaultEligible": false,
+      "purchaseDecision": "no-purchase",
+      "discoveryChannel": "public-mod-workshop-community-search",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+      "files": [],
+      "upstreamArchiveSha256": null,
+      "modelCount": 0,
+      "modelCandidates": [],
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "publicRedistributionRightsVerified": false,
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "heroIds": [
+          "b2-popp"
+        ],
+        "selectionVerified": false,
+        "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+      },
+      "publicationStatus": "local-research-index-only",
+      "pendingBackup": {
+        "status": "not-uploaded",
+        "assetPayloadExists": false,
+        "readbackVerified": false
+      },
+      "sourceEvidence": {
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+        "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+      },
+      "verification": "本輪未取得素材。Not acquired; advertised rig and package quality unverified. No native game animation, sound or VFX established. Not Infinity Strash."
     }
   ],
   "ingestionPolicy": {

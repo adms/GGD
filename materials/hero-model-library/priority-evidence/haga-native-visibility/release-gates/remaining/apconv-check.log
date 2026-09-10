@@ -1,0 +1,7 @@
+
+> ggd@0.0.0 apconv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/ap-conversion/apply.py --check
+
+[apconv] 開關 enabled=True mode=replace physical=keepDamageType rounding=halfUp step=10% ap/點=0.25
+[apconv] 語料 56 支（產生器擁有 2，直接編 JSON 54）
+[apconv] check OK

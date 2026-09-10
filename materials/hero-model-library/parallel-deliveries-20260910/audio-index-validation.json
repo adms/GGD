@@ -1,0 +1,26 @@
+{
+  "schema": "ggd-audio-index-incremental-validation@1",
+  "priorCommit": "f69a9c903b9a7c3d471b1c81dd0c6a0272b806be",
+  "priorPrimaryFiles": 278874,
+  "currentPrimaryFiles": 278971,
+  "newPrimaryFiles": 97,
+  "allPriorPathsGroupsShaAndBytesPreserved": true,
+  "allPriorAlternateSourcesAndPrefetchAliasesPreserved": true,
+  "newPrimaryFilesIndependentlyRehashed": 97,
+  "queryFilesWithValidAbsolutePaths": 97,
+  "documentMirrorsMatch": true,
+  "reportedLanguage": null,
+  "speakerVerified": false,
+  "synthesisReady": false,
+  "compressedManifestSha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+  "summary": {
+    "groups": 963,
+    "audioFiles": 278971,
+    "bytes": 132953272395,
+    "missingOrSizeChanged": 0,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "alternateFormatFiles": 168,
+    "prefetchAliases": 47
+  }
+}

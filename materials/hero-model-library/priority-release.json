@@ -7,7 +7,7 @@
   "productionDeployed": false,
   "inventoryRoleCount": 157,
   "newHeroCount": 81,
-  "versionReferences": 221,
+  "versionReferences": 222,
   "registrationFailures": 0,
   "priority15": [
     {
@@ -483,14 +483,17 @@
   "preservedApprovedDerivatives": 11,
   "localFixedLibrary": {
     "before": 94,
-    "after": 137,
-    "added": 43,
-    "receipt": "current-options-admission.json"
+    "after": 138,
+    "added": 44,
+    "receipt": "current-options-admission.json",
+    "incrementalReceipts": [
+      "priority-evidence/haga-native-visibility/admission.json"
+    ]
   },
   "finishedEntryPoint": "../asset-library/current-resources.json",
   "sourceCounts": {
-    "allIndexedModels": 148,
-    "runtimeConversionDeliveries": 7
+    "allIndexedModels": 149,
+    "runtimeConversionDeliveries": 8
   },
   "audio": {
     "lolScopeHeroes": 7,
@@ -504,13 +507,15 @@
     "Forum source identity classifications remain as delivered; visual matching does not establish canonical identity.",
     "Model readiness does not imply all native VFX, skill bindings, voices or sound effects are complete.",
     "Production deployment, every-source S3 backup and KOF full-roster acquisition are not completed by this receipt.",
-    "Global model-census flags 22 retained/original/frozen geometry findings across four hero source groups; see post-registration-review.json. No hidden-geometry fix or broad visual readiness claim has been made."
+    "Original geometry findings remain retained. Haga has an independently registered visibility repair with 13 native clips and 82 direct playback samples; global geometry census and release checks are not declared passed."
   ],
   "evidence": [
     "priority-registration.json",
     "priority-evidence/final-integrity.json",
     "current-options-admission.json",
-    "priority-evidence/unpublished-v2-withdrawal.json"
+    "priority-evidence/unpublished-v2-withdrawal.json",
+    "parallel-deliveries-20260910/integration-receipt.json",
+    "priority-evidence/haga-native-visibility/final-integrity.json"
   ],
   "postRegistrationReview": "post-registration-review.json",
   "fullReleaseChecksPassed": false,
@@ -523,6 +528,24 @@
     "infinityStrash": [
       "parallel-infinity-strash-sorcerer-popp"
     ],
-    "state": "raw-reserve-pending-conversion-and-s3-backup"
-  }
+    "state": "raw-reserve-pending-conversion-and-s3-backup",
+    "kofAudio": [
+      "kof-xv-iori-audio-float32-v1"
+    ],
+    "newKofPrimaryAudioFiles": 97
+  },
+  "nativeVisibilityRepair": {
+    "sourceModelKey": "ou99.495015-native-visibility-v1",
+    "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+    "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+    "nativeAnimationCount": 13,
+    "visualSamples": 82,
+    "nonTargetVertexMaxError": 0,
+    "visibleTargetVertexMaxError": 0,
+    "hiddenTargetAreaMax": 0,
+    "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
+    "productionDeployed": false
+  },
+  "contentBuildVersion": "cv_3069a9581124",
+  "latestValidation": "priority-evidence/haga-native-visibility/release-gates/validation.json"
 }

@@ -41651,6 +41651,38 @@
       "categoryCounts": {
         "unclassified": 6
       }
+    },
+    {
+      "id": "kof-xv-iori-audio-float32-v1:XV_Iori-voice-label-unreviewed",
+      "name": "The King of Fighters XV / Iori Yagami / source-labelled voice",
+      "library": "公開來源",
+      "sourceId": "kof-xv-iori-audio-float32-v1",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 97,
+      "bytes": 26045356,
+      "knownDurationSeconds": 133.35066666666663,
+      "durationMeasuredFiles": 97,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:kof-xv-iori-audio-float32-v1"
+      ],
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "work": "The King of Fighters XV",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-label-unreviewed": 97
+      }
     }
   ],
   "backups": {
@@ -42217,12 +42249,20 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19",
       "localUseAvailable": true,
       "publicationStatus": "local-verified-s3-pending"
+    },
+    "public:kof-xv-iori-audio-float32-v1": {
+      "type": "local-intake",
+      "readbackVerified": false,
+      "localRoot": "GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
+      "localUseAvailable": true,
+      "publicationStatus": "local-verified-s3-pending"
     }
   },
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "f7a21234971f4aba7a1d349010e28450709012b9e28245d911240b391a528233"
+      "sha256": "6e167b891033abf5d570a05f6f22d35c1978ef8a1548379b6fa51e6851ad2a06"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
@@ -42535,6 +42575,22 @@
     {
       "path": "GGD-Asset-Library/intake/recovery-lol-native-pcm16-round19/delivery.json",
       "sha256": "3f925f1c034c75eb5fc0f41b7871c0c678105b4945217a9b4c7abe4e2d5d4019"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/audio-file-index.json",
+      "sha256": "e8d4212f2a1a03be7290a11b806890811783cfd9328a0018bd252f197b58105f"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
+      "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
+      "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
+      "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
@@ -93087,6 +93143,43 @@
       "mergeAllWorkflowDeliveries": true,
       "sourceChannelDoesNotOverrideDefaultClass": true,
       "downloadsUseNormalPublicOrAlreadyAuthorizedAccess": true
+    },
+    "workflowResponsibilities": {
+      "independentSourceWorkflows": [
+        "search",
+        "download",
+        "extract-and-inspect-originals",
+        "preserve-source-package-and-sha256",
+        "deliver-isolated-intake-and-evidence"
+      ],
+      "integrationWorkflow": [
+        "accept-deliveries",
+        "standardize-and-validate",
+        "preserve-native-motion-and-build-explicit-fallbacks",
+        "register-all-accepted-variants",
+        "merge-central-inventory-and-voice-index",
+        "commit-push-existing-feature-branch-and-PR"
+      ],
+      "mainWorkflow": [
+        "review-and-merge",
+        "deploy-and-verify-sites"
+      ],
+      "integrationDoesNotWaitForAllSourceSearches": true
+    },
+    "acquisitionScopeExceptions": {
+      "lol": {
+        "heroIds": [
+          "example:karthus",
+          "example:leesin",
+          "example:lux",
+          "example:missfortune",
+          "example:warwick",
+          "example:xerath",
+          "example:yasuo"
+        ],
+        "retainAlreadyAcquiredOtherCharacters": true,
+        "doNotExpandFullRoster": true
+      }
     }
   },
   "synthesisContract": {
@@ -93099,15 +93192,15 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 962,
-    "audioFiles": 278874,
-    "bytes": 132927227039,
+    "groups": 963,
+    "audioFiles": 278971,
+    "bytes": 132953272395,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "f95439d0df0c0219354a998b42ba60c0bc62d9fd53bd81b4d6fa1176bc2a4829",
-  "uncompressedFileManifestSha256": "191faa47da537d53a4596341599a81c4ec1f784512255d114610cb7f23586af0"
+  "sourceFileManifestSha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+  "uncompressedFileManifestSha256": "f9a3760bc9c403a35fb4e5122ebf9ec5c5a64cda60240441a7de27a64984b2c1"
 }

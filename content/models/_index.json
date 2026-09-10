@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "44cb8690f99f",
+  "hash": "0ff6bac98808",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -1779,6 +1779,12 @@
       "size": 276
     },
     {
+      "id": "ou99.495015-native-visibility-v1",
+      "path": "models/ou99.495015-native-visibility-v1.json",
+      "hash": "fd2415f37616",
+      "size": 373
+    },
+    {
       "id": "ou99.495015-standard",
       "path": "models/ou99.495015-standard.json",
       "hash": "572a78a5933c",
@@ -2911,6 +2917,12 @@
       "path": "models/version.body.bb883822916cba61669fe30f9b3e878ae964367229b7dd45.json",
       "hash": "80856ad23c70",
       "size": 606
+    },
+    {
+      "id": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+      "path": "models/version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a.json",
+      "hash": "118e1b837303",
+      "size": 544
     },
     {
       "id": "version.body.bd10ca5bb86915328b51bb601e4c8a82996e69678bda1255",

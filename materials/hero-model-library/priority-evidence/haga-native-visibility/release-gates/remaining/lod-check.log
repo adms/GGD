@@ -1,0 +1,5 @@
+
+> ggd@0.0.0 lod:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/lod-gen/gen_lod.py --manifest-only --check
+
+✓ _lod.json 與磁碟上的 83 顆模型一致（逐位元組）

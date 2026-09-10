@@ -3,7 +3,7 @@
   "state": "requires-main-review-before-deployment",
   "modelVersionsIntegrity": "passed",
   "registrationAndGeometryReviewAreSeparate": true,
-  "modelCensusFindingCount": 22,
+  "modelCensusFindingCount": 24,
   "affectedSources": [
     {
       "heroId": "b2-keyaru",
@@ -35,9 +35,21 @@
       ],
       "primitive": 2,
       "signal": "gore-joint and floor-slab",
-      "state": "confirmed-decay-gore-visibility-loss-pending-new-version",
+      "state": "original-visibility-loss-preserved-new-corrected-version-registered",
       "component": "49 vertices, 22 triangles, gutz00, Textures/gutz.blp; native alpha 0 for six GGD states, 1 only in Decay Flesh/Bone",
-      "nextOwner": "conversion-integration-workflow"
+      "nextOwner": "conversion-integration-workflow",
+      "correctedVersion": {
+        "sourceModelKey": "ou99.495015-native-visibility-v1",
+        "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+        "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+        "nativeAnimationCount": 13,
+        "visualSamples": 82,
+        "nonTargetVertexMaxError": 0,
+        "visibleTargetVertexMaxError": 0,
+        "hiddenTargetAreaMax": 0,
+        "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
+        "productionDeployed": false
+      }
     },
     {
       "heroId": "godie-n00b",
@@ -62,5 +74,7 @@
     "These findings do not invalidate checksums or backend registration, but do block a claim that every retained model passed full visual acceptance."
   ],
   "evidence": "priority-evidence/release-gates/models-check.log",
-  "componentReview": "priority-evidence/residual-geometry/review.json"
+  "componentReview": "priority-evidence/residual-geometry/review.json",
+  "latestModelCensusEvidence": "priority-evidence/haga-native-visibility/release-gates/models-check.log",
+  "modelCensusInterpretation": "Two additional static-geometry findings belong to the corrected Haga source and frozen version. Native direct-playback visibility has separate verified evidence; the static census gate is still failed."
 }

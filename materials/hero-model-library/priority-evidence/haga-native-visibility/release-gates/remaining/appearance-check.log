@@ -1,0 +1,6 @@
+
+> ggd@0.0.0 appearance:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> npx tsx tools/resolved-appearance/gen.ts --check
+
+⛔ ggd-resolved-appearance.json 過期 —— 跑 `pnpm appearance:build`
+ ELIFECYCLE  Command failed with exit code 1.

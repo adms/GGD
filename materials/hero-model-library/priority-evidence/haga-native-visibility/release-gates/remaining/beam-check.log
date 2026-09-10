@@ -1,0 +1,5 @@
+
+> ggd@0.0.0 beam:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/beam-orient/scan.py --check
+
+beam-orient --check: ①7 份宣告 · ②12 份被會動的節點引用（0 份沒有結論）· 共 0 條

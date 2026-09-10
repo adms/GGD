@@ -223,6 +223,37 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
       "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:haga-native-visibility-v1",
+      "modelKey": "ou99.495015-native-visibility-v1",
+      "glbPath": "assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "bytes": 658700,
+      "documentSha256": "ade84bb5a28d7e565f4eba5e2d581275e14f1d6ae6c94beb27850f2103c25368",
+      "sourceCharacter": "海星动画人",
+      "sourceWork": "來源作品待核；論壇標題：海星动画人",
+      "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand Ready",
+        "death": "Death"
+      },
+      "limitations": [
+        "This remains the previously approved Patrick Star style proxy for Haga; no identity upgrade.",
+        "All 13 original clips, original geometry, textures and motion channels retained; binary source GEOA restored by exclusive leaf-joint STEP scale.",
+        "Direct playback across 13 clips sampled; animation blending may transiently scale the decay-only geoset.",
+        "Production deployment and full gameplay acceptance remain pending."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "nativeAnimationCount": 13,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-inspect-budget-backend-prepare-and-82-sample-babylon-comparison-passed",
+      "fullCharacterPackage": false
     }
   ],
   "heroes": [
@@ -361,6 +392,27 @@
             "character": "岩谷尚文",
             "work": "盾之勇者成名錄",
             "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-haga",
+      "name": "羽賀",
+      "options": [
+        {
+          "sourceId": "runtime:haga-native-visibility-v1",
+          "sourceModelKey": "ou99.495015-native-visibility-v1",
+          "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "海星动画人",
+            "work": "來源作品待核；論壇標題：海星动画人",
+            "reference": "https://www.ou99.com/thread-495015-1-1.html"
           }
         }
       ],

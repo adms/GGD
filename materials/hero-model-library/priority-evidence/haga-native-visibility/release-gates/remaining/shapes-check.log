@@ -1,0 +1,44 @@
+
+> ggd@0.0.0 shapes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md
+
+⛔ shape_axes.json 沒有替下面這些欄位做過決定：
+     shield.onExisting  ×74
+     chance.p  ×36
+     consumeStatus.onConsumed  ×28
+     knockback.launchHeight  ×18
+     dot.tickOnApply  ×13
+     dispel.order  ×10
+     knockback.subtractGap  ×7
+     knockback.uncontrollable  ×7
+     summon.formation  ×6
+     summon.maxAlive  ×6
+     summon.spread  ×6
+     pull.destination  ×5
+     pull.stopDistance  ×5
+     (hook).on=onDashOrBlink  ×5
+     summon.championId  ×4
+     spendHealth.minimumHp  ×4
+     spendHealth.pctMaxHealth  ×4
+     (hook).on=onCrowdControlApplied  ×4
+     dot.onCasterDeath  ×4
+     (hook).on=onUltimateCast  ×3
+     evasion.chance  ×3
+     evasion.dodgesAbilities  ×3
+     (hook).on=onAllyDamaged  ×3
+     spendMana.bankAs  ×2
+     damage.bankedBonus  ×2
+     (hook).on=onHeal  ×2
+     applyStatus.healingTakenMult  ×2
+     (hook).on=onCrowdControlReceived  ×2
+     chainLightning.revisit  ×2
+     chainLightning.maxTotalJumps  ×2
+     applyStatus.sourceScope  ×1
+     status.appliedBy  ×1
+     (hook).on=onUltimateHit  ×1
+     damage.distanceScale  ×1
+     applyStatus.lifestealMult  ×1
+     applyStatus.regenMult  ×1
+     (hook).on=onShieldGained  ×1
+   ⇒ 把它加進 fields / byKind（帶軸），或加進 ignored（帶一個能被反駁的理由）。
+ ELIFECYCLE  Command failed with exit code 1.

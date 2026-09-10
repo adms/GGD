@@ -1,0 +1,5 @@
+
+> ggd@0.0.0 newhero:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/newhero/gen.ts --check
+
+✅ docs/new-hero-defaults.json 是最新的；30 組預設值全部通過自己的警示（語料 779 支技能）。

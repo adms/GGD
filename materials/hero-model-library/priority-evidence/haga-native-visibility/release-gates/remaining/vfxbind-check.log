@@ -1,0 +1,44 @@
+
+> ggd@0.0.0 vfxbind:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/vfx-bind/scan.py --check --strict
+
+綁定 58 支技能 / 未綁 132 份 fx.w3x.* emitter 文件
+投射物 1 顆接上原作飛彈 / 20 顆沒接(每一顆都帶理由)
+  MISSING   godie-e002.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e008.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00l.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00w.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-e00x.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h01n.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h01o.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-h020.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hapm.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hapm.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hart.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hjai.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hpb1.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-huth.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hvsh.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-hvwd.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-n01c.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-nbbc.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-o00x.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-ogrh.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-osam.ex —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00h.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00j.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00n.q —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00n.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00o.q —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00o.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u00v.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u010.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u01u.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-u034.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-ucrl.passive —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-udea.w —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-udre.r —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  MISSING   godie-uvng.e —— 證據過了四道閘,但 vfx-ability-art.json 沒有 promoted 列 ⇒ 這支技能拿不到原作藝術
+  EXTRA     godie-u01u.q —— promoted 有、推導沒有 ⇒ 人工裁決(閘 1/3 沒過但有人看過證據)。⛔ 這不是缺陷,列出來只是為了「沒有一列是無人知曉的」
+  EXTRA     godie-udre.q —— promoted 有、推導沒有 ⇒ 人工裁決(閘 1/3 沒過但有人看過證據)。⛔ 這不是缺陷,列出來只是為了「沒有一列是無人知曉的」
+✅ 綁定表與證據一致

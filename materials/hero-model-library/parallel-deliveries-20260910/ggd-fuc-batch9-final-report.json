@@ -1,0 +1,74 @@
+{
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9",
+  "frozen": true,
+  "files": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9/source-manifest.json",
+      "bytes": 1472,
+      "sha256": "6dc5562347ca0874ecf8711b0902bc5882e0576541c152bede3d322ad36d55d3"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9/files.sha256.json",
+      "bytes": 2013,
+      "sha256": "318044894738b8e65ef4b0fa401034c4cbb82f8a5f4f56f507938cbfe8a67190"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9/audioFileIndex.json",
+      "bytes": 951692,
+      "sha256": "aac36503b0f5beca4734f59057f3f857ad7b7f4dcd7b5e03c47f8bd759d15d33"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9/candidate-manifest.json",
+      "bytes": 75812,
+      "sha256": "8a02365ec14d39dec111e91af7e53cfe5e569250eb0b84a39d948966510ea5c1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9/local-audit.json",
+      "bytes": 274972,
+      "sha256": "0afad22bb13c765e1a3a34ce1b9ef61427cc9ce2310907cda2d535e4b62bfe00"
+    }
+  ],
+  "summary": {
+    "schema": "ggd.fuc-bounded-delivery@1",
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9",
+    "frozen": true,
+    "existingSourceCount": 10,
+    "existingOriginalArchivesRehashed": 10,
+    "existingArchiveZipCrcRechecked": 4,
+    "existingFilesHashed": 2448,
+    "existingBytesHashed": 789880649,
+    "centralReferencesPass": true,
+    "centralReferencesChecked": 800,
+    "modelCandidatesReRead": 13,
+    "uniqueCandidateGlbs": 13,
+    "modelsConvertedThisBatch": 0,
+    "audioIndexRows": 769,
+    "pcmWavFilesReRead": 739,
+    "characterPcmWavFiles": 709,
+    "bgmPcmWavFiles": 30,
+    "additionalOriginalBgmOggRows": 30,
+    "audioClassificationCounts": {
+      "voice-source-labelled": 478,
+      "character-audio-unclassified": 231,
+      "music-mod-source-labelled": 60
+    },
+    "humanVoiceLanguageIdentityReview": "not performed; source labels only",
+    "nativeFatePspFpkGmoFiles": 0,
+    "nativeFatePspModelRigMotionGapClosed": false,
+    "nativeFatePspVfxAudioGapClosed": false,
+    "newDownloadedArchives": 0,
+    "newDownloadedAssetFiles": 0,
+    "newRoutes": 4,
+    "centralGitS3OrDefaultsModified": false,
+    "problems": [],
+    "primaryReports": [
+      "local-audit.json",
+      "existing-files.sha256.json",
+      "candidate-manifest.json",
+      "audioFileIndex.json",
+      "kotomine-native-mdl-header-recheck.json",
+      "source-search-status.json",
+      "source-entry-proposals.json"
+    ]
+  }
+}

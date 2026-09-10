@@ -1,0 +1,848 @@
+{
+  "schema": "ggd-native-visibility-render@1",
+  "babylonVersion": "7.54.3",
+  "method": "Actual Babylon skinning sampled on all 13 clips, including the Decay Flesh visibility transition; identical original/corrected camera and meshes",
+  "samples": [
+    {
+      "variant": "original",
+      "clip": "Stand",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand",
+      "fraction": 0.6,
+      "timeSeconds": 0.7404,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-stand-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Stand",
+      "fraction": 1,
+      "timeSeconds": 1.234,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand 2",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand 2",
+      "fraction": 0.6,
+      "timeSeconds": 1.5197999999999998,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand 2",
+      "fraction": 1,
+      "timeSeconds": 2.533,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand 3",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand 3",
+      "fraction": 0.6,
+      "timeSeconds": 1.0404,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand 3",
+      "fraction": 1,
+      "timeSeconds": 1.734,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Spell",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Spell",
+      "fraction": 0.6,
+      "timeSeconds": 0.7002,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-spell-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Spell",
+      "fraction": 1,
+      "timeSeconds": 1.167,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand Ready",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Stand Ready",
+      "fraction": 0.6,
+      "timeSeconds": 0.6402,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-stand-ready-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Stand Ready",
+      "fraction": 1,
+      "timeSeconds": 1.067,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Attack",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Attack",
+      "fraction": 0.6,
+      "timeSeconds": 0.6,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-attack-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Attack",
+      "fraction": 1,
+      "timeSeconds": 1,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Attack 2",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Attack 2",
+      "fraction": 0.6,
+      "timeSeconds": 0.6,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Attack 2",
+      "fraction": 1,
+      "timeSeconds": 1,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Spell Slam",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Spell Slam",
+      "fraction": 0.6,
+      "timeSeconds": 0.72,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Spell Slam",
+      "fraction": 1,
+      "timeSeconds": 1.2,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Sleep",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Sleep",
+      "fraction": 0.6,
+      "timeSeconds": 1.0002,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Sleep",
+      "fraction": 1,
+      "timeSeconds": 1.667,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Death",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Death",
+      "fraction": 0.6,
+      "timeSeconds": 1.2,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-death-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Death",
+      "fraction": 1,
+      "timeSeconds": 2,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Flesh",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-decay-flesh-0.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Flesh",
+      "fraction": 0.0627,
+      "timeSeconds": 3.7620000000000005,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Flesh",
+      "fraction": 0.0629,
+      "timeSeconds": 3.774,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-decay-flesh-629.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Flesh",
+      "fraction": 0.6,
+      "timeSeconds": 36,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Flesh",
+      "fraction": 1,
+      "timeSeconds": 60,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Bone",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Bone",
+      "fraction": 0.6,
+      "timeSeconds": 36,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-decay-bone-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Decay Bone",
+      "fraction": 1,
+      "timeSeconds": 60,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Walk",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "original",
+      "clip": "Walk",
+      "fraction": 0.6,
+      "timeSeconds": 0.6,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "original-walk-6000.png"
+    },
+    {
+      "variant": "original",
+      "clip": "Walk",
+      "fraction": 1,
+      "timeSeconds": 1,
+      "sourceAlpha": 0,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand",
+      "fraction": 0.6,
+      "timeSeconds": 0.7404,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-stand-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand",
+      "fraction": 1,
+      "timeSeconds": 1.234,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand 2",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand 2",
+      "fraction": 0.6,
+      "timeSeconds": 1.5197999999999998,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand 2",
+      "fraction": 1,
+      "timeSeconds": 2.533,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand 3",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand 3",
+      "fraction": 0.6,
+      "timeSeconds": 1.0404,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand 3",
+      "fraction": 1,
+      "timeSeconds": 1.734,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Spell",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Spell",
+      "fraction": 0.6,
+      "timeSeconds": 0.7002,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-spell-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Spell",
+      "fraction": 1,
+      "timeSeconds": 1.167,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand Ready",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand Ready",
+      "fraction": 0.6,
+      "timeSeconds": 0.6402,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-stand-ready-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Stand Ready",
+      "fraction": 1,
+      "timeSeconds": 1.067,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Attack",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Attack",
+      "fraction": 0.6,
+      "timeSeconds": 0.6,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-attack-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Attack",
+      "fraction": 1,
+      "timeSeconds": 1,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Attack 2",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Attack 2",
+      "fraction": 0.6,
+      "timeSeconds": 0.6,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Attack 2",
+      "fraction": 1,
+      "timeSeconds": 1,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Spell Slam",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Spell Slam",
+      "fraction": 0.6,
+      "timeSeconds": 0.72,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Spell Slam",
+      "fraction": 1,
+      "timeSeconds": 1.2,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Sleep",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Sleep",
+      "fraction": 0.6,
+      "timeSeconds": 1.0002,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Sleep",
+      "fraction": 1,
+      "timeSeconds": 1.667,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Death",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Death",
+      "fraction": 0.6,
+      "timeSeconds": 1.2,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-death-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Death",
+      "fraction": 1,
+      "timeSeconds": 2,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Flesh",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-decay-flesh-0.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Flesh",
+      "fraction": 0.0627,
+      "timeSeconds": 3.7620000000000005,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Flesh",
+      "fraction": 0.0629,
+      "timeSeconds": 3.774,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": 0,
+      "image": "corrected-decay-flesh-629.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Flesh",
+      "fraction": 0.6,
+      "timeSeconds": 36,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": 0
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Flesh",
+      "fraction": 1,
+      "timeSeconds": 60,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": 0
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Bone",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": 0
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Bone",
+      "fraction": 0.6,
+      "timeSeconds": 36,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": 0,
+      "image": "corrected-decay-bone-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Decay Bone",
+      "fraction": 1,
+      "timeSeconds": 60,
+      "sourceAlpha": 1,
+      "goreArea": 1.5814526493585932,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": 0
+    },
+    {
+      "variant": "corrected",
+      "clip": "Walk",
+      "fraction": 0,
+      "timeSeconds": 0,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    },
+    {
+      "variant": "corrected",
+      "clip": "Walk",
+      "fraction": 0.6,
+      "timeSeconds": 0.6,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null,
+      "image": "corrected-walk-6000.png"
+    },
+    {
+      "variant": "corrected",
+      "clip": "Walk",
+      "fraction": 1,
+      "timeSeconds": 1,
+      "sourceAlpha": 0,
+      "goreArea": 0,
+      "maxBodyError": 0,
+      "maxVisibleGoreError": null
+    }
+  ],
+  "passed": true,
+  "sampleCount": 82,
+  "clipsPerVersion": 13
+}

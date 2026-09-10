@@ -1,0 +1,33 @@
+
+> ggd@0.0.0 review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> node tools/review/check.mjs
+
+[review:check] pending 354 / 資產 1250（Tier0 896 · 已審 0）
+  · [risk 128] vfx:fx.prim.arcane.pulse-sm —— 98 支上架技能引用（R/EX ×2 加權後 risk 128）；未審
+  · [risk 57] vfx:fx.prim.wind.pulse-sm —— 38 支上架技能引用（R/EX ×2 加權後 risk 57）；未審
+  · [risk 45] vfx:fx.prim.physical.slash —— 33 支上架技能引用（R/EX ×2 加權後 risk 45）；未審
+  · [risk 39] model:imported.heromusashimiyamoto —— 25 支上架技能引用（R/EX ×2 加權後 risk 39）；未審
+  · [risk 31] vfx:fx.prim.arcane.dash —— 23 支上架技能引用（R/EX ×2 加權後 risk 31）；未審
+  審查頁：http://localhost:39527/asset-review.html（pnpm dev 起 client 後）
+[review:check] 🎙 語音 51 位（ladder n=8 · 灰區 0 對進 HITL）
+  ⚠️ 分離度**判不了**：量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／1275 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）
+     ⛔ 「一對都沒選出來」不等於「沒問題」—— 它等於這一族今天沒有量尺。
+[review:check] 功能批 30（待批核 29 · 已確認 0 · 已否決 0 · 未登記 1）—— ⛔ 預設不擋部署
+  · unregistered vfx_forge_8_ability_visual-proof_20260903-0511 —— ⛔ 未登記 —— 缺 rollback 開關（config id ＋ 欄位名），⇒ 不可判定
+  · pending weather_rain_visual-proof_20260825 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending dagger_visual-proof_20260825 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending stuckescape_visual-proof_20260825 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending firering_visual-proof_20260825 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending crescent_visual-proof_20260825-2130 —— 🎯 **修復錨錯了**：登記的 de5ad2b7 **一個宣稱檔案都沒碰到**（推導出 14 個，含 abilities）—— 這個錨錯了 ⇒ 「證據比修復早」的比對在這一批上不成立
+  · pending quad_visual-proof_20260825-2200 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending penta_visual-proof_20260825-2300 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending tail_visual-proof_20260826-0000 —— ⚠️ 開關現值 0.9 ≠ 登記的 liveValue 1
+  · pending dragonslave_visual-proof_20260827-0030 —— ℹ️ 修復錨驗不了：這一批沒有登記 abilities ⇒ 宣稱集合只有 1 個 content 檔，**看不到渲染端**（`apps/client/src/render/**`）⇒ ⛔ 驗不了這個錨。補登記 --abilities 就驗得了
+  · pending dragonslave_visual-proof_20260827-fixed —— 🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending dragonslave_visual-proof_20260827 —— 🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  · pending kenshiro_visual-proof_20260827 —— 🎯 **修復錨錯了**：登記的 8bab9aa1 **只加了 _visual-proof_ 的證據圖**，零行修復 —— ⛔ 證據不是修復，這個錨一定是錯的（真正的修復是另一支 commit）
+  🎯 修復錨：⚠️ 錨錯 4 批 · ℹ️ 驗不了 15 批
+     判準是 **diff 碰到的檔案**，⛔ 不是 commit 訊息（訊息會說謊 —— tools/review/fix-anchor.mjs 檔頭）。
+     「驗不了」多半是那一批沒登記 --abilities ⇒ 推導不出它的出貨面（渲染端看不到）。
+  功能審查頁：http://localhost:39527/feature-review.html
+[review:check] 🔐 分署 OK：材料 docs/_review/material/ · 結果 docs/_review/verdicts/{local,live}.json

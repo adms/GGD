@@ -14,10 +14,10 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
-      "sha256": "6792d39a078e7bbaca3c8a0588699b8b96242de360ad971262cd26a4b1bc3412"
+      "sha256": "fecfead73c02b55bcd78c85ba8ab5180a753de2567b4e4a95114bfbee9ced98a"
     }
   ],
-  "modelSourceCount": 148,
+  "modelSourceCount": 149,
   "models": [
     {
       "id": "300heroes:20",
@@ -4563,9 +4563,21 @@
         ],
         "primitive": 2,
         "signal": "gore-joint and floor-slab",
-        "state": "confirmed-decay-gore-visibility-loss-pending-new-version",
+        "state": "original-visibility-loss-preserved-new-corrected-version-registered",
         "component": "49 vertices, 22 triangles, gutz00, Textures/gutz.blp; native alpha 0 for six GGD states, 1 only in Decay Flesh/Bone",
-        "nextOwner": "conversion-integration-workflow"
+        "nextOwner": "conversion-integration-workflow",
+        "correctedVersion": {
+          "sourceModelKey": "ou99.495015-native-visibility-v1",
+          "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+          "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+          "nativeAnimationCount": 13,
+          "visualSamples": 82,
+          "nonTargetVertexMaxError": 0,
+          "visibleTargetVertexMaxError": 0,
+          "hiddenTargetAreaMax": 0,
+          "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
+          "productionDeployed": false
+        }
       },
       "modelDocumentGitPath": "content/models/ou99.495015-standard.json"
     },
@@ -5495,6 +5507,42 @@
       ],
       "runtimeDropdownRegistered": true,
       "modelDocumentGitPath": "content/models/community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569.json"
+    },
+    {
+      "id": "runtime:haga-native-visibility-v1",
+      "modelKey": "ou99.495015-native-visibility-v1",
+      "glbPath": "assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "bytes": 658700,
+      "documentSha256": "ade84bb5a28d7e565f4eba5e2d581275e14f1d6ae6c94beb27850f2103c25368",
+      "sourceCharacter": "海星动画人",
+      "sourceWork": "來源作品待核；論壇標題：海星动画人",
+      "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand Ready",
+        "death": "Death"
+      },
+      "limitations": [
+        "This remains the previously approved Patrick Star style proxy for Haga; no identity upgrade.",
+        "All 13 original clips, original geometry, textures and motion channels retained; binary source GEOA restored by exclusive leaf-joint STEP scale.",
+        "Direct playback across 13 clips sampled; animation blending may transiently scale the decay-only geoset.",
+        "Production deployment and full gameplay acceptance remain pending."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "nativeAnimationCount": 13,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-inspect-budget-backend-prepare-and-82-sample-babylon-comparison-passed",
+      "fullCharacterPackage": false,
+      "registeredFor": [
+        "b2-haga"
+      ],
+      "runtimeDropdownRegistered": true,
+      "modelDocumentGitPath": "content/models/ou99.495015-native-visibility-v1.json"
     }
   ],
   "voiceIndex": "materials/hero-model-library/voice-index.json",

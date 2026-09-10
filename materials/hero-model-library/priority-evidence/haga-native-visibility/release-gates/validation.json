@@ -1,0 +1,51 @@
+{
+  "schema": "ggd-model-integration-batch-validation@1",
+  "fullReleaseChecksPassed": false,
+  "requiredChecksRunConcurrently": true,
+  "requiredChecks": [
+    {
+      "command": "pnpm skills:check",
+      "exit": 1,
+      "firstRemainingBlocker": "models:check: 24 preserved/static geometry findings",
+      "log": "skills-check.log",
+      "logSha256": "52a676f5b81148e038531beff7d82f6102cdb51c02d99a18c92f0d390068fa36"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exit": 1,
+      "firstRemainingBlocker": "Two pre-existing Skill Forge capability-only catalog failures",
+      "log": "editor-accept-release.log",
+      "logSha256": "55e873a4e8d480ac165231ac1e3aeba18982d96ce760bc5cdfd84d10bc3d0b69"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exit": 1,
+      "firstRemainingBlocker": "Existing claim.editor-form-receipts duplicate at unchanged type fingerprint",
+      "log": "coord-check.log",
+      "logSha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    }
+  ],
+  "pythonTests": 60,
+  "targetedModelAndRosterTests": 37,
+  "voiceTests": 7,
+  "rebuiltDocumentChecks": 8,
+  "rebuiltDocumentFailures": 0,
+  "modelNativeClips": 13,
+  "modelRenderSamples": 82,
+  "modelKhronosErrors": 0,
+  "modelKhronosWarnings": 0,
+  "modelIntegrity": "passed",
+  "newAudioFilesIndependentlyRehashed": 97,
+  "previousAudioFilesPreserved": 278874,
+  "currentAudioFiles": 278971,
+  "missingAudio": 0,
+  "otherRemainingFailures": [
+    "shapes:check: current Main shape classification missing fields",
+    "combat:check: tracked generator absent"
+  ],
+  "remainingChecks": "remaining/results.json",
+  "rebuiltChecks": "rebuilt-checks/results.json",
+  "codeAndInventoryWhitespaceCheckPassed": true,
+  "rawLogsWhitespace": "Raw captured logs retain original trailing blank lines; git diff --check reports those three evidence lines only.",
+  "productionDeployed": false
+}

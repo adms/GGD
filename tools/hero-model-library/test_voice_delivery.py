@@ -8,11 +8,18 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from voice_index import primary_audio, excluded_from_speech
+from voice_index import primary_audio, excluded_from_speech, source_audio_spec
 from query_voice import read_voice_files
 
 
 class VoiceDelivery(unittest.TestCase):
+    def test_null_model_audio_index_does_not_discard_a_real_conversion(self):
+        self.assertEqual(source_audio_spec({'audioFileIndex': None}), {})
+        conversion = {'reportPath': 'decoded.json', 'reportSha256': 'pinned'}
+        self.assertEqual(source_audio_spec({'audioFileIndex': None, 'audioConversion': conversion}), conversion)
+        explicit = {'reportPath': 'declared.json', 'reportSha256': 'other'}
+        self.assertEqual(source_audio_spec({'audioFileIndex': explicit, 'audioConversion': conversion}), explicit)
+
     def test_mixed_synthetic_provenance_does_not_identify_each_clip(self):
         self.assertTrue(excluded_from_speech('unclassified', None, True))
         self.assertTrue(excluded_from_speech('music'))

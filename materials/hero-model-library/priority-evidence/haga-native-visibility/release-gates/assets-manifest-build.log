@@ -1,0 +1,12 @@
+
+> ggd@0.0.0 assets:manifest /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh assets:manifest assets:manifest:raw
+
+🔓 隔離區:解鎖 461 份（追蹤 1434,缺 0）
+
+> ggd@0.0.0 assets:manifest:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/asset-manifest/gen.ts
+
+✅ content/assets-manifest.json —— 2565 顆 · 627.3 MB
+🔒 隔離區:上鎖 461 份（追蹤 1434,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: assets:manifest 完成（產物已重新上鎖）

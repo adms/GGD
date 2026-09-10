@@ -56,30 +56,30 @@
     }
   },
   "population": {
-    "glbFiles": 767,
-    "animatedModels": 610,
+    "glbFiles": 769,
+    "animatedModels": 612,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 512,
-      "pct": 83.9
+      "models": 514,
+      "pct": 84
     },
     "cast": {
-      "models": 336,
-      "pct": 55.1
+      "models": 338,
+      "pct": 55.2
     },
     "celebrate": {
       "models": 25,
       "pct": 4.1
     },
     "death": {
-      "models": 394,
-      "pct": 64.6
+      "models": 396,
+      "pct": 64.7
     },
     "dodge": {
-      "models": 331,
-      "pct": 54.3
+      "models": 333,
+      "pct": 54.4
     },
     "guard": {
       "models": 7,
@@ -90,11 +90,11 @@
       "pct": 9.3
     },
     "idle": {
-      "models": 579,
+      "models": 581,
       "pct": 94.9
     },
     "run": {
-      "models": 527,
+      "models": 529,
       "pct": 86.4
     }
   },
@@ -480,6 +480,11 @@
       "hurt"
     ],
     "content/assets/models/community/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb": [
       "celebrate",
       "guard",
       "hurt"
@@ -1342,6 +1347,11 @@
       "hurt"
     ],
     "content/assets/models/community/versions/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/versions/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb": [
       "celebrate",
       "guard",
       "hurt"

@@ -1,0 +1,329 @@
+{
+  "handoff": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/handoff-index.json",
+    "bytes": 7650,
+    "sha256": "f0a894194a033ae65ff121cb0f38e497a1c434fb6929055aff5896d921bc164f"
+  },
+  "newSource": {
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
+    "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
+    "manifestSha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f",
+    "entryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/public-source-entry.json",
+    "entrySha256": "57beb723bbe1d5b28f2e4a469b91407362107ab54d23db28a81a3a0cac5cb99e",
+    "sourceAudioCount": 97,
+    "pcmWavCount": 97,
+    "audioSeconds": 133.35066666666665,
+    "audioBytes": 26045356,
+    "nativeFormats": {
+      "vorbis": 97
+    },
+    "filesWithSamplesAboveUnity": 28,
+    "maxPeakAbsFloat": 1.0243676900863647,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "nativeAnimationCount": 0,
+    "uniqueCharacterSfxCount": 0,
+    "gitEligible": [
+      "public-source-entry.json",
+      "tools/acquire-iori.py",
+      "tools/validate-iori.py",
+      "tools/extract_public_sources.py"
+    ]
+  },
+  "existingSources": [
+    {
+      "sourceId": "kof-xv-ash-audio-float32-v1",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-audio-float32-v1",
+      "inMaiIoriScope": false,
+      "role": "existing-source-reverified-no-redownload",
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-audio-float32-v1/deliveries/local-audio-delivery-20260910T130503725994Z.json",
+        "bytes": 120497,
+        "sha256": "c1acf4a0716c3c9278ec68821d0a8ae6c9d05b96b0880c4a99e4520b7e5b162a"
+      },
+      "packages": [
+        {
+          "filename": "XV_Ash.7z",
+          "sourceArchive": "original/XV_Ash.7z",
+          "bytes": 1941764,
+          "sha256": "457b5d2d289ac245e35d65f8a571980e22d0af08cdb00c4c6046b53a58e1f94e",
+          "publisherSha256Verified": true,
+          "allFilesVerified": true
+        }
+      ],
+      "name": "Ash Crimson",
+      "sourceGame": "The King of Fighters XV",
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "author": "miner600",
+      "reportedLanguage": null,
+      "languageEvidence": "Uploader does not explicitly identify language; no inference from game name or archive label.",
+      "categorySummaries": [
+        {
+          "category": "unclassified-audio",
+          "count": 86,
+          "seconds": 99.16266666666667,
+          "pathPrefixes": [
+            "decoded-audio/XV_Ash/",
+            "decoded-audio/XV_Ash/streamed_audio/"
+          ],
+          "exampleNativeIds": [
+            "1003528277",
+            "1015054898",
+            "1038048311",
+            "1052984836",
+            "121473550",
+            "139502674",
+            "161874140",
+            "166298135"
+          ]
+        }
+      ],
+      "primaryAudioCount": 86,
+      "sourceNativeAudioCount": 86,
+      "audioSeconds": 99.16266666666667,
+      "nativeModelCount": 0,
+      "nativeAnimationCount": 0,
+      "standaloneVfxCount": 0,
+      "verification": {
+        "allReferencedBytesAndShaVerifiedNow": true,
+        "allFilesChecked": 182,
+        "errors": [],
+        "fullDecode": "performed in immutable delivery; this pass rehashes the full proof and exact audio bytes",
+        "perClipLanguageVerified": false,
+        "perClipSpeakerVerified": false,
+        "synthesisReady": false
+      },
+      "caveats": [
+        "Encoded variants are not new performances. Cross-game recordings have not been perceptually deduplicated.",
+        "The original source game patch and installation platform are not established by the upload date.",
+        "Existing central entry snapshots are deduplication references, not new entries to append."
+      ]
+    },
+    {
+      "sourceId": "kof-xv-mai-audio-float32-v1",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1",
+      "inMaiIoriScope": true,
+      "role": "existing-source-reverified-no-redownload",
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/deliveries/local-audio-delivery-20260910T130507939980Z.json",
+        "bytes": 114546,
+        "sha256": "cfad6cd0c25f1b9a5eb04d5bcc733b76d55120bd51c30f7aa8661e57cce20ebf"
+      },
+      "packages": [
+        {
+          "filename": "XV_Mai.7z",
+          "sourceArchive": "original/XV_Mai.7z",
+          "bytes": 1727740,
+          "sha256": "74f04841216d9ed537cb2d58bc0ea07d9c2075b0ffddc5940feb96be8363b9f4",
+          "publisherSha256Verified": true,
+          "allFilesVerified": true
+        }
+      ],
+      "name": "Mai Shiranui",
+      "sourceGame": "The King of Fighters XV",
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "author": "miner600",
+      "reportedLanguage": null,
+      "languageEvidence": "Uploader does not explicitly identify language; no inference from game name or archive label.",
+      "categorySummaries": [
+        {
+          "category": "unclassified-audio",
+          "count": 82,
+          "seconds": 96.396,
+          "pathPrefixes": [
+            "decoded-audio/XV_Mai/",
+            "decoded-audio/XV_Mai/streamed_audio/"
+          ],
+          "exampleNativeIds": [
+            "1002383309",
+            "1029374433",
+            "1047819485",
+            "1048450232",
+            "1059258334",
+            "1064689864",
+            "128083359",
+            "1557046"
+          ]
+        }
+      ],
+      "primaryAudioCount": 82,
+      "sourceNativeAudioCount": 82,
+      "audioSeconds": 96.396,
+      "nativeModelCount": 0,
+      "nativeAnimationCount": 0,
+      "standaloneVfxCount": 0,
+      "verification": {
+        "allReferencedBytesAndShaVerifiedNow": true,
+        "allFilesChecked": 171,
+        "errors": [],
+        "fullDecode": "performed in immutable delivery; this pass rehashes the full proof and exact audio bytes",
+        "perClipLanguageVerified": false,
+        "perClipSpeakerVerified": false,
+        "synthesisReady": false
+      },
+      "caveats": [
+        "Encoded variants are not new performances. Cross-game recordings have not been perceptually deduplicated.",
+        "The original source game patch and installation platform are not established by the upload date.",
+        "Existing central entry snapshots are deduplication references, not new entries to append."
+      ]
+    },
+    {
+      "sourceId": "kof-xiv-mai-audio",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio",
+      "inMaiIoriScope": true,
+      "role": "existing-source-reverified-no-redownload",
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/deliveries/local-audio-delivery-20260910T123743857192Z.json",
+        "bytes": 185526,
+        "sha256": "ce28e47821b11bf73c985bec4584498ffb0623250f6932c6e6d8a07cd6825df0"
+      },
+      "packages": [
+        {
+          "filename": "Mai_Shiranui-King_of_Fighters_XIV-Sounds.7z",
+          "sourceArchive": "original/Mai_Shiranui-King_of_Fighters_XIV-Sounds.7z",
+          "bytes": 27853894,
+          "sha256": "aca6519b71fb5367de3f9a2848d176f2c62ddb2c4f20d775d93f31a73fd8d844",
+          "publisherSha256Verified": true,
+          "validationReport": "audio-validation.json",
+          "validationReportSha256": "bd7bfc083afd11adf24554bfdfeddb969e51a3345ab7dcf76e50f407b5072476",
+          "allFilesVerified": true
+        }
+      ],
+      "name": "Mai Shiranui",
+      "sourceGame": "The King of Fighters XIV",
+      "sourceUrl": "https://sfmlab.com/project/5b875aaf-6fda-4a05-8672-7bc8b0d1261c/",
+      "author": "JP",
+      "reportedLanguage": "ja",
+      "languageEvidence": "Uploader explicitly states Japanese only; per-clip listening remains unreviewed.",
+      "categorySummaries": [
+        {
+          "category": "sfx-label-unreviewed",
+          "count": 27,
+          "seconds": 33.020045351473925,
+          "pathPrefixes": [
+            "decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/se/"
+          ],
+          "exampleNativeIds": [
+            "s_022_mai_401_fire",
+            "s_022_mai_402_fire",
+            "s_022_mai_403_rush",
+            "s_022_mai_404_rush",
+            "s_022_mai_501_ready",
+            "s_022_mai_501_ready2",
+            "s_022_mai_501_rush",
+            "s_022_mai_501_turn"
+          ]
+        },
+        {
+          "category": "voice-label-unreviewed",
+          "count": 118,
+          "seconds": 310.0490702947846,
+          "pathPrefixes": [
+            "decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/",
+            "decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/sp2/"
+          ],
+          "exampleNativeIds": [
+            "1_mai_101_1",
+            "1_mai_101_2",
+            "1_mai_101_3",
+            "1_mai_104_1",
+            "1_mai_104_2",
+            "1_mai_105_1",
+            "1_mai_106_1",
+            "1_mai_109_1"
+          ]
+        }
+      ],
+      "primaryAudioCount": 145,
+      "sourceNativeAudioCount": 145,
+      "audioSeconds": 343.0691156462585,
+      "nativeModelCount": 0,
+      "nativeAnimationCount": 0,
+      "standaloneVfxCount": 0,
+      "verification": {
+        "allReferencedBytesAndShaVerifiedNow": true,
+        "allFilesChecked": 304,
+        "errors": [],
+        "fullDecode": "performed in immutable delivery; this pass rehashes the full proof and exact audio bytes",
+        "perClipLanguageVerified": false,
+        "perClipSpeakerVerified": false,
+        "synthesisReady": false
+      },
+      "caveats": [
+        "Encoded variants are not new performances. Cross-game recordings have not been perceptually deduplicated.",
+        "The original source game patch and installation platform are not established by the upload date.",
+        "Existing central entry snapshots are deduplication references, not new entries to append."
+      ]
+    },
+    {
+      "sourceId": "kof-xv-iori-audio-float32-v1",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
+      "inMaiIoriScope": true,
+      "role": "new-source-acquired",
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
+        "bytes": 156009,
+        "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+      },
+      "packages": [
+        {
+          "filename": "XV_Iori.7z",
+          "sourceArchive": "original/XV_Iori.7z",
+          "bytes": 2259630,
+          "sha256": "3e4ef12dc8d150acb2e9759fdd46b46b1231f72ca462b5eda6180195daa60149",
+          "publisherSha256Verified": true,
+          "validationReport": "audio-validation.json",
+          "validationReportSha256": "794ad29752cdccbfdc2bef733c4376e88c4d78bf87c61956170b5118677a8787",
+          "allFilesVerified": true
+        }
+      ],
+      "name": "Iori Yagami",
+      "sourceGame": "The King of Fighters XV",
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "author": "miner600",
+      "reportedLanguage": null,
+      "languageEvidence": "Uploader does not explicitly identify language; no inference from game name or archive label.",
+      "categorySummaries": [
+        {
+          "category": "voice-label-unreviewed",
+          "count": 97,
+          "seconds": 133.35066666666665,
+          "pathPrefixes": [
+            "decoded-audio/XV_Iori/",
+            "decoded-audio/XV_Iori/streamed_audio/"
+          ],
+          "exampleNativeIds": [
+            "1029033053",
+            "1041703276",
+            "1062171527",
+            "117149375",
+            "121001225",
+            "142897026",
+            "145565016",
+            "17465007"
+          ]
+        }
+      ],
+      "primaryAudioCount": 97,
+      "sourceNativeAudioCount": 97,
+      "audioSeconds": 133.35066666666665,
+      "nativeModelCount": 0,
+      "nativeAnimationCount": 0,
+      "standaloneVfxCount": 0,
+      "verification": {
+        "allReferencedBytesAndShaVerifiedNow": true,
+        "allFilesChecked": 204,
+        "errors": [],
+        "fullDecode": "performed in immutable delivery; this pass rehashes the full proof and exact audio bytes",
+        "perClipLanguageVerified": false,
+        "perClipSpeakerVerified": false,
+        "synthesisReady": false
+      },
+      "caveats": [
+        "Encoded variants are not new performances. Cross-game recordings have not been perceptually deduplicated.",
+        "The original source game patch and installation platform are not established by the upload date.",
+        "Existing central entry snapshots are deduplication references, not new entries to append."
+      ]
+    }
+  ]
+}

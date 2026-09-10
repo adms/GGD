@@ -30,6 +30,11 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def source_audio_spec(source):
+    """A model-only delivery may explicitly declare its absent audio index null."""
+    return source.get('audioFileIndex') or source.get('audioConversion') or {}
+
+
 def excluded_from_speech(role, source_is_synthetic=None, source_contains_synthetic=None):
     """Mixed synthetic banks stay excluded without labelling every clip synthetic."""
     for flag in (source_is_synthetic, source_contains_synthetic):
@@ -172,6 +177,16 @@ def main():
                 backup=source.get('backup'),pendingBackup=source.get('pendingBackup'),
                 reason=source.get('audioFormatNote','Historical format retained; use the preferred revision.')))
             continue
+        declared=None
+        if (source.get('audioFileIndex') or {}).get('reportPath'):
+            spec=source['audioFileIndex'];path=(ws/source['localPath']/spec['reportPath']).resolve()
+            assert path.is_relative_to((ws/source['localPath']).resolve()) and sha(path)==spec['reportSha256']
+            declared=read(path)['files']
+            # Animation event references can have an explicitly empty audio index.
+            # Such a source remains in the model/source catalog; it has no audio
+            # payload whose unfinished raw-package backup belongs in this index.
+            if not declared and not source.get('nativeAudioIndex'):
+                continue
         receipt=source.get('backup',{})
         pending=source.get('pendingBackup',{})
         local_only=False
@@ -183,7 +198,7 @@ def main():
         elif receipt.get('readbackVerified'):
             archived=next(s for s in public_files['sources'] if s['id']==source['id'] and s['sha256']==receipt['sha256'])
         else:
-            spec=source.get('audioFileIndex',source.get('audioConversion',{}))
+            spec=source_audio_spec(source)
             if source.get('acquisitionStatus')!='downloaded-verified' or not spec.get('reportPath'):continue
             report_path=(ws/source['localPath']/spec['reportPath']).resolve()
             assert report_path.is_relative_to((ws/source['localPath']).resolve())
@@ -191,11 +206,6 @@ def main():
             archived=read(report_path)
             receipt=dict(readbackVerified=False)
             local_only=True
-        declared=None
-        if source.get('audioFileIndex',{}).get('reportPath'):
-            spec=source['audioFileIndex'];path=(ws/source['localPath']/spec['reportPath']).resolve()
-            assert path.is_relative_to((ws/source['localPath']).resolve()) and sha(path)==spec['reportSha256']
-            declared=read(path)['files']
         audio=primary_audio(archived['files'],declared,source.get('primaryAudioFormats'))
         if source.get('audioConversion',{}).get('decodedFloatWavCount'):
             audio=[f for f in audio if not f['path'].startswith('decoded-audio/')]
@@ -237,7 +247,7 @@ def main():
                 status='native-banks-pending-decoding-and-listening',synthesisReady=False))
         if not audio:continue
         decoded_metadata={}
-        conversion=source.get('audioFileIndex',source.get('audioConversion',{}))
+        conversion=source_audio_spec(source)
         if conversion.get('reportPath'):
             report_path=(ws/source['localPath']/conversion['reportPath']).resolve()
             assert report_path.is_relative_to((ws/source['localPath']).resolve())

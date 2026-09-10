@@ -344,7 +344,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-haga",
-  "modelKey": "version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc",
+  "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
   "name": "羽賀",
   "origin": "軟輔",
   "passiveAbility": "b2-haga.passive",
@@ -410,6 +410,24 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "118e1b83730308721690a1aea000bc533f538ab63c4733a697b05a04a9ed4a44",
+      "binarySha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "registeredAt": "2026-09-10T15:37:39.574Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "automatic"

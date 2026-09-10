@@ -4768,17 +4768,16 @@
     {
       "heroId": "b2-boxxo",
       "runtimeHeroId": "b2-boxxo",
-      "registered": [
-        "ou99:491448"
-      ],
+      "registered": [],
       "retained": [
+        "ou99:491448",
         "pet:pod"
       ],
       "failed": [],
       "before": {
         "championId": "b2-boxxo",
-        "expectedHash": "sha256:57205b28ff88b9976ede70e9c2a148fd67d16c079137240871b5bea8b6659fef",
-        "activeModelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
+        "expectedHash": "sha256:241accff55a66613722b3aa1d77c73e71d3de8c49d04dad34caa96f3efc41e17",
+        "activeModelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
         "versions": [
           {
             "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
@@ -4813,10 +4812,28 @@
               "selectionClass": "similar-proxy"
             },
             "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
+            "label": "逃亡的盗墓女孩（論壇相似模型）",
+            "sourceModelKey": "ou99.491448-standard-v3",
+            "modelSha256": "30b7a77571e7be6a1fbf2f98613a908c3c1a1e83d1d84b45b8a5b7725392382d",
+            "binarySha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+            "registeredAt": "2026-09-10T15:02:41.101Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "逃亡的盗墓女孩",
+              "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+              "library": "ou99",
+              "reference": "https://www.ou99.com/thread-491448-1-1.html",
+              "tier": "w3x",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": true
           }
         ],
         "selectionMode": "automatic",
-        "preferredModelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2"
+        "preferredModelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3"
       },
       "after": {
         "championId": "b2-boxxo",
@@ -4879,7 +4896,7 @@
         "selectionMode": "automatic",
         "preferredModelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3"
       },
-      "status": "registered"
+      "status": "unchanged"
     },
     {
       "heroId": "b2-shadow",
@@ -5776,18 +5793,17 @@
     {
       "heroId": "b2-naofumi",
       "runtimeHeroId": "b2-naofumi",
-      "registered": [
-        "runtime:naofumi-native-material-fixed-procedural-v2"
-      ],
+      "registered": [],
       "retained": [
         "300heroes:20",
-        "300heroes:81"
+        "300heroes:81",
+        "runtime:naofumi-native-material-fixed-procedural-v2"
       ],
       "failed": [],
       "before": {
         "championId": "b2-naofumi",
-        "expectedHash": "sha256:82b48c34c3c96c7738da5d989d779bba1cf13276a9691d77288e47b4eada223e",
-        "activeModelKey": "version.body.af6acbd2cc678a2ce1c4cc584a367d605b8bafda27c5046d",
+        "expectedHash": "sha256:3ff33c4fee647fd79b8cee9fc26c2ec55a9354951c8b6aeef092f0874773ff89",
+        "activeModelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
         "versions": [
           {
             "modelKey": "version.body.af6acbd2cc678a2ce1c4cc584a367d605b8bafda27c5046d",
@@ -5840,10 +5856,28 @@
               "selectionClass": "similar-proxy"
             },
             "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
+            "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
+            "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+            "modelSha256": "590e814b2bc15a9655fe0f8104dd8ddd7b4c0b2400ae46a89c651cb951d9c156",
+            "binarySha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
+            "registeredAt": "2026-09-10T15:02:43.123Z",
+            "source": {
+              "kind": "exact",
+              "character": "岩谷尚文",
+              "work": "盾之勇者成名錄",
+              "library": "GTA SA 社群 MOD",
+              "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+              "tier": "original",
+              "selectionClass": "community-mod"
+            },
+            "automaticEligible": true
           }
         ],
         "selectionMode": "automatic",
-        "preferredModelKey": "version.body.af6acbd2cc678a2ce1c4cc584a367d605b8bafda27c5046d"
+        "preferredModelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8"
       },
       "after": {
         "championId": "b2-naofumi",
@@ -5924,7 +5958,7 @@
         "selectionMode": "automatic",
         "preferredModelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8"
       },
-      "status": "registered"
+      "status": "unchanged"
     },
     {
       "heroId": "b2-makoto",
@@ -6365,7 +6399,9 @@
     {
       "heroId": "b2-haga",
       "runtimeHeroId": "b2-haga",
-      "registered": [],
+      "registered": [
+        "runtime:haga-native-visibility-v1"
+      ],
       "retained": [
         "ou99:495015",
         "300heroes:319"
@@ -6434,8 +6470,8 @@
       },
       "after": {
         "championId": "b2-haga",
-        "expectedHash": "sha256:2c6e244749888fb2d2a129377cd5ad5d27da99c9f4cf6deee65def6e6a01765d",
-        "activeModelKey": "version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc",
+        "expectedHash": "sha256:5c93de8223b76af6ed01c3346285f9585138b2e3b7c40d64552138839f97b108",
+        "activeModelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
         "versions": [
           {
             "modelKey": "version.body.2226d94021dd15a4fb18d9e3f3793f1f20f546b4d88f403b",
@@ -6488,12 +6524,30 @@
               "selectionClass": "similar-proxy"
             },
             "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+            "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+            "sourceModelKey": "ou99.495015-native-visibility-v1",
+            "modelSha256": "118e1b83730308721690a1aea000bc533f538ab63c4733a697b05a04a9ed4a44",
+            "binarySha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+            "registeredAt": "2026-09-10T15:37:39.574Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "海星动画人",
+              "work": "來源作品待核；論壇標題：海星动画人",
+              "library": "ou99",
+              "reference": "https://www.ou99.com/thread-495015-1-1.html",
+              "tier": "w3x",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": true
           }
         ],
         "selectionMode": "automatic",
-        "preferredModelKey": "version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc"
+        "preferredModelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a"
       },
-      "status": "unchanged"
+      "status": "registered"
     },
     {
       "heroId": "b2-guts",
@@ -6668,17 +6722,16 @@
     {
       "heroId": "b2-keyaru",
       "runtimeHeroId": "b2-keyaru",
-      "registered": [
-        "ou99:458777"
-      ],
+      "registered": [],
       "retained": [
+        "ou99:458777",
         "300heroes:119"
       ],
       "failed": [],
       "before": {
         "championId": "b2-keyaru",
-        "expectedHash": "sha256:e51371976f118b3b284fad5a869e10bd6d9ec9bde586654596dfcdd277e20dc4",
-        "activeModelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
+        "expectedHash": "sha256:098a6b202dbf662f958caeb19ea5ddc1e29004f9b666edcb82b322a086d85beb",
+        "activeModelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
         "versions": [
           {
             "modelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
@@ -6713,10 +6766,28 @@
               "selectionClass": "similar-proxy"
             },
             "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
+            "label": "假面绅士（論壇相似模型）",
+            "sourceModelKey": "ou99.458777-standard-v3",
+            "modelSha256": "b699fba95c852fadf85c977e59fd0fa542bf73a024d7d83089d1ca3490aeb395",
+            "binarySha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+            "registeredAt": "2026-09-10T15:02:45.029Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "假面绅士",
+              "work": "來源作品待核；論壇標題：假面绅士",
+              "library": "ou99",
+              "reference": "https://www.ou99.com/thread-458777-1-1.html",
+              "tier": "w3x",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": true
           }
         ],
         "selectionMode": "automatic",
-        "preferredModelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0"
+        "preferredModelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3"
       },
       "after": {
         "championId": "b2-keyaru",
@@ -6779,7 +6850,7 @@
         "selectionMode": "automatic",
         "preferredModelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3"
       },
-      "status": "registered"
+      "status": "unchanged"
     },
     {
       "heroId": "b2-kaede",
@@ -8681,17 +8752,16 @@
     {
       "heroId": "b2-aladdin",
       "runtimeHeroId": "b2-aladdin",
-      "registered": [
-        "ou99:473324"
-      ],
+      "registered": [],
       "retained": [
+        "ou99:473324",
         "300heroes:112"
       ],
       "failed": [],
       "before": {
         "championId": "b2-aladdin",
-        "expectedHash": "sha256:e1bfed520918d6d2c2a4ed94dfc528a6e1fadc2546be8fe7b938bde41a8dca71",
-        "activeModelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
+        "expectedHash": "sha256:7f769b08bbb84ab702faee881ea814c84d727c241c1d49aea93df4023307db2e",
+        "activeModelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
         "versions": [
           {
             "modelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
@@ -8726,10 +8796,28 @@
               "selectionClass": "similar-proxy"
             },
             "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
+            "label": "龙族亚瑟王（論壇相似模型）",
+            "sourceModelKey": "ou99.473324-standard-v3",
+            "modelSha256": "6bb691777a316f102cc2c6235954bc0a0e7019975068175495ebb1a843b457b8",
+            "binarySha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5",
+            "registeredAt": "2026-09-10T15:02:48.705Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "龙族亚瑟王",
+              "work": "來源作品待核；論壇標題：龙族亚瑟王",
+              "library": "ou99",
+              "reference": "https://www.ou99.com/thread-473324-1-1.html",
+              "tier": "w3x",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": true
           }
         ],
         "selectionMode": "automatic",
-        "preferredModelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6"
+        "preferredModelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874"
       },
       "after": {
         "championId": "b2-aladdin",
@@ -8792,7 +8880,7 @@
         "selectionMode": "automatic",
         "preferredModelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874"
       },
-      "status": "registered"
+      "status": "unchanged"
     },
     {
       "heroId": "b2-ned",
