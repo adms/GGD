@@ -379,7 +379,7 @@
     }
   },
   "round11": {
-    "enabled": false,
+    "enabled": true,
     "arenaId": "arena.royale",
     "durationSec": 600,
     "triggerBossKills": 3,

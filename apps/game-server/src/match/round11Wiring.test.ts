@@ -33,10 +33,29 @@ describe("第十一回合的設定 → 判定 接線（GH#1151）", () => {
     expect(r.round11.triggerBossKills).toBe(DOC.round11.triggerBossKills);
   });
 
-  it("⛔ 出貨設定今天是**關著**的 ⇒ 走完整條路仍然不進場", () => {
+  it("⭐⭐ 開關**兩個方向都真的接到底** —— ⛔ 不是「今天關著所以不會進」", () => {
+    // ⚠️⚠️ ⭐ 這一條**換過前提**（2026-09-10）。
+    //   ⛔ 原本它斷言 `enabled === false`，理由是「sim 那一半還沒做完」——
+    //   ⭐ 而 owner 2026-09-09 逐字「**round11快上線**」，七段全部接上之後那一格開了。
+    //
+    // ⭐ 而它在防的東西**還在**：那一格必須真的**接到判定**，⛔ 不是一個裝飾。
+    //   ⇒ 改成驗**兩個方向**（⛔ 一把只驗過單邊的尺不算自證過）：
+    //     · 照出貨設定 ⇒ 門檻到了就進、⛔ 差一個就不進
+    //     · **把那一格關掉** ⇒ ⛔ 門檻再高也不進
     const r = rulesFromDoc(DOC);
-    expect(r.round11.enabled, "⛔ 出貨不可以是開的（sim 那一半還沒做完）").toBe(false);
-    expect(shouldEnterRound11(r.round11, ROUND11_PRECEDING_ROUND, 999)).toBe(false);
+    const need = r.round11.triggerBossKills;
+
+    // ⭐ 開著（出貨）：達門檻進場，⛔ 差一個不進
+    expect(r.round11.enabled, "⭐ 出貨今天是開的（owner：round11快上線）").toBe(true);
+    expect(shouldEnterRound11(r.round11, ROUND11_PRECEDING_ROUND, need)).toBe(true);
+    expect(shouldEnterRound11(r.round11, ROUND11_PRECEDING_ROUND, need - 1)).toBe(false);
+
+    // ⛔ 關掉那一格 ⇒ ⭐ 門檻再高也不進（**rollback 真的有效**）
+    const off = rulesFromDoc({ ...DOC, round11: { ...DOC.round11, enabled: false } });
+    expect(
+      shouldEnterRound11(off.round11, ROUND11_PRECEDING_ROUND, 999),
+      "⛔ 關掉之後還進得去 ⇒ 那一格不是 rollback,是裝飾",
+    ).toBe(false);
   });
 
   it("⭐ 把開關打開（**只在測試裡**）⇒ 同一條路會進場 —— 證明它⛔不是裝飾", () => {

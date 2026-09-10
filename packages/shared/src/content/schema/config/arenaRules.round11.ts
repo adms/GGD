@@ -409,7 +409,22 @@ export type Round11Config = z.infer<typeof zRound11Config>;
  * ⛔ 打開它今天不會發生任何事，⭐ 而那正是它關著的理由。
  */
 export const SHIPPED_ROUND11: Round11Config = {
-  enabled: false,
+  /**
+   * ⭐⭐ 2026-09-10 **打開**（owner 2026-09-09 23:53 逐字：「**round11快上線**」，票 #1151
+   * 標題就是「第十一回合生存模式**上線**」）。
+   *
+   * ⛔ 它在此之前是 `false`，理由逐字是「**sim 那一半還沒做**」——
+   * ⭐ 而那個理由今天不成立了：A/B/C/D/E/F/G 七段全部有出貨消費端，
+   * `round11.*` 30 個葉節點沒有一格是裝飾（`enabledSwitchesHaveConsumers` 在守），
+   * 663/663 綠。
+   *
+   * ⭐ **rollback ＝ 這一格**：後台轉回 `false`，整個區塊逐位元 no-op
+   * （`content/` 是 live bind-mount ⇒ ⛔ 不必重新部署）。
+   *
+   * ⚠️⚠️ ⭐ 而它**尚未經過真人畫面驗收**（五道界線的第④道）：
+   * ⭐ 機制驗得完，⛔ 「像不像一回合生存模式」驗不了 —— 那只有真人看得出來。
+   */
+  enabled: true,
   arenaId: "arena.royale",
   durationSec: 600,
   triggerBossKills: 3,
