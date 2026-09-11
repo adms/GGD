@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_93bb9d65b145",
+    "contentVersion": "cv_bd090db66d00",
     "collections": {
       "champions": {
         "hash": "9ba65f7bcf1f",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "8fb213a6a7ba",
+        "hash": "b4016d0efdee",
         "count": 103
       },
       "models": {
@@ -8072,28 +8072,28 @@
             "unlocked": 500000
           },
           "maxHealth": {
-            "base": 581152,
-            "unlocked": 581152
+            "base": 402129,
+            "unlocked": 402129
           },
           "maxMana": {
-            "base": 352091,
-            "unlocked": 352091
+            "base": 240323,
+            "unlocked": 240323
           },
           "healthRegen": {
-            "base": 1235,
-            "unlocked": 1235
+            "base": 929,
+            "unlocked": 929
           },
           "manaRegen": {
-            "base": 2351,
-            "unlocked": 2351
+            "base": 1248,
+            "unlocked": 1248
           },
           "ad": {
-            "base": 23056,
-            "unlocked": 23056
+            "base": 21532,
+            "unlocked": 21532
           },
           "armor": {
-            "base": 6638,
-            "unlocked": 6638
+            "base": 4620,
+            "unlocked": 4620
           },
           "mr": {
             "base": 15311,
@@ -8413,11 +8413,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "ede2bbc309a6",
+    "fingerprint": "34d5c9e60d22",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "90993aa09f3d"
+        "digest": "89aa8c93f674"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8483,5 +8483,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "c7031b2c55b1"
+  "profileDigest": "362e21be02b3"
 }
