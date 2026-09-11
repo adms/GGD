@@ -131,6 +131,13 @@ describe("週期領域的採用阻塞點 (periodic-field adoption blocker)", () 
     //
     // ⭐ 判準留給下一輪：`mult` 是**整份酬載**的倍率，所以**每一個讀傷害量的消費端**
     //   都要乘它。今天量到兩個（印的、對帳的）——⛔ 新增第三個讀端時要先問這一題。
-    ).toEqual({ engineReady: true, referencedBy: 5 });
+    //
+    // ⭐ 2026-09-11：`referencedBy` 5 → **7**。⛔ 不是有人「先套內容」（訊息的第二個分支）
+    //   —— 引擎早就接上了（`engineReady` 2026-08-30 就翻成 true）。
+    //   多出來的兩支是 `community-review-11-20260907.r` 與 `community-review-12-20260907.r`，
+    //   ⭐ 它們在 `4b5713641`（2026-09-10 社群 37 名上架）**帶著這個家族一起進來**
+    //   （`git log -S tpl-periodic-field` 逐支查過，⛔ 不是推論）。
+    //   ⇒ ⭐ 這是**採用率上升**，是這張票要的方向。
+    ).toEqual({ engineReady: true, referencedBy: 7 });
   });
 });

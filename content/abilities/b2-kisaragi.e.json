@@ -20,6 +20,11 @@
           "kind": "blink",
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.arcane.pulse",
+              "at": "point"
+            },
+            {
               "amount": {
                 "damageTier": "極小"
               },
@@ -70,6 +75,11 @@
               "applyTo": "self",
               "kind": "blink",
               "onArrive": [
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.arcane.pulse",
+                  "at": "point"
+                },
                 {
                   "amount": {
                     "damageTier": "極小"

@@ -210,6 +210,11 @@
           "kind": "blink",
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.wind.pulse",
+              "at": "point"
+            },
+            {
               "absorbs": "all",
               "amount": {
                 "flat": 180,
@@ -270,6 +275,11 @@
               },
               "kind": "blink",
               "onArrive": [
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.wind.pulse",
+                  "at": "point"
+                },
                 {
                   "absorbs": "all",
                   "amount": {
