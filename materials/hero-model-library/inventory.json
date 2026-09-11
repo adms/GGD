@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T07:33:02+08:00",
-  "inputsSha256": "fac79894bf20b7635202a97f82a53faab9d8a387bbe1dd609171d1b4f9ac75f8",
+  "generatedAt": "2026-09-11T08:32:39+08:00",
+  "inputsSha256": "bdbca00ea03beff1fabd1f8afdf27e7941cde6e5cb7b669eb6010d7b9857acc4",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -66789,7 +66789,7 @@
         "accessStatus": "public-git-lfs",
         "acquisitionStatus": "downloaded-verified",
         "defaultEligible": false,
-        "verification": "公開固定版本整庫已取得：28,681 個 LFS 檔案／16,148,574,001 bytes 全部重新計算 SHA-256 與原始 LFS OID 一致，包含 1,793 個 Blender 檔與 26,885 PNG／2 DDS／1 個 7z。279 個原生路徑群包括角色全配色、助手、頭目、敵人及寶可夢；檔數及路徑群數不等於獨立角色數。Blender 骨架／動作內容尚未逐檔解析，不能據此宣稱完整動作庫。完整本機檔案含 Git／LFS 原始缓存保留，完整 ZIP 已在本機封存並讀回驗證，S3 上傳另行處理；按需轉換。",
+        "verification": "公開固定版本整庫已取得：28,681 個 LFS 檔案／16,148,574,001 bytes 全部重新計算 SHA-256 與原始 LFS OID 一致，包含 1,793 個 Blender 檔與 26,885 PNG／2 DDS／1 個 7z。279 個原生路徑群包括角色全配色、助手、頭目、敵人及寶可夢；檔數及路徑群數不等於獨立角色數。Blender 骨架／動作內容尚未逐檔解析，不能據此宣稱完整動作庫。完整本機檔案含 Git／LFS 原始缓存保留，完整 ZIP 已在本機封存並讀回驗證，S3 上傳另行處理；按需轉換。 已完成分段 ZIP 的逐片與有序整體 S3 讀回、以及固定 ZIP 逐成員 SHA-256 驗證。",
         "localPath": "GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models",
         "commit": "df76879171b064570b4e49a608c9f98211b33edb",
         "sourceGame": "Super Smash Bros. Ultimate",
@@ -68215,7 +68215,7 @@
           "model",
           "texture"
         ],
-        "publicationStatus": "local-only-preparing-s3-backup",
+        "publicationStatus": "s3-readback-verified",
         "nativeAssetCounts": {
           "blenderFiles": 1793,
           "pngTextures": 26885,
@@ -68237,14 +68237,15 @@
         "files": [],
         "reuseTerms": "來源作者與使用說明完整保留；來源擷取與標準化驗收分開追蹤。",
         "usage": "reserved intake; no automatic runtime selection",
-        "pendingBackup": {
-          "localArchive": "outputs/model-source-backups/gitlab-ssbu-models/9830d8001d3953ae230736a7584d58df0daf09507a81568fbde4d33ab02edc92.zip",
-          "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gitlab-ssbu-models/9830d8001d3953ae230736a7584d58df0daf09507a81568fbde4d33ab02edc92.zip",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gitlab-ssbu-models/9830d8001d3953ae230736a7584d58df0daf09507a81568fbde4d33ab02edc92/split/manifest-870f2f75e21bc9adf65d43a1534b023f7064c0fadddc558a18eeaeb224c9ac7b.json",
           "bytes": 11790760182,
           "sha256": "9830d8001d3953ae230736a7584d58df0daf09507a81568fbde4d33ab02edc92",
-          "readbackVerified": false,
-          "status": "upload-returned-success-readback-404",
-          "verificationError": "HeadObject returned 404 for plannedS3Uri after CLI upload exit 0; prefix listing empty. No readback receipt; local original/archive retained."
+          "archiveFormat": "split-zip",
+          "archiveManifestSha256": "870f2f75e21bc9adf65d43a1534b023f7064c0fadddc558a18eeaeb224c9ac7b",
+          "readbackVerified": true,
+          "orderedArchiveReadbackVerified": true,
+          "allMemberSha256Verified": true
         }
       },
       {
