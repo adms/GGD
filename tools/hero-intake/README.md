@@ -73,6 +73,27 @@ pnpm hero:intake --batch ship34 --from docs/_review/material/hero-intake/ship34.
 ⛔ 機器不替 owner 決定「`300heroes:70` 那個叫青丘国主的，是不是漩渦鳴人」——
 它只負責把**證據並排**（owner 2026-09-08：「同名匹配只是候選」）。
 
+## 👁 審查頁要能**看跟聽** —— ⛔ 一張狀態表不算審查頁
+
+> owner 2026-09-11：「你應該是要給我**審查頁** 裡面**可以看跟聽**吧」
+
+⭐ 這一條是 CLAUDE.md「非結構化資產的驗收流水線」的 Tier 2：機器只負責把**證據並排**，
+⛔ 它不替 owner 判斷「這顆模型是不是這位角色」「這個聲音配不配」。⇒ 一頁要同時給：
+
+| 給什麼 | 怎麼來 | 住處 |
+|---|---|---|
+| 🧍 **模型實拍** | 真的把那顆 glb 載進 three.js 拍一張（⛔ 不是示意圖），⭐ 每張量非透明像素，空的擋下 | `tools/hero-intake/shots/` |
+| 🎙 **原作語音** | 每位 4–6 段，涵蓋台詞／大招／陣亡／攻擊／移動／嘲諷；⛔ 已排除中文配音檔。合成一條精靈音軌＋位移表 | `build-review-page.py` |
+| 🧑‍⚖️ **通過／退回** | 退回必填原因；寫進 artifact 的 `db`（跨裝置、跨重整都在） | 同上 |
+
+```sh
+python3 tools/hero-intake/build-review-page.py \
+  --material docs/_review/material/hero-intake/ship34.json \
+  --work <工作目錄> --out <輸出>.html
+```
+
+⭐ 頁面**自足**：圖與音都內嵌成 data URI（5.2 MB）⇒ ⛔ 不依賴任何外部資源、⛔ 不會因為素材庫搬家而變空白。
+
 ## ⛔ 三件它**不做**的事
 
 1. **不裁決**：只算 `blockers`／`warnings`，通過與否是 owner 在後台按的。
