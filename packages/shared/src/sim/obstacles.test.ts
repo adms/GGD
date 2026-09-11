@@ -72,7 +72,9 @@ describe("spawnObstacle（GH#1190）", () => {
 
   it("驗收②：落點壓在既有障礙上 ⇒ 柱子被推到合法位置，⛔ 不是不生也不是重疊", () => {
     const a = rig();
-    const wall = Z0.obstacles[0];
+    // ⚠️ `Obstacle` 是 union —— 圓形那一支才有 center/radius（⛔ 不可以直接取）
+    const wall = Z0.obstacles.find((o) => o.kind === "circle");
+    if (wall === undefined || wall.kind !== "circle") throw new Error("骨架場地應該有圓形障礙");
     // 落點正中既有靜態障礙的圓心
     const ctx = { ...a.ctx(a.hero), point: { x: wall.center.x, z: wall.center.z } };
     runEffects([{ kind: "spawnObstacle", radius: 1.5, durationSec: 5, at: "point" }], ctx);
