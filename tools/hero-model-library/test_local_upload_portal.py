@@ -52,11 +52,15 @@ class LocalUploadPortalTest(unittest.TestCase):
                 'steam-intakes/steam-1850510-infinity-library-1/files/Game/Content/Paks/pakchunk0-WindowsClient.pak'))
             result = portal.finalize_collection({'collection': 'steam-1850510-infinity-library-1',
                 'libraryLabel': 'SteamLibrary', 'gameName': 'Infinity Strash', 'appId': '1850510',
-                'installDir': 'InfinityStrash', 'uploads': [state['id']]})
+                'installDir': 'InfinityStrash', 'buildId': '123456', 'manifestLastUpdated': '1780000000',
+                'prioritySource': True, 'detectedAssetKinds': ['Unreal'], 'uploads': [state['id']]})
             intake = json.loads(Path(result['manifestPath']).read_text())
             self.assertEqual(intake['fileCount'], 1)
             self.assertEqual(intake['files'][0]['assetFamily'], 'unreal')
             self.assertEqual(intake['postProcessing']['state'], 'queued')
+            self.assertEqual(intake['buildId'], '123456')
+            self.assertTrue(intake['prioritySource'])
+            self.assertEqual(intake['detectedAssetKinds'], ['Unreal'])
 
     def test_steam_collection_rejects_path_traversal(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -64,6 +68,13 @@ class LocalUploadPortalTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'relative path'):
                 portal.init({'name': 'asset.pak', 'size': 1, 'lastModified': 2,
                              'collection': 'steam-test-library-1', 'relativePath': '../asset.pak'})
+
+    def test_steam_collection_rejects_invalid_scanner_metadata(self):
+        with tempfile.TemporaryDirectory() as folder:
+            portal = mod.Portal(Path(folder), 'fixture', 64, postprocess=False)
+            with self.assertRaisesRegex(ValueError, 'asset kinds'):
+                portal.finalize_collection({'collection': 'steam-test-library-1', 'uploads': [],
+                                            'detectedAssetKinds': 'Unreal'})
 
 
 if __name__ == '__main__':
