@@ -44,6 +44,18 @@ function* subsetsUpTo<T>(values: readonly T[], limit: number): Generator<T[]> {
   yield* visit(0, []);
 }
 
+/**
+ * ⭐ GH#1211（2026-09-11）：`id` 的 schema 上限是 **64 字**，而
+ * `matrix-` (7) ＋ `hero-template.` (14) ＋ 48 位 sha = **69** ⇒ ⛔ ZodError。
+ *
+ * ⚠️ 那 24 份 `hero-template.<sha>` 是社群英雄鑄造出來的一族，⭐ 它們**本來就長**。
+ * ⇒ ⛔ 錯的不是模板 id，是這支測試把它整段接在前綴後面。
+ * ⚠️ ⭐ 而**只截 64 還不夠**：技能 id 是從 heroId 再接後綴長出來的（最長 `.passive` ＝ 8）
+ *   ⇒ heroId 本身要留出那 8 個字 ⇒ 上限 **56**。
+ * ⭐ 截斷仍然唯一：`matrix-hero-template.` 佔 21 字，剩下 35 位 sha 遠超過碰撞所需。
+ */
+const matrixHeroId = (templateId: string): string => `matrix-${templateId}`.slice(0, 56);
+
 describe("hero forge live catalog matrix", () => {
   it("generates all 10 origins across all three deterministic profiles", () => {
     const catalog = templates();
@@ -76,7 +88,7 @@ describe("hero forge live catalog matrix", () => {
       const slot = expand(template, params).innateKind === "passive" ? "PASSIVE" : "Q";
       const plan = structuredClone(basePlan(catalog));
       plan.slots[slot] = { ...plan.slots[slot], products: [{ instanceId: "first", template: { ref: template.id, params } }], capabilityIds: [...template.requires] };
-      const result = compileGeneratedHeroDraft(generateHeroDraft(plan, { heroId: `matrix-${template.id}`, heroName: template.name, templateParamsById: Object.fromEntries(catalog.map((item) => [item.id, defaultParamsFor(item)])) }), catalog, configs);
+      const result = compileGeneratedHeroDraft(generateHeroDraft(plan, { heroId: matrixHeroId(template.id), heroName: template.name, templateParamsById: Object.fromEntries(catalog.map((item) => [item.id, defaultParamsFor(item)])) }), catalog, configs);
       if (!result.ok) { failures.push(`${template.id}: compile ${result.failures.map((failure) => failure.message).join(";")}`); continue; }
       const ability = result.draft.abilityDrafts[slot];
       for (const rank of [...new Set([1, ability.maxRank])]) {
