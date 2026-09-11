@@ -423,7 +423,7 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
         { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
       );
       void raw;
-      res.rig = checkRig(plan.file, geoOut, plan.geo.targetTris);
+      res.rig = checkRig(plan.file, geoOut, "fewer");
       if (!res.rig.ok) {
         res.rejected = `geometry decimation broke the rig (${res.rig.reasons.join("; ")}) — candidate rejected, not written`;
         return res;
