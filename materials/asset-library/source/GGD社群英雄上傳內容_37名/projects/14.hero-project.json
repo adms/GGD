@@ -230,34 +230,35 @@
       "E": {
         "slot": "E",
         "name": "〔觸手再生〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】消耗資源分段恢復生命，受控制時停止。\n【待補機制】目前立即回血；需分段再生與受控中止。",
+        "purpose": "【目前模板可執行】自身回復 100 點生命。\n【目標設計】消耗資源分段恢復生命，受控制時停止。\n【待補機制】目前立即回血；需分段再生與受控中止。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100,
-                "ratios": []
-              },
-              "applyTo": "self"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-14-20260907-e-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 100,
+                      "ratios": []
+                    },
+                    "applyTo": "self"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
@@ -276,37 +277,38 @@
       "R": {
         "slot": "R",
         "name": "完全防禦形態",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":180,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-14-20260907.r.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】進入短暫球體防禦，期間無法移動及施法；結束後有明顯恢復動作。\n【待補機制】需球體變形、禁移動禁施法與限時防禦；目前只有盾。",
+        "purpose": "【目前模板可執行】自身獲得 180 點護盾，持續 3 秒。\n【目標設計】進入短暫球體防禦，期間無法移動及施法；結束後有明顯恢復動作。\n【待補機制】需球體變形、禁移動禁施法與限時防禦；目前只有盾。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
           "manaCostTier": "大",
-          "castTimeTier": "大",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 180,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-14-20260907.r.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "大"
         },
         "products": [
           {
             "instanceId": "community-review-14-20260907-r-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 180,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-14-20260907.r.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

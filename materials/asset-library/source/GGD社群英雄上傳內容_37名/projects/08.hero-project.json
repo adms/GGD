@@ -230,31 +230,32 @@
       "E": {
         "slot": "E",
         "name": "〔補給與換刃〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫停留更換刀刃並補充部分氣體；受到控制會中斷。\n【待補機制】需換刃及氣體資源／控制中斷。",
+        "purpose": "【目前模板可執行】自身回復 15% 最大魔力。\n【目標設計】短暫停留更換刀刃並補充部分氣體；受到控制會中斷。\n【待補機制】需換刃及氣體資源／控制中斷。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "restore",
-              "manaPct": 0.15,
-              "applyTo": "self"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-08-20260907-e-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.15,
+                    "applyTo": "self"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

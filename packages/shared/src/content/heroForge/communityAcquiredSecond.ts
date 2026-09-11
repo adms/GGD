@@ -13,6 +13,7 @@ const speed = { stat: "ms", op: "pctAdd", msBonusTier: "極小" };
 const passive = (name: string, purpose: string, on: string, effects: P[], internalCooldown: number, condition?: P) => m(name, purpose, "tpl-event-passive", { hooks: [{ on, effects, internalCooldown, ...(condition ? { condition } : {}) }] });
 const strike = (name: string, purpose: string, damageType = "physical", extra: P[] = [], options: Partial<Move> = {}) => m(name, purpose, "tpl-single-strike", { damage: d(), damageType, castTimeSec: 0.1 }, { effects: extra, ...options });
 const buff = (name: string, purpose: string, modifiers: P[], effects: P[] = []) => m(name, purpose, "tpl-buff-self", { duration: 3, modifiers }, { effects });
+const selfShield = (name: string, purpose: string, flat: number) => m(name, purpose, "tpl-ally-shield", { target: "self", amount: { flat, ratios: [] }, duration: 3, absorbs: "all" });
 const nova = (name: string, purpose: string, damageType = "magic", tier: Band = "小", radius = 250) => m(name, purpose, "tpl-ground-nova", { radius, damage: d(tier), damageType }, { range: "中" });
 const wave = (name: string, purpose: string, damageType = "magic") => m(name, purpose, "tpl-traveling-wave", { stepSize: 60, stepCount: 10, stepIntervalSec: 0.05, aoePerStep: 150, terminalBurst: 250, damage: d(), damageType }, { range: "大" });
 const leap = (name: string, purpose: string, damageType = "physical") => m(name, purpose, "tpl-leap-strike", { mode: "toPoint", applyTo: "self", apexHeight: 200, durationSec: 0.35, landRadius: 150, damage: d("極小"), damageType }, { range: "中" });
@@ -37,7 +38,7 @@ export const COMMUNITY_ACQUIRED_SECOND: readonly CommunityHeroExample[] = [
   make("acquired-wargreymon", "戰鬥暴龍獸", "數碼寶貝大冒險", "鬥士", "背盾像鍋蓋、蓋亞能量像外送：先貼身拆包，再把火球送到收件地。", ["龍獸剋星不新增物種判斷；以近戰爪擊和短效護盾表現。", "E貼身→Q減速→R落點爆破；對手可拉開距離避開R。"], {
     PASSIVE: passive("鍋蓋還沒掀", "受到傷害後獲得120護盾，持續3秒，內置冷卻9秒。", "onDamageTaken", [shield("brave")], 9),
     Q: strike("龍獸拆箱爪", "爪擊造成小級物理傷害並減速30%，持續1.5秒。", "physical", [status("$hero.claw", 1.5, { moveSpeedMult: 0.7 })], { range: "極小" }),
-    W: buff("勇氣鍋蓋", "獲得3秒140護盾，準備承受貼身反擊。", [], [shield("lid", 140)]),
+    W: selfShield("勇氣鍋蓋", "獲得3秒140護盾，準備承受貼身反擊。", 140),
     E: leap("勇者快遞", "跳至落點造成極小級物理傷害，接近收件人。"),
     R: { ...nova("蓋亞能量到付", "指定區域爆發大級魔法傷害；延長前搖給對手走位空間。", "magic", "大", 350), cooldown: "大", mana: "大", cast: "大" },
     EX: wave("恐龍火氣很大", "推出逐段火浪，小級魔法傷害，同一敵人行進段只命中一次。"),
@@ -104,7 +105,7 @@ export const COMMUNITY_ACQUIRED_SECOND: readonly CommunityHeroExample[] = [
     W: allyShield("騎士擔保", "為指定隊友提供130護盾，持續3秒。", "ally"),
     E: leap("騎士查勤", "跳至指定落點造成極小級物理傷害。"),
     R: m("花瓣罰單連發", "周圍向內依序發出6道射線，每道極小級魔法傷害；在Q鎖足後施放。", "tpl-orbit-array", { rayCount: 6, reach: 300, aim: "inward", rayIntervalSec: 0.15, damage: d("極小"), damageType: "magic" }, { cooldown: "大", mana: "大" }),
-    EX: buff("今天不准加班受傷", "自身獲得3秒180護盾，抵擋被集火。", [], [shield("overtime", 180)]),
+    EX: selfShield("今天不准加班受傷", "自身獲得3秒180護盾，抵擋被集火。", 180),
   }),
   make("acquired-leafa", "莉法", "刀劍神域 Sword Art Online", "軟輔", "風精靈的外送服務：回血送到人、護盾送到區域，把敵人吹離取餐區。", ["飛行改成有界跳躍，不提供永久越牆；風精靈魔法複用友軍回血、護盾與推移。", "W拉開敵人→Q補隊友；E追上隊伍→R集體護盾，敵人可繞開正面衝刺。"], {
     PASSIVE: passive("順風不用跑腿費", "施放技能後獲得極小級移速2秒，內置冷卻5秒。", "onAbilityCast", [{ kind: "applyBuff", applyTo: "self", duration: 2, modifiers: [speed], stackKey: "$hero.wind" }], 5),

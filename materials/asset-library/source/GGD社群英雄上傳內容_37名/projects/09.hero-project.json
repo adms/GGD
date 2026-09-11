@@ -179,31 +179,32 @@
       "W": {
         "slot": "W",
         "name": "〔行商議價〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.1,\"applyTo\":\"self\"}]。\n【目標設計】消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。\n【待補機制】預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。",
+        "purpose": "【目前模板可執行】自身回復 10% 最大魔力。\n【目標設計】消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。\n【待補機制】預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "大",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "restore",
-              "manaPct": 0.1,
-              "applyTo": "self"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-09-20260907-w-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "manaPct": 0.1,
+                    "applyTo": "self"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
@@ -222,37 +223,38 @@
       "E": {
         "slot": "E",
         "name": "〔麥穗庇護〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供小額護盾及短效移速。\n【待補機制】目前自身；需指定友軍盾與加速。",
+        "purpose": "【目前模板可執行】自身獲得 120 點護盾，持續 3 秒。\n【目標設計】為指定友軍提供小額護盾及短效移速。\n【待補機制】目前自身；需指定友軍盾與加速。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "大",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-09-20260907.e.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-09-20260907-e-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-09-20260907.e.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
@@ -318,37 +320,38 @@
       "EX": {
         "slot": "EX",
         "name": "〔豐收的約定〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":150,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。\n【待補機制】目前自身固定盾；需扣除剩餘籌碼並擴展附近友軍。",
+        "purpose": "【目前模板可執行】自身獲得 150 點護盾，持續 3 秒。\n【目標設計】消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。\n【待補機制】目前自身固定盾；需扣除剩餘籌碼並擴展附近友軍。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "大",
           "cooldownTier": "大",
           "manaCostTier": "大",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 150,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-09-20260907.ex.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-09-20260907-ex-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 150,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-09-20260907.ex.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

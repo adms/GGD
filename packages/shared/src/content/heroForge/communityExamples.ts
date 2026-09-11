@@ -51,6 +51,7 @@ const move = (name: string, purpose: string, ref: string, params: Params, option
 const attack = (name: string, purpose: string, damageType = "magic", condition: Params = always) => move(name, purpose, "tpl-on-attack", { event: "onBasicAttack", condition, bonusDamage: damage("極小"), damageType, internalCooldown: 2 });
 const strike = (name: string, purpose: string, damageType = "magic", options: Partial<Move> = {}) => move(name, purpose, "tpl-single-strike", { damage: damage("小"), damageType, castTimeSec: 0.1 }, options);
 const buff = (name: string, purpose: string, modifiers: Params[], options: Partial<Move> = {}) => move(name, purpose, "tpl-buff-self", { duration: 3, modifiers, castTimeSec: 0.1 }, options);
+const selfShield = (name: string, purpose: string, absorbs = "all", options: Partial<Move> = {}) => move(name, purpose, "tpl-ally-shield", { target: "self", amount: { flat: 120, ratios: [] }, duration: 3, absorbs, castTimeSec: 0.1 }, options);
 const nova = (name: string, purpose: string, tier: Band = "小", options: Partial<Move> = {}) => move(name, purpose, "tpl-ground-nova", { radius: 300, damage: damage(tier), damageType: "magic", castTimeSec: 0.3 }, options);
 const field = (name: string, purpose: string, anchor = "point") => move(name, purpose, "tpl-periodic-field", { intervalSec: 1, durationSec: 3, radiusTier: "小", anchor, applyTo: "enemies", damageTier: "極小", damageType: "magic", castTimeSec: 0.3 });
 const line = (name: string, purpose: string, damageType = "magic", options: Partial<Move> = {}) => move(name, purpose, "tpl-line-sweep", { segmentCount: 4, stepSize: 100, segmentAoe: 150, damage: damage("極小"), damageType, castTimeSec: 0.3 }, options);
@@ -68,7 +69,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
       W: buff("循血疾行", "主動獲得 3 秒極小級移速加成與 20% 攻速加成。", [speed, haste]),
       E: strike("驚獵嚎聲", "指定近處敵人，造成傷害並使其恐懼 0.8 秒。", "magic", { range: "極小", effects: [status("fear", { feared: true })] }),
       R: combo("獵衛封喉", "鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。", "magic"),
-      EX: buff("血性護甲", "獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。", [], { cooldown: "大", effects: [guard("concept-warwick-guard")] }),
+      EX: selfShield("血性護甲", "獲得持續 3 秒的全傷害護盾。", "all", { cooldown: "大" }),
     },
   },
   {
@@ -82,7 +83,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
       W: strike("亡途繫縛", "以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。", "magic", { effects: [status("slow35", { moveSpeedMult: 0.65 }, 2)] }),
       E: field("荒蕪迴音", "以自身為中心維持 3 秒傷害領域，每秒傷害一次。", "caster"),
       R: nova("暮鐘終曲", "經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。", "大", { range: "極大", cast: "極大", cooldown: "極大", mana: "大" }),
-      EX: buff("靜默幕衣", "獲得只吸收魔法傷害的 3 秒護盾，提供一段施法準備時間。", [], { cooldown: "大", effects: [guard("concept-karthus-guard", "magic")] }),
+      EX: selfShield("靜默幕衣", "獲得只吸收魔法傷害的 3 秒護盾，提供一段施法準備時間。", "magic", { cooldown: "大" }),
     },
   },
   {
@@ -93,7 +94,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     moves: {
       PASSIVE: attack("餘光", "普攻追加極小級魔法傷害，內置冷卻 2 秒。"),
       Q: strike("稜光束縛", "命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。", "magic", { effects: [status("root", { root: true })] }),
-      W: buff("折光護衣", "獲得持續 3 秒的全傷害護盾，同名護盾保留較大值。", [], { effects: [guard("concept-lux-guard")] }),
+      W: selfShield("折光護衣", "獲得持續 3 秒的全傷害護盾。"),
       E: field("流光之域", "在落點留下 3 秒光域，每秒造成極小級魔法傷害。"),
       R: line("破曉光路", "向前依序展開四段光束判定；敵人可受到相交段落的傷害。", "magic", { range: "大", cooldown: "大", mana: "大", cast: "大" }),
       EX: buff("引路星芒", "獲得 3 秒極小級移速加成，並恢復自身少量生命。", [speed], { cooldown: "大", effects: [{ kind: "heal", amount: { flat: 80, ratios: [] }, applyTo: "self" }] }),
@@ -107,7 +108,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     moves: {
       PASSIVE: attack("風行刃", "普攻追加極小級物理傷害，內置冷卻 2 秒。", "physical"),
       Q: line("斬風", "朝前方斬出四段窄風刃，以本遊戲線段判定命中。", "physical", { range: "小", cooldown: "極小" }),
-      W: buff("迎風架勢", "獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。", [], { effects: [guard("concept-yasuo-guard", "physical")] }),
+      W: selfShield("迎風架勢", "獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。", "physical"),
       E: move("踏風進擊", "朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。", "tpl-charge-push", { dashDistance: 300, dashDurationSec: 0.25, apexHeight: 0, radius: 150, damage: damage("極小"), damageType: "physical", pushDistance: 300, pushSpeed: 872, pushFrom: "facing", pushLaunchHeight: 0, castTimeSec: 0.1 }, { range: "小" }),
       R: combo("天際斷章", "鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。"),
       EX: strike("旋風縛步", "將蓄風招式獨立為 EX，對指定敵人造成物理傷害並鎖足 0.8 秒。", "physical", { range: "大", cooldown: "大", effects: [status("root", { root: true })] }),
@@ -152,7 +153,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
       W: nova("星核墜落", "在指定區域引爆小級魔法傷害。"),
       E: strike("奧能拘束", "對指定敵人造成傷害並暈眩 0.8 秒，不按飛行距離延長。", "magic", { effects: [status("stun", { stun: true })] }),
       R: move("星牢轟擊", "在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。", "tpl-random-barrage", { count: 3, intervalSec: 0.5, impactDamage: damage("小"), damageType: "magic", impactRadius: 200, scatterRadius: 100, payout: "perImpact", castTimeSec: 1 }, { range: "極大", cast: "極大", cooldown: "極大", mana: "大" }),
-      EX: buff("回收奧能", "獲得短效魔法護盾並回復自身 15% 最大魔力；受到 EX 冷卻限制。", [], { cooldown: "極大", effects: [guard("concept-xerath-guard", "magic"), { kind: "restore", manaPct: 0.15, applyTo: "self" }] }),
+      EX: selfShield("回收奧能", "獲得短效魔法護盾並回復自身 15% 最大魔力；受到 EX 冷卻限制。", "magic", { cooldown: "極大", effects: [{ kind: "restore", manaPct: 0.15, applyTo: "self" }] }),
     },
   },
 ];

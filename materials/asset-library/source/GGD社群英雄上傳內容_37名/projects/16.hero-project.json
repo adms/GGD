@@ -175,37 +175,38 @@
       "W": {
         "slot": "W",
         "name": "〔魔力防壁〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-16-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】展開有限耐久的正面護盾。\n【待補機制】目前全方向自身盾；需正面防壁。",
+        "purpose": "【目前模板可執行】自身獲得 120 點護盾，持續 3 秒。\n【目標設計】展開有限耐久的正面護盾。\n【待補機制】目前全方向自身盾；需正面防壁。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-16-20260907.w.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-16-20260907-w-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-16-20260907.w.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
