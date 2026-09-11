@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "bd6c5e5df9d501b1ea65b0f9c86369dd85f40d3f",
   "contractFingerprint": "34e36ee3486cf36a",
-  "title": "115 名英雄 loopback 全流程與 Phase 2／3 Editor 交付，請 Main 審查並接正式發布",
+  "title": "126 名英雄同服務 loopback 全流程與 Phase 2／3 Editor 交付，請 Main 審查並接正式發布",
   "claims": [
     {
       "kind": "confirmed",
@@ -107,7 +107,7 @@
     },
     {
       "kind": "confirmed",
-      "text": "模型反向閘已逐項分類目前模型幾何；本分支另以可重建工具修復 4 顆社群 GLB 的背景平面、補齊 2 份 model doc 的隱藏幾何宣告，並將 LoL 第一批 7 個成品 GLB 納入 Git。現在掃描 351 顆 GLB、24 處已宣告殘留幾何與 8 處已宣告離地分身，結果 0 問題；630 顆模型的 clip degradation 與 presentation receipt 也已由正式生成器刷新。",
+      "text": "模型反向閘已逐項分類目前模型幾何；本分支另以可重建工具修復 4 顆社群 GLB 的背景平面、補齊 2 份 model doc 的隱藏幾何宣告，並納入兩批 LoL 成品模型。現在掃描 362 顆 GLB、24 處已宣告殘留幾何與 8 處已宣告離地分身，結果 0 問題；clip degradation 與 presentation receipt 也已由正式生成器刷新。",
       "commit": "d75e98402a4ebff2ed15d074e8181c709613e981",
       "repro": {
         "command": "pnpm models:check",
@@ -135,15 +135,17 @@
     },
     {
       "kind": "confirmed",
-      "text": "目前 target 的真實 loopback 發布證據為 115 名：34 名新 ID 與 81 名既有 canonical ID 全部經 Editor 草稿、完整 ZIP、服務 inspection、不可變投稿、管理員審查、發布與公開名單核對。canonical 接管只存在於伺服器授權的獨立簽章路徑；普通作者仍不能占用正式 ID。武藤遊戲發布 v2 後恢復 v1，八神庵的 published pointer 與 revision 均未變；DIO 的既有回復證據也保持通過。這些是乾淨 loopback 收據，不冒充正式站部署。",
-      "commit": "d75e98402a4ebff2ed15d074e8181c709613e981",
+      "text": "目前 target 的真實 loopback 發布證據為 126 名：81 名既有 canonical ID、34 名新 ID 與 LoL 第二批 11 名已在同一套 current Platform 服務經 Editor 專案、完整 ZIP、服務 inspection、不可變投稿、管理員審查、發布與公開名單精確核對；結果 0 缺少、0 多出、0 失敗。canonical 接管只存在於伺服器授權的獨立簽章路徑；普通作者仍不能占用正式 ID。武藤遊戲、空渦龍、賽特各自發布 v2 後恢復 v1，八神庵、愛麗絲、阿璃的 published pointer 與 revision 均未變。這些是 loopback 收據，不冒充正式站部署。",
+      "commit": "bc55271d1ce31d38d37956c53d460b4170e55b6f",
       "repro": {
         "command": "node tools/editor-acceptance/check-community-release-receipts.mjs",
         "expectedExit": 0
       },
       "evidence": [
-        "docs/_reports/community-acquired-heroes/loopback-release-34of34.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-acquired-34-current.json",
         "docs/_reports/community-acquired-heroes/loopback-release-canonical-81of81.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-lol-batch2-11-current.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-current-service-126of126.json",
         "tools/editor-acceptance/community-hero-release-check.mts",
         "apps/platform/internal/submissions/hero_works.go",
         "packages/shared/src/content/import/heroPackage.ts"
@@ -166,10 +168,10 @@
     }
   ],
   "asks": [
-    "請 Main 審查並合併本 PR 的 #1221 canonical 接管實作；普通投稿的 ID 防撞保持不變，管理員路徑已有 81／81 發布與單英雄 rollback 收據。合併後請在正式服務重建並發布。",
-    "請與 Draft PR #1193 的 LoL 第二批 11 名一併安排合併；兩張 PR 合併後，以同一正式服務名單確認 126 名的目前發布版本及單英雄 rollback。",
+    "請 Main 審查並合併 #1216；#1221 canonical 接管與 Draft PR #1193 的 LoL 第二批語意提交都已包含在本分支，不需另外拼接兩張 PR。合併部署後請依正式 target 重建並發布，以正式服務名單確認 126 名及單英雄 rollback。",
+    "LoL 第二批的現有機制簡化版已通過 11／11 本機發布；14 槽來源核心仍由 #1187、#1189、#1190、#1191、#1197 追蹤，不應把 MVP 流程收據寫成完整原作還原。",
     "P2-05 若要正式發行，請由持有者配置簽章、Team ID、Windows publisher 與 stable feed。P3-05 若要啟用推論，請提供兩個核准硬體 target 的 E8 收據與 runtime artifact；在此之前保留 released=false。",
-    "#1206、#1212 與 #1214 已在本分支完成。#1205 的模型 ZIP 阻擋已有 34／34 收據；#1221 的接管實作已有 81／81 收據。兩票的正式服務發布狀態仍依 Main 合併與部署分開記錄。"
+    "#1206、#1212、#1214 與 #1221 已在本分支完成。#1205 的模型 ZIP 阻擋已有 34／34 收據；canonical 接管已有 81／81 收據；合併後的同服務總收據為 126／126。正式服務發布狀態仍依 Main 合併與部署分開記錄。"
   ],
   "ownerQuotes": [
     {
