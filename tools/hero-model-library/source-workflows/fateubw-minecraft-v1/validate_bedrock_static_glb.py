@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read a generated static GLB and prove its complete mesh and embedded texture."""
+"""Read a generated Bedrock GLB and verify mesh, skin and embedded texture."""
 import argparse
 import hashlib
 import json
@@ -148,13 +148,17 @@ def main():
     if not static_mesh_only and max_rest_error > 1e-6:
         problems.append("rest-skin-does-not-preserve-position")
     result = {
-        "schema": "ggd-bedrock-static-glb-readback@1",
+        "schema": "ggd-bedrock-glb-structural-readback@1",
         "glb": {"path": str(glb), "sha256": sha256(glb), "bytes": glb.stat().st_size},
         "sourceTexture": {"path": str(texture), "sha256": sha256(texture), "embeddedSha256": hashlib.sha256(embedded).hexdigest(), "embeddedByteExact": not any(p == "embedded-texture-hash-mismatch" for p in problems)},
         "structure": {"nodeCount": len(document["nodes"]), "meshCount": len(document["meshes"]), "skinCount": len(document.get("skins", [])), "jointCount": len(joint_nodes), "unusedJointIndices": sorted(set(range(len(joint_nodes))) - used), "vertexCount": len(positions), "triangleCount": len(indices) // 3, "degenerateTriangleCount": locals().get("degenerate_triangle_count", 0), "animationCount": len(document.get("animations", [])), "staticMeshOnly": static_mesh_only, "rigidWeights": None if static_mesh_only else not any(p == "vertices-are-not-rigidly-skinned" for p in problems), "normalLengthMin": float(normal_lengths.min()), "normalLengthMax": float(normal_lengths.max()), "maxRestSkinPositionError": None if static_mesh_only else max_rest_error},
         "valid": not problems,
         "problems": problems,
-        "limits": ["Structural readback only; it is not a rendered visual review.", "Native TenshiLib animation remains outside this static GLB.", "This static-mesh-only output contains no glTF rig; its source Bedrock rig is retained separately." if static_mesh_only else ""],
+        "limits": (["Structural readback only; it is not a rendered visual review.",
+                    "This static-mesh-only output contains no glTF rig; its source Bedrock rig and native animation remain separate."]
+                   if static_mesh_only else
+                   ["Structural readback checks the rest pose only; animation curves require separate contract and playback evidence.",
+                    "It does not prove source-engine interpolation, event mapping, gameplay behavior or continuous visual parity."]),
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")

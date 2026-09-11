@@ -40,7 +40,12 @@ class GLB:
         if not np.isfinite(a).all(): raise ValueError('non-finite accessor')
         row = {'bufferView': self.view(a.tobytes(), target), 'componentType': component,
                'count': len(a), 'type': kind}
-        if bounds: row.update(min=a.min(axis=0).tolist(), max=a.max(axis=0).tolist())
+        if bounds:
+            minimum, maximum = a.min(axis=0).tolist(), a.max(axis=0).tolist()
+            # glTF requires accessor min/max to be arrays even for SCALAR data.
+            # Position arrays already produce lists; animation time arrays do not.
+            if kind == 'SCALAR': minimum, maximum = [minimum], [maximum]
+            row.update(min=minimum, max=maximum)
         self.g['accessors'].append(row); return len(self.g['accessors']) - 1
     def write(self, path):
         self.bin += bytes(-len(self.bin) % 4); self.g['buffers'] = [{'byteLength': len(self.bin)}]
