@@ -61,7 +61,7 @@ function probeQ(championId: ChampionId): CastOutcome {
   let out: CastOutcome = { verdict: "FAIL" };
   for (let i = 0; i < 30; i++) {
     events.push(...world.events.map((e) => e.type));
-    out = classifyCastOutcome({ events, before, after: snapshotChannels(world), moved: false, effectsAuthored: 1 });
+    out = classifyCastOutcome({ events, before, after: snapshotChannels(world), moved: false, victimMoved: false, victimLocked: false, effectsAuthored: 1 });
     if (out.verdict === "PASS") break;
     world.step(NO_INTENTS);
   }

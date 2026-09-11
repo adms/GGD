@@ -186,9 +186,9 @@
       "since": "2026-09-06",
       "name": "Sela, the Ember Sage",
       "counterpartId": null,
-      "derivedOrigin": "硬輔",
+      "derivedOrigin": "法師",
       "counterpartOrigin": null,
-      "why": "作者手寫的骨架英雄（attributes.source=authored，⛔ 不是 w3x 匯入）：它存在是為了 main.tsx 內容載入失敗時的 fail-open 退路，數值是「重現出貨 L1 表」而不是設計。出身在載入時由 originOf() 推導＝硬輔。反駁條件：它進了白名單／選人畫面 ⇒ 那它就是一位真英雄，要由 owner 指派出身並刪這一列。"
+      "why": "作者手寫的骨架英雄（attributes.source=authored，⛔ 不是 w3x 匯入）：它存在是為了 main.tsx 內容載入失敗時的 fail-open 退路，數值是「重現出貨 L1 表」而不是設計。出身在載入時由 originOf() 推導。⭐ 2026-09-11 它從 硬輔 變成 法師 —— ⛔ 這一份文件一個位元組都沒動：變的是**級距表**（傷害五級距與屬性上限隨名單長大而重錨，見同日 `fix(balance)`），而 originOf() 是拿三圍去比那張表 ⇒ 同一組數字落到了別一格。⚠️ ⭐ 這正是為什麼骨架英雄的出身**不該**被當成設計：它是一個會隨母體漂的推導值。反駁條件：它進了白名單／選人畫面 ⇒ 那它就是一位真英雄，要由 owner 指派出身並刪這一列。"
     },
     "thorne": {
       "kind": "authored-skeleton",

@@ -12,7 +12,7 @@ contentVersion `cv_bd090db66d00`
 
 ---
 
-## 效果（effect kind） —— 50 種
+## 效果（effect kind） —— 51 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -57,6 +57,7 @@ contentVersion `cv_bd090db66d00`
 | `shield` | 吸收（護盾） | 85 | `b2-aladdin.ex`、`b2-albus.r`、`b2-bojji.ex`、`b2-boxxo.passive`、`b2-boxxo.w`、`b2-elma.q`、`b2-elma.w`、`b2-fushi.e`、`b2-fushi.q`、`b2-goblin.ex`、`b2-goblin.passive`、`b2-guts.ex` …（共 85） |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
+| `spawnObstacle` | 暫時障礙（技能生的碰撞圓柱：走不過、衝刺撞得到，到期或被撞碎消失） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spawnProjectile` | 投射物 | 4 | `godie-e010.q`、`grail-c-16`、`grail-c-20`、`storm-arrow` |
 | `spawnThresholds` | 邊界陣（可穿越的段：穿過才觸發、各段獨立消失） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spawnVfx` | 純演出（特效／音效） | 56 | `b2-orphen.r`、`b2-shadow.ex`、`godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q` …（共 56） |

@@ -72,6 +72,7 @@ import type { LeapOverride } from "../components";
 import { relaxBody } from "../collision/resolve";
 import { flightIgnoresObstacles } from "../flight";
 import { crossesWalls, policyFor, resolveDisplacementEnd } from "./wallBlock";
+import { zoneWithObstacles } from "../obstacles";
 // ⭐ **唯一**的 origin 解析器（它自己的檔頭逐字寫著「it is the one place origin
 // is parsed」）—— ⛔ 不在這裡再寫一份 `startsWith("ability:")`，理由見
 // `stats/modifiers.ts:484`。⚠️ 這條 import 與 `combat/damage.ts:30` 的
@@ -192,7 +193,8 @@ export function resolveLandingPoint(
 ): Vec2 {
   const t = world.transform.get(flyerId);
   if (!t) return { x: requested.x, z: requested.z };
-  const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
+  // ⭐ GH#1190：跳躍落點的牆體 clamp 也要看得到暫時障礙（⛔ 不然可以跳過鄂爾的柱子）。
+  const zone = zoneWithObstacles(world, t.zone, world.arena.zones[t.zone] ?? world.arena.zones[0]!);
   // ⭐ owner 2026-08-21「有許多地圖的牆 瞬移過去」——「終點不在牆裡」不蘊含
   //    「終點在牆的**這一邊**」（一道 graybox 牆只有 2 單位厚，對面 1.6 單位外
   //    的點完全合法）。整段理由與三個決策點寫在 `movement/wallBlock.ts`。

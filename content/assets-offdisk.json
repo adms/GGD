@@ -2,14 +2,10 @@
   "schema": "ggd-assets-offdisk@1",
   "note": "⭐ **不在 git 裡**的資產：位元組住 S3 ggd-390630837668-ap-east-2-an，⭐ 而驗得起來的那半（bytes + sha256）住這裡（owner 2026-09-08 的歸屬表）。⛔ 沒有宣告的缺席資產仍然 fail-loud —— 這**不是**一張放行清單。⚠️ 內容定址的路徑（檔名 = 64 hex），sha256 必須等於檔名，⭐ 產生器會當場擋下自我矛盾的宣告。",
   "counts": {
-    "entries": 118,
-    "totalBytes": 121246672
+    "entries": 117,
+    "totalBytes": 121194584
   },
   "entries": {
-    "assets/models/champions/versions/b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810.glb": {
-      "bytes": 52088,
-      "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810"
-    },
     "assets/models/community/01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72.glb": {
       "bytes": 1165520,
       "sha256": "01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72"

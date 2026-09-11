@@ -110,6 +110,7 @@ import { grantXpEffect } from "./grantXp"; // ⭐ GH#890 —— 每秒額外獲�
 // TRIGGER a revive, never a second definition of what a revived champion is.
 import { dispelEffect } from "./dispel";
 import { spawnThresholdsEffect } from "./spawnThresholds";
+import { spawnObstacleEffect } from "./spawnObstacle";
 import { shieldBreakEffect } from "./shieldBreak";
 import { devourEffect } from "./devour";
 import { reviveEffect } from "./revive";
@@ -207,6 +208,8 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   dispel: dispelEffect,
   // ── 【邊界陣】(GH#1197 瑟雷西 R) — 可穿越的段，穿越才觸發、各段獨立消失。行為 ../systems/ThresholdSystem.ts。
   spawnThresholds: spawnThresholdsEffect,
+  // ── 【暫時障礙】(GH#1190 鄂爾 Q) — 真碰撞圓柱，到期／被 dash.shatter 撞碎消失。碰撞 ../obstacles.ts。
+  spawnObstacle: spawnObstacleEffect,
   shieldBreak: shieldBreakEffect,
   devour: devourEffect,
 

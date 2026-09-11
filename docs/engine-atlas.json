@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "5c58cd69",
+  "capabilityFingerprint": "e9023124",
   "counts": {
-    "effectKinds": 50,
+    "effectKinds": 51,
     "hookEvents": 33,
     "conditionLeafKinds": 10,
     "templateFamilies": 47,
-    "effectFields": 278,
+    "effectFields": 280,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -530,6 +530,7 @@
       "shield",
       "shieldBreak",
       "spawnModelFx",
+      "spawnObstacle",
       "spawnProjectile",
       "spawnThresholds",
       "spawnVfx",

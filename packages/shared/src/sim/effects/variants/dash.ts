@@ -45,7 +45,9 @@ export interface DashVariant {
    * 合成**同一個**結束條件。預設選 `"always"`，因為卡面說「衝刺後揮出」，
    * 而一刀被場景取消是玩家看不見的失敗。
    */
-  onEndOn?: "always" | "completed";
+  onEndOn?: "always" | "completed" | "blocked";
+  /** GH#1190：撞停時撞碎碰到的可碎暫時障礙。 */
+  shatter?: boolean;
   /**
    * ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = `false`。
    * 形狀與精神逐字沿用 `randomArea.stopOnCasterDeath`。

@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "5c58cd69",
+    "fingerprint": "e9023124",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -140,6 +140,7 @@
       "shield",
       "shieldBreak",
       "spawnModelFx",
+      "spawnObstacle",
       "spawnProjectile",
       "spawnThresholds",
       "spawnVfx",
@@ -464,6 +465,8 @@
       "scatterRadius",
       "scripted",
       "shape",
+      "shatter",
+      "shatterable",
       "side",
       "sides",
       "silenced",
@@ -894,6 +897,8 @@
       "scatterRadius",
       "scripted",
       "shape",
+      "shatter",
+      "shatterable",
       "side",
       "sides",
       "silenced",
@@ -7540,12 +7545,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "5c58cd69",
+    "engineFingerprint": "e9023124",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 5c58cd69 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e9023124 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -8413,11 +8418,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "34d5c9e60d22",
+    "fingerprint": "6e74071665f3",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "89aa8c93f674"
+        "digest": "14106ddb0812"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8483,5 +8488,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "362e21be02b3"
+  "profileDigest": "cd5bc7ee5022"
 }

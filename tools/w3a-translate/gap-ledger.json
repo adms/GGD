@@ -136,7 +136,7 @@
     },
     {
       "key": "mana:tier",
-      "max": 166,
+      "max": 131,
       "layer": "GGD-tier-table",
       "reason": "owner 的五級距魔耗表(`content/config/mana-tiers.json`)取代原作值;出貨文件帶著 `manaCostTier` ⇒ 有主。",
       "bumps": [
@@ -158,7 +158,7 @@
           "why": "GH#903 子票（2026-09-02）—— ⭐ **同一個規則的第二個實例**（第一次是 `godie-huth.e` 28-03 分身,見這一格 bumps 裡上一則）。`godie-n00b.w`（57-03 複製鏡)從 `tpl-single-strike` 改接 `tpl-summon-agent` 之後,`tierize.py` 的 ⑦ 分支（owner 逐字:「若不是主動傷害技能 就免魔力吧 乾脆點」)判定它**不再是主動傷害技** ⇒ 魔耗歸 0 且級別欄被拔掉。⭐ 三個面同時動:`mana:tier` −1 · `mana:ggd-zero` +1 · `duration:ggd-absent` −1（召喚體有 `durationSec` ⇒ 從「沒有持續」變成「有」),⛔ 不是三次獨立漂移。⚠️ ⭐ 而卡面**完全沒有提到傷害** —— 那一發 `damageTier 小 · ap 0.6` 是佔位模板帶來的,⛔ 不是設計 ⇒ 拿掉它才是翻譯（第〇·六守則）。⛔ 我沒有去覆寫規則的判定。"
         }
       ],
-      "why": "⭐ 2026-09-06 167 → 166 —— 修好了就降。"
+      "why": "⭐ 2026-09-06 167 → 166 —— 修好了就降。⭐ 2026-09-11 **166 → 131**（−35，這一格史上最大的一次降）—— ⛔ 而它不是逐支修出來的：耗魔五級距（`content/config/mana-tiers.json`）從公式今天的答案重錨（72/144/… → 74/148/…，GH#1222），於是 35 支原本被判成「級距取代原作值」的技能，級距值**正好落回**原作那一格 ⇒ 它們從 `mana:tier` 移到了 `mana:same`。⚠️ ⭐ 這是**同一件事的兩個面**（`mana:tier` −35 · `mana:same` 相應增加），⛔ 不是 35 次獨立修復。"
     },
     {
       "key": "mana:ggd-zero",
