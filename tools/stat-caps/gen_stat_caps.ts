@@ -140,15 +140,31 @@ interface Row {
  * `tools/balance-anchors/gen.ts` 的 `FIXED_BASE_*` **刻意是同一個數字** ——
  * 它們量的是同一件事（⛔ 兩邊不一致就是兩個住處各自漂）。
  */
-const FIXED_MEDIAN: Readonly<Record<string, Readonly<Record<number, number>>>> = {
-  maxHealth: { 30: 2838, 50: 4438, 99: 8358 },
-  maxMana: { 30: 1745, 50: 2745, 99: 5195 },
-  healthRegen: { 30: 4.645, 50: 7.165, 99: 13.26 },
-  manaRegen: { 30: 6.24, 50: 7.205, 99: 7.5 },
-  ad: { 30: 107.66, 50: 163.02, 99: 315 },
-  armor: { 30: 23.1, 50: 34.27, 99: 61.64 },
-  mr: { 30: 76.555, 50: 117.48, 99: 206.96 },
-};
+/**
+ * ⭐ 從**出貨設定檔**讀（owner 2026-09-12：「這些常數是**可被編輯的設定檔** 而非寫死」）。
+ * ⭐ `enabled:false` 或讀不到 ⇒ 回空 ⇒ 退回取名單中位（一鍵 rollback），⛔ 而且明說。
+ */
+function shippedStatMedian(): Record<string, Record<number, number>> {
+  try {
+    const d = JSON.parse(
+      readFileSync(join(REPO, "content/config/balance-anchors.json"), "utf-8"),
+    ) as { enabled?: boolean; statMedian?: Record<string, Record<string, number>> };
+    if (d.enabled === false || d.statMedian === undefined) {
+      console.log("⚠️ `balance-anchors` 關著或沒有 `statMedian` ⇒ ⛔ 屬性上限**回到取名單中位**。");
+      return {};
+    }
+    return Object.fromEntries(
+      Object.entries(d.statMedian).map(([k, v]) => [
+        k,
+        Object.fromEntries(Object.entries(v).map(([lv, n]) => [Number(lv), n])),
+      ]),
+    );
+  } catch {
+    console.log("⚠️ 讀不到 `content/config/balance-anchors.json` ⇒ ⛔ 退回取名單中位（明說，⛔ 不是靜默）。");
+    return {};
+  }
+}
+const FIXED_MEDIAN: Readonly<Record<string, Readonly<Record<number, number>>>> = shippedStatMedian();
 /** 量到的中位與固定值差超過這個比例 ⇒ 印一行（⛔ 不改值、⛔ 不回非零）。 */
 const STAT_CAP_DRIFT_WARN = 0.1;
 

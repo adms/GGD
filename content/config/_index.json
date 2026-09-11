@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "ba791265412a",
+  "hash": "305ec8546762",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -85,6 +85,12 @@
       "path": "config/authoring-rules.json",
       "hash": "debe3d095be9",
       "size": 5477
+    },
+    {
+      "id": "balance-anchors",
+      "path": "config/balance-anchors.json",
+      "hash": "249b5f562c62",
+      "size": 1948
     },
     {
       "id": "base-bonus",

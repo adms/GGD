@@ -19,6 +19,7 @@ import {
   zConfigSkillNormalizeDoc,
   zConfigManaEconomyDoc,
   // ⭐ 吟唱五級距（GH#943）／AP 係數公式（GH#942）—— 同上面那一族走 barrel。
+  zConfigBalanceAnchorsDoc,
   zConfigCastTimeTiersDoc,
   zConfigApCoefficientDoc,
   zConfigRankGrowthDoc,
@@ -535,5 +536,41 @@ export const RANK_GROWTH_SPEC: ConfigDocSpec<"rankGrowth"> = {
   consumer: "packages/shared/src/content/rankGrowth.ts 的 resolveRankGrowth（全專案唯一的查表處）",
   effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同其他級距(#278)。",
   fields: derivedFields(zConfigRankGrowthDoc, []),
+  preserved: [],
+};
+
+// ──────────────────── 平衡錨點 (config/balance-anchors) ─
+
+/**
+ * ⭐⭐ owner 2026-09-12（逐字，三則）：
+ * > 「這個中位數是**相對所有出身**而言 不是指所有角色 **不然這個值會變動到停不下來**」
+ * > 「⋯以後**固定數值 别再取中位數了**」
+ * > 「這些常數是**可被編輯的設定檔** 而非寫死」
+ *
+ * ⛔ 在此之前這些數字是 `median(每一張出貨卡)` 算出來的
+ * ⇒ ⭐ **上架一批英雄，全遊戲的傷害刻度與每一項屬性上限就重算一次**。
+ * ⚠️ 實測：81 名上架之後傷害五級距降 20%、耗魔降 24%、maxHealth 上限 402,129 → 567,600
+ * —— ⛔ 而那不是任何人的決定。
+ */
+export const BALANCE_ANCHORS_SPEC: ConfigDocSpec<"balanceAnchors"> = {
+  page: "balanceAnchors",
+  collection: "config",
+  docId: "balance-anchors",
+  schemaTag: "config.balance-anchors@1",
+  zod: zConfigBalanceAnchorsDoc,
+  title: "平衡錨點",
+  intro: [
+    "⭐ **傷害與耗魔五級距的分母**，以及**每一項屬性上限**的基礎中位 —— 這一頁是它們的唯一真源。",
+    "⛔ 在此之前這些數字是「取全部出貨英雄卡的中位」算出來的 ⇒ ⭐ **上架一批英雄，全遊戲的刻度就重算一次**。owner 2026-09-12：「**不然這個值會變動到停不下來**」「以後**固定數值 别再取中位數了**」。",
+    "⚠️ ⭐ 動 `baseHp` = **全遊戲每一支技能的傷害同時變**（五級距是從它反推的）。⛔ 它不是手感旋鈕。",
+    "⚠️ ⭐ 動 `statMedian` = **玩家堆得到的天花板跟著動**（上限 = 這個值 × 倍數）。",
+    "⭐ 兩支產生器**仍然量**今天的名單中位並印出偏差（> 10% 印一行）—— ⛔ 值不會自己動，⭐ 但「固定值與世界脫節」看得見。",
+    "⭐ `enabled` 關掉 = **一鍵回頭**：錨點回到取名單中位（⚠️ 刻度會再度隨上架名單漂）。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/balance-anchors.json`**。",
+  ],
+  consumer:
+    "tools/balance-anchors/gen.ts（傷害／耗魔五級距的分母）與 tools/stat-caps/gen_stat_caps.ts（屬性上限）—— ⚠️ 兩支都是**產生器**，改完要重跑 `pnpm anchors:build` + `pnpm statcaps:build`",
+  effect: "**要重跑產生器並重新部署**才生效 —— ⛔ 它不是執行期讀的旋鈕，是**產生器的輸入**。",
+  fields: derivedFields(zConfigBalanceAnchorsDoc, []),
   preserved: [],
 };
