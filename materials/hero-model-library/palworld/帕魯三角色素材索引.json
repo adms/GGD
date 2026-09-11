@@ -3,11 +3,11 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "f49fd62bdcd55a6daebf6d08cb9d9e652431f8f0c2c6efc55f80ef95e89a845f"
+      "sha256": "28fa8da0612bbd3e6de56069d3c4ba7c6ba693ad9601cc5dfcc1358b253c85e5"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
-      "sha256": "f82e54d29c6696f58330723a29ce41ee965bb573959edf1be3d80bbf2a923909"
+      "sha256": "aeec3c32cf2f199b7e66721b0632a0017d440413a8b15bddfe00129f5c69aedf"
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",

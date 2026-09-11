@@ -1,0 +1,3316 @@
+{
+  "schema": "ggd-lol-native-event-bindings@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "sourceGame": "League of Legends",
+  "heroId": "example:lux",
+  "nativeId": "Lux",
+  "skinId": "skin0",
+  "reportedLocale": "ja_JP",
+  "releaseId": "7CAC3C60C863BF12",
+  "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+  "sourcePackage": "DATA/FINAL/Champions/Lux.wad.client",
+  "sourcePackageCompleteLocally": false,
+  "metadataAcquisitionStatus": "partial-extraction-from-official-release-chunks",
+  "inputs": {
+    "bin": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-metadata/Lux/skin0.bin",
+      "sha256": "d8a73faa8ff734c24af349fb9e110f6ac9f73202f2a5022fa181a9c93314b50c"
+    },
+    "eventsBnk": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Lux.ja_JP/native/1429fd766f5d2b8d.bnk",
+      "sha256": "add680ea08bfa1c2a644f3871cf6e9b48250d5462419d1415889c20170507d69",
+      "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/lux/skins/base/lux_base_vo_events.bnk"
+    },
+    "audioBanks": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Lux.ja_JP/native/28d09fa19a05bbc2.bnk",
+        "sha256": "9fcebdfa89673967814071a7276c975fb748a05ac4232fe76c1301db3cb84a25",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/lux/skins/base/lux_base_vo_audio.bnk"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Lux.ja_JP/native/6b3bba90ad14f137.wpk",
+        "sha256": "5cee9c3562d01a661d5fbd5c53aacbdf31acc07d0b9b0611b9d5734ea8d986ec",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/lux/skins/base/lux_base_vo_audio.wpk"
+      }
+    ],
+    "extraction": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Lux.ja_JP/extraction.json",
+      "sha256": "8d2a5d7088ee91a46fa81a505e9b9a400d7dcea96d28e11799fd82714bffbc5a"
+    },
+    "decoding": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/audio-index.json",
+      "sha256": "843a718ad7d990bba98ed7c45aba60b70a92d34e18537d9bc3078150de24e8f1"
+    },
+    "metadataReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/receipts/shared-event-metadata/project-seven-base-six-v1.json",
+      "sha256": "e51bdf3680f8b2c2159f098399121286c5afa3e0fed427ef0e175be558fec5ea"
+    }
+  },
+  "tool": {
+    "name": "league-tools",
+    "commit": "913150dd922e69b18aba519410670fcf017df2ff",
+    "mapping": "BIN event strings -> NativeHIRC event graph -> WEM ID"
+  },
+  "validation": {
+    "binEvents": 69,
+    "hircEvents": 47,
+    "mappedEvents": 39,
+    "mappedWemIds": 104,
+    "exactAudioBankDecodedFiles": 104,
+    "allMappedWemIdsFoundInExactAudioBank": true,
+    "allReferencedWavBytesAndSha256Verified": true,
+    "eventBindingsVerified": true,
+    "speakerVerified": false,
+    "perClipLanguageVerified": false,
+    "ggdSkillSemanticBindingsVerified": false,
+    "categoryCountsByEvent": {
+      "ability-cast": 7,
+      "attack": 4,
+      "death": 1,
+      "emote": 5,
+      "encounter": 16,
+      "move": 6
+    },
+    "abilitySlotCountsByEvent": {
+      "E": 2,
+      "Q": 2,
+      "R": 1,
+      "W": 2
+    }
+  },
+  "events": [
+    {
+      "eventName": "Play_vo_Lux_Attack2DGeneral",
+      "eventId": 3565432578,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        76154985,
+        108044880,
+        149890988,
+        163795795,
+        535395823,
+        698836818,
+        1074826333,
+        1349461345,
+        1427958369,
+        1686932694,
+        1720466094,
+        1728531226,
+        1819168938,
+        1924849187,
+        2016038063
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Death3D",
+      "eventId": 944217235,
+      "category": "death",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        43864394,
+        754192429,
+        1124644677,
+        1272794498
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DDemacia",
+      "eventId": 1401110340,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        786960801
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DEzreal",
+      "eventId": 4170591849,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1279651501
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DGalio",
+      "eventId": 3679427956,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        126409900
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DGaren",
+      "eventId": 3410691795,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1030210573
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DJarvanIV",
+      "eventId": 2317375,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1237442861
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DKatarina",
+      "eventId": 3770174229,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        150232804
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DLeona",
+      "eventId": 3296558751,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        745758561
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DLucian",
+      "eventId": 3081302240,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        942619693
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DNoxus",
+      "eventId": 754406419,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        561271945,
+        777500660
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DRyze",
+      "eventId": 1270320240,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        523368038
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DShadowIsles",
+      "eventId": 4232330172,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1144137533
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DSona",
+      "eventId": 2723758277,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        2093602122
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DTaliyah",
+      "eventId": 196885054,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1022009896,
+        1859067049
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_FirstEncounter3DTwitch",
+      "eventId": 2709740813,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        480186733
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Joke3DGeneral",
+      "eventId": 2993846940,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        240148324,
+        779277177
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_JokeResponse3DGeneral",
+      "eventId": 84891359,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        905338261
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Kill3DGeneral",
+      "eventId": 2662837643,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        286765780,
+        1753247404
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Laugh3DGeneral",
+      "eventId": 2799664590,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        272065142,
+        803293712,
+        1454548238,
+        1660158584
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxBasicAttack2_cast3D",
+      "eventId": 2443452582,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1181182979,
+        1227133041,
+        1305891199,
+        2036090139
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxBasicAttack_cast3D",
+      "eventId": 1609158102,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1181182979,
+        1227133041,
+        1305891199,
+        2036090139
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxCritAttack_cast3D",
+      "eventId": 988252006,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1181182979,
+        1227133041,
+        1305891199,
+        2036090139
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxLightBindingMis_hit3D",
+      "eventId": 4030548274,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        443239334,
+        1028131711,
+        1228123012
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxLightBinding_cast3D",
+      "eventId": 1113730939,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        75190727,
+        1109040047,
+        1116918019,
+        1661866825
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxLightStrikeKugel_cast3D",
+      "eventId": 3683721672,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "E",
+      "wemIds": [
+        633884159,
+        977487074,
+        1090343791,
+        1487072341
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxLightstrikeToggle_cast3D",
+      "eventId": 944647942,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "E",
+      "wemIds": [
+        1393076836,
+        1973730884
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxPrismaticWaveMissile_hit3D",
+      "eventId": 673838569,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "W",
+      "wemIds": [
+        738030717,
+        823681601
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxPrismaticWave_cast3D",
+      "eventId": 2610112285,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "W",
+      "wemIds": [
+        388339829,
+        539136446,
+        1730176760,
+        1765929320
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_LuxR_cast3D",
+      "eventId": 1486462086,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "R",
+      "wemIds": [
+        155414615,
+        193322636,
+        501384332,
+        528990325,
+        801292437,
+        1009715459
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Move2DFirst",
+      "eventId": 4115302265,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        232711709,
+        683481008,
+        1611200575,
+        2017849066
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Move2DFirstAllyDemacia",
+      "eventId": 2646747765,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1370726349,
+        1962895790
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Move2DFirstAllyGalio",
+      "eventId": 2366435081,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1495717605
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Move2DFirstAllyGaren",
+      "eventId": 2771363614,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1987863014
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Move2DFirstAllyTaliyah",
+      "eventId": 1155944823,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        662432155
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Move2DStandard",
+      "eventId": 2055701498,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        13485646,
+        71727385,
+        138073070,
+        362484473,
+        437615327,
+        495074382,
+        723825124,
+        1112323113,
+        1119984955,
+        1160062849,
+        1171377016,
+        1326077606,
+        1340619006,
+        1656800077,
+        2120499095
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Respawn2DGeneral",
+      "eventId": 2725686714,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        960009624,
+        1279689393,
+        2013083134
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_Taunt3DGeneral",
+      "eventId": 2796993495,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1369833665,
+        1536677276,
+        2080087558
+      ]
+    },
+    {
+      "eventName": "Play_vo_Lux_TauntResponse3DGeneral",
+      "eventId": 1980857728,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        63814786
+      ]
+    }
+  ],
+  "files": [
+    {
+      "wemId": 13485646,
+      "sourceWem": "6b3bba90ad14f137/00000-13485646.wem",
+      "sourceWemSha256": "dfe1259fd3ea9eb7655dbcbf97b392302b47659272f00b132ca50b9f24928317",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00000-13485646.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00000-13485646.wav",
+      "bytes": 734172,
+      "sha256": "9a564f0341ee3189e65b7bb44273dc5b12099dddd76b2035c8e32a2099aae033",
+      "seconds": 2.0808616780045353,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 43864394,
+      "sourceWem": "6b3bba90ad14f137/00001-43864394.wem",
+      "sourceWemSha256": "af8fb837a677027f98bfe9cfe19ffe6faccf0fcbeb412fee25e2a0658f7b819c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00001-43864394.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00001-43864394.wav",
+      "bytes": 398576,
+      "sha256": "24a11d7b3753f4339fabba2b1336b60f36c8a75822a62505486a4bbee00f93c1",
+      "seconds": 2.259251700680272,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Death3D",
+          "eventId": 944217235,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 63814786,
+      "sourceWem": "6b3bba90ad14f137/00002-63814786.wem",
+      "sourceWemSha256": "50cede7fad33dd995e77ed5bd903458792d268106aff78dfec68b5a3fa29ff10",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00002-63814786.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00002-63814786.wav",
+      "bytes": 420984,
+      "sha256": "1d78bc428a87064d4e3d6f07dc59bd6b3f6250903bd32e5a1bc40318f82d099f",
+      "seconds": 2.386281179138322,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_TauntResponse3DGeneral",
+          "eventId": 1980857728,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 71727385,
+      "sourceWem": "6b3bba90ad14f137/00003-71727385.wem",
+      "sourceWemSha256": "f7f2cd6728900cb2739664176343ba36b4fafb34efc8c6eeced416dc7aecad65",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00003-71727385.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00003-71727385.wav",
+      "bytes": 888132,
+      "sha256": "f7946ff57934f082011029a8f68c66772036f9ddded9ffef57f659697b62969e",
+      "seconds": 2.5172562358276642,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 75190727,
+      "sourceWem": "6b3bba90ad14f137/00004-75190727.wem",
+      "sourceWemSha256": "f35cff16157d4fd269f208dd635fe5649b9d2f354dd4ec285113608644e85e7e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00004-75190727.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00004-75190727.wav",
+      "bytes": 188752,
+      "sha256": "72bb8aac06fef30894d9721b32b5af37b850dfd0cdcb27eaa607e24176bcfb5a",
+      "seconds": 1.0697732426303854,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBinding_cast3D",
+          "eventId": 1113730939,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 76154985,
+      "sourceWem": "6b3bba90ad14f137/00005-76154985.wem",
+      "sourceWemSha256": "be39512ada38b1eb3c15730345a60f73b0914139dbf70d22bc082d4ac276be66",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00005-76154985.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00005-76154985.wav",
+      "bytes": 1468324,
+      "sha256": "7b8b093110ff4b61b8a034c8696532d94bf3d3136bae17b1dfa6283f00e09aed",
+      "seconds": 4.1617913832199545,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 108044880,
+      "sourceWem": "6b3bba90ad14f137/00006-108044880.wem",
+      "sourceWemSha256": "9f12adb6f01016e95a1c49d189c7b60acb519fa46ee8828a306ad59d98913805",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00006-108044880.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00006-108044880.wav",
+      "bytes": 755052,
+      "sha256": "a345728eeaa084a1be00956b3545e2696760c8bfc5673f81d0c03a5a058feaca",
+      "seconds": 2.140045351473923,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 126409900,
+      "sourceWem": "6b3bba90ad14f137/00007-126409900.wem",
+      "sourceWemSha256": "61b9fad8707d877c8bdab4ec353d36b7b75fc11a2999b1dd86b59d629e9660e0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00007-126409900.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00007-126409900.wav",
+      "bytes": 719400,
+      "sha256": "9d4a660d6c83a953e2c707969b2dcd4aa227dc183e4c00557609270d7a5ee7d7",
+      "seconds": 4.077981859410431,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DGalio",
+          "eventId": 3679427956,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 138073070,
+      "sourceWem": "6b3bba90ad14f137/00008-138073070.wem",
+      "sourceWemSha256": "c4739019fa3565d021ea2dcea636d049d9d59833267bfbbb0ea8e168eac1e3e5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00008-138073070.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00008-138073070.wav",
+      "bytes": 1338876,
+      "sha256": "78b66440384ebab78b60d89541ef8706a6e7494b2fe27d5191b0f003b0c1b204",
+      "seconds": 3.794875283446712,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 149890988,
+      "sourceWem": "6b3bba90ad14f137/00009-149890988.wem",
+      "sourceWemSha256": "4fee2e851c8b5653cc57fb79320ff7efe247601b0d8f8f646cb4d87f0c6426cc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00009-149890988.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00009-149890988.wav",
+      "bytes": 727084,
+      "sha256": "620a9ab5e740efa512f713a254363a101935fb81f6394a60d78f064092677b42",
+      "seconds": 2.0607709750566894,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 150232804,
+      "sourceWem": "6b3bba90ad14f137/00010-150232804.wem",
+      "sourceWemSha256": "73127401e3f2e547b7291e47266f3eff2b273c5a54216f56947acdbf4eb76947",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00010-150232804.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00010-150232804.wav",
+      "bytes": 1002516,
+      "sha256": "0856b093980919c3b11515b594fc561dfb2a2a820644d668487bad162fbf5f1b",
+      "seconds": 5.682947845804988,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DKatarina",
+          "eventId": 3770174229,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 155414615,
+      "sourceWem": "6b3bba90ad14f137/00011-155414615.wem",
+      "sourceWemSha256": "5048f387ab623a79780b9904de594804fe5fec5e44e53a3692b999e73e314cdf",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00011-155414615.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00011-155414615.wav",
+      "bytes": 365412,
+      "sha256": "fc7f9d37f00115caf92445d7b206b21f3c3e1a11df1535da1948564879b7cb4a",
+      "seconds": 2.07124716553288,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxR_cast3D",
+          "eventId": 1486462086,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 163795795,
+      "sourceWem": "6b3bba90ad14f137/00012-163795795.wem",
+      "sourceWemSha256": "2c4a98dd43bd86a8756fc4793bc5df5f3fb3c64d7f019b222a502faaef13f0cf",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00012-163795795.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00012-163795795.wav",
+      "bytes": 797660,
+      "sha256": "f506359055428d682b9ea5bf33824d3eb41c9f3bb0e70130107c6e9998259535",
+      "seconds": 2.260816326530612,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 193322636,
+      "sourceWem": "6b3bba90ad14f137/00013-193322636.wem",
+      "sourceWemSha256": "273a73a12ed23cdb7c9a7d01791efcd79a25c57b98ec9aed77bbbe6f292f640b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00013-193322636.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00013-193322636.wav",
+      "bytes": 368488,
+      "sha256": "5640f8a632b54bfe8599c80cbc538ea2c61b1b1697dad78c6d13d9dabe2a083a",
+      "seconds": 2.088684807256236,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxR_cast3D",
+          "eventId": 1486462086,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 232711709,
+      "sourceWem": "6b3bba90ad14f137/00014-232711709.wem",
+      "sourceWemSha256": "f9a164c9b9c0ab7a6027b47d361ea1a3758a1c127a16645c4076476ed9a53458",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00014-232711709.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00014-232711709.wav",
+      "bytes": 1090284,
+      "sha256": "37e20ffd4fa8012778c36bf89f7335105bda1e1d5b9308b349231f607824f905",
+      "seconds": 3.090249433106576,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirst",
+          "eventId": 4115302265,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 240148324,
+      "sourceWem": "6b3bba90ad14f137/00015-240148324.wem",
+      "sourceWemSha256": "9ad747f444af099b54028941ab3318df88c9ea0155107ea717c9007c047acf40",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00015-240148324.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00015-240148324.wav",
+      "bytes": 637076,
+      "sha256": "fdcc938cfbcd7af5b71173c2592497a79a4943d69618d952d13c20ddf1a801be",
+      "seconds": 3.611292517006803,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Joke3DGeneral",
+          "eventId": 2993846940,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 272065142,
+      "sourceWem": "6b3bba90ad14f137/00016-272065142.wem",
+      "sourceWemSha256": "90e379eb3c5af8ae2016bea6a1207b9ea5d1d4a54ea1a04260061e91612275f0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00016-272065142.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00016-272065142.wav",
+      "bytes": 662112,
+      "sha256": "974975cb393b0e65f69fabc8e1ab4cbee5cf1aaa0c885fd57bca0a31f68d3f97",
+      "seconds": 3.753219954648526,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Laugh3DGeneral",
+          "eventId": 2799664590,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 286765780,
+      "sourceWem": "6b3bba90ad14f137/00017-286765780.wem",
+      "sourceWemSha256": "9f753db28f88485880de8b73cc1b1e6b19b7f529651336d407d7fe34e1dca0fd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00017-286765780.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00017-286765780.wav",
+      "bytes": 625320,
+      "sha256": "33e7345f8fdf59ee27aa5108b56d1e44443940958aa886c3e9a189a484147c6b",
+      "seconds": 3.5446485260770975,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Kill3DGeneral",
+          "eventId": 2662837643,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 362484473,
+      "sourceWem": "6b3bba90ad14f137/00018-362484473.wem",
+      "sourceWemSha256": "bb5891b494ff72b0f7e0310820545cfc6c11bd5978fa3e41a141f93becaaa151",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00018-362484473.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00018-362484473.wav",
+      "bytes": 1644732,
+      "sha256": "ff5576e8463a6f0f420c567137adf09d9aa9b44a1a4501c2ec8366ea75ffe024",
+      "seconds": 4.661814058956916,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 388339829,
+      "sourceWem": "6b3bba90ad14f137/00019-388339829.wem",
+      "sourceWemSha256": "81fd8950868ba90c8ccc1b617f224c3cef71916ee3ceb7229e01f7a5d00165f0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00019-388339829.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00019-388339829.wav",
+      "bytes": 177968,
+      "sha256": "0075605487980a15c28d84bec190921790f1432595a9f19fd8c3b672e70627b8",
+      "seconds": 1.0086394557823128,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxPrismaticWave_cast3D",
+          "eventId": 2610112285,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 437615327,
+      "sourceWem": "6b3bba90ad14f137/00020-437615327.wem",
+      "sourceWemSha256": "6ccde1531c02d968fec67af4d831b5b8c39a1a29a5668ae83e62f682ca25eb89",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00020-437615327.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00020-437615327.wav",
+      "bytes": 588468,
+      "sha256": "a7fd6fb8319c75fbaeda5b537c760a7b8ab964e5897fb5884bd569a9665758b0",
+      "seconds": 1.6678684807256237,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 443239334,
+      "sourceWem": "6b3bba90ad14f137/00021-443239334.wem",
+      "sourceWemSha256": "9f00495772424b08940d68bd5f5f3be2ddbce1d645c51521ffc231de0dd11531",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00021-443239334.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00021-443239334.wav",
+      "bytes": 305568,
+      "sha256": "f7004881c31637efa0e45021129d81d5909d889907f9b496a22eb8e715d594b9",
+      "seconds": 1.7319954648526077,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBindingMis_hit3D",
+          "eventId": 4030548274,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 480186733,
+      "sourceWem": "6b3bba90ad14f137/00022-480186733.wem",
+      "sourceWemSha256": "c3f6b3d889205c0e0e6aa8ef4258521378cb7aadbddc506edcda732d33104cbc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00022-480186733.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00022-480186733.wav",
+      "bytes": 1005508,
+      "sha256": "1b5fc4185291d2607fc457e81c56a678dc3d9ae48a82482abdb0fe657506d23f",
+      "seconds": 5.699909297052154,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DTwitch",
+          "eventId": 2709740813,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 495074382,
+      "sourceWem": "6b3bba90ad14f137/00023-495074382.wem",
+      "sourceWemSha256": "55b7fc566d6482ac15edac89a99307acfcacd8a211df4aec87e78fce127681b6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00023-495074382.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00023-495074382.wav",
+      "bytes": 1245340,
+      "sha256": "1498a81e179fe77aa294dec5f4e002ffcb7eb2d3a80f4dc267a6936b1e2fd69c",
+      "seconds": 3.529750566893424,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 501384332,
+      "sourceWem": "6b3bba90ad14f137/00024-501384332.wem",
+      "sourceWemSha256": "3bc3c9c44ff6aae8b42c95280615e9c768e474fedf0a87c5b96f9096b1ef35f6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00024-501384332.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00024-501384332.wav",
+      "bytes": 317892,
+      "sha256": "8eab69c28f98cce6057cd2f4e90fa1ddf0974932bb5af02638b319f859d036e9",
+      "seconds": 1.801859410430839,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxR_cast3D",
+          "eventId": 1486462086,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 523368038,
+      "sourceWem": "6b3bba90ad14f137/00025-523368038.wem",
+      "sourceWemSha256": "9f3967c2a819638477278e4c28f54f3c0fb690a81553157ffa65581ece7b08a3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00025-523368038.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00025-523368038.wav",
+      "bytes": 842348,
+      "sha256": "bf4e6525abc720f02dbbbe7e23c3dd14af9bd718760cba4926a8492b177398a9",
+      "seconds": 4.774965986394558,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DRyze",
+          "eventId": 1270320240,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 528990325,
+      "sourceWem": "6b3bba90ad14f137/00026-528990325.wem",
+      "sourceWemSha256": "b36353c3b8834ab8a7a07186360140844af4924ec85b160b54d0c0e5efb44f7a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00026-528990325.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00026-528990325.wav",
+      "bytes": 343276,
+      "sha256": "4ff5af00f88cad72646216fe5189770000f457ce5d29684b74dd6d0424c1e217",
+      "seconds": 1.9457596371882087,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxR_cast3D",
+          "eventId": 1486462086,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 535395823,
+      "sourceWem": "6b3bba90ad14f137/00027-535395823.wem",
+      "sourceWemSha256": "3bc758b98253616c80aea25bb641bc028fba4f750e488ff27122dd010cbe4792",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00027-535395823.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00027-535395823.wav",
+      "bytes": 979100,
+      "sha256": "936f78cabc7863f5e1884441bd8768349ada39b8247fff70db884d603e9cdf32",
+      "seconds": 2.7751020408163267,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 539136446,
+      "sourceWem": "6b3bba90ad14f137/00028-539136446.wem",
+      "sourceWemSha256": "bd5b281e3c6d2709ffa230f8eed90f58bb311268980e801e854df0dca4aaddf0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00028-539136446.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00028-539136446.wav",
+      "bytes": 173592,
+      "sha256": "a68d80aecb6c14da93bb718c63c34e8a728feaa8400d050a6afdad7d5e3d898f",
+      "seconds": 0.9838321995464853,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxPrismaticWave_cast3D",
+          "eventId": 2610112285,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 561271945,
+      "sourceWem": "6b3bba90ad14f137/00029-561271945.wem",
+      "sourceWemSha256": "01dcd90c408841b0c40de056a087ffddeabb63d9ee9e2ab5274509c9c8bfb218",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00029-561271945.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00029-561271945.wav",
+      "bytes": 805348,
+      "sha256": "ae8b57958b5a221cec20b0915600d548e61e441f36740873ee7f4f414e968de1",
+      "seconds": 4.565215419501134,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DNoxus",
+          "eventId": 754406419,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 633884159,
+      "sourceWem": "6b3bba90ad14f137/00030-633884159.wem",
+      "sourceWemSha256": "5036880963ad706b9c3cef94203f8dcde0ce25903f05941ea54e13d76b4422f1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00030-633884159.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00030-633884159.wav",
+      "bytes": 250332,
+      "sha256": "51bcef339ac2491bcac1c43fec331595f588a4b9ef43cec1aba2c614a9eb20c7",
+      "seconds": 1.4188662131519274,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightStrikeKugel_cast3D",
+          "eventId": 3683721672,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 662432155,
+      "sourceWem": "6b3bba90ad14f137/00031-662432155.wem",
+      "sourceWemSha256": "e7c87a1c63be6df030253c44a7aa9b82509b3db6284705cf4f743f78e675843b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00031-662432155.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00031-662432155.wav",
+      "bytes": 448232,
+      "sha256": "61cdab80f44dd5c854bbca17d6ae379c0e142a6c08347b9aee9b691397cc6965",
+      "seconds": 2.540748299319728,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirstAllyTaliyah",
+          "eventId": 1155944823,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 683481008,
+      "sourceWem": "6b3bba90ad14f137/00032-683481008.wem",
+      "sourceWemSha256": "d2a7ac11521c02ac351857f6cbab516a514f58323293c2e782f36ea6be784ee9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00032-683481008.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00032-683481008.wav",
+      "bytes": 1669604,
+      "sha256": "ec88b09cec18040c287eed756b81c31f38baf35f2fc01fe7111a70ad58cff352",
+      "seconds": 4.732312925170068,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirst",
+          "eventId": 4115302265,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 698836818,
+      "sourceWem": "6b3bba90ad14f137/00033-698836818.wem",
+      "sourceWemSha256": "ee79629ecf37f4907918e52996c3ce0bfd7a6c034f04aacfb4f212ca5829a650",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00033-698836818.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00033-698836818.wav",
+      "bytes": 1408884,
+      "sha256": "2c2a0569fd03f61ba721ede221710c643cf463e021d218dbd845108c1365d199",
+      "seconds": 3.9933106575963717,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 723825124,
+      "sourceWem": "6b3bba90ad14f137/00034-723825124.wem",
+      "sourceWemSha256": "ded392168f05614926f8229dff634d77ded8c0fe17ff94fc1601e52b77572642",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00034-723825124.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00034-723825124.wav",
+      "bytes": 717988,
+      "sha256": "b247212263f5bb16a3d05a5fe783791bf2d9aac08385a6664e5ec0c02ce7832d",
+      "seconds": 2.034988662131519,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 738030717,
+      "sourceWem": "6b3bba90ad14f137/00035-738030717.wem",
+      "sourceWemSha256": "f70161a12d96e43cfc660c5a2f52cb8d7a8d16207e65cc268d240792bd5c39b3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00035-738030717.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00035-738030717.wav",
+      "bytes": 323548,
+      "sha256": "e44a4d4e50300f1c5fc0684b0ae7c6f42927b47e7c188811b8e3ed81ff1a5f1d",
+      "seconds": 1.833922902494331,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxPrismaticWaveMissile_hit3D",
+          "eventId": 673838569,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 745758561,
+      "sourceWem": "6b3bba90ad14f137/00036-745758561.wem",
+      "sourceWemSha256": "41de4c762a6ea701a2e85d978ce464ac989cce87263df7ab96ba21b93cb0b183",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00036-745758561.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00036-745758561.wav",
+      "bytes": 1241120,
+      "sha256": "311690f06dc2671d335f1e8558308ca20288b28970007a85ce85d02e9f276cf4",
+      "seconds": 7.035578231292517,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DLeona",
+          "eventId": 3296558751,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 754192429,
+      "sourceWem": "6b3bba90ad14f137/00037-754192429.wem",
+      "sourceWemSha256": "31afc36c7a692c96d65b2b4c5b33316a995079f1ada2db98e0523bcf589e29d0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00037-754192429.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00037-754192429.wav",
+      "bytes": 374648,
+      "sha256": "3dff9a11c3fb677c0314e402069dd33e7bc29f69c0b43765a7fa84f1b1f5d430",
+      "seconds": 2.1236054421768706,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Death3D",
+          "eventId": 944217235,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 777500660,
+      "sourceWem": "6b3bba90ad14f137/00038-777500660.wem",
+      "sourceWemSha256": "bd141dfa0b85bdfca63279ea361efa729b0ec7bf91dfc1061218de7287a27010",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00038-777500660.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00038-777500660.wav",
+      "bytes": 1180484,
+      "sha256": "292fbb4d7d23ac495ddb9131f7eeb7eecf77698318f014173c4cf4ddabb0a779",
+      "seconds": 6.691836734693878,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DNoxus",
+          "eventId": 754406419,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 779277177,
+      "sourceWem": "6b3bba90ad14f137/00039-779277177.wem",
+      "sourceWemSha256": "a327d903ff70335de413268ccaf6e6db1610f4536ce7a25bc8dc55d864432b14",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00039-779277177.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00039-779277177.wav",
+      "bytes": 2315068,
+      "sha256": "e1e794309fd0a4bf24cacb6df6f44f2c7fa27a13ea1894824d485b810a55d664",
+      "seconds": 13.123718820861678,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Joke3DGeneral",
+          "eventId": 2993846940,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 786960801,
+      "sourceWem": "6b3bba90ad14f137/00040-786960801.wem",
+      "sourceWemSha256": "a262bc34b09ae03ca8415697ad7fa5c7616d086342dde2ee30c8cbdfb869cfc0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00040-786960801.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00040-786960801.wav",
+      "bytes": 635084,
+      "sha256": "48a6ac14dc78ca019b846bdff3402fd69a5a900beb3723d922f4c8f51c5f81e7",
+      "seconds": 3.6,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DDemacia",
+          "eventId": 1401110340,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 801292437,
+      "sourceWem": "6b3bba90ad14f137/00041-801292437.wem",
+      "sourceWemSha256": "a7b3b4a490a301efe6ffe67608e58c9359ac5df30428a135d3fd032281510619",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00041-801292437.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00041-801292437.wav",
+      "bytes": 361940,
+      "sha256": "c6be1564187cf8281f75f05c5f3c899827405ad70a8721112547d0248b16729b",
+      "seconds": 2.05156462585034,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxR_cast3D",
+          "eventId": 1486462086,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 803293712,
+      "sourceWem": "6b3bba90ad14f137/00042-803293712.wem",
+      "sourceWemSha256": "23e97aa7721c80837795f7abb7a9f70dcdc597bb470731848662d35f2f0382cd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00042-803293712.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00042-803293712.wav",
+      "bytes": 632868,
+      "sha256": "2ef8c435e2b0d0be5b9425a29d43ab8152268734e9a4f5e871b8186dc3ddc75b",
+      "seconds": 3.587437641723356,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Laugh3DGeneral",
+          "eventId": 2799664590,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 823681601,
+      "sourceWem": "6b3bba90ad14f137/00043-823681601.wem",
+      "sourceWemSha256": "59f0b978cf9133184540b792e89ee7e4e7cf557708064b14fcb9491dc11f2bdd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00043-823681601.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00043-823681601.wav",
+      "bytes": 332460,
+      "sha256": "056878e4d63e1d2c58d2131c87574ad559933a1dc60d639dca545d5a33fb9346",
+      "seconds": 1.8844444444444444,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxPrismaticWaveMissile_hit3D",
+          "eventId": 673838569,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 905338261,
+      "sourceWem": "6b3bba90ad14f137/00044-905338261.wem",
+      "sourceWemSha256": "c03988f2ec6b0e98b45f73b605e34cf179d3897c566beae09c9d55f8b170f414",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00044-905338261.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00044-905338261.wav",
+      "bytes": 462080,
+      "sha256": "d30a022ed7cd91df371f3f0315f2801aa9c25b7907afebf1d63b0c67b54d8516",
+      "seconds": 2.6192517006802722,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_JokeResponse3DGeneral",
+          "eventId": 84891359,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 942619693,
+      "sourceWem": "6b3bba90ad14f137/00045-942619693.wem",
+      "sourceWemSha256": "fa141b3c08ce51f3c706a2d7d2cffb6cbcd4634035024716f498916308cf2275",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00045-942619693.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00045-942619693.wav",
+      "bytes": 1186684,
+      "sha256": "5d1a3f016f454b3586d72e73ed0bd212db168cbbc597dd2f6427953877af7227",
+      "seconds": 6.726984126984127,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DLucian",
+          "eventId": 3081302240,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 960009624,
+      "sourceWem": "6b3bba90ad14f137/00046-960009624.wem",
+      "sourceWemSha256": "bbd0b6fb8cfe0895fabda95a574a8b360511ac5be129241b694190f6ead6eaab",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00046-960009624.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00046-960009624.wav",
+      "bytes": 655732,
+      "sha256": "fa3a88acb35fac977be8de49407fe88663a9ebe6903b121853050c610901ff5b",
+      "seconds": 3.7170521541950112,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Respawn2DGeneral",
+          "eventId": 2725686714,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 977487074,
+      "sourceWem": "6b3bba90ad14f137/00047-977487074.wem",
+      "sourceWemSha256": "2dbaf12e84dd302950b6fbe6b6fe83ebc19e7053d4ce101bed6cad4e57d37034",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00047-977487074.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00047-977487074.wav",
+      "bytes": 171968,
+      "sha256": "79614908268afde547d7a6d7bc09131f785eafa0c26448ec8b7200af6ab2b1ec",
+      "seconds": 0.974625850340136,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightStrikeKugel_cast3D",
+          "eventId": 3683721672,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1009715459,
+      "sourceWem": "6b3bba90ad14f137/00048-1009715459.wem",
+      "sourceWemSha256": "dfa8f79b75c8155b976d42ed73aa5137acd34ff29f11dd1de9d2c8702e799c99",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00048-1009715459.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00048-1009715459.wav",
+      "bytes": 297880,
+      "sha256": "75f39d6b8a2f4929bc69a5fca89356a7fbc7a466410a9cbcc99fc181d8ea8449",
+      "seconds": 1.6884126984126984,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxR_cast3D",
+          "eventId": 1486462086,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1022009896,
+      "sourceWem": "6b3bba90ad14f137/00049-1022009896.wem",
+      "sourceWemSha256": "cdc8f36e062dac6b38cc7073306675513a605a37ef6cc98cdfc79ce41a0bda8d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00049-1022009896.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00049-1022009896.wav",
+      "bytes": 702948,
+      "sha256": "6e960305fffe2e06867343aa3eb0181fa183dee1334db8f35a92645fb6117a3b",
+      "seconds": 3.984716553287982,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DTaliyah",
+          "eventId": 196885054,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1028131711,
+      "sourceWem": "6b3bba90ad14f137/00050-1028131711.wem",
+      "sourceWemSha256": "b61ff7c7e23e9c21d632795ddae8eb5ac3f3e5c45958968aaac451b3fea28dac",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00050-1028131711.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00050-1028131711.wav",
+      "bytes": 248176,
+      "sha256": "523c744e9d843d27497dc0a682e45a8495cff94e54c0734c5f36aa3f73f28ef1",
+      "seconds": 1.4066439909297053,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBindingMis_hit3D",
+          "eventId": 4030548274,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1030210573,
+      "sourceWem": "6b3bba90ad14f137/00051-1030210573.wem",
+      "sourceWemSha256": "0a56a727afcba4cbfce7e3c2a91bda12e65b0a14cc0ab46de656489946aacc27",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00051-1030210573.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00051-1030210573.wav",
+      "bytes": 543728,
+      "sha256": "75facaece6815bd96db599a3812728190cd4cddbbd08cd0c4e10be35bebca2d1",
+      "seconds": 3.082108843537415,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DGaren",
+          "eventId": 3410691795,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1074826333,
+      "sourceWem": "6b3bba90ad14f137/00052-1074826333.wem",
+      "sourceWemSha256": "1738e1d4816571c422758235a9b7c15f699cdcf3f44ba6e45071c021e1fc84b8",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00052-1074826333.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00052-1074826333.wav",
+      "bytes": 1179508,
+      "sha256": "ab4646fa4ffc36b03db434b12632218dc5fdbb1f30f8999266b3a3bc0aecaed1",
+      "seconds": 3.3431519274376416,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1090343791,
+      "sourceWem": "6b3bba90ad14f137/00053-1090343791.wem",
+      "sourceWemSha256": "1548008c4339f084cdb179354612b9d33469241ebc04a42f7b5a04920487a694",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00053-1090343791.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00053-1090343791.wav",
+      "bytes": 174088,
+      "sha256": "9cdb0762e10f7846a199d6e86b9fa7cfb464b162d5b9da6992b706b24ceeb612",
+      "seconds": 0.9866439909297052,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightStrikeKugel_cast3D",
+          "eventId": 3683721672,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1109040047,
+      "sourceWem": "6b3bba90ad14f137/00054-1109040047.wem",
+      "sourceWemSha256": "95752f29f64f1afdbebfde894010646e1286d24ed360b3e4ddc46eeac7366e37",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00054-1109040047.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00054-1109040047.wav",
+      "bytes": 145812,
+      "sha256": "97f0e3379003bb72b1ef75e603343407834ee144506a131c31a74feef58d6ff9",
+      "seconds": 0.8263492063492064,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBinding_cast3D",
+          "eventId": 1113730939,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1112323113,
+      "sourceWem": "6b3bba90ad14f137/00055-1112323113.wem",
+      "sourceWemSha256": "868a5914cab3800ff8b8c0968568a780f8937772df2306ccdea39979bf1e1fd2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00055-1112323113.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00055-1112323113.wav",
+      "bytes": 741628,
+      "sha256": "ea9aac945b805d3386dc4a106691bb0f8106f7f76ae46ffdf96d453a524fa3de",
+      "seconds": 2.1019954648526076,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1116918019,
+      "sourceWem": "6b3bba90ad14f137/00056-1116918019.wem",
+      "sourceWemSha256": "076565139d1f181ba0b09f7010a3d7a100203d7d06e0b95e43bae0114950a0ec",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00056-1116918019.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00056-1116918019.wav",
+      "bytes": 193060,
+      "sha256": "5632a0949689b9b2c199eae2ad2feb6c437ead372706a8c1f61704ba84af3df7",
+      "seconds": 1.0941950113378685,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBinding_cast3D",
+          "eventId": 1113730939,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1119984955,
+      "sourceWem": "6b3bba90ad14f137/00057-1119984955.wem",
+      "sourceWemSha256": "fcfc573112bfd28fb98f59ccbe6cb4bd883587d5a359b1b24d3ee63f2b4c35c2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00057-1119984955.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00057-1119984955.wav",
+      "bytes": 720340,
+      "sha256": "fe3b19e745157bfcca04cc46af788cb349b677fa81f143aebe1cdd74809981fa",
+      "seconds": 2.041655328798186,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1124644677,
+      "sourceWem": "6b3bba90ad14f137/00058-1124644677.wem",
+      "sourceWemSha256": "79919c51320f9f84323db6576b24281c9875a77af2f9ad77731208f7b94dfbb6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00058-1124644677.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00058-1124644677.wav",
+      "bytes": 370980,
+      "sha256": "23204c9e276f17637da8d250716060f5483fb19826405d01ff3ab3e2979d0cee",
+      "seconds": 2.10281179138322,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Death3D",
+          "eventId": 944217235,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1144137533,
+      "sourceWem": "6b3bba90ad14f137/00059-1144137533.wem",
+      "sourceWemSha256": "a2ab59e7a39f6b3a7efb1bafaf2dee7ff2e476e029a1c111547468ab5478c585",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00059-1144137533.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00059-1144137533.wav",
+      "bytes": 671432,
+      "sha256": "d336575ce7814881e3f211a42af2897924fecbeb4861df99dcb4eb1aa804e33e",
+      "seconds": 3.8060544217687076,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DShadowIsles",
+          "eventId": 4232330172,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1160062849,
+      "sourceWem": "6b3bba90ad14f137/00060-1160062849.wem",
+      "sourceWemSha256": "305cc068277541a2954bf1abc71c15e9ad67c95167961aae4d82f01124f4d176",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00060-1160062849.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00060-1160062849.wav",
+      "bytes": 692804,
+      "sha256": "2e7d3a13bd61fa52321bc1c9460e95018437dee08fbf2ae64fc4b2345fa3b223",
+      "seconds": 1.9636054421768707,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1171377016,
+      "sourceWem": "6b3bba90ad14f137/00061-1171377016.wem",
+      "sourceWemSha256": "2df5e6deccd17d6728b5693f44f2bbab5448755b5537798333625f9b1e466546",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00061-1171377016.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00061-1171377016.wav",
+      "bytes": 812452,
+      "sha256": "ca6a9d298bd9345b1bec5e5a84dcc089a7bf1f9e7a787cc2f157653421890cca",
+      "seconds": 2.3027437641723356,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1181182979,
+      "sourceWem": "6b3bba90ad14f137/00062-1181182979.wem",
+      "sourceWemSha256": "8a42b77ad19d28d2031f7a75a8380e5b635c69ff79d14534b4e2a542cfe04a73",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00062-1181182979.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00062-1181182979.wav",
+      "bytes": 151152,
+      "sha256": "e6a251116ba4c5ac7ac70460b1b10faa38887b15bbc2ffb71983ba3a4f893189",
+      "seconds": 0.8566213151927438,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack2_cast3D",
+          "eventId": 2443452582,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack_cast3D",
+          "eventId": 1609158102,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxCritAttack_cast3D",
+          "eventId": 988252006,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1227133041,
+      "sourceWem": "6b3bba90ad14f137/00063-1227133041.wem",
+      "sourceWemSha256": "9beaa315b2a0ad50652a14c9423fd1ba01ac0482c149a3015634ddc99b5e2bb9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00063-1227133041.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00063-1227133041.wav",
+      "bytes": 151324,
+      "sha256": "59633bbec56502e2de1ddf59d099a422118c71c6e7150a8baac772e98a53dc36",
+      "seconds": 0.8575963718820862,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack2_cast3D",
+          "eventId": 2443452582,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack_cast3D",
+          "eventId": 1609158102,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxCritAttack_cast3D",
+          "eventId": 988252006,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1228123012,
+      "sourceWem": "6b3bba90ad14f137/00064-1228123012.wem",
+      "sourceWemSha256": "3dadb28aaef9e3ecf8ac67b2e3da866923985edcac42b688d47dce6252a7d330",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00064-1228123012.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00064-1228123012.wav",
+      "bytes": 167736,
+      "sha256": "a4b3604280da161b472d451b51c83cfafc4f209b7bc1d041596610cf2787f697",
+      "seconds": 0.9506349206349206,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBindingMis_hit3D",
+          "eventId": 4030548274,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1237442861,
+      "sourceWem": "6b3bba90ad14f137/00065-1237442861.wem",
+      "sourceWemSha256": "242dd148594597fcbdd63f4097876434c93249bd26008c6f0c422c161b581f1e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00065-1237442861.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00065-1237442861.wav",
+      "bytes": 1930448,
+      "sha256": "40d6dcc5936d79bd19dc3e9f3d9e06cc92b772ec1b97392afb2a8022c94522ad",
+      "seconds": 10.943333333333333,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DJarvanIV",
+          "eventId": 2317375,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1272794498,
+      "sourceWem": "6b3bba90ad14f137/00066-1272794498.wem",
+      "sourceWemSha256": "8a6ffc3b89ccc3d000001695d322277b37a0d22b44ed769b7b42669c0cd8e06d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00066-1272794498.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00066-1272794498.wav",
+      "bytes": 325700,
+      "sha256": "9cf3ed22ee21470b3cc7ec7e66d088507bdc4d1721b6dbb78a9cb76a5bb173c1",
+      "seconds": 1.8461224489795918,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Death3D",
+          "eventId": 944217235,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1279651501,
+      "sourceWem": "6b3bba90ad14f137/00067-1279651501.wem",
+      "sourceWemSha256": "c7ada3d7cfe372d3d04200b21078dbaa4bd7330a7ebed08511c431233cf2dd25",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00067-1279651501.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00067-1279651501.wav",
+      "bytes": 1126156,
+      "sha256": "e55048eb48e3c8ac20a61b4b409e11e1eff318dfbb7965278575ed202773b735",
+      "seconds": 6.383854875283447,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DEzreal",
+          "eventId": 4170591849,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1279689393,
+      "sourceWem": "6b3bba90ad14f137/00068-1279689393.wem",
+      "sourceWemSha256": "c2f69572a9771c302bdafa7a8e738c98e76a77914c7bf29eecaa620875845e92",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00068-1279689393.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00068-1279689393.wav",
+      "bytes": 760032,
+      "sha256": "83ce457e922744a9212351c78f1bd1c30416da01db8edd06b982564577af5719",
+      "seconds": 4.308321995464852,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Respawn2DGeneral",
+          "eventId": 2725686714,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1305891199,
+      "sourceWem": "6b3bba90ad14f137/00069-1305891199.wem",
+      "sourceWemSha256": "9b6442064d841bd710166fe6854c754b3e4d64d7464255df95328592c2189c07",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00069-1305891199.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00069-1305891199.wav",
+      "bytes": 163252,
+      "sha256": "e48f9ef9fa05b459a699473b5799976fc55bb861dc77fc90c607015d52bd85fd",
+      "seconds": 0.9252154195011338,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack2_cast3D",
+          "eventId": 2443452582,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack_cast3D",
+          "eventId": 1609158102,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxCritAttack_cast3D",
+          "eventId": 988252006,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1326077606,
+      "sourceWem": "6b3bba90ad14f137/00070-1326077606.wem",
+      "sourceWemSha256": "c975abebd2e183bc36e458ce544ca5aafcdc5fee640bc250ce0980c710b59c6f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00070-1326077606.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00070-1326077606.wav",
+      "bytes": 905468,
+      "sha256": "c78316b1de4df4b9b5dfbe44fae942c1338606e8ad3801a4418e5199850497d9",
+      "seconds": 2.5663945578231293,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1340619006,
+      "sourceWem": "6b3bba90ad14f137/00071-1340619006.wem",
+      "sourceWemSha256": "6841912838eadd3d4459a238ec418142a78c2a72a01faf6c4cf9ae2ce8e606b2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00071-1340619006.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00071-1340619006.wav",
+      "bytes": 994212,
+      "sha256": "7608ac97ef94c73455319c10c7b1bc7695484b0c5074974dbf68f7f3db120fdd",
+      "seconds": 2.817936507936508,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1349461345,
+      "sourceWem": "6b3bba90ad14f137/00072-1349461345.wem",
+      "sourceWemSha256": "7f8ccb41f0e7480d973660d2644279ed7ad9525ff898911bae44e179360cd579",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00072-1349461345.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00072-1349461345.wav",
+      "bytes": 720340,
+      "sha256": "32495e1634552efdfceb56d95b87d8ee75c8bf963a33a2dbde203c88b1be9317",
+      "seconds": 2.041655328798186,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1369833665,
+      "sourceWem": "6b3bba90ad14f137/00073-1369833665.wem",
+      "sourceWemSha256": "fb24214aa0af866d8958888b1694282e643838eb14fd637eb9a5941b2e47d82a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00073-1369833665.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00073-1369833665.wav",
+      "bytes": 943960,
+      "sha256": "f00d9a3ee6bee83f64981ca4dbe48455d20cea541aea1a207259089af91aeede",
+      "seconds": 5.350997732426304,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Taunt3DGeneral",
+          "eventId": 2796993495,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1370726349,
+      "sourceWem": "6b3bba90ad14f137/00074-1370726349.wem",
+      "sourceWemSha256": "02236f9dd1f8b8972f3762e59e093ae73107cdbee3b22fdf5784deccf41af16b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00074-1370726349.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00074-1370726349.wav",
+      "bytes": 1110696,
+      "sha256": "b87e516925a7219ba4c2850004a6320fc517d8e3035846daa7537d8c9e34d9b7",
+      "seconds": 6.296213151927438,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirstAllyDemacia",
+          "eventId": 2646747765,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1393076836,
+      "sourceWem": "6b3bba90ad14f137/00075-1393076836.wem",
+      "sourceWemSha256": "5c43f9d87a3bbbab7ea3c44a32866f1e8eb7412ffe8bb1b0bbca8d13029de29b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00075-1393076836.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00075-1393076836.wav",
+      "bytes": 233460,
+      "sha256": "f7bef974c62d4b8b0c74c7ee4e5a0207d29b540c4901e736d50f479b2143aae4",
+      "seconds": 1.3232199546485262,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightstrikeToggle_cast3D",
+          "eventId": 944647942,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1427958369,
+      "sourceWem": "6b3bba90ad14f137/00076-1427958369.wem",
+      "sourceWemSha256": "515b20f08f31b63c585f12d67efee5de6a816684adb1ebb10f83077392efbbc0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00076-1427958369.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00076-1427958369.wav",
+      "bytes": 1245388,
+      "sha256": "09445844a288b7fbde2fec7d8237994b1ad8a7764d8fe0a0f6378821d0583f14",
+      "seconds": 3.529886621315193,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1454548238,
+      "sourceWem": "6b3bba90ad14f137/00077-1454548238.wem",
+      "sourceWemSha256": "dbe971ed41dee65e0463e93d30570bc3e03998e00dad8dee86849c8676ab5b95",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00077-1454548238.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00077-1454548238.wav",
+      "bytes": 722536,
+      "sha256": "545d2d7c37c5b9abf04510aa1d98c73c2a3ad213e7a3727f550109dec1cd095b",
+      "seconds": 4.095759637188209,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Laugh3DGeneral",
+          "eventId": 2799664590,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1487072341,
+      "sourceWem": "6b3bba90ad14f137/00078-1487072341.wem",
+      "sourceWemSha256": "7b2716962a961a2b41576fbd7358a124756107e6eb8f56c3b0e723c519cff788",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00078-1487072341.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00078-1487072341.wav",
+      "bytes": 186192,
+      "sha256": "e0ec1762735147cf36b7d631afb9d5cd0d0099ea985e27b0c6751c0077be7a6b",
+      "seconds": 1.0552607709750568,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightStrikeKugel_cast3D",
+          "eventId": 3683721672,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1495717605,
+      "sourceWem": "6b3bba90ad14f137/00079-1495717605.wem",
+      "sourceWemSha256": "d3972a286921fe9bc9d8b27eca36e74047fe23d99acaf60246ce575614c5b200",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00079-1495717605.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00079-1495717605.wav",
+      "bytes": 815888,
+      "sha256": "6f30e77b2b95ef607ba0c7ed395a4dcda5f712e0fae2d6f76256d6633f3b9457",
+      "seconds": 4.624965986394558,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirstAllyGalio",
+          "eventId": 2366435081,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1536677276,
+      "sourceWem": "6b3bba90ad14f137/00080-1536677276.wem",
+      "sourceWemSha256": "529e63e82368088fc170a1d68b4d245c59ab548b6b02fe3dc0c0bf293d6407bb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00080-1536677276.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00080-1536677276.wav",
+      "bytes": 934264,
+      "sha256": "7b18d6c10136568dc6f1b5981930ddea4f3ce9197993bd1650c6e7f05373e322",
+      "seconds": 5.296031746031746,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Taunt3DGeneral",
+          "eventId": 2796993495,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1611200575,
+      "sourceWem": "6b3bba90ad14f137/00081-1611200575.wem",
+      "sourceWemSha256": "73266b125cacfc66c7ecad33200ec6a6a343fa608361eeda2d3157c5e088fbe6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00081-1611200575.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00081-1611200575.wav",
+      "bytes": 1488572,
+      "sha256": "523c8f8caeffe985d3ba561ff55b87f84906cb179391ad7d791bcd761b43c8bb",
+      "seconds": 4.219183673469388,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirst",
+          "eventId": 4115302265,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1656800077,
+      "sourceWem": "6b3bba90ad14f137/00082-1656800077.wem",
+      "sourceWemSha256": "30e44202ea1f7b132ec0cd600697030b4b64a18d3be48584b9e3350a38510f03",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00082-1656800077.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00082-1656800077.wav",
+      "bytes": 883836,
+      "sha256": "5264a534ed89f08b9cea1eb0c01706094ff5be0c63432136ab2576f91227e7e3",
+      "seconds": 2.5050793650793652,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1660158584,
+      "sourceWem": "6b3bba90ad14f137/00083-1660158584.wem",
+      "sourceWemSha256": "6688428aa9e2b56c2625e4eb6260b2257930b50266548c48ecafd306bfa928d0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00083-1660158584.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00083-1660158584.wav",
+      "bytes": 618236,
+      "sha256": "f6842ee512e8033f201424dcf2ce44ffd4bbe9e5bfe46d0fb7eb520bd0e40c13",
+      "seconds": 3.504489795918367,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Laugh3DGeneral",
+          "eventId": 2799664590,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1661866825,
+      "sourceWem": "6b3bba90ad14f137/00084-1661866825.wem",
+      "sourceWemSha256": "baf52d1101d56fd23064d8819ebc708303062f6f51b7924d5951d2e441cbe694",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00084-1661866825.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00084-1661866825.wav",
+      "bytes": 142800,
+      "sha256": "4f0350c7ff02a96b6f16a69d93ef3eeb4c7b0af4b941f00784a4392e580b5308",
+      "seconds": 0.8092743764172335,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightBinding_cast3D",
+          "eventId": 1113730939,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1686932694,
+      "sourceWem": "6b3bba90ad14f137/00085-1686932694.wem",
+      "sourceWemSha256": "18fe264eff603a2733c7658ddec43f237c62459fd12319aebcd92fc5edde7b6c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00085-1686932694.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00085-1686932694.wav",
+      "bytes": 1388172,
+      "sha256": "bf54fba7cbf57e6cfbc29537491c0a1227f018d791ba7a8a06dcee029f57adc7",
+      "seconds": 3.9346031746031747,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1720466094,
+      "sourceWem": "6b3bba90ad14f137/00086-1720466094.wem",
+      "sourceWemSha256": "161a201f8a7d106f0ca5242f654f683944bd71232fcd8341bee78a2e8e1d43aa",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00086-1720466094.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00086-1720466094.wav",
+      "bytes": 737020,
+      "sha256": "c7e30c43e5ea1deedc8fec25d157fcef4383ac0dacbf28d27164b9f17e0085ac",
+      "seconds": 2.088934240362812,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1728531226,
+      "sourceWem": "6b3bba90ad14f137/00087-1728531226.wem",
+      "sourceWemSha256": "223ebf144f7e822d192f77cf34afd9a63b9b6293fd8a387e303771663211eb8f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00087-1728531226.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00087-1728531226.wav",
+      "bytes": 603700,
+      "sha256": "017f145493c5224252c7d7c40e6dba30985f710e105e2ad8f0fbfa602cfbcb02",
+      "seconds": 1.7110430839002269,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1730176760,
+      "sourceWem": "6b3bba90ad14f137/00088-1730176760.wem",
+      "sourceWemSha256": "89ca0dfd57f33174b8ca9b7250878127f4de1afb5e15d0640e9df767cee62fbf",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00088-1730176760.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00088-1730176760.wav",
+      "bytes": 168804,
+      "sha256": "9c6ad14592a0c4c0494ff2c5bbf26fb8a9d4628385d87ce83c3d2210044dad8a",
+      "seconds": 0.9566893424036281,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxPrismaticWave_cast3D",
+          "eventId": 2610112285,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1753247404,
+      "sourceWem": "6b3bba90ad14f137/00089-1753247404.wem",
+      "sourceWemSha256": "15d621221ab381d38b52f49323c0a74af1a148bf1904d0f18a1334909d8a16e3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00089-1753247404.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00089-1753247404.wav",
+      "bytes": 355312,
+      "sha256": "e9daab14bfc4c682ba88f87d908a9c04bb782dc73bf728012ea68dba74c2d86b",
+      "seconds": 2.013990929705215,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Kill3DGeneral",
+          "eventId": 2662837643,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1765929320,
+      "sourceWem": "6b3bba90ad14f137/00090-1765929320.wem",
+      "sourceWemSha256": "066f6e67359c83b5bbd5e086fb7c8697760a35ab9ee3a0c0469936cba51da584",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00090-1765929320.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00090-1765929320.wav",
+      "bytes": 125108,
+      "sha256": "b0f2950888649e76cba46f11f5d0e29b29f5d2aa5c242802e453e54f1da4098b",
+      "seconds": 0.7089795918367346,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxPrismaticWave_cast3D",
+          "eventId": 2610112285,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1819168938,
+      "sourceWem": "6b3bba90ad14f137/00091-1819168938.wem",
+      "sourceWemSha256": "c2c1c6fe327bdfbc7e804b93dfed7a8b60d17586a34d6bc62e6fb465a3781d84",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00091-1819168938.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00091-1819168938.wav",
+      "bytes": 651556,
+      "sha256": "f8460ce7cfde87723586810614fe7aea72d3eb4a5725feef6e22342be00683bf",
+      "seconds": 1.8466893424036281,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1859067049,
+      "sourceWem": "6b3bba90ad14f137/00092-1859067049.wem",
+      "sourceWemSha256": "41dada1025274d1869a25b5909541b2c7a849022112f9ec9594cdaa7e72ef971",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00092-1859067049.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00092-1859067049.wav",
+      "bytes": 474348,
+      "sha256": "4a7d5dffeab5fa2e109503d63e90d7df2a675ec2513405812860600d6a3f6a0b",
+      "seconds": 2.6887981859410433,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DTaliyah",
+          "eventId": 196885054,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1924849187,
+      "sourceWem": "6b3bba90ad14f137/00093-1924849187.wem",
+      "sourceWemSha256": "e09ad4a9f8417a239c702ea17efce1ac6ece450d420b8d3289b6fe2a88390f70",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00093-1924849187.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00093-1924849187.wav",
+      "bytes": 755172,
+      "sha256": "5e19924b268277e2e5773affda0469e4b6ccffcd9c9862af34a96a6d19223f57",
+      "seconds": 2.1403854875283446,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1962895790,
+      "sourceWem": "6b3bba90ad14f137/00094-1962895790.wem",
+      "sourceWemSha256": "190fc76c332c53edd5f261a0c446944f326651436a2bff3bff784461fa5b6d1e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00094-1962895790.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00094-1962895790.wav",
+      "bytes": 639620,
+      "sha256": "f16b7b84abc377df1dd42d97ef2141e236fd0e004e8aa03b50c2f2e460f8df55",
+      "seconds": 3.625714285714286,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirstAllyDemacia",
+          "eventId": 2646747765,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1973730884,
+      "sourceWem": "6b3bba90ad14f137/00095-1973730884.wem",
+      "sourceWemSha256": "2fcbce24412c035d8113f98a1ed752e974af49a45ddb4f36de3fba09d8ec5bad",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00095-1973730884.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00095-1973730884.wav",
+      "bytes": 299892,
+      "sha256": "2118ad5f6f307acd6b7ed63a98a027379acc59968a7fa432f34e3664a37a4977",
+      "seconds": 1.6998185941043085,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxLightstrikeToggle_cast3D",
+          "eventId": 944647942,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1987863014,
+      "sourceWem": "6b3bba90ad14f137/00096-1987863014.wem",
+      "sourceWemSha256": "01bab14e89b1a13e087cf9545127c859fa8d0306bdfa42ed758c4021c617cb91",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00096-1987863014.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00096-1987863014.wav",
+      "bytes": 508580,
+      "sha256": "bfb605c173fbd5af87c455ecc4d1595f9126e2a216e03097d154594da5775d5c",
+      "seconds": 2.882857142857143,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirstAllyGaren",
+          "eventId": 2771363614,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2013083134,
+      "sourceWem": "6b3bba90ad14f137/00097-2013083134.wem",
+      "sourceWemSha256": "efb333deef9b924d716e4a20b1020907ea762b0b16657bc4d6eefc054fe2a080",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00097-2013083134.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00097-2013083134.wav",
+      "bytes": 780832,
+      "sha256": "1f7487a34a1f8442d61ef737139874dee5f03565c26a6fe75a590e203ba2f045",
+      "seconds": 4.426235827664399,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Respawn2DGeneral",
+          "eventId": 2725686714,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2016038063,
+      "sourceWem": "6b3bba90ad14f137/00098-2016038063.wem",
+      "sourceWemSha256": "4a3b5ef18a712e002bb1eb476960b5b6f3df4adf5a0f65524bb5f51702b07bbf",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00098-2016038063.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00098-2016038063.wav",
+      "bytes": 996260,
+      "sha256": "abace6b06d788ef5f57d7d1831085b3de12d7fe7a6c7b22e634e0990f2f577c3",
+      "seconds": 2.8237414965986396,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Attack2DGeneral",
+          "eventId": 3565432578,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2017849066,
+      "sourceWem": "6b3bba90ad14f137/00099-2017849066.wem",
+      "sourceWemSha256": "4c6037a9c2d24944f412f779b942d7fb129b3dc47837d70054f5e0426c4e85c0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00099-2017849066.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00099-2017849066.wav",
+      "bytes": 1717964,
+      "sha256": "8a89a9ac6d042f1e692946a7147cf27b5143dff65243136393bc556438358b61",
+      "seconds": 4.869387755102041,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DFirst",
+          "eventId": 4115302265,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2036090139,
+      "sourceWem": "6b3bba90ad14f137/00100-2036090139.wem",
+      "sourceWemSha256": "a2bf63da017fce4dced3c544a38cf03fa42fea4a7084b8bb1d0891e7e96bca28",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00100-2036090139.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00100-2036090139.wav",
+      "bytes": 151732,
+      "sha256": "5bae8ea3d066fddd0248690580dbd1e68e20d1b59fc67cb51307d58f6cc4a6ef",
+      "seconds": 0.8599092970521542,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack2_cast3D",
+          "eventId": 2443452582,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxBasicAttack_cast3D",
+          "eventId": 1609158102,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Lux_LuxCritAttack_cast3D",
+          "eventId": 988252006,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2080087558,
+      "sourceWem": "6b3bba90ad14f137/00101-2080087558.wem",
+      "sourceWemSha256": "9501207d44578e84296a8704543a38e8ab499b2e862c0b8c74de84233f52e32d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00101-2080087558.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00101-2080087558.wav",
+      "bytes": 611392,
+      "sha256": "2cdb01020fba6204672b693ccca47943c65cc3860aae50b10e27c83baad1ed7e",
+      "seconds": 3.4656916099773243,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Taunt3DGeneral",
+          "eventId": 2796993495,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2093602122,
+      "sourceWem": "6b3bba90ad14f137/00102-2093602122.wem",
+      "sourceWemSha256": "f3bf8a8ec8ec09da0c5c8260211dbe0ee84e217fb0722ee99ff81a357dacdce8",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00102-2093602122.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00102-2093602122.wav",
+      "bytes": 1064116,
+      "sha256": "003ddcf64a1c0d92e89379a5d3bfd0bda188d6c4820b40d4e9e94cff757a0c03",
+      "seconds": 6.032154195011338,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_FirstEncounter3DSona",
+          "eventId": 2723758277,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2120499095,
+      "sourceWem": "6b3bba90ad14f137/00103-2120499095.wem",
+      "sourceWemSha256": "7b357cd903f1ac01a02eff1a25c538c0cb809a959a4a67f1f058bab633d3b3be",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00103-2120499095.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/6b3bba90ad14f137/00103-2120499095.wav",
+      "bytes": 967964,
+      "sha256": "22ecaedf6f07e8278e9f0948b3bf08440cf5858efe31502d0cd0ea1d5d3788bb",
+      "seconds": 2.7435374149659864,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Lux_Move2DStandard",
+          "eventId": 2055701498,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    }
+  ],
+  "gaps": [
+    "Per-clip listening, speaker, language and transcript review are pending.",
+    "Ability slots are candidates derived from native event-name tokens; GGD runtime binding is pending.",
+    "The complete non-localized champion WAD has not been reconstructed or archived."
+  ]
+}

@@ -32,4 +32,4 @@ git-handoff-files.json 列出窄版 Git 交付：程式、設定、精簡索引�
 
 `control/shared-event-metadata.json` 固定七名角色與同一 Riot release。`tools/acquire_shared_event_metadata.py` 只擷取指定 shared WAD 的目錄及 skin BIN 所需官方 chunks，驗證 RMAN 大小、WAD 3.4 entry checksum、解碼大小與 SHA-256；稀疏擷取不代表完整 shared WAD 已取得。`tools/build_event_bindings.py` 再把 BIN 事件名稱經 `_events.bnk` HIRC 圖對應到同形態 WPK 的 WEM 與既有 Float32 WAV。
 
-Karthus base 已建立事件證據；`event-bindings/karthus-base.json` 的 `eventBindingsVerified=true` 只證明原生事件圖關係。`abilitySlotCandidate` 來自原生事件名稱 token，還不是 GGD 技能綁定；逐段語言、說話者、台詞與聽審仍為 false／pending。中央索引由 `tools/hero-model-library/voice_index.py` 讀取這些報告重建，不能只手改 `voice-files.jsonl.gz`。
+七名指定英雄的 base／skin0 均已建立事件證據，合計 232 個原生事件、754 個事件對應 WAV：Karthus 35／135、LeeSin 50／151、Lux 39／104、MissFortune 9／35、Warwick 46／159、Xerath 24／79、Yasuo 29／91。每份 `event-bindings/*-base.json` 的 `eventBindingsVerified=true` 只證明該基礎造型的原生事件圖關係。`abilitySlotCandidate` 來自固定控制檔中的原生事件名稱 token，還不是 GGD 技能綁定；其他造型、逐段語言、說話者、台詞與聽審仍為 false／pending。中央索引由 `tools/hero-model-library/voice_index.py` 讀取這些報告重建，不能只手改 `voice-files.jsonl.gz`。

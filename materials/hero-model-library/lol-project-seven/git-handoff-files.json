@@ -16,8 +16,8 @@
     },
     {
       "path": "control/shared-event-metadata.json",
-      "bytes": 2182,
-      "sha256": "29869d088d30d3a0658003e9d29e7eb659fcadebf02fbb681db8e9c7df0b9627"
+      "bytes": 3856,
+      "sha256": "857d263d1e32e5e21877ec8b6bfd96a10ea25c73a88bb52d5fec21d2b3765650"
     },
     {
       "path": "guard-validation.json",
@@ -26,13 +26,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 3254,
-      "sha256": "5d8d5b527f72b650e0e301b42cf79d32851b841121e38042b909c956113a688a"
+      "bytes": 3514,
+      "sha256": "1f1e7f4f1cc5525196096e0abf29c505e884f9c8eaea3e5fc4adbed9becf7900"
     },
     {
       "path": "seven-voice-index.json",
-      "bytes": 14613,
-      "sha256": "eeae23e884a9da362f54e6c0693b06c7006fb9d61cb820157f38e706441e77f5"
+      "bytes": 17608,
+      "sha256": "2b6c526dac301d8ce4c2ce6a8a728d419d9c6597f4bef719f648446a7480687a"
     },
     {
       "path": "latest-seven-delivery-receipt.json",
@@ -43,6 +43,36 @@
       "path": "event-bindings/karthus-base.json",
       "bytes": 184827,
       "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
+    },
+    {
+      "path": "event-bindings/leesin-base.json",
+      "bytes": 205301,
+      "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735"
+    },
+    {
+      "path": "event-bindings/lux-base.json",
+      "bytes": 142674,
+      "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3"
+    },
+    {
+      "path": "event-bindings/missfortune-base.json",
+      "bytes": 50569,
+      "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9"
+    },
+    {
+      "path": "event-bindings/warwick-base.json",
+      "bytes": 235760,
+      "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a"
+    },
+    {
+      "path": "event-bindings/xerath-base.json",
+      "bytes": 109927,
+      "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36"
+    },
+    {
+      "path": "event-bindings/yasuo-base.json",
+      "bytes": 131384,
+      "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4"
     },
     {
       "path": "tools/acquire_project_ja.py",
@@ -58,6 +88,11 @@
       "path": "tools/build_event_bindings.py",
       "bytes": 12286,
       "sha256": "b9170b36db9441463c2d790073c355671a19e2753398479ee7d1316a54e153b6"
+    },
+    {
+      "path": "tools/bundle_event_bindings.py",
+      "bytes": 9536,
+      "sha256": "64c95aa04435c3376d706462ea804e49df9047651f7584585438e3530f95a376"
     },
     {
       "path": "tools/decode_project_ja.py",
@@ -103,6 +138,11 @@
       "path": "tools/scope_guard.py",
       "bytes": 882,
       "sha256": "6d71f7e1d0d5d03409f08b57b238ff1f7e3f54426fcc75253fadca15ee55ac0c"
+    },
+    {
+      "path": "tools/sync_event_binding_evidence.py",
+      "bytes": 6050,
+      "sha256": "4079d40b6618a946f6892dfa4bc8687d9b55bb964e897e4484426b9bafc15b8d"
     },
     {
       "path": "tools/test_acquire_shared_event_metadata.py",

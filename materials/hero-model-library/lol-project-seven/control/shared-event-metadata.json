@@ -43,42 +43,133 @@
       "nativeId": "LeeSin",
       "skinPaths": [
         "data/characters/leesin/skins/skin0.bin"
-      ]
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "LeeSinQOne",
+          "LeeSinQTwo"
+        ],
+        "W": [
+          "LeeSinWOne",
+          "LeeSinWTwo"
+        ],
+        "E": [
+          "LeeSinEOne",
+          "LeeSinETwo"
+        ],
+        "R": [
+          "LeeSinR"
+        ]
+      }
     },
     {
       "heroId": "example:lux",
       "nativeId": "Lux",
       "skinPaths": [
         "data/characters/lux/skins/skin0.bin"
-      ]
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "LuxLightBinding"
+        ],
+        "W": [
+          "LuxPrismaticWave"
+        ],
+        "E": [
+          "LuxLightStrikeKugel",
+          "LuxLightstrikeToggle"
+        ],
+        "R": [
+          "LuxR"
+        ]
+      }
     },
     {
       "heroId": "example:missfortune",
       "nativeId": "MissFortune",
       "skinPaths": [
         "data/characters/missfortune/skins/skin0.bin"
-      ]
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "MissFortuneRicochetShot"
+        ],
+        "W": [
+          "MissFortuneViciousStrikes"
+        ],
+        "E": [
+          "MissFortuneScattershot"
+        ],
+        "R": [
+          "MissFortuneBulletTime"
+        ]
+      }
     },
     {
       "heroId": "example:warwick",
       "nativeId": "Warwick",
       "skinPaths": [
         "data/characters/warwick/skins/skin0.bin"
-      ]
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "Spell3DQCast"
+        ],
+        "W": [
+          "Spell3DWCast",
+          "WarwickWActive"
+        ],
+        "E": [
+          "Spell3DE1Cast",
+          "Spell3DE2Cast"
+        ],
+        "R": [
+          "Spell3DR",
+          "WarwickR"
+        ]
+      }
     },
     {
       "heroId": "example:xerath",
       "nativeId": "Xerath",
       "skinPaths": [
         "data/characters/xerath/skins/skin0.bin"
-      ]
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "XerathArcanopulse2"
+        ],
+        "W": [
+          "XerathArcaneBarrage2"
+        ],
+        "E": [
+          "XerathMageSpear"
+        ],
+        "R": [
+          "XerathLocusOfPower2"
+        ]
+      }
     },
     {
       "heroId": "example:yasuo",
       "nativeId": "Yasuo",
       "skinPaths": [
         "data/characters/yasuo/skins/skin0.bin"
-      ]
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "YasuoQ"
+        ],
+        "W": [
+          "YasuoW"
+        ],
+        "E": [
+          "YasuoEDash"
+        ],
+        "R": [
+          "YasuoR"
+        ]
+      }
     }
   ],
   "rules": [

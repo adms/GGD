@@ -1,0 +1,3095 @@
+{
+  "schema": "ggd-lol-native-event-bindings@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "sourceGame": "League of Legends",
+  "heroId": "example:yasuo",
+  "nativeId": "Yasuo",
+  "skinId": "skin0",
+  "reportedLocale": "ja_JP",
+  "releaseId": "7CAC3C60C863BF12",
+  "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+  "sourcePackage": "DATA/FINAL/Champions/Yasuo.wad.client",
+  "sourcePackageCompleteLocally": false,
+  "metadataAcquisitionStatus": "partial-extraction-from-official-release-chunks",
+  "inputs": {
+    "bin": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-metadata/Yasuo/skin0.bin",
+      "sha256": "bcc18c663ae6e881094498c3c17d6c155adc61ffdf0975d27e8b6036952b2a24"
+    },
+    "eventsBnk": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Yasuo.ja_JP/native/7e911e5158edff33.bnk",
+      "sha256": "20e3a55ba5fc5d3563dbbf9fd9ab07909de72826f815571fef361af7200e44b4",
+      "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/yasuo/skins/base/yasuo_base_vo_events.bnk"
+    },
+    "audioBanks": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Yasuo.ja_JP/native/abc3c8d11bb65978.bnk",
+        "sha256": "4928f54c14ce12eebb139ffaae1b50568af21897ec5d8e8ff4a1d2a807bbb14b",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/yasuo/skins/base/yasuo_base_vo_audio.bnk"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Yasuo.ja_JP/native/b8d559972c5f56f2.wpk",
+        "sha256": "f6f4e156d8675419c24b0f94bc4cf1a062d2654bc72c444200b077f7f3edf4c1",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/yasuo/skins/base/yasuo_base_vo_audio.wpk"
+      }
+    ],
+    "extraction": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Yasuo.ja_JP/extraction.json",
+      "sha256": "47cb1e1e6378aaa59ba309bfd84c2b313f4d218e551beb818ba46599250da6f5"
+    },
+    "decoding": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/audio-index.json",
+      "sha256": "626d8e84218351d0b48a1dbb6ca4e09818777f5154a98ee7fa6b76dcccbaf682"
+    },
+    "metadataReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/receipts/shared-event-metadata/project-seven-base-six-v1.json",
+      "sha256": "e51bdf3680f8b2c2159f098399121286c5afa3e0fed427ef0e175be558fec5ea"
+    }
+  },
+  "tool": {
+    "name": "league-tools",
+    "commit": "913150dd922e69b18aba519410670fcf017df2ff",
+    "mapping": "BIN event strings -> NativeHIRC event graph -> WEM ID"
+  },
+  "validation": {
+    "binEvents": 117,
+    "hircEvents": 29,
+    "mappedEvents": 29,
+    "mappedWemIds": 91,
+    "exactAudioBankDecodedFiles": 91,
+    "allMappedWemIdsFoundInExactAudioBank": true,
+    "allReferencedWavBytesAndSha256Verified": true,
+    "eventBindingsVerified": true,
+    "speakerVerified": false,
+    "perClipLanguageVerified": false,
+    "ggdSkillSemanticBindingsVerified": false,
+    "categoryCountsByEvent": {
+      "ability-cast": 6,
+      "attack": 12,
+      "death": 1,
+      "emote": 3,
+      "encounter": 5,
+      "move": 2
+    },
+    "abilitySlotCountsByEvent": {
+      "E": 1,
+      "Q": 3,
+      "R": 1,
+      "W": 1
+    }
+  },
+  "events": [
+    {
+      "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+      "eventId": 3154276812,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        112798496,
+        163337437,
+        218453784,
+        803242691,
+        963190043,
+        982661255,
+        1057660263,
+        1158354424,
+        1210656346,
+        1345306878,
+        1569316363,
+        1576495121,
+        1789186003,
+        1852030730,
+        2023099016
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Death3D",
+      "eventId": 3196039457,
+      "category": "death",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        436405048,
+        665635476,
+        1736174721,
+        1762105292
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_FirstEncounter3DMasterYi",
+      "eventId": 3730311230,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        7219425,
+        1619674745,
+        2087600947
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+      "eventId": 1439789772,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        10341106,
+        93581581,
+        856119467,
+        1101287722,
+        1771844838,
+        2050507314,
+        2083058717,
+        2140126096
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_FirstEncounter3DShen",
+      "eventId": 1725966518,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        21116213,
+        931941002,
+        1826561038
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_FirstEncounter3DYone",
+      "eventId": 4057062677,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        909177629,
+        1843855854,
+        2026795990
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Joke3DGeneral",
+      "eventId": 449050298,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        11951443,
+        343798648,
+        1780647877
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Kill3DYone",
+      "eventId": 2340606688,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1773900907
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Laugh3DGeneral",
+      "eventId": 3102818760,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1126022998,
+        1580419677,
+        1603387360,
+        2134861090
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Move2DFirstEnemyYone",
+      "eventId": 2523311390,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        930038269,
+        2146582735
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Move2DStandard",
+      "eventId": 1083669192,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        110605689,
+        251525693,
+        342224083,
+        361457580,
+        404976372,
+        636600774,
+        692233856,
+        894759640,
+        1112938453,
+        1380602468,
+        1447910641,
+        1534703685,
+        1542059206,
+        1752122627,
+        1780787634,
+        1808105925,
+        1809489442,
+        2008731185,
+        2015328670,
+        2030780311
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_Taunt3DGeneral",
+      "eventId": 3182692065,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        292978509,
+        603534338,
+        1872410009
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoBasicAttack2_cast3D",
+      "eventId": 817366158,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoBasicAttack3_cast3D",
+      "eventId": 203103821,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoBasicAttack4_cast3D",
+      "eventId": 1143674228,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoBasicAttack5_cast3D",
+      "eventId": 3933017875,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoBasicAttack6_cast3D",
+      "eventId": 1382643114,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoBasicAttack_cast3D",
+      "eventId": 3606952558,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoCritAttack2_cast3D",
+      "eventId": 1457458318,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoCritAttack3_cast3D",
+      "eventId": 843195981,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoCritAttack4_cast3D",
+      "eventId": 1783766388,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoCritAttack5_cast3D",
+      "eventId": 278142739,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoCritAttack_cast3D",
+      "eventId": 784306798,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        335488881,
+        773052528,
+        1131054268,
+        1896335251
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoEDash_cast3D",
+      "eventId": 2812602247,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "E",
+      "wemIds": [
+        1033832330,
+        1299116574,
+        2038431254,
+        2069020404
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoQ1_cast3D",
+      "eventId": 2597382496,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        89106516,
+        453920534,
+        539941851,
+        1659211407
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoQ2_cast3D",
+      "eventId": 3980515109,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        904503149,
+        1986183632
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoQ3Wrapper_cast3D",
+      "eventId": 1767428439,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        188840705,
+        2080380069
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoR_cast3D",
+      "eventId": 1294425758,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "R",
+      "wemIds": [
+        111444817,
+        185297318,
+        807652697
+      ]
+    },
+    {
+      "eventName": "Play_vo_Yasuo_YasuoW_cast3D",
+      "eventId": 368906409,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "W",
+      "wemIds": [
+        176441622,
+        1071158760,
+        1442125570
+      ]
+    }
+  ],
+  "files": [
+    {
+      "wemId": 7219425,
+      "sourceWem": "b8d559972c5f56f2/00000-7219425.wem",
+      "sourceWemSha256": "1f67c583239646623d2fd877eb11972a59407b095bc61e2cab393cf54d7963d0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00000-7219425.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00000-7219425.wav",
+      "bytes": 497084,
+      "sha256": "f7219ca8833261ad55b93406c3f50ec3e50192c822320baab6d8a8b1e465c8d2",
+      "seconds": 2.817687074829932,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DMasterYi",
+          "eventId": 3730311230,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 10341106,
+      "sourceWem": "b8d559972c5f56f2/00001-10341106.wem",
+      "sourceWemSha256": "45c72e92543e74cf35101d5b7b7d20dcb8167239a8d223ddaae9afc769f018d7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00001-10341106.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00001-10341106.wav",
+      "bytes": 441044,
+      "sha256": "afe082f1679e87a6e728257f090f2bad8c78a35c6513c36f260b1fd1a517b974",
+      "seconds": 2.5,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 11951443,
+      "sourceWem": "b8d559972c5f56f2/00002-11951443.wem",
+      "sourceWemSha256": "f3536f04038d285bd41ecd3b7ee8687392bf4c8b601dc85ac02a16c0feca2dbe",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00002-11951443.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00002-11951443.wav",
+      "bytes": 1368044,
+      "sha256": "225f4ac624de746873231d7dbc4cb35843e23626ea4066724a5076ae6104e3e4",
+      "seconds": 7.755102040816326,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Joke3DGeneral",
+          "eventId": 449050298,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 21116213,
+      "sourceWem": "b8d559972c5f56f2/00003-21116213.wem",
+      "sourceWemSha256": "0dedeced67c170aebda25c57515e9018ee0578b3516217c46e46fad1fee64c99",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00003-21116213.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00003-21116213.wav",
+      "bytes": 519828,
+      "sha256": "392acd7e65d053e9fb718806c2f541f569bdb412f632812f11c67843d8d3bac7",
+      "seconds": 2.946621315192744,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DShen",
+          "eventId": 1725966518,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 89106516,
+      "sourceWem": "b8d559972c5f56f2/00004-89106516.wem",
+      "sourceWemSha256": "1d9d58c77613d71320b70acddac31a54fe778ea9d709c4e8d58fa06454035de4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00004-89106516.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00004-89106516.wav",
+      "bytes": 194084,
+      "sha256": "e4c1d7a4075f211ffa3b82b62c3383276818e63b79155daeafcd829621cad2da",
+      "seconds": 1.1,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ1_cast3D",
+          "eventId": 2597382496,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 93581581,
+      "sourceWem": "b8d559972c5f56f2/00005-93581581.wem",
+      "sourceWemSha256": "2fa08a7ab4947c8eabb82b572b70f99dc4ce6a808c0f826d29574cd9a0f3dfc5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00005-93581581.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00005-93581581.wav",
+      "bytes": 299924,
+      "sha256": "049e81b8cb50838d1e2d30e6d7205b09dfcf39b02b94f717ecdf5d99642a9800",
+      "seconds": 1.7,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 110605689,
+      "sourceWem": "b8d559972c5f56f2/00006-110605689.wem",
+      "sourceWemSha256": "7b4ea157408bc6b188d7c30f63b8184fd7b7cd752c30b5242d3becfa78ad53c0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00006-110605689.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00006-110605689.wav",
+      "bytes": 464712,
+      "sha256": "7ab0aa33874e4ab1f1d9e20cece8c5850be68c8354a60c534277e0558be0f098",
+      "seconds": 2.634172335600907,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 111444817,
+      "sourceWem": "b8d559972c5f56f2/00007-111444817.wem",
+      "sourceWemSha256": "76ab2229664b508892a42d3a5f00e723a87943b150b29353baa8b4653d2f5ff7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00007-111444817.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00007-111444817.wav",
+      "bytes": 307408,
+      "sha256": "5f6926b7f6de428d585cb20a4c681bb3dbdc048368e5b6fd1f3c1deec5da1a1b",
+      "seconds": 1.7424263038548753,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoR_cast3D",
+          "eventId": 1294425758,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 112798496,
+      "sourceWem": "b8d559972c5f56f2/00008-112798496.wem",
+      "sourceWemSha256": "a0bb026a0aff72944b6bb6f448eed362dacb0283d5a51aca573db321baeb8bf6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00008-112798496.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00008-112798496.wav",
+      "bytes": 352844,
+      "sha256": "b6dd58f843e599e6b60465289254a88b1d5f1f1c139a4e760b87095da5050737",
+      "seconds": 2.0,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 163337437,
+      "sourceWem": "b8d559972c5f56f2/00009-163337437.wem",
+      "sourceWemSha256": "fd2b0f962dc9221b84bde3cc29ff9932aa3507ef3496268d2ef3e3a53f33dfe0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00009-163337437.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00009-163337437.wav",
+      "bytes": 469064,
+      "sha256": "bb493ade57541f47104d3e37514ebfdb2df5827dc1f1b9b83455606874cc6da7",
+      "seconds": 2.658843537414966,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 176441622,
+      "sourceWem": "b8d559972c5f56f2/00010-176441622.wem",
+      "sourceWemSha256": "368156a5238e3cc11883a0c924ba475534cf43fb5c6784435349932e48478968",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00010-176441622.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00010-176441622.wav",
+      "bytes": 155176,
+      "sha256": "8470acfd1e0f313562076903a5f825a8a00f847d30dd390c5a0078ad9be64096",
+      "seconds": 0.8794331065759637,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoW_cast3D",
+          "eventId": 368906409,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 185297318,
+      "sourceWem": "b8d559972c5f56f2/00011-185297318.wem",
+      "sourceWemSha256": "6e7797c7f0734be0ad4f217c71add072f1e8cde1c05c964b2e09f60fb713555f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00011-185297318.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00011-185297318.wav",
+      "bytes": 211920,
+      "sha256": "f59991d48fe20fda3c8b32848a7bff05bc13b7f5556ff6d93fc95738f9e20d53",
+      "seconds": 1.201111111111111,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoR_cast3D",
+          "eventId": 1294425758,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 188840705,
+      "sourceWem": "b8d559972c5f56f2/00012-188840705.wem",
+      "sourceWemSha256": "076c326341b20b817302fa9a33e7097fd2e27d42ce83c260572b099748a13ba8",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00012-188840705.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00012-188840705.wav",
+      "bytes": 194084,
+      "sha256": "5f05cfb94a63cc12fd242d0f1a636bc57659699f195afb19b4b96a3e2bcaacf9",
+      "seconds": 1.1,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ3Wrapper_cast3D",
+          "eventId": 1767428439,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 218453784,
+      "sourceWem": "b8d559972c5f56f2/00013-218453784.wem",
+      "sourceWemSha256": "32fe57c45312da2629bc8ad60e65f052d9e8cff8c4aeaa2257b95b201b514603",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00013-218453784.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00013-218453784.wav",
+      "bytes": 368356,
+      "sha256": "3246b4ca380889296123b48769dd2e92d62ba81666065398477a99be2a81994b",
+      "seconds": 2.087936507936508,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 251525693,
+      "sourceWem": "b8d559972c5f56f2/00014-251525693.wem",
+      "sourceWemSha256": "176d65da646005f4b9aa8b91f7cbe7c40b1d2e258e00e41d53fd722e8549b231",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00014-251525693.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00014-251525693.wav",
+      "bytes": 1013504,
+      "sha256": "ec2f8e9b9501cf44fec00cd9c96564f1a64fd8457556f546dcabcf6558e3f40e",
+      "seconds": 5.745238095238095,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 292978509,
+      "sourceWem": "b8d559972c5f56f2/00015-292978509.wem",
+      "sourceWemSha256": "1d9cfed08cb206d9f793320eea8a13ca9eb70fed52efc6a3126d079d9f8566f9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00015-292978509.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00015-292978509.wav",
+      "bytes": 1076084,
+      "sha256": "7fb070e503e4f4827eef9357ee1a341336dfa026e5e1be79d4dc76c01f0d4b85",
+      "seconds": 6.1,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Taunt3DGeneral",
+          "eventId": 3182692065,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 335488881,
+      "sourceWem": "b8d559972c5f56f2/00016-335488881.wem",
+      "sourceWemSha256": "a6f1baef0f56ce8cb1182bd09ae57ae74e50314771353d04d2a20a5765ecb69e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00016-335488881.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00016-335488881.wav",
+      "bytes": 57568,
+      "sha256": "2ff14b0a309e6345d76223e49f18f2a68ff6917ad6fbd150d5c00b51c42f906c",
+      "seconds": 0.3260997732426304,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack2_cast3D",
+          "eventId": 817366158,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack3_cast3D",
+          "eventId": 203103821,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack4_cast3D",
+          "eventId": 1143674228,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack5_cast3D",
+          "eventId": 3933017875,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack6_cast3D",
+          "eventId": 1382643114,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack_cast3D",
+          "eventId": 3606952558,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack2_cast3D",
+          "eventId": 1457458318,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack3_cast3D",
+          "eventId": 843195981,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack4_cast3D",
+          "eventId": 1783766388,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack5_cast3D",
+          "eventId": 278142739,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack_cast3D",
+          "eventId": 784306798,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 342224083,
+      "sourceWem": "b8d559972c5f56f2/00017-342224083.wem",
+      "sourceWemSha256": "54714912d3d1ce4cad05acc32b4a0b8df71973a65452101bcb47611f8bd7ec3a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00017-342224083.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00017-342224083.wav",
+      "bytes": 425548,
+      "sha256": "2261280c8bd15e2046d3b2c6775c5184f28c45dc369c963c49a63821717f98e4",
+      "seconds": 2.412154195011338,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 343798648,
+      "sourceWem": "b8d559972c5f56f2/00018-343798648.wem",
+      "sourceWemSha256": "57c52b8edc7e68480f43d0365801ae8a915eb7e158651934a7b61db3898f09ed",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00018-343798648.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00018-343798648.wav",
+      "bytes": 1093724,
+      "sha256": "48cbdb2e213fc6320c50f2075a866b408f74f2650cbd3c48e6ebbde252a99b60",
+      "seconds": 6.2,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Joke3DGeneral",
+          "eventId": 449050298,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 361457580,
+      "sourceWem": "b8d559972c5f56f2/00019-361457580.wem",
+      "sourceWemSha256": "6acfe3615b545ad3737a66833f19653939151e6d03b9f685ac5548ec326bcc30",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00019-361457580.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00019-361457580.wav",
+      "bytes": 554368,
+      "sha256": "dd33262e4e073e607f010c24fcf1db1b2367d1fe315c8282a25fd9505251f4d7",
+      "seconds": 3.1424263038548754,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 404976372,
+      "sourceWem": "b8d559972c5f56f2/00020-404976372.wem",
+      "sourceWemSha256": "cbd6df63d5a4a45f843353e0600bcb017d20f16b2006aeae3697dd6f5631c29d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00020-404976372.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00020-404976372.wav",
+      "bytes": 694612,
+      "sha256": "b259da2d027a7652da06b9a7e742e349b751f1b99aa03ae6eaeb4d27e9f0d64e",
+      "seconds": 3.9374603174603173,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 436405048,
+      "sourceWem": "b8d559972c5f56f2/00021-436405048.wem",
+      "sourceWemSha256": "4d8aac50294730f6ca1d8e02c674295fbdd8ec749c296c4f9eb0a8492fae9a0a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00021-436405048.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00021-436405048.wav",
+      "bytes": 506484,
+      "sha256": "44f60a141fc117e13b120dc4a092a2b7adec52cb2a8ba5d190bbe1a330722e74",
+      "seconds": 2.8709750566893426,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Death3D",
+          "eventId": 3196039457,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 453920534,
+      "sourceWem": "b8d559972c5f56f2/00022-453920534.wem",
+      "sourceWemSha256": "b90e484bd86ec565672c4d37af882aef5376360b01617a2308cfa9656fe743e9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00022-453920534.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00022-453920534.wav",
+      "bytes": 134384,
+      "sha256": "43e7704576a0937b36c7f8c69d2c82766d42c29f1e7c84a1fc00154fbc7e481f",
+      "seconds": 0.7615646258503401,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ1_cast3D",
+          "eventId": 2597382496,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 539941851,
+      "sourceWem": "b8d559972c5f56f2/00023-539941851.wem",
+      "sourceWemSha256": "e1c62d792413303639c254887e6f9bb03291848b63231b85b57c0dbaa30fbfe7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00023-539941851.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00023-539941851.wav",
+      "bytes": 86368,
+      "sha256": "e03cc16dcf68d55bbd27e4f18fe2c7f06c202d8a3ba7116bff8e43db134be102",
+      "seconds": 0.4893650793650794,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ1_cast3D",
+          "eventId": 2597382496,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 603534338,
+      "sourceWem": "b8d559972c5f56f2/00024-603534338.wem",
+      "sourceWemSha256": "97b9b57396faf84c44a41a4b29fb021b639b015cc080c45862c92747c324a2d9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00024-603534338.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00024-603534338.wav",
+      "bytes": 1245596,
+      "sha256": "ba33f0f9a6ff23d91c6745e56b0ba89b2b2835b63f7a13b9612355a9ef36e3f1",
+      "seconds": 7.060952380952381,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Taunt3DGeneral",
+          "eventId": 3182692065,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 636600774,
+      "sourceWem": "b8d559972c5f56f2/00025-636600774.wem",
+      "sourceWemSha256": "5271f84cbf8cfe135f7850eb40d37cb663b569fc7f4b48cd516358074f554a24",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00025-636600774.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00025-636600774.wav",
+      "bytes": 423404,
+      "sha256": "7e321744e85431f247af86d5edbb0d9698eeb07be9e8ee849fed9ed965f144cf",
+      "seconds": 2.4,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 665635476,
+      "sourceWem": "b8d559972c5f56f2/00026-665635476.wem",
+      "sourceWemSha256": "6c5dbdaa055963f017cf48e09da4acc8a5afd44b5f68fef63994907ea03ab426",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00026-665635476.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00026-665635476.wav",
+      "bytes": 537924,
+      "sha256": "b1665f24a37b78f90ee92e5f2586a100d240467c1e09040f6710e378abc43127",
+      "seconds": 3.049206349206349,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Death3D",
+          "eventId": 3196039457,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 692233856,
+      "sourceWem": "b8d559972c5f56f2/00027-692233856.wem",
+      "sourceWemSha256": "fcf02666bd432dce12ef048c395a52f058c1950c3169ce93053bab296d8ac5b8",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00027-692233856.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00027-692233856.wav",
+      "bytes": 445892,
+      "sha256": "7967034283fb74c54eff3d8cf2b18c31265fcfcc3b3b35ed35253c2c48c514a4",
+      "seconds": 2.527482993197279,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 773052528,
+      "sourceWem": "b8d559972c5f56f2/00028-773052528.wem",
+      "sourceWemSha256": "9540714b2a4c2cb8fa64c7bacad1b98a10dfd5acf821a5fa305f43273a0736ff",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00028-773052528.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00028-773052528.wav",
+      "bytes": 74132,
+      "sha256": "9cde327de2288a8b2a68e984b8463041c2cc4ab72abe764893d60324e67043df",
+      "seconds": 0.42,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack2_cast3D",
+          "eventId": 817366158,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack3_cast3D",
+          "eventId": 203103821,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack4_cast3D",
+          "eventId": 1143674228,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack5_cast3D",
+          "eventId": 3933017875,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack6_cast3D",
+          "eventId": 1382643114,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack_cast3D",
+          "eventId": 3606952558,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack2_cast3D",
+          "eventId": 1457458318,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack3_cast3D",
+          "eventId": 843195981,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack4_cast3D",
+          "eventId": 1783766388,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack5_cast3D",
+          "eventId": 278142739,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack_cast3D",
+          "eventId": 784306798,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 803242691,
+      "sourceWem": "b8d559972c5f56f2/00029-803242691.wem",
+      "sourceWemSha256": "d02e557660d8bddaa1803aa9cf9f9ed1598074d9920f65ccc765fbb16e898d3f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00029-803242691.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00029-803242691.wav",
+      "bytes": 316756,
+      "sha256": "74d4f4747eb7735a3b2448edd4be9338c40fe4537c1689bb739304b065b7a5fb",
+      "seconds": 1.7954195011337868,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 807652697,
+      "sourceWem": "b8d559972c5f56f2/00030-807652697.wem",
+      "sourceWemSha256": "952966f7c33dae4827976aa40f92481e0513bd21597e998af5e1e754f4898f70",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00030-807652697.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00030-807652697.wav",
+      "bytes": 200352,
+      "sha256": "07910b67d3524f6ed6b9af48d6765a617722fc4c52563c957c3429b7abb03687",
+      "seconds": 1.1355328798185942,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoR_cast3D",
+          "eventId": 1294425758,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 856119467,
+      "sourceWem": "b8d559972c5f56f2/00031-856119467.wem",
+      "sourceWemSha256": "949293db25cdf8290ee87adaf12fed700a3ac94006c89720dd8fe139c961320e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00031-856119467.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00031-856119467.wav",
+      "bytes": 553704,
+      "sha256": "49d0f5e1e1e256e5495edf176bc95df84f2744026eb3f7df22cca2ebcb99aa17",
+      "seconds": 3.138662131519274,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 894759640,
+      "sourceWem": "b8d559972c5f56f2/00032-894759640.wem",
+      "sourceWemSha256": "c95e08bb1370fe9bbd001760312fe96f9593322f3042d859c7e8979dc45e1b0c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00032-894759640.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00032-894759640.wav",
+      "bytes": 646684,
+      "sha256": "d056806e768e9d15377c850e3a33912f39f24c15937f582d9c34ff11b54f6478",
+      "seconds": 3.6657596371882084,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 904503149,
+      "sourceWem": "b8d559972c5f56f2/00033-904503149.wem",
+      "sourceWemSha256": "67c38a583d060530a691c0f31649e789742ee9c614476cedf49ea618bd3a58a9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00033-904503149.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00033-904503149.wav",
+      "bytes": 93104,
+      "sha256": "745bf71eae01e051bfcbfb9d7ea3610c6e0380fae582a7d68229b1b79c65472d",
+      "seconds": 0.5275510204081633,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ2_cast3D",
+          "eventId": 3980515109,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 909177629,
+      "sourceWem": "b8d559972c5f56f2/00034-909177629.wem",
+      "sourceWemSha256": "0f5af86c534a002a5c06e878c6c204342e4464ddf71a6483bdc4d1326ac47c5e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00034-909177629.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00034-909177629.wav",
+      "bytes": 998016,
+      "sha256": "2351980d18a19be544f673222e88308be6fceff04a39ecff8cc1388ece1bcec0",
+      "seconds": 5.657437641723356,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DYone",
+          "eventId": 4057062677,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 930038269,
+      "sourceWem": "b8d559972c5f56f2/00035-930038269.wem",
+      "sourceWemSha256": "27a2e313028e72ef071e187f208da6c540d5ead8bb1b1a1ca1d4ea8b38f698aa",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00035-930038269.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00035-930038269.wav",
+      "bytes": 1169784,
+      "sha256": "647817210f4ca9b470dbe05684ef663b246c2e4107751c2c8816283d18e1dc16",
+      "seconds": 6.631179138321995,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DFirstEnemyYone",
+          "eventId": 2523311390,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 931941002,
+      "sourceWem": "b8d559972c5f56f2/00036-931941002.wem",
+      "sourceWemSha256": "c7c9e50ddcbe63bffc8d24a76f5ea8a825443d8d52c822d55dd9994191b98ae3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00036-931941002.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00036-931941002.wav",
+      "bytes": 662808,
+      "sha256": "e25e3015717054561888e131a020ebe33475a629fe503100bff386fa8730c6e3",
+      "seconds": 3.7571655328798186,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DShen",
+          "eventId": 1725966518,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 963190043,
+      "sourceWem": "b8d559972c5f56f2/00037-963190043.wem",
+      "sourceWemSha256": "dc79da1e9b2c3d154ee3df1533f7f7c232945d94173007a80b40f105ce8ab5c9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00037-963190043.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00037-963190043.wav",
+      "bytes": 533912,
+      "sha256": "89881853fcdc0602b07e2ef468a28a0d5e7dc6ab14e6539db0d5ca81b8328af0",
+      "seconds": 3.0264625850340137,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 982661255,
+      "sourceWem": "b8d559972c5f56f2/00038-982661255.wem",
+      "sourceWemSha256": "252db14c4db8464153bdab36e1df16857bba395fa1692ea7b0571b159d53e12d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00038-982661255.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00038-982661255.wav",
+      "bytes": 499476,
+      "sha256": "7fcad25a38c179c9120de51a129f6192dc0378e71400037f7e2cc248c0820f24",
+      "seconds": 2.8312471655328797,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1033832330,
+      "sourceWem": "b8d559972c5f56f2/00039-1033832330.wem",
+      "sourceWemSha256": "f4f559ed68bfffef39be9de3b2afc984ab9a32da1666e123e6622e129833fb75",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00039-1033832330.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00039-1033832330.wav",
+      "bytes": 97064,
+      "sha256": "938deb47b98a6ed57f245596debd89c19ffbe97c60b04ed7420daf784b1ccfd4",
+      "seconds": 0.55,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoEDash_cast3D",
+          "eventId": 2812602247,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1057660263,
+      "sourceWem": "b8d559972c5f56f2/00040-1057660263.wem",
+      "sourceWemSha256": "91dc428873412e020bebc2d7fc1b650586e760a0f08ef7ea0d9353f5f9977e65",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00040-1057660263.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00040-1057660263.wav",
+      "bytes": 304992,
+      "sha256": "17691ab73c3e6c1c1164af543552224ba6dbba444402696055c76a27fc4a397b",
+      "seconds": 1.7287301587301587,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1071158760,
+      "sourceWem": "b8d559972c5f56f2/00041-1071158760.wem",
+      "sourceWemSha256": "7b7482120c3531cf72b999e1b88f88959846f70ee7bda20de0a982be873a839d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00041-1071158760.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00041-1071158760.wav",
+      "bytes": 231344,
+      "sha256": "3f132c7b13f15a27f686b00972e6f6a3e8198c6a322489ce0a4fdfff1241c27b",
+      "seconds": 1.3112244897959184,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoW_cast3D",
+          "eventId": 368906409,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1101287722,
+      "sourceWem": "b8d559972c5f56f2/00042-1101287722.wem",
+      "sourceWemSha256": "84e235761d03f3013e6643b34482290fad95361306ce7d99ab23d5c8705a258e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00042-1101287722.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00042-1101287722.wav",
+      "bytes": 930180,
+      "sha256": "9341fea7ae4d9e82f80117f9029e7fb1842fcda2be56a2357748651d0f535e30",
+      "seconds": 5.272879818594104,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1112938453,
+      "sourceWem": "b8d559972c5f56f2/00043-1112938453.wem",
+      "sourceWemSha256": "10dd02eacc2030d9d3fef6c7f4bd196904487a7be3a04c33752597944940158a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00043-1112938453.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00043-1112938453.wav",
+      "bytes": 641552,
+      "sha256": "87e43da6bbb8ef94caddbe126e0ce18e4da18d01da0d5c115306bafbdca4f9a9",
+      "seconds": 3.6366666666666667,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1126022998,
+      "sourceWem": "b8d559972c5f56f2/00044-1126022998.wem",
+      "sourceWemSha256": "20f7d07a4f2c9862ddd36ea5d0ff1998acf0d59395ec55262139e21a4a9b8141",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00044-1126022998.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00044-1126022998.wav",
+      "bytes": 1041120,
+      "sha256": "adcfcc2bdcfb186ab8365ac1d6620b68cb96d253a16ed68bde6a0e4d6746d1f1",
+      "seconds": 5.901791383219955,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Laugh3DGeneral",
+          "eventId": 3102818760,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1131054268,
+      "sourceWem": "b8d559972c5f56f2/00045-1131054268.wem",
+      "sourceWemSha256": "375fea6c5be830a3e9f2bcfd4b30727596bd7cf9727cc172eb9b288469a8982b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00045-1131054268.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00045-1131054268.wav",
+      "bytes": 72924,
+      "sha256": "20e023704786858ee8b92eba59bf8216b8c49809b31743a5f809160359d5d87a",
+      "seconds": 0.41315192743764173,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack2_cast3D",
+          "eventId": 817366158,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack3_cast3D",
+          "eventId": 203103821,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack4_cast3D",
+          "eventId": 1143674228,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack5_cast3D",
+          "eventId": 3933017875,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack6_cast3D",
+          "eventId": 1382643114,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack_cast3D",
+          "eventId": 3606952558,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack2_cast3D",
+          "eventId": 1457458318,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack3_cast3D",
+          "eventId": 843195981,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack4_cast3D",
+          "eventId": 1783766388,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack5_cast3D",
+          "eventId": 278142739,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack_cast3D",
+          "eventId": 784306798,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1158354424,
+      "sourceWem": "b8d559972c5f56f2/00046-1158354424.wem",
+      "sourceWemSha256": "8b2a6519767974248959b5ba05b6afd040ea419acfaf3118a680e3d1dbda6905",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00046-1158354424.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00046-1158354424.wav",
+      "bytes": 413336,
+      "sha256": "dfa588bd5f4b0f40151478bdc21855458930902290810a0403de8128a60d0984",
+      "seconds": 2.3429251700680274,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1210656346,
+      "sourceWem": "b8d559972c5f56f2/00047-1210656346.wem",
+      "sourceWemSha256": "3605ffbd6dbf29f47e2adbf008fed75dfa4211f6774e1778b20d23069d6b9a36",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00047-1210656346.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00047-1210656346.wav",
+      "bytes": 340804,
+      "sha256": "ae82a4bd0ad17180ecbe97118e9f8d59e124ce570e14985d06eaea1bc57b770e",
+      "seconds": 1.9317460317460318,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1299116574,
+      "sourceWem": "b8d559972c5f56f2/00048-1299116574.wem",
+      "sourceWemSha256": "672e1650cd5e3c5fb316e3d87011f13692c74202e5a290a83422487d515a670f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00048-1299116574.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00048-1299116574.wav",
+      "bytes": 130692,
+      "sha256": "41219aaf9cb10fbadbcc1e48fe791cf270baf2b4a0e2825b5f9162e972b17568",
+      "seconds": 0.7406349206349206,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoEDash_cast3D",
+          "eventId": 2812602247,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1345306878,
+      "sourceWem": "b8d559972c5f56f2/00049-1345306878.wem",
+      "sourceWemSha256": "89395bbdf29b3ca5f32e781e2bd1248526eb103130fb45abf8b260be632ec700",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00049-1345306878.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00049-1345306878.wav",
+      "bytes": 521264,
+      "sha256": "0e84b53c6c36555262e6ae0ab6d4fa92ac0407b5f6d92103c6bd6a887c5471b6",
+      "seconds": 2.954761904761905,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1380602468,
+      "sourceWem": "b8d559972c5f56f2/00050-1380602468.wem",
+      "sourceWemSha256": "bbf84a0ba634dd09522d0fa45ba625666f4b0622fc29693c931f0b57cc0c8182",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00050-1380602468.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00050-1380602468.wav",
+      "bytes": 557512,
+      "sha256": "e83cc5f9a41795b833beb6e92cb90552e7a36af35191c0c2205d0d828afe47be",
+      "seconds": 3.160249433106576,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1442125570,
+      "sourceWem": "b8d559972c5f56f2/00051-1442125570.wem",
+      "sourceWemSha256": "807ba2dfdb846e2b58d140a36be899e230259c7b4c05233d004b27215fbc4863",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00051-1442125570.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00051-1442125570.wav",
+      "bytes": 130964,
+      "sha256": "56b5bf70e743124a0c9f8962c8da7a6d4d97f59fdc4c7d4988d85e52b4f8c5b2",
+      "seconds": 0.7421768707482993,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoW_cast3D",
+          "eventId": 368906409,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1447910641,
+      "sourceWem": "b8d559972c5f56f2/00052-1447910641.wem",
+      "sourceWemSha256": "170920fde1faa37f46389a06fc578da4b9e40c201e1d9a607884f0fc350a0c74",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00052-1447910641.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00052-1447910641.wav",
+      "bytes": 590060,
+      "sha256": "7be4305f4ab90a1de133a7b40e1d0e519864757c9f1c8511d63adc358983935f",
+      "seconds": 3.3447619047619046,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1534703685,
+      "sourceWem": "b8d559972c5f56f2/00053-1534703685.wem",
+      "sourceWemSha256": "2e1fc6c5635f882333fad726c95176166dda8a0edab0b4c45413a52bb4cff583",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00053-1534703685.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00053-1534703685.wav",
+      "bytes": 522484,
+      "sha256": "7c344fdedf5ba66a197b8426f0722108d335d21d096d6e872581208e2fe29e4a",
+      "seconds": 2.9616780045351474,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1542059206,
+      "sourceWem": "b8d559972c5f56f2/00054-1542059206.wem",
+      "sourceWemSha256": "5931c53be5744c21bd29bc8e48d206ef7e038bb3e669007eaeac68d035ef47c6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00054-1542059206.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00054-1542059206.wav",
+      "bytes": 655580,
+      "sha256": "ea0cf3cd0f27676dd280f3fdd65256dd0678610df9ed680d82d945a3bb7bc2ee",
+      "seconds": 3.716190476190476,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1569316363,
+      "sourceWem": "b8d559972c5f56f2/00055-1569316363.wem",
+      "sourceWemSha256": "524085a3914e5e44dcb262556534319a0ca8395dcc04baa4e5118103df461811",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00055-1569316363.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00055-1569316363.wav",
+      "bytes": 244812,
+      "sha256": "595e2d6eb0b54e1ffe76e5c2cc9201acff80faa53c4956e06b7f8d9b4959b4c5",
+      "seconds": 1.3875736961451248,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1576495121,
+      "sourceWem": "b8d559972c5f56f2/00056-1576495121.wem",
+      "sourceWemSha256": "f7f095636cb98441d7177724c21413ee6abff2735ee3876a50498f4c1e9e0adb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00056-1576495121.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00056-1576495121.wav",
+      "bytes": 158804,
+      "sha256": "ad9ed703ffd7488e7e00456680e272f17b0d8c37d1cd39411636035e08a7ca30",
+      "seconds": 0.9,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1580419677,
+      "sourceWem": "b8d559972c5f56f2/00057-1580419677.wem",
+      "sourceWemSha256": "d22991f17c6cada7fd647e5c15bbd0a3c683d0fa02f391443aae4e120ea63d9b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00057-1580419677.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00057-1580419677.wav",
+      "bytes": 933260,
+      "sha256": "e3858990e0102bb91f27085b32c4719956c7496a4ce63bed97e687b6388ded97",
+      "seconds": 5.2903401360544215,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Laugh3DGeneral",
+          "eventId": 3102818760,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1603387360,
+      "sourceWem": "b8d559972c5f56f2/00058-1603387360.wem",
+      "sourceWemSha256": "af005ae2c4bfeec59eb69d2b274b4fda1c53ccf57d407f18e3d938b53c07d356",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00058-1603387360.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00058-1603387360.wav",
+      "bytes": 941112,
+      "sha256": "6b5a5c4f1a77d764a97f19db41653920ba4b150d82693bf8b65574c9639d2633",
+      "seconds": 5.334852607709751,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Laugh3DGeneral",
+          "eventId": 3102818760,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1619674745,
+      "sourceWem": "b8d559972c5f56f2/00059-1619674745.wem",
+      "sourceWemSha256": "a8a17fda634dec2f863b02360dfc341864c462bc0885ef33792cca399d71b152",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00059-1619674745.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00059-1619674745.wav",
+      "bytes": 821308,
+      "sha256": "c2bbc38a91973c0a9f2b2d95cee470630173f44a04583d3c6645ba5350f949fa",
+      "seconds": 4.655691609977325,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DMasterYi",
+          "eventId": 3730311230,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1659211407,
+      "sourceWem": "b8d559972c5f56f2/00060-1659211407.wem",
+      "sourceWemSha256": "aaa39624242b8d7f04e43eb3ed3701657785d1a750bb096bc689ca159bc92625",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00060-1659211407.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00060-1659211407.wav",
+      "bytes": 149984,
+      "sha256": "810a547cb64d8287d6b87f074db2951d29858734c7700de2d814ac8ff09c666f",
+      "seconds": 0.85,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ1_cast3D",
+          "eventId": 2597382496,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1736174721,
+      "sourceWem": "b8d559972c5f56f2/00061-1736174721.wem",
+      "sourceWemSha256": "303d4057cd89dcafa6b6bf15805a428de5d384ff10f250010a44ee9931fb24d0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00061-1736174721.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00061-1736174721.wav",
+      "bytes": 534788,
+      "sha256": "f58d331856b4d2443c7900b5773b5f54f45c42f137f53f8f6955c30773298eb4",
+      "seconds": 3.0314285714285716,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Death3D",
+          "eventId": 3196039457,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1752122627,
+      "sourceWem": "b8d559972c5f56f2/00062-1752122627.wem",
+      "sourceWemSha256": "2b9bdd6c4378cea7ff016f48bd417d3e6fbff16c67233e0bc19dd604fcb59c39",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00062-1752122627.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00062-1752122627.wav",
+      "bytes": 649852,
+      "sha256": "8692b0d6386ba4bc03f22ecc111bbc14b40bc28347da91bd7493c6be2d5a2116",
+      "seconds": 3.683718820861678,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1762105292,
+      "sourceWem": "b8d559972c5f56f2/00063-1762105292.wem",
+      "sourceWemSha256": "9cf649b859b7c59e96b985c03687bfa9b1e2ca00640dc62551839fa26b5deaea",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00063-1762105292.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00063-1762105292.wav",
+      "bytes": 546884,
+      "sha256": "fc9c9327149fbd956524bd0dcdf6e19d4fca271151de094730b6cf8c4ce93d97",
+      "seconds": 3.1,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Death3D",
+          "eventId": 3196039457,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1771844838,
+      "sourceWem": "b8d559972c5f56f2/00064-1771844838.wem",
+      "sourceWemSha256": "b1245d02480250f399a0d20bdf1ce088700863b316a9dbe0ca6ac8de02546a8b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00064-1771844838.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00064-1771844838.wav",
+      "bytes": 264672,
+      "sha256": "01b201312cc75209c80d4479f8572996d8605edb69ab50b7b519e019f8ad747a",
+      "seconds": 1.5001587301587302,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1773900907,
+      "sourceWem": "b8d559972c5f56f2/00065-1773900907.wem",
+      "sourceWemSha256": "c9ef38d4624593c4bf965ab3d6e26d74f37831f6caa2a3e6bdb8ccc451e07998",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00065-1773900907.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00065-1773900907.wav",
+      "bytes": 727604,
+      "sha256": "519426695a85506c20f752f871269b14bc5ef838fd5cf2dc996a584ff28698e5",
+      "seconds": 4.124489795918367,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Kill3DYone",
+          "eventId": 2340606688,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1780647877,
+      "sourceWem": "b8d559972c5f56f2/00066-1780647877.wem",
+      "sourceWemSha256": "8fa3767d74d012526929b7cdf7577f0666f904d16dfaf5d756a273b5842ca9b1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00066-1780647877.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00066-1780647877.wav",
+      "bytes": 899684,
+      "sha256": "ac36878276922efc643ec71ba22d8b9cbe1e053dfd0a7b179d9a1ab5154b964c",
+      "seconds": 5.1,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Joke3DGeneral",
+          "eventId": 449050298,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1780787634,
+      "sourceWem": "b8d559972c5f56f2/00067-1780787634.wem",
+      "sourceWemSha256": "4d887e065e8f33c9da8cf20d95ad1bd17cc30e4afb0f8f5ef6845ea3bb4d1e07",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00067-1780787634.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00067-1780787634.wav",
+      "bytes": 569828,
+      "sha256": "50aa29fb8307c45d6a9a8f1861f2fad60e82d55d85f3855937eca536122b9881",
+      "seconds": 3.2300680272108844,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1789186003,
+      "sourceWem": "b8d559972c5f56f2/00068-1789186003.wem",
+      "sourceWemSha256": "0f11f8d366ffd9ece0adeacc0037257f02f2be496ada572fb59404c0c3abf179",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00068-1789186003.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00068-1789186003.wav",
+      "bytes": 534052,
+      "sha256": "cc470755e9fbd84e800c0434dbeffb906bb37a9fecec5004391cc7e23b43dfa5",
+      "seconds": 3.0272562358276645,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1808105925,
+      "sourceWem": "b8d559972c5f56f2/00069-1808105925.wem",
+      "sourceWemSha256": "89d6659bbb677cdcea92ca2976a63eff1bbbcc654f6171e68f03b2a59de0bffb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00069-1808105925.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00069-1808105925.wav",
+      "bytes": 647304,
+      "sha256": "03127b6c0db58580702d4e50f458582199406316cf2867c8402a5118b72ce5ca",
+      "seconds": 3.6692743764172335,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1809489442,
+      "sourceWem": "b8d559972c5f56f2/00070-1809489442.wem",
+      "sourceWemSha256": "58cbb5719d23a545973126856d646704f4ac779fb64efce2a8fe4110775b13d4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00070-1809489442.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00070-1809489442.wav",
+      "bytes": 405764,
+      "sha256": "ce0d836b1c1ebbabfe7db377bec6a3df47a94e81ff0e5bc9af4a9626c32110e4",
+      "seconds": 2.3,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1826561038,
+      "sourceWem": "b8d559972c5f56f2/00071-1826561038.wem",
+      "sourceWemSha256": "0da82b44777973a3828fb6db5eb2275c40ec859027d2f3bab64fbda4c1745d31",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00071-1826561038.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00071-1826561038.wav",
+      "bytes": 719492,
+      "sha256": "8f35fb549a9fe51bae52911791ded69a770429937f39e5882446f0aa43666d1d",
+      "seconds": 4.078503401360544,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DShen",
+          "eventId": 1725966518,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1843855854,
+      "sourceWem": "b8d559972c5f56f2/00072-1843855854.wem",
+      "sourceWemSha256": "5ad3febc82a748361ec9a526943cffb1bcfc21824290313b0ccc5fe3af11aaee",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00072-1843855854.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00072-1843855854.wav",
+      "bytes": 738884,
+      "sha256": "6c7eb42006fa057a6929aaa51403d4da9a32f5601cbac100542ba459c85ebc37",
+      "seconds": 4.18843537414966,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DYone",
+          "eventId": 4057062677,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1852030730,
+      "sourceWem": "b8d559972c5f56f2/00073-1852030730.wem",
+      "sourceWemSha256": "1896332625a93d9bc18b4751ade6d51a8639ed479cc6565393b423b263bfe9a0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00073-1852030730.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00073-1852030730.wav",
+      "bytes": 549112,
+      "sha256": "94c7380f11caa5d3a0d1f2ed7dfda3e3b8ec64b350ce7f4f4121cee376aa1886",
+      "seconds": 3.1126303854875284,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1872410009,
+      "sourceWem": "b8d559972c5f56f2/00074-1872410009.wem",
+      "sourceWemSha256": "52cd4b56cdea9855931cab62eb9d77be06ab090c0a31d3d45bb60e9b8afb07e9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00074-1872410009.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00074-1872410009.wav",
+      "bytes": 1234844,
+      "sha256": "737df6c95171de0591d171631224de977952045f7e486e886ba99ac11c7b82df",
+      "seconds": 7.0,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Taunt3DGeneral",
+          "eventId": 3182692065,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1896335251,
+      "sourceWem": "b8d559972c5f56f2/00075-1896335251.wem",
+      "sourceWemSha256": "f81e3c10d2dfefbfc7d5164a4c14577d8bf065c8a8348db44e51acfa3f1fb952",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00075-1896335251.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00075-1896335251.wav",
+      "bytes": 77660,
+      "sha256": "015f4be5236eac425f43c68370fb07eab56b863e2daac1a477fcce6848c91ded",
+      "seconds": 0.44,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack2_cast3D",
+          "eventId": 817366158,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack3_cast3D",
+          "eventId": 203103821,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack4_cast3D",
+          "eventId": 1143674228,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack5_cast3D",
+          "eventId": 3933017875,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack6_cast3D",
+          "eventId": 1382643114,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoBasicAttack_cast3D",
+          "eventId": 3606952558,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack2_cast3D",
+          "eventId": 1457458318,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack3_cast3D",
+          "eventId": 843195981,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack4_cast3D",
+          "eventId": 1783766388,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack5_cast3D",
+          "eventId": 278142739,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Yasuo_YasuoCritAttack_cast3D",
+          "eventId": 784306798,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1986183632,
+      "sourceWem": "b8d559972c5f56f2/00076-1986183632.wem",
+      "sourceWemSha256": "78aeb57262d4e5046c05ce00a37689705eacb39776f1f558b64796732cfb44f5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00076-1986183632.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00076-1986183632.wav",
+      "bytes": 65360,
+      "sha256": "7343d860c59cd0ee29ae2ae7d0dc9c13704214687510463d0b8a23f2bf52dc3c",
+      "seconds": 0.3702721088435374,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ2_cast3D",
+          "eventId": 3980515109,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2008731185,
+      "sourceWem": "b8d559972c5f56f2/00077-2008731185.wem",
+      "sourceWemSha256": "82212e7de9bdbb9e79781d0f6d86b92ee20efb7cadc9d1d0af84fa03af4f6c8b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00077-2008731185.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00077-2008731185.wav",
+      "bytes": 546884,
+      "sha256": "ac96ce506ad45e8875665f3bcd24276a4458e086dbc39b57d38bb477d135dc7c",
+      "seconds": 3.1,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2015328670,
+      "sourceWem": "b8d559972c5f56f2/00078-2015328670.wem",
+      "sourceWemSha256": "046ac1676b795850c43a2966c77dea7f7475cf01eff67909deccdc960c737a72",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00078-2015328670.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00078-2015328670.wav",
+      "bytes": 612796,
+      "sha256": "67c1d3254a4baf4574bff4760e7d4e215968e56472ca6d802d50e0d42c6567e1",
+      "seconds": 3.4736507936507937,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2023099016,
+      "sourceWem": "b8d559972c5f56f2/00079-2023099016.wem",
+      "sourceWemSha256": "05e15dac75ee5b9cfcb80ce6db3dcd3cd469555507ed4c67194783fd287aa613",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00079-2023099016.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00079-2023099016.wav",
+      "bytes": 401252,
+      "sha256": "39d8454e67cf55ab332e422897e678aa09932fea50f65e27bb72c5d6c09fe5b4",
+      "seconds": 2.274421768707483,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Attack2DGeneral",
+          "eventId": 3154276812,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2026795990,
+      "sourceWem": "b8d559972c5f56f2/00080-2026795990.wem",
+      "sourceWemSha256": "febbd2feb0cedb146ad8c29cd7cc2ae3f408bdadc98517fc7d8651a4b6d6fc13",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00080-2026795990.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00080-2026795990.wav",
+      "bytes": 645548,
+      "sha256": "9ea4ce5116df85aa59dcd70c54b86577f340e48070c8f1f53d64cb6b2ab4ad26",
+      "seconds": 3.6593197278911567,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DYone",
+          "eventId": 4057062677,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2030780311,
+      "sourceWem": "b8d559972c5f56f2/00081-2030780311.wem",
+      "sourceWemSha256": "2ede32aab66d2a980fd32e57d2c549f43869b77970a027bf59a1044d0de45936",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00081-2030780311.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00081-2030780311.wav",
+      "bytes": 582892,
+      "sha256": "fa323a327de1174d995609e8fc1f4db9eb5dc961eb1cef5613e3205fffa9180d",
+      "seconds": 3.304126984126984,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DStandard",
+          "eventId": 1083669192,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2038431254,
+      "sourceWem": "b8d559972c5f56f2/00082-2038431254.wem",
+      "sourceWemSha256": "abf0ff91c2ac30f5feb2db3bcc1719c4292da4e98b8b51d7ed916753a6e6d7e5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00082-2038431254.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00082-2038431254.wav",
+      "bytes": 138464,
+      "sha256": "4f5afe9a43c54e93a1ec4e36dd73cd3ce21b7c5124737de4311ff25b1c920c00",
+      "seconds": 0.7846938775510204,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoEDash_cast3D",
+          "eventId": 2812602247,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2050507314,
+      "sourceWem": "b8d559972c5f56f2/00083-2050507314.wem",
+      "sourceWemSha256": "1818479e8194b86afe38b2af00e3cd4aadf83a536a4b5faea1747c026cf7a1bc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00083-2050507314.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00083-2050507314.wav",
+      "bytes": 639488,
+      "sha256": "9c2f8d7f2568a56a42d6324706c0e739a5ec33bf7a19ea6bf81ea2a993afb042",
+      "seconds": 3.624965986394558,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2069020404,
+      "sourceWem": "b8d559972c5f56f2/00084-2069020404.wem",
+      "sourceWemSha256": "f73162b6bf2d025c3a21fd7ed7ca129496d66c3a538e72a1bdaa5657257ca573",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00084-2069020404.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00084-2069020404.wav",
+      "bytes": 107628,
+      "sha256": "416cf8df92be26e74198b8c368a4e94845204f047759edf88d17191b16d81e21",
+      "seconds": 0.6098866213151928,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoEDash_cast3D",
+          "eventId": 2812602247,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2080380069,
+      "sourceWem": "b8d559972c5f56f2/00085-2080380069.wem",
+      "sourceWemSha256": "788016a9f32eccef5dbf71965ce3baf83be66728451635765d8aff7a2fc20086",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00085-2080380069.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00085-2080380069.wav",
+      "bytes": 165264,
+      "sha256": "bd7c43fcfc6033f51e48b7e39638970e5b8325d36773ce3f873fc6f4c0a62857",
+      "seconds": 0.9366213151927437,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_YasuoQ3Wrapper_cast3D",
+          "eventId": 1767428439,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2083058717,
+      "sourceWem": "b8d559972c5f56f2/00086-2083058717.wem",
+      "sourceWemSha256": "4efa87f7e6ab470c57768537ee3d5ce8f3b77fd1df08a1be59e558a7d712b6fc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00086-2083058717.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00086-2083058717.wav",
+      "bytes": 620560,
+      "sha256": "777edfc49ff25e8d62c60a54b25badf334c56863b3b91e97e54fc74e4f9a600d",
+      "seconds": 3.5176643990929706,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2087600947,
+      "sourceWem": "b8d559972c5f56f2/00087-2087600947.wem",
+      "sourceWemSha256": "0fd5a9c7fa647014477dfa55492196a910e3bd1740bedaa65bf9a627fefa5080",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00087-2087600947.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00087-2087600947.wav",
+      "bytes": 507152,
+      "sha256": "027dd22e645234ec91c3e83ad85a392d91b2132c452c37e1c2a51e0f7fa52e95",
+      "seconds": 2.874761904761905,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DMasterYi",
+          "eventId": 3730311230,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2134861090,
+      "sourceWem": "b8d559972c5f56f2/00088-2134861090.wem",
+      "sourceWemSha256": "73823a999b4b3da8c9b118720bb6693fd3d1195766f6de126030bb8f0cc54462",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00088-2134861090.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00088-2134861090.wav",
+      "bytes": 998796,
+      "sha256": "00eba3b618cac99ef9e422e583dea77bcd861bee765e7e2559b1f1f99aed9b5c",
+      "seconds": 5.661859410430839,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Laugh3DGeneral",
+          "eventId": 3102818760,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2140126096,
+      "sourceWem": "b8d559972c5f56f2/00089-2140126096.wem",
+      "sourceWemSha256": "ff7a460b003e000031930ccdad4442bc4deb6c76b2ef1af44895d77e41d94cff",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00089-2140126096.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00089-2140126096.wav",
+      "bytes": 951908,
+      "sha256": "50ea6e96b805625943866b308ef4f42039781e1204676d8d394f7532b2548913",
+      "seconds": 5.396054421768707,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_FirstEncounter3DRiven",
+          "eventId": 1439789772,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2146582735,
+      "sourceWem": "b8d559972c5f56f2/00090-2146582735.wem",
+      "sourceWemSha256": "fcd0ddd0f732dd6227c5c8f4eaf49fc13d68fb15c80730fd8506de2e55ed412e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00090-2146582735.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/b8d559972c5f56f2/00090-2146582735.wav",
+      "bytes": 1126280,
+      "sha256": "e3e868aa0ce939180e874f99fd983038334f32312b8234e944dd9353a4fb97c8",
+      "seconds": 6.384557823129252,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Yasuo_Move2DFirstEnemyYone",
+          "eventId": 2523311390,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    }
+  ],
+  "gaps": [
+    "Per-clip listening, speaker, language and transcript review are pending.",
+    "Ability slots are candidates derived from native event-name tokens; GGD runtime binding is pending.",
+    "The complete non-localized champion WAD has not been reconstructed or archived."
+  ]
+}

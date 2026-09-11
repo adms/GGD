@@ -41148,8 +41148,16 @@
       "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 79,
       "categoryCounts": {
-        "unclassified": 223
+        "unclassified": 144,
+        "encounter": 17,
+        "ability-cast": 12,
+        "move": 20,
+        "emote": 12,
+        "native-event-multi": 4,
+        "death": 4,
+        "attack": 10
       }
     },
     {
@@ -41974,8 +41982,16 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 151,
       "categoryCounts": {
-        "unclassified": 1069
+        "unclassified": 918,
+        "move": 36,
+        "emote": 11,
+        "ability-cast": 29,
+        "encounter": 37,
+        "attack": 28,
+        "death": 7,
+        "recall": 3
       }
     },
     {
@@ -42010,8 +42026,15 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 104,
       "categoryCounts": {
-        "unclassified": 1142
+        "unclassified": 1038,
+        "move": 24,
+        "death": 4,
+        "emote": 11,
+        "ability-cast": 25,
+        "attack": 19,
+        "encounter": 21
       }
     },
     {
@@ -42046,8 +42069,14 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 35,
       "categoryCounts": {
-        "unclassified": 695
+        "unclassified": 660,
+        "move": 8,
+        "emote": 6,
+        "ability-cast": 11,
+        "death": 4,
+        "attack": 6
       }
     },
     {
@@ -42082,8 +42111,17 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 159,
       "categoryCounts": {
-        "unclassified": 531
+        "unclassified": 372,
+        "ability-cast": 25,
+        "attack": 31,
+        "emote": 8,
+        "native-event-multi": 20,
+        "move": 33,
+        "encounter": 35,
+        "recall": 4,
+        "death": 3
       }
     },
     {
@@ -42118,8 +42156,16 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 79,
       "categoryCounts": {
-        "unclassified": 223
+        "unclassified": 144,
+        "encounter": 17,
+        "ability-cast": 12,
+        "move": 20,
+        "emote": 12,
+        "native-event-multi": 4,
+        "death": 4,
+        "attack": 10
       }
     },
     {
@@ -42154,8 +42200,15 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 91,
       "categoryCounts": {
-        "unclassified": 1042
+        "unclassified": 951,
+        "encounter": 18,
+        "emote": 10,
+        "ability-cast": 18,
+        "move": 22,
+        "attack": 19,
+        "death": 4
       }
     },
     {
@@ -43384,11 +43437,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "f49fd62bdcd55a6daebf6d08cb9d9e652431f8f0c2c6efc55f80ef95e89a845f"
+      "sha256": "28fa8da0612bbd3e6de56069d3c4ba7c6ba693ad9601cc5dfcc1358b253c85e5"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "f82e54d29c6696f58330723a29ce41ee965bb573959edf1be3d80bbf2a923909"
+      "sha256": "aeec3c32cf2f199b7e66721b0632a0017d440413a8b15bddfe00129f5c69aedf"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -43405,6 +43458,30 @@
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
       "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
+      "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
+      "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
+      "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
+      "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
+      "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
+      "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4"
     },
     {
       "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
@@ -94246,6 +94323,84 @@
       "speakerVerified": false,
       "perClipLanguageVerified": false,
       "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
+      "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735",
+      "heroId": "example:leesin",
+      "nativeId": "LeeSin",
+      "skinId": "skin0",
+      "mappedEvents": 50,
+      "mappedWemIds": 151,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
+      "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3",
+      "heroId": "example:lux",
+      "nativeId": "Lux",
+      "skinId": "skin0",
+      "mappedEvents": 39,
+      "mappedWemIds": 104,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
+      "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9",
+      "heroId": "example:missfortune",
+      "nativeId": "MissFortune",
+      "skinId": "skin0",
+      "mappedEvents": 9,
+      "mappedWemIds": 35,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
+      "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a",
+      "heroId": "example:warwick",
+      "nativeId": "Warwick",
+      "skinId": "skin0",
+      "mappedEvents": 46,
+      "mappedWemIds": 159,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
+      "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36",
+      "heroId": "example:xerath",
+      "nativeId": "Xerath",
+      "skinId": "skin0",
+      "mappedEvents": 24,
+      "mappedWemIds": 79,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
+      "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4",
+      "heroId": "example:yasuo",
+      "nativeId": "Yasuo",
+      "skinId": "skin0",
+      "mappedEvents": 29,
+      "mappedWemIds": 91,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
     }
   ],
   "acquisitionPolicy": {
@@ -94397,11 +94552,11 @@
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
     "prefetchAliases": 47,
-    "nativeEventBindingReports": 1,
-    "nativeEventBoundUniqueFiles": 135,
-    "nativeEventBoundRelationshipRows": 270,
-    "nativeEventMappedEvents": 35
+    "nativeEventBindingReports": 7,
+    "nativeEventBoundUniqueFiles": 754,
+    "nativeEventBoundRelationshipRows": 968,
+    "nativeEventMappedEvents": 232
   },
-  "sourceFileManifestSha256": "0502e07e6b4994b2ba38b132c52335af71f8827cfc41b00a60628ee056e6f8d7",
-  "uncompressedFileManifestSha256": "dab7a0d615caa1aff4e26f0e9854b53501fa20fdcd1596f3b5c6d571a16240e3"
+  "sourceFileManifestSha256": "48541a77ace3e13c2fe784ac0e5c9a7acf9de6a901ccac95a6f5c9a185bca564",
+  "uncompressedFileManifestSha256": "08fe1e8eee11eab18730523080193f320e2375148df2dd45ed74ac28fd6b9ef3"
 }

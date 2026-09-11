@@ -4,9 +4,9 @@
   "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
   "manifestSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
   "voiceIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/seven-voice-index.json",
-  "voiceIndexSha256": "eeae23e884a9da362f54e6c0693b06c7006fb9d61cb820157f38e706441e77f5",
+  "voiceIndexSha256": "2b6c526dac301d8ce4c2ce6a8a728d419d9c6597f4bef719f648446a7480687a",
   "gitHandoffPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/git-handoff-files.json",
-  "gitHandoffSha256": "d6b78ae95e29bcf6952d906a2aa01b390e054118b3495ea2a7b3f55ca7d1b28d",
+  "gitHandoffSha256": "8a7173064b3efd42b22925939b5675c9bdf03f2fb5a30d551d06c4545dbad7fb",
   "scopeControlPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/control/allowlist.json",
   "totals": {
     "completeWads": 7,
@@ -22,9 +22,9 @@
     "synthesisReadyGroups": 0,
     "exactPcm16Recoveries": 0,
     "packagesWithUnresolvedErrors": 0,
-    "nativeEventBindingReports": 1,
-    "nativeEventBoundUniqueFiles": 135,
-    "nativeEventMappedEvents": 35
+    "nativeEventBindingReports": 7,
+    "nativeEventBoundUniqueFiles": 754,
+    "nativeEventMappedEvents": 232
   },
   "characters": [
     {
@@ -43,9 +43,9 @@
       "nativeId": "LeeSin.ja_JP",
       "pcmWavCount": 1069,
       "seconds": 4757.531111111111,
-      "nativeEventBoundFiles": 0,
-      "nativeEventMappedEvents": 0,
-      "eventBindingCoverage": "not-started"
+      "nativeEventBoundFiles": 151,
+      "nativeEventMappedEvents": 50,
+      "eventBindingCoverage": "partial-by-skin"
     },
     {
       "heroId": "example:lux",
@@ -53,9 +53,9 @@
       "nativeId": "Lux.ja_JP",
       "pcmWavCount": 1142,
       "seconds": 3473.1046712018183,
-      "nativeEventBoundFiles": 0,
-      "nativeEventMappedEvents": 0,
-      "eventBindingCoverage": "not-started"
+      "nativeEventBoundFiles": 104,
+      "nativeEventMappedEvents": 39,
+      "eventBindingCoverage": "partial-by-skin"
     },
     {
       "heroId": "example:missfortune",
@@ -63,9 +63,9 @@
       "nativeId": "MissFortune.ja_JP",
       "pcmWavCount": 695,
       "seconds": 2130.2731972789097,
-      "nativeEventBoundFiles": 0,
-      "nativeEventMappedEvents": 0,
-      "eventBindingCoverage": "not-started"
+      "nativeEventBoundFiles": 35,
+      "nativeEventMappedEvents": 9,
+      "eventBindingCoverage": "partial-by-skin"
     },
     {
       "heroId": "example:warwick",
@@ -73,9 +73,9 @@
       "nativeId": "Warwick.ja_JP",
       "pcmWavCount": 531,
       "seconds": 1848.2423303571418,
-      "nativeEventBoundFiles": 0,
-      "nativeEventMappedEvents": 0,
-      "eventBindingCoverage": "not-started"
+      "nativeEventBoundFiles": 159,
+      "nativeEventMappedEvents": 46,
+      "eventBindingCoverage": "partial-by-skin"
     },
     {
       "heroId": "example:xerath",
@@ -83,9 +83,9 @@
       "nativeId": "Xerath.ja_JP",
       "pcmWavCount": 223,
       "seconds": 1060.2127210884355,
-      "nativeEventBoundFiles": 0,
-      "nativeEventMappedEvents": 0,
-      "eventBindingCoverage": "not-started"
+      "nativeEventBoundFiles": 79,
+      "nativeEventMappedEvents": 24,
+      "eventBindingCoverage": "partial-by-skin"
     },
     {
       "heroId": "example:yasuo",
@@ -93,9 +93,9 @@
       "nativeId": "Yasuo.ja_JP",
       "pcmWavCount": 1042,
       "seconds": 4239.575510204076,
-      "nativeEventBoundFiles": 0,
-      "nativeEventMappedEvents": 0,
-      "eventBindingCoverage": "not-started"
+      "nativeEventBoundFiles": 91,
+      "nativeEventMappedEvents": 29,
+      "eventBindingCoverage": "partial-by-skin"
     }
   ],
   "defaultChanged": false,

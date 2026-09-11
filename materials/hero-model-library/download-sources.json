@@ -43471,7 +43471,7 @@
       "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
       "accessStatus": "public-direct-download",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
+      "readiness": "local-audio-hash-verified-all-seven-base-events-mapped-pending-listening-gain-other-skins-and-runtime",
       "purchaseDecision": "no-purchase-existing-local-audio",
       "defaultEligible": false,
       "automaticEligible": false,
@@ -43540,7 +43540,12 @@
           "eventBindingsVerified": false,
           "synthesisReady": false,
           "pcmWavCount": 1069,
-          "filesWithSamplesAboveUnity": 399
+          "filesWithSamplesAboveUnity": 399,
+          "eventBindingCoverage": "partial-base-skin",
+          "eventBoundWavCount": 151,
+          "mappedNativeEventCount": 50,
+          "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
+          "eventBindingReportSha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735"
         },
         {
           "id": "lol-lux-ja-jp-16-18-8159717",
@@ -43562,7 +43567,12 @@
           "eventBindingsVerified": false,
           "synthesisReady": false,
           "pcmWavCount": 1142,
-          "filesWithSamplesAboveUnity": 689
+          "filesWithSamplesAboveUnity": 689,
+          "eventBindingCoverage": "partial-base-skin",
+          "eventBoundWavCount": 104,
+          "mappedNativeEventCount": 39,
+          "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
+          "eventBindingReportSha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3"
         },
         {
           "id": "lol-missfortune-ja-jp-16-18-8159717",
@@ -43584,7 +43594,12 @@
           "eventBindingsVerified": false,
           "synthesisReady": false,
           "pcmWavCount": 695,
-          "filesWithSamplesAboveUnity": 248
+          "filesWithSamplesAboveUnity": 248,
+          "eventBindingCoverage": "partial-base-skin",
+          "eventBoundWavCount": 35,
+          "mappedNativeEventCount": 9,
+          "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
+          "eventBindingReportSha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9"
         },
         {
           "id": "lol-warwick-ja-jp-16-18-8159717",
@@ -43606,7 +43621,12 @@
           "eventBindingsVerified": false,
           "synthesisReady": false,
           "pcmWavCount": 531,
-          "filesWithSamplesAboveUnity": 194
+          "filesWithSamplesAboveUnity": 194,
+          "eventBindingCoverage": "partial-base-skin",
+          "eventBoundWavCount": 159,
+          "mappedNativeEventCount": 46,
+          "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
+          "eventBindingReportSha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a"
         },
         {
           "id": "lol-xerath-ja-jp-16-18-8159717",
@@ -43628,7 +43648,12 @@
           "eventBindingsVerified": false,
           "synthesisReady": false,
           "pcmWavCount": 223,
-          "filesWithSamplesAboveUnity": 78
+          "filesWithSamplesAboveUnity": 78,
+          "eventBindingCoverage": "partial-base-skin",
+          "eventBoundWavCount": 79,
+          "mappedNativeEventCount": 24,
+          "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
+          "eventBindingReportSha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36"
         },
         {
           "id": "lol-yasuo-ja-jp-16-18-8159717",
@@ -43650,7 +43675,12 @@
           "eventBindingsVerified": false,
           "synthesisReady": false,
           "pcmWavCount": 1042,
-          "filesWithSamplesAboveUnity": 605
+          "filesWithSamplesAboveUnity": 605,
+          "eventBindingCoverage": "partial-base-skin",
+          "eventBoundWavCount": 91,
+          "mappedNativeEventCount": 29,
+          "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
+          "eventBindingReportSha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4"
         }
       ],
       "audioAcquisition": {
@@ -43894,14 +43924,14 @@
         "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
         "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
       },
-      "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
+      "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON have a prior full-GET S3 receipt. All seven base skin0 reports map 754 exact WAVs through 232 native events. Speaker identity, per-clip language, transcript, GGD skill semantic binding, other skins, backend playback and deployment remain pending.",
       "limitations": [
         "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
         "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
         "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
         "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
         "English not acquired in this scoped delivery.",
-        "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
+        "All seven base skin0 event graphs are mapped; other skins and runtime semantic bindings remain incomplete."
       ],
       "files": [
         {
@@ -43978,7 +44008,7 @@
         "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
       },
       "eventBindingEvidence": {
-        "state": "partial-base-skin",
+        "state": "all-seven-base-skin-mapped-partial-by-skin",
         "completeForSource": false,
         "reports": [
           {
@@ -43993,11 +44023,89 @@
             "speakerVerified": false,
             "perClipLanguageVerified": false,
             "ggdSkillSemanticBindingsVerified": false
+          },
+          {
+            "path": "materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
+            "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735",
+            "heroId": "example:leesin",
+            "nativeId": "LeeSin",
+            "skinId": "skin0",
+            "eventBoundWavCount": 151,
+            "mappedNativeEventCount": 50,
+            "eventBindingsVerified": true,
+            "speakerVerified": false,
+            "perClipLanguageVerified": false,
+            "ggdSkillSemanticBindingsVerified": false
+          },
+          {
+            "path": "materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
+            "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3",
+            "heroId": "example:lux",
+            "nativeId": "Lux",
+            "skinId": "skin0",
+            "eventBoundWavCount": 104,
+            "mappedNativeEventCount": 39,
+            "eventBindingsVerified": true,
+            "speakerVerified": false,
+            "perClipLanguageVerified": false,
+            "ggdSkillSemanticBindingsVerified": false
+          },
+          {
+            "path": "materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
+            "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9",
+            "heroId": "example:missfortune",
+            "nativeId": "MissFortune",
+            "skinId": "skin0",
+            "eventBoundWavCount": 35,
+            "mappedNativeEventCount": 9,
+            "eventBindingsVerified": true,
+            "speakerVerified": false,
+            "perClipLanguageVerified": false,
+            "ggdSkillSemanticBindingsVerified": false
+          },
+          {
+            "path": "materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
+            "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a",
+            "heroId": "example:warwick",
+            "nativeId": "Warwick",
+            "skinId": "skin0",
+            "eventBoundWavCount": 159,
+            "mappedNativeEventCount": 46,
+            "eventBindingsVerified": true,
+            "speakerVerified": false,
+            "perClipLanguageVerified": false,
+            "ggdSkillSemanticBindingsVerified": false
+          },
+          {
+            "path": "materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
+            "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36",
+            "heroId": "example:xerath",
+            "nativeId": "Xerath",
+            "skinId": "skin0",
+            "eventBoundWavCount": 79,
+            "mappedNativeEventCount": 24,
+            "eventBindingsVerified": true,
+            "speakerVerified": false,
+            "perClipLanguageVerified": false,
+            "ggdSkillSemanticBindingsVerified": false
+          },
+          {
+            "path": "materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
+            "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4",
+            "heroId": "example:yasuo",
+            "nativeId": "Yasuo",
+            "skinId": "skin0",
+            "eventBoundWavCount": 91,
+            "mappedNativeEventCount": 29,
+            "eventBindingsVerified": true,
+            "speakerVerified": false,
+            "perClipLanguageVerified": false,
+            "ggdSkillSemanticBindingsVerified": false
           }
         ],
-        "nativeEventBoundUniqueFiles": 135,
-        "mappedNativeEventCount": 35,
-        "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+        "nativeEventBoundUniqueFiles": 754,
+        "mappedNativeEventCount": 232,
+        "note": "All seven base skin0 event graphs are mapped. Other skins, listening, speaker/language/transcript review, GGD skill semantics, backend playback and deployment remain incomplete."
       },
       "supplementalBackups": [
         {
@@ -44018,6 +44126,60 @@
           "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
           "s3Use": "backup-only-not-runtime-entry",
           "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+        }
+      ],
+      "supplementalDeliveries": [
+        {
+          "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-base-seven-v1",
+          "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+          "resourceRole": "integration-evidence-backup",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/project-seven-base-seven-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-base-event-bindings-v1/e4c09b94b3bdadf16ec141472eaa4eba33363a0f3ee74ae5474023df50589f0a/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-base-event-bindings-v1/e4c09b94b3bdadf16ec141472eaa4eba33363a0f3ee74ae5474023df50589f0a/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-base-seven-v1/bb19a27c6112237d7917784ab55228201e07def800766a07dd0da808875f460e.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-base-seven-v1/bb19a27c6112237d7917784ab55228201e07def800766a07dd0da808875f460e.files.json",
+          "bytes": 26926549,
+          "sha256": "bb19a27c6112237d7917784ab55228201e07def800766a07dd0da808875f460e",
+          "fileCount": 95,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-base-event-bindings-v1/latest-receipt.json",
+          "receiptSha256": "48d62cd673ccbc5d1ab6ecc7887e76827cf9b9170f7cee9b63d2b01d8c89b43f",
+          "manifestSha256": "dc0c1c5450035a18f84fb963db3d868d615528cc48c7916fb86cefdbcb1b09e0",
+          "s3Use": "backup-only-not-runtime-entry"
+        },
+        {
+          "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-base-seven-v2",
+          "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+          "resourceRole": "integration-evidence-backup",
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/project-seven-base-seven-v2",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-base-event-bindings-v2/857f767f87ff12bd4f40c459ffc807363982a34257c3f8687997034ab6d6bfd4/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-base-event-bindings-v2/857f767f87ff12bd4f40c459ffc807363982a34257c3f8687997034ab6d6bfd4/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-base-seven-v2/56fd03e72c93c622a98968500b441f58179a141e64ea2694ca4bdd8ce4a58abd.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-base-seven-v2/56fd03e72c93c622a98968500b441f58179a141e64ea2694ca4bdd8ce4a58abd.files.json",
+          "bytes": 26926547,
+          "sha256": "56fd03e72c93c622a98968500b441f58179a141e64ea2694ca4bdd8ce4a58abd",
+          "fileCount": 95,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-base-event-bindings-v2/latest-receipt.json",
+          "receiptSha256": "24697ad291a02cceefbcdf768b4b94bd279daf233bfb17b7e8cdd271fca374bf",
+          "manifestSha256": "b492b691a51ae3162768b63d70c4dd8657748e34b5cffad0509278c6aa5f590e",
+          "s3Use": "backup-only-not-runtime-entry"
         }
       ]
     },
