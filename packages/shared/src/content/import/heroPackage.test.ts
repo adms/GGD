@@ -109,8 +109,21 @@ describe("complete hero through Main's package representation", () => {
     const modelKey = catalog.documents.get("champions/thorne")!.modelKey;
     expect(wire.compiled).toContainEqual(expect.objectContaining({ path: `compiled/models/${modelKey}.json` }));
     expect(validateHeroImportPackage(wire, catalog).diagnostics).toEqual([]);
+    // ⭐⭐ GH#1211（2026-09-11）：這裡本來釘住**錯誤訊息的字串** `/champions\/thorne/`。
+    // ⚠️ 今天有一條**更早**的檢查先開火（「英雄本體必須使用目前目錄中已核准的英雄模型」）——
+    //   ⭐ 而它與舊訊息是**同一個事實的兩種說法**：把 `champions/thorne` 從目錄拿掉，
+    //   thorne 的身體模型也就不再是「目錄裡已核准的英雄模型」。
+    // ⇒ ⛔ 釘住字串 ⇒ 檢查順序一變就紅，⭐ 而被測的性質**根本沒有變**。
+    //
+    // ⇒ ⭐ 改成釘**性質本身**，而且**兩個方向都走**：
+    //   ① 文件在  ⇒ ⛔ 不可以擲（⛔ 否則一個「永遠擲」的實作也會讓②綠）
+    //   ② 文件不在 ⇒ ⭐ 一定要擲
+    expect(() => compileHeroPackageProject(authored, catalog, false)).not.toThrow();
     const missing = new Map(catalog.documents); missing.delete("champions/thorne");
-    expect(() => compileHeroPackageProject(authored, { ...catalog, documents: missing }, false)).toThrow(/champions\/thorne/);
+    expect(
+      () => compileHeroPackageProject(authored, { ...catalog, documents: missing }, false),
+      "⛔ 召喚出來的英雄文件不在目錄裡，而編譯照樣過 —— 那正是「靠 server-only 基準線」的病",
+    ).toThrow();
   });
 
   it("carries original slot requirements and author notes through ZIP without turning them into verdicts", async () => {
