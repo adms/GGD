@@ -119,9 +119,25 @@ function longAxisComplaint(g: Gltf, axis: string): string | undefined {
   if (!vis) return `${full.join(" × ")} 的幾何**一片都畫不出來**（材質 alpha 全 0）⇒ 零像素`;
   const k = "xyz".indexOf(axis);
   if (k < 0) return `宣告了一個不存在的軸「${axis}」`;
-  const visLong = "xyz"[vis.indexOf(Math.max(...vis))];
+  // ⭐⭐ GH#1211（2026-09-11）：**平手要當平手**，⛔ 不是挑一個再說另一個說謊。
+  //
+  // ⚠️ 實測 `w3x.stock.reddragonmissile`：y = 4.925219、z = 4.925220
+  //   ⇒ ⭐ 差 **2.4e-07**（相對 5e-8）—— 那是 glTF accessor min/max 的浮點雜訊，
+  //   ⛔ 不是一個形狀事實。而 `Math.max` 會**穩定地**挑到 z，於是宣告 y 被判成說謊。
+  //
+  // ⚠️⚠️ ⭐ 這條閘的訊息逐字說「改 fxLongAxis 只是換一句謊話，先問那片隱形面片為什麼不可見」——
+  //   ⛔ 而這一份**沒有隱形面片**：可見與含隱形的包圍盒**逐位元相同**。
+  //   ⇒ ⭐ 照那句話去重烘模型會白做，⛔ 而照它去改宣告會把一個**對的**宣告改成另一個對的宣告。
+  //   ⇒ 真正該修的是**這把尺**：一個軸對稱的模型，兩軸都是誠實的答案。
+  //
+  // ⭐ 容差取**相對 1e-4**（⛔ 不是絕對值）：它比浮點雜訊大四個數量級，
+  //   ⛔ 又遠小於任何真的「長軸搞錯」（那一族是成倍的差距，例：3.3 vs 4.9 ＝ 49%）。
+  const MAX_EXTENT = Math.max(...vis);
+  const TIE_REL = 1e-4;
+  const tiedWithLongest = MAX_EXTENT > 1e-9 && (MAX_EXTENT - vis[k]!) / MAX_EXTENT <= TIE_REL;
+  const visLong = "xyz"[vis.indexOf(MAX_EXTENT)];
   const frac = full[k]! > 1e-9 ? vis[k]! / full[k]! : 0;
-  if (visLong !== axis)
+  if (visLong !== axis && !tiedWithLongest)
     return (
       `宣告 ${axis}，但**可見**幾何的最長軸是 ${visLong}` +
       `（可見 ${vis.map((v) => v.toFixed(3)).join(" × ")} · 含隱形 ${full.map((v) => v.toFixed(3)).join(" × ")}）`
