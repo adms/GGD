@@ -14,6 +14,12 @@
  *   POST /__review/feature-verdict → body { id, hash, verdict: "keep"|"veto", reason? }
  *     ⭐ 預設是 live（已上線）；veto＝事後否決 ⇒ **必填 reason**（400 擋空的）。
  *
+ * owner 2026-09-11 —— **新英雄上架一頁檢核**（同一個通道，⛔ 不造第三套）：
+ *   GET  /__review/hero-intake           → { counts, batches: [{ batch, heroes: [模型／圖示／語音 ＋ 裁決] }] }
+ *   GET  /__review/hero-asset?p=<rel>    → 一張圖示（**只**從 docs/_review/material/hero-intake/ 底下取）
+ *   POST /__review/hero-intake-verdict   → body { batch, heroId, digest, verdict: "approve"|"reject", reason? }
+ *     ⭐ 退回**必填原因**；材料重跑過（digest 不同）⇒ 舊裁決在頁面上標 stale。
+ *
  * ## 🔐 兩種權限模式（owner 2026-08-27:「用**特定存取權限**來管理**避免錯改**」）
  * | mode | 誰在跑 | 可以寫什麼 | 為什麼 |
  * |---|---|---|---|
@@ -28,6 +34,7 @@
 import { buildInventory, buildQueue, saveVerdict } from "./triage.mjs";
 import { auditPlan } from "./enable-audit.mjs";
 import { buildFeatureQueue, saveFeatureVerdict, SEQUENCE_ROOT_REL } from "./features.mjs";
+import { buildHeroIntakeQueue, saveHeroIntakeVerdict, MATERIAL_DIR_REL as HERO_INTAKE_DIR_REL } from "./heroIntake.mjs";
 import { actorFromBearer } from "./adminAuth.mjs";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
@@ -168,6 +175,61 @@ export function createReviewMiddleware(repoRoot, options = {}) {
           sendJson(res, 200, { ok: true, path: rel, bytes: statSync(abs).size });
         } catch (err) {
           sendJson(res, 500, { error: String(err) });
+        }
+      });
+      return;
+    }
+    if (req.method === "GET" && url === "/__review/hero-intake") {
+      try {
+        const batch = new URL(req.url ?? "", "http://x").searchParams.get("batch");
+        sendJson(res, 200, buildHeroIntakeQueue(repoRoot, batch));
+      } catch (err) {
+        sendJson(res, 500, { error: String(err) });
+      }
+      return;
+    }
+    if (req.method === "GET" && url === "/__review/hero-asset") {
+      // ⚠️ 同一道柵欄（⛔ 不是「有沒有 ..」）：只供應批核材料底下的圖示。
+      const rel = normalize(new URL(req.url ?? "", "http://x").searchParams.get("p") ?? "");
+      const okExt = [".webp", ".png", ".jpg", ".jpeg"].some((e) => rel.toLowerCase().endsWith(e));
+      // ⭐ 出貨樹的圖示**直接供應**（⛔ 不把同一張圖複製一份進材料 —— 第〇·四守則：
+      //    一份事實一個住處）。柵欄仍然是逐字前綴，⛔ 不是「有沒有 ..」。
+      const allowed = rel.startsWith(`${HERO_INTAKE_DIR_REL}/`) || rel.startsWith("content/assets/icons/");
+      if (!allowed || !okExt)
+        return sendJson(res, 400, { error: `只供應 ${HERO_INTAKE_DIR_REL}/** 與 content/assets/icons/**（webp/png/jpg），收到：${rel}` });
+      const abs = join(repoRoot, rel);
+      if (!existsSync(abs) || !statSync(abs).isFile()) return sendJson(res, 404, { error: `找不到 ${rel}` });
+      res.statusCode = 200;
+      res.setHeader("Content-Type", rel.toLowerCase().endsWith(".webp") ? "image/webp" : rel.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg");
+      res.setHeader("Cache-Control", "no-store");
+      res.end(readFileSync(abs));
+      return;
+    }
+    if (req.method === "POST" && url === "/__review/hero-intake-verdict") {
+      let raw = "";
+      req.on("data", (c) => (raw += c));
+      req.on("end", () => {
+        try {
+          const { batch, heroId, digest, verdict, reason } = JSON.parse(raw || "{}");
+          if (typeof batch !== "string" || typeof heroId !== "string")
+            return sendJson(res, 400, { error: "需要 { batch, heroId, digest, verdict: approve|reject, reason? }" });
+          const queue = buildHeroIntakeQueue(repoRoot, batch);
+          const b = queue.batches.find((x) => x.batch === batch);
+          if (b === undefined) return sendJson(res, 404, { error: `未知批次：${batch}` });
+          if (!b.heroes.some((h) => h.id === heroId)) return sendJson(res, 404, { error: `批次 ${batch} 裡沒有 ${heroId}` });
+          if (typeof digest === "string" && digest !== "" && digest !== b.digest)
+            return sendJson(res, 409, {
+              error: "材料已重跑 —— 你看的那一份不是現在的那一份。重新整理再判定。",
+              currentDigest: b.digest,
+              submittedDigest: digest,
+            });
+          const actor = actorFromBearer(req.headers?.authorization ?? null);
+          const entry = saveHeroIntakeVerdict(repoRoot, verdictSource, {
+            batch, heroId, digest: b.digest, verdict, reason, by: actor?.id ?? actor?.name ?? null,
+          });
+          sendJson(res, 200, { ok: true, entry });
+        } catch (err) {
+          sendJson(res, 400, { error: String(err instanceof Error ? err.message : err) });
         }
       });
       return;

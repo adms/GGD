@@ -185,6 +185,11 @@ export type Page =
    * ⛔ 不進 SESSION_REQUIRED_PAGES：帳本是本機檔，dev middleware 直接供應。
    */
   | "featureReview"
+  /**
+   * 🧍🖼🎙 新英雄上架一頁檢核（owner 2026-09-11「全部放到一頁檢核頁面讓我複查…
+   * 並且這一頁也要放到後台管理頁」）。⛔ 不進 SESSION_REQUIRED_PAGES：材料是本機檔。
+   */
+  | "heroIntake"
   | "submissionsReview"
   | "liveMdlFamilies"
   | "liveParallelBoard"

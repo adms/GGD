@@ -121,6 +121,7 @@
     "handback:build": "bash scripts/genrun.sh handback:build handback:build:raw",
     "handback:build:raw": "tsx tools/main-handback/gen.ts",
     "handback:check": "bash scripts/gencheck.sh tsx tools/main-handback/gen.ts --check",
+    "hero:intake": "node tools/hero-intake/run.mjs",
     "iconplan:build": "bash scripts/genrun.sh iconplan:build iconplan:build:raw",
     "iconplan:build:raw": "python3 tools/icon-gen/src/plan.py --write",
     "iconplan:check": "python3 tools/icon-gen/src/plan.py --check",
