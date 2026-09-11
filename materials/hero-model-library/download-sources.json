@@ -36717,7 +36717,7 @@
       "format": "UnityFS / 2 distinct GLB / 15 PCM WAV",
       "accessStatus": "public-source-or-local-derived",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "pending-runtime-and-visual-validation",
+      "readiness": "converted-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
       "purchaseDecision": "supplement-only-continue-model-search",
       "defaultEligible": false,
       "resourceRole": "character-model-collection",
@@ -36726,7 +36726,7 @@
       "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
-        "state": "pending-runtime-and-visual-validation",
+        "state": "pending-rights-action-integration-and-backend-selection",
         "selectionVerified": false
       },
       "sourceGame": "Fate/unlimited codes",
@@ -36752,7 +36752,7 @@
           "model": "converted/models/01-p1/body.glb",
           "bytes": 307032,
           "sha256": "db1038b27795660802f7701195ddf48ab8b5a520f63f7d5bc0cbacff1dd108eb",
-          "readyStage": "standard-glb-candidate",
+          "readyStage": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
           "meshCount": 1,
           "skinCount": 1,
           "jointCounts": [
@@ -36763,12 +36763,13 @@
           "sourceSkeleton": "MOD-retargeted",
           "runtimeReady": false,
           "backendSelectionVerified": false,
-          "manualVisualReview": "CPU static skinned render inspected; complete clothed model, purple hair, black/red versus white/red outfit.",
+          "manualVisualReview": "reviewed-static-body-only",
           "defaultChanged": false,
           "limitations": [
-            "Original game source platform, skeleton and animations not proven.",
-            "Custom toon shader reduced to base-color PBR.",
-            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            "Original Fate/unlimited codes PSP/PS2 platform, skeleton and native animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Static WebGL review proves body completeness and embedded material visibility only; the source toon shader and dynamic hair/skirt MonoBehaviours are not reproduced.",
+            "This candidate has no native or approved GGD action clips.",
+            "No rights/republication approval, backend dropdown registration, gameplay validation or deployment has been performed."
           ],
           "sourceOutfitIndices": [
             0,
@@ -36778,7 +36779,72 @@
             "converted/models/03-p1/body.glb"
           ],
           "khronosValidation": "0 errors; 0 warnings; unlimited issue collection; not truncated",
-          "sourceOutfitEntriesRetained": true
+          "sourceOutfitEntriesRetained": true,
+          "ggdContractValidation": {
+            "batch": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/contract-validation.json",
+              "bytes": 2533,
+              "sha256": "f40515953ab90258cc8fecc60adda0ac5bae5831fa336fd62092aaffc7a87251"
+            },
+            "candidate": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p1/contract-validation.json",
+              "bytes": 3502,
+              "sha256": "6002391c262deb63c7a5b761543843c59e85e844f7666827e158d8e6d8916080"
+            },
+            "allKhronosErrorsZero": true,
+            "allKhronosWarningsZero": true,
+            "allGgdBudgetErrorsZero": true,
+            "contractCommit": "1b70ae47b62ff65b907ed6d7ccf68caf10d0fe35"
+          },
+          "webglVisualReview": {
+            "review": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/review.json",
+              "bytes": 7230,
+              "sha256": "fa1ed57a1d674d2541a27dceef8da97fdbd3f9473d8ea60850fa3c583644c72f",
+              "candidateId": "fuc-mod-dark-sakura-p1"
+            },
+            "proof": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p1/webgl/proof.json",
+              "bytes": 2395,
+              "sha256": "d38dd2e019a6b35fa8c1e4bba75503f29717c296658a893901398d73cb81d367"
+            },
+            "run": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p1/webgl/run.json",
+              "bytes": 393,
+              "sha256": "d010304a4cc8487fd1a1104a5339368e47e25842cb1b342d9a156af1397b64cd"
+            },
+            "images": {
+              "front": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p1/webgl/front.png",
+                "bytes": 159426,
+                "sha256": "435c4a6a7a242c6c70aae40be156f098b2b4c29d1bb05cb13c7be34b9095d94c"
+              },
+              "back": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p1/webgl/back.png",
+                "bytes": 137118,
+                "sha256": "db0f29c2eaaf0fb42105a0b2a0b3d5f2a0e27ba9dcbff78ca3e47ab948061ec9"
+              },
+              "isometric": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p1/webgl/isometric.png",
+                "bytes": 156806,
+                "sha256": "9408ae2f920ef4d325db7ec0568f83bce66dbf438408b1ee9e14518041e766ac"
+              }
+            },
+            "engine": "Babylon 7.54.3",
+            "scope": "reviewed-static-body-only",
+            "sourceGameShaderParity": false,
+            "gameplayAcceptance": false,
+            "backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-dark-sakura-webgl-review-v1/7f5d4d361ad44fb1c85e9eba1ca661e8cfb7d25b1f9b37efe0adc5540f2c3b69.tar.gz",
+              "s3ArchiveMember": "review.json",
+              "s3Use": "evidence-backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-dark-sakura-webgl-review-v1/latest-receipt.json",
+              "backupReceiptSha256": "4c66f01c0d476eb88c1492c472388847a9a2b6d0f7f6ef0720894c5ac6f3b090"
+            }
+          },
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false
         },
         {
           "candidateId": "fuc-mod-dark-sakura-p2",
@@ -36793,7 +36859,7 @@
           "model": "converted/models/02-p2/body.glb",
           "bytes": 309512,
           "sha256": "a60f1b30d613f16c95d20579aaadce672bddc0fe0f8d084979aa01d835eee247",
-          "readyStage": "standard-glb-candidate",
+          "readyStage": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
           "meshCount": 1,
           "skinCount": 1,
           "jointCounts": [
@@ -36804,12 +36870,13 @@
           "sourceSkeleton": "MOD-retargeted",
           "runtimeReady": false,
           "backendSelectionVerified": false,
-          "manualVisualReview": "CPU static skinned render inspected; complete clothed model, purple hair, black/red versus white/red outfit.",
+          "manualVisualReview": "reviewed-static-body-only",
           "defaultChanged": false,
           "limitations": [
-            "Original game source platform, skeleton and animations not proven.",
-            "Custom toon shader reduced to base-color PBR.",
-            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            "Original Fate/unlimited codes PSP/PS2 platform, skeleton and native animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Static WebGL review proves body completeness and embedded material visibility only; the source toon shader and dynamic hair/skirt MonoBehaviours are not reproduced.",
+            "This candidate has no native or approved GGD action clips.",
+            "No rights/republication approval, backend dropdown registration, gameplay validation or deployment has been performed."
           ],
           "sourceOutfitIndices": [
             1,
@@ -36819,7 +36886,72 @@
             "converted/models/04-p2/body.glb"
           ],
           "khronosValidation": "0 errors; 0 warnings; unlimited issue collection; not truncated",
-          "sourceOutfitEntriesRetained": true
+          "sourceOutfitEntriesRetained": true,
+          "ggdContractValidation": {
+            "batch": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/contract-validation.json",
+              "bytes": 2533,
+              "sha256": "f40515953ab90258cc8fecc60adda0ac5bae5831fa336fd62092aaffc7a87251"
+            },
+            "candidate": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p2/contract-validation.json",
+              "bytes": 3502,
+              "sha256": "2e23687d30fc7bcb6fb3bda28ca3890ec7d23d8c25bebd96f8298a87e3160025"
+            },
+            "allKhronosErrorsZero": true,
+            "allKhronosWarningsZero": true,
+            "allGgdBudgetErrorsZero": true,
+            "contractCommit": "1b70ae47b62ff65b907ed6d7ccf68caf10d0fe35"
+          },
+          "webglVisualReview": {
+            "review": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/review.json",
+              "bytes": 7230,
+              "sha256": "fa1ed57a1d674d2541a27dceef8da97fdbd3f9473d8ea60850fa3c583644c72f",
+              "candidateId": "fuc-mod-dark-sakura-p2"
+            },
+            "proof": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p2/webgl/proof.json",
+              "bytes": 2395,
+              "sha256": "4889047a18c2ff97931ab465890d84cee0853d018c128ea156bde86b4217e9a8"
+            },
+            "run": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p2/webgl/run.json",
+              "bytes": 393,
+              "sha256": "292532dd4778882089732653c38cd284181d49ba0993488359ed0de352b49da5"
+            },
+            "images": {
+              "front": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p2/webgl/front.png",
+                "bytes": 174265,
+                "sha256": "c57f89d40063d65f854e8c435716b82c0099570b719a1f042bf0dd45d6f89a89"
+              },
+              "back": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p2/webgl/back.png",
+                "bytes": 147275,
+                "sha256": "7067a158d06e51a59ef95ca28c6fca2339a365cbed832f6c03539c5196fb4b62"
+              },
+              "isometric": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/sakura-p2/webgl/isometric.png",
+                "bytes": 168173,
+                "sha256": "afd157e36a18383c82f8b87c7f0ae9a363a1d0c78a4c0b4de930d19c1edc791b"
+              }
+            },
+            "engine": "Babylon 7.54.3",
+            "scope": "reviewed-static-body-only",
+            "sourceGameShaderParity": false,
+            "gameplayAcceptance": false,
+            "backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-dark-sakura-webgl-review-v1/7f5d4d361ad44fb1c85e9eba1ca661e8cfb7d25b1f9b37efe0adc5540f2c3b69.tar.gz",
+              "s3ArchiveMember": "review.json",
+              "s3Use": "evidence-backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-dark-sakura-webgl-review-v1/latest-receipt.json",
+              "backupReceiptSha256": "4c66f01c0d476eb88c1492c472388847a9a2b6d0f7f6ef0720894c5ac6f3b090"
+            }
+          },
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false
         }
       ],
       "candidateManifest": {
@@ -36875,7 +37007,7 @@
       "primaryAudioFormats": [
         ".wav"
       ],
-      "verification": "完整原包、4來源服裝輸出全留；相同SHA分成P1/P2兩個候選，57骨節、0動畫。15 PCM WAV完整解碼/長度/SHA通過，原作者標為角色聲音，語言及逐段說話者待核。兩GLB完整Khronos0錯誤0警告，原PSP/PS2平台未證明，MOD重綁與toon材質限制保留；GGD未驗收。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "完整 MOD 原包、4筆來源服裝關係、2個不同SHA的P1/P2 GLB與15個來源標示PCM均保留；兩GLB通過目前分支的GGD匯入檢查與英雄預算，Khronos均為0錯誤0警告。Babylon 7.54.3 WebGL已各完成前／後／等角三視圖，57骨節GPU蒙皮、完整身體及內嵌材質可見性通過。此為Bomb Rush Cyberfunk社群MOD轉接；PSP/PS2原生平台、原生骨架／動作／VFX、toon shader、動態頭髮／裙襬、語音語言與事件、權利、後台切換、遊戲驗收及部署仍未完成。",
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
         "bytes": 3979145,
@@ -36884,6 +37016,48 @@
         "readbackVerified": true,
         "fullGetVerified": true,
         "allMemberSha256Verified": true
+      },
+      "supplementalDeliveries": [
+        {
+          "id": "fuc-dark-sakura-webgl-review-v1",
+          "sourceId": "gamebanana-fuc-dark-sakura-492607",
+          "resourceRole": "integration-evidence-backup",
+          "localPath": "GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-dark-sakura-webgl-review-v1/b0262fcb60257637b335b95542ac8d227fca24fccebae3717a366527ecfa1596/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-dark-sakura-webgl-review-v1/b0262fcb60257637b335b95542ac8d227fca24fccebae3717a366527ecfa1596/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-dark-sakura-webgl-review-v1/7f5d4d361ad44fb1c85e9eba1ca661e8cfb7d25b1f9b37efe0adc5540f2c3b69.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-dark-sakura-webgl-review-v1/7f5d4d361ad44fb1c85e9eba1ca661e8cfb7d25b1f9b37efe0adc5540f2c3b69.files.json",
+          "bytes": 4745026,
+          "sha256": "7f5d4d361ad44fb1c85e9eba1ca661e8cfb7d25b1f9b37efe0adc5540f2c3b69",
+          "fileCount": 18,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-dark-sakura-webgl-review-v1/latest-receipt.json",
+          "receiptSha256": "4c66f01c0d476eb88c1492c472388847a9a2b6d0f7f6ef0720894c5ac6f3b090",
+          "manifestSha256": "d2fb790510e98e85d514051d45656229999f1fb84b67aaad9ff457e13d9f39c6",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
+      ],
+      "supplementalReview": {
+        "review": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-dark-sakura-webgl-review-v1/review.json",
+          "bytes": 7230,
+          "sha256": "fa1ed57a1d674d2541a27dceef8da97fdbd3f9473d8ea60850fa3c583644c72f"
+        },
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-dark-sakura-webgl-review-v1/7f5d4d361ad44fb1c85e9eba1ca661e8cfb7d25b1f9b37efe0adc5540f2c3b69.tar.gz",
+          "s3ArchiveMember": "review.json",
+          "s3Use": "evidence-backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-dark-sakura-webgl-review-v1/latest-receipt.json",
+          "backupReceiptSha256": "4c66f01c0d476eb88c1492c472388847a9a2b6d0f7f6ef0720894c5ac6f3b090"
+        }
       }
     },
     {

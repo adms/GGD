@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "f119944320809ee5681e1f6bc0ed67abadbefa25f41d8cf372db3168a1ac5877"
+      "sha256": "c3a3ed26cb414c0ad6ae75ca67bcc767366594a22c0680857f6338d300a9ce98"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "80014df3a3062b80bd88e10c8b491dbe7cec83f3b3f382890c8c41ec27ef2519"
+      "sha256": "3073450ee928d827745009c236263a0f690e9ef31f274634f44cf421c5192dda"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "5c09e33fb04378ee12aa2df8f1b1a77635a7dcb6fff0e658f83c365e4bb73849"
+      "sha256": "6ce67d2e6851cf35360712c1f891e4eb7f0c77f27d0d924a82e6559e8aaef79e"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -144395,12 +144395,15 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-dark-sakura-492607",
           "sourceUrl": "https://gamebanana.com/mods/492607",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
           "limitations": [
-            "Original game source platform, skeleton and animations not proven.",
-            "Custom toon shader reduced to base-color PBR.",
-            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            "Original Fate/unlimited codes PSP/PS2 platform, skeleton and native animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Static WebGL review proves body completeness and embedded material visibility only; the source toon shader and dynamic hair/skirt MonoBehaviours are not reproduced.",
+            "This candidate has no native or approved GGD action clips.",
+            "No rights/republication approval, backend dropdown registration, gameplay validation or deployment has been performed."
           ],
           "identityReviewRequired": false,
           "recordedBytes": 307032,
@@ -144426,12 +144429,15 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-dark-sakura-492607",
           "sourceUrl": "https://gamebanana.com/mods/492607",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
           "limitations": [
-            "Original game source platform, skeleton and animations not proven.",
-            "Custom toon shader reduced to base-color PBR.",
-            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            "Original Fate/unlimited codes PSP/PS2 platform, skeleton and native animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Static WebGL review proves body completeness and embedded material visibility only; the source toon shader and dynamic hair/skirt MonoBehaviours are not reproduced.",
+            "This candidate has no native or approved GGD action clips.",
+            "No rights/republication approval, backend dropdown registration, gameplay validation or deployment has been performed."
           ],
           "identityReviewRequired": false,
           "recordedBytes": 309512,
@@ -144489,7 +144495,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
-            "readiness": "standard-glb-candidate",
+            "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
           {
@@ -144497,7 +144503,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
-            "readiness": "standard-glb-candidate",
+            "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],

@@ -58,7 +58,7 @@ python3 tools/hero-model-library/steam-library-bridge/query_windows_game_invento
 
 Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/`，Git 只收正規化來源索引與重建／查詢程式。
 
-Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名皆有本機及 S3 讀回驗證的靜態 GLB，13 名另有骨架與原生動作 GLB，共轉換 98 段；Heracles 的 17 段來源動作因休息骨架含旋轉而維持待轉換。這批是 ARR 權利審查中的社群 MOD 儲備，尚未成為 Git 成品、後台選項或正式站內容。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 查詢，摘要以同名 Markdown 顯示。
+Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名皆有本機及 S3 讀回驗證的靜態 GLB、骨架與原生動作 GLB。132 段來源片段中已轉換 112 段，另保留 20 段公式驅動或缺少時長的未轉換缺口；Heracles 未被動作命中的末端休息旋轉已用獨立烘焙與完整逆綁定流程處理。這批是 ARR 權利審查中的社群 MOD 儲備，尚未成為 Git 成品、後台選項或正式站內容。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 查詢，摘要以同名 Markdown 顯示。
 
 獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原、尚未綁定真實英雄 ID 的舊模型版本。兩者均以 `fullHeroModel=false`、`heroIds=[]` 防止被誤認成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
 

@@ -1,6 +1,6 @@
 {
   "schema": "ggd-undesigned-community-audit@1",
-  "generatedAt": "2026-09-11T01:29:27.960997+00:00",
+  "generatedAt": "2026-09-11T22:49:01.746533+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
   "scope": "READONLY acquired public/community/paid-OU99/console/MOD model candidates excluding primary 300/MBA models. Retargets using those animations remain as community-body versions. Original local LoL corpus is audited by the root workflow separately.",
   "policy": {
@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "5c09e33fb04378ee12aa2df8f1b1a77635a7dcb6fff0e658f83c365e4bb73849",
-      "bytes": 2402748
+      "sha256": "6ce67d2e6851cf35360712c1f891e4eb7f0c77f27d0d924a82e6559e8aaef79e",
+      "bytes": 2414758
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "c2e484cf127046863943530013d088ad7abe6506715dbd3c056ae7a581245ed9",
-      "bytes": 6911425
+      "sha256": "a4ecda5ef81c4e8819b2449481a5a5e6511efadf273fc83db42a3694d05a8521",
+      "bytes": 6923783
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -27,8 +27,8 @@
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "801482bab87aea49a44334a0679341de04d8eebee5638f14f04591552c84cfcb",
-      "bytes": 29867578
+      "sha256": "c26441f66968881a2fa33378a42028a41ca314660d8a9fc9648815661c8fc115",
+      "bytes": 29872853
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
@@ -39892,12 +39892,15 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-dark-sakura-492607",
           "sourceUrl": "https://gamebanana.com/mods/492607",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
           "limitations": [
-            "Original game source platform, skeleton and animations not proven.",
-            "Custom toon shader reduced to base-color PBR.",
-            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            "Original Fate/unlimited codes PSP/PS2 platform, skeleton and native animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Static WebGL review proves body completeness and embedded material visibility only; the source toon shader and dynamic hair/skirt MonoBehaviours are not reproduced.",
+            "This candidate has no native or approved GGD action clips.",
+            "No rights/republication approval, backend dropdown registration, gameplay validation or deployment has been performed."
           ],
           "identityReviewRequired": false,
           "recordedBytes": 307032,
@@ -39921,12 +39924,15 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-dark-sakura-492607",
           "sourceUrl": "https://gamebanana.com/mods/492607",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
           "limitations": [
-            "Original game source platform, skeleton and animations not proven.",
-            "Custom toon shader reduced to base-color PBR.",
-            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+            "Original Fate/unlimited codes PSP/PS2 platform, skeleton and native animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Static WebGL review proves body completeness and embedded material visibility only; the source toon shader and dynamic hair/skirt MonoBehaviours are not reproduced.",
+            "This candidate has no native or approved GGD action clips.",
+            "No rights/republication approval, backend dropdown registration, gameplay validation or deployment has been performed."
           ],
           "identityReviewRequired": false,
           "recordedBytes": 309512,
