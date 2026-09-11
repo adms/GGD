@@ -185,11 +185,11 @@
       ],
       "id": "b2-elma.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 3,
       "name": "照攻略抄的重擊",
       "range": 6,
@@ -353,8 +353,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.4
@@ -369,8 +369,8 @@
     "as": 0,
     "healthRegen": 0.08196326530612243,
     "manaRegen": 0,
-    "maxHealth": 27.67734693877551,
-    "maxMana": 0.9209183673469388,
+    "maxHealth": 100,
+    "maxMana": 20,
     "mr": 5.279591836734694
   },
   "msGrowthTier": "極小",

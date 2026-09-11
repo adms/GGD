@@ -6,11 +6,11 @@
   "to": "main",
   "baseCommit": "bd6c5e5df9d501b1ea65b0f9c86369dd85f40d3f",
   "contractFingerprint": "34e36ee3486cf36a",
-  "title": "Editor 179 顆積木的 React 操作與回讀：174 通過、5 不可用",
+  "title": "Editor 180 顆積木的 React 操作與回讀：175 通過、5 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，179 顆積木中 174 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，180 顆積木中 175 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,20 +26,20 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "6afb8e3be9e2e708f66dc6a8add15cd3db38cb81e1dda91e33b463a13c5f4837",
-    "capabilityFingerprint": "5c58cd69",
+    "brickInputSha256": "46a84df853d1b0f1b27d28d60a07d858eb33b7d8dcc674c379ca2067226e6955",
+    "capabilityFingerprint": "e9023124",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
     "typeCatalogSha256": "34e36ee3486cf36a362be073f44c4c9d98ef7acd2ba4a31d91efe0409a4099ff"
   },
   "summary": {
-    "total": 179,
-    "renderable": 174,
+    "total": 180,
+    "renderable": 175,
     "missing": 5,
-    "parameterEdited": 107,
+    "parameterEdited": 108,
     "byLayer": {
       "effect": {
-        "total": 50,
-        "renderable": 50,
+        "total": 51,
+        "renderable": 51,
         "missing": 0
       },
       "hook": {
@@ -1493,12 +1493,18 @@
           "type": "enum",
           "values": [
             "always",
-            "completed"
+            "completed",
+            "blocked"
           ],
           "optional": true
         },
         {
           "name": "onEndWhenDead",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "shatter",
           "type": "boolean",
           "optional": true
         },
@@ -3890,6 +3896,52 @@
       "renderable": true,
       "reason": null,
       "controlCount": 54,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "spawnObstacle",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "at",
+          "type": "enum",
+          "values": [
+            "point",
+            "self"
+          ],
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "durationSec",
+          "type": "number"
+        },
+        {
+          "name": "radius",
+          "type": "number"
+        },
+        {
+          "name": "shatterable",
+          "type": "boolean",
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnObstacle",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,

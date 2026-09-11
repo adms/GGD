@@ -305,12 +305,12 @@
       ],
       "id": "b2-rem.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "鐵球拖把暫停你的普攻",
       "radius": 3,
@@ -392,8 +392,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 10,
     "range": 1.4
@@ -408,8 +408,8 @@
     "as": 0.005017163869659167,
     "healthRegen": 0.22937551020408167,
     "manaRegen": 0,
-    "maxHealth": 0.8563265306122456,
-    "maxMana": 2.1239795918367355,
+    "maxHealth": 60,
+    "maxMana": 20,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",

@@ -2,7 +2,7 @@
   "id": "lol-warwick.passive",
   "name": "嗅血",
   "provenance": "editor-json",
-  "description": "普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。",
+  "description": "普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 {{cd}} 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

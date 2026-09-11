@@ -24,9 +24,9 @@
     "range": 12.0
   },
   "growth": {
-    "maxHealth": 34,
+    "maxHealth": 80,
     "healthRegen": 0.09,
-    "maxMana": 21,
+    "maxMana": 50,
     "manaRegen": 0.07,
     "ad": 1.02,
     "armor": 0.8,
@@ -109,10 +109,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.nature.nova",
@@ -160,10 +160,10 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
@@ -172,7 +172,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-drain-leech",
         "params": {
@@ -201,9 +201,9 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.shockwave-lg",
@@ -211,7 +211,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-projectile-strike",
         "params": {

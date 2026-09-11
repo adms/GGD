@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -63,5 +63,6 @@
         ]
       }
     ]
-  }
+  },
+  "targetsEnemies": false
 }

@@ -1,0 +1,105 @@
+{
+  "schema": "ggd-transparent-component-material-normalization-batch@1",
+  "rule": "transparent atlas materials use BLEND",
+  "records": [
+    {
+      "candidateId": "historical-kita-kita-7bc2fa3f8",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "bytes": 373464,
+        "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c"
+      },
+      "output": {
+        "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-kita-kita-7bc2fa3f8/component.glb",
+        "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+        "bytes": 373212,
+        "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e"
+      },
+      "changes": [
+        "mat0:MBA diffuse atlas transparent=86.32%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb"
+      }
+    },
+    {
+      "candidateId": "historical-lord-nightmares-7bc2fa3f8",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "bytes": 695600,
+        "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8"
+      },
+      "output": {
+        "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-lord-nightmares-7bc2fa3f8/component.glb",
+        "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+        "bytes": 695020,
+        "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c"
+      },
+      "changes": [
+        "mat0:MBA diffuse atlas transparent=73.29%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb"
+      }
+    },
+    {
+      "candidateId": "zero-lancer-p1-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+        "bytes": 336732,
+        "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308"
+      },
+      "output": {
+        "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p1-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
+        "bytes": 336752,
+        "sha256": "ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184"
+      },
+      "changes": [
+        "mat0:P1 transparent=39.06%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+        "s3ArchiveMember": "outputs/p1/component.glb"
+      }
+    },
+    {
+      "candidateId": "zero-lancer-p2-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+        "bytes": 337856,
+        "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6"
+      },
+      "output": {
+        "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p2-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
+        "bytes": 337876,
+        "sha256": "2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8"
+      },
+      "changes": [
+        "mat0:P2 transparent=39.06%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+        "s3ArchiveMember": "outputs/p2/component.glb"
+      }
+    }
+  ],
+  "sourceBytesPreserved": true,
+  "runtimeSelectable": false,
+  "deployed": false
+}

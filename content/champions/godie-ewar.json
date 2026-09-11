@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 77.4,
+    "maxHealth": 80,
     "healthRegen": 0.205,
-    "maxMana": 47.4031,
+    "maxMana": 50,
     "manaRegen": 0.171,
     "ad": 3.109,
     "armor": 0.8458,
@@ -67,10 +67,10 @@
         6.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 4.5,
       "targetsEnemies": true,
@@ -352,9 +352,9 @@
         60.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0.0,
       "radiusTier": "中",

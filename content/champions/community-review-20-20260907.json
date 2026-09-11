@@ -8,9 +8,9 @@
   "origin": "法師",
   "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 29.202653061224485,
+    "maxHealth": 80,
     "healthRegen": 0.07234693877551021,
-    "maxMana": 13.676326530612242,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 2.5489795918367353,
     "as": 0,
@@ -62,12 +62,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 6,
       "rangeTier": "中",
       "cooldownTier": "小",
@@ -140,12 +140,12 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 4.5,
       "rangeTier": "小",
       "cooldownTier": "小",
@@ -272,11 +272,11 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
-      "manaCostTier": "大",
+      "manaCostTier": "中",
       "range": 8,
       "rangeTier": "大",
       "cooldownTier": "大",

@@ -14,7 +14,7 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "castTimeSec": 0.267,
@@ -45,5 +45,6 @@
         ]
       }
     ]
-  }
+  },
+  "targetsEnemies": false
 }

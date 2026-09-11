@@ -166,6 +166,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   damageTiers: ["數值", "技能", "可調"], // 尺之四
   manaTiers: ["數值", "技能", "可調"], // 尺之五
   castTimeTiers: ["數值", "技能", "可調"], // 尺之六（GH#943 —— owner 逐字給的 0/0.1/0.3/0.5/1）
+  balanceAnchors: ["數值", "可調"], // ⭐ 五級距與屬性上限的**分母**（owner 2026-09-12：固定數值，別再取中位）
   apCoefficient: ["數值", "技能", "可調"],
   rankGrowth: ["數值", "技能", "可調"],
   // ⭐ GH#1116 —— 素材從哪裡載（維運類，⛔ 不是數值）。

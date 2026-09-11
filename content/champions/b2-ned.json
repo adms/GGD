@@ -31,12 +31,12 @@
       ],
       "id": "b2-ned.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "請退後不要問會不會呱",
       "radius": 3,
@@ -114,12 +114,12 @@
       ],
       "id": "b2-ned.q",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "蛙跳出差交通費",
       "radius": 1.83,
@@ -179,11 +179,11 @@
       ],
       "id": "b2-ned.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 3,
       "name": "青蛙劍術會議沿線開",
       "range": 6,
@@ -240,12 +240,12 @@
       ],
       "id": "b2-ned.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "不是舌頭是近身劍",
       "radius": 3,
@@ -311,8 +311,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 1.6
@@ -327,8 +327,8 @@
     "as": 0,
     "healthRegen": 0.13085306122448978,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 26.357142857142858,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.639795918367347
   },
   "msGrowthTier": "極小",

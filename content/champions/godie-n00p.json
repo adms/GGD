@@ -26,9 +26,9 @@
     "range": 6.0
   },
   "growth": {
-    "maxHealth": 37,
+    "maxHealth": 80,
     "healthRegen": 0.09,
-    "maxMana": 32,
+    "maxMana": 50,
     "manaRegen": 0.11,
     "ad": 1.08,
     "armor": 0.5,
@@ -66,9 +66,9 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.nature.slash",
@@ -77,7 +77,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -111,10 +111,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.nature.swarm",
@@ -167,10 +167,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.nature.pulse",
@@ -180,7 +180,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -213,9 +213,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -256,7 +256,7 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "小"
+      "manaCostTier": "極小"
     }
   },
   "skillOrder": [

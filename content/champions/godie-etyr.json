@@ -26,9 +26,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 61.4731,
+    "maxHealth": 60,
     "healthRegen": 0.2062,
-    "maxMana": 35.0857,
+    "maxMana": 35,
     "manaRegen": 0.1926,
     "ad": 1.9592,
     "armor": 0.6926,
@@ -210,10 +210,10 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0.0,
       "effects": [],
@@ -241,7 +241,7 @@
         }
       },
       "cooldownTier": "極小",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "radiusTier": "中"
     },
     "R": {
@@ -259,9 +259,9 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -299,7 +299,7 @@
       "range": 8,
       "cooldownTier": "極小",
       "castTimeSec": 0.667,
-      "manaCostTier": "小"
+      "manaCostTier": "極小"
     }
   },
   "skillOrder": [

@@ -443,6 +443,23 @@ def _all_heroes_table(rows, flags):
     return out
 
 
+def _rosterHeadline(rows, opened):
+    """⭐ 標題行：**角色** / 變身態 / 骨架 分開數。
+
+    ⛔ 「153 名英雄，其中 130 名在開放名單內」把三種東西放進同一個分母 ——
+    ⭐ 而變身態**不是第 21 位角色**，它是某一位已上架角色的第二具身體。
+    """
+    off = [r for r in rows if not r["open"]]
+    alt = sum(1 for r in off if r["reason"] == "變身態")
+    skel = sum(1 for r in off if r["reason"] == "骨架")
+    other = len(off) - alt - skel
+    bits = [f"**{opened}** 名角色（⭐ 全部在開放名單內）"]
+    if alt: bits.append(f"**{alt}** 個變身態（⭐ 它們的本體都已上架）")
+    if skel: bits.append(f"**{skel}** 個骨架替身")
+    if other: bits.append(f"⛔ **{other}** 名未列入（⭐ 這一格要處理）")
+    return [f"這份文件共 **{len(rows)}** 列 ＝ " + " ＋ ".join(bits) + "。"]
+
+
 def _offlist_summary(rows, opened):
     """⭐ owner 2026-09-11 問「153 名全部上架」⇒ 這幾行就是答案。
 
@@ -514,7 +531,13 @@ def gen_all_heroes_doc(ctx):
         f"> ⛔ **這份文件是產生的**（`{CMD}`）—— 手改會在下一次重新產生時被打回來。",
         f"> 來源只有 `content/champions/` 與進版控的策展快照；contentVersion `{ctx['contentVersion']}`。",
         "",
-        f"共 **{len(rows)}** 名英雄，其中 **{opened}** 名在開放名單內。",
+        # ⭐ owner 2026-09-11：「我的目標是 **153 名全部上架**」。
+        # ⇒ 這一行本來寫「共 153 名英雄，其中 130 名在開放名單內」——
+        #   ⛔ 而那讀起來像「有 23 名沒上架」。⭐ 實際不是：那 23 列裡
+        #   **21 個是變身態**（而它們的本體 **21/21 全部已上架**，量過的），
+        #   2 個是內容載入失敗時的骨架替身。
+        # ⇒ ⭐ 改成按**它們是什麼**分開數，⛔ 不是把角色與第二具身體混在一個分母裡。
+        *_rosterHeadline(rows, opened),
         "",
         *_offlist_summary(rows, opened),
         "",

@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "range": 0.0,
@@ -24,7 +24,7 @@
     {
       "kind": "applyBuff",
       "modifiers": [],
-      "duration": 2.0,
+      "duration": 2,
       "hooks": [
         {
           "on": "onDamageTaken",
@@ -33,19 +33,19 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "flat": 0.0,
+                "flat": 0,
                 "ratios": [
                   {
                     "stat": "ap",
-                    "coeff": 3.0
+                    "coeff": 3
                   }
                 ]
               },
               "incomingPct": {
                 "perRank": [
-                  3.0,
-                  5.0,
-                  7.0
+                  3,
+                  5,
+                  7
                 ],
                 "negateOriginal": true
               }
@@ -95,7 +95,7 @@
               "applyTo": "all"
             }
           ],
-          "internalCooldown": 1.0,
+          "internalCooldown": 1,
           "target": "event"
         }
       ]
@@ -106,12 +106,12 @@
       "preset": "tpl-locust-strike",
       "modelKey": "w3x.stock.monsoonbolttarget",
       "anchor": "self",
-      "lifeSec": 2.0,
-      "scale": 6.0,
+      "lifeSec": 2,
+      "scale": 6,
       "tint": [
         0.3922,
-        0.0,
-        0.0
+        0,
+        0
       ]
     }
   ],

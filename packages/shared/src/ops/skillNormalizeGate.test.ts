@@ -93,7 +93,20 @@ describe("技能正規化總閘（tools/skill-normalize/gen.ts）", () => {
       .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
       .find((f) => {
         const d = JSON.parse(readFileSync(join(AB, f), "utf8")) as { description?: string; cooldown?: number[] };
-        return (d.description ?? "").includes("{{cd}}") && Array.isArray(d.cooldown);
+        // ⭐⭐ `cooldown[0]` **必須 > 0** —— ⛔ 不是「有這個欄位」就好。
+        //
+        // ⚠️ 2026-09-11 起 `{{cd}}` 對**天生技**綁的是 `internalCooldown`
+        // （`abilityProse.ts` 的 `internalCooldownRanks()`），而天生技的
+        // `cooldown` 是 **[0]** ⇒ 這個夾具若挑到天生技，寫回去的是「冷卻 0 秒」
+        // ⇒ ⛔ 那**不是**「手打一個綁得上的數字」，是「卡面對不上 JSON」
+        // ⇒ 閘走的是另一條路 ⇒ ⭐ **突變不紅，而原因是夾具挑錯技能**。
+        //
+        // ⇒ 夾具要挑一支**主動技**：它的 `cooldown[0]` 就是 `{{cd}}` 算繪出來的值。
+        return (
+          (d.description ?? "").includes("{{cd}}") &&
+          Array.isArray(d.cooldown) &&
+          (d.cooldown[0] ?? 0) > 0
+        );
       });
     expect(file, "夾具前提：出貨樹上找不到任何一支說明帶 {{cd}} 的技能").toBeDefined();
     const p = join(AB, file!);

@@ -29,12 +29,12 @@
       ],
       "id": "b2-goblin.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "工具箱灰塵遮眼",
       "range": 6,
@@ -105,12 +105,12 @@
       ],
       "id": "b2-goblin.q",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "工地開工三次點名",
       "radius": 3,
@@ -197,11 +197,11 @@
       ],
       "id": "b2-goblin.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 3,
       "name": "盲目亂闖請走緊急出口",
       "radius": 3,
@@ -339,8 +339,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 1.6
@@ -355,8 +355,8 @@
     "as": 0,
     "healthRegen": 0.13085306122448978,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 26.357142857142858,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.639795918367347
   },
   "msGrowthTier": "極小",

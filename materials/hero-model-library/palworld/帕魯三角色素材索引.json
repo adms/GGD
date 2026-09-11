@@ -3,7 +3,7 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "c47480c9cc5d0c619d67775150013c9e5cf571d3ddfd22962ef3c85f1c6cf702"
+      "sha256": "5e2939577c0663fc2be21d29be3ed45b8b45400178a0073ef8ed2aa70ecabd4f"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -3237,7 +3237,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
       "characterIdentity": "community:palworld-jetragon",
       "characterName": "空渦龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
     },
@@ -3287,7 +3287,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
     },
@@ -3367,7 +3367,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
       "characterIdentity": "community:palworld-cattiva",
       "characterName": "搗蛋貓",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
     }

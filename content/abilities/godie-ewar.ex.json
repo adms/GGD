@@ -11,7 +11,7 @@
     30.0
   ],
   "manaCost": [
-    448.0
+    600.0
   ],
   "range": 3.0,
   "castTimeTier": "小",
@@ -21,7 +21,7 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "極大",
+        "damageTier": "大",
         "ratios": [
           {
             "stat": "ap",

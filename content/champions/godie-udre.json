@@ -11,7 +11,7 @@
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 200,
+    "maxMana": 100,
     "manaRegen": 2.1,
     "ad": 6.0,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 76.4612,
+    "maxHealth": 80,
     "healthRegen": 0.2034,
-    "maxMana": 46.0765,
+    "maxMana": 50,
     "manaRegen": 0.1463,
     "ad": 3.0992,
     "armor": 0.8764,
@@ -124,10 +124,10 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0,
       "effects": [],
@@ -175,10 +175,10 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.void.slash",

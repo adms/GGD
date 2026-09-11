@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "270193f6df6c",
+  "fingerprint": "ebd5131324b1",
   "capabilityFingerprint": "fb8d3eb8",
   "required": [
     {
@@ -1973,6 +1973,46 @@
       "group": "configField",
       "name": "base",
       "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseHp",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseHp.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseHp.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseHp.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseMana",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseMana.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseMana.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseMana.99",
+      "owner": "config.balance-anchors@1"
     },
     {
       "group": "configField",
@@ -9527,6 +9567,11 @@
     {
       "group": "configField",
       "name": "enabled",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
       "owner": "config.cast-time-tiers@1"
     },
     {
@@ -11518,6 +11563,11 @@
       "group": "configField",
       "name": "id",
       "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
+      "owner": "config.balance-anchors@1"
     },
     {
       "group": "configField",
@@ -14288,6 +14338,11 @@
       "group": "configField",
       "name": "note",
       "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
+      "owner": "config.balance-anchors@1"
     },
     {
       "group": "configField",
@@ -17872,6 +17927,11 @@
     {
       "group": "configField",
       "name": "schema",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
       "owner": "config.cast-time-tiers@1"
     },
     {
@@ -19633,6 +19693,151 @@
       "group": "configField",
       "name": "startIgnoresReady",
       "owner": "config.lobby-rally@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.ad",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.ad.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.ad.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.ad.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.armor",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.armor.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.armor.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.armor.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.healthRegen",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.healthRegen.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.healthRegen.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.healthRegen.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.manaRegen",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.manaRegen.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.manaRegen.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.manaRegen.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxHealth",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxHealth.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxHealth.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxHealth.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxMana",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxMana.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxMana.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.maxMana.99",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.mr",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.mr.30",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.mr.50",
+      "owner": "config.balance-anchors@1"
+    },
+    {
+      "group": "configField",
+      "name": "statMedian.mr.99",
+      "owner": "config.balance-anchors@1"
     },
     {
       "group": "configField",
@@ -25259,9 +25464,9 @@
     "projectileField": 21,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4046,
+    "configField": 4087,
     "_notRequired": 15,
-    "_total": 5189,
+    "_total": 5230,
     "_ownerOnly": 39
   }
 }

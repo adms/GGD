@@ -9,9 +9,9 @@
   "modelKey": "imported.heropikachu",
   "missileSpeed": 36.7,
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 6.0,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 61.5139,
+    "maxHealth": 60,
     "healthRegen": 0.1281,
-    "maxMana": 47.9643,
+    "maxMana": 50,
     "manaRegen": 0.1646,
     "ad": 5.04,
     "armor": 0.4046,
@@ -71,11 +71,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -284,10 +284,10 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.lightning.pulse",

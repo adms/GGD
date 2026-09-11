@@ -43,6 +43,21 @@ def source_historical_components(downloads, repo):
             expected = 'content/assets/models/community/' + candidate['sha256'] + '.glb'
             require(candidate.get('gitPath') == expected, 'Noncanonical historical component path')
             model_path = verify_pin(candidate, repo)
+            source_artifact = candidate.get('sourceArtifact')
+            historical_sha = candidate['sha256'] if source_artifact is None else source_artifact['sha256']
+            historical_bytes = candidate['bytes'] if source_artifact is None else source_artifact['bytes']
+            if source_artifact is not None:
+                normalization_path = verify_pin(candidate['normalizationEvidence'], repo)
+                normalization = json.loads(normalization_path.read_text())
+                normalized_rows = [item for item in normalization.get('records', []) if item.get('candidateId') == candidate['id']]
+                require(len(normalized_rows) == 1, 'Missing historical material-normalization record')
+                normalized = normalized_rows[0]
+                require((normalized['source']['sha256'], normalized['source']['bytes']) == (historical_sha, historical_bytes),
+                        'Historical normalization source mismatch')
+                require((normalized['output']['sha256'], normalized['output']['bytes']) == (candidate['sha256'], candidate['bytes']),
+                        'Historical normalization output mismatch')
+                require(normalized.get('binaryChunkByteIdentical') is True and normalized.get('nonMaterialJsonByteSemanticIdentical') is True,
+                        'Historical normalization changed non-material data')
             evidence_path = verify_pin(candidate['validationEvidence'], repo)
             evidence = json.loads(evidence_path.read_text())
             require(evidence.get('schema') == 'ggd-historical-model-recovery-validation@1', 'Unexpected historical validation schema')
@@ -53,7 +68,7 @@ def source_historical_components(downloads, repo):
             rows = [row for row in evidence.get('records', []) if row.get('id') == candidate['id']]
             require(len(rows) == 1, 'Missing historical validation record: ' + candidate['id'])
             row = rows[0]
-            require((row.get('sha256'), row.get('bytes')) == (candidate['sha256'], candidate['bytes']), 'Historical validation output mismatch')
+            require((row.get('sha256'), row.get('bytes')) == (historical_sha, historical_bytes), 'Historical source validation output mismatch')
             require(row.get('historicalModelKey') == candidate.get('historicalModelKey'), 'Historical model key mismatch')
             require(row.get('identityIds') == candidate.get('identityIds'), 'Historical identity mismatch')
             require(row.get('byteIdenticalToHistoricalGitBlob') is True, 'Historical Git blob match missing')

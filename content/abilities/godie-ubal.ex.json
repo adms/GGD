@@ -12,9 +12,9 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    448.0
+    300.0
   ],
-  "manaCostTier": "大",
+  "manaCostTier": "中",
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",

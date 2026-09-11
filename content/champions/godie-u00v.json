@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 76.4612,
+    "maxHealth": 80,
     "healthRegen": 0.2034,
-    "maxMana": 47.0969,
+    "maxMana": 50,
     "manaRegen": 0.1667,
     "ad": 3.0073,
     "armor": 0.8764,
@@ -125,10 +125,10 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.earth.shockwave",
@@ -166,10 +166,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0,
       "effects": [
@@ -215,7 +215,7 @@
         }
       },
       "cooldownTier": "小",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "radiusTier": "中"
     },
     "R": {
@@ -233,9 +233,9 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -306,7 +306,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "小"
+      "manaCostTier": "極小"
     }
   },
   "skillOrder": [

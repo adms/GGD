@@ -7,9 +7,9 @@
   "modelKey": "imported.picacugy",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 6.0,
     "ap": 0,
@@ -24,9 +24,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 32,
+    "maxHealth": 60,
     "healthRegen": 0.08,
-    "maxMana": 18,
+    "maxMana": 50,
     "manaRegen": 0.06,
     "ad": 0.96,
     "armor": 0.9,
@@ -66,11 +66,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.lightning.nova",
@@ -279,10 +279,10 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.nova",
@@ -329,9 +329,9 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-lg",

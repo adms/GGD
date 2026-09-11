@@ -148,11 +148,11 @@
       ],
       "id": "b2-klaus.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 3,
       "name": "移動式背景工作",
       "range": 0.0,
@@ -220,12 +220,12 @@
       ],
       "id": "b2-klaus.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "全部執行不要再問",
       "radius": 3,
@@ -301,8 +301,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 8.2
@@ -317,8 +317,8 @@
     "as": 0,
     "healthRegen": 0.07234693877551021,
     "manaRegen": 0,
-    "maxHealth": 29.202653061224485,
-    "maxMana": 19.291836734693877,
+    "maxHealth": 60,
+    "maxMana": 50,
     "mr": 1.3198979591836735
   },
   "msGrowthTier": "極小",

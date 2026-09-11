@@ -296,6 +296,7 @@ const HAND_NAV: NavItem[] = [
   // ⭐ 吟唱五級距（GH#943）／AP 係數公式（GH#942）—— 緊接在其他五級距後面是刻意的:
   //   ⭐ AP 係數那一頁的「公式總開關」就是 owner 常設指令要的**一鍵 rollback**。
   { page: "castTimeTiers", label: "吟唱五級距", emoji: "⏳", section: SEC_TIERS },
+  { page: "balanceAnchors", label: "平衡錨點", emoji: "📌", section: SEC_COMBAT },
   { page: "apCoefficient", label: "AP 係數公式", emoji: "🧮", section: SEC_TIERS },
   { page: "rankGrowth", label: "升級成長率", emoji: "📈", section: SEC_TIERS },
 

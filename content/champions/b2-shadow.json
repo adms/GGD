@@ -163,11 +163,11 @@
       ],
       "id": "b2-shadow.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 3,
       "name": "I AM 加班到 ATOMIC",
       "range": 6,
@@ -239,12 +239,12 @@
       ],
       "id": "b2-shadow.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "掌聲先等零點七秒",
       "radius": 3,
@@ -317,8 +317,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 10,
     "range": 1.4
@@ -333,8 +333,8 @@
     "as": 0,
     "healthRegen": 0.07555510204081634,
     "manaRegen": 0,
-    "maxHealth": 6.100816326530613,
-    "maxMana": 0.8520408163265306,
+    "maxHealth": 40,
+    "maxMana": 35,
     "mr": 1.3198979591836735
   },
   "msGrowthTier": "極小",

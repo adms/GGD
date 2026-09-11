@@ -2,7 +2,7 @@
   "id": "lol-lux.passive",
   "name": "餘光",
   "provenance": "editor-json",
-  "description": "普攻追加極小級魔法傷害，內置冷卻 2 秒。",
+  "description": "普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

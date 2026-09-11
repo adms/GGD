@@ -8,9 +8,9 @@
   "origin": "射手",
   "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 29.202653061224485,
+    "maxHealth": 60,
     "healthRegen": 0.07234693877551021,
-    "maxMana": 19.291836734693877,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 4.477551020408164,
     "as": 0,
@@ -62,12 +62,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 8,
       "rangeTier": "大",
       "cooldownTier": "小",
@@ -153,12 +153,12 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 4.5,
       "rangeTier": "小",
       "cooldownTier": "小",
@@ -277,11 +277,11 @@
         45.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
-      "manaCostTier": "大",
+      "manaCostTier": "中",
       "range": 4.5,
       "rangeTier": "小",
       "cooldownTier": "大",

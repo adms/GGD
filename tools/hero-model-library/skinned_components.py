@@ -32,11 +32,23 @@ def validate_component(candidate, repo):
             'Static component cannot claim animations')
     path=verify_pin(candidate, repo)
     require(candidate.get('gitPath') == 'content/assets/models/community/'+candidate['sha256']+'.glb', 'Noncanonical component Git path')
+    source_artifact=candidate.get('sourceArtifact')
+    accepted_sha=candidate['sha256'] if source_artifact is None else source_artifact['sha256']
+    accepted_bytes=candidate['bytes'] if source_artifact is None else source_artifact['bytes']
+    if source_artifact is not None:
+        normalization=json.loads(verify_pin(candidate['normalizationEvidence'],repo).read_text())
+        rows=[row for row in normalization.get('records',[]) if row.get('candidateId') == candidate['id']]
+        require(len(rows) == 1, 'Missing component material-normalization record')
+        row=rows[0]
+        require((row['source']['sha256'],row['source']['bytes']) == (accepted_sha,accepted_bytes), 'Normalization source pin mismatch')
+        require((row['output']['sha256'],row['output']['bytes']) == (candidate['sha256'],candidate['bytes']), 'Normalization output pin mismatch')
+        require(row.get('binaryChunkByteIdentical') is True and row.get('nonMaterialJsonByteSemanticIdentical') is True,
+                'Component normalization changed geometry, animation, image or other JSON data')
     validation=json.loads(verify_pin(candidate['validationEvidence'],repo).read_text())
     schema=validation.get('schema')
     if schema == 'ggd.zero-lancer-current-validation@1':
         require(validation.get('role') == 'independent-skinned-model-component', 'Validation is not an independent skinned component')
-        require((validation.get('outputSha256'),validation.get('outputBytes')) == (candidate['sha256'],candidate['bytes']), 'Validation output pin mismatch')
+        require((validation.get('outputSha256'),validation.get('outputBytes')) == (accepted_sha,accepted_bytes), 'Validation source-output pin mismatch')
         require(validation.get('outputByteIdenticalToAcquiredCandidate') is True, 'Byte-identical source rebuild missing')
         require(validation.get('skinCount') == 1 and validation.get('joints') == 59 and validation.get('clips') == [], 'Unexpected skin/animation shape')
         require(validation.get('budget',{}).get('errors') == [], 'Component exceeds current budget')
@@ -74,7 +86,7 @@ def validate_component(candidate, repo):
     matches=[row for row in acceptance.get('components',[]) if row.get('id') == candidate['id']]
     require(len(matches) == 1 and matches[0].get('accepted') is True,
             'Missing parent acceptance for skinned component')
-    require(matches[0].get('scope') == 'independent-static-skinned-model-component' and matches[0].get('sha256') == candidate['sha256'],
+    require(matches[0].get('scope') == 'independent-static-skinned-model-component' and matches[0].get('sha256') == accepted_sha,
             'Parent acceptance scope or SHA mismatch')
     for evidence in ['deliveryEvidence','visualEvidence','webglProofEvidence','sourceFidelityEvidence','sourceRebuildEvidence']:
         if evidence not in candidate:

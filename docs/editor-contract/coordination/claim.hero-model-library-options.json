@@ -112,7 +112,7 @@
       "evidence": [
         "materials/hero-model-library/角色語音索引.md",
         "materials/hero-model-library/voice-index.json",
-        "materials/hero-model-library/voice-files.jsonl",
+        "materials/hero-model-library/voice-files.jsonl.gz",
         "materials/hero-model-library/voice-index-validation.json",
         "tools/hero-model-library/query_voice.py"
       ]

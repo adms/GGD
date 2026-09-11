@@ -8,9 +8,9 @@
   "origin": "法刺",
   "modelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 31.047346938775508,
+    "maxHealth": 40,
     "healthRegen": 0.07555510204081634,
-    "maxMana": 11.026530612244898,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 3.4382040816326525,
     "as": 0,
@@ -62,12 +62,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 3,
       "radius": 2.75,
       "rangeTier": "極小",
@@ -149,12 +149,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 4.5,
       "radius": 2.75,
       "rangeTier": "小",

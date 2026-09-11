@@ -59,9 +59,9 @@
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 5000,
+    "maxMana": 100,
     "manaRegen": 1000,
-    "ad": 6,
+    "ad": 6.0,
     "ap": 0,
     "armor": 0,
     "mr": 28,
@@ -74,9 +74,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 32,
+    "maxHealth": 80,
     "healthRegen": 0.08,
-    "maxMana": 36,
+    "maxMana": 50,
     "manaRegen": 0.12,
     "ad": 0.96,
     "armor": 0.5,
@@ -103,6 +103,7 @@
     "Q": {
       "id": "godie-h020.q",
       "name": "04-01 火球術",
+      "icon": "assets/icons/abilities/godie-h020.q.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使用火球來攻擊敵人造成{{dmg}}點傷害，並附帶暈眩1.50秒的效果。",
       "slot": "Q",
@@ -115,20 +116,19 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "極小",
-      "range": 12,
-      "rangeTier": "極大",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
       "castTimeSec": 0.567,
-      "icon": "assets/icons/abilities/godie-h020.q.webp",
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -154,6 +154,7 @@
     "W": {
       "id": "godie-h020.w",
       "name": "04-02 炸彈陣",
+      "icon": "assets/icons/abilities/godie-h020.w.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，每秒可以燒傷55點並持續5秒的時間。在火柱消散之後，在火焰中的部隊仍然會持續受到10點的傷害，持續5秒。",
       "slot": "W",
@@ -166,22 +167,20 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "極小",
-      "range": 12,
-      "radius": 6.0,
-      "radiusTier": "中",
-      "rangeTier": "極大",
-      "cooldownTier": "極小",
-      "targetsEnemies": true,
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "radius": 6.0,
       "castTimeSec": 1.033,
-      "icon": "assets/icons/abilities/godie-h020.w.webp",
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極小",
+      "radiusTier": "中",
       "template": {
         "ref": "tpl-periodic-field",
         "params": {
@@ -194,11 +193,13 @@
           "damageType": "magic",
           "castTimeSec": 1.033
         }
-      }
+      },
+      "manaCostTier": "極小"
     },
     "E": {
       "id": "godie-h020.e",
       "name": "04-03 龍破斬",
+      "icon": "assets/icons/abilities/godie-h020.e.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n藉由赤眼魔王沙布蘭尼古之力使用的咒文，以範圍廣和強大的破壞力自誇，具有一擊可殺死巨龍及毀滅一個小鎮的威力。給予範圍內的敵人最多{{dmg}}點傷害。\n\n(對建築傷害*50%)\n\n點選惡夢魔王碎片增幅後，可增加威力({{ap}}% [AP])",
       "slot": "E",
@@ -211,18 +212,11 @@
         60.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0,
-        224.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "中",
-      "range": 12,
-      "radius": 8.0,
-      "radiusTier": "大",
-      "rangeTier": "極大",
-      "cooldownTier": "中",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "floatingText",
@@ -422,12 +416,19 @@
         }
       ],
       "vfxKey": "fx.prim.fire.beam",
+      "targetsEnemies": true,
+      "radius": 8.0,
       "castTimeSec": 1.233,
-      "icon": "assets/icons/abilities/godie-h020.e.webp"
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "小",
+      "radiusTier": "大"
     },
     "R": {
       "id": "godie-h020.r",
       "name": "04-04 神滅斬",
+      "icon": "assets/icons/abilities/godie-h020.r.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體{{dmg}}+{{ap}}% [AP]點傷害並暈眩2秒。\n\n點選惡夢魔王碎片增幅後，可增加威力({{ap2}}% [AP])",
       "slot": "R",
@@ -439,15 +440,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
-      "range": 4.5,
-      "rangeTier": "小",
-      "cooldownTier": "極大",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "spawnModelFx",
@@ -461,8 +457,12 @@
         }
       ],
       "vfxKey": "fx.prim.void.explosion-lg",
+      "targetsEnemies": true,
       "castTimeSec": 2,
-      "icon": "assets/icons/abilities/godie-h020.r.webp",
+      "rangeTier": "小",
+      "range": 4.5,
+      "cooldownTier": "極大",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-single-strike",
         "params": {

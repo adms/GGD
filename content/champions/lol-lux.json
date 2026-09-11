@@ -8,9 +8,9 @@
   "origin": "軟輔",
   "modelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 10.305102040816323,
+    "maxHealth": 60,
     "healthRegen": 0.1168285714285714,
-    "maxMana": 6.564285714285716,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.220326530612245,
     "as": 0,
@@ -62,12 +62,12 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 6,
       "rangeTier": "中",
       "cooldownTier": "小",
@@ -176,12 +176,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 6,
       "radius": 4.5,
       "rangeTier": "中",
@@ -245,11 +245,11 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
-      "manaCostTier": "大",
+      "manaCostTier": "中",
       "range": 8,
       "rangeTier": "大",
       "cooldownTier": "大",

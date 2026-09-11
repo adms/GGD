@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "ffa2e8dc8b5e",
+  "hash": "2553d1c1d6c2",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -85,6 +85,12 @@
       "path": "config/authoring-rules.json",
       "hash": "debe3d095be9",
       "size": 5477
+    },
+    {
+      "id": "balance-anchors",
+      "path": "config/balance-anchors.json",
+      "hash": "249b5f562c62",
+      "size": 1948
     },
     {
       "id": "base-bonus",
@@ -221,8 +227,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "7edc151e7fde",
-      "size": 3347
+      "hash": "70740be7f3a6",
+      "size": 3344
     },
     {
       "id": "dispel",
@@ -269,7 +275,7 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "975ad940dc18",
+      "hash": "c05109a96249",
       "size": 921
     },
     {
@@ -311,8 +317,8 @@
     {
       "id": "mana-tiers",
       "path": "config/mana-tiers.json",
-      "hash": "6d500097e499",
-      "size": 2110
+      "hash": "29b26f94dac9",
+      "size": 2606
     },
     {
       "id": "map-report",
@@ -461,7 +467,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "11de07da31da",
+      "hash": "78e31f81326a",
       "size": 918
     },
     {

@@ -28,6 +28,7 @@
  * MUTATION（落地前跑過）：`sim/effects/summon.ts` 的 `capRaw <= 0 ? ∞ : capRaw` 改回
  * `Math.max(0, capRaw)`（GH#1076 修法回退）⇒ 🔴 指名 `tpl-summon-agent`。
  */
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -65,7 +66,23 @@ const DUMMY = "godie-hart" as ChampionId;
  */
 const EXTRA_TICKS = 4 * TICK_HZ;
 
-const probeId = (t: TemplateDoc): AbilityId => `probe1078.${t.id}.q` as AbilityId;
+/**
+ * ⭐ 探針技能的 id —— ⛔ **不可以**是 `probe1078.<模板 id>.q`。
+ *
+ * ⚠️ 內容 id 上限是 **64 字元**（`schema/common.ts:201` 的 `.max(64)`），而
+ * 2026-09-11 進來的 `hero-template.<48 位 sha>` 本身就 **62 字元**
+ * ⇒ 加上前後綴變成 **74** ⇒ `zAbilityDoc` 拒收 ⇒ registry **把它降級**
+ * ⇒ ⭐ 24 份模板一起被報成「預設展開在 sim 裡什麼都不做」。
+ *
+ * ⛔⛔ 而那個報告**是假的**：那 24 份模板單獨 `expand()` **全部 OK**。
+ * ⇒ ⭐ 壞的是**量尺**（探針造了一個過長的 id），⛔ 不是模板 ——
+ *   而它報出來的症狀與「模板真的是 no-op」**長得一模一樣**。
+ *
+ * ⇒ ⭐ 改成**定長**：`probe1078.<模板 id 的 12 位雜湊>.q`（共 27 字元），
+ *   ⛔ 而雜湊只取模板 id ⇒ 同一份模板每次跑都是同一個 id（可重現）。
+ */
+const probeId = (t: TemplateDoc): AbilityId =>
+  `probe1078.${createHash("sha256").update(t.id).digest("hex").slice(0, 12)}.q` as AbilityId;
 const champOf = (t: TemplateDoc): ChampionId => `probe1078.${t.id}` as ChampionId;
 const isPassiveTemplate = (t: TemplateDoc): boolean => {
   const ex = expand(t, defaultParamsFor(t));

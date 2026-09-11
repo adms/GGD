@@ -59,9 +59,21 @@ def prepare(repo, downloads, delivery_path, acceptance_path):
             visualEvidence=visual_pin,sourceFidelityEvidence=fidelity,sourceRebuildEvidence=rebuild)
         existing=[x for x in source.setdefault('componentCandidates',[]) if x.get('id')==component_id]
         require(len(existing)<=1,'Duplicate Zero Lancer component ID')
-        if existing: require(all(existing[0].get(k)==v for k,v in candidate.items()),'Existing component differs from delivery')
-        else: source['componentCandidates'].append(candidate)
-        copies.append((out,repo/candidate['gitPath']))
+        if existing and existing[0].get('normalizationEvidence'):
+            # The repository-wide transparent-atlas gate can add a later,
+            # content-addressed material-only normalization stage.  Preserve
+            # that downstream result while still proving it came from this
+            # exact accepted delivery; rerunning intake must not restore the
+            # pre-gate OPAQUE copy over the normalized candidate.
+            original=existing[0].get('sourceArtifact',{})
+            require((original.get('sha256'),original.get('bytes')) == (model['outputSha256'],model['outputBytes']),
+                    'Normalized candidate no longer pins this Zero Lancer delivery')
+            candidate=existing[0]
+        elif existing:
+            require(all(existing[0].get(k)==v for k,v in candidate.items()),'Existing component differs from delivery')
+        else:
+            source['componentCandidates'].append(candidate)
+            copies.append((out,repo/candidate['gitPath']))
     for src,dst in copies: require(not dst.exists() or dst.read_bytes()==src.read_bytes(),'Refusing to overwrite '+str(dst))
     return result,copies
 

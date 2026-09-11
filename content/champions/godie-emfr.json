@@ -26,9 +26,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 60.769,
+    "maxHealth": 60,
     "healthRegen": 0.334,
-    "maxMana": 21.3546,
+    "maxMana": 20,
     "manaRegen": 0.0593,
     "ad": 3.0784,
     "armor": 0.6599,
@@ -68,10 +68,10 @@
         30.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0,
-        224.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 6.0,
       "targetsEnemies": true,
@@ -118,7 +118,7 @@
         }
       ],
       "cooldownTier": "中",
-      "manaCostTier": "中",
+      "manaCostTier": "小",
       "rangeTier": "中",
       "castTimeSec": 0.467
     },
@@ -137,10 +137,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -268,10 +268,10 @@
         45.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0,
-        224.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -362,7 +362,7 @@
       "vfxKey": "fx.prim.fire.nova",
       "icon": "assets/icons/abilities/godie-emfr.e.webp",
       "cooldownTier": "小",
-      "manaCostTier": "中",
+      "manaCostTier": "小",
       "castTimeSec": 0.267
     },
     "R": {
@@ -379,9 +379,9 @@
         60.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -539,7 +539,7 @@
       "icon": "assets/icons/abilities/godie-emfr.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
       "cooldownTier": "極大",
-      "manaCostTier": "中",
+      "manaCostTier": "小",
       "castTimeSec": 0.667
     }
   },

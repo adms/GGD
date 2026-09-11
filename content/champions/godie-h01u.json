@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 75.5224,
+    "maxHealth": 80,
     "healthRegen": 0.2017,
-    "maxMana": 47.7092,
+    "maxMana": 50,
     "manaRegen": 0.1753,
     "ad": 3.1078,
     "armor": 0.8601,
@@ -124,10 +124,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -137,12 +137,7 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小",
-              "小"
-            ]
+            "damageTier": "極小"
           },
           "radius": 4.5,
           "radiusTier": "小",
@@ -250,7 +245,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.667
     },
     "E": {
@@ -268,10 +263,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 8.0,
       "radiusTier": "中",

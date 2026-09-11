@@ -25,9 +25,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 36,
+    "maxHealth": 80,
     "healthRegen": 0.09,
-    "maxMana": 20,
+    "maxMana": 50,
     "manaRegen": 0.07,
     "ad": 1.68,
     "armor": 0.9,
@@ -65,10 +65,10 @@
         6.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 4.5,
       "targetsEnemies": true,
@@ -164,10 +164,10 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -207,9 +207,9 @@
         60.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -222,7 +222,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 2.0
+                "coeff": 2
               }
             ],
             "damageTierPerRank": [
@@ -231,14 +231,14 @@
               "中"
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true
         },
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 8.0,
+          "radius": 8,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {

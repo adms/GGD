@@ -31,12 +31,12 @@
       ],
       "id": "b2-naofumi.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "盾牌清空違停入口",
       "radius": 3,
@@ -433,8 +433,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.6
@@ -449,8 +449,8 @@
     "as": 2.9226239784265093e-05,
     "healthRegen": 0.023048979591836743,
     "manaRegen": 0,
-    "maxHealth": 38.2761224489796,
-    "maxMana": 0.8520408163265306,
+    "maxHealth": 100,
+    "maxMana": 35,
     "mr": 3.299795918367347
   },
   "msGrowthTier": "極小",

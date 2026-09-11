@@ -142,11 +142,75 @@ const MP_BONUS = bonus["maxMana"] ?? 0;
 /** 一位數小數 —— 逐位元組比對要一個穩定的字面表示（`2808.6000000000004` 不行）。 */
 const q = (n: number): number => Math.round(n * 10) / 10;
 
+/**
+ * ⭐⭐ **固定的錨點值** —— ⛔ 不再取名單中位。
+ *
+ * owner 2026-09-12（逐字）：
+ * > 「這個中位數是**相對所有出身**而言 不是指所有角色 **不然這個值會變動到停不下來**」
+ * > 「⋯以後**固定數值 别再取中位數了**」
+ *
+ * ⛔ 在此之前這兩行是 `median(每一張出貨卡)` ⇒ ⭐ **上架一批英雄，全遊戲的傷害刻度就重算一次**
+ * —— 2026-09-10／11 上架 81 名之後傷害降 20%、耗魔降 24%，⚠️ 而那**不是任何人的決定**。
+ *
+ * ⭐ 這一組數字是「逐出身梯子」落地之後量到的（2026-09-12），
+ * ⛔ 而它們現在是**常數**：名單再長大也不會動。
+ *
+ * ⚠️ ⭐ 而它**仍然量**名單中位並印出來（見下面的 advisory）——
+ * ⛔ 靜默地固定住，與「忘了更新」長得一模一樣（fail-open 沒錯，靜默才是缺陷）。
+ * ⇒ 偏差超過門檻會印一行要 owner 看，⛔ 但**不會自己改值**。
+ */
+/**
+ * ⭐ 從**出貨設定檔**讀（owner 2026-09-12：「這些常數是**可被編輯的設定檔** 而非寫死」）。
+ * ⛔ 不在這裡寫死 —— 第一守則：owner 會改的東西住 `content/config/`。
+ * ⭐ `enabled:false` ⇒ 回傳 `undefined` ⇒ 下面退回取名單中位（＝一鍵 rollback）。
+ */
+function shippedAnchors(): { baseHp?: Record<number, number>; baseMana?: Record<number, number> } {
+  try {
+    const d = JSON.parse(
+      readFileSync(join(REPO, "content/config/balance-anchors.json"), "utf-8"),
+    ) as { enabled?: boolean; baseHp?: Record<string, number>; baseMana?: Record<string, number> };
+    if (d.enabled === false) {
+      console.log("⚠️ `balance-anchors.enabled:false` ⇒ ⛔ 錨點**回到取名單中位** —— 刻度會隨上架名單漂。");
+      return {};
+    }
+    const n = (o?: Record<string, number>) =>
+      o === undefined ? undefined : Object.fromEntries(Object.entries(o).map(([k, v]) => [Number(k), v]));
+    return { baseHp: n(d.baseHp), baseMana: n(d.baseMana) };
+  } catch {
+    // ⭐ 設定檔不在（新分支／舊 checkout）⇒ 明說退回，⛔ 不靜默。
+    console.log("⚠️ 讀不到 `content/config/balance-anchors.json` ⇒ ⛔ 退回取名單中位（明說，⛔ 不是靜默）。");
+    return {};
+  }
+}
+const ANCHORS = shippedAnchors();
+const FIXED_BASE_HP = ANCHORS.baseHp;
+const FIXED_BASE_MANA = ANCHORS.baseMana;
+/** 量到的中位與固定值差超過這個比例 ⇒ 印一行（⛔ 不改值、⛔ 不回非零）。 */
+const ANCHOR_DRIFT_WARN = 0.1;
+
 const baseHp: Record<number, number> = {};
 const baseMana: Record<number, number> = {};
 for (const lv of BALANCE_ANCHOR_LEVELS) {
-  baseHp[lv] = q(median(pop.map((d) => championStatBase(d as never, Stat.MaxHealth, lv, env))));
-  baseMana[lv] = q(median(pop.map((d) => championStatBase(d as never, Stat.MaxMana, lv, env))));
+  // ⭐ 一律先量 —— ⛔ 就算固定值在，也要量得到才說得出偏差。
+  const mHp = q(median(pop.map((d) => championStatBase(d as never, Stat.MaxHealth, lv, env))));
+  const mMp = q(median(pop.map((d) => championStatBase(d as never, Stat.MaxMana, lv, env))));
+  // ⭐ 設定檔有值就用它；⛔ 沒有（或 `enabled:false`）才退回中位。
+  baseHp[lv] = FIXED_BASE_HP?.[lv] ?? mHp;
+  baseMana[lv] = FIXED_BASE_MANA?.[lv] ?? mMp;
+  for (const [what, key, fixed, measured] of [
+    ["血量", "baseHp", FIXED_BASE_HP?.[lv], mHp],
+    ["魔力", "baseMana", FIXED_BASE_MANA?.[lv], mMp],
+  ] as const) {
+    if (fixed === undefined) continue;
+    const off = Math.abs(measured - fixed) / (fixed || 1);
+    if (off > ANCHOR_DRIFT_WARN) {
+      console.log(
+        `⚠️ LV${lv} ${what}錨點：固定值 ${fixed}，而**今天的名單中位是 ${measured}**（差 ${(off * 100).toFixed(1)}%）。\n` +
+          `   ⭐ 值**沒有動**（owner：固定數值别再取中位數）。⛔ 要改就改 ` +
+          `\`content/config/balance-anchors.json\` 的 \`${key}.${lv}\` —— 那是一次**平衡決定**，⛔ 不是同步。`,
+      );
+    }
+  }
 }
 
 const finalHp = (lv: BalanceAnchorLevel): number => q(baseHp[lv]! * HP_MULT + HP_BONUS);
