@@ -23,6 +23,7 @@
           "value": -35
         }
       ],
+      "polarity": "debuff",
       "statusId": "armor-break"
     }
   ],
@@ -59,6 +60,7 @@
               "value": -35
             }
           ],
+          "polarity": "debuff",
           "statusId": "armor-break"
         }
       ],
