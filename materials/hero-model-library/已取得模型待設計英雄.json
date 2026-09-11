@@ -55,7 +55,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "d7aea4ff7063b9e1b3ff5e25d016ed38ace2e9d1406d88d677cf48f232417713"
+      "sha256": "d2d46672318881afd4df987bd5de3af455562fd115011093db97e2a1352cdf49"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -67,11 +67,11 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "ce6f5efecff605df2775a21122cee43b9af5597922d845adbf78aa6ed4f99526"
+      "sha256": "fa4e0c6e574890d0720f395efdc300a90d286f83d2ae52c023c3447b54108ab7"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "2c619214c630a957b6953022f60cfccdff6275943b016dc7229c5000021a8ec2"
+      "sha256": "a8781ea88dcc9341b12bf9c8198ba24da113214e1baede17926e2aeab6f86fdd"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -104080,7 +104080,7 @@
           "kof-xv-mai-audio:XV_Mai-unclassified-audio"
         ],
         "indexedAudioFileCount": 227,
-        "unclassifiedAudioFileCount": 200,
+        "unclassifiedAudioFileCount": 227,
         "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "拳皇3D（XIV／XV；Maximum Impact 尚無已核實包）"
@@ -108216,7 +108216,7 @@
           "parallel-ps-jumpforce-audio:JForce_Kenshiro"
         ],
         "indexedAudioFileCount": 217,
-        "unclassifiedAudioFileCount": 217,
+        "unclassifiedAudioFileCount": 0,
         "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
