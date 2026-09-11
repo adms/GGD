@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    74.0,
-    74.0,
-    74.0,
-    74.0
+    112.0,
+    112.0,
+    112.0,
+    112.0
   ],
   "range": 0.0,
   "radiusTier": "小",
@@ -140,6 +140,6 @@
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.defendcaster",
   "cooldownTier": "中",
-  "manaCostTier": "極小",
+  "manaCostTier": "小",
   "castTimeSec": 0.667
 }
