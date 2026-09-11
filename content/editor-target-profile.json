@@ -8418,11 +8418,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "6e74071665f3",
+    "fingerprint": "7144f412c387",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "14106ddb0812"
+        "digest": "d9b3d1fbc797"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8488,5 +8488,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "b2d77014b01c"
+  "profileDigest": "e3ae949d6ab4"
 }
