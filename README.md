@@ -2216,40 +2216,40 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 | # | ID | 角色 | 狀態 |
 | ---: | --- | --- | --- |
-| 1 | `acquired-jetragon` | 空渦龍 | 待上架 |
-| 2 | `acquired-astralym` | 枯星龍 | 待上架 |
-| 3 | `acquired-cattiva` | 搗蛋貓 | 待上架 |
-| 4 | `acquired-dio` | DIO | 待上架 |
-| 5 | `acquired-morgiana` | 摩尔迦娜 | 待上架 |
-| 6 | `acquired-zero` | Zero | 待上架 |
-| 7 | `acquired-emilia` | 愛蜜莉雅 | 待上架 |
-| 8 | `acquired-ram` | 拉姆 | 待上架 |
-| 9 | `acquired-beatrice` | 碧翠絲 | 待上架 |
-| 10 | `acquired-mario` | Mario | 待上架 |
-| 11 | `acquired-mewtwo` | Mewtwo | 待上架 |
-| 12 | `acquired-pokemon-trainer` | Pokémon Trainer | 待上架 |
-| 13 | `acquired-ryu` | Ryu | 待上架 |
-| 14 | `acquired-minecraft` | Steve／Alex | 待上架 |
-| 15 | `acquired-kita-kita` | 吉他吉他老伯（阿德巴古·艾魯多魯） | 待上架 |
-| 16 | `acquired-wargreymon` | 戰鬥暴龍獸 | 待上架 |
-| 17 | `acquired-saya` | 沙耶 | 待上架 |
-| 18 | `acquired-naruto` | 漩渦鳴人 | 待上架 |
-| 19 | `acquired-lord-nightmares` | 金色魔王／惡夢之王 | 待上架 |
-| 20 | `acquired-rim` | 莉姆（Rim；粉紅魔龍） | 待上架 |
-| 21 | `acquired-xiaodangjia` | 小當家 | 待上架 |
-| 22 | `acquired-inuyasha` | 犬夜叉 | 待上架 |
-| 23 | `acquired-asuna` | 亞絲娜／結城明日奈 | 待上架 |
-| 24 | `acquired-alice` | 愛麗絲·滋貝魯庫（Alice Zuberg） | 待上架 |
-| 25 | `acquired-leafa` | 莉法 | 待上架 |
-| 26 | `acquired-kuroyukihime` | 黑雪姬 | 待上架 |
-| 27 | `godie-hlgr` | 鋼彈 | 待上架 |
-| 28 | `godie-eevi` | 劍心拔刀齋 | 待上架 |
-| 29 | `godie-e00q` | 黑化Saber英靈亞瑟王 | 待上架 |
-| 30 | `godie-usyl` | 異形殺戮之牙 | 待上架 |
-| 31 | `godie-nbst` | 瘋狂假面變態正義 | 待上架 |
-| 32 | `godie-nman` | 胖虎地獄歌神 | 待上架 |
-| 33 | `godie-e00t` | 貞子七夜怪談 | 待上架 |
-| 34 | `godie-h021` | 阿強一號破銅爛鐵 | 待上架 |
+| 1 | `acquired-jetragon` | 空渦龍 | 待上架（本機發布已通過） |
+| 2 | `acquired-astralym` | 枯星龍 | 待上架（本機發布已通過） |
+| 3 | `acquired-cattiva` | 搗蛋貓 | 待上架（本機發布已通過） |
+| 4 | `acquired-dio` | DIO | 待上架（本機發布已通過） |
+| 5 | `acquired-morgiana` | 摩尔迦娜 | 待上架（本機發布已通過） |
+| 6 | `acquired-zero` | Zero | 待上架（本機發布已通過） |
+| 7 | `acquired-emilia` | 愛蜜莉雅 | 待上架（本機發布已通過） |
+| 8 | `acquired-ram` | 拉姆 | 待上架（本機發布已通過） |
+| 9 | `acquired-beatrice` | 碧翠絲 | 待上架（本機發布已通過） |
+| 10 | `acquired-mario` | Mario | 待上架（本機發布已通過） |
+| 11 | `acquired-mewtwo` | Mewtwo | 待上架（本機發布已通過） |
+| 12 | `acquired-pokemon-trainer` | Pokémon Trainer | 待上架（本機發布已通過） |
+| 13 | `acquired-ryu` | Ryu | 待上架（本機發布已通過） |
+| 14 | `acquired-minecraft` | Steve／Alex | 待上架（本機發布已通過） |
+| 15 | `acquired-kita-kita` | 吉他吉他老伯（阿德巴古·艾魯多魯） | 待上架（本機發布已通過） |
+| 16 | `acquired-wargreymon` | 戰鬥暴龍獸 | 待上架（本機發布已通過） |
+| 17 | `acquired-saya` | 沙耶 | 待上架（本機發布已通過） |
+| 18 | `acquired-naruto` | 漩渦鳴人 | 待上架（本機發布已通過） |
+| 19 | `acquired-lord-nightmares` | 金色魔王／惡夢之王 | 待上架（本機發布已通過） |
+| 20 | `acquired-rim` | 莉姆（Rim；粉紅魔龍） | 待上架（本機發布已通過） |
+| 21 | `acquired-xiaodangjia` | 小當家 | 待上架（本機發布已通過） |
+| 22 | `acquired-inuyasha` | 犬夜叉 | 待上架（本機發布已通過） |
+| 23 | `acquired-asuna` | 亞絲娜／結城明日奈 | 待上架（本機發布已通過） |
+| 24 | `acquired-alice` | 愛麗絲·滋貝魯庫（Alice Zuberg） | 待上架（本機發布已通過） |
+| 25 | `acquired-leafa` | 莉法 | 待上架（本機發布已通過） |
+| 26 | `acquired-kuroyukihime` | 黑雪姬 | 待上架（本機發布已通過） |
+| 27 | `godie-hlgr` | 鋼彈 | 待上架（本機發布已通過） |
+| 28 | `godie-eevi` | 劍心拔刀齋 | 待上架（本機發布已通過） |
+| 29 | `godie-e00q` | 黑化Saber英靈亞瑟王 | 待上架（本機發布已通過） |
+| 30 | `godie-usyl` | 異形殺戮之牙 | 待上架（本機發布已通過） |
+| 31 | `godie-nbst` | 瘋狂假面變態正義 | 待上架（本機發布已通過） |
+| 32 | `godie-nman` | 胖虎地獄歌神 | 待上架（本機發布已通過） |
+| 33 | `godie-e00t` | 貞子七夜怪談 | 待上架（本機發布已通過） |
+| 34 | `godie-h021` | 阿強一號破銅爛鐵 | 待上架（本機發布已通過） |
 
 *由 `pnpm docs:readme` 從 contentVersion `cv_6fbc4aae62ba` 產生。 全量 153 名，其中開放 130 名。另有 45 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:all-heroes -->
