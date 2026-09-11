@@ -1,6 +1,6 @@
 {
   "schema": "ggd-undesigned-community-audit@1",
-  "generatedAt": "2026-09-11T01:20:52.651554+00:00",
+  "generatedAt": "2026-09-11T01:29:27.960997+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
   "scope": "READONLY acquired public/community/paid-OU99/console/MOD model candidates excluding primary 300/MBA models. Retargets using those animations remain as community-body versions. Original local LoL corpus is audited by the root workflow separately.",
   "policy": {
@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "9b7f70c89c728007649bd5dfd1d0a8c80596c45adf747eeaac03cd49c03d9300",
-      "bytes": 2072476
+      "sha256": "8f7ee2d8f4d7751fb09de7be10f6ae64eba0e371250b2a3b5ef6a6a7e5876ea6",
+      "bytes": 2076242
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "7f1d7e07795c68491b6ac6c04d3789781a35f10302439e8581112557657ccac2",
-      "bytes": 5165314
+      "sha256": "85e6690d42b2e518d9c7f444553d708f94875f8eed49c59b26d03880704394db",
+      "bytes": 5173122
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -27,8 +27,8 @@
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "5f1bc180363d3bba5c7a51a9452e6379dc6b2a083ecf27c611bb26a5531258fc",
-      "bytes": 29361485
+      "sha256": "68a8215e434076c31d2d079e4063ed39e06e9d14eb4897f5b3bf771e75bcb0a7",
+      "bytes": 29363808
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
