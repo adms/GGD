@@ -16,11 +16,18 @@ vi.mock("../drafts/session", () => ({ autosave: { flush: state.flush }, enqueueD
 vi.mock("./packageClient", () => ({ downloadHeroFile: state.download, prepareHeroZip: vi.fn(), openHeroZip: vi.fn(), recoveredHeroModelDraft: vi.fn() }));
 vi.mock("./HeroCommunityPanel", () => ({ HeroCommunityPanel: () => null }));
 vi.mock("./HeroHandoffImportPanel", () => ({ HeroHandoffImportPanel: () => null }));
+vi.mock("./communitySession", () => ({ useHeroAccount: () => ({ account: null, ready: true }) }));
 import { CommunityHeroExamples } from "./CommunityHeroExamples";
 import { HeroPackagePanel } from "./HeroPackagePanel";
 
 const catalog = shippedHeroCatalog();
 const modelIds = heroBodyModelIds(catalog.documents);
+const countType = (value: unknown, type: string): number => {
+  if (Array.isArray(value)) return value.reduce((total, entry) => total + countType(entry, type), 0);
+  if (!value || typeof value !== "object") return 0;
+  const node = value as { type?: unknown; children?: unknown };
+  return (node.type === type ? 1 : 0) + countType(node.children, type);
+};
 state.templates = [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
 beforeEach(() => {
   vi.clearAllMocks(); state.flush.mockReset().mockResolvedValue(); state.modelIds = [...modelIds];
@@ -38,7 +45,7 @@ it("keeps the original seven cards and exposes eleven candidates with their unre
     expect(textOf(candidates.children)).toContain(`建立${recipe.inspiration}草稿候選`);
     for (const difference of recipe.adaptations) expect(textOf(candidates.children)).toContain(difference);
   }
-  expect(view.hosts().filter((node) => node.type === "details")).toHaveLength(COMMUNITY_HERO_EXAMPLES.length);
+  expect(countType(old.children, "details")).toBe(COMMUNITY_HERO_EXAMPLES.length);
 });
 
 it("creates all eleven independent candidates and preserves complete editable data through actual draft download, file import and reopening", async () => {

@@ -11,6 +11,15 @@
   },
   "releaseReady": false,
   "published": false,
+  "currentMvpPublication": {
+    "status": "passed",
+    "environment": "one current loopback Platform service",
+    "heroes": 11,
+    "failed": 0,
+    "rollback": "lol-sett v1->v2->v1; lol-ahri unchanged",
+    "receipt": "docs/_reports/community-acquired-heroes/loopback-release-lol-batch2-11-current.json",
+    "formalMainPublished": false
+  },
   "checks": {
     "sharedTypecheck": "passed",
     "editorTypecheck": "passed",

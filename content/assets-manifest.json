@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2463,
-    "totalBytes": 529890178
+    "entries": 2474,
+    "totalBytes": 557955002
   },
   "entries": [
     {
@@ -22133,6 +22133,17 @@
       ]
     },
     {
+      "path": "assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+      "bytes": 2041452,
+      "sha256": "09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13"
+      ]
+    },
+    {
       "path": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
       "bytes": 920828,
       "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
@@ -22150,6 +22161,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc"
       ]
     },
@@ -22160,6 +22172,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7"
       ]
     },
@@ -22247,6 +22260,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827"
       ]
     },
@@ -22262,12 +22276,24 @@
       ]
     },
     {
+      "path": "assets/models/community/35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf.glb",
+      "bytes": 4566192,
+      "sha256": "35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7"
+      ]
+    },
+    {
       "path": "assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
       "bytes": 3876004,
       "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59"
       ]
     },
@@ -22289,6 +22315,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
       ]
     },
@@ -22332,6 +22359,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944"
       ]
     },
@@ -22358,6 +22386,17 @@
       ]
     },
     {
+      "path": "assets/models/community/5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4.glb",
+      "bytes": 2552760,
+      "sha256": "5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc"
+      ]
+    },
+    {
       "path": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
       "bytes": 2361292,
       "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
@@ -22375,7 +22414,19 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc"
+      ]
+    },
+    {
+      "path": "assets/models/community/75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20.glb",
+      "bytes": 523132,
+      "sha256": "75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9"
       ]
     },
     {
@@ -22456,6 +22507,17 @@
       ]
     },
     {
+      "path": "assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+      "bytes": 3459856,
+      "sha256": "8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99"
+      ]
+    },
+    {
       "path": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
       "bytes": 852356,
       "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
@@ -22495,6 +22557,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223"
       ]
     },
@@ -22521,6 +22584,17 @@
       ]
     },
     {
+      "path": "assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+      "bytes": 3759304,
+      "sha256": "a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa"
+      ]
+    },
+    {
       "path": "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
       "bytes": 862984,
       "sha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
@@ -22529,6 +22603,17 @@
       "refs": [
         "bundle",
         "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5"
+      ]
+    },
+    {
+      "path": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+      "bytes": 414708,
+      "sha256": "b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e"
       ]
     },
     {
@@ -22560,7 +22645,19 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e"
+      ]
+    },
+    {
+      "path": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
+      "bytes": 1279552,
+      "sha256": "c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70"
       ]
     },
     {
@@ -22572,6 +22669,17 @@
       "refs": [
         "bundle",
         "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878"
+      ]
+    },
+    {
+      "path": "assets/models/community/c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d.glb",
+      "bytes": 4518760,
+      "sha256": "c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488"
       ]
     },
     {
@@ -22636,6 +22744,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb"
       ]
     },
@@ -22657,6 +22766,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0"
       ]
     },
@@ -22667,7 +22777,19 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257"
+      ]
+    },
+    {
+      "path": "assets/models/community/e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce.glb",
+      "bytes": 425584,
+      "sha256": "e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc"
       ]
     },
     {
@@ -22688,6 +22810,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840"
       ]
     },
@@ -22731,6 +22854,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3"
       ]
     },
@@ -22746,12 +22870,24 @@
       ]
     },
     {
+      "path": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+      "bytes": 4523524,
+      "sha256": "f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399"
+      ]
+    },
+    {
       "path": "assets/models/community/f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30.glb",
       "bytes": 794628,
       "sha256": "f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe"
       ]
     },
@@ -22773,6 +22909,7 @@
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
+        "bundle",
         "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41"
       ]
     },

@@ -6,11 +6,13 @@ import { COMMUNITY_LOL_BATCH2_EXAMPLES, COMMUNITY_LOL_BATCH2_RELEASE_READY } fro
 import { createCommunityHeroRecipe } from "../../packages/shared/src/content/heroForge/communityExamples";
 import type { TemplateDoc } from "../../packages/shared/src/content/schema/template";
 import { contentSha256 } from "../../packages/shared/src/content/import/jcs";
+import { snapshotHeroGenerator } from "../../packages/shared/src/content/import/heroBuildSources";
 import { createLocalDraft } from "../../apps/editor/src/drafts/repository";
 
 const root = resolve(import.meta.dirname, "../..");
 const check = process.argv.includes("--check");
 const catalog = shippedHeroCatalog();
+const generatorVersion = snapshotHeroGenerator(root).versionId;
 const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
 const outArg = process.argv.indexOf("--out");
 if (outArg !== -1 && !process.argv[outArg + 1]) throw new Error("--out requires a directory");
@@ -28,7 +30,7 @@ const write = (relative: string, value: unknown) => {
 };
 const rows = COMMUNITY_LOL_BATCH2_EXAMPLES.map((recipe) => {
   const projectId = `lol-${recipe.id}`;
-  const project = createCommunityHeroRecipe(recipe, projectId, templates);
+  const project = createCommunityHeroRecipe(recipe, projectId, templates, generatorVersion);
   write(`projects/${projectId}.json`, project);
   const draft = createLocalDraft(`hero/${projectId}`, "hero", project.revision, { project, rawInputs: {}, mode: "visual", origin: recipe.origin });
   draft.updatedAt = 0; // Stable distributable authoring snapshot, not a user's last-edit timestamp.
@@ -41,5 +43,6 @@ if (rows.length !== 11 || rows.reduce((n, row) => n + row.slots.length, 0) !== 6
 write("authoring-manifest.json", { schema: "ggd-lol-batch2-authoring@1", issue: 1185,
   releaseReady: COMMUNITY_LOL_BATCH2_RELEASE_READY, source: "packages/shared/src/content/heroForge/communityLolBatch2.ts",
   generator: "tools/community-hero-forge/lol-batch2.mts", recipeSha256: contentSha256(COMMUNITY_LOL_BATCH2_EXAMPLES),
+  generatorVersion,
   status: "candidate; source-critical mechanics pending Main", serviceImported: false, published: false, rows });
 console.log(`${check ? "verified" : "rebuilt"}: 11 editable candidates / 66 slots; not publication-ready`);

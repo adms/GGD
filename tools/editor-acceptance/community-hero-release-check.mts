@@ -128,6 +128,29 @@ async function request(route: string, token: string | null, options: { method?: 
 }
 const json = async (route: string, token: string | null, options?: Parameters<typeof request>[2]): Promise<unknown> => (await request(route, token, options)).json();
 const login = async (username: string): Promise<Actor> => await json("/auth/login", null, { body: { username, password } }) as Actor;
+// A batch is bounded well inside the platform's 15-minute access-token TTL.
+// Sharing one in-flight login per account avoids turning a successful fast
+// importer into an authentication-rate-limit test. Server-side authorization
+// still runs for every request and any expired token fails closed.
+const actorLogins = new Map<string, Promise<Actor>>();
+const actorFor = (username: string): Promise<Actor> => {
+  const existing = actorLogins.get(username);
+  if (existing) return existing;
+  const pending = login(username);
+  actorLogins.set(username, pending);
+  return pending;
+};
+async function existingWork(workId: string, token: string): Promise<ReturnType<typeof zHeroWork.parse> | null> {
+  const response = await fetch(`${origin}/hero-works/${encodeURIComponent(workId)}`, {
+    redirect: "error",
+    headers: { authorization: `Bearer ${token}` },
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`/hero-works/${workId}: HTTP ${response.status} ${await response.text()}`);
+  const body = await response.json() as { work?: unknown };
+  return zHeroWork.parse(body.work);
+}
 async function buildCompleteArchive(sourceArchive: Uint8Array, token: string, projectId: string): Promise<Uint8Array> {
   return new Uint8Array(await (await request(canonicalTakeover ? "/admin/hero-import/build" : "/hero-import/build", token, { body: sourceArchive, ...(canonicalTakeover ? { headers: { "x-ggd-work-id": projectId } } : {}) })).arrayBuffer());
 }
@@ -189,7 +212,7 @@ async function modelBytes(project: HeroProject): Promise<Uint8Array | undefined>
 }
 
 try {
-  const reviewer = await login(values.reviewer);
+  const reviewer = await actorFor(values.reviewer);
   const profile = await json("/hero-import/target-profile", reviewer.tokens.accessToken);
   const facts = readTargetProfileFacts(profile);
   assert(facts.gameRevision && facts.contentVersion && facts.migrationFingerprint && facts.authoringProcessorFingerprint, "Target profile is incomplete.");
@@ -209,7 +232,7 @@ try {
       // The platform access token is intentionally short-lived. A large batch
       // must prove the whole workflow without treating an expired test session
       // as a hero failure, so each independent work starts with a fresh login.
-      const author = await login(receipt.author);
+      const author = await actorFor(receipt.author);
       const bytes = await modelBytes(project);
       if (project.presentation.uploadedModel && bytes) {
         await request(`/hero-model-assets/${project.presentation.uploadedModel.sha256}`, author.tokens.accessToken, {
@@ -217,7 +240,10 @@ try {
         });
       }
       const payload = { project, rawInputs: {}, mode: "advanced", origin: project.acceptedPlan.origin };
-      const work = zHeroWork.parse(await json("/hero-works/draft", author.tokens.accessToken, { body: { workId: project.projectId, expectedRevision: 0, payload } }));
+      const priorWork = await existingWork(project.projectId, author.tokens.accessToken);
+      const work = zHeroWork.parse(await json("/hero-works/draft", author.tokens.accessToken, {
+        body: { workId: project.projectId, expectedRevision: priorWork?.draftRevision ?? 0, payload },
+      }));
       const source = buildHeroSourcePackage(project, [], target, bytes);
       const sourceArchive = (await buildRuntimePackageZip(packageZipInput(source, project.projectId))).bytes;
       const builtArchive = await buildCompleteArchive(sourceArchive, author.tokens.accessToken, project.projectId);
@@ -238,7 +264,7 @@ try {
         headers: { "x-ggd-work-id": project.projectId, "x-ggd-operation-id": operationId, "x-ggd-allow-attribution-remix": "true" },
       }));
       assert.equal(snapshot.canonicalTakeover, canonicalTakeover, `${project.projectId} submission lost its canonical takeover authority.`);
-      const activeReviewer = receipt.author === values.reviewer ? author : await login(values.reviewer);
+      const activeReviewer = receipt.author === values.reviewer ? author : await actorFor(values.reviewer);
       const review = zHeroReviewView.parse(await json(`/admin/hero-submissions/${snapshot.id}`, activeReviewer.tokens.accessToken));
       assert.equal(review.status, "pending");
       assert.deepEqual(review.snapshot.inspection.project, project);
@@ -284,8 +310,8 @@ try {
   const rollbackInput = projects.find(({ project }) => project.projectId === effectiveRollbackId)!;
   const unaffectedReceipt = published.find((receipt) => receipt.id !== effectiveRollbackId)!;
   assert(Number.isInteger(rollbackReceipt.draftRevision), `${effectiveRollbackId} has no saved draft revision.`);
-  const rollbackAuthor = await login(rollbackReceipt.author);
-  const rollbackReviewer = rollbackReceipt.author === values.reviewer ? rollbackAuthor : await login(values.reviewer);
+  const rollbackAuthor = await actorFor(rollbackReceipt.author);
+  const rollbackReviewer = rollbackReceipt.author === values.reviewer ? rollbackAuthor : await actorFor(values.reviewer);
   const unaffectedBefore = zHeroReviewView.parse(await json(`/admin/hero-submissions/${unaffectedReceipt.submissionId}`, rollbackReviewer.tokens.accessToken));
   const v1 = zHeroReviewView.parse(await json(`/admin/hero-submissions/${rollbackReceipt.submissionId}`, rollbackReviewer.tokens.accessToken));
   assert.equal(v1.publication.published?.submissionId, rollbackReceipt.submissionId);
