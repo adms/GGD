@@ -19,6 +19,7 @@ from pathlib import Path
 SOURCE_ID = "github-flemmli97-fateubw-07e9d79b"
 SOURCE_COMMIT = "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9"
 COMPATIBLE = [
+    "fateubw-artoria_pendragon_saber",
     "fateubw-cu_chulainn_lancer", "fateubw-diarmuid_ua_duibhne_lancer",
     "fateubw-emiya_archer", "fateubw-gilgamesh_archer",
     "fateubw-gilles_de_rais_caster", "fateubw-hassan-i-sabbah_assassin",
@@ -51,6 +52,8 @@ def main():
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--intake", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--only", action="append", default=[], metavar="CANDIDATE_ID",
+                        help="Convert only declared compatible candidate IDs; repeat as needed.")
     args = parser.parse_args()
     repo, intake, output = args.repo.resolve(), args.intake.resolve(), args.output.resolve()
     if output.exists():
@@ -62,11 +65,14 @@ def main():
     candidates = {row["candidateId"]: row for row in source["modelCandidates"]}
     if set(COMPATIBLE) - candidates.keys():
         raise ValueError("declared compatible candidate missing from source index")
+    selected = COMPATIBLE if not args.only else args.only
+    if not selected or len(selected) != len(set(selected)) or set(selected) - set(COMPATIBLE):
+        raise ValueError("--only must be a unique nonempty subset of declared compatible candidates")
     converter = Path(__file__).with_name("convert_bedrock_geometry.py")
     inspector = Path(__file__).with_name("inspect_tenshilib_animation.py")
     output.mkdir(parents=True)
     records = []
-    for candidate_id in COMPATIBLE:
+    for candidate_id in selected:
         candidate = candidates[candidate_id]
         geometry = source_path(intake, candidate["sourceModel"])
         texture = source_path(intake, candidate["sourceTexture"]["path"])

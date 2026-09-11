@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T10:30:20+08:00",
-  "inputsSha256": "174fe94b527d8235f6ad61bca90ba847d7ab7f0c9baaebbbfa90bb7f0d8e4d0b",
+  "generatedAt": "2026-09-11T10:43:59+08:00",
+  "inputsSha256": "5344d7a3fe0acd11f50342ffb0f61b7d51dd51a24f49cd5e2ab708f4cfd53b2b",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -452,21 +452,22 @@
               },
               "boneCount": 21,
               "cubeCount": 28,
-              "readyStage": "static-body-structural-validated-pending-visual-rights-animation",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
               "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
               "bodyStandardization": {
-                "attemptId": "fateubw-artoria-static-v2",
-                "status": "structural-validated-pending-visual-and-rights-review",
+                "attemptId": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
                 "bodyConverted": true,
+                "glbRigConverted": false,
                 "nativeAnimationConverted": false,
-                "visualReview": "pending",
+                "visualReview": "reviewed-static-body-only",
                 "rightsReview": "pending",
                 "runtimeReady": false,
                 "backendSelectionVerified": false,
@@ -1287,6 +1288,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
               "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
               "manifestSha256": "1e3cddab93e17f45e4127312deb7198726c47e7bd68824601b39c26d7de4aa7f",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-artoria-static-mesh-v3",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+              "bytes": 1980768,
+              "sha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+              "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+              "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -2241,6 +2268,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
                 "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+              "candidateId": "fateubw-artoria_pendragon_saber",
+              "conversionInstanceId": "fateubw-artoria_pendragon_saber-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+                "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+                "bytes": 27964
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+                "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+                "bytes": 2136
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+                "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+                "bytes": 1573
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+                "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+                "bytes": 3234
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+                "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+                "bytes": 9943,
+                "clipCount": 10,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+                "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+                "bytes": 2218,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+                  "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+                  "bytes": 364
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+                "archiveSha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+                "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -2810,21 +2909,22 @@
               },
               "boneCount": 21,
               "cubeCount": 28,
-              "readyStage": "static-body-structural-validated-pending-visual-rights-animation",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
               "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
               "bodyStandardization": {
-                "attemptId": "fateubw-artoria-static-v2",
-                "status": "structural-validated-pending-visual-and-rights-review",
+                "attemptId": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
                 "bodyConverted": true,
+                "glbRigConverted": false,
                 "nativeAnimationConverted": false,
-                "visualReview": "pending",
+                "visualReview": "reviewed-static-body-only",
                 "rightsReview": "pending",
                 "runtimeReady": false,
                 "backendSelectionVerified": false,
@@ -3645,6 +3745,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
               "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
               "manifestSha256": "1e3cddab93e17f45e4127312deb7198726c47e7bd68824601b39c26d7de4aa7f",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-artoria-static-mesh-v3",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+              "bytes": 1980768,
+              "sha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+              "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+              "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -4599,6 +4725,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
                 "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+              "candidateId": "fateubw-artoria_pendragon_saber",
+              "conversionInstanceId": "fateubw-artoria_pendragon_saber-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+                "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+                "bytes": 27964
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+                "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+                "bytes": 2136
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+                "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+                "bytes": 1573
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+                "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+                "bytes": 3234
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+                "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+                "bytes": 9943,
+                "clipCount": 10,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+                "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+                "bytes": 2218,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+                  "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+                  "bytes": 364
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+                "archiveSha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+                "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -17645,21 +17843,22 @@
               },
               "boneCount": 21,
               "cubeCount": 28,
-              "readyStage": "static-body-structural-validated-pending-visual-rights-animation",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
               "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
               "bodyStandardization": {
-                "attemptId": "fateubw-artoria-static-v2",
-                "status": "structural-validated-pending-visual-and-rights-review",
+                "attemptId": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
                 "bodyConverted": true,
+                "glbRigConverted": false,
                 "nativeAnimationConverted": false,
-                "visualReview": "pending",
+                "visualReview": "reviewed-static-body-only",
                 "rightsReview": "pending",
                 "runtimeReady": false,
                 "backendSelectionVerified": false,
@@ -18480,6 +18679,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
               "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
               "manifestSha256": "1e3cddab93e17f45e4127312deb7198726c47e7bd68824601b39c26d7de4aa7f",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-artoria-static-mesh-v3",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+              "bytes": 1980768,
+              "sha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+              "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+              "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -19434,6 +19659,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
                 "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+              "candidateId": "fateubw-artoria_pendragon_saber",
+              "conversionInstanceId": "fateubw-artoria_pendragon_saber-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+                "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+                "bytes": 27964
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+                "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+                "bytes": 2136
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+                "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+                "bytes": 1573
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+                "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+                "bytes": 3234
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+                "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+                "bytes": 9943,
+                "clipCount": 10,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+                "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+                "bytes": 2218,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+                  "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+                  "bytes": 364
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+                "archiveSha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+                "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -30453,21 +30750,22 @@
               },
               "boneCount": 21,
               "cubeCount": 28,
-              "readyStage": "static-body-structural-validated-pending-visual-rights-animation",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
               "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
               "bodyStandardization": {
-                "attemptId": "fateubw-artoria-static-v2",
-                "status": "structural-validated-pending-visual-and-rights-review",
+                "attemptId": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
                 "bodyConverted": true,
+                "glbRigConverted": false,
                 "nativeAnimationConverted": false,
-                "visualReview": "pending",
+                "visualReview": "reviewed-static-body-only",
                 "rightsReview": "pending",
                 "runtimeReady": false,
                 "backendSelectionVerified": false,
@@ -31288,6 +31586,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
               "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
               "manifestSha256": "1e3cddab93e17f45e4127312deb7198726c47e7bd68824601b39c26d7de4aa7f",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-artoria-static-mesh-v3",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+              "bytes": 1980768,
+              "sha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+              "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+              "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -32242,6 +32566,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
                 "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+              "candidateId": "fateubw-artoria_pendragon_saber",
+              "conversionInstanceId": "fateubw-artoria_pendragon_saber-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+                "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+                "bytes": 27964
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+                "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+                "bytes": 2136
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+                "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+                "bytes": 1573
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+                "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+                "bytes": 3234
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+                "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+                "bytes": 9943,
+                "clipCount": 10,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+                "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+                "bytes": 2218,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+                  "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+                  "bytes": 364
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+                "archiveSha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+                "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -42822,21 +43218,22 @@
               },
               "boneCount": 21,
               "cubeCount": 28,
-              "readyStage": "static-body-structural-validated-pending-visual-rights-animation",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
               "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
               "bodyStandardization": {
-                "attemptId": "fateubw-artoria-static-v2",
-                "status": "structural-validated-pending-visual-and-rights-review",
+                "attemptId": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
                 "bodyConverted": true,
+                "glbRigConverted": false,
                 "nativeAnimationConverted": false,
-                "visualReview": "pending",
+                "visualReview": "reviewed-static-body-only",
                 "rightsReview": "pending",
                 "runtimeReady": false,
                 "backendSelectionVerified": false,
@@ -43657,6 +44054,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
               "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
               "manifestSha256": "1e3cddab93e17f45e4127312deb7198726c47e7bd68824601b39c26d7de4aa7f",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-artoria-static-mesh-v3",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+              "bytes": 1980768,
+              "sha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+              "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+              "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -44611,6 +45034,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
                 "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+              "candidateId": "fateubw-artoria_pendragon_saber",
+              "conversionInstanceId": "fateubw-artoria_pendragon_saber-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+                "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+                "bytes": 27964
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+                "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+                "bytes": 2136
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+                "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+                "bytes": 1573
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+                "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+                "bytes": 3234
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+                "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+                "bytes": 9943,
+                "clipCount": 10,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+                "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+                "bytes": 2218,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+                  "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+                  "bytes": 364
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+                "archiveSha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+                "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -102850,21 +103345,22 @@
             },
             "boneCount": 21,
             "cubeCount": 28,
-            "readyStage": "static-body-structural-validated-pending-visual-rights-animation",
+            "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultEligible": false,
             "defaultChanged": false,
             "license": "ARR",
             "nativeFucPsp": false,
             "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
             "bodyStandardization": {
-              "attemptId": "fateubw-artoria-static-v2",
-              "status": "structural-validated-pending-visual-and-rights-review",
+              "attemptId": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "bodyConverted": true,
+              "glbRigConverted": false,
               "nativeAnimationConverted": false,
-              "visualReview": "pending",
+              "visualReview": "reviewed-static-body-only",
               "rightsReview": "pending",
               "runtimeReady": false,
               "backendSelectionVerified": false,
@@ -103685,6 +104181,32 @@
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
             "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
             "manifestSha256": "1e3cddab93e17f45e4127312deb7198726c47e7bd68824601b39c26d7de4aa7f",
+            "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "fateubw-artoria-static-mesh-v3",
+            "sourceId": "github-flemmli97-fateubw-07e9d79b",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/dbe793d0cd13ae75454174064c278d82d06e3deb690db7d85dd4d87444425fa5/readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+            "bytes": 1980768,
+            "sha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+            "fileCount": 14,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+            "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+            "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
             "s3Use": "backup-only-not-runtime-entry"
           }
         ],
@@ -104639,6 +105161,78 @@
               "readbackVerified": true,
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-servant-static-batch-v6/latest-receipt.json",
               "receiptSha256": "26149385ca8b88a3c1eca54e2b93863b8f65ac79284f402086bbfab5be93d5de",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "defaultEligible": false,
+            "deploymentStatus": "not-deployed",
+            "missing": [
+              "redistribution permission for ARR source",
+              "glTF skeleton conversion",
+              "TenshiLib animation conversion and event mapping",
+              "GGD backend import and selection verification"
+            ]
+          },
+          {
+            "id": "fateubw-artoria_pendragon_saber-static-mesh-v2",
+            "candidateId": "fateubw-artoria_pendragon_saber",
+            "conversionInstanceId": "fateubw-artoria_pendragon_saber-static-v2",
+            "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+            "sourceClass": "community-mod",
+            "platform": "Minecraft Java 1.21.1",
+            "nativeFucPsp": false,
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber",
+            "body": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+              "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+              "bytes": 27964
+            },
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+              "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+              "bytes": 2136
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+              "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+              "bytes": 1573
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+              "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+              "bytes": 3234
+            },
+            "nativeAnimationReserve": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+              "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+              "bytes": 9943,
+              "clipCount": 10,
+              "convertedToGlb": false
+            },
+            "webglVisualReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+              "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+              "bytes": 2218,
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+                "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+                "bytes": 364
+              },
+              "reviewedViews": [
+                "front",
+                "back",
+                "isometric"
+              ],
+              "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+            },
+            "legacyBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.files.json",
+              "archiveSha256": "1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a",
+              "readbackVerified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
+              "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
               "s3Use": "backup-only-not-runtime-entry"
             },
             "runtimeReady": false,

@@ -12,7 +12,6 @@ from pathlib import Path
 
 
 SOURCE_ID = "github-flemmli97-fateubw-07e9d79b"
-DELIVERY_ID = "fateubw-servant-static-batch-v6"
 
 
 def sha256(path):
@@ -31,6 +30,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
+    parser.add_argument("--delivery-id", required=True,
+                        help="Verified supplemental-delivery ID that owns this immutable batch archive.")
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[4]
     batch, receipt_path = args.batch.resolve(), args.receipt.resolve()
@@ -41,7 +42,8 @@ def main():
         raise ValueError("batch backup receipt is not a verified readback of this batch")
     manifest = json.loads((batch / "batch-manifest.json").read_text())
     contract = json.loads((batch / "contract-validation.json").read_text())
-    if (manifest.get("sourceId") != SOURCE_ID or manifest.get("counts", {}).get("converted") != 12
+    if (manifest.get("sourceId") != SOURCE_ID or manifest.get("counts", {}).get("converted") != len(manifest.get("records", []))
+            or not manifest.get("records")
             or contract.get("allKhronosErrorsZero") is not True
             or contract.get("allKhronosWarningsZero") is not True
             or contract.get("allGgdBudgetErrorsZero") is not True):
@@ -54,13 +56,13 @@ def main():
     if source is None:
         raise ValueError("frozen FateUBW source is absent")
     delivery = next((row for row in source.get("supplementalDeliveries", [])
-                     if row.get("id") == DELIVERY_ID and row.get("sha256") == receipt["archiveSha256"]), None)
+                     if row.get("id") == args.delivery_id and row.get("sha256") == receipt["archiveSha256"]), None)
     if delivery is None or delivery.get("readbackVerified") is not True:
         raise ValueError("matching verified supplemental delivery is absent")
     candidates = {row["candidateId"]: row for row in source["modelCandidates"]}
     records = manifest["records"]
-    if len(records) != 12 or len({row["candidateId"] for row in records}) != 12:
-        raise ValueError("batch candidate list is not a unique 12-member set")
+    if len(records) != len({row["candidateId"] for row in records}):
+        raise ValueError("batch candidate list is not unique")
     attempts = source.setdefault("conversionAttempts", [])
     for row in records:
         candidate_id = row["candidateId"]
