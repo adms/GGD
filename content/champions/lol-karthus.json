@@ -292,7 +292,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-karthus.webp"
 }

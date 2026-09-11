@@ -356,7 +356,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "claw"
+  ],
   "schema": "champion@1",
   "modelVersions": [
     {

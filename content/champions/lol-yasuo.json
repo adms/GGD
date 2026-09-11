@@ -356,7 +356,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "katana"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-yasuo.webp"
 }
