@@ -25,7 +25,11 @@ def main() -> None:
         print(json.dumps(matches, ensure_ascii=False, indent=2))
         return
     for row in matches:
-        print(f"{row['id']}\t{row['title']}\t{row.get('platform', row.get('collectionKind', ''))}\t{row['inventoryStatus']}\t{row['sourcePath']}")
+        container_status = row.get("containerInventoryStatus", "not-scanned-inside-install")
+        print(
+            f"{row['id']}\t{row['title']}\t{row.get('platform', row.get('collectionKind', ''))}\t"
+            f"{row['inventoryStatus']}\t{container_status}\t{row['sourcePath']}"
+        )
     print(f"matches={len(matches)}")
 
 

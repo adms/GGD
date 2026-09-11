@@ -49,3 +49,17 @@ Set-ExecutionPolicy -Scope Process Bypass
 ```
 
 腳本預設從 Steam Registry 與 `libraryfolders.vdf` 自動發現分散在四顆硬碟的所有 SteamLibrary；找不到時才需要用 `-SteamRoots @('F:\SteamLibrary\steamapps\common', ...)` 手動指定。它會輸出每個遊戲的檔案數、總大小、前 25 種副檔名、引擎線索，以及 `.pak/.utoc/.ucas/.uasset`、Unity、Wwise、FMOD、CRIWARE、模型和動作候選的逐檔路徑與大小。它不讀取容器內容、不計大檔雜湊、不複製遊戲，也不變更分享權限；`payloadBytesRead=0`。交付 `GGD-Asset-Container-Inventory-*.zip` 後，整合工作流才能把 Palworld 本體與其他遊戲從「已安裝」提升為「容器已盤點」，再按角色需求選擇性複製和解包。
+
+解壓回傳 ZIP 後，以原始第一階段索引為輸入合併；Git 只保存逐遊戲摘要，完整逐檔候選保留為本機壓縮 JSONL，連同原始 ZIP／CSV 進 S3 `legacy/`：
+
+```sh
+python3 tools/hero-model-library/steam-library-bridge/merge_windows_asset_container_inventory.py \
+  --base-json materials/hero-model-library/source-inventories/windows-game-library.json \
+  --scan-dir <解壓後目錄> \
+  --source-zip <GGD-Asset-Container-Inventory-*.zip> \
+  --local-output <GGD-Asset-Library/intake/remote-game-libraries/current> \
+  --git-json materials/hero-model-library/source-inventories/windows-game-library.json \
+  --git-markdown materials/hero-model-library/source-inventories/windows-game-library.md
+```
+
+合併器依 Steam App ID 與完整安裝路徑對應多硬碟重複安裝；逐檔資料寫入 `asset-container-files.jsonl.gz`，不塞進 Git 摘要。若尚未完成 S3 備份，`s3Backup` 保持空值，不能把預定位置寫成已上傳。

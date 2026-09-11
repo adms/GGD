@@ -263,9 +263,33 @@ if (Test-Path -LiteralPath $GameRoot -PathType Container) {
 }
 
 $timer.Stop()
-$gameRows | Export-Csv -LiteralPath (Join-Path $OutputDirectory 'game-file-summaries.csv') -NoTypeInformation -Encoding UTF8
-$assetRows | Export-Csv -LiteralPath (Join-Path $OutputDirectory 'asset-container-files.csv') -NoTypeInformation -Encoding UTF8
-$scanErrors | Export-Csv -LiteralPath (Join-Path $OutputDirectory 'scan-errors.csv') -NoTypeInformation -Encoding UTF8
+function Export-CsvWithHeaders {
+    param(
+        [System.Collections.IEnumerable]$Rows,
+        [string]$Path,
+        [string[]]$Headers
+    )
+    $items = @($Rows)
+    if ($items.Count -gt 0) {
+        $items | Export-Csv -LiteralPath $Path -NoTypeInformation -Encoding UTF8
+        return
+    }
+    $quotedHeaders = @($Headers | ForEach-Object { '"' + $_.Replace('"', '""') + '"' })
+    Set-Content -LiteralPath $Path -Value ($quotedHeaders -join ',') -Encoding UTF8
+}
+
+Export-CsvWithHeaders -Rows $gameRows -Path (Join-Path $OutputDirectory 'game-file-summaries.csv') -Headers @(
+    'SourceKind', 'SteamRoot', 'AppId', 'BuildId', 'Title', 'InstallDirectory', 'FullPath', 'FileCount',
+    'TotalBytes', 'AssetContainerCandidateCount', 'EngineHints', 'TopExtensionsJson', 'ManifestMatched',
+    'InventoryStatus', 'ContentInspected', 'PayloadBytesRead'
+)
+Export-CsvWithHeaders -Rows $assetRows -Path (Join-Path $OutputDirectory 'asset-container-files.csv') -Headers @(
+    'SourceKind', 'SteamRoot', 'AppId', 'BuildId', 'GameTitle', 'InstallDirectory', 'AssetKind', 'Extension',
+    'SizeBytes', 'RelativePath', 'FullPath', 'LastWriteTimeUtc', 'Sha256', 'ContentRead', 'Status'
+)
+Export-CsvWithHeaders -Rows $scanErrors -Path (Join-Path $OutputDirectory 'scan-errors.csv') -Headers @(
+    'Scope', 'Path', 'Error'
+)
 
 $receipt = [ordered]@{
     schema = 'ggd-windows-asset-container-inventory-receipt@1'

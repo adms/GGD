@@ -380,11 +380,36 @@ def markdown(index: dict) -> str:
             source_path = row.get("sourcePath") or row.get("manifestPath") or ""
             lines.append(f"| {tag} | {row['sourceKind']} | {row['title']} | {row['platform']} | {version} | `{source_path}` |")
     palworld_rows = [row for row in index["steamGames"] if "palworld" in row["priorityTags"]]
+    container_inventory = index.get("containerInventory")
+    if container_inventory:
+        container_summary = container_inventory["summary"]
+        lines.extend([
+            "",
+            "## 素材容器盤點",
+            "",
+            f"- 逐檔掃描遊戲：**{container_summary['gameRecordCount']}**",
+            f"- 對應既有目錄：**{container_summary['matchedCatalogRecordCount']}**",
+            f"- 素材容器／模型／音訊候選：**{container_summary['assetContainerCandidateCount']}**",
+            f"- 掃描錯誤：**{container_summary['scanErrorCount']}**",
+            f"- 實際讀取容器內容：**{container_summary['payloadBytesRead']} bytes**",
+            "",
+            "> 這一層只列出容器與素材候選的路徑、大小及引擎線索，尚未解包或確認角色身分。",
+        ])
+    palworld_scanned = any(
+        row.get("catalogRole") == "game-asset-source"
+        and row.get("containerInventoryStatus") == "metadata-only-files-enumerated"
+        for row in palworld_rows
+    )
+    palworld_status_note = (
+        "本體已完成安裝目錄逐檔 metadata 盤點；尚未解包 PAK、IoStore 或音訊容器。"
+        if palworld_scanned
+        else "目前尚未掃描安裝目錄內的 PAK、IoStore 或音訊容器。"
+    )
     lines.extend([
         "",
         "## Palworld／幻獸帕魯",
         "",
-        "> 本體與 Dedicated Server 分開建檔。只有本體列為角色素材來源；目前尚未掃描安裝目錄內的 PAK、IoStore 或音訊容器。",
+        f"> 本體與 Dedicated Server 分開建檔。只有本體列為角色素材來源；{palworld_status_note}",
         "",
         "| 名稱 | App ID | Build ID | 用途 | 容器盤點 | 指定角色 | 路徑 |",
         "|---|---|---|---|---|---|---|",
