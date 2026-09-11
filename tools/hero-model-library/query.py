@@ -49,6 +49,24 @@ def public_match_scope(sources, query):
     return hero_ids, entry_ids
 
 
+def candidate_conversion_evidence(source, candidate):
+    """Return the immutable conversion records belonging to one candidate.
+
+    Raw source candidates and their conversion receipts intentionally live in
+    separate fields: the former preserves the acquired game/MOD payload while
+    the latter preserves each accepted or rejected conversion stage.  Joining
+    them in the query result makes a verified local GLB and its S3 receipt
+    discoverable without presenting it as runtime-ready.
+    """
+    candidate_id = candidate.get('candidateId', candidate.get('id'))
+    attempts = [attempt for attempt in source.get('conversionAttempts', [])
+                if attempt.get('candidateId') == candidate_id]
+    preferred_id = candidate.get('bodyStandardization', {}).get('attemptId')
+    current = next((attempt for attempt in reversed(attempts)
+                    if attempt.get('id') == preferred_id), None)
+    return attempts, current
+
+
 def candidate_records(sources, query):
     """Native characters remain queryable without borrowing a package sibling's hero ID."""
     result=[]
@@ -56,9 +74,15 @@ def candidate_records(sources, query):
         whole_source=query==source['id'].casefold()
         for candidate in source.get('modelCandidates',[]):
             if not query or whole_source or candidate_matches(candidate,query):
-                result.append(dict(candidate,sourceId=source['id'],sourceUrl=source['url'],
+                record = dict(candidate,sourceId=source['id'],sourceUrl=source['url'],
                     sourceLocalPath=source['localPath'],sourceReadiness=source['readiness'],
-                    sourceBackendIntegration=source.get('backendIntegration',{})))
+                    sourceBackendIntegration=source.get('backendIntegration',{}))
+                attempts, current = candidate_conversion_evidence(source, candidate)
+                if attempts:
+                    record['conversionAttempts'] = attempts
+                if current:
+                    record['currentConversionAttempt'] = current
+                result.append(record)
     return result
 
 
@@ -84,6 +108,11 @@ def main():
             for c in records:
                 print(f"{c.get('candidateId',c.get('id',''))} | {c.get('label',c.get('character',''))} | {c.get('resourceRole','model-candidate')} | {c.get('status',c.get('readyStage',c['sourceReadiness']))} | GGD: {', '.join(c.get('heroIds',[])) or '未對應'}")
                 print('  '+c['sourceId']+' | '+c['sourceLocalPath'])
+                current = c.get('currentConversionAttempt', {})
+                body = current.get('body', {})
+                if body:
+                    print('  已驗證靜態 GLB（非後台可選）：'+body['path'])
+                    print('  SHA-256: '+body['sha256']+' | '+current.get('status', 'conversion stage'))
         return 0 if records else 1
     if args.downloads:
         direct = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]

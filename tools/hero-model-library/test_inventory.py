@@ -47,6 +47,19 @@ class InventoryHandoff(unittest.TestCase):
         self.assertFalse(source_matches(vearn_source, '巴蘭'))
         self.assertEqual(public_match_scope([vearn_source], '巴蘭'), (set(), set()))
 
+    def test_candidate_query_exposes_current_conversion_evidence(self):
+        script = REPO / 'tools/hero-model-library/query.py'
+        result = json.loads(subprocess.check_output(
+            [sys.executable, str(script), 'github-flemmli97-fateubw-07e9d79b', '--candidates', '--json'], text=True))
+        artoria = next(row for row in result['candidates']
+                       if row['candidateId'] == 'fateubw-artoria_pendragon_saber')
+        current = artoria['currentConversionAttempt']
+        self.assertEqual(current['id'], artoria['bodyStandardization']['attemptId'])
+        self.assertEqual(current['status'], 'static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend')
+        self.assertTrue(current['body']['path'].endswith('/body.glb'))
+        self.assertTrue(current['legacyBackup']['readbackVerified'])
+        self.assertFalse(current['runtimeReady'])
+
     def test_links_and_approved_defaults_are_complete(self):
         inventory = json.loads((DATA/'inventory.json').read_text())
         sources = json.loads((DATA/'download-sources.json').read_text())
