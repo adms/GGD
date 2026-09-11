@@ -28,3 +28,14 @@ python3 tools/hero-model-library/steam-library-bridge/scan_mounted_steam.py \
 ```
 
 相同 App ID 的多個安裝會保留為獨立記錄並標示 `duplicateInstall=true`；不會因去重而遺失來源硬碟或 build ID。
+
+若 macOS 應用程式隔離不允許直接遍歷 SMB 卷宗，改在 Windows PowerShell 直接掃本機路徑，不需把 SMB 密碼交給整合工作流：
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scan_windows_game_inventory.ps1 `
+  -SteamRoot 'F:\SteamLibrary\steamapps\common' `
+  -GameRoot 'E:\Game\單機遊戲'
+```
+
+產生的 ZIP 只含 Steam 目錄、appmanifest、遊戲目錄、ROM／封裝候選與掃描收據，不讀 ROM／PAK 內容。交付 ZIP 後用 `build_windows_game_inventory.py` 正規化；Git 的 `materials/hero-model-library/source-inventories/windows-game-library.json` 是共編查詢入口，原始 CSV 與 ZIP 留在本機素材庫及待辦 S3 `legacy/` 備份。

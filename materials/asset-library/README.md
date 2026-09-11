@@ -34,6 +34,7 @@
 | 整合另一工作流付費取得的模型 | 同一 `download-sources.json` 的 `paidSources`；查詢回傳 `paidCandidates`，與免費來源一起保留整合 |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
+| 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>` |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
 | 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
 | 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |
@@ -51,7 +52,11 @@ python3 tools/hero-model-library/query.py 拳四郎 --downloads
 python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
 python3 tools/hero-model-library/query_voice.py 莉娜
 python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json
+python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py Palworld
+python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py 'Fate-Unlimited' --json
 ```
+
+Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/`，Git 只收正規化來源索引與重建／查詢程式。
 
 獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原、尚未綁定真實英雄 ID 的舊模型版本。兩者均以 `fullHeroModel=false`、`heroIds=[]` 防止被誤認成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
 
