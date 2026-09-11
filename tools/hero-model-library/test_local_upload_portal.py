@@ -33,10 +33,37 @@ class LocalUploadPortalTest(unittest.TestCase):
             receipt = json.loads(Path(done['receiptPath']).read_text())
             self.assertFalse(receipt['s3Uploaded'])
             self.assertEqual(receipt['sourceRegistration'], 'pending-intake-validation')
+            already = portal.init({'name': 'pakchunk0-WindowsClient.pak', 'size': len(payload), 'lastModified': 1})
+            self.assertTrue(already['complete'])
+            self.assertEqual(portal.finalize(already['id'])['sha256'], done['sha256'])
             repeated = portal.init({'name': 'pakchunk0-WindowsClient.pak', 'size': len(payload), 'lastModified': 1})
-            portal.append(repeated['id'], 0, io.BytesIO(payload), len(payload))
-            with self.assertRaisesRegex(ValueError, 'Destination already exists'):
-                portal.finalize(repeated['id'])
+            self.assertEqual(repeated['received'], len(payload))
+
+    def test_steam_collection_preserves_paths_and_writes_intake(self):
+        with tempfile.TemporaryDirectory() as folder:
+            portal = mod.Portal(Path(folder), 'fixture', 64, postprocess=False)
+            payload = b'pak-data'
+            state = portal.init({'name': 'pakchunk0-WindowsClient.pak', 'size': len(payload),
+                                 'lastModified': 2, 'collection': 'steam-1850510-infinity-library-1',
+                                 'relativePath': 'Game/Content/Paks/pakchunk0-WindowsClient.pak'})
+            portal.append(state['id'], 0, io.BytesIO(payload), len(payload))
+            done = portal.finalize(state['id'])
+            self.assertTrue(done['absolutePath'].endswith(
+                'steam-intakes/steam-1850510-infinity-library-1/files/Game/Content/Paks/pakchunk0-WindowsClient.pak'))
+            result = portal.finalize_collection({'collection': 'steam-1850510-infinity-library-1',
+                'libraryLabel': 'SteamLibrary', 'gameName': 'Infinity Strash', 'appId': '1850510',
+                'installDir': 'InfinityStrash', 'uploads': [state['id']]})
+            intake = json.loads(Path(result['manifestPath']).read_text())
+            self.assertEqual(intake['fileCount'], 1)
+            self.assertEqual(intake['files'][0]['assetFamily'], 'unreal')
+            self.assertEqual(intake['postProcessing']['state'], 'queued')
+
+    def test_steam_collection_rejects_path_traversal(self):
+        with tempfile.TemporaryDirectory() as folder:
+            portal = mod.Portal(Path(folder), 'fixture', 64, postprocess=False)
+            with self.assertRaisesRegex(ValueError, 'relative path'):
+                portal.init({'name': 'asset.pak', 'size': 1, 'lastModified': 2,
+                             'collection': 'steam-test-library-1', 'relativePath': '../asset.pak'})
 
 
 if __name__ == '__main__':
