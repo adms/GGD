@@ -250,6 +250,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "screenFlash",
         "screenShake",
         "spawnModelFx",
+        "spawnObstacle",
         "spawnProjectile",
         "spawnThresholds",
         "spawnVfx",
