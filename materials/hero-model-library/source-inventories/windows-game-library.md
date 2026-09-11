@@ -8,6 +8,7 @@
 
 - Steam 安裝：**312**
 - Steam manifest：**311**
+- 完整可查記錄：**1215**（Steam 目錄、manifest-only、ROM／封裝候選與入口集合）
 - 原始 ROM／封裝候選：**849**
 - 原始目錄列：**11866**；保留為入口集合：**33**
 - 正規化候選：**847**
@@ -38,6 +39,15 @@
 | palworld | steam-install | Palworld Dedicated Server | Windows (Steam) | 25080279 | `F:\SteamLibrary\steamapps\common\PalServer` |
 | palworld | steam-install | Palworld | Windows (Steam) | 25094871 | `F:\SteamLibrary\steamapps\common\Palworld` |
 
+## Palworld／幻獸帕魯
+
+> 本體與 Dedicated Server 分開建檔。只有本體列為角色素材來源；目前尚未掃描安裝目錄內的 PAK、IoStore 或音訊容器。
+
+| 名稱 | App ID | Build ID | 用途 | 容器盤點 | 指定角色 | 路徑 |
+|---|---|---|---|---|---|---|
+| Palworld Dedicated Server | 2394010 | 25080279 | dedicated-server | not-required-for-character-assets |  | `F:\SteamLibrary\steamapps\common\PalServer` |
+| Palworld | 1623730 | 25094871 | game-asset-source | not-scanned-inside-install | 空渦龍 / Jetragon, 枯星龍 / Astralym, 搗蛋貓 / Cattiva | `F:\SteamLibrary\steamapps\common\Palworld` |
+
 ## 平台統計
 
 | 平台 | 候選數 |
@@ -61,325 +71,350 @@
 
 ## Steam 安裝
 
-| 名稱 | App ID | Build ID | 優先群組 | 路徑 |
+安裝目錄缺 manifest：**24**；只有 manifest、未觀察到安裝目錄：**23**。兩者均保留，不能以其中一方推定已完整安裝。
+
+| 名稱 | App ID | Build ID | manifest | 優先群組 | 路徑 |
+|---|---|---|---|---|---|
+| JUMP FORCE | 816020 | 8523149 | matched | jump-force | `F:\SteamLibrary\steamapps\common\JUMP FORCE` |
+| THE KING OF FIGHTERS 2002 UNLIMITED MATCH | 222440 | 8463197 | matched | kof | `F:\SteamLibrary\steamapps\common\The King of Fighters 2002 Unlimited Match` |
+| THE KING OF FIGHTERS XIV STEAM EDITION | 571260 | 3452034 | matched | kof | `F:\SteamLibrary\steamapps\common\THE KING OF FIGHTERS XIV` |
+| 7 Sexy Sins | 1023740 | 6423310 | matched |  | `F:\SteamLibrary\steamapps\common\7SexySins` |
+| 7th Domain:Tree of Chaos | 3088410 | 18050505 | matched |  | `F:\SteamLibrary\steamapps\common\7th DomainTree of Chaos` |
+| 9 Years of Shadows | 1402120 | 18181340 | matched |  | `F:\SteamLibrary\steamapps\common\9 Years of Shadows` |
+| Above The Clouds | 2257720 | 12377669 | matched |  | `F:\SteamLibrary\steamapps\common\Above The Clouds` |
+| Absolum | 1904480 | 23851193 | matched |  | `F:\SteamLibrary\steamapps\common\Absolum` |
+| Academy Love Saga: Tennis Angels EX | 3099640 | 22087358 | matched |  | `F:\SteamLibrary\steamapps\common\Academy Love Saga Tennis Angels EX` |
+| Acting Lessons | 1045520 | 4539343 | matched |  | `F:\SteamLibrary\steamapps\common\Acting Lessons` |
+| ACTION GAME MAKER | 2987180 | 25072525 | matched |  | `F:\SteamLibrary\steamapps\common\ACTION GAME MAKER` |
+| Afterimage | 1701520 | 14404437 | matched |  | `F:\SteamLibrary\steamapps\common\Afterimage` |
+| All-In-One Sports VR | 1514840 | 23357048 | matched |  | `F:\SteamLibrary\steamapps\common\All-In-One Sports VR` |
+| AMEDAMA | 2411980 | 16783518 | matched |  | `F:\SteamLibrary\steamapps\common\AMEDAMA` |
+| Among Us | 945360 | 24302054 | matched |  | `F:\SteamLibrary\steamapps\common\Among Us` |
+| amusement park:lust | 2403000 | 22960458 | matched |  | `F:\SteamLibrary\steamapps\common\amusement parklust` |
+| And the Hero Was Never Seen Again | 2582660 | 13406331 | matched |  | `F:\SteamLibrary\steamapps\common\And the Hero Was Never Seen Again` |
+| Anuchard | 1386620 | 15421362 | matched |  | `F:\SteamLibrary\steamapps\common\Anuchard` |
+| Aokana - EXTRA1 | 1340130 | 6182825 | matched |  | `F:\SteamLibrary\steamapps\common\Aokana Extra1` |
+| ASTLIBRA | 1718570 | 21868037 | matched |  | `F:\SteamLibrary\steamapps\common\ASTLIBRA` |
+| Astral Ascent | 1280930 | 25183799 | matched |  | `F:\SteamLibrary\steamapps\common\Astral Ascent` |
+| BANDIT KNIGHT Playtest | 3229960 | 21280919 | matched |  | `F:\SteamLibrary\steamapps\common\BANDIT KNIGHT Playtest` |
+| Banner of the Maid | 994730 | 23006781 | matched |  | `F:\SteamLibrary\steamapps\common\Banner of the Maid` |
+| Battle Fantasia -Revised Edition- | 356910 | 874051 | matched |  | `F:\SteamLibrary\steamapps\common\Battle Fantasia Revised Edition` |
+| Beat Saber | 620980 | 24732346 | matched |  | `F:\SteamLibrary\steamapps\common\Beat Saber` |
+| Beautiful Mystic Survivors | 1930600 | 11052706 | matched |  | `F:\SteamLibrary\steamapps\common\Beautiful Mystic Survivors` |
+| BERSERK and the Band of the Hawk | 502280 | 1627003 | matched |  | `F:\SteamLibrary\steamapps\common\BERSERK and the Band of the Hawk` |
+| Black Skylands | 1143810 | 12247500 | matched |  | `F:\SteamLibrary\steamapps\common\Black Skylands` |
+| BLACK★ACADEMY |  |  | missing |  | `F:\SteamLibrary\steamapps\common\BLACK★ACADEMY` |
+| Black Myth: Wukong | 2358720 | 21393610 | matched |  | `F:\SteamLibrary\steamapps\common\BlackMythWukong` |
+| Blade Strangers | 565170 | 6461634 | matched |  | `F:\SteamLibrary\steamapps\common\Blade Strangers` |
+| Blasphemous | 774361 | 20206233 | matched |  | `F:\SteamLibrary\steamapps\common\Blasphemous` |
+| Body Pay | 2909170 | 17804692 | matched |  | `F:\SteamLibrary\steamapps\common\Bodypay` |
+| Brothel Secrets 🔞 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Brothel Secrets 🔞` |
+| Captain fly and sexy students | 1135400 | 4281620 | matched |  | `F:\SteamLibrary\steamapps\common\Captain fly and sexy students` |
+| Cat Museum | 1688100 | 10186922 | matched |  | `F:\SteamLibrary\steamapps\common\Cat Museum` |
+| Cat'sKiss 貓研社 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Cat'sKiss 貓研社` |
+| Chaos Galaxy 2 | 1537910 | 20357448 | matched |  | `F:\SteamLibrary\steamapps\common\Chaos Galaxy 2` |
+| Children of Morta | 330020 | 8334433 | matched |  | `F:\SteamLibrary\steamapps\common\ChildrenOfMorta` |
+| CODE OF PRINCESS | 408640 | 1663423 | matched |  | `F:\SteamLibrary\steamapps\common\CODE OF PRINCESS` |
+| Cosplay Collection | 2149070 | 21543115 | matched |  | `F:\SteamLibrary\steamapps\common\Cosplay Collection` |
+| FATAL FURY: City of the Wolves | 2492040 | 25067869 | matched |  | `F:\SteamLibrary\steamapps\common\CotW` |
+| Criss Cross | 1066600 | 3794584 | matched |  | `F:\SteamLibrary\steamapps\common\Criss Cross` |
+| Crypt of the NecroDancer | 247080 | 22938426 | matched |  | `F:\SteamLibrary\steamapps\common\Crypt of the NecroDancer` |
+| Cute Honey | 1347430 | 11276816 | matched |  | `F:\SteamLibrary\steamapps\common\Cute Honey` |
+| Glory & Miserable Survivors DX | 2178330 | 10881077 | matched |  | `F:\SteamLibrary\steamapps\common\DaiSenKa` |
+| Dark Deity | 1374840 | 9986509 | matched |  | `F:\SteamLibrary\steamapps\common\Dark Deity` |
+| Dark Elf | 665180 | 2040915 | matched |  | `F:\SteamLibrary\steamapps\common\Dark Elf` |
+| DATE A LIVE: Rio Reincarnation | 1047440 | 4144953 | matched |  | `F:\SteamLibrary\steamapps\common\DATE A LIVE Rio Reincarnation` |
+| Diorama Battle of NINJA | 464070 | 1361618 | matched |  | `F:\SteamLibrary\steamapps\common\DBoN` |
+| Dead Cells | 588650 | 23762174 | matched |  | `F:\SteamLibrary\steamapps\common\Dead Cells` |
+| Dehumanized | 865850 | 4299551 | matched |  | `F:\SteamLibrary\steamapps\common\Dehumanized` |
+| Demons Roots | 1933660 | 10251225 | matched |  | `F:\SteamLibrary\steamapps\common\Demons Roots` |
+| Deviant Dungeon | 1012900 | 8508964 | matched |  | `F:\SteamLibrary\steamapps\common\Deviant Dungeon` |
+| Disgaea 2 PC | 495280 | 2643362 | matched |  | `F:\SteamLibrary\steamapps\common\Disgaea 2 PC` |
+| DISSIDIA FINAL FANTASY NT Free Edition | 921590 | 4740933 | matched |  | `F:\SteamLibrary\steamapps\common\DISSIDIA FINAL FANTASY NT Free Edition` |
+| Doki Doki Literature Club Plus! | 1388880 | 10766092 | matched |  | `F:\SteamLibrary\steamapps\common\Doki Doki Literature Club Plus` |
+| Double Dragon Gaiden: Rise of the Dragons | 1967260 | 22709693 | matched |  | `F:\SteamLibrary\steamapps\common\DoubleDragonGaiden_ROTD` |
+| DOUKYUUSEI | 1689910 | 8509195 | matched |  | `F:\SteamLibrary\steamapps\common\DOUKYUUSEI` |
+| DRAGON BALL FighterZ | 678950 | 22154755 | matched |  | `F:\SteamLibrary\steamapps\common\DRAGON BALL FighterZ` |
+| Dragon Knight | 508190 | 2691286 | matched |  | `F:\SteamLibrary\steamapps\common\Dragon Knight` |
+| Dragon Spear | 886960 | 14021111 | matched |  | `F:\SteamLibrary\steamapps\common\DragonSpear` |
+| DragonSword : Awakening | 4570720 | 25202218 | matched |  | `F:\SteamLibrary\steamapps\common\DragonSword  Awakening` |
+| Dream Hacker | 1850270 | 12489918 | matched |  | `F:\SteamLibrary\steamapps\common\Dream Hacker` |
+| Dusk Pub - Adult Only | 1974520 | 21940216 | matched |  | `F:\SteamLibrary\steamapps\common\DuskPub` |
+| Eastward | 977880 | 13400350 | matched |  | `F:\SteamLibrary\steamapps\common\Eastward` |
+| Eiyuden Chronicle: Rising | 1658290 | 8900289 | matched |  | `F:\SteamLibrary\steamapps\common\Eiyuden Chronicle Rising` |
+| Elf World Adventure 2 | 2928820 | 22678323 | matched |  | `F:\SteamLibrary\steamapps\common\Elf World Adventure 2` |
+| ENDER LILIES: Quietus of the Knights | 1369630 | 8834157 | matched |  | `F:\SteamLibrary\steamapps\common\ENDER LILIES` |
+| Endless Jade Sea -Midori no Umi- | 925470 | 3518405 | matched |  | `F:\SteamLibrary\steamapps\common\Endless Jade Sea -Midori no Umi-` |
+| Escape from the Cursed Convent | 1142740 | 18332139 | matched |  | `F:\SteamLibrary\steamapps\common\Escape from the Cursed Convent` |
+| Estella's Nightmare: Sealed Space and a Succubus's Curse | 1925210 | 11293546 | matched |  | `F:\SteamLibrary\steamapps\common\Estella's Nightmare Sealed Space and a Succubus's Curse` |
+| Explore Fushimi Inari | 1098490 | 9018808 | matched |  | `F:\SteamLibrary\steamapps\common\Explore Fushimi Inari` |
+| F3K | 1240480 | 11782534 | matched |  | `F:\SteamLibrary\steamapps\common\F3K` |
+| FailedAdventure | 1349850 | 7084230 | matched |  | `F:\SteamLibrary\steamapps\common\FailedAdventure` |
+| Fairy Biography4 : Affair | 2387590 | 11536275 | matched |  | `F:\SteamLibrary\steamapps\common\Fairy Biography4  Affair` |
+| Fantasy Match -Make a H match with cute young woman- | 2651500 | 15791782 | matched |  | `F:\SteamLibrary\steamapps\common\FantasyMatch` |
+| Fate/Samurai Remnant | 1902690 | 15597839 | matched |  | `F:\SteamLibrary\steamapps\common\FateSamuraiRemnant` |
+| Fetish Locator Week One | 1360980 | 24652676 | matched |  | `F:\SteamLibrary\steamapps\common\Fetish Locator Week One - Extended Edition` |
+| Fight of Animals | 1160330 | 13194598 | matched |  | `F:\SteamLibrary\steamapps\common\Fight of Animals` |
+| Fight of Gods | 612930 | 5367760 | matched |  | `F:\SteamLibrary\steamapps\common\Fight of Gods` |
+| FINAL FANTASY VII REMAKE INTERGRADE | 1462040 | 21888968 | matched |  | `F:\SteamLibrary\steamapps\common\FINAL FANTASY VII REMAKE` |
+| Finding Paradise | 337340 | 22603404 | matched |  | `F:\SteamLibrary\steamapps\common\Finding Paradise` |
+| Firework | 1288310 | 7840723 | matched |  | `F:\SteamLibrary\steamapps\common\Firework` |
+| Fluffy Store | 1038740 | 11085344 | matched |  | `F:\SteamLibrary\steamapps\common\FluffyStore` |
+| Fox Hime | 720280 | 15045999 | matched |  | `F:\SteamLibrary\steamapps\common\FoxHime` |
+| Fox Hime Zero | 844930 | 16586507 | matched |  | `F:\SteamLibrary\steamapps\common\FoxHimeZero` |
+| Gazing from beyond | 782690 | 2643339 | matched |  | `F:\SteamLibrary\steamapps\common\Gazing from beyond` |
+| GetsuFumaDen: Undying Moon | 1323470 | 8762323 | matched |  | `F:\SteamLibrary\steamapps\common\GetsuFumaDen` |
+| Getting Over It with Bennett Foddy | 240720 | 8111718 | matched |  | `F:\SteamLibrary\steamapps\common\Getting Over It` |
+| 擛澆撗? | 1100910 | 19431533 | matched |  | `F:\SteamLibrary\steamapps\common\GhostCry Hill` |
+| Ghost Feed | 1111080 | 12769301 | matched |  | `F:\SteamLibrary\steamapps\common\GHOSTFEED` |
+| Girl and Goblin | 880510 | 4534514 | matched |  | `F:\SteamLibrary\steamapps\common\Girl and Goblin` |
+| Girls! Girls! Girls!? | 1412310 | 21365589 | matched |  | `F:\SteamLibrary\steamapps\common\Girls! Girls! Girls!` |
+| GLASS 2 | 2392760 | 14425917 | matched |  | `F:\SteamLibrary\steamapps\common\GLASS 2` |
+| Gleamlight | 1199370 | 21488715 | matched |  | `F:\SteamLibrary\steamapps\common\Gleamlight` |
+| Gold Wiper | 1926870 | 8707255 | matched |  | `F:\SteamLibrary\steamapps\common\Gold Wiper` |
+| Golden Axe Idol | 1827950 | 9782174 | matched |  | `F:\SteamLibrary\steamapps\common\GoldenAxeIdol` |
+| GRANDIA II HD Remaster | 330390 | 8485014 | matched |  | `F:\SteamLibrary\steamapps\common\Grandia II Anniversary Edition` |
+| Grandpa High On Retro | 2967320 | 25105995 | matched |  | `F:\SteamLibrary\steamapps\common\Grandpa High On Retro` |
+| Haste | 1796470 | 23870627 | matched |  | `F:\SteamLibrary\steamapps\common\Haste` |
+| Hello Lady! -New Division- | 1025070 | 3776567 | matched |  | `F:\SteamLibrary\steamapps\common\hello_lady_nd` |
+| Love Rhythm | 1185520 | 5217657 | matched |  | `F:\SteamLibrary\steamapps\common\Hentai Crush Love Rhythm` |
+| Hentai Girl Division | 1113680 | 4950723 | matched |  | `F:\SteamLibrary\steamapps\common\Hentai Girl Division` |
+| ANIME REDEMPTION | 1192610 | 4673989 | matched |  | `F:\SteamLibrary\steamapps\common\HENTAI REDEMPTION` |
+| Hero of Fate | 2332410 | 14107873 | matched |  | `F:\SteamLibrary\steamapps\common\Hero of Fate` |
+| Heroine Anthem Zero | 537990 | 2914242 | matched |  | `F:\SteamLibrary\steamapps\common\Heroine Anthem Zero` |
+| Hero Siege | 269210 | 25170583 | matched |  | `F:\SteamLibrary\steamapps\common\HeroSiege` |
+| Himegashima Island | 2991400 | 15216593 | matched |  | `F:\SteamLibrary\steamapps\common\Himegashima Island` |
+| H-Isekai Loves | 1660280 | 20792559 | matched |  | `F:\SteamLibrary\steamapps\common\H-Isekai Loves` |
+| Home Behind | 467960 | 2566564 | matched |  | `F:\SteamLibrary\steamapps\common\HomeBehind` |
+| Hook | 367580 | 20417289 | matched |  | `F:\SteamLibrary\steamapps\common\Hook` |
+| Hot And Lovely ：Charm |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Hot And Lovely ：Charm` |
+| Hot And Lovely ：Uniform |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Hot And Lovely ：Uniform` |
+| Hot And Lovely 2 | 1256690 | 11566782 | matched |  | `F:\SteamLibrary\steamapps\common\Hot And Lovely 2` |
+| hot and lovely | 1189050 | 4567533 | matched |  | `F:\SteamLibrary\steamapps\common\HotAndLovely` |
+| Incubus | 1973080 | 17804375 | matched |  | `F:\SteamLibrary\steamapps\common\Incubus` |
+| Indivisible | 421170 | 5205809 | matched |  | `F:\SteamLibrary\steamapps\common\Indivisible` |
+| INSIDE | 304430 | 16538646 | matched |  | `F:\SteamLibrary\steamapps\common\INSIDE` |
+| ISEKAI QUEST | 1268110 | 20412903 | matched |  | `F:\SteamLibrary\steamapps\common\ISEKAI QUEST` |
+| J8Mahjong | 2372380 | 15659221 | matched |  | `F:\SteamLibrary\steamapps\common\J8Mahjong` |
+| Jianghu Survivors | 2196790 | 11410229 | matched |  | `F:\SteamLibrary\steamapps\common\Jianghu Survivors` |
+| JoJo's Bizarre Adventure: All-Star Battle R | 1372110 | 13123765 | matched |  | `F:\SteamLibrary\steamapps\common\JoJo's Bizarre Adventure All-Star Battle R` |
+| Dropped into the Modern World: Surviving the Red-Light District | 2841070 | 15328132 | matched |  | `F:\SteamLibrary\steamapps\common\Kabukicho` |
+| Keeper's Toll | 2002220 | 22467691 | matched |  | `F:\SteamLibrary\steamapps\common\Keeper's Toll` |
+| Killing Time | 686190 | 2138833 | matched |  | `F:\SteamLibrary\steamapps\common\Killing Time` |
+| Love, Elections, and Chocolate | 3027600 | 17894739 | matched |  | `F:\SteamLibrary\steamapps\common\KoiChoco` |
+| KumaKuma Manga Editor | 1020820 | 23759335 | matched |  | `F:\SteamLibrary\steamapps\common\KumaKuma Manga Editor` |
+| Kyoto Colorful Days | 464080 | 1192449 | matched |  | `F:\SteamLibrary\steamapps\common\Kyoto Colorful Days` |
+| La-Mulana 2 | 835430 | 9559015 | matched |  | `F:\SteamLibrary\steamapps\common\La-Mulana 2` |
+| Landlord Girls | 1138080 | 8265156 | matched |  | `F:\SteamLibrary\steamapps\common\Landlord Girls` |
+| LEILA | 2458430 | 19462323 | matched |  | `F:\SteamLibrary\steamapps\common\LEILA` |
+| Little Noah: Scion of Paradise | 1883260 | 20857912 | matched |  | `F:\SteamLibrary\steamapps\common\LITTLE NOAH` |
+| Pinball Storm: Lokanta | 2642570 | 18865934 | matched |  | `F:\SteamLibrary\steamapps\common\Lokanta` |
+| LOLLIPOP! | 1515230 | 6830514 | matched |  | `F:\SteamLibrary\steamapps\common\LOLLIPOP!` |
+| LOST EPIC | 1426490 | 11260175 | matched |  | `F:\SteamLibrary\steamapps\common\LOST EPIC` |
+| Lost: Find | 1801650 | 8968657 | matched |  | `F:\SteamLibrary\steamapps\common\Lost Find` |
+| Love n Dream: Virtual Happiness | 1426110 | 10433743 | matched |  | `F:\SteamLibrary\steamapps\common\Love n Dream Virtual Happiness` |
+| Love n War: Warlord by Chance | 1508680 | 7469065 | matched |  | `F:\SteamLibrary\steamapps\common\Love n War Warlord by Chance` |
+| Waifu Secret | 1505620 | 6225782 | matched |  | `F:\SteamLibrary\steamapps\common\Love Puzzle 2` |
+| Love Tavern | 1354230 | 20706889 | matched |  | `F:\SteamLibrary\steamapps\common\Love Tavern` |
+| Lulu & Ennoi - Sacred Suit Girls | 1051590 | 4990750 | matched |  | `F:\SteamLibrary\steamapps\common\Lulu & Ennoi - Sacred Suit Girls` |
+| The Fantasy World of Mahjong Princess | 1912340 | 9271460 | matched |  | `F:\SteamLibrary\steamapps\common\MahjongPrincess` |
+| MahjongSoul | 1329410 | 24808622 | matched |  | `F:\SteamLibrary\steamapps\common\MahjongSoul` |
+| Make Way | 1445790 | 23432086 | matched |  | `F:\SteamLibrary\steamapps\common\Make Way` |
+| Manga maker ComiPo! | 262490 | 9955523 | matched |  | `F:\SteamLibrary\steamapps\common\Manga Maker Comipo` |
+| Manifest Destiny | 2611410 | 18527133 | matched |  | `F:\SteamLibrary\steamapps\common\Manifest Destiny` |
+| Manor of Mystic Courtesans | 1180330 | 20780867 | matched |  | `F:\SteamLibrary\steamapps\common\Manor of Mystic Courtesans` |
+| MELTY BLOOD: TYPE LUMINA | 1372280 | 14425854 | matched |  | `F:\SteamLibrary\steamapps\common\MELTY BLOOD TYPE LUMINA` |
+| METAL SLUG ATTACK RELOADED | 2322440 | 16214511 | matched |  | `F:\SteamLibrary\steamapps\common\MetalSlugAttackReloaded` |
+| Midnight Ramen | 2543030 | 23400487 | matched |  | `F:\SteamLibrary\steamapps\common\Midnight Ramen` |
+| Midnight Ride | 1210110 | 10213886 | matched |  | `F:\SteamLibrary\steamapps\common\Midnight Ride` |
+| Million Arthur: Arcana Blood | 989550 | 4145408 | matched |  | `F:\SteamLibrary\steamapps\common\Million Arthur Arcana Blood` |
+| Minoria | 940910 | 8977673 | matched |  | `F:\SteamLibrary\steamapps\common\Minoria` |
+| Mirror | 644560 | 6722797 | matched |  | `F:\SteamLibrary\steamapps\common\Mirror` |
+| Miss Neko: Pirates | 2695270 | 14887377 | matched |  | `F:\SteamLibrary\steamapps\common\Miss Neko Pirates` |
+| Secret Camera | 1928500 | 13098912 | matched |  | `F:\SteamLibrary\steamapps\common\Monitorture` |
+| Monster | 1894600 | 9544060 | matched |  | `F:\SteamLibrary\steamapps\common\Monster` |
+| Monster Hunter Wilds | 2246340 | 24705561 | matched |  | `F:\SteamLibrary\steamapps\common\MonsterHunterWilds` |
+| MUGEN Avatar?Dress Girls version | 1865660 | 8406682 | matched |  | `F:\SteamLibrary\steamapps\common\MugenAvatar` |
+| Muse Dash | 774171 | 24808527 | matched |  | `F:\SteamLibrary\steamapps\common\Muse Dash` |
+| Mutazione | 1080750 | 12954907 | matched |  | `F:\SteamLibrary\steamapps\common\Mutazione` |
+| My Newborn Life In A Harem | 1742470 | 8533633 | matched |  | `F:\SteamLibrary\steamapps\common\My Newborn Life In A Harem` |
+| My wife's cheating on me! | 3242170 | 18007995 | matched |  | `F:\SteamLibrary\steamapps\common\My wife's cheating on me!` |
+| My Creampie Heaven | 1356710 | 5410427 | matched |  | `F:\SteamLibrary\steamapps\common\MyCreampieHeaven` |
+| MyGame | 779640 | 4510106 | matched |  | `F:\SteamLibrary\steamapps\common\MyGame` |
+| Naked Story | 1092000 | 4703520 | matched |  | `F:\SteamLibrary\steamapps\common\Naked Story` |
+| NEKOPARA Vol. 1 | 333600 | 3841001 | matched |  | `F:\SteamLibrary\steamapps\common\NEKOPARA Vol. 1` |
+| NEKOPARA Vol. 2 | 420110 | 3841004 | matched |  | `F:\SteamLibrary\steamapps\common\NEKOPARA Vol. 2` |
+| Ni no Kuni Wrath of the White Witch™ Remastered |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Ni no Kuni Wrath of the White Witch™ Remastered` |
+| 9-nine-:Episode 1 | 976390 | 3526650 | matched |  | `F:\SteamLibrary\steamapps\common\nine_kokoiro` |
+| Noita | 881100 | 17130612 | matched |  | `F:\SteamLibrary\steamapps\common\Noita` |
+| OCTOPATH TRAVELER II | 1971650 | 13399590 | matched |  | `F:\SteamLibrary\steamapps\common\Octopath_Traveler2` |
+| Office Is My Harem | 2434160 | 12468501 | matched |  | `F:\SteamLibrary\steamapps\common\Office Is My Harem` |
+| Ogre Tale | 1124050 | 14714693 | matched |  | `F:\SteamLibrary\steamapps\common\Ogre Tale` |
+| Onimusha: Warlords | 761600 | 17777991 | matched |  | `F:\SteamLibrary\steamapps\common\Onimusha` |
+| OPUS: Echo of Starsong - Full Bloom Edition | 1504500 | 10870966 | matched |  | `F:\SteamLibrary\steamapps\common\OPUS Echo of Starsong` |
+| Orgasm Simulator 2023 | 2421780 | 11478712 | matched |  | `F:\SteamLibrary\steamapps\common\Orgasm Simulator 2023` |
+| OshiRabu: Waifus Over Husbandos | 1233270 | 6843325 | matched |  | `F:\SteamLibrary\steamapps\common\OshiRabu` |
+| OVERLORD: ESCAPE FROM NAZARICK | 1782150 | 9280392 | matched |  | `F:\SteamLibrary\steamapps\common\OVERLORD -ESCAPE FROM NAZARICK-` |
+| Pacify | 967050 | 24063669 | matched |  | `F:\SteamLibrary\steamapps\common\Pacify` |
+| Palworld Dedicated Server | 2394010 | 25080279 | matched | palworld | `F:\SteamLibrary\steamapps\common\PalServer` |
+| Palworld | 1623730 | 25094871 | matched | palworld | `F:\SteamLibrary\steamapps\common\Palworld` |
+| Paradiddle | 685240 | 23237248 | matched |  | `F:\SteamLibrary\steamapps\common\Paradiddle` |
+| Paranoia: Deliver Me | 970600 | 4938758 | matched |  | `F:\SteamLibrary\steamapps\common\Paranoia Deliver Me` |
+| Parquet | 1662840 | 7270362 | matched |  | `F:\SteamLibrary\steamapps\common\Parquet` |
+| Party Animals | 1260320 | 24949861 | matched |  | `F:\SteamLibrary\steamapps\common\Party Animals` |
+| Peeping Dorm Manager | 2273420 | 14407700 | matched |  | `F:\SteamLibrary\steamapps\common\Peeping Dorm Manager` |
+| PerfectLover | 1181140 | 12673616 | matched |  | `F:\SteamLibrary\steamapps\common\PerfectLover` |
+| Phantom Brave PC | 409870 | 16763670 | matched |  | `F:\SteamLibrary\steamapps\common\Phantom Brave PC` |
+| Photo Album | 1480340 | 11153066 | matched |  | `F:\SteamLibrary\steamapps\common\Photo Album` |
+| Pierhead Arcade 2 | 572620 | 14515476 | matched |  | `F:\SteamLibrary\steamapps\common\Pierhead Arcade 2` |
+| PIMP Life Sex Simulator 18+ | 2624760 | 12924256 | matched |  | `F:\SteamLibrary\steamapps\common\PIMP Life Sex Simulator 18+` |
+| Pixel Game Maker MV | 837510 | 15221806 | matched |  | `F:\SteamLibrary\steamapps\common\Pixel Game Maker` |
+| Plague Inc: Evolved | 246620 | 24657097 | matched |  | `F:\SteamLibrary\steamapps\common\PlagueInc` |
+| PlateUp! | 1599600 | 24651854 | matched |  | `F:\SteamLibrary\steamapps\common\PlateUp` |
+| PowerBeatsVR | 810500 | 19468681 | matched |  | `F:\SteamLibrary\steamapps\common\PowerBeatsVR` |
+| PsionicSentryInfinite | 2598800 | 20487684 | matched |  | `F:\SteamLibrary\steamapps\common\PsionicSentryInfinite` |
+| PVZGW2 | 1922560 | 18148967 | matched |  | `F:\SteamLibrary\steamapps\common\PVZGW2` |
+| Qian Shan Village |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Qian Shan Village` |
+| Queen's Glory | 1271190 | 6510838 | matched |  | `F:\SteamLibrary\steamapps\common\Queen's Glory` |
+| Rainy City: Pandemic | 1316050 | 8590859 | matched |  | `F:\SteamLibrary\steamapps\common\RainyCityPandemic` |
+| Rayman: Raving Rabbids | 15080 | 252090 | matched |  | `F:\SteamLibrary\steamapps\common\Rayman Raving Rabbids` |
+| Rebirth2:Beware of Mr.Wang | 1517960 | 8170568 | matched |  | `F:\SteamLibrary\steamapps\common\Rebirth2` |
+| Rebirth:Mr Wang | 1394800 | 9155494 | matched |  | `F:\SteamLibrary\steamapps\common\RebirthMr Wang` |
+| Re:Destiny | 1426120 | 9013109 | matched |  | `F:\SteamLibrary\steamapps\common\ReDestiny` |
+| Resist the succubus—The end of the female Knight |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Resist the succubus—The end of the female Knight` |
+| Rhythm Witch: Beat Death | 2951580 | 22691418 | matched |  | `F:\SteamLibrary\steamapps\common\Rhythm Witch` |
+| River City Saga: Three Kingdoms | 1013220 | 9639067 | matched |  | `F:\SteamLibrary\steamapps\common\River City Saga Three Kingdoms` |
+| RPG in a Box | 498310 | 23837036 | matched |  | `F:\SteamLibrary\steamapps\common\RPG in a Box` |
+| R-Type Final 2 | 1442820 | 24933032 | matched |  | `F:\SteamLibrary\steamapps\common\R-Type Final 2` |
+| Sakuna: Of Rice and Ruin | 1356670 | 7842265 | matched |  | `F:\SteamLibrary\steamapps\common\Sakuna Of Rice and Ruin` |
+| SAMURAI SHODOWN | 1342260 | 14948879 | matched |  | `F:\SteamLibrary\steamapps\common\SamuraiShodown` |
+| SANABI | 1562700 | 21675470 | matched |  | `F:\SteamLibrary\steamapps\common\SANABI` |
+| sanoba witch | 2458530 | 11913959 | matched |  | `F:\SteamLibrary\steamapps\common\sanoba witch` |
+| Secret Pie (Adult Version) | 1802870 | 15926072 | matched |  | `F:\SteamLibrary\steamapps\common\SecretPie` |
+| Seek Girl Ⅶ |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Seek Girl Ⅶ` |
+| Seek Girl V | 1393410 | 5573034 | matched |  | `F:\SteamLibrary\steamapps\common\Seek Girl V` |
+| Seek GirlFog Ⅰ |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Seek GirlFog Ⅰ` |
+| SEGA Bass Fishing | 71240 | 403155 | matched |  | `F:\SteamLibrary\steamapps\common\SEGA Bass Fishing` |
+| Sex Bar Simulator 🍸🔞 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\Sex Bar Simulator 🍸🔞` |
+| SEX Massage 🔞 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\SEX Massage 🔞` |
+| Lovey-Dovey Lockdown | 2329630 | 13737051 | matched |  | `F:\SteamLibrary\steamapps\common\Sex room` |
+| SEX, BEACH & GIRLS ⛱ 💦 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\SEX, BEACH & GIRLS ⛱ 💦` |
+| Sexy Mystic Survivors | 1964360 | 11052888 | matched |  | `F:\SteamLibrary\steamapps\common\Sexy Mystic Survivors` |
+| Shades of Sakura | 1678140 | 7072701 | matched |  | `F:\SteamLibrary\steamapps\common\Shades of Sakura` |
+| Shio | 525360 | 3100506 | matched |  | `F:\SteamLibrary\steamapps\common\Shio` |
+| Siege of Dungeon | 1972410 | 13075952 | matched |  | `F:\SteamLibrary\steamapps\common\Siege Of Dungeon` |
+| Sifu | 2138710 | 18739835 | matched |  | `F:\SteamLibrary\steamapps\common\Sifu` |
+| Sinners Landing | 1816140 | 23855451 | matched |  | `F:\SteamLibrary\steamapps\common\SinnersLanding` |
+| Skul: The Hero Slayer | 1147560 | 20492693 | matched |  | `F:\SteamLibrary\steamapps\common\Skul` |
+| Slave's Sword | 893010 | 5386380 | matched |  | `F:\SteamLibrary\steamapps\common\Slave's Sword` |
+| Slaycation Paradise | 1643850 | 10055319 | matched |  | `F:\SteamLibrary\steamapps\common\Slaycation Paradise` |
+| Slobbish Dragon Princess | 1469910 | 6043076 | matched |  | `F:\SteamLibrary\steamapps\common\Slobbish Dragon Princess` |
+| Slobbish Dragon Princess 2 | 1752150 | 7738813 | matched |  | `F:\SteamLibrary\steamapps\common\Slobbish Dragon Princess 2` |
+| SNK 40th Anniversary Collection | 865940 | 4248009 | matched |  | `F:\SteamLibrary\steamapps\common\SNK40thCollection` |
+| SNK HEROINES Tag Team Frenzy | 794580 | 3705378 | matched |  | `F:\SteamLibrary\steamapps\common\SNKHEROINES` |
+| Some Some Convenience Store | 1217390 | 24180769 | matched |  | `F:\SteamLibrary\steamapps\common\somesome` |
+| Songs of Death | 2276420 | 16678849 | matched |  | `F:\SteamLibrary\steamapps\common\Songs Of Death` |
+| Spirit City: Lofi Sessions | 2113850 | 24980898 | matched |  | `F:\SteamLibrary\steamapps\common\Spirit City Lofi Sessions` |
+| STEPMOM Milf Scandal 💖 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\STEPMOM Milf Scandal 💖` |
+| Wolf of Stock Street | 1658310 | 8402153 | matched |  | `F:\SteamLibrary\steamapps\common\Stock Wolf` |
+| Infinity Strash: DRAGON QUEST The Adventure of Dai | 1895810 | 12283352 | matched | infinity-strash | `F:\SteamLibrary\steamapps\common\Strash` |
+| Street Fighter 6 | 1364780 | 24176760 | matched |  | `F:\SteamLibrary\steamapps\common\Street Fighter 6` |
+| Subway Exorcist Girl | 3263210 | 17675049 | matched |  | `F:\SteamLibrary\steamapps\common\Subway Exorcist Girl` |
+| Succubus: SEX Story | 2560670 | 12492338 | matched |  | `F:\SteamLibrary\steamapps\common\Succubus SEX Story` |
+| Sultan's Game | 3117820 | 24704220 | matched |  | `F:\SteamLibrary\steamapps\common\Sultan's Game` |
+| Sumire | 1335230 | 8604766 | matched |  | `F:\SteamLibrary\steamapps\common\Sumire` |
+| Sun Haven | 1432860 | 24721658 | matched |  | `F:\SteamLibrary\steamapps\common\Sun Haven` |
+| Super Battle Golf | 4069520 | 24993500 | matched |  | `F:\SteamLibrary\steamapps\common\Super Battle Golf` |
+| Super Bunny Man | 673750 | 24350853 | matched |  | `F:\SteamLibrary\steamapps\common\Super Bunny Man` |
+| Tayutama 2 -you're the only one- | 552280 | 1538248 | matched |  | `F:\SteamLibrary\steamapps\common\tayutama 2 -you're the only one-` |
+| Teslagrad 2 | 1698220 | 23225880 | matched |  | `F:\SteamLibrary\steamapps\common\Teslagrad 2` |
+| The Coma 2: Vicious Sisters | 1045720 | 20285137 | matched |  | `F:\SteamLibrary\steamapps\common\The Coma 2 Vicious Sisters` |
+| The Coma: Recut | 600090 | 20285179 | matched |  | `F:\SteamLibrary\steamapps\common\The Coma Recut` |
+| The Escapists 2 | 641990 | 5292929 | matched |  | `F:\SteamLibrary\steamapps\common\The Escapists 2` |
+| The Heiress | 680320 | 2049169 | matched |  | `F:\SteamLibrary\steamapps\common\The Heiress` |
+| The Invincible | 731040 | 18630819 | matched |  | `F:\SteamLibrary\steamapps\common\The Invincible` |
+| The logic of the miniature garden | 943980 | 3958825 | matched |  | `F:\SteamLibrary\steamapps\common\The logic of the miniature garden` |
+| The Moment We Met | 882940 | 3235243 | matched |  | `F:\SteamLibrary\steamapps\common\The Moment We Met` |
+| The Rewinder | 1161170 | 12242342 | matched |  | `F:\SteamLibrary\steamapps\common\The Rewinder` |
+| The Secret Atelier | 2799690 | 18888510 | matched |  | `F:\SteamLibrary\steamapps\common\The Secret Atelier` |
+| The Shadow of Yidhra | 1576240 | 7860297 | matched |  | `F:\SteamLibrary\steamapps\common\The Shadow of Yidhra` |
+| The Shell Part I: Inferno | 2258770 | 17169299 | matched |  | `F:\SteamLibrary\steamapps\common\The Shell Part I` |
+| The Song of Saya | 702050 | 4414713 | matched |  | `F:\SteamLibrary\steamapps\common\The Song of Saya` |
+| Thought Experiment Simulator | 2696320 | 18138595 | matched |  | `F:\SteamLibrary\steamapps\common\Thought Experiment Simulator` |
+| To the Moon | 206440 | 23897596 | matched |  | `F:\SteamLibrary\steamapps\common\To the Moon` |
+| Trials of Mana | 924980 | 5736103 | matched |  | `F:\SteamLibrary\steamapps\common\Trials of Mana` |
+| Ultimate Chicken Horse | 386940 | 23306644 | matched |  | `F:\SteamLibrary\steamapps\common\Ultimate Chicken Horse` |
+| Ultimate Fishing簧 Simulator 2 | 1136380 | 18886995 | matched |  | `F:\SteamLibrary\steamapps\common\Ultimate Fishing Simulator 2020` |
+| Umamusume: Pretty Derby - Party Dash | 2313020 | 16260841 | matched |  | `F:\SteamLibrary\steamapps\common\Uma Party Dash` |
+| Umineko: Golden Fantasia | 550340 | 2615651 | matched |  | `F:\SteamLibrary\steamapps\common\Umineko Golden Fantasia` |
+| UnHolY ToRturEr | 1158010 | 20247011 | matched |  | `F:\SteamLibrary\steamapps\common\UnHolY ToRturEr` |
+| UNSIGHTED | 1062110 | 7990170 | matched |  | `F:\SteamLibrary\steamapps\common\Unsighted` |
+| Until You Fall | 858260 | 20228127 | matched |  | `F:\SteamLibrary\steamapps\common\UntilYouFall` |
+| Vampire Survivors | 1794680 | 25016043 | matched |  | `F:\SteamLibrary\steamapps\common\Vampire Survivors` |
+| Vampires' Melody | 1377360 | 15046977 | matched |  | `F:\SteamLibrary\steamapps\common\VampiresMelody` |
+| Vampires' Melody 2 | 2532050 | 15046505 | matched |  | `F:\SteamLibrary\steamapps\common\VampiresMelody2` |
+| VEGAS 19 Edit Steam Edition | 1698340 | 11156546 | matched |  | `F:\SteamLibrary\steamapps\common\VEGAS Pro 19.0` |
+| Visions of Mana | 2490990 | 15634602 | matched |  | `F:\SteamLibrary\steamapps\common\VisionsofMana` |
+| Visions of Mana Demo | 2989250 | 15671287 | matched |  | `F:\SteamLibrary\steamapps\common\VisionsofManaDemo` |
+| VTube Studio | 1325860 | 23574781 | matched |  | `F:\SteamLibrary\steamapps\common\VTube Studio` |
+| Wallpaper Engine | 431960 | 23967692 | matched |  | `F:\SteamLibrary\steamapps\common\wallpaper_engine` |
+| WARRIORS ALL-STARS | 610190 | 2155167 | matched |  | `F:\SteamLibrary\steamapps\common\WARRIORS ALL-STARS` |
+| WasteLand Express | 1831250 | 22274677 | matched |  | `F:\SteamLibrary\steamapps\common\WasteLand Express` |
+| West Sweety | 1186400 | 8450671 | matched |  | `F:\SteamLibrary\steamapps\common\West Sweety` |
+| When The Past Was Around | 1164050 | 5931608 | matched |  | `F:\SteamLibrary\steamapps\common\When The Past Was Around` |
+| Whisper Mountain Outbreak | 1953230 | 24315481 | matched |  | `F:\SteamLibrary\steamapps\common\Whisper Mountain Outbreak` |
+| Wind Fantasy 4 | 2020510 | 9271245 | matched |  | `F:\SteamLibrary\steamapps\common\Wind Fantasy 4` |
+| WISH Paradise | 1573300 | 7354382 | matched |  | `F:\SteamLibrary\steamapps\common\WISH Paradise` |
+| Witch's Apocalyptic Journey | 3709430 | 24831968 | matched |  | `F:\SteamLibrary\steamapps\common\Witch's Apocalyptic Journey` |
+| Witch's Dungeon | 3171630 | 20732849 | matched |  | `F:\SteamLibrary\steamapps\common\Witch's Dungeon` |
+| Working Sakuya | 2861150 | 14119971 | matched |  | `F:\SteamLibrary\steamapps\common\Working Sakuya` |
+| Yet another tower defence | 923890 | 3486619 | matched |  | `F:\SteamLibrary\steamapps\common\Yet another tower defence` |
+| Yggdra Union | 2107860 | 11283770 | matched |  | `F:\SteamLibrary\steamapps\common\Yggdra Union` |
+| YinYang Street Ultimate Edition | 2334040 | 19628249 | matched |  | `F:\SteamLibrary\steamapps\common\YinYang Street Ultimate Edition` |
+| Yogurt! | 1390740 | 5734562 | matched |  | `F:\SteamLibrary\steamapps\common\Yogurt!` |
+| Yohane the Parhelion - NUMAZU in the MIRAGE - | 2459750 | 19806702 | matched |  | `F:\SteamLibrary\steamapps\common\Yohanuma` |
+| Yokai Art: Night Parade of One Hundred Demons | 1812060 | 18677113 | matched |  | `F:\SteamLibrary\steamapps\common\Yokai Art Night Parade of One Hundred Demons` |
+| Yomawari: Lost in the Dark | 1998330 | 9762023 | matched |  | `F:\SteamLibrary\steamapps\common\Yomawari Lost in the Dark` |
+| YUME | 1471200 | 6104068 | matched |  | `F:\SteamLibrary\steamapps\common\YUME` |
+| Zoeti | 1434540 | 18608440 | matched |  | `F:\SteamLibrary\steamapps\common\Zoeti` |
+| サキと淫絡の坩堝 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\サキと淫絡の坩堝` |
+| 少女妖精弹珠台 Elf Girl Pinball |  |  | missing |  | `F:\SteamLibrary\steamapps\common\少女妖精弹珠台 Elf Girl Pinball` |
+| 自由行動俠 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\自由行動俠` |
+| 我与你共度的七日 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\我与你共度的七日` |
+| 奉仕人偶的日常 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\奉仕人偶的日常` |
+| 穿越黃油開後宮 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\穿越黃油開後宮` |
+| 鬼谷八荒 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\鬼谷八荒` |
+| 球球少女 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\球球少女` |
+| 創業王 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\創業王` |
+| 葬花 |  |  | missing |  | `F:\SteamLibrary\steamapps\common\葬花` |
+
+## Steam manifest-only 記錄
+
+| 名稱 | App ID | Build ID | 狀態 | manifest |
 |---|---|---|---|---|
-| JUMP FORCE | 816020 | 8523149 | jump-force | `F:\SteamLibrary\steamapps\common\JUMP FORCE` |
-| THE KING OF FIGHTERS 2002 UNLIMITED MATCH | 222440 | 8463197 | kof | `F:\SteamLibrary\steamapps\common\The King of Fighters 2002 Unlimited Match` |
-| THE KING OF FIGHTERS XIV STEAM EDITION | 571260 | 3452034 | kof | `F:\SteamLibrary\steamapps\common\THE KING OF FIGHTERS XIV` |
-| 7 Sexy Sins | 1023740 | 6423310 |  | `F:\SteamLibrary\steamapps\common\7SexySins` |
-| 7th Domain:Tree of Chaos | 3088410 | 18050505 |  | `F:\SteamLibrary\steamapps\common\7th DomainTree of Chaos` |
-| 9 Years of Shadows | 1402120 | 18181340 |  | `F:\SteamLibrary\steamapps\common\9 Years of Shadows` |
-| Above The Clouds | 2257720 | 12377669 |  | `F:\SteamLibrary\steamapps\common\Above The Clouds` |
-| Absolum | 1904480 | 23851193 |  | `F:\SteamLibrary\steamapps\common\Absolum` |
-| Academy Love Saga: Tennis Angels EX | 3099640 | 22087358 |  | `F:\SteamLibrary\steamapps\common\Academy Love Saga Tennis Angels EX` |
-| Acting Lessons | 1045520 | 4539343 |  | `F:\SteamLibrary\steamapps\common\Acting Lessons` |
-| ACTION GAME MAKER | 2987180 | 25072525 |  | `F:\SteamLibrary\steamapps\common\ACTION GAME MAKER` |
-| Afterimage | 1701520 | 14404437 |  | `F:\SteamLibrary\steamapps\common\Afterimage` |
-| All-In-One Sports VR | 1514840 | 23357048 |  | `F:\SteamLibrary\steamapps\common\All-In-One Sports VR` |
-| AMEDAMA | 2411980 | 16783518 |  | `F:\SteamLibrary\steamapps\common\AMEDAMA` |
-| Among Us | 945360 | 24302054 |  | `F:\SteamLibrary\steamapps\common\Among Us` |
-| amusement park:lust | 2403000 | 22960458 |  | `F:\SteamLibrary\steamapps\common\amusement parklust` |
-| And the Hero Was Never Seen Again | 2582660 | 13406331 |  | `F:\SteamLibrary\steamapps\common\And the Hero Was Never Seen Again` |
-| Anuchard | 1386620 | 15421362 |  | `F:\SteamLibrary\steamapps\common\Anuchard` |
-| Aokana - EXTRA1 | 1340130 | 6182825 |  | `F:\SteamLibrary\steamapps\common\Aokana Extra1` |
-| ASTLIBRA 嚚???閮潘? Revision | 1718570 | 21868037 |  | `F:\SteamLibrary\steamapps\common\ASTLIBRA` |
-| Astral Ascent | 1280930 | 25183799 |  | `F:\SteamLibrary\steamapps\common\Astral Ascent` |
-| BANDIT KNIGHT Playtest | 3229960 | 21280919 |  | `F:\SteamLibrary\steamapps\common\BANDIT KNIGHT Playtest` |
-| Banner of the Maid | 994730 | 23006781 |  | `F:\SteamLibrary\steamapps\common\Banner of the Maid` |
-| Battle Fantasia -Revised Edition- | 356910 | 874051 |  | `F:\SteamLibrary\steamapps\common\Battle Fantasia Revised Edition` |
-| Beat Saber | 620980 | 24732346 |  | `F:\SteamLibrary\steamapps\common\Beat Saber` |
-| Beautiful Mystic Survivors | 1930600 | 11052706 |  | `F:\SteamLibrary\steamapps\common\Beautiful Mystic Survivors` |
-| BERSERK and the Band of the Hawk | 502280 | 1627003 |  | `F:\SteamLibrary\steamapps\common\BERSERK and the Band of the Hawk` |
-| Black Skylands | 1143810 | 12247500 |  | `F:\SteamLibrary\steamapps\common\Black Skylands` |
-| BLACK★ACADEMY |  |  |  | `F:\SteamLibrary\steamapps\common\BLACK★ACADEMY` |
-| Black Myth: Wukong | 2358720 | 21393610 |  | `F:\SteamLibrary\steamapps\common\BlackMythWukong` |
-| Blade Strangers | 565170 | 6461634 |  | `F:\SteamLibrary\steamapps\common\Blade Strangers` |
-| Blasphemous | 774361 | 20206233 |  | `F:\SteamLibrary\steamapps\common\Blasphemous` |
-| Body Pay | 2909170 | 17804692 |  | `F:\SteamLibrary\steamapps\common\Bodypay` |
-| Brothel Secrets 🔞 |  |  |  | `F:\SteamLibrary\steamapps\common\Brothel Secrets 🔞` |
-| Captain fly and sexy students | 1135400 | 4281620 |  | `F:\SteamLibrary\steamapps\common\Captain fly and sexy students` |
-| Cat Museum | 1688100 | 10186922 |  | `F:\SteamLibrary\steamapps\common\Cat Museum` |
-| Cat'sKiss 貓研社 |  |  |  | `F:\SteamLibrary\steamapps\common\Cat'sKiss 貓研社` |
-| Chaos Galaxy 2 | 1537910 | 20357448 |  | `F:\SteamLibrary\steamapps\common\Chaos Galaxy 2` |
-| Children of Morta | 330020 | 8334433 |  | `F:\SteamLibrary\steamapps\common\ChildrenOfMorta` |
-| CODE OF PRINCESS | 408640 | 1663423 |  | `F:\SteamLibrary\steamapps\common\CODE OF PRINCESS` |
-| Cosplay Collection | 2149070 | 21543115 |  | `F:\SteamLibrary\steamapps\common\Cosplay Collection` |
-| FATAL FURY: City of the Wolves | 2492040 | 25067869 |  | `F:\SteamLibrary\steamapps\common\CotW` |
-| Criss Cross | 1066600 | 3794584 |  | `F:\SteamLibrary\steamapps\common\Criss Cross` |
-| Crypt of the NecroDancer | 247080 | 22938426 |  | `F:\SteamLibrary\steamapps\common\Crypt of the NecroDancer` |
-| Cute Honey | 1347430 | 11276816 |  | `F:\SteamLibrary\steamapps\common\Cute Honey` |
-| Glory & Miserable Survivors DX | 2178330 | 10881077 |  | `F:\SteamLibrary\steamapps\common\DaiSenKa` |
-| Dark Deity | 1374840 | 9986509 |  | `F:\SteamLibrary\steamapps\common\Dark Deity` |
-| Dark Elf | 665180 | 2040915 |  | `F:\SteamLibrary\steamapps\common\Dark Elf` |
-| DATE A LIVE: Rio Reincarnation | 1047440 | 4144953 |  | `F:\SteamLibrary\steamapps\common\DATE A LIVE Rio Reincarnation` |
-| Diorama Battle of NINJA | 464070 | 1361618 |  | `F:\SteamLibrary\steamapps\common\DBoN` |
-| Dead Cells | 588650 | 23762174 |  | `F:\SteamLibrary\steamapps\common\Dead Cells` |
-| Dehumanized | 865850 | 4299551 |  | `F:\SteamLibrary\steamapps\common\Dehumanized` |
-| Demons Roots | 1933660 | 10251225 |  | `F:\SteamLibrary\steamapps\common\Demons Roots` |
-| Deviant Dungeon | 1012900 | 8508964 |  | `F:\SteamLibrary\steamapps\common\Deviant Dungeon` |
-| Disgaea 2 PC | 495280 | 2643362 |  | `F:\SteamLibrary\steamapps\common\Disgaea 2 PC` |
-| DISSIDIA FINAL FANTASY NT Free Edition | 921590 | 4740933 |  | `F:\SteamLibrary\steamapps\common\DISSIDIA FINAL FANTASY NT Free Edition` |
-| Doki Doki Literature Club Plus! | 1388880 | 10766092 |  | `F:\SteamLibrary\steamapps\common\Doki Doki Literature Club Plus` |
-| Double Dragon Gaiden: Rise of the Dragons | 1967260 | 22709693 |  | `F:\SteamLibrary\steamapps\common\DoubleDragonGaiden_ROTD` |
-| DOUKYUUSEI | 1689910 | 8509195 |  | `F:\SteamLibrary\steamapps\common\DOUKYUUSEI` |
-| DRAGON BALL FighterZ | 678950 | 22154755 |  | `F:\SteamLibrary\steamapps\common\DRAGON BALL FighterZ` |
-| Dragon Knight | 508190 | 2691286 |  | `F:\SteamLibrary\steamapps\common\Dragon Knight` |
-| Dragon Spear | 886960 | 14021111 |  | `F:\SteamLibrary\steamapps\common\DragonSpear` |
-| DragonSword : Awakening | 4570720 | 25202218 |  | `F:\SteamLibrary\steamapps\common\DragonSword  Awakening` |
-| Dream Hacker | 1850270 | 12489918 |  | `F:\SteamLibrary\steamapps\common\Dream Hacker` |
-| Dusk Pub - Adult Only | 1974520 | 21940216 |  | `F:\SteamLibrary\steamapps\common\DuskPub` |
-| Eastward | 977880 | 13400350 |  | `F:\SteamLibrary\steamapps\common\Eastward` |
-| Eiyuden Chronicle: Rising | 1658290 | 8900289 |  | `F:\SteamLibrary\steamapps\common\Eiyuden Chronicle Rising` |
-| Elf World Adventure 2 | 2928820 | 22678323 |  | `F:\SteamLibrary\steamapps\common\Elf World Adventure 2` |
-| ENDER LILIES: Quietus of the Knights | 1369630 | 8834157 |  | `F:\SteamLibrary\steamapps\common\ENDER LILIES` |
-| Endless Jade Sea -Midori no Umi- | 925470 | 3518405 |  | `F:\SteamLibrary\steamapps\common\Endless Jade Sea -Midori no Umi-` |
-| ??啁??楠 - Escape from the cursed convent | 1142740 | 18332139 |  | `F:\SteamLibrary\steamapps\common\Escape from the Cursed Convent` |
-| Estella's Nightmare: Sealed Space and a Succubus's Curse | 1925210 | 11293546 |  | `F:\SteamLibrary\steamapps\common\Estella's Nightmare Sealed Space and a Succubus's Curse` |
-| Explore Fushimi Inari | 1098490 | 9018808 |  | `F:\SteamLibrary\steamapps\common\Explore Fushimi Inari` |
-| ?勗擳????瘙? -The?Sacrificial?Girl?of?the?Fantasy?3?Kingdoms- SHU | 1240480 | 11782534 |  | `F:\SteamLibrary\steamapps\common\F3K` |
-| 憭望????⊿?銋 | 1349850 | 7084230 |  | `F:\SteamLibrary\steamapps\common\FailedAdventure` |
-| Fairy Biography4 : Affair | 2387590 | 11536275 |  | `F:\SteamLibrary\steamapps\common\Fairy Biography4  Affair` |
-| Fantasy Match -Make a H match with cute young woman- | 2651500 | 15791782 |  | `F:\SteamLibrary\steamapps\common\FantasyMatch` |
-| Fate/Samurai Remnant | 1902690 | 15597839 |  | `F:\SteamLibrary\steamapps\common\FateSamuraiRemnant` |
-| Fetish Locator Week One | 1360980 | 24652676 |  | `F:\SteamLibrary\steamapps\common\Fetish Locator Week One - Extended Edition` |
-| Fight of Animals | 1160330 | 13194598 |  | `F:\SteamLibrary\steamapps\common\Fight of Animals` |
-| Fight of Gods | 612930 | 5367760 |  | `F:\SteamLibrary\steamapps\common\Fight of Gods` |
-| FINAL FANTASY VII REMAKE INTERGRADE | 1462040 | 21888968 |  | `F:\SteamLibrary\steamapps\common\FINAL FANTASY VII REMAKE` |
-| Finding Paradise | 337340 | 22603404 |  | `F:\SteamLibrary\steamapps\common\Finding Paradise` |
-| Firework | 1288310 | 7840723 |  | `F:\SteamLibrary\steamapps\common\Firework` |
-| Fluffy Store | 1038740 | 11085344 |  | `F:\SteamLibrary\steamapps\common\FluffyStore` |
-| Fox Hime | 720280 | 15045999 |  | `F:\SteamLibrary\steamapps\common\FoxHime` |
-| Fox Hime Zero | 844930 | 16586507 |  | `F:\SteamLibrary\steamapps\common\FoxHimeZero` |
-| Gazing from beyond | 782690 | 2643339 |  | `F:\SteamLibrary\steamapps\common\Gazing from beyond` |
-| GetsuFumaDen: Undying Moon | 1323470 | 8762323 |  | `F:\SteamLibrary\steamapps\common\GetsuFumaDen` |
-| Getting Over It with Bennett Foddy | 240720 | 8111718 |  | `F:\SteamLibrary\steamapps\common\Getting Over It` |
-| 擛澆撗?
-	 | 1100910 | 19431533 |  | `F:\SteamLibrary\steamapps\common\GhostCry Hill` |
-| Ghost Feed | 1111080 | 12769301 |  | `F:\SteamLibrary\steamapps\common\GHOSTFEED` |
-| Girl and Goblin | 880510 | 4534514 |  | `F:\SteamLibrary\steamapps\common\Girl and Goblin` |
-| Girls! Girls! Girls!? | 1412310 | 21365589 |  | `F:\SteamLibrary\steamapps\common\Girls! Girls! Girls!` |
-| GLASS 2 | 2392760 | 14425917 |  | `F:\SteamLibrary\steamapps\common\GLASS 2` |
-| Gleamlight | 1199370 | 21488715 |  | `F:\SteamLibrary\steamapps\common\Gleamlight` |
-| Gold Wiper | 1926870 | 8707255 |  | `F:\SteamLibrary\steamapps\common\Gold Wiper` |
-| Golden Axe Idol | 1827950 | 9782174 |  | `F:\SteamLibrary\steamapps\common\GoldenAxeIdol` |
-| GRANDIA II HD Remaster | 330390 | 8485014 |  | `F:\SteamLibrary\steamapps\common\Grandia II Anniversary Edition` |
-| Grandpa High On Retro | 2967320 | 25105995 |  | `F:\SteamLibrary\steamapps\common\Grandpa High On Retro` |
-| Haste | 1796470 | 23870627 |  | `F:\SteamLibrary\steamapps\common\Haste` |
-| Hello Lady! -New Division- | 1025070 | 3776567 |  | `F:\SteamLibrary\steamapps\common\hello_lady_nd` |
-| Love Rhythm | 1185520 | 5217657 |  | `F:\SteamLibrary\steamapps\common\Hentai Crush Love Rhythm` |
-| Hentai Girl Division | 1113680 | 4950723 |  | `F:\SteamLibrary\steamapps\common\Hentai Girl Division` |
-| ANIME REDEMPTION | 1192610 | 4673989 |  | `F:\SteamLibrary\steamapps\common\HENTAI REDEMPTION` |
-| Hero of Fate | 2332410 | 14107873 |  | `F:\SteamLibrary\steamapps\common\Hero of Fate` |
-| Heroine Anthem Zero | 537990 | 2914242 |  | `F:\SteamLibrary\steamapps\common\Heroine Anthem Zero` |
-| Hero Siege | 269210 | 25170583 |  | `F:\SteamLibrary\steamapps\common\HeroSiege` |
-| Himegashima Island | 2991400 | 15216593 |  | `F:\SteamLibrary\steamapps\common\Himegashima Island` |
-| H-Isekai Loves | 1660280 | 20792559 |  | `F:\SteamLibrary\steamapps\common\H-Isekai Loves` |
-| Home Behind | 467960 | 2566564 |  | `F:\SteamLibrary\steamapps\common\HomeBehind` |
-| Hook | 367580 | 20417289 |  | `F:\SteamLibrary\steamapps\common\Hook` |
-| Hot And Lovely ：Charm |  |  |  | `F:\SteamLibrary\steamapps\common\Hot And Lovely ：Charm` |
-| Hot And Lovely ：Uniform |  |  |  | `F:\SteamLibrary\steamapps\common\Hot And Lovely ：Uniform` |
-| Hot And Lovely 2 | 1256690 | 11566782 |  | `F:\SteamLibrary\steamapps\common\Hot And Lovely 2` |
-| hot and lovely | 1189050 | 4567533 |  | `F:\SteamLibrary\steamapps\common\HotAndLovely` |
-| Incubus | 1973080 | 17804375 |  | `F:\SteamLibrary\steamapps\common\Incubus` |
-| Indivisible | 421170 | 5205809 |  | `F:\SteamLibrary\steamapps\common\Indivisible` |
-| INSIDE | 304430 | 16538646 |  | `F:\SteamLibrary\steamapps\common\INSIDE` |
-| ISEKAI QUEST | 1268110 | 20412903 |  | `F:\SteamLibrary\steamapps\common\ISEKAI QUEST` |
-| ?曉暻餃?(J8 Mahjong) | 2372380 | 15659221 |  | `F:\SteamLibrary\steamapps\common\J8Mahjong` |
-| 瘙?撟詨???
-	 | 2196790 | 11410229 |  | `F:\SteamLibrary\steamapps\common\Jianghu Survivors` |
-| JoJo's Bizarre Adventure: All-Star Battle R | 1372110 | 13123765 |  | `F:\SteamLibrary\steamapps\common\JoJo's Bizarre Adventure All-Star Battle R` |
-| Dropped into the Modern World: Surviving the Red-Light District | 2841070 | 15328132 |  | `F:\SteamLibrary\steamapps\common\Kabukicho` |
-| Keeper's Toll | 2002220 | 22467691 |  | `F:\SteamLibrary\steamapps\common\Keeper's Toll` |
-| Killing Time | 686190 | 2138833 |  | `F:\SteamLibrary\steamapps\common\Killing Time` |
-| Love, Elections, and Chocolate | 3027600 | 17894739 |  | `F:\SteamLibrary\steamapps\common\KoiChoco` |
-| KumaKuma Manga Editor | 1020820 | 23759335 |  | `F:\SteamLibrary\steamapps\common\KumaKuma Manga Editor` |
-| Kyoto Colorful Days | 464080 | 1192449 |  | `F:\SteamLibrary\steamapps\common\Kyoto Colorful Days` |
-| La-Mulana 2 | 835430 | 9559015 |  | `F:\SteamLibrary\steamapps\common\La-Mulana 2` |
-| Landlord Girls | 1138080 | 8265156 |  | `F:\SteamLibrary\steamapps\common\Landlord Girls` |
-| LEILA | 2458430 | 19462323 |  | `F:\SteamLibrary\steamapps\common\LEILA` |
-| Little Noah: Scion of Paradise | 1883260 | 20857912 |  | `F:\SteamLibrary\steamapps\common\LITTLE NOAH` |
-| Pinball Storm: Lokanta | 2642570 | 18865934 |  | `F:\SteamLibrary\steamapps\common\Lokanta` |
-| LOLLIPOP! | 1515230 | 6830514 |  | `F:\SteamLibrary\steamapps\common\LOLLIPOP!` |
-| LOST EPIC | 1426490 | 11260175 |  | `F:\SteamLibrary\steamapps\common\LOST EPIC` |
-| Lost: Find | 1801650 | 8968657 |  | `F:\SteamLibrary\steamapps\common\Lost Find` |
-| Love n Dream: Virtual Happiness | 1426110 | 10433743 |  | `F:\SteamLibrary\steamapps\common\Love n Dream Virtual Happiness` |
-| Love n War: Warlord by Chance | 1508680 | 7469065 |  | `F:\SteamLibrary\steamapps\common\Love n War Warlord by Chance` |
-| Waifu Secret | 1505620 | 6225782 |  | `F:\SteamLibrary\steamapps\common\Love Puzzle 2` |
-| Love Tavern | 1354230 | 20706889 |  | `F:\SteamLibrary\steamapps\common\Love Tavern` |
-| Lulu & Ennoi - Sacred Suit Girls | 1051590 | 4990750 |  | `F:\SteamLibrary\steamapps\common\Lulu & Ennoi - Sacred Suit Girls` |
-| The Fantasy World of Mahjong Princess | 1912340 | 9271460 |  | `F:\SteamLibrary\steamapps\common\MahjongPrincess` |
-| ?擳獄撠?MahjongSoul) | 1329410 | 24808622 |  | `F:\SteamLibrary\steamapps\common\MahjongSoul` |
-| Make Way | 1445790 | 23432086 |  | `F:\SteamLibrary\steamapps\common\Make Way` |
-| Manga maker ComiPo! | 262490 | 9955523 |  | `F:\SteamLibrary\steamapps\common\Manga Maker Comipo` |
-| Manifest Destiny | 2611410 | 18527133 |  | `F:\SteamLibrary\steamapps\common\Manifest Destiny` |
-| Manor of Mystic Courtesans | 1180330 | 20780867 |  | `F:\SteamLibrary\steamapps\common\Manor of Mystic Courtesans` |
-| MELTY BLOOD: TYPE LUMINA | 1372280 | 14425854 |  | `F:\SteamLibrary\steamapps\common\MELTY BLOOD TYPE LUMINA` |
-| METAL SLUG ATTACK RELOADED | 2322440 | 16214511 |  | `F:\SteamLibrary\steamapps\common\MetalSlugAttackReloaded` |
-| Midnight Ramen | 2543030 | 23400487 |  | `F:\SteamLibrary\steamapps\common\Midnight Ramen` |
-| Midnight Ride | 1210110 | 10213886 |  | `F:\SteamLibrary\steamapps\common\Midnight Ride` |
-| Million Arthur: Arcana Blood | 989550 | 4145408 |  | `F:\SteamLibrary\steamapps\common\Million Arthur Arcana Blood` |
-| Minoria | 940910 | 8977673 |  | `F:\SteamLibrary\steamapps\common\Minoria` |
-| Mirror | 644560 | 6722797 |  | `F:\SteamLibrary\steamapps\common\Mirror` |
-| Miss Neko: Pirates | 2695270 | 14887377 |  | `F:\SteamLibrary\steamapps\common\Miss Neko Pirates` |
-| Secret Camera | 1928500 | 13098912 |  | `F:\SteamLibrary\steamapps\common\Monitorture` |
-| Monster | 1894600 | 9544060 |  | `F:\SteamLibrary\steamapps\common\Monster` |
-| Monster Hunter Wilds | 2246340 | 24705561 |  | `F:\SteamLibrary\steamapps\common\MonsterHunterWilds` |
-| MUGEN Avatar?Dress Girls version | 1865660 | 8406682 |  | `F:\SteamLibrary\steamapps\common\MugenAvatar` |
-| Muse Dash | 774171 | 24808527 |  | `F:\SteamLibrary\steamapps\common\Muse Dash` |
-| Mutazione | 1080750 | 12954907 |  | `F:\SteamLibrary\steamapps\common\Mutazione` |
-| My Newborn Life In A Harem | 1742470 | 8533633 |  | `F:\SteamLibrary\steamapps\common\My Newborn Life In A Harem` |
-| My wife's cheating on me! | 3242170 | 18007995 |  | `F:\SteamLibrary\steamapps\common\My wife's cheating on me!` |
-| My Creampie Heaven | 1356710 | 5410427 |  | `F:\SteamLibrary\steamapps\common\MyCreampieHeaven` |
-| 憒??Deliver Me | 779640 | 4510106 |  | `F:\SteamLibrary\steamapps\common\MyGame` |
-| Naked Story | 1092000 | 4703520 |  | `F:\SteamLibrary\steamapps\common\Naked Story` |
-| NEKOPARA Vol. 1 | 333600 | 3841001 |  | `F:\SteamLibrary\steamapps\common\NEKOPARA Vol. 1` |
-| NEKOPARA Vol. 2 | 420110 | 3841004 |  | `F:\SteamLibrary\steamapps\common\NEKOPARA Vol. 2` |
-| Ni no Kuni Wrath of the White Witch™ Remastered |  |  |  | `F:\SteamLibrary\steamapps\common\Ni no Kuni Wrath of the White Witch™ Remastered` |
-| 9-nine-:Episode 1 | 976390 | 3526650 |  | `F:\SteamLibrary\steamapps\common\nine_kokoiro` |
-| Noita | 881100 | 17130612 |  | `F:\SteamLibrary\steamapps\common\Noita` |
-| OCTOPATH TRAVELER II | 1971650 | 13399590 |  | `F:\SteamLibrary\steamapps\common\Octopath_Traveler2` |
-| Office Is My Harem?? | 2434160 | 12468501 |  | `F:\SteamLibrary\steamapps\common\Office Is My Harem` |
-| Ogre Tale | 1124050 | 14714693 |  | `F:\SteamLibrary\steamapps\common\Ogre Tale` |
-| Onimusha: Warlords | 761600 | 17777991 |  | `F:\SteamLibrary\steamapps\common\Onimusha` |
-| OPUS: Echo of Starsong - Full Bloom Edition | 1504500 | 10870966 |  | `F:\SteamLibrary\steamapps\common\OPUS Echo of Starsong` |
-| Orgasm Simulator 2023 | 2421780 | 11478712 |  | `F:\SteamLibrary\steamapps\common\Orgasm Simulator 2023` |
-| OshiRabu: Waifus Over Husbandos | 1233270 | 6843325 |  | `F:\SteamLibrary\steamapps\common\OshiRabu` |
-| OVERLORD: ESCAPE FROM NAZARICK | 1782150 | 9280392 |  | `F:\SteamLibrary\steamapps\common\OVERLORD -ESCAPE FROM NAZARICK-` |
-| Pacify | 967050 | 24063669 |  | `F:\SteamLibrary\steamapps\common\Pacify` |
-| Palworld Dedicated Server | 2394010 | 25080279 | palworld | `F:\SteamLibrary\steamapps\common\PalServer` |
-| Palworld | 1623730 | 25094871 | palworld | `F:\SteamLibrary\steamapps\common\Palworld` |
-| Paradiddle | 685240 | 23237248 |  | `F:\SteamLibrary\steamapps\common\Paradiddle` |
-| Paranoia: Deliver Me | 970600 | 4938758 |  | `F:\SteamLibrary\steamapps\common\Paranoia Deliver Me` |
-| Parquet | 1662840 | 7270362 |  | `F:\SteamLibrary\steamapps\common\Parquet` |
-| Party Animals | 1260320 | 24949861 |  | `F:\SteamLibrary\steamapps\common\Party Animals` |
-| Peeping Dorm Manager | 2273420 | 14407700 |  | `F:\SteamLibrary\steamapps\common\Peeping Dorm Manager` |
-| PerfectLover | 1181140 | 12673616 |  | `F:\SteamLibrary\steamapps\common\PerfectLover` |
-| Phantom Brave PC | 409870 | 16763670 |  | `F:\SteamLibrary\steamapps\common\Phantom Brave PC` |
-| ??銵??瑟??詨? | 1480340 | 11153066 |  | `F:\SteamLibrary\steamapps\common\Photo Album` |
-| Pierhead Arcade 2 | 572620 | 14515476 |  | `F:\SteamLibrary\steamapps\common\Pierhead Arcade 2` |
-| Eros Lights: Strip-Club ?? | 2624760 | 12924256 |  | `F:\SteamLibrary\steamapps\common\PIMP Life Sex Simulator 18+` |
-| Pixel Game Maker MV | 837510 | 15221806 |  | `F:\SteamLibrary\steamapps\common\Pixel Game Maker` |
-| Plague Inc: Evolved | 246620 | 24657097 |  | `F:\SteamLibrary\steamapps\common\PlagueInc` |
-| PlateUp! | 1599600 | 24651854 |  | `F:\SteamLibrary\steamapps\common\PlateUp` |
-| PowerBeatsVR | 810500 | 19468681 |  | `F:\SteamLibrary\steamapps\common\PowerBeatsVR` |
-| ??刻?:?⊿? | 2598800 | 20487684 |  | `F:\SteamLibrary\steamapps\common\PsionicSentryInfinite` |
-| Plants vs. Zombies??Garden Warfare 2: Deluxe Edition | 1922560 | 18148967 |  | `F:\SteamLibrary\steamapps\common\PVZGW2` |
-| Qian Shan Village |  |  |  | `F:\SteamLibrary\steamapps\common\Qian Shan Village` |
-| Queen's Glory | 1271190 | 6510838 |  | `F:\SteamLibrary\steamapps\common\Queen's Glory` |
-| Rainy City: Pandemic | 1316050 | 8590859 |  | `F:\SteamLibrary\steamapps\common\RainyCityPandemic` |
-| Rayman: Raving Rabbids | 15080 | 252090 |  | `F:\SteamLibrary\steamapps\common\Rayman Raving Rabbids` |
-| Rebirth2:Beware of Mr.Wang | 1517960 | 8170568 |  | `F:\SteamLibrary\steamapps\common\Rebirth2` |
-| Rebirth:Mr Wang | 1394800 | 9155494 |  | `F:\SteamLibrary\steamapps\common\RebirthMr Wang` |
-| Re:Destiny | 1426120 | 9013109 |  | `F:\SteamLibrary\steamapps\common\ReDestiny` |
-| Resist the succubus—The end of the female Knight |  |  |  | `F:\SteamLibrary\steamapps\common\Resist the succubus—The end of the female Knight` |
-| Rhythm Witch: Beat Death | 2951580 | 22691418 |  | `F:\SteamLibrary\steamapps\common\Rhythm Witch` |
-| River City Saga: Three Kingdoms | 1013220 | 9639067 |  | `F:\SteamLibrary\steamapps\common\River City Saga Three Kingdoms` |
-| RPG in a Box | 498310 | 23837036 |  | `F:\SteamLibrary\steamapps\common\RPG in a Box` |
-| R-Type Final 2 | 1442820 | 24933032 |  | `F:\SteamLibrary\steamapps\common\R-Type Final 2` |
-| Sakuna: Of Rice and Ruin | 1356670 | 7842265 |  | `F:\SteamLibrary\steamapps\common\Sakuna Of Rice and Ruin` |
-| SAMURAI SHODOWN | 1342260 | 14948879 |  | `F:\SteamLibrary\steamapps\common\SamuraiShodown` |
-| SANABI | 1562700 | 21675470 |  | `F:\SteamLibrary\steamapps\common\SANABI` |
-| 擳戊??摰?
-	 | 2458530 | 11913959 |  | `F:\SteamLibrary\steamapps\common\sanoba witch` |
-| Secret Pie (Adult Version) | 1802870 | 15926072 |  | `F:\SteamLibrary\steamapps\common\SecretPie` |
-| Seek Girl Ⅶ |  |  |  | `F:\SteamLibrary\steamapps\common\Seek Girl Ⅶ` |
-| Seek Girl V | 1393410 | 5573034 |  | `F:\SteamLibrary\steamapps\common\Seek Girl V` |
-| Seek GirlFog Ⅰ |  |  |  | `F:\SteamLibrary\steamapps\common\Seek GirlFog Ⅰ` |
-| SEGA Bass Fishing | 71240 | 403155 |  | `F:\SteamLibrary\steamapps\common\SEGA Bass Fishing` |
-| Sex Bar Simulator 🍸🔞 |  |  |  | `F:\SteamLibrary\steamapps\common\Sex Bar Simulator 🍸🔞` |
-| SEX Massage 🔞 |  |  |  | `F:\SteamLibrary\steamapps\common\SEX Massage 🔞` |
-| Lovey-Dovey Lockdown | 2329630 | 13737051 |  | `F:\SteamLibrary\steamapps\common\Sex room` |
-| SEX, BEACH & GIRLS ⛱ 💦 |  |  |  | `F:\SteamLibrary\steamapps\common\SEX, BEACH & GIRLS ⛱ 💦` |
-| Sexy Mystic Survivors | 1964360 | 11052888 |  | `F:\SteamLibrary\steamapps\common\Sexy Mystic Survivors` |
-| Shades of Sakura | 1678140 | 7072701 |  | `F:\SteamLibrary\steamapps\common\Shades of Sakura` |
-| Shio | 525360 | 3100506 |  | `F:\SteamLibrary\steamapps\common\Shio` |
-| Siege of Dungeon | 1972410 | 13075952 |  | `F:\SteamLibrary\steamapps\common\Siege Of Dungeon` |
-| Sifu | 2138710 | 18739835 |  | `F:\SteamLibrary\steamapps\common\Sifu` |
-| Sinners Landing | 1816140 | 23855451 |  | `F:\SteamLibrary\steamapps\common\SinnersLanding` |
-| Skul: The Hero Slayer | 1147560 | 20492693 |  | `F:\SteamLibrary\steamapps\common\Skul` |
-| Slave's Sword | 893010 | 5386380 |  | `F:\SteamLibrary\steamapps\common\Slave's Sword` |
-| Slaycation Paradise | 1643850 | 10055319 |  | `F:\SteamLibrary\steamapps\common\Slaycation Paradise` |
-| Slobbish Dragon Princess | 1469910 | 6043076 |  | `F:\SteamLibrary\steamapps\common\Slobbish Dragon Princess` |
-| Slobbish Dragon Princess 2 | 1752150 | 7738813 |  | `F:\SteamLibrary\steamapps\common\Slobbish Dragon Princess 2` |
-| SNK 40th Anniversary Collection | 865940 | 4248009 |  | `F:\SteamLibrary\steamapps\common\SNK40thCollection` |
-| SNK HEROINES Tag Team Frenzy | 794580 | 3705378 |  | `F:\SteamLibrary\steamapps\common\SNKHEROINES` |
-| Some Some Convenience Store | 1217390 | 24180769 |  | `F:\SteamLibrary\steamapps\common\somesome` |
-| Songs of Death | 2276420 | 16678849 |  | `F:\SteamLibrary\steamapps\common\Songs Of Death` |
-| Spirit City: Lofi Sessions | 2113850 | 24980898 |  | `F:\SteamLibrary\steamapps\common\Spirit City Lofi Sessions` |
-| STEPMOM Milf Scandal 💖 |  |  |  | `F:\SteamLibrary\steamapps\common\STEPMOM Milf Scandal 💖` |
-| Wolf of Stock Street | 1658310 | 8402153 |  | `F:\SteamLibrary\steamapps\common\Stock Wolf` |
-| Infinity Strash: DRAGON QUEST The Adventure of Dai | 1895810 | 12283352 | infinity-strash | `F:\SteamLibrary\steamapps\common\Strash` |
-| Street Fighter??6 | 1364780 | 24176760 |  | `F:\SteamLibrary\steamapps\common\Street Fighter 6` |
-| Subway Exorcist Girl | 3263210 | 17675049 |  | `F:\SteamLibrary\steamapps\common\Subway Exorcist Girl` |
-| Succubus: SEX Story | 2560670 | 12492338 |  | `F:\SteamLibrary\steamapps\common\Succubus SEX Story` |
-| Sultan's Game | 3117820 | 24704220 |  | `F:\SteamLibrary\steamapps\common\Sultan's Game` |
-| Sumire | 1335230 | 8604766 |  | `F:\SteamLibrary\steamapps\common\Sumire` |
-| Sun Haven | 1432860 | 24721658 |  | `F:\SteamLibrary\steamapps\common\Sun Haven` |
-| Super Battle Golf | 4069520 | 24993500 |  | `F:\SteamLibrary\steamapps\common\Super Battle Golf` |
-| Super Bunny Man | 673750 | 24350853 |  | `F:\SteamLibrary\steamapps\common\Super Bunny Man` |
-| Tayutama 2 -you're the only one- | 552280 | 1538248 |  | `F:\SteamLibrary\steamapps\common\tayutama 2 -you're the only one-` |
-| Teslagrad 2 | 1698220 | 23225880 |  | `F:\SteamLibrary\steamapps\common\Teslagrad 2` |
-| The Coma 2: Vicious Sisters | 1045720 | 20285137 |  | `F:\SteamLibrary\steamapps\common\The Coma 2 Vicious Sisters` |
-| The Coma: Recut | 600090 | 20285179 |  | `F:\SteamLibrary\steamapps\common\The Coma Recut` |
-| The Escapists 2 | 641990 | 5292929 |  | `F:\SteamLibrary\steamapps\common\The Escapists 2` |
-| The Heiress | 680320 | 2049169 |  | `F:\SteamLibrary\steamapps\common\The Heiress` |
-| The Invincible | 731040 | 18630819 |  | `F:\SteamLibrary\steamapps\common\The Invincible` |
-| The logic of the miniature garden | 943980 | 3958825 |  | `F:\SteamLibrary\steamapps\common\The logic of the miniature garden` |
-| The Moment We Met | 882940 | 3235243 |  | `F:\SteamLibrary\steamapps\common\The Moment We Met` |
-| The Rewinder | 1161170 | 12242342 |  | `F:\SteamLibrary\steamapps\common\The Rewinder` |
-| The Secret Atelier | 2799690 | 18888510 |  | `F:\SteamLibrary\steamapps\common\The Secret Atelier` |
-| The Shadow of Yidhra | 1576240 | 7860297 |  | `F:\SteamLibrary\steamapps\common\The Shadow of Yidhra` |
-| The Shell Part I: Inferno | 2258770 | 17169299 |  | `F:\SteamLibrary\steamapps\common\The Shell Part I` |
-| The Song of Saya | 702050 | 4414713 |  | `F:\SteamLibrary\steamapps\common\The Song of Saya` |
-| Thought Experiment Simulator | 2696320 | 18138595 |  | `F:\SteamLibrary\steamapps\common\Thought Experiment Simulator` |
-| To the Moon | 206440 | 23897596 |  | `F:\SteamLibrary\steamapps\common\To the Moon` |
-| Trials of Mana | 924980 | 5736103 |  | `F:\SteamLibrary\steamapps\common\Trials of Mana` |
-| Ultimate Chicken Horse | 386940 | 23306644 |  | `F:\SteamLibrary\steamapps\common\Ultimate Chicken Horse` |
-| Ultimate Fishing簧 Simulator 2 | 1136380 | 18886995 |  | `F:\SteamLibrary\steamapps\common\Ultimate Fishing Simulator 2020` |
-| Umamusume: Pretty Derby - Party Dash | 2313020 | 16260841 |  | `F:\SteamLibrary\steamapps\common\Uma Party Dash` |
-| Umineko: Golden Fantasia | 550340 | 2615651 |  | `F:\SteamLibrary\steamapps\common\Umineko Golden Fantasia` |
-| UnHolY ToRturEr | 1158010 | 20247011 |  | `F:\SteamLibrary\steamapps\common\UnHolY ToRturEr` |
-| UNSIGHTED | 1062110 | 7990170 |  | `F:\SteamLibrary\steamapps\common\Unsighted` |
-| Until You Fall | 858260 | 20228127 |  | `F:\SteamLibrary\steamapps\common\UntilYouFall` |
-| Vampire Survivors | 1794680 | 25016043 |  | `F:\SteamLibrary\steamapps\common\Vampire Survivors` |
-| Vampires' Melody | 1377360 | 15046977 |  | `F:\SteamLibrary\steamapps\common\VampiresMelody` |
-| Vampires' Melody 2 | 2532050 | 15046505 |  | `F:\SteamLibrary\steamapps\common\VampiresMelody2` |
-| VEGAS 19 Edit Steam Edition | 1698340 | 11156546 |  | `F:\SteamLibrary\steamapps\common\VEGAS Pro 19.0` |
-| Visions of Mana | 2490990 | 15634602 |  | `F:\SteamLibrary\steamapps\common\VisionsofMana` |
-| Visions of Mana Demo | 2989250 | 15671287 |  | `F:\SteamLibrary\steamapps\common\VisionsofManaDemo` |
-| VTube Studio | 1325860 | 23574781 |  | `F:\SteamLibrary\steamapps\common\VTube Studio` |
-| Wallpaper Engine | 431960 | 23967692 |  | `F:\SteamLibrary\steamapps\common\wallpaper_engine` |
-| WARRIORS ALL-STARS | 610190 | 2155167 |  | `F:\SteamLibrary\steamapps\common\WARRIORS ALL-STARS` |
-| WasteLand Express 摨?敹恍?
-	 | 1831250 | 22274677 |  | `F:\SteamLibrary\steamapps\common\WasteLand Express` |
-| West Sweety | 1186400 | 8450671 |  | `F:\SteamLibrary\steamapps\common\West Sweety` |
-| When The Past Was Around | 1164050 | 5931608 |  | `F:\SteamLibrary\steamapps\common\When The Past Was Around` |
-| Whisper Mountain Outbreak | 1953230 | 24315481 |  | `F:\SteamLibrary\steamapps\common\Whisper Mountain Outbreak` |
-| 憌撟餅4:???????
-	 | 2020510 | 9271245 |  | `F:\SteamLibrary\steamapps\common\Wind Fantasy 4` |
-| WISH Paradise | 1573300 | 7354382 |  | `F:\SteamLibrary\steamapps\common\WISH Paradise` |
-| Witch's Apocalyptic Journey | 3709430 | 24831968 |  | `F:\SteamLibrary\steamapps\common\Witch's Apocalyptic Journey` |
-| Witch's Dungeon | 3171630 | 20732849 |  | `F:\SteamLibrary\steamapps\common\Witch's Dungeon` |
-| Working Sakuya | 2861150 | 14119971 |  | `F:\SteamLibrary\steamapps\common\Working Sakuya` |
-| Yet another tower defence | 923890 | 3486619 |  | `F:\SteamLibrary\steamapps\common\Yet another tower defence` |
-| Yggdra Union | 2107860 | 11283770 |  | `F:\SteamLibrary\steamapps\common\Yggdra Union` |
-| YinYang Street Ultimate Edition | 2334040 | 19628249 |  | `F:\SteamLibrary\steamapps\common\YinYang Street Ultimate Edition` |
-| Yogurt! | 1390740 | 5734562 |  | `F:\SteamLibrary\steamapps\common\Yogurt!` |
-| Yohane the Parhelion - NUMAZU in the MIRAGE - | 2459750 | 19806702 |  | `F:\SteamLibrary\steamapps\common\Yohanuma` |
-| Yokai Art: Night Parade of One Hundred Demons | 1812060 | 18677113 |  | `F:\SteamLibrary\steamapps\common\Yokai Art Night Parade of One Hundred Demons` |
-| Yomawari: Lost in the Dark | 1998330 | 9762023 |  | `F:\SteamLibrary\steamapps\common\Yomawari Lost in the Dark` |
-| YUME | 1471200 | 6104068 |  | `F:\SteamLibrary\steamapps\common\YUME` |
-| Zoeti | 1434540 | 18608440 |  | `F:\SteamLibrary\steamapps\common\Zoeti` |
-| サキと淫絡の坩堝 |  |  |  | `F:\SteamLibrary\steamapps\common\サキと淫絡の坩堝` |
-| 少女妖精弹珠台 Elf Girl Pinball |  |  |  | `F:\SteamLibrary\steamapps\common\少女妖精弹珠台 Elf Girl Pinball` |
-| 自由行動俠 |  |  |  | `F:\SteamLibrary\steamapps\common\自由行動俠` |
-| 我与你共度的七日 |  |  |  | `F:\SteamLibrary\steamapps\common\我与你共度的七日` |
-| 奉仕人偶的日常 |  |  |  | `F:\SteamLibrary\steamapps\common\奉仕人偶的日常` |
-| 穿越黃油開後宮 |  |  |  | `F:\SteamLibrary\steamapps\common\穿越黃油開後宮` |
-| 鬼谷八荒 |  |  |  | `F:\SteamLibrary\steamapps\common\鬼谷八荒` |
-| 球球少女 |  |  |  | `F:\SteamLibrary\steamapps\common\球球少女` |
-| 創業王 |  |  |  | `F:\SteamLibrary\steamapps\common\創業王` |
-| 葬花 |  |  |  | `F:\SteamLibrary\steamapps\common\葬花` |
+| Seek GirlFog ?? | 1263370 | 5477164 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1263370.acf` |
+| ??撠戊 | 1349120 | 7493374 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1349120.acf` |
+| Cat's Kiss | 1409770 | 14700898 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1409770.acf` |
+| Seek Girl ?? | 1464930 | 6006683 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1464930.acf` |
+| 擛潸健?怨? | 1468810 | 21758240 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1468810.acf` |
+| ?祈 | 1506980 | 9735673 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1506980.acf` |
+| BLACK?CADEMY | 1602390 | 14532545 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1602390.acf` |
+| Resist the succubus?he end of the female Knight | 1868000 | 17173956 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_1868000.acf` |
+| 撠戊憒移撘寧???Elf Girl Pinball | 2074890 | 23122499 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2074890.acf` |
+| Hot And Lovely 嚗harm | 2206150 | 11556877 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2206150.acf` |
+| ?菜平?? | 2269460 | 10898092 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2269460.acf` |
+| Hot And Lovely 嚗niform | 2533950 | 12262280 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2533950.acf` |
+| Sex Bar Simulator ??? | 2551690 | 12044152 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2551690.acf` |
+| The Daily Life of Serving Doll | 2651420 | 19392931 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2651420.acf` |
+| Travel through the adult game and build a harem | 2651530 | 17497390 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2651530.acf` |
+| Saki and the Crucible of Debauchery | 2652500 | 15610323 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2652500.acf` |
+| SEX Massage ?? | 2666200 | 12862775 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2666200.acf` |
+| Brothel Secrets ?? | 2721240 | 13284817 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2721240.acf` |
+| STEPMOM Milf Scandal ?? | 2879480 | 13967385 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_2879480.acf` |
+| SEX, BEACH & GIRLS ??? | 3009830 | 15380960 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_3009830.acf` |
+| Freestyle Man in Office | 3436140 | 20602205 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_3436140.acf` |
+| ??雿摨衣?銝 | 3946810 | 23560874 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_3946810.acf` |
+| Ni no Kuni Wrath of the White Witch??Remastered | 798460 | 4428219 | manifest-only-install-directory-not-observed | `F:\SteamLibrary\steamapps\appmanifest_798460.acf` |
 
 ## ROM／封裝候選
 

@@ -20,6 +20,8 @@ def verify_component_git_contents(components, repo=ROOT):
 
 def build():
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
+    windows_game_inventory_path=base/'source-inventories/windows-game-library.json'
+    windows_game_inventory=read(windows_game_inventory_path)
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -48,6 +50,12 @@ def build():
         palworldResourceIndex='materials/hero-model-library/palworld/帕魯三角色素材索引.json',
         palworldResourceDocument='materials/hero-model-library/palworld/帕魯三角色素材索引.md',
         projectSevenJapaneseVoiceIndex='materials/hero-model-library/lol-project-seven/seven-voice-index.json',
+        windowsGameSourceInventory=dict(
+            gitPath=str(windows_game_inventory_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(windows_game_inventory_path.read_bytes()).hexdigest(),
+            status=windows_game_inventory['statusSemantics']['current'],
+            summary=windows_game_inventory['summary']),
+        windowsGameSourceDocument='materials/hero-model-library/source-inventories/windows-game-library.md',
         note='Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.')
     component_path=base/'palworld/帕魯三角色素材索引.json'
     component_data=read(component_path)

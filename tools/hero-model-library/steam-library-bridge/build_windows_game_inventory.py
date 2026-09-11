@@ -82,6 +82,25 @@ EXTENSION_PLATFORMS = {
 
 ARCHIVE_EXTENSIONS = {".zip", ".7z", ".rar"}
 
+STEAM_APP_NOTES = {
+    "1623730": {
+        "catalogRole": "game-asset-source",
+        "sourceWork": "Palworld / 幻獸帕魯",
+        "priorityCharacters": ["空渦龍 / Jetragon", "枯星龍 / Astralym", "搗蛋貓 / Cattiva"],
+        "expectedContainerKinds": ["Unreal pak", "Unreal IoStore", "Wwise audio bank"],
+        "containerInventoryStatus": "not-scanned-inside-install",
+        "note": "遊戲本體安裝已建檔；尚未取得安裝目錄內逐檔清單，不能宣稱已擷取角色素材。",
+    },
+    "2394010": {
+        "catalogRole": "dedicated-server",
+        "sourceWork": "Palworld Dedicated Server",
+        "priorityCharacters": [],
+        "expectedContainerKinds": [],
+        "containerInventoryStatus": "not-required-for-character-assets",
+        "note": "專用伺服器與遊戲本體分開記錄；不把伺服器安裝誤列為角色素材來源。",
+    },
+}
+
 
 def load_csv(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as handle:
@@ -110,6 +129,16 @@ def int_value(value: object) -> int | None:
 def slug(value: str) -> str:
     cooked = re.sub(r"[^a-z0-9]+", "-", value.casefold()).strip("-")
     return cooked or hashlib.sha256(value.encode()).hexdigest()[:16]
+
+
+def display_title(raw_title: str | None, install_directory: str | None) -> tuple[str, str | None]:
+    """Prefer a legible directory name when a VDF title was decoded incorrectly."""
+    raw_title = (raw_title or "").strip()
+    install_directory = (install_directory or "").strip()
+    suspicious = "�" in raw_title or raw_title.count("?") >= 2
+    if suspicious and install_directory:
+        return install_directory, raw_title
+    return raw_title or install_directory or "未知 Steam 遊戲", None
 
 
 def tags(text: str) -> list[str]:
@@ -165,9 +194,10 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
         manifest = manifest_by_dir.get(row.get("Name", "").casefold())
         if manifest:
             matched_manifests.add(manifest.get("Manifest", ""))
-        title = (manifest or {}).get("Name") or row.get("Name") or "未知 Steam 遊戲"
+        title, raw_manifest_title = display_title((manifest or {}).get("Name"), row.get("Name"))
         combined_text = " ".join(filter(None, (title, row.get("Name"), row.get("FullPath"))))
         app_id = (manifest or {}).get("AppId") or None
+        app_notes = STEAM_APP_NOTES.get(app_id or "", {})
         steam_games.append({
             "id": f"steam:{app_id}" if app_id else f"steam-dir:{slug(row.get('Name', 'unknown'))}",
             "sourceKind": "steam-install",
@@ -178,15 +208,43 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
             "platform": "Windows (Steam)",
             "sourcePath": row.get("FullPath"),
             "manifestPath": (manifest or {}).get("Manifest") or None,
+            "manifestMatched": bool(manifest),
+            "rawManifestTitle": raw_manifest_title,
             "lastWriteTimeUtc": row.get("LastWriteTimeUtc"),
             "priorityTags": tags(combined_text),
+            **app_notes,
             "inventoryStatus": "inventory-only",
             "extractionStatus": "not-started",
             "conversionStatus": "not-started",
             "integrationStatus": "not-registered",
         })
 
-    orphan_manifests = [row for row in manifests if row.get("Manifest", "") not in matched_manifests]
+    orphan_manifests = []
+    for row in manifests:
+        if row.get("Manifest", "") in matched_manifests:
+            continue
+        app_id = row.get("AppId") or None
+        title, raw_manifest_title = display_title(row.get("Name"), row.get("InstallDir"))
+        app_notes = STEAM_APP_NOTES.get(app_id or "", {})
+        orphan_manifests.append({
+            "id": f"steam-manifest:{app_id}" if app_id else f"steam-manifest:{slug(row.get('Manifest', 'unknown'))}",
+            "sourceKind": "steam-manifest-only",
+            "title": title,
+            "installDirectory": row.get("InstallDir") or None,
+            "appId": app_id,
+            "buildId": row.get("BuildId") or None,
+            "platform": "Windows (Steam)",
+            "sourcePath": None,
+            "manifestPath": row.get("Manifest") or None,
+            "manifestMatched": False,
+            "rawManifestTitle": raw_manifest_title,
+            "priorityTags": tags(" ".join(row.values())),
+            **app_notes,
+            "inventoryStatus": "manifest-only-install-directory-not-observed",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "integrationStatus": "not-registered",
+        })
     directory_collections = []
     for row in raw_directories:
         relative = row.get("RelativePath", "")
@@ -238,7 +296,7 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
         }
         (excluded if classification == "excluded-non-rom" else rom_candidates).append(normalized)
 
-    all_rows = steam_games + rom_candidates
+    all_rows = steam_games + orphan_manifests + rom_candidates
     priority_views = {
         tag: [row["id"] for row in all_rows if tag in row["priorityTags"]]
         for tag, _ in PRIORITY_PATTERNS
@@ -269,12 +327,14 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
             "steamInstallCount": len(steam_games),
             "steamManifestCount": len(manifests),
             "steamManifestWithoutDirectoryMatchCount": len(orphan_manifests),
+            "steamDirectoryWithoutManifestCount": sum(not row["manifestMatched"] for row in steam_games),
             "rawRomCandidateCount": len(raw_roms),
             "rawDirectoryCount": len(raw_directories),
             "directoryCollectionCount": len(directory_collections),
             "normalizedRomCandidateCount": len(rom_candidates),
             "excludedFalsePositiveCount": len(excluded),
             "priorityRecordCount": sum(bool(row["priorityTags"]) for row in all_rows),
+            "catalogRecordCount": len(steam_games) + len(orphan_manifests) + len(rom_candidates) + len(directory_collections),
             "platformCounts": dict(sorted(platform_counts.items())),
             "classificationCounts": dict(sorted(classification_counts.items())),
         },
@@ -300,6 +360,7 @@ def markdown(index: dict) -> str:
         "",
         f"- Steam 安裝：**{summary['steamInstallCount']}**",
         f"- Steam manifest：**{summary['steamManifestCount']}**",
+        f"- 完整可查記錄：**{summary['catalogRecordCount']}**（Steam 目錄、manifest-only、ROM／封裝候選與入口集合）",
         f"- 原始 ROM／封裝候選：**{summary['rawRomCandidateCount']}**",
         f"- 原始目錄列：**{summary['rawDirectoryCount']}**；保留為入口集合：**{summary['directoryCollectionCount']}**",
         f"- 正規化候選：**{summary['normalizedRomCandidateCount']}**",
@@ -311,17 +372,45 @@ def markdown(index: dict) -> str:
         "| 群組 | 類型 | 名稱 | 平台 | 版本／大小 | Windows 路徑 |",
         "|---|---|---|---|---|---|",
     ]
-    by_id = {row["id"]: row for row in index["steamGames"] + index["romCandidates"]}
+    by_id = {row["id"]: row for row in index["steamGames"] + index["orphanSteamManifests"] + index["romCandidates"]}
     for tag, ids in index["priorityViews"].items():
         for row_id in ids:
             row = by_id[row_id]
             version = row.get("buildId") or row.get("sizeBytes") or ""
-            lines.append(f"| {tag} | {row['sourceKind']} | {row['title']} | {row['platform']} | {version} | `{row['sourcePath']}` |")
+            source_path = row.get("sourcePath") or row.get("manifestPath") or ""
+            lines.append(f"| {tag} | {row['sourceKind']} | {row['title']} | {row['platform']} | {version} | `{source_path}` |")
+    palworld_rows = [row for row in index["steamGames"] if "palworld" in row["priorityTags"]]
+    lines.extend([
+        "",
+        "## Palworld／幻獸帕魯",
+        "",
+        "> 本體與 Dedicated Server 分開建檔。只有本體列為角色素材來源；目前尚未掃描安裝目錄內的 PAK、IoStore 或音訊容器。",
+        "",
+        "| 名稱 | App ID | Build ID | 用途 | 容器盤點 | 指定角色 | 路徑 |",
+        "|---|---|---|---|---|---|---|",
+    ])
+    for row in palworld_rows:
+        lines.append(
+            f"| {row['title']} | {row['appId'] or ''} | {row['buildId'] or ''} | "
+            f"{row.get('catalogRole', '')} | {row.get('containerInventoryStatus', '')} | "
+            f"{', '.join(row.get('priorityCharacters', []))} | `{row['sourcePath']}` |"
+        )
     lines.extend(["", "## 平台統計", "", "| 平台 | 候選數 |", "|---|---:|"])
     lines.extend(f"| {name} | {count} |" for name, count in summary["platformCounts"].items())
-    lines.extend(["", "## Steam 安裝", "", "| 名稱 | App ID | Build ID | 優先群組 | 路徑 |", "|---|---|---|---|---|"])
+    lines.extend([
+        "",
+        "## Steam 安裝",
+        "",
+        f"安裝目錄缺 manifest：**{summary['steamDirectoryWithoutManifestCount']}**；只有 manifest、未觀察到安裝目錄：**{summary['steamManifestWithoutDirectoryMatchCount']}**。兩者均保留，不能以其中一方推定已完整安裝。",
+        "",
+        "| 名稱 | App ID | Build ID | manifest | 優先群組 | 路徑 |",
+        "|---|---|---|---|---|---|",
+    ])
     for row in index["steamGames"]:
-        lines.append(f"| {row['title']} | {row['appId'] or ''} | {row['buildId'] or ''} | {', '.join(row['priorityTags'])} | `{row['sourcePath']}` |")
+        lines.append(f"| {row['title']} | {row['appId'] or ''} | {row['buildId'] or ''} | {'matched' if row['manifestMatched'] else 'missing'} | {', '.join(row['priorityTags'])} | `{row['sourcePath']}` |")
+    lines.extend(["", "## Steam manifest-only 記錄", "", "| 名稱 | App ID | Build ID | 狀態 | manifest |", "|---|---|---|---|---|"])
+    for row in index["orphanSteamManifests"]:
+        lines.append(f"| {row['title']} | {row['appId'] or ''} | {row['buildId'] or ''} | {row['inventoryStatus']} | `{row['manifestPath'] or ''}` |")
     lines.extend(["", "## ROM／封裝候選", "", "| 名稱 | 平台 | 分類 | 大小 bytes | 優先群組 | 路徑 |", "|---|---|---|---:|---|---|"])
     for row in index["romCandidates"]:
         lines.append(f"| {row['title']} | {row['platform']} | {row['classification']} | {row['sizeBytes'] or ''} | {', '.join(row['priorityTags'])} | `{row['sourcePath']}` |")
@@ -361,6 +450,7 @@ def main() -> None:
     (args.local_output / "game-library-index.json").write_text(payload, encoding="utf-8")
     (args.local_output / "game-library-index.md").write_text(markdown(index), encoding="utf-8")
     write_csv(args.local_output / "steam-games.normalized.csv", index["steamGames"])
+    write_csv(args.local_output / "steam-manifests-only.normalized.csv", index["orphanSteamManifests"])
     write_csv(args.local_output / "rom-candidates.normalized.csv", index["romCandidates"])
     (args.local_output / "latest.json").write_text(json.dumps({
         "schema": "ggd-windows-game-source-inventory-pointer@1",

@@ -14,7 +14,12 @@ def main() -> None:
     args = parser.parse_args()
     data = json.loads(args.index.read_text(encoding="utf-8"))
     needle = args.query.casefold()
-    rows = data["steamGames"] + data["romCandidates"] + data.get("directoryCollections", [])
+    rows = (
+        data["steamGames"]
+        + data.get("orphanSteamManifests", [])
+        + data["romCandidates"]
+        + data.get("directoryCollections", [])
+    )
     matches = [row for row in rows if needle in json.dumps(row, ensure_ascii=False).casefold()]
     if args.json:
         print(json.dumps(matches, ensure_ascii=False, indent=2))

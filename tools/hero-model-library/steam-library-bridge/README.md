@@ -39,3 +39,14 @@ Set-ExecutionPolicy -Scope Process Bypass
 ```
 
 產生的 ZIP 只含 Steam 目錄、appmanifest、遊戲目錄、ROM／封裝候選與掃描收據，不讀 ROM／PAK 內容。交付 ZIP 後用 `build_windows_game_inventory.py` 正規化；Git 的 `materials/hero-model-library/source-inventories/windows-game-library.json` 是共編查詢入口，原始 CSV 與 ZIP 留在本機素材庫及待辦 S3 `legacy/` 備份。
+
+第一次清單只證明遊戲／ROM 入口存在。要徹查每個遊戲使用哪種素材容器，再執行第二階段的唯讀 metadata 掃描：
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scan_windows_asset_containers.ps1 `
+  -SteamRoots @('F:\SteamLibrary\steamapps\common') `
+  -GameRoot 'E:\Game\單機遊戲'
+```
+
+若另三顆硬碟也有 SteamLibrary，把它們的 `steamapps\common` 一併放進 `-SteamRoots @(...)`。腳本會輸出每個遊戲的檔案數、總大小、前 25 種副檔名、引擎線索，以及 `.pak/.utoc/.ucas/.uasset`、Unity、Wwise、FMOD、CRIWARE、模型和動作候選的逐檔路徑與大小。它不讀取容器內容、不計大檔雜湊、不複製遊戲，也不變更分享權限；`payloadBytesRead=0`。交付 `GGD-Asset-Container-Inventory-*.zip` 後，整合工作流才能把 Palworld 本體與其他遊戲從「已安裝」提升為「容器已盤點」，再按角色需求選擇性複製和解包。
