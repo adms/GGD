@@ -123,23 +123,49 @@ def run() -> dict:
     names = list(_SWATCHES)
     for i, key in enumerate(names):
         tex_png[i], tex_alpha[i] = _png(*_SWATCHES[key])
-    model = MDXModel(name="filter-mode-probe")
-    model.textures = [Texture(0, f"probe\\{k}.blp") for k in names]
+    # ⭐⭐ **一個案例一顆模型**（⛔ 不是 14 個案例塞進同一顆）。
+    #
+    # ⛔ 在此之前這裡把 14 個案例當成同一顆模型的 14 份材質，⇒ 而 GH#1164 的
+    # **渲染狀態去重**（`gltf.py`「兩份材質如果畫出來逐像素一樣，它們就是同一份」）
+    # 會**跨案例**把它們併掉：`fm99-unknown`(BLEND+smooth) 與
+    # `fm2-blend-smooth` 畫出來逐像素一樣、`two-layer` 的兩層又分別等於
+    # `fm0-none` 與 `fm2-blend-smooth` ⇒ 量到 `merged 3 render-identical materials`，
+    # ⭐ 而少掉的正好就是那 3 份 ⇒ 這兩個案例**永遠回 0 份材質**。
+    #
+    # ⚠️⚠️ ⭐ 去重是**對的**，探針才是壞的 —— ⛔ 而它壞的樣子是
+    # 「疊加層靜默消失」與「未知 fm 靜默消失」，⭐ **正好就是這兩條斷言要抓的缺陷**
+    # ⇒ 一把量尺在它最需要說話的時候，報出了它本來就在找的那個症狀。
+    # （同族：本文件「一把只驗過單邊的尺不算自證過」與假綠燈⑪「兩條各自對的閘，
+    #   而沒有人驗接縫」—— 這裡的接縫是 #841 的溯源契約 × #1164 的去重。）
+    #
+    # ⇒ ⭐ 分開轉之後跨案例的去重**結構上不可能發生**，⛔ 而每個案例仍然跑
+    #   出貨的那一支 `convert()`（⛔ 不是換一條假的路徑繞過去）。
+    # ⚠️ 貼圖表**每一顆模型都帶全份** —— notes 裡有「texture 6: …」這種以
+    #   **索引**指名的句子，只留用到的那幾張會讓索引漂掉。
+    notes: list[str] = []
+    per_case: list[tuple[dict, bytes, list[int]]] = []
     for _label, layers in PROBES:
+        model = MDXModel(name="filter-mode-probe")
+        model.textures = [Texture(0, f"probe\\{k}.blp") for k in names]
         model.materials.append(Material(layers=[
             Layer(filter_mode=fm, shading_flags=0, texture_id=names.index(tex),
                   alpha=1.0) for fm, tex in layers]))
-        model.geosets.append(_quad(len(model.materials) - 1))
-    res = convert(model, tex_png, 1.0, "probe.mdx", tex_alpha)
-    doc, blob = _glb_parts(res.glb)
-    prim_mats: list[list[int]] = [[] for _ in PROBES]
-    for prim in doc["meshes"][0]["primitives"]:
-        mat = doc["materials"][prim["material"]]
-        prim_mats[mat["extras"]["w3x"]["material"]].append(prim["material"])
-    out = {"notes": res.notes, "probes": {}}
+        model.geosets.append(_quad(0))
+        res = convert(model, tex_png, 1.0, "probe.mdx", tex_alpha)
+        notes += res.notes
+        doc, blob = _glb_parts(res.glb)
+        # ⭐ 只收**真的被 primitive 用到的**材質（⛔ 不是整個 materials 陣列）——
+        #   `gltf.py` 刻意不壓縮那個陣列，沒被引用的會留成 UNUSED_OBJECT。
+        used: list[int] = []
+        for prim in doc["meshes"][0]["primitives"]:
+            if prim["material"] not in used:
+                used.append(prim["material"])
+        per_case.append((doc, blob, used))
+    out = {"notes": notes, "probes": {}}
     for pi, (label, _layers) in enumerate(PROBES):
+        doc, blob, used = per_case[pi]
         mats = []
-        for mi in prim_mats[pi]:
+        for mi in used:
             m = doc["materials"][mi]
             pbr = m.get("pbrMetallicRoughness", {})
             entry = {
