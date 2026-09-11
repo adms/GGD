@@ -38506,7 +38506,7 @@
         }
       ],
       "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
-      "verification": "Complete author archive preserved, ZIP CRC passed, all 782 Git blob hashes verified. 19 geometry JSON (14 servants),20 animation JSON/156 clips (134 with changing channels),168 PNG,5 OGG decode verified. No GLB/runtime conversion or visual/listening review.",
+      "verification": "Complete author archive preserved, ZIP CRC passed, all 782 Git blob hashes verified. 19 geometry JSON (14 servants + 5 prop/creature), 20 animation JSON/156 clips (134 with changing channels), 168 PNG,5 OGG decode verified. Fourteen servant static GLBs passed structural, Khronos and WebGL static-body review; their source rigs and 132 servant clips remain unconverted. Five prop/creature candidates remain raw. No GGD backend selection, default, deployment or listening review.",
       "mappingEvidence": "Exact named character mappings: Artoria to godie-e002/godie-e00l, Gilgamesh to community-review-18-20260907, Heracles to godie-hapm, Medusa to godie-hvsh. Archer is not automatically assigned to Shirou. Unknowns remain empty; no defaults changed.",
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
