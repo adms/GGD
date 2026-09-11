@@ -10451,7 +10451,53 @@
         "readbackVerified": true,
         "orderedArchiveReadbackVerified": true,
         "allMemberSha256Verified": true
-      }
+      },
+      "supplementalDeliveries": [
+        {
+          "id": "ssbu-kirby-c00-assimp-probe-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/conversions/ssbu-kirby-c00-assimp-probe-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-assimp-probe-v1/5fb227bf46c21f81ae2837f190ff07c5f08198c5a8ff72722dcad6f7136fdaf6/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-assimp-probe-v1/5fb227bf46c21f81ae2837f190ff07c5f08198c5a8ff72722dcad6f7136fdaf6/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-kirby-c00-assimp-probe-v1/39800038edb7bf2274654c847ba54ca82278cb8b82f9460a903be8755c5ef6b5.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-kirby-c00-assimp-probe-v1/39800038edb7bf2274654c847ba54ca82278cb8b82f9460a903be8755c5ef6b5.files.json",
+          "bytes": 726353,
+          "sha256": "39800038edb7bf2274654c847ba54ca82278cb8b82f9460a903be8755c5ef6b5",
+          "fileCount": 2,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-assimp-probe-v1/latest-receipt.json",
+          "receiptSha256": "050f580f339f5dcb6339b37115150be1e47ac0133bc0f138f885b42063f12f33",
+          "manifestSha256": "0811af512e713528e501cbc48942a83c6236e5bac2a1b14ab4245471c14d1348",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
+      ],
+      "conversionAttempts": [
+        {
+          "id": "ssbu-kirby-c00-assimp-probe-v1",
+          "status": "rejected-lossy-conversion",
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-assimp-probe-v1",
+          "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-assimp-probe-v1/conversion-attempt.json",
+          "reportSha256": "345b0a5054a6a7efac97b87553778e465744cbdd3017c8c4ada9759b17a6957a",
+          "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-assimp-probe-v1/assimp-output.glb",
+          "outputSha256": "268ec23cb96ee64329dc063539d24f1e2c51ce30d91cb54486387486383de281",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-kirby-c00-assimp-probe-v1/39800038edb7bf2274654c847ba54ca82278cb8b82f9460a903be8755c5ef6b5.tar.gz",
+          "s3ArchiveMember": "assimp-output.glb",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-assimp-probe-v1/latest-receipt.json",
+          "backupReceiptSha256": "050f580f339f5dcb6339b37115150be1e47ac0133bc0f138f885b42063f12f33",
+          "s3Use": "backup-only-not-runtime-entry",
+          "runtimeReady": false,
+          "reason": "Assimp imported geometry but did not preserve any image or texture in the GLB, despite the source directory containing texture sidecars. It also emitted no glTF skin or animation. This workflow must not infer material bindings or represent the static output as a complete native character model."
+        }
+      ]
     },
     {
       "id": "parallel-ps-jumpforce-local-10",

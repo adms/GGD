@@ -32,7 +32,8 @@ def main():
     attempt_dir = args.attempt_dir.resolve()
     report = read(attempt_dir / 'conversion-attempt.json')
     output = attempt_dir / report['output']['path']
-    if report['rejection']['status'] != 'rejected-not-self-contained' or report['output']['sha256'] != sha256(output):
+    if (report['rejection']['status'] not in {'rejected-not-self-contained', 'rejected-lossy-conversion'}
+            or report['output']['sha256'] != sha256(output)):
         raise ValueError('Unexpected or changed conversion probe')
     receipt = read(args.receipt)
     if (receipt.get('schema') != 'ggd-intake-backup-receipt@1'
