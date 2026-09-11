@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T08:50:57+08:00",
-  "inputsSha256": "bdc948daa2203837984fc212145398fc48b46530347e6e2755c2051bce641a9e",
+  "generatedAt": "2026-09-11T09:03:17+08:00",
+  "inputsSha256": "828f0cdcf0c04387283daecaa9e3b426496fe91aa45a5d5b981a28776fd7a1d7",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -57707,7 +57707,8 @@
           "infinity-strash-dai-owner-source",
           "lead-vearn-mmd-sketchfab-a264ddd",
           "parallel-vearn-priority-source-audit-20260911",
-          "parallel-dai-vearn-local-followup-02-20260911"
+          "parallel-dai-vearn-local-followup-02-20260911",
+          "lead-vearn-crealitycloud-66d70beed164d01a74e934ca"
         ],
         "acquiredPublicSources": [],
         "acquiredPaidSources": [],
@@ -57747,7 +57748,8 @@
           "infinity-strash-dai-owner-source",
           "lead-vearn-mmd-sketchfab-a264ddd",
           "parallel-vearn-priority-source-audit-20260911",
-          "parallel-dai-vearn-local-followup-02-20260911"
+          "parallel-dai-vearn-local-followup-02-20260911",
+          "lead-vearn-crealitycloud-66d70beed164d01a74e934ca"
         ],
         "acquiredPublicSources": [],
         "acquiredPaidSources": [],
@@ -103291,6 +103293,85 @@
           "selectionVerified": false,
           "note": "僅研究線索；沒有模型素材，不登記可選模型。"
         }
+      },
+      {
+        "id": "lead-vearn-crealitycloud-66d70beed164d01a74e934ca",
+        "target": "巴恩／大魔王バーン／Vearn：Creality Cloud 3D 列印模型（付費／點數，未購）",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "url": "https://www.crealitycloud.com/ja/model-detail/66d70beed164d01a74e934ca",
+        "uploader": "KHUONGTAINANG",
+        "originalAuthor": "KHUONGTAINANG (listing attribution)",
+        "sourceGame": null,
+        "sourceKind": "community-authored-3d-print-model",
+        "platform": "3D print / STL / 3MF",
+        "accessStatus": "paid-or-points-source-not-purchased",
+        "format": "Advertised STL and 3MF print files; actual package uninspected",
+        "advertised": {
+          "modelId": "66d70beed164d01a74e934ca",
+          "listedFiles": 7,
+          "publishedAt": "2024-09-03",
+          "licenseLabel": "Creality Cloud Standard License"
+        },
+        "evidence": [
+          {
+            "url": "https://www.crealitycloud.com/ja/model-detail/66d70beed164d01a74e934ca",
+            "status": "public-product-page-read",
+            "observation": "Product page presents a 1,100-point acquisition flow and seven print files. Its Standard License limits use to personal purposes and prohibits commercial use, sharing, transmission, redistribution, remixing, reproduction or sale of the digital model or any part. No purchase, login or download attempted."
+          }
+        ],
+        "reuseTerms": "Listing states Creality Cloud Standard License: personal use only; commercial use and digital redistribution or remixing are prohibited. It cannot enter the shared GGD model library without a separate author grant.",
+        "gaps": [
+          "No package, mesh, textures, skeleton, motions, voices or VFX acquired.",
+          "Print-model composition, old/young/transformed Vearn identity and topology are unverified.",
+          "Not a native Infinity Strash asset and advertised licensing excludes the intended shared library use."
+        ],
+        "nextAction": "Do not purchase or download in this workflow. Reconsider only with an author grant covering shared GGD game/library use and an independently acquired package.",
+        "checkedAt": "2026-09-11T01:03:17.296891+00:00",
+        "ownerEntryIds": [],
+        "downloadUrl": null,
+        "acquisitionStatus": "not-acquired",
+        "readiness": "source-lead-only",
+        "resourceRole": "model-source-lead",
+        "sourceWork": "ドラゴンクエスト ダイの大冒険",
+        "assetKinds": [],
+        "defaultEligible": false,
+        "purchaseDecision": "no-purchase",
+        "discoveryChannel": "public-mod-workshop-community-search",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+        "files": [],
+        "upstreamArchiveSha256": null,
+        "modelCount": 0,
+        "modelCandidates": [],
+        "audioAcquisition": {
+          "audioCount": 0,
+          "nativeAudioBankCount": 0,
+          "confirmedVoiceCount": 0,
+          "runtimeReady": false
+        },
+        "publicRedistributionRightsVerified": false,
+        "backendIntegration": {
+          "required": false,
+          "state": "not-acquired",
+          "heroIds": [
+            "godie-ubal"
+          ],
+          "selectionVerified": false,
+          "note": "Research lead only; no selectable model payload. Do not register a runtime model option."
+        },
+        "publicationStatus": "local-research-index-only",
+        "pendingBackup": {
+          "status": "not-uploaded",
+          "assetPayloadExists": false,
+          "readbackVerified": false
+        },
+        "sourceEvidence": {
+          "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910",
+          "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+          "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
+        },
+        "verification": "本輪未取得素材。列印商品需點數／購買，且頁面標示僅限個人使用、禁止數位再散布與改作；沒有取得檔案、沒有下載、沒有登入。"
       }
     ],
     "ingestionPolicy": {
