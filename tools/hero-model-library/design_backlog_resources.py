@@ -28,6 +28,9 @@ def resource_view(row, coverage, voice_groups, public_sources):
             c.get('modelProof', {}).get('animationEntries')))
         if isinstance(value, int):
             motion_entries.append(dict(candidateId=c['id'], count=value,
+                sourceCount=c.get('sourceAnimationCount'),
+                unconvertedCount=c.get('unconvertedAnimationCount'),
+                readiness=c.get('readiness'),
                 evidence='existing-candidate-metadata; not runtime acceptance'))
     motion = '尚未逐角色解析／建檔'
     if 'animation' in source_kinds:
@@ -49,6 +52,21 @@ def resource_view(row, coverage, voice_groups, public_sources):
         if source_ids.intersection(f.get('sourceIds', []))
         or any(s.startswith(prefix) for s in source_ids for prefix in f.get('sourceIdPrefixes', []))]
     motion = override.get('motion', motion)
+    converted_native = [entry for entry in motion_entries
+        if entry['count'] > 0 and 'native-motion' in str(entry.get('readiness', ''))]
+    if converted_native:
+        # Verified conversions supersede older hand-authored "pending
+        # conversion" summaries.  Remaining clips and release gates stay
+        # explicit because a native-motion reserve is not a backend option.
+        best = max(converted_native, key=lambda entry: entry['count'])
+        source_count = best.get('sourceCount')
+        unconverted_count = best.get('unconvertedCount')
+        counts = f"已轉換 {best['count']} 個原生動作"
+        if isinstance(source_count, int):
+            counts = f"來源 {source_count} 個片段；" + counts
+        if isinstance(unconverted_count, int) and unconverted_count:
+            counts += f"；{unconverted_count} 個公式／無時長等片段保留未轉換"
+        motion = counts + '；待來源引擎曲線比對、事件映射、權利與後台驗收'
     if any(c['localSizeMatches'] and c.get('modelProof', {}).get('hasSequenceChunk')
            for c in row['modelCandidates']):
         motion += '；另保留 MDX 序列區塊，片段數與轉換可用性待核'

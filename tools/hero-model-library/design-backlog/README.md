@@ -54,10 +54,13 @@ python3 tools/hero-model-library/design-backlog/validate_300_mba.py \
 社群、MOD、論壇與主機模型的盤點工具：
 
 ```bash
+python3 tools/hero-model-library/source-workflows/fateubw-minecraft-v1/sync_backlog_resources.py
 python3 tools/hero-model-library/design-backlog/audit_community.py \
   --repo . --workspace .. --output /private/tmp/ggd-design-sources-community.json
 ```
 
 檢查輸出後更新 `materials/hero-model-library/design-backlog/sources-300-mba.json`／`sources-community.json`。新增來源尚未受來源掃描器支援時，保留完整個別來源收據，透過 `sources-supplemental.json` 登記，避免重掃時消失。隨後重跑上述英雄核對與主清單產生器，將來源索引、生成文件與工具一起提交同一分支／PR。
+
+FateUBW 同步器從 `download-sources.json` 的已驗證標準化嘗試重建 14 名英靈的逐角動作摘要；其中 13 名原生動作 GLB 與 Heracles 靜態模型缺口分開記錄。可用 `sync_backlog_resources.py --check` 驗證，不能用手改摘要把本機／S3 儲備誤寫成後台可選或已部署。
 
 Git 備份工具為 `tools/hero-model-library/backup_git_assets.py`；`--base` 只接受已有完整 S3 讀回驗證收據的祖先版本。備份增量會記錄移除路徑，S3 原備份仍保留。來源包的 S3 備份收據與 Git 版本備份分開核對。

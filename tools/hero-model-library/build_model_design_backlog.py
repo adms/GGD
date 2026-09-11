@@ -164,6 +164,8 @@ def friendly_stage(value):
     if 'backend-standardized-option' in value:return '已登記後台選項；程序化動作另標'
     if 'shared-upload-and-runtime-motion' in value:return '已通過匯入與動作檢查'
     if 'historical-staging-path' in value:return '歷史暫存 GLB；凍結版本另留'
+    if 'native-motion-khronos-webgl-phase-validated' in value:return '原生動作 GLB 已通過結構與分段 WebGL 驗證；待權利、曲線、事件映射與後台驗收'
+    if 'static-mesh-khronos-webgl-validated' in value:return '靜態 GLB 已通過 Khronos 與 WebGL 驗證；待權利、骨架動作與後台驗收'
     if 'appearance-review' in value:return 'GLB 候選；外觀待驗'
     if 'visual' in value or 'review-sample' in value:return '已有轉換樣本；外觀／動作待驗'
     if 'standard' in value and ('candidate' in value or 'option' in value):return '標準化候選；待選用驗收'

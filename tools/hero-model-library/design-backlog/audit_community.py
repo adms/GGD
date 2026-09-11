@@ -81,11 +81,11 @@ def add(key,name,work,s,paths,heroes=None,unknown=False,evidence=None,aliases=No
   p=pathlib.Path(item['path'])
   if not p.is_absolute():p=BASE/s['localPath']/p
   e=file_evidence(p,item.get('sha256'))
-  e.update({'id':(cid or key+':'+sid)+(f':{n}' if len(paths)>1 else ''),'library':'community' if not sid.startswith('ou99:') else 'ou99','sourceId':sid,'sourceUrl':s.get('url',s.get('canonicalUrl')),'readiness':readiness or s.get('readiness','native-source-reserve'),'converted':p.suffix.lower() in ['.glb','.gltf']})
+  e.update({'id':item.get('id',(cid or key+':'+sid)+(f':{n}' if len(paths)>1 else '')),'library':'community' if not sid.startswith('ou99:') else 'ou99','sourceId':sid,'sourceUrl':s.get('url',s.get('canonicalUrl')),'readiness':item.get('readiness',readiness or s.get('readiness','native-source-reserve')),'converted':p.suffix.lower() in ['.glb','.gltf']})
   # Candidate roles are source evidence, not display-only labels. Preserve them
   # so downstream indexes can distinguish a complete body from a prop, a
   # shared bundle, or an independently accepted component.
-  for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence']:
+  for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','isStandaloneModelCandidate','sourceAnimationCount','nativeAnimationCount','unconvertedAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','s3Uri','s3ArchiveMember','archiveSha256','readbackVerified']:
    if field in item:e[field]=item[field]
   e['identityReviewRequired']=unknown
   if parts:e['sourceScope']=parts
@@ -152,13 +152,54 @@ for s in sources:
     if pathlib.Path(item['path']).suffix.lower() in ['.glb','.gltf','.gmo','.fbx','.blend','.mdl','.json','.bundle']:
      item.setdefault('sha256', c.get('sourceModelSha256') if k=='sourceModel' else c.get('nativeModelSha256') if k=='nativeModel' else c.get('sha256'))
      item.setdefault('bytes',c.get('sourceModelBytes') if k=='sourceModel' else c.get('nativeModelBytes') if k=='nativeModel' else c.get('bytes'))
-     for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence']:
+     for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','isStandaloneModelCandidate','sourceAnimationCount','nativeAnimationCount','unconvertedAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','s3Uri','s3ArchiveMember','archiveSha256','readbackVerified']:
       if field in c:item.setdefault(field,c[field])
      if str(pathlib.Path(item['path'])) not in {str(pathlib.Path(existing['path'])) for existing in paths}:paths.append(item)
   if not paths:
    if c.get('descriptorPath'): paths=[{'path':str(pathlib.Path(c['descriptorPath']).with_suffix('.numshb'))}]
    elif c.get('parts'):paths=[{'path':p} for p in c['parts']]
    elif c.get('sourceFiles'):paths=[p for p in c['sourceFiles'] if pathlib.Path(p['path']).suffix.lower() in ['.fbx','.blend']]
+  if s['id']=='github-flemmli97-fateubw-07e9d79b':
+   # The frozen source record is the durable authority for both the original
+   # Bedrock geometry and later verified GLB reserves.  Keep the source model,
+   # then attach only the exact standardization attempt IDs selected by the
+   # candidate.  This prevents stale audits from discarding successful
+   # conversions or accidentally reviving rejected/older attempts.
+   for item in paths:
+    item.setdefault('resourceRole','character-body-mesh-source')
+    item.setdefault('isStandaloneModelCandidate',False)
+    item.setdefault('sourceAnimationCount',c.get('sourceAnimation',{}).get('clipCount'))
+    item.setdefault('nativeAnimationCount',0)
+    item.setdefault('runtimeSelectable',False)
+    item.setdefault('defaultEligible',False)
+    item.setdefault('fullHeroModel',False)
+   attempts={a['id']:a for a in s.get('conversionAttempts',[])}
+   for standardization_key in ['bodyStandardization','nativeMotionStandardization']:
+    standardization=c.get(standardization_key) or {};attempt_id=standardization.get('attemptId')
+    attempt=attempts.get(attempt_id)
+    if not attempt:continue
+    body=attempt.get('body') or {};body_path=body.get('path')
+    if not body_path:continue
+    native=attempt.get('nativeAnimations') or {}
+    backup=attempt.get('legacyBackup') or {}
+    validation={k:attempt[k] for k in ['converterReport','structuralReadback','contractValidation','batchEvidence'] if k in attempt}
+    visual={k:attempt[k] for k in ['webglPhaseReview','batchEvidence'] if k in attempt}
+    paths.append({
+     'id':attempt_id,
+     'path':body_path,'bytes':body.get('bytes'),'sha256':body.get('sha256'),
+     'format':'glTF Binary','resourceRole':'character-body',
+     'isStandaloneModelCandidate':True,'componentReady':False,
+     'sourceAnimationCount':native.get('sourceClipCount',c.get('sourceAnimation',{}).get('clipCount')),
+     'nativeAnimationCount':native.get('convertedClipCount',0),
+     'unconvertedAnimationCount':native.get('unconvertedClipCount',c.get('sourceAnimation',{}).get('clipCount',0)),
+     'proceduralAnimationCount':0,'runtimeSelectable':False,
+     'defaultEligible':False,'fullHeroModel':False,
+     'readiness':attempt.get('status',standardization.get('status')),
+     'limitations':attempt.get('missing',[]),
+     'validationEvidence':validation,'visualEvidence':visual,
+     's3Uri':backup.get('s3Uri'),'s3ArchiveMember':backup.get('s3ArchiveMember'),
+     'archiveSha256':backup.get('archiveSha256'),'readbackVerified':backup.get('readbackVerified',False),
+    })
   if not paths:issues.append({'sourceId':s['id'],'candidateId':c.get('candidateId',c.get('id')),'reason':'candidate has no explicit model path found'});continue
   add(key,name,work,s,paths,hh,unknown,c.get('identityEvidence',c.get('mappingEvidence',c.get('identityReview','Explicit acquired source candidate manifest'))),[label],c.get('candidateId',c.get('id')),c.get('readiness',c.get('readyStage',c.get('status',s.get('readiness')))),c.get('sourceBodyNodes'))
 

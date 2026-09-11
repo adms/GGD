@@ -220,8 +220,8 @@
       "sourceIds": [
         "github-flemmli97-fateubw-07e9d79b"
       ],
-      "model": "19幾何JSON＝14英靈＋5道具/生物；168PNG。保留原始格式，未GLB/runtime標準化。",
-      "motion": "20動畫JSON／156項，134有時間變化；Minecraft MOD原資料，不是FUC PSP原生動作。",
+      "model": "14名英靈均已轉為靜態GLB並通過結構、Khronos與WebGL驗證；其中13名另有骨架及原生動作GLB。5個道具／生物仍保留原始幾何JSON。全部待權利、來源引擎比對、事件映射與後台驗收。",
+      "motion": "20個動畫JSON共156項：14名英靈合計132項；其中13名一般骨架含115項，已轉換98項、保留17項公式／無時長片段；Heracles另17項因來源休息骨架含旋轉待獨立轉換。5個道具／生物20項及共用4項仍為原始格式；非FUC PSP。",
       "vfx": "道具/投射物幾何保留；未驗證逐角獨立VFX與執行時綁定。",
       "sfx": "3檔來源標示劃斬/揮動SFX；另海克力斯咆哮1、尼祿固有結界1待分類。",
       "voice": "共5OGG全部已入音訊索引；未確認可用人物台詞，不列成品語音。",
@@ -1064,31 +1064,51 @@
     },
     "gilgamesh": {
       "nameZh": "吉爾伽美什",
-      "motion": "FateUBW Minecraft MOD 9項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 9 個片段，已轉換 8 個原生動作；1 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilgamesh_archer.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilgamesh_archer.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "medusa": {
       "nameZh": "梅杜莎",
-      "motion": "FateUBW Minecraft MOD 11項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 11 個片段，已轉換 10 個原生動作；1 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medusa_rider.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medusa_rider.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "heracles": {
       "nameZh": "海克力斯",
-      "motion": "FateUBW Minecraft MOD 17項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 17 個片段尚未轉成原生動作 GLB；Heracles 來源休息骨架含旋轉，已完成靜態 GLB 驗證，須以獨立旋轉骨架流程轉換動作。待權利、事件映射與後台驗收；非FUC PSP。",
       "voice": "FateUBW咆哮1檔，非已確認台詞。",
       "voiceGroupIds": [
         "github-flemmli97-fateubw-07e9d79b:heracles-roar"
@@ -1097,13 +1117,17 @@
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "saber": {
       "nameZh": "阿爾托莉雅・潘德拉剛",
-      "motion": "FateUBW Minecraft MOD 10項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 10 個片段，已轉換 8 個原生動作；2 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voice": "已入索引251音訊檔；語音/說話者/逐段語系未全聽審。",
       "voiceGroupIds": [
         "spritedatabase-fate-ps2-saber:saber-character-audio"
@@ -1112,9 +1136,19 @@
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/artoria_pendragon_saber.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/artoria_pendragon_saber.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "shirou": {
       "nameZh": "衛宮士郎",
@@ -1178,7 +1212,7 @@
     },
     "emiya-archer": {
       "nameZh": "英靈衛宮（弓兵）",
-      "motion": "FateUBW Minecraft MOD 11項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 11 個片段，已轉換 11 個原生動作；0 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voice": "已入索引180音訊檔；語音/說話者/逐段語系未全聽審。",
       "voiceGroupIds": [
         "spritedatabase-fate-ps2-archer:archer-character-audio"
@@ -1187,61 +1221,111 @@
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/emiya_archer.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/emiya_archer.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "iskander": {
       "nameZh": "伊斯坎達爾",
-      "motion": "FateUBW Minecraft MOD 9項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 9 個片段，已轉換 8 個原生動作；1 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/iskander_rider.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/iskander_rider.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "sasaki-kojiro": {
       "nameZh": "佐佐木小次郎",
-      "motion": "FateUBW Minecraft MOD 11項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 11 個片段，已轉換 10 個原生動作；1 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/sasaki_kojiro_assassin.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/sasaki_kojiro_assassin.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "gilles-de-rais": {
       "nameZh": "吉爾・德・雷",
-      "motion": "FateUBW Minecraft MOD 4項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 4 個片段，已轉換 4 個原生動作；0 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilles_de_rais_caster.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilles_de_rais_caster.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "hassan": {
       "nameZh": "哈桑・薩巴赫",
-      "motion": "FateUBW Minecraft MOD 8項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 8 個片段，已轉換 8 個原生動作；0 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/hassan-i-sabbah_assassin.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/hassan-i-sabbah_assassin.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "nero-claudius": {
       "nameZh": "尼祿・克勞狄烏斯",
-      "motion": "FateUBW Minecraft MOD 6項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 6 個片段，已轉換 3 個原生動作；3 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voice": "FateUBW固有結界1檔待分類，非已確認台詞。",
       "voiceGroupIds": [
         "github-flemmli97-fateubw-07e9d79b:nero-noble-phantasm"
@@ -1250,49 +1334,89 @@
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/nero_claudius_saber.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/nero_claudius_saber.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "cu-chulainn": {
       "nameZh": "庫・丘林",
-      "motion": "FateUBW Minecraft MOD 8項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 8 個片段，已轉換 7 個原生動作；1 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/cu_chulainn_lancer.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/cu_chulainn_lancer.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "medea": {
       "nameZh": "美狄亞",
-      "motion": "FateUBW Minecraft MOD 7項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 7 個片段，已轉換 4 個原生動作；3 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "lancelot": {
       "nameZh": "蘭斯洛特",
-      "motion": "FateUBW Minecraft MOD 13項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 13 個片段，已轉換 11 個原生動作；2 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voiceGroupIds": [],
       "evidencePaths": [
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/lancelot_berserker.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/lancelot_berserker.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "diarmuid": {
       "nameZh": "迪爾姆德・奧迪那",
-      "motion": "FateUBW Minecraft MOD 8項來源動畫，待轉換；非FUC PSP。",
+      "motion": "FateUBW Minecraft MOD：來源 8 個片段，已轉換 6 個原生動作；2 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。",
       "voice": "已入索引13音訊檔；語音/說話者/逐段語系未全聽審。",
       "voiceGroupIds": [
         "gamebanana-zero-lancer-493444:zero-lancer-voice"
@@ -1301,9 +1425,19 @@
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
         "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "/private/tmp/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/contract-validation.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/native-structural-readback.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/webgl-native-v1/proof.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-manifest.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-webgl-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png"
       ],
-      "scope": "source-package audit only; no global absence claim"
+      "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
     },
     "kirei": {
       "nameZh": "言峰綺禮",
