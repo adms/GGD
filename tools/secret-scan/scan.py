@@ -206,13 +206,17 @@ def scan_paths(rules, allow, paths, findings):
                     findings.append((r, p, 0, os.path.basename(p)))
 
 
-def scan_content(rules, allow, pub, cached: bool, findings):
+def scan_content(rules, allow, pub, cached: bool, findings, paths=None):
     # ⚠️ 樣式一律走 `-e` —— `-----BEGIN … PRIVATE KEY-----` 以 `-` 開頭,
     #    ⛔ 不帶 `-e` 會被 git 當成**選項**而整條規則靜默失效
     #    （2026-09-11 實際踩到:最高風險的私鑰那兩條一直是死的,而輸出是「✅ 零發現」)。
     base = ["grep", "-I", "-n", "-E"] + (["--cached"] if cached else [])
     for r in (x for x in rules if x.kind in ("content", "infra")):
-        out = git(*base, "-e", r.rx, "--", ".", ok=(0, 1))
+        # ⚠️ `--cached` 掃的是**整個 index**,⛔ 不是「這次 staged 的那幾個檔」——
+        #    ⇒ 一行的 commit 也要 34 秒。⭐ 而一個 34 秒的 pre-commit 會被關掉,
+        #    而被關掉的閘等於沒有閘（2026-09-11 實測）。⇒ staged 模式逐檔限定範圍。
+        scope = ["--", *paths] if paths else ["--", "."]
+        out = git(*base, "-e", r.rx, *scope, ok=(0, 1))
         for line in out.splitlines():
             parts = line.split(":", 2)
             if len(parts) != 3:
@@ -413,10 +417,13 @@ def main() -> int:
         scan_history(rules, allow, pub, findings, a.quiet)
     else:
         cached = mode == "staged"
-        paths = git("diff", "--cached", "--name-only", "--diff-filter=ACMR").splitlines() \
-            if cached else git("ls-files").splitlines()
-        scan_paths(rules, allow, [p for p in paths if p], findings)
-        scan_content(rules, allow, pub, cached, findings)
+        paths = [p for p in (git("diff", "--cached", "--name-only", "--diff-filter=ACMR")
+                             .splitlines() if cached else git("ls-files").splitlines()) if p]
+        if cached and not paths:
+            print("✅ [staged] 沒有 staged 的檔案 ⇒ 沒東西可掃。")
+            return 0
+        scan_paths(rules, allow, paths, findings)
+        scan_content(rules, allow, pub, cached, findings, paths if cached else None)
 
     if not findings:
         print(f"✅ [{mode}] 零發現。")
